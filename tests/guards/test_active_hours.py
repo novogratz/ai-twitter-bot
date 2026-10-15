@@ -7,6 +7,40 @@ from src.guards import action_guard as ag, active_hours as hours
 from tests.helpers import TORONTO, stop_requested, clock
 
 
+@pytest.mark.parametrize("monday", ["2026-03-02", "2026-10-12", "2026-10-26"])
+def test_24_7_covers_every_minute_and_both_dst_changes(monday):
+    from datetime import timezone
+    start = datetime.fromisoformat(monday).replace(tzinfo=timezone.utc)
+    for minute in range(7 * 24 * 60):
+        assert hours.is_active(start + timedelta(minutes=minute))
+
+
+@pytest.mark.parametrize("stamp", [
+    "2026-10-14T23:59:59-04:00", "2026-10-15T00:00:00-04:00",
+    "2026-10-15T04:59:59-04:00", "2026-11-01T01:30:00-04:00",
+    "2026-11-01T01:30:00-05:00", "2026-03-08T03:00:00-04:00",
+])
+def test_24_7_has_no_closing_deadline_and_permits_overnight_replies(monkeypatch, stamp):
+    import math
+    now = datetime.fromisoformat(stamp).astimezone(TORONTO)
+    clock(monkeypatch, now)
+    assert hours.next_wake(now) == now
+    assert hours.bedtime(now) is None
+    assert math.isinf(hours.seconds_until_bedtime())
+    hours.require_active()
+    ran = []
+    hours.awake_job(lambda: ran.append(True))()
+    assert ran == [True]
+    assert ag.can_post(ag.REPLY)[0]
+    # Continuous scheduling cannot restore disabled publication types.
+    assert all(not ag.can_post(kind)[0] for kind in (ag.POST, ag.QUOTE, ag.RETWEET))
+    stop_requested(monkeypatch)
+    assert hours.seconds_until_bedtime() == 0
+    assert not ag.can_post(ag.REPLY)[0]
+    with pytest.raises(hours.OutsideActiveHours):
+        hours.require_active()
+
+
 @pytest.mark.parametrize("when,awake", [
     ("2026-10-14T04:59:59-04:00", False), ("2026-10-14T05:00:00-04:00", True),
     ("2026-10-14T09:00:00-04:00", True), ("2026-10-14T10:00:00-04:00", True),
@@ -18,11 +52,11 @@ from tests.helpers import TORONTO, stop_requested, clock
     ("2026-03-08T08:59:59+00:00", False), ("2026-03-08T09:00:00+00:00", True),
     ("2026-03-09T03:59:59+00:00", True), ("2026-03-09T04:00:00+00:00", False),
 ])
-def test_exact_waking_boundaries_and_dst(when, awake):
+def test_exact_waking_boundaries_and_dst(limited_hours, when, awake):
     assert hours.is_active(datetime.fromisoformat(when)) is awake
 
 
-def test_continuous_window_applies_every_minute_every_day_without_jitter():
+def test_continuous_window_applies_every_minute_every_day_without_jitter(limited_hours):
     monday = datetime(2026, 10, 12, tzinfo=TORONTO)
     for day in range(7):
         for minute in range(24 * 60):
@@ -30,14 +64,14 @@ def test_continuous_window_applies_every_minute_every_day_without_jitter():
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "05:00–24:00 America/Toronto"
+    assert hours.window_label() == "24/7 America/Toronto"
 
 
 @pytest.mark.parametrize("hour,minute,remaining", [
     (4, 59, 0), (5, 0, 68400), (9, 0, 54000), (10, 0, 50400),
     (12, 0, 43200), (13, 0, 39600), (17, 0, 25200), (23, 59, 60), (0, 0, 0),
 ])
-def test_seconds_until_bedtime_uses_midnight_without_daytime_breaks(monkeypatch, hour, minute, remaining):
+def test_seconds_until_bedtime_uses_midnight_without_daytime_breaks(limited_hours, monkeypatch, hour, minute, remaining):
     clock(monkeypatch, datetime(2026, 10, 14, hour, minute, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == remaining
 
@@ -51,7 +85,7 @@ def test_seconds_until_bedtime_uses_midnight_without_daytime_breaks(monkeypatch,
     ("2026-11-02T04:30:00+00:00", "2026-11-02T05:00:00+00:00"),
     ("2026-03-09T03:30:00+00:00", "2026-03-09T04:00:00+00:00"),
 ])
-def test_evening_bedtime_is_next_midnight_in_the_callers_timezone(now, close):
+def test_evening_bedtime_is_next_midnight_in_the_callers_timezone(limited_hours, now, close):
     assert hours.bedtime(datetime.fromisoformat(now)).isoformat() == close
 
 
@@ -61,13 +95,13 @@ def test_evening_bedtime_is_next_midnight_in_the_callers_timezone(now, close):
     ("2026-11-01T00:00:00-04:00", "2026-11-01T05:00:00-05:00"),
     ("2026-03-08T00:00:00-05:00", "2026-03-08T05:00:00-04:00"),
 ])
-def test_next_wake_is_five_am_including_dst(now, wake):
+def test_next_wake_is_five_am_including_dst(limited_hours, now, wake):
     local = datetime.fromisoformat(now).astimezone(TORONTO)
     assert hours.next_wake(local) == datetime.fromisoformat(wake)
 
 
 @pytest.mark.parametrize("hour,minute", [(0, 0), (4, 59)])
-def test_overnight_stops_queued_jobs_and_writes(monkeypatch, hour, minute):
+def test_overnight_stops_queued_jobs_and_writes(limited_hours, monkeypatch, hour, minute):
     clock(monkeypatch, datetime(2026, 10, 14, hour, minute, tzinfo=TORONTO))
     ran = []
     hours.awake_job(lambda: ran.append(True))()
@@ -113,7 +147,7 @@ def test_a_stored_day_is_over_before_today_in_toronto_or_when_unreadable(monkeyp
     assert hours.is_past_day(stamped) is past
 
 
-def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
+def test_night_rejects_all_posting_and_queued_jobs(limited_hours, monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 21, 0, 30, tzinfo=TORONTO))
     called = []
     hours.awake_job(lambda: called.append(True))()

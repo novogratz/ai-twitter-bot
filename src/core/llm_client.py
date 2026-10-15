@@ -804,7 +804,8 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
     Ollama is floored at the default, then at the profile's floor: caller
     timeouts tuned for codex's ~5s answers killed qwen3.6 mid-generation
     (2026-05-15: 26 replies generated, 0 posted in an hour). Every timeout
-    stops at the time left before bedtime."""
+    stops at the time left before bedtime when the schedule has a closing time.
+    A 24/7 schedule keeps the provider's normal finite timeout."""
     from ..guards.active_hours import seconds_until_bedtime
     default = settings.get("LLM_TIMEOUT_SECONDS")
     if provider == "ollama":
@@ -815,7 +816,7 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
         seconds = min(requested or default, _CLI_AFTER_OLLAMA_CAP)
     else:
         seconds = requested or default
-    return min(seconds, max(1, int(seconds_until_bedtime())))
+    return int(min(seconds, max(1, seconds_until_bedtime())))
 
 
 def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMResult:

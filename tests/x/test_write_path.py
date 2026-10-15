@@ -502,7 +502,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     assert url not in load_replied()
 
 
-def test_overnight_reply_is_refused_not_raised(monkeypatch):
+def test_overnight_reply_is_refused_not_raised(limited_hours, monkeypatch):
     """_safari_lock raises OutsideActiveHours on entry; the chokepoint must
     refuse with False before it, like any other skip."""
     from datetime import datetime

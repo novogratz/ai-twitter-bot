@@ -1,6 +1,6 @@
 # Architecture
 
-How the restored September 26 bot is built, with the October 14 Reply-only restrictions. The rules
+How the restored September 26 bot is built, with the October 15 Reply-only, 24/7 policy. The rules
 it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
 debug it is in [OPERATIONS.md](OPERATIONS.md). `main.py` is the source of truth
 for what runs: where this page and the code disagree, trust the code.
@@ -30,7 +30,8 @@ At start, `main()`:
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`, and only when `config.originals_enabled()` permits it;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at each daily activity-window boundary.
+   resumes it immediately under the 24/7 policy. The loop retains support for
+   restricted schedules; an explicit stop ends the process.
 
 Flags: `--post-only` (refused for this Reply-only Account), `--reply-only` (standalone Reply jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -38,33 +39,24 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns one continuous 05:00–24:00 Toronto window,
-with midnight exclusive and DST handled by
-`zoneinfo`. The evening's midnight end means the following day's 00:00;
-external work is refused from then until 05:00. `WINDOWS` owns the bounds;
-`window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
-those windows or once a stop was requested; `awake_job()` turns a job into a
-no-op in the same cases (`may_act()`), and a job already running halts at its
-next `require_active()`. `is_active()` reads the clock only: the scheduler's
-pause/resume loop must not treat a stop as a wake-up boundary.
+`src/guards/active_hours.py` permits activity 24/7. Toronto defines calendar
+days for the remaining quotas and history, without a midnight publishing pause.
+`WINDOWS` represents a full day; `window_label()` reports `24/7 America/Toronto`.
+`bedtime()` returns `None` and `seconds_until_bedtime()` is unbounded while work
+is permitted. `llm_client._timeout` clamps to the provider's finite timeout before
+converting to an integer, so midnight neither truncates nor breaks a model call.
+Original slots, for Accounts permitted to publish them, retain their 45-minute
+expiry. The live Account still permits Replies only.
 
-Pausing the scheduler is not enough, because a job queued just before a window closes would still
-run. The check is repeated at each point where work leaves the process:
+Explicit stops remain checked before and after acquiring the Safari lock,
+before browser scripts, at model calls and before publication. `require_active()`
+raises `OutsideActiveHours` on a stop; `awake_job()` skips queued work and ends
+an interrupted cycle. `is_active()` deliberately ignores the stop so the
+scheduler cannot interpret shutdown as a change in schedule. Model and browser
+calls already issued may finish, but cannot authorize another write after stop.
 
-- `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
-- `safari._run_applescript` and `safari._run_js`, through which every page
-  JavaScript runs. A caller that falls back on an unparsable answer still
-  lets `OutsideActiveHours` through, and `health.record_failure` does not
-  count it toward a Safari restart;
-- `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
-  relaunch never run outside waking hours;
-- `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
-  also caps every model call's timeout at the time left before the current window closes;
-- `action_guard.can_post`, which also refuses once a stop was requested, and
-  `editorial_bot` before fetching a source and again before publishing.
-
-A request already sent to X or to a model can finish after the window closes; it cannot
-authorize a new action.
+The same guards retain closing-time enforcement for a restricted schedule,
+covered with synthetic windows in tests. The shipped schedule has no such close.
 
 ## Jobs
 
@@ -73,8 +65,8 @@ authorize a new action.
 Account permission for Originals. Replyback, Debate, babysitter and notification
 registrations are disabled; retained manual paths still pass the conversation
 refusal. Reply jobs use `health.wrap_job`; `reach_report_job` excludes model or
-measurement failures from the Safari failure counter. Every job uses the three
-daily activity windows. Browser target verification and permanent claims enforce
+measurement failures from the Safari failure counter. Every job uses the shared
+24/7 schedule and stop guard. Browser target verification and permanent claims enforce
 one Reply per original, with no protected-author or own-post exception.
 
 The reply jobs live in `src/replies/`; `engage_job`,
@@ -250,7 +242,7 @@ the label, sets what the call gets on Ollama, whether Ollama answers first
 or as a fallback: `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`), the
 Draft or review schema as `format`, temperature 0.65 or 0.2, and a
 timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
-bedtime. A call without a profile, every Reply, gets
+a configured closing time, if any. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
 A CLI runs the model setting of the call's surface. Each is an
 `llm_client.ModelSetting`, read when the call runs for the primary CLI:
@@ -294,8 +286,9 @@ leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
 `_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`
 (180) and the profile's floor, a CLI primary at most 360s, a CLI after
-Ollama at most 150s, a CLI after a CLI the requested timeout, all capped by
-bedtime.
+Ollama at most 150s, a CLI after a CLI the requested timeout, with a closing-time
+cap only if a restricted schedule applies. Under 24/7
+activity, normal finite provider timeouts remain in force.
 
 `run_llm` reads the answer once, in the output mode the profile declares,
 whatever the provider and the rank. It unwraps NDJSON events and CLI JSON

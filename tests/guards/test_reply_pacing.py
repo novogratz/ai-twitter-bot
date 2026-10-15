@@ -64,7 +64,7 @@ def test_corrupt_pacing_stops_admission_without_overwriting(clock, value):
     assert path.read_text() == value
 
 
-def test_dry_run_and_window_close_do_not_reserve_a_submission(clock, monkeypatch):
+def test_dry_run_and_window_close_do_not_reserve_a_submission(limited_hours, clock, monkeypatch):
     from pathlib import Path
     monkeypatch.setenv("DRY_RUN", "1")
     assert not reply_pacing.reserve(fresh("one"))
@@ -102,10 +102,21 @@ def test_old_saved_cooldown_is_not_shortened_by_faster_defaults(clock, settings_
     assert reply_pacing.remaining() == 600
 
 
+def test_24_7_continues_after_midnight_without_resetting_the_cooldown(clock, memory_ledger):
+    clock[0] = clock[0].replace(hour=23, minute=59, second=50)
+    assert reply_pacing.reserve(fresh("first"))
+    deadline = datetime.fromisoformat(reply_pacing.PACE.read()["next_at"])
+    clock[0] += timedelta(seconds=20)
+    assert active_hours.is_active()
+    assert not reply_pacing.reserve(fresh("second"))
+    clock[0] = deadline
+    assert reply_pacing.reserve(fresh("second"))
+
+
 def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, memory_ledger):
     """Capacity check, not a quota: assume an approved draft is always ready."""
     import math
-    clock[0] = clock[0].replace(hour=5, minute=0)
+    clock[0] = clock[0].replace(hour=0, minute=0)
     end = (clock[0] + timedelta(days=1)).replace(hour=0, minute=0)
     sent = 0
     while clock[0] < end:
@@ -119,7 +130,7 @@ def test_full_day_has_more_capacity_with_ready_drafts_and_browser_time(clock, me
         # The selector runs every ten seconds and never catches up in bursts.
         next_tick = (math.floor(clock[0].timestamp() / 10) + 1) * 10
         clock[0] = datetime.fromtimestamp(next_tick, tz=TORONTO)
-    assert 1000 <= sent <= 1300, sent
+    assert 1300 <= sent <= 1600, sent
 
 
 def _reserve_child(folder, start, results, index):

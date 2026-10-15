@@ -92,7 +92,7 @@ def _local(now=None):
 
 def _in_window(clock: str, now) -> bool:
     """45-minute window of a Slot, or of the Startup post from the moment
-    the bot started; every window ends at bedtime."""
+    the bot started; a scheduled closing time may shorten it."""
     if is_startup(clock):
         start = _startup_opened_at
         if start is None or clock != startup_key():
@@ -100,7 +100,9 @@ def _in_window(clock: str, now) -> bool:
     else:
         hour, mins = map(int, clock.split(":"))
         start = now.replace(hour=hour, minute=mins, second=0, microsecond=0)
-    return start <= now < min(start + SLOT_WINDOW, bedtime(start))
+    close = bedtime(start)
+    end = min(start + SLOT_WINDOW, close) if close is not None else start + SLOT_WINDOW
+    return start <= now < end
 
 
 def _open(clock: str, now, journal: SlotJournal) -> bool:

@@ -25,8 +25,8 @@ creation and uploads remain Operator-managed.
 
 - **Replies only:** no new original posts, including startup/restart posts. The
   Account's `publish_originals = false` wins over engine settings and CLI flags.
-- **Daily Toronto window:** 05:00–24:00 continuously, with no daytime breaks.
-  Start inclusive, midnight exclusive, with automatic DST handling.
+- **24/7 activity:** no overnight or daytime pauses. Toronto still defines
+  calendar days for history and the existing like/follow limits.
 - **At least two likes per Reply target:** zero, one or unreadable like counts
   are skipped, regardless of reposts or views. Discovery and the final write
   check the parent's own count, including posts already liked by the bot.
@@ -53,9 +53,10 @@ creation and uploads remain Operator-managed.
   Oversized drafts are skipped. Each draft also draws an independent choice:
   no smiley (50%), or exactly one friendly smiley/positive text emoticon (50%)
   in a natural position. The saved choice is enforced through publication; no automatic
-  ending or fake typos. Recent replies guide variety.
+  ending or fake typos. Flags and decorative emojis cannot substitute for plain
+  text or become a signature. Recent replies guide variety.
 - **More active Replies:** no daily or hourly Reply-count cap; a shared
-  30–45 second cooldown within the 19-hour daily activity window.
+  30–45 second cooldown around the clock.
   Actual volume depends on qualifying posts, approved drafts and model/browser
   time; there is no forced quota. Collectors prepare a shared
   pool during the cooldown. Independent review scores impact, sharpness and
@@ -81,7 +82,7 @@ creation and uploads remain Operator-managed.
 Conversation jobs and automatic pinning are unscheduled. The historical editorial
 slots and state remain available for other Accounts, but cannot publish for this
 Account. Browser calls, model calls and the final Reply submit all check the
-activity windows. Starting, stopping and restarting require an explicit Operator
+stop request. Starting, stopping and restarting require an explicit Operator
 request; code and configuration load at process start.
 See [editorial policy](docs/EDITORIAL_POLICY.md) for the complete rules.
 

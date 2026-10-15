@@ -75,10 +75,12 @@ def _smiley_instruction(smiley: bool | None) -> str:
     if smiley is None:
         return "Normally use no emoji or text smiley; at most one when it fits naturally."
     if not smiley:
-        return "ASSIGNED SMILEY: no emoji or text smileys in this reply. Convey warmth with words."
+        return ("ASSIGNED SMILEY: no emoji or text smileys anywhere in this reply, including "
+                "the ending. This includes flags and decorative symbols; a flag is an emoji. "
+                "Convey warmth with words; never add a signature.")
     return (
         "ASSIGNED SMILEY: include exactly one friendly smiley, chosen naturally from "
-        + " ".join(_FRIENDLY_FACES) + " or :) :D ;). No other emoji or text smiley. "
+        + " ".join(_FRIENDLY_FACES) + " or :) :D ;). No other emoji, flag or text smiley. "
         "It may appear anywhere natural, not always at the end; vary the choice. "
         "Include it within the assigned character/word limit. Do not force a joke or pad the answer."
     )

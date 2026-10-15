@@ -143,7 +143,7 @@ def script(monkeypatch, tmp_path):
 
 
 @pytest.mark.parametrize("now", [_toronto(0, 0), _toronto(1, 15), _toronto(4, 59)])
-def test_refuses_to_start_overnight(script, now):
+def test_refuses_to_start_overnight(limited_hours, script, now):
     script.clock["now"] = now
     with pytest.raises(SystemExit) as exit_:
         script.main()
@@ -167,7 +167,7 @@ def test_refuses_while_the_state_waits_at_the_project_root(script, monkeypatch, 
     assert not script.results.exists()
 
 
-def test_stops_between_two_unfollows_when_waking_hours_end(script):
+def test_stops_between_two_unfollows_when_waking_hours_end(limited_hours, script):
     script.clock["now"] = _toronto(23, 59, 50)
 
     def ten_seconds_pass():
@@ -181,7 +181,7 @@ def test_stops_between_two_unfollows_when_waking_hours_end(script):
     assert json.loads(script.results.read_text()) == ["user1"]
 
 
-def test_never_confirms_a_click_made_before_bedtime(script):
+def test_never_confirms_a_click_made_before_bedtime(limited_hours, script):
     script.clock["now"] = _toronto(23, 59, 59)
 
     def one_second_passes():
@@ -214,7 +214,7 @@ def test_sigterm_stops_before_the_next_unfollow(script):
     assert json.loads(script.results.read_text()) == ["user1"]
 
 
-def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, capsys):
+def test_bedtime_before_the_confirm_script_leaves_the_account_followed(limited_hours, script, capsys):
     """Bedtime between the last stop check and the confirm: `_run_js` refuses
     before its osascript starts, so the modal stays open, nothing is
     recorded and the run ends with its report."""

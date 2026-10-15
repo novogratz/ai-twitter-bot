@@ -8,10 +8,8 @@ from ..core import config
 from ..core.logger import log
 
 
-# A midnight end closes at the following day's 00:00, displayed as 24:00.
-WINDOWS = ((time(5), time.min),)
-WAKE = WINDOWS[0][0]
-BEDTIME = WINDOWS[-1][1]
+# Midnight to midnight means continuous activity, without a daily closing instant.
+WINDOWS = ((time.min, time.min),)
 
 _STOP = threading.Event()
 
@@ -25,10 +23,16 @@ class OutsideActiveHours(RuntimeError):
 
 
 def window_label() -> str:
+    if _all_day():
+        return f"24/7 {config.BOT_TIMEZONE}"
     windows = ", ".join(
         f"{start:%H:%M}–{'24:00' if end == time.min else end.strftime('%H:%M')}"
         for start, end in WINDOWS)
     return f"{windows} {config.BOT_TIMEZONE}"
+
+
+def _all_day() -> bool:
+    return WINDOWS == ((time.min, time.min),)
 
 
 def now_local() -> datetime:
@@ -74,12 +78,15 @@ def may_act(now: datetime | None = None) -> bool:
 
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    if _all_day():
+        return local
     for start, _ in WINDOWS:
         wake = local.replace(hour=start.hour, minute=start.minute, second=0, microsecond=0)
         if local < wake:
             return wake
+    wake = WINDOWS[0][0]
     return (local + timedelta(days=1)).replace(
-        hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
+        hour=wake.hour, minute=wake.minute, second=0, microsecond=0)
 
 
 def require_active() -> None:
@@ -101,15 +108,17 @@ def awake_job(fn):
     return run
 
 
-def bedtime(now: datetime) -> datetime:
-    """Close of the current or next window, in `now`'s timezone.
+def bedtime(now: datetime) -> datetime | None:
+    """Close of the current or next window; None for continuous activity.
 
     An editorial slot opened during a break may still overlap the next
     window; the activity guard separately refuses all work during the break.
     """
+    if _all_day():
+        return None
     local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
     clock = local.time().replace(tzinfo=None)
-    end = next((end for _, end in WINDOWS if end == time.min or clock < end), BEDTIME)
+    end = next((end for _, end in WINDOWS if end == time.min or clock < end), WINDOWS[-1][1])
     close = local.replace(hour=end.hour, minute=end.minute, second=0, microsecond=0)
     if end == time.min:
         close += timedelta(days=1)
@@ -120,4 +129,5 @@ def seconds_until_bedtime() -> float:
     now = now_local()
     if not may_act(now):
         return 0.0
-    return max(0.0, (bedtime(now) - now).total_seconds())
+    close = bedtime(now)
+    return float("inf") if close is None else max(0.0, (close - now).total_seconds())

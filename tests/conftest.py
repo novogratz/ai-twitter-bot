@@ -315,3 +315,11 @@ def originals_account(monkeypatch):
     profile = replace(account.current(), publish_originals=True)
     monkeypatch.setattr(account, "current", lambda: profile)
     return profile
+
+
+@_pytest.fixture
+def limited_hours(monkeypatch):
+    """A synthetic restricted schedule for tests of the retained closing guard."""
+    from datetime import time
+    from src.guards import active_hours
+    monkeypatch.setattr(active_hours, "WINDOWS", ((time(5), time.min),))
