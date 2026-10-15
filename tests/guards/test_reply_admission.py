@@ -60,7 +60,7 @@ def test_already_replied_on_status_id_whatever_the_url_author():
     assert verdict.refusal is Refusal.ALREADY_REPLIED and verdict.refusal.definitive
 
 
-def test_definitive_rules_win_over_overnight(monkeypatch):
+def test_definitive_rules_win_over_overnight(limited_hours, monkeypatch):
     monkeypatch.setattr(active_hours, "now_local",
                         lambda: datetime(2026, 9, 24, 0, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})

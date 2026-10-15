@@ -238,9 +238,8 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
 - **`bin/watchdog.sh`**: every 120 seconds, starts `run.sh` if no bot runs and
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
-  paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes outside the three activity windows; each restart
-  comes back asleep.
+  current 24/7 schedule has no overnight pause; the watchdog still reacts to a
+  stale log regardless of the time.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
 
@@ -257,8 +256,9 @@ real account from a second process. Before any of them:
 3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
-   prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
-   and `bin/mass_unfollow.py` refuses to start Overnight and stops at the current activity-window close.
+   prints `True` under the current 24/7 schedule. The `twitter_client` chokepoints
+   and `bin/mass_unfollow.py` still honor explicit stop requests. If a restricted
+   schedule is restored, both also enforce its closing times.
 
 ## Watching
 

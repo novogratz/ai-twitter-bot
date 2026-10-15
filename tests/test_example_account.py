@@ -103,7 +103,7 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 
 def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
     shown = dry_run({})
-    assert shown["active"] == "05:00–24:00 America/Toronto"
+    assert shown["active"] == "24/7 America/Toronto"
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (0, 0, 0)
     assert shown["startup_post"] == "disabled"
     assert shown["slots"] == [] and shown["trend_slots"] == []

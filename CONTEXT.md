@@ -284,13 +284,14 @@ like or follow policy.
 ### Time and people
 
 **Waking hours**:
-The continuous daily Toronto window when the account acts externally:
-05:00–24:00. `active_hours.WINDOWS` owns the bounds; the start is inclusive
-and midnight exclusive, with no daytime breaks or daily jitter.
+The time when the account may act externally. The current policy is 24/7,
+with no scheduled pause or closing instant. `active_hours.WINDOWS` owns the
+schedule; Toronto still defines calendar days and explicit stops still win.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:
-00:00–05:00 Toronto, when nothing external happens.
+The historical scheduled pause. The current 24/7 policy has no Overnight
+window; explicit stop requests still halt external work.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:

@@ -93,6 +93,18 @@ def test_smiley_choice_targets_half_plain_replies_with_random_streaks(monkeypatc
     assert any(a == b for a, b in zip(choices, choices[1:]))  # No mechanical alternation.
 
 
+@pytest.mark.parametrize("draw,smiley", [(0.0, True), (0.49, True), (0.5, False), (0.99, False)])
+def test_smiley_probability_boundary_is_one_half(monkeypatch, draw, smiley):
+    monkeypatch.setattr(reply_style.random, "random", lambda: draw)
+    assert reply_style.choose_smiley() is smiley
+
+
+@pytest.mark.parametrize("ending", ["🇺🇸", "🤓 SI makes building smart APIs effortless now! 🇺🇸"])
+@pytest.mark.parametrize("smiley", [False, True])
+def test_reported_flag_endings_cannot_pass_either_assigned_style(ending, smiley):
+    assert not reply_style.accepts_smiley("Adding vector databases helps. " + ending, smiley)
+
+
 @pytest.mark.parametrize("text,smiley,accepted", [
     ("Bandwidth matters.", False, True), ("Bandwidth matters.", True, False),
     ("Bandwidth matters. 🙂", True, True), ("Bandwidth matters. 🙂", False, False),

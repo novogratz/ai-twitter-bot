@@ -38,7 +38,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Daily windows 05:00–24:00 America/Toronto; closing times exclusive, DST aware | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
+| 24/7 activity; America/Toronto remains the calendar for non-Reply limits | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |

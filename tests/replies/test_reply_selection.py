@@ -458,7 +458,8 @@ def test_queue_refuses_a_draft_that_ignores_its_smiley_choice(clock, smiley, tex
 
 @pytest.mark.parametrize("status", ["ready", "selected"])
 @pytest.mark.parametrize("smiley,text", [(True, TEXT), (False, TEXT + " 🙂"),
-                                       (False, TEXT + " 🇺🇸"), (False, TEXT + " 1️⃣")])
+                                       (False, TEXT + " 🇺🇸"), (False, TEXT + " 1️⃣"),
+                                       (True, TEXT + " 🇺🇸"), (True, TEXT + " 🤓 🇺🇸")])
 def test_saved_wrong_smiley_cannot_reach_review_or_browser(
         clock, monkeypatch, memory_ledger, status, smiley, text):
     sid = stage(text=text)

@@ -47,7 +47,7 @@ def test_slots_do_not_catch_up_or_repeat_after_restart():
     assert editorial.due_slot(at(23, 30), {}) is None
 
 
-def test_retained_slots_stay_in_waking_hours_and_slots_cannot_publish_overnight(monkeypatch):
+def test_retained_slots_stay_in_waking_hours_and_slots_cannot_publish_overnight(limited_hours, monkeypatch):
     """Even an explicitly permitted Account cannot use overnight Original slots."""
     slots = editorial.slots()
     for slot in slots:
@@ -223,7 +223,7 @@ def test_an_unreadable_state_halts_the_editorial_with_the_repair(monkeypatch, dr
                                    "Repair the file (docs/OPERATIONS.md#recovery).")
 
 
-def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture, caplog):
+def test_the_overnight_stop_of_the_editorial_is_named(limited_hours, monkeypatch, draft_fixture, caplog):
     """A Draft that ends past midnight stops the cycle before publishing; the
     log names the Overnight."""
     from src.x import twitter_client as tc
@@ -241,7 +241,7 @@ def test_the_overnight_stop_of_the_editorial_is_named(monkeypatch, draft_fixture
 
 
 @pytest.mark.parametrize("finish_hour", [8, 0])
-def test_slow_generation_cannot_publish_after_window_or_bedtime(monkeypatch, draft_fixture, finish_hour):
+def test_slow_generation_cannot_publish_after_window_or_bedtime(limited_hours, monkeypatch, draft_fixture, finish_hour):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("expired draft published"))
     draft = draft_fixture[0]
@@ -571,7 +571,7 @@ def test_trend_slots_sit_in_the_grid():
     assert [slot.clock for slot in editorial.slots() if slot.trend] == ["10:00", "13:00", "15:00"]
 
 
-def test_startup_window_opens_on_every_waking_start():
+def test_startup_window_opens_on_every_waking_start(limited_hours):
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     assert editorial.startup_slot(at(17, 15), {}) is None
     editorial.open_startup_window(at(17, 15))
@@ -741,7 +741,7 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
     assert len(posted) == 1
 
 
-def test_the_startup_window_closes_at_bedtime():
+def test_the_startup_window_closes_at_bedtime(limited_hours):
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     editorial.open_startup_window(at(23, 40))
     key = editorial.startup_key()
@@ -749,6 +749,14 @@ def test_the_startup_window_closes_at_bedtime():
     midnight = datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO)
     assert not editorial._in_window(key, midnight)
     assert editorial.startup_slot(midnight, {}) is None
+
+
+def test_permitted_startup_slot_keeps_its_45_minute_deadline_across_midnight():
+    start = datetime(2026, 10, 14, 23, 40, tzinfo=TORONTO)
+    editorial.open_startup_window(start)
+    key = editorial.startup_key()
+    assert editorial._in_window(key, start + timedelta(minutes=44, seconds=59))
+    assert not editorial._in_window(key, start + timedelta(minutes=45))
 
 
 def test_a_silent_slot_does_not_hide_the_overlapping_next_one(monkeypatch, trend_fixture):

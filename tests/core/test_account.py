@@ -847,7 +847,7 @@ def test_voice_research_aliases_and_hours_match_current_policy(language):
     from src.core import personality_store
     voice = personality_store.render_voice(language)
     assert all(term in voice for term in ('SI', '"super intelligence"', 'superintelligence', '"artificial intelligence"'))
-    assert "05:00–24:00" in voice
+    assert "24/7" in voice
     assert "05:00–09:30" not in voice
 
 

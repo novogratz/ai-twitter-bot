@@ -600,7 +600,7 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
 
 
 @pytest.mark.parametrize("cut", ["stop", "overnight"])
-def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypatch, cut):
+def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(limited_hours, spacing, monkeypatch, cut):
     import threading
     from src.guards import action_guard as ag, active_hours
 

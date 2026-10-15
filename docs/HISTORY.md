@@ -1,5 +1,23 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-15 — Continuous 24/7 activity and plain-text emoji enforcement
+
+The Operator restored round-the-clock activity and reaffirmed no daily or
+hourly Reply cap, while keeping useful, independently approved replies. The
+latest emoji instruction is 50/50 plain text versus one friendly smiley.
+
+A full-day schedule has no closing instant. Midnight no longer shortens
+provider timeouts or stops queued work. Explicit stops, finite model timeouts,
+reply pacing, target protection, parent-like checks and quality review remain.
+
+The last run logged the older segmented schedule and stopped at 00:14. It had
+started before the prior flag-check fix was merged, explaining the reported
+flag endings. Prompts and both Voice files now explicitly prohibit flag or
+decorative signatures; regressions cover flags alone and smileys followed by
+flags, including saved drafts at the write. Plain assignments allow no reaction.
+Code changes require a new start or restart to load; this implementation and
+push do not start the stopped bot or alter production state.
+
 ## 2026-10-14 — Continuous waking hours, two-like minimum and more For You discovery
 
 The Operator requested continuous 05:00–24:00 Toronto activity, no daily or

@@ -1,4 +1,24 @@
-# Publishing policy — October 14, 2026
+# Publishing policy — October 15, 2026
+
+2026-10-15 — The Operator restored 24/7 activity, with no scheduled overnight
+pause and no daily or hourly Reply-count cap. This supersedes all activity
+windows below. America/Toronto still defines calendar days for the remaining
+like/follow limits and history. Midnight must not shorten a model timeout or
+halt queued work; normal finite provider timeouts and explicit stop requests
+remain enforced.
+
+The latest emoji instruction is a random 50/50 split: plain text, or exactly
+one friendly smiley. Flags, decorative emoji and text emoticons all count;
+none may appear in a plain-text assignment, including at the end. A flag is
+not an alternative signature. The saved choice survives drafting, independent
+comparison and the final write. Random streaks are possible; quality review
+never rewards an emoji or appends one after approval.
+
+Replies still require a useful, specific, kind and supported contribution,
+independent review, at least two parent likes, protected-author and own-post
+checks, standalone targets, permanent deduplication and the shared 30–45 second
+cooldown. No quota forces weak replies. The requested push and merge do not
+start or restart the bot or modify the local environment or production state.
 
 2026-10-14 — The Operator's current window is 05:00–24:00 America/Toronto
 every day, continuously without daytime breaks. This supersedes all segmented
@@ -275,10 +295,10 @@ and nested replies have no VIP exception.
 
 ## Scheduler and publishing permissions
 
-The continuous Toronto window applies every day without jitter: 05:00–24:00.
-Browser locks, browser scripts, model
-calls, queued jobs and the final submit all check the clock. Closing is exclusive;
-a request already issued may finish remotely but cannot authorize another write.
+Activity is permitted 24/7 with no scheduled closing instant. Toronto still
+defines calendar days for history and non-Reply limits. Browser locks, browser
+scripts, model calls, queued jobs and the final submit all honor explicit stop
+requests. Model calls keep their normal finite timeouts across midnight.
 
 The live Account publishes Replies only. `publish_originals = false` gives an
 effective original ceiling and target of zero, omits the editorial job, prevents
