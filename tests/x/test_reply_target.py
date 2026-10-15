@@ -34,8 +34,8 @@ def test_protected_author_is_refused_before_any_browser_work(monkeypatch, memory
 
 
 @pytest.mark.parametrize("answer", ["", "refused", "null", "[]", "{}", '{"url":17}',
-                                    json.dumps({"url": numbered_url(800, "elonmusk"), "clicked": False}),
-                                    json.dumps({"url": numbered_url(801), "clicked": False})])
+                                    json.dumps({"url": numbered_url(800, "elonmusk"), "likes": 2, "clicked": False}),
+                                    json.dumps({"url": numbered_url(801), "likes": 2, "clicked": False})])
 def test_unreadable_or_misattributed_target_is_refused(monkeypatch, answer):
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: answer)
     assert not tc._standalone_reply_target(PARENT)
@@ -53,24 +53,32 @@ DOM = r"""
 const input = JSON.parse(process.argv[1]);
 const clicks = [];
 function article(spec) {
-  const a = {innerText: spec.text || 'An original AI post'};
+  const a = {innerText: spec.text || 'An original AI post', innerHTML: ''};
   function node(values, quoted=false) {
     return {...values, closest: selector => selector === 'article' ? a : (quoted ? {} : null)};
   }
   const makeLink = (url, quoted=false) => node({
     href: url, pathname: new URL(url).pathname,
+    getAttribute: name => name === 'href' ? new URL(url).pathname : null,
     querySelector: selector => selector === 'time' ? {} : null
   }, quoted);
   const link = makeLink(spec.url);
   const links = spec.quote ? [makeLink(spec.quote, true), link] : [link];
   const body = node({innerText: a.innerText});
-  const button = node({click: () => clicks.push(spec.url)});
+  const button = node({click: () => clicks.push(spec.url), getAttribute: () => ''});
+  const metric = (value, quoted=false) => value === null ? [] : [node({
+    innerText: typeof value === 'object' ? value.text || '' : '',
+    getAttribute: () => typeof value === 'object' ? value.label || '' : String(value) + ' Likes. Like'
+  }, quoted)];
   a.querySelectorAll = selector => {
-    if (selector === 'a[href]') return links;
+    if (selector === 'a[href]' || selector === 'a[href*="/status/"]') return links;
     if (selector === '[data-testid="tweetText"]') return [body];
     if (selector === '[data-testid="reply"]') return spec.noButton ? [] : [button];
+    if (selector === '[data-testid="like"], [data-testid="unlike"]')
+      return [...metric(spec.likes === undefined ? 2 : spec.likes), ...metric(spec.quoteLikes ?? null, true)];
     return [];
   };
+  a.querySelector = selector => a.querySelectorAll(selector)[0] || null;
   return a;
 }
 global.document = {querySelectorAll: () => input.articles.map(article)};
@@ -102,6 +110,37 @@ def test_page_script_targets_only_the_verified_original(monkeypatch, articles, p
     clicks = mock_page(monkeypatch, articles, page)
     assert tc._standalone_reply_target(PARENT, click=click) is allowed
     assert clicks == ([articles[0]["url"]] if allowed and click else [])
+
+
+@pytest.mark.parametrize("likes,allowed", [
+    (0, False), (1, False), (2, True), (100, True), (None, False),
+    ("1.2K", True), ("1,234", True), ("1\u202f234", True),
+    ({"label": "Unlike", "text": "2"}, True),
+    ({"label": "1 Like. Unlike", "text": "2"}, False),
+    ("unknown", False), ("1,2", False), ("1.5", False), ("-2", False),
+])
+@pytest.mark.parametrize("click", [False, True])
+def test_actual_parent_needs_two_likes_before_any_reply_click(monkeypatch, likes, allowed, click):
+    clicks = mock_page(monkeypatch, [
+        {"url": PARENT, "likes": likes, "quoteLikes": "999K"},
+        {"url": numbered_url(802, "another"), "likes": "999K"},
+    ], PARENT)
+    assert tc._standalone_reply_target(PARENT, click=click) is allowed
+    assert clicks == ([PARENT] if allowed and click else [])
+
+
+@pytest.mark.parametrize("likes", [0, 1, None])
+def test_low_like_parent_never_reaches_a_like_or_submission(monkeypatch, memory_ledger, likes):
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    for name in ("_activate_or_abort", "_open_or_abort"):
+        monkeypatch.setattr(tc, name, lambda *a, **k: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an ineligible parent"))
+    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("submitted to an ineligible parent"))
+    clicks = mock_page(monkeypatch, [{"url": PARENT, "likes": likes}], PARENT)
+    assert tc.reply_to_tweet(PARENT, TEXT) is WriteOutcome.REFUSED
+    assert not clicks and memory_ledger.rows == []
+    assert PARENT not in replied_store.load_replied()
 
 
 def mock_page(monkeypatch, articles, page):

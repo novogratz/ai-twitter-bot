@@ -16,6 +16,7 @@ import random
 from datetime import timedelta
 from ..x import x_urls
 from ..core.logger import log
+from ..guards.reply_admission import has_reply_engagement
 from ..core import reply_queue
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
@@ -95,7 +96,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
     for tweet in tweets:
         url = tweet.get("url", "")
         text = tweet.get("text", "")
-        if not url:
+        if not url or not has_reply_engagement(tweet.get("likes")):
             continue
         if x_urls.is_reply_like_tweet(tweet, expected_author=username):
             log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")

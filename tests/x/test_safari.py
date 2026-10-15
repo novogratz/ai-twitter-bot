@@ -10,7 +10,6 @@ from tests.helpers import TORONTO, clock
 
 
 @pytest.mark.parametrize("before,after", [
-    (datetime(2026, 9, 20, 8, 59, tzinfo=TORONTO), datetime(2026, 9, 20, 9, 0, tzinfo=TORONTO)),
     (datetime(2026, 9, 20, 23, 59, tzinfo=TORONTO), datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO)),
 ])
 def test_browser_wait_rechecks_bedtime(monkeypatch, before, after):
@@ -33,7 +32,7 @@ def test_browser_wait_rechecks_bedtime(monkeypatch, before, after):
     assert released == [True]
 
 
-@pytest.mark.parametrize("hour,minute", [(9, 30), (0, 0)])
+@pytest.mark.parametrize("hour,minute", [(4, 30), (0, 0)])
 def test_submit_checks_bedtime_before_applescript(monkeypatch, hour, minute):
     from src.x import safari
     # Use the real helper (the suite normally prevents Safari calls).

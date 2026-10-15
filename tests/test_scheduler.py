@@ -16,7 +16,7 @@ def test_discovery_and_single_selector_run_frequently():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
     assert scheduler.get_job("direct_reply_job").trigger.interval.total_seconds() == 60
-    assert scheduler.get_job("feed_sweep_job").trigger.interval.total_seconds() == 120
+    assert scheduler.get_job("feed_sweep_job").trigger.interval.total_seconds() == 60
     assert scheduler.get_job("reply_selection_job").trigger.interval.total_seconds() == 10
     assert scheduler.get_job("reply_selection_job").executor == "reply_selection"
 

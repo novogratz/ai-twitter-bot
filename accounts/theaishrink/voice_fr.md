@@ -89,7 +89,7 @@ Les faits et les vidéos :
   capacité, chiffre, expérience, ni test personnel d'un produit.
 
 Les limites :
-- Activité uniquement à 06:00–09:00, 12:00–13:00 et 17:00–24:00
+- Activité uniquement à 05:00–24:00
   America/Toronto chaque jour, début inclus et fin exclue.
 - Uniquement des réponses ; aucun nouveau post, même au démarrage.
 - Aucune interaction avec @elonmusk : ni réponse, like, suivi ou @mention,

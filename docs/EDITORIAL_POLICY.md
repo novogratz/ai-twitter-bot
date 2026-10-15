@@ -1,5 +1,34 @@
 # Publishing policy — October 14, 2026
 
+2026-10-14 — The Operator's current window is 05:00–24:00 America/Toronto
+every day, continuously without daytime breaks. This supersedes all segmented
+windows below. Midnight is exclusive; the next wake is 05:00. Replies have no
+daily or hourly count cap. The 30–45 second cooldown and independent approval
+still apply; no quota forces publication or relaxes protected authors, own-post
+and nested-reply refusals, factual support or permanent deduplication.
+
+Every Reply parent needs at least two likes, regardless of other metrics.
+Zero, one and unreadable like counts cannot qualify. Discovery filters before
+drafting; the browser write verifies the opened parent's own count before any
+parent like and before clicking Reply. Saved approvals and priority scans have
+no exemption. The common reader handles like/unlike buttons and compact counts,
+excluding quoted posts and comments. A low-engagement post may qualify later
+if its actual like count rises; it is not permanently marked as answered.
+
+New ranked drafts independently choose 50% plain text and 50% exactly one
+friendly smiley, superseding the 35% probability below. The saved choice remains
+enforced through review and publication. Flags, keycaps and emoji variants count
+as reactions too; no emoji may slip into a plain-text assignment. Random streaks
+are possible, and review never favors smiley presence or appends an ending.
+
+For You and Following scans run every minute. For You receives first priority
+in three of every four cycles; Following receives it in the fourth. The
+collectors select and verify the requested native tab; an unavailable or
+unverified feed yields no candidates. Queue
+capacity and preparation budgets preserve browser time for publication, without
+placing a daily or hourly cap on Replies. No local environment or production
+state changes, start or restart accompany the requested push, PR and merge.
+
 2026-10-14 — The Operator extended the evening window to midnight. Current
 Toronto activity windows are 06:00–09:00, 12:00–13:00 and 17:00–24:00, with
 closing times exclusive. This replaces the 22:30 close below. The evening's
@@ -230,7 +259,7 @@ Maximum 278 characters, not a target; the brief option allows at most five words
 and 60 characters. A draft that cannot fit meaningfully is skipped.
 The 2-character floor permits meaningful brevity; generic praise and standalone
 reactions remain refused. New ranked drafts use the saved random choice: no
-smiley (65%) or exactly one friendly smiley/positive text emoticon (35%), at any
+smiley (50%) or exactly one friendly smiley/positive text emoticon (50%), at any
 natural position and within the length limit. No automatic ending, random
 case/period changes or manufactured spelling errors. Recent shipped replies are
 shown as untrusted examples to avoid repeating, never as instructions or facts.
@@ -246,8 +275,8 @@ and nested replies have no VIP exception.
 
 ## Scheduler and publishing permissions
 
-The three Toronto windows apply every day without jitter: 06:00–09:00,
-12:00–13:00 and 17:00–24:00. Browser locks, browser scripts, model
+The continuous Toronto window applies every day without jitter: 05:00–24:00.
+Browser locks, browser scripts, model
 calls, queued jobs and the final submit all check the clock. Closing is exclusive;
 a request already issued may finish remotely but cannot authorize another write.
 
@@ -266,7 +295,7 @@ Replyback, Debate, babysitter and notification jobs remain unscheduled; their
 retained manual paths cannot publish conversation replies. Automatic pinning is
 unscheduled. Non-publishing likes, follows, browser upkeep and measurement jobs
 keep their existing limits and respect the no-contact rule. Reply volume has no
-forced daily quota or cap; actual volume depends on the
+forced quota or daily/hourly count cap; actual volume depends on the
 shared cooldown, model/browser time, quality and per-cycle preparation bounds.
 
 ## Bounds on volume and check settings

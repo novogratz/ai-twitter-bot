@@ -14,6 +14,7 @@ from datetime import timedelta
 from enum import Enum
 
 from ..core import account
+from ..guards.reply_admission import has_reply_engagement
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -56,7 +57,8 @@ def freshness_sort_key(tweet):
         return (3, 0.0, float("inf"))
     minutes = age.total_seconds() / 60
     bucket = 0 if minutes <= 60 else 1 if minutes <= 360 else 2
-    velocity = (tweet.get("likes") or 0) / max(minutes, 1.0)
+    likes = tweet.get("likes")
+    velocity = (likes if has_reply_engagement(likes) else 0) / max(minutes, 1.0)
     return (bucket, -velocity, minutes)
 
 
@@ -71,6 +73,8 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         url = tweet.get("url") or ""
         text = tweet.get("text") or ""
         if not url or not text.strip():
+            continue
+        if not has_reply_engagement(tweet.get("likes")):
             continue
         if declaration.root_only and x_urls.is_reply_like_tweet(tweet):
             continue

@@ -57,6 +57,13 @@ class Refusal(Enum):
 _DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.PROTECTED_ACCOUNT, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
+MIN_PARENT_LIKES = 2
+
+
+def has_reply_engagement(likes=None) -> bool:
+    """Every parent needs two readable likes; other metrics cannot substitute."""
+    return type(likes) is int and likes >= MIN_PARENT_LIKES
+
 
 @dataclass(frozen=True)
 class Verdict:

@@ -158,9 +158,11 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
     """Run JS on the current Safari page to extract tweets. Returns list of
     dicts; each `text` is cut to `text_limit` characters."""
     import json as _json
+    from .post_metrics import POST_METRICS_JS
 
     js_code = """
     (function() {
+        __POST_METRICS__
         function extractFromLabel(label) {
             var m = (label || '').match(/(\\d[\\d,\\.KMkm]*)/);
             if (!m) return 0;
@@ -210,7 +212,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             }
             var authorEl = a.querySelector('[data-testid="User-Name"] a[role="link"]');
             var author = authorEl ? authorEl.textContent.trim().replace('@','') : '';
-            var likes = extractCount(a, 'like');
+            var likes = postMetric(a, ['like', 'unlike']);
             var replies = extractCount(a, 'reply');
             var tl = detectTranslatedLang(a);
             var isReply = detectReplyArticle(a, text);
@@ -226,7 +228,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
     })()
-    """.replace("MAX_TWEETS", str(max_tweets)).replace("TEXT_LIMIT", str(int(text_limit)))
+    """.replace("MAX_TWEETS", str(max_tweets)).replace("TEXT_LIMIT", str(int(text_limit))).replace(
+        "__POST_METRICS__", POST_METRICS_JS)
 
     # Activate Safari first. Without this, "current tab of front window" can
     # block waiting on a different app being frontmost — that was causing the
@@ -367,59 +370,66 @@ def scrape_mentions(max_tweets: int = 20):
         return tweets
 
 
+def _select_home_tab(labels: tuple[str, ...]) -> bool:
+    """Select the intended native feed and verify it before reading posts."""
+    js = r"""(() => {
+      const labels = __LABELS__, click = __CLICK__;
+      const tabs = [...document.querySelectorAll('[role="tab"]')].filter(tab =>
+        labels.includes((tab.textContent || '').trim().toLowerCase().replace(/\s+/g, ' ')));
+      if (tabs.length !== 1) return 'UNVERIFIED';
+      const tab = tabs[0];
+      if (tab.getAttribute('aria-selected') === 'true') return 'VERIFIED';
+      if (!click) return 'UNVERIFIED';
+      tab.click();
+      return 'CLICKED';
+    })()""".replace("__LABELS__", json.dumps(labels))
+    result = safari._run_js(js.replace("__CLICK__", "true"), 8, log_prefix="[SCRAPE]")
+    if result == "VERIFIED":
+        return True
+    if result != "CLICKED":
+        return False
+    time.sleep(4)
+    return safari._run_js(js.replace("__CLICK__", "false"), 8, log_prefix="[SCRAPE]") == "VERIFIED"
+
+
 def scrape_home_feed(max_tweets: int = 15, text_limit: int = 200):
     """Scrape tweets from the home feed (For You / algorithmic)."""
     with safari._safari_lock:
         log.info("[SCRAPE] Opening home feed...")
         safari.open_url("https://x.com/home")
-        time.sleep(8)
-
-        # Scroll deep — reply to everything means we need to surface many tweets.
-        # Each scroll reveals ~8-12 posts; cap at 15 scrolls to stay bounded.
-        for _ in range(max(4, min(15, max_tweets // 7))):
-            safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page("home feed", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            if not _select_home_tab(("for you", "pour vous")):
+                log.info("[SCRAPE] For You tab could not be verified; skipping feed.")
+                return []
+            # Each scroll reveals ~8-12 posts; keep each pass bounded.
+            for _ in range(max(4, min(15, max_tweets // 7))):
+                safari._scroll_page()
+            return _scrape_tweets_from_page("home feed", max_tweets, text_limit)
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_following_feed(max_tweets: int = 15, text_limit: int = 200):
     """Scrape the chronological 'Following' tab — only accounts we follow.
 
     The Following tab is a JS-rendered tab on /home (not its own URL). We open
-    /home and click the 'Following' tab via JS before scraping. Falls back to
-    whatever loaded if the tab can't be located.
+    /home and verify the 'Following' tab via JS before scraping. An unverified
+    tab yields no posts, including when X remembers the other feed.
     """
     with safari._safari_lock:
         log.info("[SCRAPE] Opening Following feed...")
         safari.open_url("https://x.com/home")
-        time.sleep(8)
-
-        # Click the "Following" tab.
-        click_js = """
-        (function() {
-            var tabs = document.querySelectorAll('[role="tab"]');
-            for (var i = 0; i < tabs.length; i++) {
-                var t = tabs[i].textContent.trim().toLowerCase();
-                if (t === 'following' || t === 'abonnements' || t === 'suivi(e)s') {
-                    tabs[i].click();
-                    return 'CLICKED';
-                }
-            }
-            return 'NO_TAB';
-        })()
-        """
-        safari._run_js(click_js, 8, log_prefix="[SCRAPE]")
-
-        time.sleep(4)
-        # Scroll proportionally to the requested depth (same as home feed).
-        for _ in range(max(2, min(8, max_tweets // 12))):
-            safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page("following feed", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        try:
+            time.sleep(8)
+            if not _select_home_tab(("following", "abonnements", "suivi(e)s")):
+                log.info("[SCRAPE] Following tab could not be verified; skipping feed.")
+                return []
+            for _ in range(max(2, min(8, max_tweets // 12))):
+                safari._scroll_page()
+            return _scrape_tweets_from_page("following feed", max_tweets, text_limit)
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
