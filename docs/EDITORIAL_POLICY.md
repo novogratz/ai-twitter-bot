@@ -1,5 +1,15 @@
 # Publishing policy — October 16, 2026
 
+2026-10-16 — Every Reply parent now needs at least three likes, superseding
+the two-like minimum below. The Operator requested this stricter threshold,
+then push, PR, merge and release. Discovery skips zero, one, two and unreadable
+counts before drafting; Top Reply queries use `min_faves:3`. The final write
+rechecks the opened parent's own count before any optional parent like and
+before clicking Reply. Saved approvals, priority authors and already-liked
+posts have no exemption. Reposts, views, quotes and comments cannot substitute
+for the parent's likes. All other publishing rules remain unchanged. No start,
+restart, local environment or production-state edit accompanies this change.
+
 2026-10-16 — The Operator requested more daily Replies, then push, PR, merge
 and release. The main limitation observed was discarded style-invalid drafts,
 not the existing cooldown. Direct and feed discovery now run every 30 seconds,

@@ -6,6 +6,15 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-16 — The Operator raised the Reply parent minimum from two to three
+likes and requested push, PR, merge and release. Every discovery source skips
+parents with zero, one, two or unreadable likes before drafting. Top Reply
+queries use `min_faves:3`. The final write rechecks the actual parent's own
+count before any optional parent like and before clicking Reply, including
+saved approvals and priority authors. Other metrics, quotes and comments
+cannot supply the missing likes. All other rules remain; no start, restart,
+local environment or production-state edit accompanies this change.
+
 2026-10-16 — The Operator requested more daily Replies, then push, PR, merge
 and release. Direct and feed scans now run every 30 seconds; the selector checks
 every five seconds and lets a new pool gather choices for five seconds, retaining

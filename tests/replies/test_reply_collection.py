@@ -26,15 +26,15 @@ def drafting(monkeypatch, llm):
     return llm
 
 
-@pytest.mark.parametrize("likes", [0, 1, 2, None, "2"])
-def test_latest_queries_use_the_shared_two_like_floor_without_an_author_gate(likes):
+@pytest.mark.parametrize("likes", [0, 1, 2, 3, None, "3"])
+def test_latest_queries_use_the_shared_three_like_floor_without_an_author_gate(likes):
     queries = account.current().searches.replies
     assert queries
     for query in queries:
         assert not any(term in query for term in ("min_faves:", "min_replies:", "min_retweets:", "from:"))
         assert "-filter:replies" in query
     tweet = {"url": fresh("newbuilder"), "text": PARENT, "likes": likes}
-    expected = [tweet["url"]] if likes == 2 else []
+    expected = [tweet["url"]] if likes == 3 else []
     assert [c.url for c in direct._search_candidates([tweet], queries[0])] == expected
 
 
@@ -56,7 +56,7 @@ def test_ranked_budget_counts_declined_drafts_across_queries(monkeypatch, settin
     calls = []
     def discover(query, **kwargs):
         calls.append(query)
-        return [{"likes": 2, "url": fresh("builder", n=len(calls)), "text": PARENT}]
+        return [{"likes": 3, "url": fresh("builder", n=len(calls)), "text": PARENT}]
     monkeypatch.setattr(direct, "scrape_x_search", discover)
     direct.run_direct_reply_cycle()
     assert len(calls) == len(drafting.calls) == 3
@@ -66,12 +66,12 @@ def test_ranked_budget_counts_declined_drafts_across_queries(monkeypatch, settin
 
 def test_vip_and_search_share_the_ranked_preparation_budget(monkeypatch, settings_override, drafting):
     settings_override(VIP_SCAN_HANDLES="builder", DIRECT_REPLY_MAX_PER_CYCLE=3)
-    vip = [{"likes": 2, "url": fresh("builder", n=n), "text": PARENT} for n in (1, 2)]
+    vip = [{"likes": 3, "url": fresh("builder", n=n), "text": PARENT} for n in (1, 2)]
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: vip)
     calls = []
     def discover(query, **kwargs):
         calls.append(query)
-        return [{"likes": 2, "url": fresh("another", n=n), "text": PARENT} for n in (3, 4, 5)]
+        return [{"likes": 3, "url": fresh("another", n=n), "text": PARENT} for n in (3, 4, 5)]
     monkeypatch.setattr(direct, "scrape_x_search", discover)
     direct.run_direct_reply_cycle()
     assert len(calls) == 1 and len(drafting.calls) == len(reply_queue.ready()) == 3
@@ -137,7 +137,7 @@ def test_corrupt_queue_stops_discovery_without_overwriting():
 def test_mega_watch_counts_preparation_instead_of_zero_publications(monkeypatch, drafting):
     monkeypatch.setattr(mega, "_watch_pool", lambda: ["builder"])
     monkeypatch.setattr(mega, "scrape_profile_tweets", lambda *a, **k: [
-        {"likes": 2, "url": fresh("builder", minutes=1, n=n), "text": PARENT} for n in range(5)])
+        {"likes": 3, "url": fresh("builder", minutes=1, n=n), "text": PARENT} for n in range(5)])
     mega.run_mega_watch_cycle()
     assert len(drafting.calls) == len(reply_queue.ready()) == mega.MAX_REPLIES_PER_CYCLE
 
@@ -153,7 +153,7 @@ def test_collectors_and_drafts_keep_parent_evidence_after_200_characters(monkeyp
     requested = []
     def scrape(*args, **kwargs):
         requested.append(kwargs["text_limit"])
-        return [{"likes": 2, "url": url, "text": parent}]
+        return [{"likes": 3, "url": url, "text": parent}]
     monkeypatch.setattr(pipeline, "scrape", scrape)
     run()
     assert requested and set(requested) == {4000}
@@ -172,8 +172,8 @@ def test_topic_search_uses_the_same_parent_limit_as_the_vip_pass(monkeypatch, se
 
 @pytest.mark.parametrize("run", [direct.run_direct_reply_cycle, feed.run_feed_sweep_cycle,
                                   early.run_early_bird_cycle, mega.run_mega_watch_cycle])
-@pytest.mark.parametrize("likes", [0, 1, 2, None, "2"])
-def test_every_collector_skips_zero_and_one_like_before_drafting(monkeypatch, settings_override, drafting, run, likes):
+@pytest.mark.parametrize("likes", [0, 1, 2, 3, None, "3"])
+def test_every_collector_requires_three_likes_before_drafting(monkeypatch, settings_override, drafting, run, likes):
     settings_override(VIP_SCAN_HANDLES="builder", DIRECT_REPLY_MAX_PER_CYCLE=1)
     monkeypatch.setattr(early, "_scan_pool", lambda: ["builder"])
     monkeypatch.setattr(mega, "_watch_pool", lambda: ["builder"])
@@ -181,5 +181,5 @@ def test_every_collector_skips_zero_and_one_like_before_drafting(monkeypatch, se
     monkeypatch.setattr(pipeline, "scrape", lambda *a, **k: [
         {"url": url, "text": PARENT, "likes": likes, "reposts": 10000}])
     run()
-    assert len(drafting.calls) == (1 if likes == 2 else 0)
-    assert len(reply_queue.ready()) == (1 if likes == 2 else 0)
+    assert len(drafting.calls) == (1 if likes == 3 else 0)
+    assert len(reply_queue.ready()) == (1 if likes == 3 else 0)

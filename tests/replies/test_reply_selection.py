@@ -278,24 +278,33 @@ def test_two_selectors_cannot_review_or_publish_concurrently(clock, reviewer, pu
     assert len(reviewer[0]) == len(publisher) == 1
 
 
-def test_selected_draft_reaches_real_write_guards_once(clock, reviewer, monkeypatch, memory_ledger):
+@pytest.mark.parametrize("parent_likes,ships", [([3, 3], True), ([2], False), ([3, 2], False)])
+def test_selected_draft_reaches_real_write_guards_once(
+        clock, reviewer, monkeypatch, memory_ledger, parent_likes, ships):
     from src.x import safari
     sid = stage()
     other = stage("other", 2, "Batching trades latency for throughput.")
     reviewer[1][sid] = review(5)
-    submitted, pasted = [], []
+    submitted, pasted, parent_likes_attempted = [], [], []
     for name in ("_activate_or_abort", "_open_or_abort"):
         monkeypatch.setattr(twitter_client, name, lambda *a, **k: True)
-    monkeypatch.setattr(twitter_client, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(twitter_client, "_maybe_like_parent", lambda *a: parent_likes_attempted.append(True))
     monkeypatch.setattr(twitter_client, "_paste_or_abort", lambda text, *a: pasted.append(text) or True)
     monkeypatch.setattr(twitter_client, "_submit_or_abort", lambda *a, **k: submitted.append(k["target"]) or True)
     monkeypatch.setattr(twitter_client.time, "sleep", lambda *a: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     url = reply_queue.ready()[sid]["url"]
+    counts = iter(parent_likes)
     monkeypatch.setattr(safari, "_run_js", lambda js, *a, **k: json.dumps(
-        {"url": url, "text": PARENT, "likes": 2, "clicked": "click = true" in js}))
+        {"url": url, "text": PARENT, "likes": next(counts), "clicked": "click = true" in js}))
     clock[0] += timedelta(seconds=61)
-    assert selection.run_selection_cycle() == 1
+    assert selection.run_selection_cycle() == int(ships)
+    assert len(parent_likes_attempted) == int(parent_likes[0] >= 3)
+    if not ships:
+        assert not pasted and not submitted and memory_ledger.rows == []
+        assert url not in replied_store.load_replied() and reply_pacing.PACE.read() == {}
+        assert reply_queue.QUEUE.read()[sid]["status"] == "attempted"
+        return
     assert pasted == [TEXT] and submitted == [url]
     assert url in replied_store.load_replied()
     assert action_guard.count_today(action_guard.REPLY) == 1

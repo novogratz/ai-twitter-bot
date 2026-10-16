@@ -67,11 +67,11 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     def search(author, text):
         url = fresh(author)  # every query of the cycle finds the same post
         settings_override(VIP_SCAN_HANDLES="")
-        monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text, "likes": 2}])
+        monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text, "likes": 3}])
         dr.run_direct_reply_cycle()
 
     def feed(author, text):
-        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text, "likes": 2}])
+        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text, "likes": 3}])
         monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
         fs.run_feed_sweep_cycle()
 
@@ -79,13 +79,13 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         def run(handle, text):
             monkeypatch.setattr(module, pool, lambda: [handle])
             monkeypatch.setattr(module, "scrape_profile_tweets", lambda username, **k: [
-                {"url": fresh(handle, minutes=1), "text": text, "author": handle, "likes": 2}])
+                {"url": fresh(handle, minutes=1), "text": text, "author": handle, "likes": 3}])
             cycle()
         return run
 
     def vip(handle, text):
         settings_override(VIP_SCAN_HANDLES=handle)
-        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text, "likes": 2}])
+        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text, "likes": 3}])
         dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):

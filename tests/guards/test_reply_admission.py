@@ -17,7 +17,7 @@ from src.guards import (
     replied_store,
 )
 from src.core import config, engagement_log, humanizer
-from src.guards.reply_admission import Refusal, judge_parent, judge_reply
+from src.guards.reply_admission import Refusal, has_reply_engagement, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 from tests.helpers import url
 
@@ -26,6 +26,14 @@ TEXT = "Batching is where inference margins are won or lost."
 
 
 # --- rules on the post ------------------------------------------------------
+
+
+@pytest.mark.parametrize("likes,allowed", [
+    (0, False), (1, False), (2, False), (3, True), (100, True),
+    (None, False), ("3", False), (3.0, False), (True, False), (-1, False),
+])
+def test_parent_needs_at_least_three_readable_likes(likes, allowed):
+    assert has_reply_engagement(likes) is allowed
 
 
 @pytest.mark.parametrize("handle,token", [

@@ -346,10 +346,10 @@ NETWORK = {
         '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
     ],
     "HOT_TAB_QUERIES": [
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:2 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:2 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:2 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:2 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:3 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:3 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:3 -filter:replies',
+        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:3 -filter:replies',
     ],
     "LIKE_QUERIES": [
         '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
@@ -578,9 +578,9 @@ def test_generic_lifestyle_or_product_mentions_do_not_widen_reply_scope(text):
     assert not is_on_niche(text)
 
 
-def test_top_reply_discovery_uses_the_same_two_like_minimum():
+def test_top_reply_discovery_uses_the_same_three_like_minimum():
     for query in account.current().searches.hot_tab:
-        assert re.findall(r"min_faves:(\d+)", query) == ["2"]
+        assert re.findall(r"min_faves:(\d+)", query) == ["3"]
         assert "-filter:replies" in query
 
 
