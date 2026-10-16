@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field, replace
 from typing import Callable
 
-from ..core import account, config, engagement_log, outgoing_text, reply_queue, reply_style
+from ..core import account, config, engagement_log, outgoing_text, reply_queue, reply_style, settings
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -75,7 +75,7 @@ class Cycle:
     tried: set = field(default_factory=set)  # admitted this cycle, in memory only
     rate_limited: bool = False
     refusals: Counter = field(default_factory=Counter)  # Reply admission refusals by value
-    preparations: int = 0  # Reserved draft attempts, including invalid or declined drafts.
+    preparations: int = 0  # Generation attempts, including corrections and declined drafts.
 
     def work_done(self, shipped: int) -> int:
         """Collectors count ranked preparation even though run() returns zero shipped."""
@@ -101,8 +101,8 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
         max_shipped: int | None = None) -> int:
     """Answer `candidates` in order; returns the Replies shipped.
 
-    `max_generations` bounds the candidates admitted (the generations paid),
-    `max_shipped` the Replies shipped. Nothing is admitted once
+    `max_generations` bounds generation attempts, including style corrections;
+    `max_shipped` bounds shipped Replies, or preparations for ranked Accounts. Nothing is admitted once
     `cycle.rate_limited` is set. A job without a ReplyCall takes only
     candidates that carry their reply: ValueError before any admission."""
     if job.reply_call is None:
@@ -159,27 +159,42 @@ def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
         sid = reply_queue.reserve(candidate, length=length, smiley=smiley)
         if not sid:
             continue
-        prepared += 1
-        cycle.preparations += 1
         try:
-            generation = _generate(job, candidate, author, length, smiley)
-            if generation.outcome is Outcome.RATE_LIMITED:
-                _stop_for_rate_limit(job, cycle)
-            if generation.outcome is not Outcome.WRITTEN:
-                reply_queue.discard(sid, generation.outcome.value)
-                continue
-            text, pattern = extract_pattern(generation.text)
-            text = outgoing_text.normalize(humanize(text))
-            if not length.accepts(text) or not reply_style.accepts_smiley(text, smiley):
-                reply_queue.discard(sid, "assigned reply style not met")
-                continue
-            verdict = judge_text(author, text)
-            if not verdict:
-                reply_queue.discard(sid, verdict.reason)
-                continue
-            if reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern):
-                log.info("[%s] Prepared %s (%s) for independent comparison; not published.",
-                         job.label, sid, length.name)
+            correction = None
+            retries = settings.get("REPLY_STYLE_RETRIES") if job.reply_call and not candidate.reply else 0
+            for attempt in range(retries + 1):
+                require_active()
+                if attempt and not judge_parent(candidate.url):
+                    reply_queue.discard(sid, "parent admission changed before correction")
+                    break
+                prepared += 1
+                cycle.preparations += 1
+                generation = (_generate(job, candidate, author, length, smiley, correction) if correction else
+                              _generate(job, candidate, author, length, smiley))
+                if generation.outcome is Outcome.RATE_LIMITED:
+                    _stop_for_rate_limit(job, cycle)
+                if generation.outcome is not Outcome.WRITTEN:
+                    reply_queue.discard(sid, generation.outcome.value)
+                    break
+                text, pattern = extract_pattern(generation.text)
+                text = outgoing_text.normalize(humanize(text))
+                reason = reply_style.draft_refusal(text, length, smiley)
+                if reason:
+                    log.info("[%s] Draft style refused: %s", job.label, reason)
+                    if (attempt < retries and not _reached(prepared, max_generations)
+                            and not _reached(prepared, max_shipped)):
+                        correction = (text, reason)
+                        continue
+                    reply_queue.discard(sid, reason)
+                    break
+                verdict = judge_text(author, text)
+                if not verdict:
+                    reply_queue.discard(sid, verdict.reason)
+                    break
+                if reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern):
+                    log.info("[%s] Prepared %s (%s) for independent comparison; not published.",
+                             job.label, sid, length.name)
+                break
         except (OutsideActiveHours, StateUnreadable):
             raise
         except Exception:
@@ -235,7 +250,8 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
 
 
 def _generate(job: Job, candidate: Candidate, author: str,
-              length: reply_style.Length | None = None, smiley: bool | None = None) -> Generation:
+              length: reply_style.Length | None = None, smiley: bool | None = None,
+              correction: tuple[str, str] | None = None) -> Generation:
     if candidate.reply:
         # The reply search prompt is English (LanguageRule.ENGLISH).
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
@@ -245,7 +261,8 @@ def _generate(job: Job, candidate: Candidate, author: str,
     if account.current().replies.ranked_selection:
         call = replace(call, text_limit=reply_queue.PARENT_TEXT_LIMIT)
     return reply_generator.generate(call, author=author, text=candidate.text,
-                                    context=candidate.context, length=length, smiley=smiley)
+                                    context=candidate.context, length=length, smiley=smiley,
+                                    correction=correction)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:

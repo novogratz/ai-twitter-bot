@@ -76,15 +76,15 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.replies.mega_watch_bot import run_mega_watch_cycle
         from src.replies.first_hour_babysitter import run_babysit_cycle
 
-        add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 1, "direct_reply_job", first_seconds=2)
-        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 1, "feed_sweep_job")
+        add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 30 / 60, "direct_reply_job", first_seconds=2)
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 30 / 60, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         # Retained manual entry points share admission, but never run automatically.
         add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job", enabled=False)
         add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job", enabled=False)
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
         from src.replies.reply_selection import run_selection_cycle
-        add(health.wrap_job(run_selection_cycle, "reply_selection", safari_health=False), 10 / 60,
+        add(health.wrap_job(run_selection_cycle, "reply_selection", safari_health=False), 5 / 60,
             "reply_selection_job", executor="reply_selection", first_seconds=60,
             enabled=account.current().replies.ranked_selection)
         add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job", enabled=False)

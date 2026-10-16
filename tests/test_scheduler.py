@@ -15,9 +15,9 @@ def test_reply_only_still_registers_the_reply_engine():
 def test_discovery_and_single_selector_run_frequently():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
-    assert scheduler.get_job("direct_reply_job").trigger.interval.total_seconds() == 60
-    assert scheduler.get_job("feed_sweep_job").trigger.interval.total_seconds() == 60
-    assert scheduler.get_job("reply_selection_job").trigger.interval.total_seconds() == 10
+    assert scheduler.get_job("direct_reply_job").trigger.interval.total_seconds() == 30
+    assert scheduler.get_job("feed_sweep_job").trigger.interval.total_seconds() == 30
+    assert scheduler.get_job("reply_selection_job").trigger.interval.total_seconds() == 5
     assert scheduler.get_job("reply_selection_job").executor == "reply_selection"
 
 

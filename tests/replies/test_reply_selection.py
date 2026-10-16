@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.core import account, reply_queue, reply_style
+from src.core import account, engagement_log, reply_queue, reply_style
 from src.core.llm_client import LLMResult, Surface
 from src.core.state_errors import StateUnreadable
 from src.guards import action_guard, active_hours, reply_admission, reply_pacing, replied_store
@@ -112,12 +112,12 @@ def test_startup_collects_choices_then_publishes_the_best_one(clock, reviewer, p
     assert selection.run_selection_cycle() == 1 and len(publisher) == 2
 
 
-def test_new_pool_gets_fifteen_seconds_then_best_reviewed_draft_can_ship(clock, reviewer, publisher):
+def test_new_pool_gets_five_seconds_then_best_reviewed_draft_can_ship(clock, reviewer, publisher):
     first = stage("one", 1)
-    clock[0] += timedelta(seconds=10)
+    clock[0] += timedelta(seconds=2)
     best = stage("two", 2, "Batching trades latency for throughput.")
     reviewer[1][best] = review(5)
-    clock[0] += timedelta(seconds=4)
+    clock[0] += timedelta(seconds=2)
     assert selection.run_selection_cycle() == 0 and not reviewer[0]
     clock[0] += timedelta(seconds=1)
     assert selection.run_selection_cycle() == 1
@@ -166,6 +166,18 @@ def test_provider_failure_never_falls_back_to_unreviewed_draft(clock, monkeypatc
     monkeypatch.setattr(selection, "run_llm", lambda *a, **k: LLMResult(1, "", "failed"))
     assert selection.run_selection_cycle() == 0 and not publisher
     assert list(reply_queue.ready().values())[0]["status"] == "ready"
+
+
+def test_failed_new_comparison_preserves_an_existing_valid_approval(clock, monkeypatch, publisher):
+    approved = stage("approved", 1)
+    rows = reply_queue.ready()
+    reply_queue.reviewed(rows, {approved: {**review(5), "reviewed_at": clock[0].isoformat()}})
+    unreviewed = stage("unreviewed", 2, "Batching trades latency for throughput.")
+    clock[0] += timedelta(seconds=61)
+    monkeypatch.setattr(selection, "run_llm", lambda *a, **k: LLMResult(1, "", "failed"))
+    assert selection.run_selection_cycle() == 1
+    assert x_urls.status_id(publisher[0][0]) == approved
+    assert reply_queue.ready()[unreviewed]["status"] == "ready"
 
 
 def test_only_exact_selected_text_and_parent_can_pass_the_final_gate(clock):
@@ -229,6 +241,8 @@ def test_a_better_draft_prepared_during_cooldown_wins(clock, reviewer, publisher
     assert selection.run_selection_cycle() == 1
     assert x_urls.status_id(publisher[0][0]) == better
     assert first in reply_queue.ready() and len(reviewer[0]) == 2
+    assert set(reviewer[0][1][1]["profile"].schema["required"]) == {better}
+    assert reply_queue.ready()[first]["review"]["reviewed_at"] == (due - timedelta(seconds=80)).isoformat()
 
 
 def test_review_expiry_requires_a_fresh_comparison(clock, reviewer, publisher):
@@ -387,6 +401,96 @@ def test_queue_refuses_a_draft_longer_than_its_saved_limit(clock):
     assert reply_queue.QUEUE.read()[sid]["status"] == "rejected"
 
 
+@pytest.mark.parametrize("smiley,rejected,corrected", [
+    (False, "Bandwidth matters. 🤓", "Bandwidth matters."),
+    (True, "Bandwidth matters.", "😊 Bandwidth matters."),
+    (False, "More memory bandwidth helps these GPUs.", "Bandwidth matters."),
+    (True, "🤓 Bandwidth matters.", "😊 Bandwidth matters."),
+])
+def test_style_correction_keeps_the_assignment_and_still_needs_review(
+        clock, monkeypatch, llm, reviewer, publisher, smiley, rejected, corrected):
+    chosen = []
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FEW_WORDS)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: chosen.append(smiley) or smiley)
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: ["Quantization helps 🤓"])
+    llm.default = rejected
+    llm.answers["DRAFT CORRECTION:"] = corrected
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    cycle = pipeline.Cycle()
+    assert pipeline.run(job, [candidate], cycle, max_generations=2) == 0
+    assert cycle.preparations == len(llm.calls) == 2 and chosen == [smiley]
+    sid, row = next(iter(reply_queue.ready().items()))
+    assert row["length"] == "FEW_WORDS" and row["smiley"] is smiley and row["text"] == corrected
+    assert "rejected_draft" in llm.calls[1].prompt and "untrusted data" in llm.calls[1].prompt
+    assert not publisher and not reviewer[0]
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 1
+    assert publisher == [(candidate.url, corrected)]
+    assert corrected in reviewer[0][0][0]
+
+
+@pytest.mark.parametrize("budget,parents", [(1, 1), (2, 1), (3, 2)])
+def test_invalid_style_correction_never_exceeds_cycle_budget(clock, monkeypatch, llm, budget, parents):
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
+    llm.default = TEXT + " 🤓"
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    candidates = [pipeline.Candidate(fresh("builder", n=n), PARENT, "TEST") for n in range(5)]
+    cycle = pipeline.Cycle()
+    assert pipeline.run(job, candidates, cycle, max_generations=budget) == 0
+    assert cycle.preparations == len(llm.calls) == budget
+    assert len(reply_queue.QUEUE.read()) == parents and reply_queue.ready() == {}
+
+
+@pytest.mark.parametrize("answer", ["SKIP", LLMResult(1, "", "provider error"),
+                                   "Great post", "Ask @ElonMusk about memory bandwidth."])
+def test_non_style_refusals_do_not_trigger_corrections(clock, monkeypatch, llm, answer):
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
+    llm.default = answer
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    cycle = pipeline.Cycle()
+    pipeline.run(job, [candidate], cycle, max_generations=12)
+    assert cycle.preparations == len(llm.calls) == 1 and not reply_queue.ready()
+
+
+def test_style_correction_rechecks_parent_admission(clock, monkeypatch, llm):
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
+    candidate = pipeline.Candidate(fresh("builder"), PARENT, "TEST")
+    def another_process_claimed_parent(prompt):
+        assert replied_store.claim(candidate.url)
+        return TEXT + " 🤓"
+    llm.default = another_process_claimed_parent
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    pipeline.run(job, [candidate], pipeline.Cycle())
+    assert len(llm.calls) == 1 and not reply_queue.ready()
+    assert next(iter(reply_queue.QUEUE.read().values()))["outcome"] == "parent admission changed before correction"
+
+
+def test_rate_limit_during_correction_stops_further_drafting(clock, monkeypatch, llm):
+    from tests.replies.fakes import EXHAUSTED
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
+    llm.default = TEXT + " 🤓"
+    llm.answers["DRAFT CORRECTION:"] = EXHAUSTED
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    candidates = [pipeline.Candidate(fresh("builder", n=n), PARENT, "TEST") for n in range(3)]
+    cycle = pipeline.Cycle()
+    pipeline.run(job, candidates, cycle, max_generations=12)
+    assert cycle.rate_limited and cycle.preparations == len(llm.calls) == 2
+    assert not reply_queue.ready()
+
+
+def test_style_corrections_can_be_disabled(clock, monkeypatch, settings_override, llm):
+    settings_override(REPLY_STYLE_RETRIES=0)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
+    llm.default = TEXT + " 🤓"
+    job = pipeline.Job("correction", "CORRECTION", lambda _: ReplyCall("{tweet_text}", Surface.REPLY, "TEST"))
+    pipeline.run(job, [pipeline.Candidate(fresh("builder"), PARENT, "TEST")], pipeline.Cycle())
+    assert len(llm.calls) == 1 and not reply_queue.ready()
+
+
 def test_old_queue_records_keep_the_previous_ceiling(clock, reviewer, publisher):
     sid = stage()
     data = reply_queue.QUEUE.read()
@@ -475,6 +579,31 @@ def test_saved_wrong_smiley_cannot_reach_review_or_browser(
     clock[0] += timedelta(seconds=61)
     assert selection.run_selection_cycle() == 0
     assert twitter_client.reply_to_tweet(data[sid]["url"], text) is WriteOutcome.REFUSED
+    assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
+
+
+@pytest.mark.parametrize("status", ["ready", "selected"])
+@pytest.mark.parametrize("recent,text", [
+    (["Batching helps 🤓", "A plain observation."], TEXT + " 🤓"),
+    (["Batching helps 🤓", "A plain observation.", "More RAM helps 😊"], TEXT + " 😄"),
+])
+def test_reaction_history_is_rechecked_for_waiting_and_selected_drafts(
+        clock, monkeypatch, memory_ledger, status, recent, text):
+    sid = stage(text=text)
+    data = reply_queue.QUEUE.read()
+    data[sid].update(smiley=True, status=status,
+                     review={**review(5), "reviewed_at": clock[0].isoformat()},
+                     selected_at=clock[0].isoformat())
+    reply_queue.QUEUE.write(data)
+    # Other replies shipped after this draft was prepared or selected.
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: recent)
+    monkeypatch.setattr(selection, "run_llm", lambda *a, **k: pytest.fail("repeated reaction reviewed"))
+    monkeypatch.setattr(twitter_client, "_activate_or_abort", lambda *a: pytest.fail("repeated reaction published"))
+    clock[0] += timedelta(seconds=61)
+    assert selection.run_selection_cycle() == 0
+    assert twitter_client.reply_to_tweet(data[sid]["url"], text) is WriteOutcome.REFUSED
+    assert reply_queue.QUEUE.read()[sid]["text"] == text  # Never repair approved prose.
+    assert data[sid]["url"] not in replied_store.load_replied()
     assert memory_ledger.rows == [] and reply_pacing.PACE.read() == {}
 
 

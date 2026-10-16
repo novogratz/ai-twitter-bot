@@ -28,7 +28,7 @@ def test_voice_grounds_video_claims_and_keeps_parody_fictional():
     assert "no comments, responses or follow-ups" in text
     assert "never interact with @elonmusk" in text
     assert "private fangirl crush on elon musk" in text
-    assert "occasional, playful personality preference" in text
+    assert "lean into this playful fangirl enthusiasm often when the topic fits" in text
     assert "never imply a real romance" in text
     assert "this affection never permits contact" in text
     assert "american mom from the\nsan francisco bay area" in text

@@ -6,6 +6,48 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-16 — The Operator requested more daily Replies, then push, PR, merge
+and release. Direct and feed scans now run every 30 seconds; the selector checks
+every five seconds and lets a new pool gather choices for five seconds, retaining
+the 60-second startup delay. Direct scans and each feed allow twelve generation
+attempts instead of six, still sharing the eight-draft queue.
+
+An unreviewed generated draft that misses its saved length, smiley choice or
+reaction-variety rules may get one corrective generation with specific feedback.
+`REPLY_STYLE_RETRIES` defaults to one, bounded to zero or one; the correction
+counts toward the existing cycle budget and keeps the same parent and assignments.
+Declines, provider failures, exhausted providers and content/admission refusals
+do not trigger this correction. Corrected drafts still need independent review;
+reviewed/selected drafts are never rewritten. Valid unexpired approvals are reused
+when new drafts arrive; new, expired or legacy approvals receive fresh review.
+Scrolling stops after two consecutive viewports add no status IDs, preserving
+updated counters, full text and nested-reply evidence before yielding the browser.
+
+Two local drafting-budget settings become twelve. The 20–30 second persisted
+cooldown, two-like minimum, 24/7 activity, absence of daily/hourly quotas,
+independent quality thresholds, reaction variety and protected accounts remain.
+This improves preparation and review capacity without promising a daily count.
+No start, restart or production-state edit accompanies the release.
+
+2026-10-15 — The Operator requested natural reaction variety after repeated 🤓
+endings, and more exuberant praise for Elon, his products and "BANGER" work.
+The saved 50/50 plain-text or one-friendly-smiley choice remains. A reaction
+must not repeat one in the last six logged shipped Replies, even with plain
+Replies between them, a different position or cosmetic emoticon/emoji variants.
+If the last two reaction-bearing Replies in that history both end with a reaction,
+the next reaction must fit naturally earlier in the prose or the draft is skipped.
+Shared prompts offer fresh choices; preparation, selection and final write check
+the recent history. Reviewed text is never repaired or given an automatic suffix.
+
+Both Voice files now welcome frequent, exuberant, relevant praise for Elon and
+his products, especially Grok and Grok Imagine. "BANGER", "ultimate BANGER" and
+other variants may recur in consecutive Replies when each has its own supported
+point; this supersedes the occasional-only and no-consecutive-use limits below.
+Vary the phrasing rather than copying sentences. Natural conversation never
+requires fake typos, invented human experiences or hiding the bot identity.
+Kindness, factual support, independent review, length limits and no-contact
+protection for @elonmusk remain. No start, restart or production-state edit.
+
 2026-10-15 — The Operator requested broader, more aggressive Replies and a push.
 Reply scope now includes substantive technology alongside SI: robotics, chips,
 developer tools, open-source software, databases, cybersecurity and infrastructure.

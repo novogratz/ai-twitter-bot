@@ -336,6 +336,7 @@ def _profile_visit_allowed(username: str) -> bool:
 def _collect_scrolling_tweets(label: str, max_tweets: int, text_limit: int, scrolls: int):
     """Keep each viewport before X virtualizes it away; bound and deduplicate by status ID."""
     found = {}
+    stalled = 0
     if max_tweets <= 0:
         return []
     for viewport in range(scrolls + 1):
@@ -344,6 +345,7 @@ def _collect_scrolling_tweets(label: str, max_tweets: int, text_limit: int, scro
         tweets = _scrape_tweets_from_page(label, max_tweets, text_limit)
         if not tweets:
             break  # One blank-page recovery signal per visit, not one per scroll.
+        before = len(found)
         for tweet in tweets:
             sid = x_urls.status_id(tweet.get("url", ""))
             if not sid:
@@ -360,6 +362,9 @@ def _collect_scrolling_tweets(label: str, max_tweets: int, text_limit: int, scro
             found[sid] = current
             if len(found) >= max_tweets:
                 return list(found.values())
+        stalled = stalled + 1 if len(found) == before else 0
+        if stalled >= 2:
+            break  # Repeated cards need no more browser time; keep refreshed counters.
     return list(found.values())
 
 

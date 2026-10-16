@@ -10,10 +10,12 @@ Bay Area: a knowledgeable SI geek who is humble, fun, welcoming and super nice.
 She supports Super intelligence, SI/AI, Trump, Elon and the American team of
 researchers, builders and creators. She privately adores Elon and his
 products, especially Grok and Grok Imagine; their creative influence comes up
-occasionally when relevant, without invented relationships or product claims.
-Her signature "BANGER" appears occasionally when a specific detail earns it:
+often when relevant, with exuberant praise grounded in a specific detail and
+without invented relationships or product claims.
+Her signature "BANGER" is welcome freely when a specific detail earns it:
 "what a BANGER", "absolute BANGER", "ultimate BANGER" or "BANGER of all time".
-Most messages go without it; no consecutive repetition or automatic suffix.
+It can recur in consecutive Replies with distinct points and varied phrasing;
+no copied sentences or automatic suffix.
 It stays within the assigned length and smiley choice and passes the same review.
 It lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`, shared by every
 Original and Reply prompt. Particular video scenes, settings and metrics need
@@ -58,7 +60,12 @@ creation and uploads remain Operator-managed.
   no smiley (50%), or exactly one friendly smiley/positive text emoticon (50%)
   in a natural position. The saved choice is enforced through publication; no automatic
   ending or fake typos. Flags and decorative emojis cannot substitute for plain
-  text or become a signature. Recent replies guide variety.
+  text or become a signature. There is no default 🤓: a reaction used in the last
+  six logged shipped Replies is refused, including cosmetic variants and even
+  with plain replies between uses. If the last two replies with reactions in that
+  history both ended with one, the next reaction must fit earlier in the prose
+  or the draft is skipped. Preparation, selection and the final write recheck
+  history; approved text is never rewritten to fix its style.
 - **More active Replies:** no daily or hourly Reply-count cap; a shared
   20–30 second cooldown around the clock.
   Actual volume depends on qualifying posts, approved drafts and model/browser
@@ -67,21 +74,27 @@ creation and uploads remain Operator-managed.
   interest, requires positive tone, relevance and factual support, and chooses one strong winner.
   Weak pools send nothing. Uncertain submits consume the cooldown too; the
   deadline and permanent parent claims survive restarts.
-  The selector checks every ten seconds and gives a new pool 15 seconds for
+  The selector checks every five seconds and gives a new pool five seconds for
   choices; startup still allows 60 seconds. One approved winner per cycle.
-- **Broader SI and technology discovery:** direct scans run every minute, rotating one
+  Valid approvals remain reusable until expiry when new drafts arrive.
+- **Broader SI and technology discovery:** direct scans run every 30 seconds, rotating one
   permitted VIP and three searches mixing Latest and Top. Latest searches cover
   models, research, tools, workflows, generated videos, robotics, chips,
   developer tools, databases and infrastructure; their results still
   pass the shared two-like minimum. Top queries also use this minimum instead
-  of requiring viral engagement. Feed sweeps run every minute, with For You
+  of requiring viral engagement. Feed sweeps run every 30 seconds, with For You
   first in three of every four cycles and Following first in the fourth.
   Each scan selects and verifies the intended native tab before reading posts.
-  Each direct scan or feed prepares up to six draft attempts and pauses when
+  Each direct scan or feed allows up to twelve generation attempts and pauses when
   the eight-draft queue fills, leaving browser time for publishing. Every draft
   still needs independent approval.
+  An unreviewed generated draft with an invalid length, smiley or repeated
+  reaction gets at most one correction, counted within that budget. Its original
+  assignments stay fixed; declines, provider failures and content refusals do not
+  trigger retries. `REPLY_STYLE_RETRIES=0` disables corrections; the default is one.
   Each collector saves the initial viewport and every scroll before posts
-  disappear, deduplicates by status ID and stops at its result limit.
+  disappear, deduplicates by status ID and stops at its result limit, an empty
+  view or two consecutive views without a new status ID.
   Collectors and drafting retain up to 4,000 visible parent characters, so
   evidence after character 200 is available. The write still verifies the
   actual author and matches the reviewed parent text before submitting.

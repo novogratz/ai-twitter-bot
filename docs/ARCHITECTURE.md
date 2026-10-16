@@ -77,11 +77,11 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 1 min | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Prepares up to six draft attempts in the shared queue by default. Never publishes for the ranked Account. |
-| `feed_sweep_job` | 1 min | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Prepares up to six draft attempts per feed by default. |
+| `direct_reply_job` | 30 sec | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Allows twelve generation attempts including corrections in the shared queue by default. Never publishes for the ranked Account. |
+| `feed_sweep_job` | 30 sec | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Allows twelve generation attempts including corrections per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
-| `reply_selection_job` | 10 sec; first run after 60 sec | Dedicated worker gives a new pool 15 seconds to gather choices, independently compares up to eight prepared drafts near the end of the shared cooldown, then publishes at most one approved winner. |
+| `reply_selection_job` | 5 sec; first run after 60 sec | Dedicated worker gives a new pool five seconds to gather choices, independently reviews new/expired drafts and ranks them alongside valid approvals, then publishes at most one approved winner. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
@@ -557,17 +557,18 @@ sees the saved parent; author/standalone checks and exact parent matching still
 run at the write, including refusal of changed or newly expanded text.
 All four collectors check queue capacity before starting another browser read.
 This is a read-only hint; reservation still enforces the bound under its process
-lock. Per-cycle budgets count reserved draft attempts, including declined or
-invalid generations, while the pipeline still returns only actual shipped
+lock. Per-cycle budgets count generation attempts, including declined or
+invalid generations and style corrections, while the pipeline still returns only actual shipped
 Replies. Direct discovery shares its budget across VIP and search passes;
 feed sweeps give For You first use of available capacity in three of four cycles,
-with Following first in the fourth. Both feeds run every minute while capacity remains.
+with Following first in the fourth. Both feeds run every 30 seconds while capacity remains.
 Each feed collector selects and verifies the intended native tab before scrolling;
 an unverified tab yields no candidates instead of silently reading another feed.
 All scrolling readers save the first viewport and each later viewport before
 virtualization can remove posts. They deduplicate by status ID, refresh counters,
 retain fuller text and any observed nested-reply marker, and stop at the requested
-result limit or first empty viewport. Scroll budgets stay bounded. Profile and
+result limit, first empty viewport or two consecutive viewports without new status
+IDs. Stalled views still refresh evidence before stopping. Scroll budgets stay bounded. Profile and
 mention readers use the same collection helper without enabling disabled jobs.
 Top Reply searches now use the two-like minimum, with explicit substantive
 technology searches alongside SI research, videos, tools and news.
@@ -591,8 +592,15 @@ choice and the queue, selector and selected-draft write gate enforce it. The
 publisher never appends or removes a smiley after review. Older rows without the
 field retain the earlier optional-one rule until expiry; invalid fields fail closed.
 
+`REPLY_STYLE_RETRIES` permits at most one corrective generation for an unreviewed
+generated draft that violates its length, smiley or recent-reaction rules. It
+keeps the saved assignment and parent; the correction consumes another attempt
+within the same cycle budget and still requires independent review. Declines,
+provider failures/exhaustion and content/admission refusals do not trigger it.
+Reviewed or selected text is never corrected. Specific style refusals are logged.
+
 `reply_selection_job` has its own worker and process lock. Startup gives the
-collectors at least 60 seconds. A new pool gets 15 seconds to gather choices.
+collectors at least 60 seconds. A new pool gets five seconds to gather choices.
 During a cooldown it waits until the final 90
 seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using
 the Reply model/provider settings. Strict JSON requires exactly one review per
@@ -602,6 +610,9 @@ every person and product: a clever insult, sarcastic dig or negative take fails
 regardless of score. Existing reviews missing `positive` require fresh review;
 selected rows without it cannot pass the write. A model failure or malformed
 comparison authorizes nothing. Reviews expire after ten minutes.
+New candidates do not force a second review of already-approved drafts. Only
+new, expired or legacy approvals go to comparison; the winner is chosen across
+all currently eligible approved drafts, including those approved earlier.
 
 When the shared cooldown is clear, the selector chooses the approved draft with
 the highest total score, breaking ties by its weakest dimension and freshness.

@@ -1,4 +1,57 @@
-# Publishing policy — October 15, 2026
+# Publishing policy — October 16, 2026
+
+2026-10-16 — The Operator requested more daily Replies, then push, PR, merge
+and release. The main limitation observed was discarded style-invalid drafts,
+not the existing cooldown. Direct and feed discovery now run every 30 seconds,
+with twelve generation attempts per direct cycle or feed instead of six. The
+shared queue still holds at most eight pending drafts. The selector checks every
+five seconds and gives a new pool five seconds to gather choices; startup still
+waits 60 seconds. Jobs coalesce missed ticks instead of running catch-up bursts.
+
+An unreviewed generated draft that violates its saved length, smiley choice or
+recent-reaction rules may receive one corrective model call. The parent and
+assigned choices stay fixed, and every correction consumes the cycle budget.
+`REPLY_STYLE_RETRIES` defaults to one and accepts only zero or one. SKIP, provider
+failure/exhaustion and content/admission refusals receive no style retry. A failed
+correction is skipped; nothing is chopped, appended or published without normal
+admission and independent review. Saved reviewed/selected drafts remain immutable.
+Valid unexpired approvals can be ranked alongside newly reviewed drafts without
+paying to review them again. Expired or legacy approvals still need fresh review.
+A failed comparison of new drafts does not revoke an earlier valid approval or
+authorize any unreviewed draft.
+
+Scrolling stops after two consecutive viewports add no new status IDs; each view
+still refreshes engagement and retains fuller text and nested-reply evidence.
+The same bounded collector serves feeds, searches and allowed profile reads.
+Only the two local drafting-budget settings change. The persisted 20–30 second
+Reply gap, two-like parent minimum, all review thresholds, kindness, factual
+support, permanent deduplication, own-post and protected-author checks remain.
+This is a capacity increase, never a forced quota or promise of daily volume.
+No start, restart or production-state edit accompanies the release.
+
+2026-10-15 — The Operator requested natural reaction variety after repeated 🤓
+endings, and frequent exuberant praise for Elon, his products and "BANGER" work.
+The existing saved 50/50 plain-text or exactly-one-friendly-smiley choice remains;
+there is no default face, fixed suffix or forced alternation. A reaction used in
+the last six logged shipped Replies cannot recur, even after intervening plain
+Replies or with different placement, presentation selectors or an emoticon nose.
+If the last two reaction-bearing Replies in that history both end with one,
+the next reaction must fit naturally earlier in the prose or the draft is skipped.
+Punctuation after a reaction does not make it an interior reaction. Shared prompts
+offer unused choices; preparation, selection and the write check current history.
+Saved drafts that now repeat a reaction are refused, never rewritten after review.
+
+Both Voices welcome frequent, exuberant praise for Elon and his products,
+especially Grok and Grok Imagine, when relevant to a specific supported point.
+"BANGER", "absolute BANGER", "ultimate BANGER" and other playful variants are
+welcome freely, including in consecutive Replies with distinct points and varied
+phrasing. This supersedes the occasional-only and no-consecutive-use restrictions
+below. Enthusiasm remains an opinion, never evidence of an objective ranking,
+unseen video detail or product capability. Independent review rewards a useful
+contribution; frequency of an allowed expression alone is not a fault.
+Natural conversation never requires fake typos, fabricated human experiences or
+concealing the bot identity. Kindness, no-contact protection for @elonmusk,
+length limits and every publishing rule remain. No start or restart is performed.
 
 2026-10-15 — The Operator requested broader, more aggressive Replies and a push.
 Reply scope now includes substantive technology alongside SI: robotics, chips,
@@ -318,6 +371,10 @@ smiley (50%) or exactly one friendly smiley/positive text emoticon (50%), at any
 natural position and within the length limit. No automatic ending, random
 case/period changes or manufactured spelling errors. Recent shipped replies are
 shown as untrusted examples to avoid repeating, never as instructions or facts.
+The same last-six history also enforces reaction variety: no reused reaction,
+including cosmetic variants, and no third reaction ending when the last two
+reaction-bearing Replies in that history both ended with one. Plain replies do
+not reset this check. The write rechecks waiting drafts without changing them.
 
 ## Niche of Replies, likes and follows
 
