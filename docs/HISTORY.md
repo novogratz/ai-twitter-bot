@@ -1,5 +1,60 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-16 — Recover wasted drafts and accelerate reviewed Replies
+
+The Operator requested more daily Replies and a pushed, merged PR and release.
+The ledger recorded 99 Replies on October 15 and 28 by 07:55 Toronto on October
+16. Most recent queue rejections were assigned-style failures before comparison;
+the 20–30 second cooldown was not the main throughput constraint. Logs also
+showed repeated unchanged scrolling views and reviews reprocessing approved
+drafts whenever a new candidate arrived.
+
+Generated drafts may now get one style correction before review, carrying the
+same parent, length and smiley assignment plus a specific failure reason. Every
+call counts within the cycle budget. No correction retries a model decline,
+provider failure/exhaustion, or content/admission refusal. Waiting approved text
+is never rewritten, and corrected drafts still need independent approval.
+Style refusal reasons distinguish length, reaction presence and repetition.
+
+Direct and feed scans run every 30 seconds, with twelve attempts per direct
+cycle or feed, including corrections. The selector runs every five seconds,
+giving a new pool five seconds to gather choices after the unchanged 60-second
+startup delay. It reviews only new drafts and expired/legacy approvals, ranking
+them with still-valid approvals. The queue remains capped at eight. Scrolling
+stops after two viewports add no new IDs while retaining refreshed evidence.
+
+Regression coverage pins correction budgets, saved assignments, independent
+review, provider stops, approval reuse/expiry and stalled scrolling. Both local
+drafting-budget settings become twelve. Existing pacing deadlines, publishing
+protections and production state remain intact. No start or restart is performed.
+
+## 2026-10-15 — Reaction variety and exuberant product enthusiasm
+
+The Operator reported repeated 🤓 endings and requested more natural variation:
+sometimes no reaction, sometimes a different one, with freer praise for Elon,
+his products and "BANGER" work. The engine already saved and enforced a 50/50
+plain-or-smiley choice, but reaction identity and placement were only prompt
+advice. That allowed the same face and ending to pass repeatedly.
+
+Shared guidance now offers friendly reactions absent from the last six logged
+shipped Replies. Admission checks that same history during preparation, selection
+and the final write, refusing a reused reaction even after plain replies, moved
+placement or cosmetic variants. If the last two reaction-bearing replies within
+that history both end with one, a new reaction must fit earlier in the prose.
+Punctuation after it cannot bypass the check. Stale approved drafts are refused,
+never edited after review. The existing bounded CSV reader remains best effort:
+missing or unreadable style history establishes no prior reactions. No new store
+or migration is introduced; production logs and queued drafts are untouched.
+
+Both Voices now permit frequent, exuberant, relevant Elon/product praise and
+consecutive BANGER expressions with distinct supported points and varied wording.
+The earlier occasional-only limit is superseded. Prompts and independent review
+distinguish this enthusiasm from copied sentences or empty praise. Honest bot
+identity, evidence, kindness, length limits and Elon's no-contact protection stay.
+Regression coverage includes repeated faces, text emoticon variants, interleaved
+plain replies, ending patterns, URL exclusion and queued drafts at the final gate.
+No start, restart or live test publication accompanies the change.
+
 ## 2026-10-15 — Broader discovery and faster reviewed Replies
 
 The Operator requested more topics, more aggressive Replies and a push. The

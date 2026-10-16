@@ -124,3 +124,52 @@ def test_reported_flag_endings_cannot_pass_either_assigned_style(ending, smiley)
 ])
 def test_assigned_smiley_checks_the_actual_prose(text, smiley, accepted):
     assert reply_style.accepts_smiley(text, smiley) is accepted
+
+
+@pytest.mark.parametrize("recent,text,accepted", [
+    ([], "Memory bandwidth matters 🤓", True),
+    (["Batching helps 🤓", "Latency matters."], "Memory bandwidth matters 🤓", False),
+    (["Batching helps 🤓"], "🤓 Memory bandwidth matters.", False),
+    (["Batching helps 🤓"], "Memory bandwidth matters 🤓️", False),
+    (["Batching helps :-)"], "Memory bandwidth matters :)", False),
+    (["Batching helps XD"], "Memory bandwidth matters xD", False),
+    (["Batching helps 🤓"], "Memory bandwidth matters 😊", True),
+    (["Batching helps 🤓", "Latency matters.", "More RAM helps 😊"],
+     "Memory bandwidth matters 😄!", False),
+    (["Batching helps 🤓", "More RAM helps 😊"], "« More bandwidth helps 😄 »", False),
+    (["Batching helps 🤓", "More RAM helps 😊"], "Memory bandwidth matters 😄\uFE0E", False),
+    (["Batching helps 🤓", "Latency matters.", "More RAM helps 😊"],
+     "😄 Memory bandwidth matters.", True),
+    (["Batching helps 🤓", "More RAM helps 😊"], "Memory bandwidth matters.", True),
+    (["Batching helps 🤓", "😊 More RAM helps."], "Memory bandwidth matters 😄", True),
+    (["Batching helps 🤓"] + ["Plain observation."] * 6, "Memory bandwidth matters 🤓", True),
+    (["See https://example.com/🤓"], "Memory bandwidth matters 🤓", True),
+    (["Batching helps 🤓"], "See https://example.com/🤓", True),
+])
+def test_recent_reactions_vary_in_identity_and_position(monkeypatch, recent, text, accepted):
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: recent[-limit:])
+    assert (not reply_style.repetition_reason(text)) is accepted
+
+
+def test_assigned_smiley_offers_fresh_faces_and_breaks_repeated_endings(monkeypatch):
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: [
+        "Batching helps 🤓", "Latency matters.", "More RAM helps 😊."])
+    prompt = reply_style.prompt(smiley=True)
+    choices = prompt.split("ASSIGNED SMILEY:", 1)[1].split("\n\n", 1)[0]
+    assert "🤓" not in choices and "😊" not in choices and "😄" in choices
+    assert "place it naturally before the end of the prose" in prompt
+    plain = reply_style.prompt(smiley=False)
+    assert "no emoji or text smileys anywhere" in plain
+
+
+def test_reaction_variety_reads_shipped_csv_and_preserves_it():
+    with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as f:
+        csv.writer(f).writerows([
+            ["one", "reply", "Batching helps 🤓", numbered_url(1)],
+            ["two", "like", "Unpublished thought 😊", numbered_url(2)],
+            ["three", "reply", "Latency matters.", numbered_url(3)],
+        ])
+    before = open(config.ENGAGEMENT_LOG_FILE, "rb").read()
+    assert reply_style.repetition_reason("Memory bandwidth matters 🤓")
+    assert not reply_style.repetition_reason("Memory bandwidth matters 😊")
+    assert open(config.ENGAGEMENT_LOG_FILE, "rb").read() == before

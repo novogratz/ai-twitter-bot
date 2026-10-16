@@ -68,6 +68,8 @@ def _compare(rows):
         "4 is strong; 5 is exceptional. Every dimension must be at least 4 to qualify. "
         "Even a specific two-to-five-word answer can earn full marks; length, jokes, favorite brands and flattery "
         "earn no automatic points. Penalize stock reactions, repeated wording or forced product plugs. "
+        "Frequent enthusiasm and recurring expressions allowed by the Voice are fine when each "
+        "reply has a specific supported point; their frequency alone is not a fault. "
         "Each draft's smiley value is an assigned style: true requires one friendly smiley, false "
         "requires none, null keeps the older optional rule. Do not reward or penalize smiley presence "
         "by itself; assess whether the actual words and tone suit this parent. "
@@ -92,12 +94,12 @@ def _compare(rows):
                      cwd=route.options.cwd, allowed_tools=(), timeout=route.options.timeout,
                      profile=CallProfile(schema=_schema(rows), temperature=0.2, output=Output.JSON))
     if result.status is LLMStatus.EXHAUSTED or result.returncode != 0:
-        log.info("[REPLY_COMPARISON] Provider did not answer; no selection.")
+        log.info("[REPLY_COMPARISON] Provider did not answer; no new approvals.")
         return None
     try:
         return _parse(result.stdout, rows)
     except (ValueError, TypeError, KeyError) as exc:
-        log.warning("[REPLY_COMPARISON] Invalid comparison; no selection: %s", exc)
+        log.warning("[REPLY_COMPARISON] Invalid comparison; no new approvals: %s", exc)
         return None
 
 
@@ -123,18 +125,19 @@ def run_selection_cycle():
         rows = _eligible()
         if not rows:
             return 0
-        # Give each new pool 15 seconds to collect choices. The scheduler still
+        # Give each new pool five seconds to collect choices. The scheduler still
         # leaves 60 seconds at startup. Review in the cooldown's last 90 seconds.
         oldest = min(reply_queue._stamp(row["created_at"]) for row in rows.values())
-        if active_hours.now_local() - oldest < timedelta(seconds=15):
+        if active_hours.now_local() - oldest < timedelta(seconds=5):
             return 0
         if action_guard.seconds_until_allowed(action_guard.REPLY) > 90:
             return 0
-        if any(row["status"] == "ready" or not reply_queue.approved(row) for row in rows.values()):
-            reviews = _compare(rows)
-            if reviews is None:
-                return 0
-            reply_queue.reviewed(rows, reviews)
+        needs_review = {sid: row for sid, row in rows.items()
+                        if row["status"] == "ready" or not reply_queue.approved(row)}
+        if needs_review:
+            reviews = _compare(needs_review)
+            if reviews is not None:
+                reply_queue.reviewed(needs_review, reviews)
         if not action_guard.can_post(action_guard.REPLY)[0]:
             return 0
         rows = {sid: row for sid, row in _eligible().items()

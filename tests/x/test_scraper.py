@@ -217,6 +217,35 @@ def test_collector_stops_before_scrolling_when_first_viewport_fills_limit(monkey
     assert scraper._collect_scrolling_tweets("test", 1, 4000, 5) == [row]
 
 
+def test_stalled_viewports_yield_browser_time_but_keep_refreshed_evidence(monkeypatch):
+    from src.x import scraper, safari
+    frames = iter([
+        [{"url": "https://x.com/builder/status/101", "text": "SI full caption", "likes": 8, "is_reply": True}],
+        [{"url": "https://x.com/builder/status/101", "text": "SI", "likes": 5}],
+        [{"url": "https://x.com/builder/status/101", "text": "SI", "likes": 1}],
+    ])
+    scrolls = []
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: next(frames))
+    monkeypatch.setattr(safari, "_scroll_page", lambda: scrolls.append(True))
+    rows = scraper._collect_scrolling_tweets("test", 40, 4000, 10)
+    assert len(scrolls) == 2 and len(rows) == 1
+    assert rows[0]["text"] == "SI full caption" and rows[0]["is_reply"] is True
+    assert rows[0]["likes"] == 1
+
+
+def test_new_status_resets_the_stalled_viewport_count(monkeypatch):
+    from src.x import scraper, safari
+    first = {"url": "https://x.com/builder/status/101", "text": "SI result"}
+    second = {"url": "https://x.com/builder/status/102", "text": "SI update"}
+    frames = iter([[first], [first], [second], [second], [second]])
+    scrolls = []
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", lambda *a: next(frames))
+    monkeypatch.setattr(safari, "_scroll_page", lambda: scrolls.append(True))
+    assert scraper._collect_scrolling_tweets("test", 40, 4000, 10) == [
+        {**first, "is_reply": False}, {**second, "is_reply": False}]
+    assert len(scrolls) == 4
+
+
 @pytest.mark.parametrize("text", ["SI research.\n" * 30, "SI " + "🙂" * 4000])
 def test_scraped_visible_text_retains_long_evidence_and_counts_unicode_characters(monkeypatch, text):
     import json

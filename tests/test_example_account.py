@@ -114,7 +114,9 @@ def test_live_account_reports_reply_only_policy_and_current_windows(dry_run):
     ]
     assert shown["reply_gap_seconds"] == [20, 30]
     assert shown["ranked_reply_selection"] is True
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {**PRE_187_BOUNDED, "MIN_SECONDS_BETWEEN_REPLIES": 20, "REPLY_JITTER_SECONDS": 10}
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
+        **PRE_187_BOUNDED, "MIN_SECONDS_BETWEEN_REPLIES": 20, "REPLY_JITTER_SECONDS": 10,
+        "REPLY_STYLE_RETRIES": 1}
     assert shown["settings_warnings"] == []
 
 
@@ -139,7 +141,8 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
-                       "LIKE_BOT_DAILY_CAP": 100, "MIN_SECONDS_BETWEEN_REPLIES": 20, "REPLY_JITTER_SECONDS": 10}
+                       "LIKE_BOT_DAILY_CAP": 100, "MIN_SECONDS_BETWEEN_REPLIES": 20, "REPLY_JITTER_SECONDS": 10,
+                       "REPLY_STYLE_RETRIES": 1}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
     assert os.listdir(project / "state") == ["theaishrink"]

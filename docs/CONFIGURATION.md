@@ -166,14 +166,15 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `6` |  | Draft preparation attempts per ranked direct_reply cycle, or shipped Replies for an unranked Account. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `12` |  | Draft preparation attempts, including style corrections, per ranked direct_reply cycle, or shipped Replies for an unranked Account. |
+| `REPLY_STYLE_RETRIES` | int | `1` | floor `0`, ceiling `1` | Additional generation attempts to correct an unreviewed ranked draft's assigned style; counted within the cycle budget. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `3` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `40` |  | Posts the feed sweep scrapes per feed. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `6` |  | Reply generations one feed sweep may run per feed. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `12` |  | Reply generations per feed, including any style correction attempts. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |

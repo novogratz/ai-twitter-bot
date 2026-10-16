@@ -44,12 +44,16 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     in test_reply_jobs. These calls test only the shared prompt assembler.
     """
     from src.core import evolution_store
+    from src.core import reply_style
     from src.replies import reply_pipeline, reply_source
     from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
     chokepoint.answer = WriteOutcome.REFUSED
+    # These tests inspect one prompt's language/anchors, not random style retries.
+    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
+    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
     for module in (dr, eb, mw, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())

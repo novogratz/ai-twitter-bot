@@ -5,7 +5,7 @@ disable-model-invocation: true
 allowed-tools: Bash Read
 ---
 
-Trigger one reply scan, the same one `direct_reply_job` runs every minute.
+Trigger one reply scan, the same one `direct_reply_job` runs every 30 seconds.
 Only on an explicit operator request: it scans the real account and uses models.
 For the ranked live Account this prepares drafts only. The scheduler's separate
 selector compares and publishes at most one approved draft after the shared

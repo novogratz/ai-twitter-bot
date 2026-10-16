@@ -134,6 +134,8 @@ def judge_text(author: str, draft: str) -> Verdict:
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
     if reply_style.reaction_count(text) > 1:
         return Verdict(Refusal.TEXT, "at most one optional emoji or text smiley", author)
+    if why := reply_style.repetition_reason(text):
+        return Verdict(Refusal.TEXT, why, author)
     if mentions_blocked(text):
         return Verdict(Refusal.TEXT, "reply mentions an account protected from interactions", author)
     # Validate last, so the text that ships is the text that was checked.

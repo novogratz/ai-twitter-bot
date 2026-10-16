@@ -16,7 +16,7 @@ from src.guards import (
     content_guard,
     replied_store,
 )
-from src.core import config, humanizer
+from src.core import config, engagement_log, humanizer
 from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 from tests.helpers import url
@@ -170,6 +170,21 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     assert judge_reply(url("someone"), TEXT)
+    assert url("someone") not in replied_store.load_replied()
+    assert memory_ledger.rows == []
+
+
+@pytest.mark.parametrize("draft", [TEXT + " 🤓", "🤓 " + TEXT, TEXT + " :-)"])
+def test_repeated_reaction_is_refused_without_changing_text_or_claiming_parent(
+        monkeypatch, memory_ledger, draft):
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: [
+        "Batching helps 🤓", "A plain observation.", "More RAM helps :)"])
+    verdict = judge_reply(url("someone"), draft)
+    assert verdict.refusal is Refusal.TEXT and not verdict.refusal.definitive
+    assert "reaction repeats" in verdict.reason
+    assert judge_reply(url("someone"), TEXT).text == TEXT
+    fresh = "😊 " + TEXT
+    assert judge_reply(url("someone"), fresh).text == fresh
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
 

@@ -8,7 +8,7 @@ from .pillar_tags import classify as _classify_pillar
 
 
 def recent_replies(limit: int = 6) -> list[str]:
-    """Bounded tail of the existing CSV, for style guidance only; never rewrite it."""
+    """Bounded shipped-text history for style guidance and checks; never rewrite it."""
     import io
     try:
         with open(config.ENGAGEMENT_LOG_FILE, "rb") as f:
@@ -21,7 +21,7 @@ def recent_replies(limit: int = 6) -> list[str]:
         rows = csv.reader(io.StringIO(tail))
         return [row[2] for row in rows if len(row) >= 4 and row[1] == "reply"][-limit:]
     except (OSError, csv.Error):
-        return []  # style advice never changes publication history or admission
+        return []  # Missing style history cannot establish earlier reactions.
 
 
 def _extract_author(target_url: str) -> str:

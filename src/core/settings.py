@@ -236,7 +236,8 @@ _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an edito
 _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
 _declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
-_declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 6, "Draft preparation attempts per ranked direct_reply cycle, or shipped Replies for an unranked Account.")
+_declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 12, "Draft preparation attempts, including style corrections, per ranked direct_reply cycle, or shipped Replies for an unranked Account.")
+_declare("REPLY_STYLE_RETRIES", int, 1, "Additional generation attempts to correct an unreviewed ranked draft's assigned style; counted within the cycle budget.", floor=0, ceiling=1)
 _declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 3, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
 _declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
 _declare_unused("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150)
@@ -248,7 +249,7 @@ _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may sh
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
 _declare("FEED_SWEEP_SCAN_LIMIT", int, 40, "Posts the feed sweep scrapes per feed.")
-_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 6, "Reply generations one feed sweep may run per feed.")
+_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 12, "Reply generations per feed, including any style correction attempts.")
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
