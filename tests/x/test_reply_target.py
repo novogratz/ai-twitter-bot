@@ -34,8 +34,8 @@ def test_protected_author_is_refused_before_any_browser_work(monkeypatch, memory
 
 
 @pytest.mark.parametrize("answer", ["", "refused", "null", "[]", "{}", '{"url":17}',
-                                    json.dumps({"url": numbered_url(800, "elonmusk"), "likes": 2, "clicked": False}),
-                                    json.dumps({"url": numbered_url(801), "likes": 2, "clicked": False})])
+                                    json.dumps({"url": numbered_url(800, "elonmusk"), "likes": 3, "clicked": False}),
+                                    json.dumps({"url": numbered_url(801), "likes": 3, "clicked": False})])
 def test_unreadable_or_misattributed_target_is_refused(monkeypatch, answer):
     monkeypatch.setattr(safari, "_run_js", lambda *a, **k: answer)
     assert not tc._standalone_reply_target(PARENT)
@@ -75,7 +75,7 @@ function article(spec) {
     if (selector === '[data-testid="tweetText"]') return [body];
     if (selector === '[data-testid="reply"]') return spec.noButton ? [] : [button];
     if (selector === '[data-testid="like"], [data-testid="unlike"]')
-      return [...metric(spec.likes === undefined ? 2 : spec.likes), ...metric(spec.quoteLikes ?? null, true)];
+      return [...metric(spec.likes === undefined ? 3 : spec.likes), ...metric(spec.quoteLikes ?? null, true)];
     return [];
   };
   a.querySelector = selector => a.querySelectorAll(selector)[0] || null;
@@ -113,14 +113,15 @@ def test_page_script_targets_only_the_verified_original(monkeypatch, articles, p
 
 
 @pytest.mark.parametrize("likes,allowed", [
-    (0, False), (1, False), (2, True), (100, True), (None, False),
+    (0, False), (1, False), (2, False), (3, True), (100, True), (None, False),
     ("1.2K", True), ("1,234", True), ("1\u202f234", True),
-    ({"label": "Unlike", "text": "2"}, True),
-    ({"label": "1 Like. Unlike", "text": "2"}, False),
+    ({"label": "Unlike", "text": "2"}, False),
+    ({"label": "Unlike", "text": "3"}, True),
+    ({"label": "2 Likes. Unlike", "text": "3"}, False),
     ("unknown", False), ("1,2", False), ("1.5", False), ("-2", False),
 ])
 @pytest.mark.parametrize("click", [False, True])
-def test_actual_parent_needs_two_likes_before_any_reply_click(monkeypatch, likes, allowed, click):
+def test_actual_parent_needs_three_likes_before_any_reply_click(monkeypatch, likes, allowed, click):
     clicks = mock_page(monkeypatch, [
         {"url": PARENT, "likes": likes, "quoteLikes": "999K"},
         {"url": numbered_url(802, "another"), "likes": "999K"},
@@ -129,7 +130,7 @@ def test_actual_parent_needs_two_likes_before_any_reply_click(monkeypatch, likes
     assert clicks == ([PARENT] if allowed and click else [])
 
 
-@pytest.mark.parametrize("likes", [0, 1, None])
+@pytest.mark.parametrize("likes", [0, 1, 2, None])
 def test_low_like_parent_never_reaches_a_like_or_submission(monkeypatch, memory_ledger, likes):
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     for name in ("_activate_or_abort", "_open_or_abort"):
@@ -177,6 +178,8 @@ def test_ranked_parent_must_match_reviewed_text_before_click(unranked_account, m
     from src.guards import active_hours
     from src.replies.reply_pipeline import Candidate
     from src.replies.reply_generator import Generation, Outcome
+    now = active_hours.now_local()
+    monkeypatch.setattr(active_hours, "now_local", lambda: now)
     profile = account.current()
     monkeypatch.setattr(account, "current", lambda: replace(
         profile, replies=replace(profile.replies, ranked_selection=True)))

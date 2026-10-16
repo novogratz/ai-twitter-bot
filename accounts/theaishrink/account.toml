@@ -302,8 +302,8 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # AI/artificial intelligence and verified product names remain search aliases.
 # Direct Reply interleaves Latest `replies` and Top `hot_tab` queries, then
 # rotates a bounded slice per cycle. Latest has no popularity minimum;
-# every result still needs two likes, topic admission and independent draft review.
-# Top also uses min_faves:2; popularity is not a separate viral-only gate.
+# every result still needs three likes, topic admission and independent draft review.
+# Top also uses min_faves:3; popularity is not a separate viral-only gate.
 replies = [
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR "generated video") OR "Grok Imagine") lang:en -filter:replies',
     '(SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") lang:en -filter:replies',
@@ -326,14 +326,14 @@ replies = [
     '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (creator OR animation OR filmmaking) OR "text to video" OR "image to video" OR "Grok Imagine" OR Kling OR RunwayML) lang:en -filter:replies',
 ]
 hot_tab = [
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR brainrot) OR "Grok Imagine") lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding OR workflow OR tutorial) OR "developer tools" OR "open source software" OR compilers) lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (chips OR hardware) OR semiconductors OR CPUs OR "chip design" OR robotics) lang:en min_faves:2 -filter:replies',
-    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (deployment OR infrastructure) OR databases OR "distributed systems" OR cybersecurity) lang:en min_faves:2 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (video OR brainrot) OR "Grok Imagine") lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding OR workflow OR tutorial) OR "developer tools" OR "open source software" OR compilers) lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (chips OR hardware) OR semiconductors OR CPUs OR "chip design" OR robotics) lang:en min_faves:3 -filter:replies',
+    '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (deployment OR infrastructure) OR databases OR "distributed systems" OR cybersecurity) lang:en min_faves:3 -filter:replies',
 ]
 # like_job picks one per cycle, on the Top or the Latest tab, and likes
 # what it finds without the niche check: the query is the only filter.

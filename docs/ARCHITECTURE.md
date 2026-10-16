@@ -77,7 +77,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 30 sec | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least two likes. Allows twelve generation attempts including corrections in the shared queue by default. Never publishes for the ranked Account. |
+| `direct_reply_job` | 30 sec | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least three likes. Allows twelve generation attempts including corrections in the shared queue by default. Never publishes for the ranked Account. |
 | `feed_sweep_job` | 30 sec | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Allows twelve generation attempts including corrections per feed by default. |
 | `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
 | `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
@@ -570,9 +570,9 @@ retain fuller text and any observed nested-reply marker, and stop at the request
 result limit, first empty viewport or two consecutive viewports without new status
 IDs. Stalled views still refresh evidence before stopping. Scroll budgets stay bounded. Profile and
 mention readers use the same collection helper without enabling disabled jobs.
-Top Reply searches now use the two-like minimum, with explicit substantive
+Top Reply searches now use the three-like minimum, with explicit substantive
 technology searches alongside SI research, videos, tools and news.
-Every Reply collector requires at least two readable likes before drafting. The
+Every Reply collector requires at least three readable likes before drafting. The
 final write rechecks the opened parent before a parent like or Reply click, using
 the same article-local like/unlike counter reader (`src/x/post_metrics.py`) as
 discovery. Quoted posts, comments, reposts and views cannot supply that count.

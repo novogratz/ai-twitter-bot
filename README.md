@@ -33,7 +33,7 @@ creation and uploads remain Operator-managed.
   Account's `publish_originals = false` wins over engine settings and CLI flags.
 - **24/7 activity:** no overnight or daytime pauses. Toronto still defines
   calendar days for history and the existing like/follow limits.
-- **At least two likes per Reply target:** zero, one or unreadable like counts
+- **At least three likes per Reply target:** zero, one, two or unreadable like counts
   are skipped, regardless of reposts or views. Discovery and the final write
   check the parent's own count, including posts already liked by the bot.
 - **Never interact with @elonmusk:** no replies, likes, follows, unfollows or @mentions,
@@ -81,7 +81,7 @@ creation and uploads remain Operator-managed.
   permitted VIP and three searches mixing Latest and Top. Latest searches cover
   models, research, tools, workflows, generated videos, robotics, chips,
   developer tools, databases and infrastructure; their results still
-  pass the shared two-like minimum. Top queries also use this minimum instead
+  pass the shared three-like minimum. Top queries also use this minimum instead
   of requiring viral engagement. Feed sweeps run every 30 seconds, with For You
   first in three of every four cycles and Following first in the fourth.
   Each scan selects and verifies the intended native tab before reading posts.

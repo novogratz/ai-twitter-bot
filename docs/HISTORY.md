@@ -1,5 +1,19 @@
 # History — mandates and incidents, June to September 2026
 
+## 2026-10-16 — Require three likes before replying
+
+The Operator raised the Reply parent minimum from two likes to three and
+requested push, PR, merge and release. The shared admission threshold now
+rejects zero, one, two and unreadable counts in every discovery source and in
+the final browser check. Top Reply queries also use `min_faves:3`. The opened
+parent must qualify before any optional parent like and before clicking Reply;
+saved approvals and priority authors cannot bypass the current count.
+
+Regression coverage pins the two/three-like boundary in discovery and browser
+writes, including already-liked posts and queued approved drafts. Other metrics
+and nested posts cannot supply missing likes. No start, restart, local
+environment or production-state edit accompanies this change.
+
 ## 2026-10-16 — Recover wasted drafts and accelerate reviewed Replies
 
 The Operator requested more daily Replies and a pushed, merged PR and release.

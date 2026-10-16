@@ -31,7 +31,7 @@ drafts and model/browser time. The minimum cannot be lowered below 20; jitter
 may range from 0 to 180. The live Account requires ranked selection;
 changing pacing does not bypass review, clear a saved deadline or authorize a restart.
 Reply volume has no daily or hourly count cap. Every Reply target needs at least
-two likes, rechecked on the opened post; reposts and views cannot substitute.
+three likes, rechecked on the opened post; reposts and views cannot substitute.
 New ranked drafts independently choose no smiley with 50% probability or
 exactly one friendly smiley with 50%, enforced within the assigned length limit
 through publication.
@@ -52,5 +52,5 @@ when the eight-draft queue is full. These are preparation bounds, not daily quot
 Each feed scan selects and verifies its native tab before reading posts.
 Collectors retain every viewport while scrolling and deduplicate status IDs;
 two consecutive views without a new status ID stop scrolling after evidence refresh.
-Top Reply queries use the same two-like minimum as publication. Reply scope
+Top Reply queries use the same three-like minimum as publication. Reply scope
 includes substantive technology alongside SI; follow bios retain their SI gate.

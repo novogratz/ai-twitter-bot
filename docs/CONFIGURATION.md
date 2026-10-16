@@ -46,7 +46,7 @@ hold whatever `.env` says:
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
 | Reply count | Subject to quality and model/browser time; no forced quota or daily/hourly cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 20) plus `REPLY_JITTER_SECONDS` (0–180, default 10) space them |
-| Reply parent likes | At least 2; discovery and the opened-target check enforce `reply_admission.has_reply_engagement`. Other metrics cannot substitute. |
+| Reply parent likes | At least 3; discovery and the opened-target check enforce `reply_admission.has_reply_engagement`. Other metrics cannot substitute. |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The live Account requires `replies.ranked_selection = true`: shared preparation
