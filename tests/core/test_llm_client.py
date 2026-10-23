@@ -629,21 +629,21 @@ def test_each_adapter_gets_the_timeout_computed_for_its_rank(providers, provider
     assert {name: request.timeout for name, request in providers.calls} == expected
 
 
-def test_every_timeout_stops_at_bedtime(providers, monkeypatch):
+def test_every_timeout_stops_at_the_next_pause(providers, monkeypatch):
     from src.guards import active_hours
-    monkeypatch.setattr(active_hours, "seconds_until_bedtime", lambda: 42)
+    monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 42)
     ask(CallProfile(min_timeout=300), "ollama", timeout=500)
     assert [request.timeout for _, request in providers.calls] == [42, 42]
 
 
-def test_only_the_timeout_function_reads_the_bedtime_clock():
+def test_only_the_timeout_function_reads_the_pause_clock():
     import ast
     import inspect
     from src.core import llm_client as llm
 
     readers = {node.name for node in ast.walk(ast.parse(inspect.getsource(llm)))
                if isinstance(node, ast.FunctionDef)
-               and "seconds_until_bedtime" in ast.unparse(node)}
+               and "seconds_until_pause" in ast.unparse(node)}
     assert readers == {"_timeout"}
 
 

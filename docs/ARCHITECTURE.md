@@ -29,14 +29,21 @@ At start, `main()`:
 2. installs SIGTERM/SIGINT handlers that call `active_hours.request_stop()`;
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`;
-4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 04:30 and 00:00 boundaries.
+4. starts the scheduler paused, then checks the waking window and scheduled breaks
+   every 15 seconds, pausing or resuming at either boundary.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
 before touching the browser or a model).
 
 ## Waking hours
+
+`break_window()` derives a shared account/day/hour plan with no state file.
+With `HOURLY_BREAK_MINUTES=10`, roughly three of four hours include a ten-minute
+pause between minutes 35 and 60, after the first waking hour. `break_until()`
+reports an active pause. `may_act()` and `require_active()` gate it everywhere;
+`ScheduledBreak` is an `OutsideActiveHours` subclass and never a health failure.
+`seconds_until_pause()` bounds model requests at the next break or midnight.
 
 `src/guards/active_hours.py` owns the clock: from 04:30 until the next midnight, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
@@ -93,7 +100,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
+| `feed_sweep_job` | 8 min | Selects and verifies For You and Following, collects each viewport during bounded deep scrolling, and pipelines eligible standalone originals through admission and the generation budget. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |

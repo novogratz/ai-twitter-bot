@@ -114,7 +114,8 @@ each call, and compare a handle with the one read from a status URL.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
   optional `ticker` (case-sensitive) must match a post the reply jobs find;
   `bio` must match the name and bio of a non-Engager the follow quality
-  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
+  gate judges. @thesimaximalist sets no `ticker`: its niche covers SI and
+  the named Musk/X/SpaceX ecosystem.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
   it finds without the niche check; the Trend slots and the Startup post run
@@ -263,7 +264,7 @@ real account from a second process. Before any of them:
 
 | Where | What it tells you |
 |---|---|
-| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a reply, editorial or reach-report job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report` |
+| `bot.log` (root) | Runtime activity. Useful tags: `[HOURS]`, `[BREAK]`, `[EDITORIAL]`, `[POST]`, `[REPLY]`, `[REPLYBACK]`, `[VIP]`, `[DEBATE]`, `[FOLLOW]`, `[LIKE]`, `[PIN]`, `[HYGIENE]`, `[HEALTH]`. A failed cycle of a reply, editorial or reach-report job logs `[<label>] Cycle failed.` at ERROR with its traceback, the label being its health label: `direct_reply`, `feed_sweep`, `early_bird`, `replyback`, `debate`, `mega_watch`, `babysitter`, `notify`, `reply`, `editorial`, `reach_report` |
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |

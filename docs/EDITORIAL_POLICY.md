@@ -1,5 +1,44 @@
 # Editorial policy — October 23, 2026
 
+## The SI Maximalist: voice, discovery and breaks
+
+The latest Operator request sets the Account handle to `thesimaximalist` and
+the brand to The SI Maximalist. The old `TheAIShrink` handle remains an own
+identity; `BOT_ACCOUNT=theaishrink` and all state paths remain. Both Voice files
+are English and describe a fictional 45-year-old woman with technical depth,
+sharp humor, warmth and natural conversational rhythm. She has no therapist
+role. She favors Elon Musk, Twitter/X, X products, SpaceX and xAI/Grok; Grok
+Imagine is her personal favorite. Preferences are opinions, never fabricated
+benchmarks, experiences or superiority claims. Kindness does not require
+false agreement; no fabricated biography, impersonation or concealed bot identity.
+
+`publication_si_wording` extends SI / Super Intelligence to every Original and
+Reply. Originals are normalized before length checks, independent review and
+at the final write. Source evidence, URLs, handles and embedded names remain
+literal. The editor understands this vocabulary does not assert a new capability.
+Research retains both AI and SI and now includes Grok Imagine, SpaceX,
+Starship, Starlink, Elon Musk, Twitter and named X products. Bare X is not a
+niche match. Query counts and minimum engagement filters are preserved.
+The named ecosystem expansion supersedes the September space exclusion;
+general politics, crypto and markets remain outside the niche.
+
+The Operator requests deeper browsing of both Home feeds. The scraper selects
+and verifies For You or Following, reads each viewport before scrolling,
+deduplicates by status ID, and stops after three screens with no new posts.
+The Account's discovery budget is 20 scrolls and 160 posts per feed. Failed
+tab selection skips that feed. No Reply or publication budget is raised.
+
+The Account sets `HOURLY_BREAK_MINUTES=10`. Breaks start between minute 35 and
+50 in roughly three of four waking hours, after the first waking hour. Their
+account/day/hour plan is deterministic across workers and restarts and creates
+no state file. The scheduler pauses, running jobs stop at the next activity
+check, model timeouts end at the next break, and no new external request or
+browser action starts during the break. An already-issued request may finish
+remotely. Breaks are expected pauses and never trigger Safari failure recovery.
+Midnight–04:30 sleep, permanent standalone Reply deduplication, English-only
+validation and all publication ceilings remain. The Operator requests push,
+PR, merge and a release afterward; activation requires a requested restart.
+
 ## English output and midnight sleep
 
 The latest Operator instructions extend Waking hours to midnight and require

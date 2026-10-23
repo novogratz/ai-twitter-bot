@@ -1,10 +1,30 @@
 # AGENTS.md
 
-@TheAIShrink is a live X account driven by Safari + AppleScript from the
+@thesimaximalist (The SI Maximalist) is a live X account driven by Safari + AppleScript from the
 operator's Mac: no X API. Every change here can publish, like or follow on a
 real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
+
+2026-10-23, The SI Maximalist — The Operator renames the Account to
+`thesimaximalist`, retaining `TheAIShrink` in `previous_handles` and the
+`theaishrink` folder/state namespace. Both Voice files describe a fictional
+45-year-old SI expert: sharp, funny, warm, conversational, no therapist role.
+She favors Elon Musk, X/Twitter, SpaceX and xAI, and calls Grok Imagine her
+personal favorite. Taste never replaces supported facts or honest bot identity.
+`publication_si_wording = true` extends SI / Super Intelligence to Originals,
+before review and final publication checks; evidence and literal names remain.
+Research keeps both vocabularies and explicitly includes the named Musk/X/
+SpaceX ecosystem, without broadening to general politics, crypto or markets.
+
+Both Home feeds are explicitly selected and verified. Collect each viewport
+before scrolling; deduplicate by status ID and stop on a stalled feed. The
+Account selects up to 20 scrolls and 160 collected posts per feed. Publication
+counts and generation budgets stay bounded as before. `HOURLY_BREAK_MINUTES=10`
+pauses new jobs, model requests and browser activity in roughly three of four
+waking hours, starting at minute 35–50 after the first waking hour. The plan
+is stable across workers and restarts and creates no state file. No restart,
+profile edit or production-state migration accompanies the PR/merge/release.
 
 2026-10-23, latest requests — Sleep from 00:00 through 04:29:59 Toronto time;
 resume at 04:30. Midnight is the end of the preceding waking day for model
@@ -44,7 +64,7 @@ charm and deep technical perspective. Both Voice files and Relation prompts emph
 mechanism, implication, tradeoff or precise question, grounded in the supplied
 evidence or stable knowledge. Kindness, factual support and honest bot identity
 remain; no fabricated biography, tests, internals or claims of omniscience.
-SI / Super Intelligence remains the Reply vocabulary; research keeps both
+SI / Super Intelligence remains the publication vocabulary; research keeps both
 AI and SI. No start, restart, environment edit or production-state migration.
 
 2026-10-23 — On the hard-reset September 26 baseline, the Operator requests
@@ -62,7 +82,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(2026-09-23) and supersedes every older mandate. It encodes:
+(including the October 23 amendments) and supersedes older mandates. It encodes:
 
 - Active 04:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
@@ -76,10 +96,10 @@ environment edit or production-state migration accompanies this update.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
-- Replies, likes and follows keep to AI (2026-09-25): the Account's niche
-  patterns and searches look for AI, and its lists drop crypto, markets and
-  space accounts, save those the Operator picked by hand and a few still to
-  confirm. The patterns' known false positives are listed in the policy.
+- Replies, likes and follows cover SI and the named Musk/X/SpaceX ecosystem
+  (2026-10-23). Research retains both vocabularies. Crypto, general markets
+  and unrelated space topics remain excluded, apart from the Operator's
+  hand-picked accounts. Known pattern false positives remain in the policy.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
@@ -116,7 +136,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
-| Account's SI Reply wording, enforced before final validation; source evidence and literal references preserved | `src/core/reply_wording.py` |
+| Account's SI publication wording, applied before review and final validation; evidence and literal references preserved | `src/core/reply_wording.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |

@@ -293,12 +293,14 @@ def source_evidence(source):
 
 def draft_post(slot, sources, recent, feedback="", trending=None):
     from ..core.personality_store import render_voice, hard_rules_block
+    from ..core import reply_wording
     language = "French" if not account.current().english_only and settings.get("CONTENT_LANG_PRIMARY") == "fr" else "English"
     domain = account.current().domain
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
                          "evidence": source_evidence(source)} for source in sources]
     prompt = f"""{render_voice('en')}
 {hard_rules_block()}
+{reply_wording.prompt_block(kind="original")}
 Write ONE original {domain} post in {language}. Today's slot: {slot[1]}.
 Draft three different angles privately, then choose the most useful one.
 Prefer a fresh launch, model update, {domain} article, research method, or concrete
@@ -326,15 +328,21 @@ sentences supplied by the application. Never make up IDs or quotations.
 Set "skip":true (with empty text/evidence_ids) if no strong post is possible.{trend_block(trending)}
 RECENT POSTS: {json.dumps(recent[-12:], ensure_ascii=False)}
 SOURCES: {json.dumps(evidence_sources, ensure_ascii=False)}"""
-    return _json_call(prompt, "EDITORIAL_DRAFT", schemas.draft_profile())
+    draft = _json_call(prompt, "EDITORIAL_DRAFT", schemas.draft_profile())
+    if isinstance(draft, dict) and isinstance(draft.get("text"), str):
+        draft["text"] = reply_wording.apply(draft["text"], kind="original")
+    return draft
 
 
 def review_draft(draft, sources, recent, exceptional=False, trending=None):
     """Deterministic evidence checks, then a separate factual/value editor."""
+    from ..core import reply_wording
     if not isinstance(draft, dict) or draft.get("skip") is True:
         return False, "malformed draft", None
     domain = account.current().domain
     text = draft.get("text")
+    if isinstance(text, str):
+        text = draft["text"] = reply_wording.apply(text, kind="original")
     source = next((s for s in sources if s["id"] == draft.get("source_id")), None)
     if (not isinstance(text, str) or not 80 <= len(text) <= schemas.TEXT_MAX_CHARS or not source
             or not _trusted(source["url"]) or not draft.get("angle") or not draft.get("takeaway")):
@@ -377,6 +385,7 @@ A clear beginner explanation or a specific application of documentation counts
 as reader value. Novel means different from the recent posts, not a new
 scientific discovery. A useful teaching post need not invent a prediction,
 performance claim, or recommended numeric setting to earn approval.
+{reply_wording.prompt_block(kind="original")}
 Return JSON only with boolean fields: {', '.join(schemas.review_flags())};
 and a short reason.
 {schemas.EXCEPTIONAL_FLAG} means a consequential fresh update or unusually useful {domain} teaching source.

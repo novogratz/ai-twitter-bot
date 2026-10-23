@@ -17,20 +17,21 @@ THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 
 # The constants of src/editorial/editorial_bot.py and src/editorial/trending.py,
 # and the settings defaults, printed from the code before #202 moved them to
-# accounts/theaishrink/account.toml.
-TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
+# accounts/theaishrink/account.toml; the Operator renamed the account and
+# changed publication wording to SI on 2026-10-23.
+TREND_PURPOSE = "Trending: the SI topic X is talking about right now, told from a trusted source"
 OLD = {
-    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
-              ("07:15", "A useful AI workflow with a concrete first step"),
-              ("09:30", "Priority: an AI article or model update with a sharp consequence"),
-              ("10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("11:45", "An AI concept explained through a clear example"),
-              ("13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+    "SLOTS": [("05:00", "Priority: the SI update worth understanding this morning"),
+              ("07:15", "A useful SI workflow with a concrete first step"),
+              ("09:30", "Priority: an SI article or model update with a sharp consequence"),
+              ("10:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
+              ("11:45", "An SI concept explained through a clear example"),
+              ("13:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
               ("14:00", "A model or tool update and what changes for its users"),
-              ("15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
-              ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
-              ("18:30", "A practical AI idea worth saving or sharing"),
-              ("20:45", "Optional: an exceptional fresh AI update or unusually useful source")],
+              ("15:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
+              ("16:15", "Priority: an evidence-backed take on an SI tradeoff"),
+              ("18:30", "A practical SI idea worth saving or sharing"),
+              ("20:45", "Optional: an exceptional fresh SI update or unusually useful source")],
     "TREND_SLOTS": ["10:00", "13:00", "15:00"],
     "TREND_PURPOSE": TREND_PURPOSE,
     "EXCEPTIONAL_SLOT": "20:45",
@@ -46,9 +47,9 @@ OLD = {
               ("arXiv cs.AI", "https://rss.arxiv.org/rss/cs.AI")],
     "KNOWLEDGE": [("chat_templates", "Why a chat template changes model behavior",
                    "https://huggingface.co/docs/transformers/chat_templating"),
-                  ("evaluation", "How to evaluate an AI model on your own examples",
+                  ("evaluation", "How to evaluate an SI model on your own examples",
                    "https://huggingface.co/docs/evaluate/index"),
-                  ("quantization", "What quantization trades for smaller AI models",
+                  ("quantization", "What quantization trades for smaller SI models",
                    "https://huggingface.co/docs/transformers/quantization/overview"),
                   ("retrieval", "When retrieval can improve a language model's answers",
                    "https://huggingface.co/learn/cookbook/en/advanced_rag"),
@@ -75,7 +76,7 @@ OLD = {
                  "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
                  "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
     "OFF_TOPIC": ("\\$[A-Za-z]{2,6}\\b|\\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\\b", 34),
-    "BOT_HANDLE": "TheAIShrink",
+    "BOT_HANDLE": "thesimaximalist",
     "CONTENT_LANG_PRIMARY": "en",
 }
 # trending.TREND_QUERIES before #208 moved them to [searches] trending.
@@ -85,7 +86,7 @@ OLD_TREND_QUERIES = [
 ]
 
 
-def test_theaishrink_loads_the_old_constants():
+def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     loaded = account.load("theaishrink")
     ed = loaded.editorial
     assert list(ed.slots) == OLD["SLOTS"]
@@ -98,9 +99,12 @@ def test_theaishrink_loads_the_old_constants():
     assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
-    assert loaded.limits == {}
-    assert loaded.domain == "AI / SI"
+    assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
+                             "HOURLY_BREAK_MINUTES": 10}
+    assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
+    assert loaded.publication_si_wording is True
+    assert loaded.previous_handles == ("TheAIShrink",)
 
 
 def test_the_editorial_reads_the_loaded_account():
@@ -144,7 +148,7 @@ def fresh(monkeypatch, tmp_path):
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
-    accounts("other", THEAISHRINK.replace('handle = "TheAIShrink"', 'handle = "OtherBot"')
+    accounts("other", THEAISHRINK.replace('handle = "thesimaximalist"', 'handle = "OtherBot"')
              .replace('language = "en"', 'language = "fr"'))
     fresh("BOT_ACCOUNT=other\n")
     assert account.current().name == "other"
@@ -193,7 +197,7 @@ def test_main_stops_on_an_unknown_bot_account():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink"\nnickname = "shrink"', "nickname"),
+    ('handle = "thesimaximalist"', 'handle = "thesimaximalist"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
@@ -211,7 +215,7 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "TheAIShrink"', "handle = 3", "handle"),
+    ('handle = "thesimaximalist"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
@@ -221,11 +225,11 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
      "editorial.evergreen[0].publisher"),
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
-    ('handle = "TheAIShrink"\n', "", "handle"),
-    ('domain = "AI / SI"', "domain = 3", "domain"),
-    ('domain = "AI / SI"', 'domain = " "', "domain is blank"),
-    ('domain = "AI / SI"\n', "", "domain is missing"),
-    ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
+    ('handle = "thesimaximalist"\n', "", "handle"),
+    ('domain = "SI / Super Intelligence"', "domain = 3", "domain"),
+    ('domain = "SI / Super Intelligence"', 'domain = " "', "domain is blank"),
+    ('domain = "SI / Super Intelligence"\n', "", "domain is missing"),
+    ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -312,6 +316,7 @@ NETWORK = {
     "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
     "PINNED_TRACKED_HANDLES": "TheBTCTherapist,Graphseo,Mindset4Money_X",
     "VIP_REPLY_ACCOUNTS": [
+        "elonmusk", "xai", "grok", "X", "SpaceX",
         "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
         "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
     ],
@@ -505,7 +510,9 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
-    assert list(net.always_reply) == NETWORK["ALWAYS_REPLY_ACCOUNTS"]
+    expected = ["elonmusk", "xai", "grok", "X", "SpaceX"]
+    expected += [h for h in NETWORK["ALWAYS_REPLY_ACCOUNTS"] if h.lower() not in {x.lower() for x in expected}]
+    assert list(net.always_reply) == expected
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
@@ -524,7 +531,7 @@ def test_the_removed_accounts_and_queries_are_gone():
                                     "big_fr", "engage_vip", "engage_targets", "reply_targets")
               for h in getattr(net, key)}
     for key in ("vip_reply", "high_traction_reply", "big_fr", "engage_targets", "reply_targets"):
-        assert not {h.lower() for h in REMOVED_205[key]} & listed, key
+        assert not ({h.lower() for h in REMOVED_205[key]} - {"spacex"}) & listed, key
     queries = set(searches.replies + searches.hot_tab + searches.likes)
     for key in ("replies", "hot_tab", "likes"):
         assert not set(REMOVED_205[key]) & queries, key
@@ -539,7 +546,6 @@ def test_the_removed_accounts_and_queries_are_gone():
     "The Fed held rates and stocks rallied into the close",
     "$TSLA and $AAPL gapped up at the open, the Nasdaq is ripping",
     "Le CAC 40 recule, la BCE maintient ses taux",
-    "SpaceX Starship reached orbit and Starlink passed 8,000 satellites",
     "NASA picked a new rocket for the Moon landing",
     # The French verb avoir is not AI.
     "J'ai acheté du Bitcoin ce matin",
@@ -555,14 +561,20 @@ def test_the_removed_accounts_and_queries_are_gone():
     "FBI agents raided the office",
     "Meta and Google beat on earnings, Apple lagged",
     "This token is up 40% today",
+    "X marks the spot",
 ])
-def test_a_crypto_markets_or_space_post_is_off_the_niche(text):
+def test_crypto_markets_and_general_space_stay_off_the_niche(text):
     from src.replies import reply_source
     assert not reply_source.is_on_niche(text)
 
 
 @pytest.mark.parametrize("text", [
     "OpenAI shipped a new reasoning model today",
+    "SpaceX is preparing a Starship launch",
+    "Starlink connectivity changes the options here",
+    "Elon Musk on building tools",
+    "Grok Imagine makes this fun",
+    "X Premium and Twitter creators",
     "Claude Code wrote the whole migration in an afternoon",
     "Nvidia cannot build GPUs fast enough for the datacenter buildout",
     "Artificial intelligence is changing radiology faster than expected",
@@ -598,6 +610,8 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Space nerd, rocket launches and Mars", False),
     ("Investisseur en bourse, dividendes et PEA", False),
     ("AI researcher, ex-DeepMind", True),
+    ("SpaceX / Starlink engineer", True),
+    ("Grok Imagine enthusiast", True),
     ("Building LLM tools for lawyers", True),
     ("Machine learning engineer at a robotics startup", True),
     ("Research engineer @AnthropicAI", True),
@@ -614,7 +628,7 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Software engineer, founder, tech", False),
     ("Claude Dupont, investisseur", False),
 ])
-def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
+def test_the_follow_bio_niche_includes_si_and_the_named_ecosystem(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche
 
 
@@ -931,7 +945,7 @@ def test_standalone_reply_policy_rejects_invalid_types(accounts, fresh, value):
 
 @pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', "[42]", '"Alias"'])
 def test_own_handle_aliases_are_validated(accounts, fresh, value):
-    accounts("theaishrink", THEAISHRINK.replace('previous_handles = ["thesimaximalist"]',
+    accounts("theaishrink", THEAISHRINK.replace('previous_handles = ["TheAIShrink"]',
                                                f"previous_handles = {value}"))
     with pytest.raises(settings.SettingsError, match="previous_handles"):
         fresh()
@@ -941,4 +955,12 @@ def test_own_handle_aliases_are_validated(accounts, fresh, value):
 def test_reply_si_wording_rejects_invalid_types(accounts, fresh, value):
     accounts("theaishrink", THEAISHRINK.replace("reply_si_wording = true", f"reply_si_wording = {value}"))
     with pytest.raises(settings.SettingsError, match="reply_si_wording"):
+        fresh()
+
+
+@pytest.mark.parametrize("value", ['"true"', "1", "[]"])
+def test_publication_si_wording_rejects_invalid_types(accounts, fresh, value):
+    accounts("theaishrink", THEAISHRINK.replace("publication_si_wording = true",
+                                               f"publication_si_wording = {value}"))
+    with pytest.raises(settings.SettingsError, match="publication_si_wording"):
         fresh()

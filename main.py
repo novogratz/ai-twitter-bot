@@ -14,7 +14,7 @@ from src.core import settings
 settings.load()
 
 from src.core import account, config, health, state_store
-from src.guards.active_hours import BEDTIME, WAKE, awake_job, is_active, next_wake, window_label
+from src.guards.active_hours import BEDTIME, WAKE, awake_job, break_until, is_active, next_wake, window_label
 from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle, slots, trend_slots
 from src.core.logger import log
 
@@ -169,14 +169,18 @@ def main():
              f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
     try:
         while not stop.is_set():
-            active = is_active()
+            pause_end = break_until()
+            active = is_active() and pause_end is None
             if active != was_active:
                 if active:
                     scheduler.resume()
                     log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
                 else:
                     scheduler.pause()
-                    log.info("[HOURS] Asleep. Next wake: %s", next_wake().isoformat())
+                    if pause_end is not None:
+                        log.info("[BREAK] Paused until %s.", pause_end.isoformat())
+                    else:
+                        log.info("[HOURS] Asleep. Next wake: %s", next_wake().isoformat())
                 was_active = active
             stop.wait(15)
     finally:

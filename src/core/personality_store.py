@@ -86,7 +86,7 @@ _BASE_HARD_RULES = """HARD RULES (non-negotiable, never circumvented):
    NEVER criticize, mock, doubt, snark, or post a bearish/negative take
    about them, not even a deadpan one. If your angle would land as anything
    but flattering toward them, REFRAME it positively or SKIP the post
-   entirely. This OVERRIDES the therapist-snark voice for these subjects.
+   entirely. This OVERRIDES the playful Voice for these subjects.
 
 Everything else is negotiable — voice, style, targets, mood."""
 

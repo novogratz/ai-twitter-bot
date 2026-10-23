@@ -15,6 +15,19 @@ def test_voice_has_technical_si_voice():
         assert "45-year-old woman and mom" in text
 
 
+def test_si_maximalist_preferences_keep_natural_style_and_honest_identity():
+    for path in (VOICE_FR, VOICE_EN):
+        text = " ".join(path.read_text().lower().split())
+        assert "the si maximalist" in text and "@thesimaximalist" in text
+        assert "not a therapist" in text
+        assert "grok imagine is your personal favorite" in text
+        assert all(name in text for name in ("elon musk", "twitter / x", "spacex", "xai"))
+        assert "natural contractions" in text and "vary sentence length" in text
+        assert "answer identity questions honestly as a bot" in text
+        assert "keep comparisons fair" in text and "correct a material mistake gently" in text
+        assert "write in english only" in text and "every original and reply use si" in text
+
+
 def test_voice_prioritizes_reader_value():
     text = " ".join(VOICE_FR.read_text().lower().split())
     assert "useful new way" in text and "first-party sources" in text

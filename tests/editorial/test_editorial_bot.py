@@ -83,6 +83,22 @@ def test_quality_gate_requires_actual_source_and_complete_boolean_review(draft_f
     assert not editorial.review_draft(draft, [source], [])[0]
 
 
+def test_original_wording_is_reviewed_without_rewriting_evidence(monkeypatch, draft_fixture):
+    draft, source, review = draft_fixture
+    evidence = "Artificial Intelligence tools need a chat template that fits their model."
+    source["body"] = evidence
+    draft["evidence"] = [evidence]
+    draft["text"] = ("AI tools need the right chat template: changing the wrapper can change "
+                     "the output even when the words stay the same.")
+    prompts = []
+    monkeypatch.setattr(editorial, "_json_call", lambda prompt, *a: prompts.append(prompt) or review)
+    assert editorial.review_draft(draft, [source], [])[0]
+    assert draft["text"].startswith("SI tools")
+    assert draft["evidence"] == [evidence] and source["body"] == evidence
+    assert '"text": "SI tools' in prompts[0]
+    assert "terminology preference" in prompts[0]
+
+
 @pytest.mark.parametrize("text", ["AI is a game changer. " * 6, "Follow for more. " * 8, "Thoughts? " * 12])
 def test_quality_gate_rejects_bait(draft_fixture, text):
     draft, source, _ = draft_fixture

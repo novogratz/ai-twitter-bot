@@ -30,7 +30,22 @@ def test_terms_and_references(before, after):
 
 
 def test_an_account_without_the_preference_keeps_its_wording(monkeypatch):
-    other = replace(account.current(), reply_si_wording=False)
+    other = replace(account.current(), reply_si_wording=False, publication_si_wording=False)
     monkeypatch.setattr(account, "current", lambda: other)
     assert reply_wording.apply("AI means Artificial Intelligence") == "AI means Artificial Intelligence"
     assert reply_wording.prompt_block() == ""
+
+
+@pytest.mark.parametrize("kind", ["reply", "original"])
+def test_publication_wording_covers_every_publication(kind):
+    assert reply_wording.apply("AI / Artificial Intelligence by OpenAI", kind=kind) == \
+        "SI / Super Intelligence by OpenAI"
+    assert "terminology preference" in reply_wording.prompt_block(kind=kind)
+
+
+def test_legacy_reply_only_preference_does_not_rewrite_originals(monkeypatch):
+    other = replace(account.current(), reply_si_wording=True, publication_si_wording=False)
+    monkeypatch.setattr(account, "current", lambda: other)
+    assert reply_wording.apply("AI tools") == "SI tools"
+    assert reply_wording.apply("AI tools", kind="original") == "AI tools"
+    assert reply_wording.prompt_block(kind="original") == ""

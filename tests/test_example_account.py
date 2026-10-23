@@ -88,6 +88,7 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
     monkeypatch.setattr(llm_client, "ADAPTERS", {name: FakeAdapter(name, calls) for name in llm_client.ADAPTERS})
     monkeypatch.setattr(settings, "_values", None)
     monkeypatch.setattr(settings, "_warnings", [])
+    monkeypatch.setattr(settings, "_overrides", {})
     env_file = tmp_path / ".env"
     env_file.write_text("")
 
@@ -106,8 +107,11 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert set(shown) == set(PRE_187) | NEW_KEYS
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
+    expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
     assert {key: shown[key] for key in PRE_187} == expected
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == PRE_187_BOUNDED
+    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
+        **PRE_187_BOUNDED, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
+        "HOURLY_BREAK_MINUTES": 10}
     assert shown["settings_warnings"] == []
 
 
@@ -131,7 +135,8 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
-                       "LIKE_BOT_DAILY_CAP": 100}
+                       "LIKE_BOT_DAILY_CAP": 100, "FEED_SCROLL_PASSES": 8,
+                       "FEED_SWEEP_SCAN_LIMIT": 80, "HOURLY_BREAK_MINUTES": 0}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
     assert os.listdir(project / "state") == ["theaishrink"]

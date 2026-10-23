@@ -1,10 +1,11 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
 from datetime import date, datetime, time, timedelta
 from functools import wraps
+import hashlib
 import threading
 from zoneinfo import ZoneInfo
 
-from ..core import config
+from ..core import config, settings
 from ..core.logger import log
 
 
@@ -20,6 +21,33 @@ def request_stop():
 
 class OutsideActiveHours(RuntimeError):
     """A running cycle reached bedtime; it must stop doing external work."""
+
+
+class ScheduledBreak(OutsideActiveHours):
+    """The Account is taking its scheduled pause, not experiencing a failure."""
+
+
+def break_window(now: datetime | None = None) -> tuple[datetime, datetime] | None:
+    """A stable per-hour plan shared by workers and preserved across restarts."""
+    minutes = settings.get("HOURLY_BREAK_MINUTES")
+    if not minutes:
+        return None
+    local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    key = f"{settings.get('BOT_ACCOUNT')}:{local:%Y-%m-%d-%H}"
+    seed = hashlib.sha256(key.encode()).digest()
+    if seed[0] % 4 == 0:
+        return None
+    start = local.replace(minute=35 + seed[1] % 16, second=0, microsecond=0)
+    wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
+    if not is_active(start) or start < wake + timedelta(hours=1):
+        return None
+    return start, min(start + timedelta(minutes=minutes), bedtime(start))
+
+
+def break_until(now: datetime | None = None) -> datetime | None:
+    local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    window = break_window(local)
+    return window[1] if window and window[0] <= local < window[1] else None
 
 
 def window_label() -> str:
@@ -60,12 +88,9 @@ def stop_requested() -> bool:
 
 
 def may_act(now: datetime | None = None) -> bool:
-    """Waking hours and no stop requested: external work may start.
-
-    The scheduler's pause/resume loop keeps using is_active(), which ignores
-    the stop so shutdown never flips the scheduler back on.
-    """
-    return not stop_requested() and is_active(now)
+    """External work may start in Waking hours, outside breaks and shutdown."""
+    now = now or now_local()
+    return not stop_requested() and is_active(now) and break_until(now) is None
 
 
 def next_wake(now: datetime | None = None) -> datetime:
@@ -75,8 +100,12 @@ def next_wake(now: datetime | None = None) -> datetime:
 
 
 def require_active() -> None:
-    if not may_act():
+    now = now_local()
+    if stop_requested() or not is_active(now):
         raise OutsideActiveHours(f"Bot asleep: active {window_label()}")
+    end = break_until(now)
+    if end is not None:
+        raise ScheduledBreak(f"Scheduled break until {end.isoformat(timespec='minutes')}")
 
 
 def awake_job(fn):
@@ -87,6 +116,9 @@ def awake_job(fn):
             return None
         try:
             return fn(*args, **kwargs)
+        except ScheduledBreak:
+            log.info("[%s] Stopped for a scheduled break.", fn.__name__)
+            return None
         except OutsideActiveHours:
             log.info("[%s] Stopped for bedtime.", fn.__name__)
             return None
@@ -104,3 +136,17 @@ def bedtime(now: datetime) -> datetime:
 def seconds_until_bedtime() -> float:
     now = now_local()
     return max(0.0, (bedtime(now) - now).total_seconds())
+
+
+def seconds_until_pause() -> float:
+    """Model requests stop at the next break or bedtime, whichever comes first."""
+    now = now_local()
+    if not is_active(now) or break_until(now) is not None:
+        return 0.0
+    end = bedtime(now)
+    for hour in range(now.hour, 24):
+        window = break_window(now.replace(hour=hour))
+        if window and now < window[0] < end:
+            end = window[0]
+            break
+    return max(0.0, (end - now).total_seconds())

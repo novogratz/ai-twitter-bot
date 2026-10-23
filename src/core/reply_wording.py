@@ -1,4 +1,4 @@
-"""The Account's SI terminology for Reply prose, separate from source evidence."""
+"""The Account's SI terminology in published prose, separate from source evidence."""
 import re
 
 from . import account
@@ -15,9 +15,16 @@ _FRENCH_BEFORE = re.compile(
     r"\bje\s+(?:(?:ne|le|la|les|me|te|nous|vous|lui|leur|en|y)\s+)*(?:[lmt]['’])?)$", re.I)
 
 
-def apply(text: str) -> str:
-    """Replace whole terms in Reply prose; never rewrite links, handles or French avoir."""
-    if not text or not account.current().reply_si_wording:
+def _enabled(kind: str) -> bool:
+    if kind not in ("reply", "original"):
+        raise ValueError(f"unknown publication kind: {kind!r}")
+    profile = account.current()
+    return profile.publication_si_wording or (kind == "reply" and profile.reply_si_wording)
+
+
+def apply(text: str, *, kind: str = "reply") -> str:
+    """Replace whole terms in prose; never rewrite links, handles or French avoir."""
+    if not _enabled(kind) or not text:
         return text
 
     def prose(part):
@@ -39,11 +46,11 @@ def apply(text: str) -> str:
     return "".join(pieces)
 
 
-def prompt_block() -> str:
-    if not account.current().reply_si_wording:
+def prompt_block(*, kind: str = "reply") -> str:
+    if not _enabled(kind):
         return ""
     return (
-        'REPLY WORDING: In your own Reply prose use "SI" instead of "AI", and '
+        'PUBLICATION WORDING: In your own prose use "SI" instead of "AI", and '
         '"Super Intelligence" instead of "Artificial Intelligence". '
         'Keep literal URLs, handles and embedded names such as OpenAI unchanged; '
         'French verb forms such as "j’ai" are not the acronym. '
