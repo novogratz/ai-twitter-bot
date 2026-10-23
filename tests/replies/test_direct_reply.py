@@ -17,10 +17,8 @@ def _searches():
     return list(searches.replies), list(searches.hot_tab)
 
 
-def test_reply_and_like_queries_are_ai_only():
-    """Operator 2026-09-25: AI only, like the policy (#205). Every reply and
-    like query carries an AI term, and none looks for crypto, markets or
-    space posts."""
+def test_queries_stay_in_si_and_the_named_musk_ecosystem():
+    """The 2026-10-23 ecosystem expansion keeps general markets out."""
     from src.core import account
     replies, hot_tab = _searches()
     queries = replies + hot_tab + list(account.current().searches.likes)
@@ -31,9 +29,9 @@ def test_reply_and_like_queries_are_ai_only():
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
     for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
-                   "earnings", "etf", "portfolio", "sell off", "vix", "spacex", "starlink",
-                   "starship", "nasa", "satellite", "orbit"):
-        assert banned not in joined, f"{banned!r} is off the AI niche"
+                   "earnings", "etf", "portfolio", "sell off", "vix", "nasa", "satellite", "orbit"):
+        assert banned not in joined, f"{banned!r} is off the niche"
+    assert all(term in joined for term in ("grok imagine", "spacex", "starlink", "starship", "x premium"))
 
 
 def _query_clauses(query: str, and_first: bool) -> list:

@@ -86,6 +86,7 @@ class Account:
     standalone_replies_only: bool = False
     previous_handles: tuple[str, ...] = ()
     english_only: bool = False
+    publication_si_wording: bool = False
 
 
 def current() -> Account:
@@ -126,7 +127,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                                              "niche": dict, "searches": dict},
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
-                           "english_only": bool})
+                           "english_only": bool, "publication_si_wording": bool})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -150,6 +151,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         searches=_searches(top), reply_si_wording=top.get("reply_si_wording", False),
         standalone_replies_only=top.get("standalone_replies_only", False), previous_handles=previous,
         english_only=top.get("english_only", False),
+        publication_si_wording=top.get("publication_si_wording", False),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

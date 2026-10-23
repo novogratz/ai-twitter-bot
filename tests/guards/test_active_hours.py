@@ -1,5 +1,5 @@
 """src/guards/active_hours: Waking hours, DST, bedtime and stop requests."""
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
@@ -142,3 +142,76 @@ def test_is_active_ignores_stop_for_the_scheduler_loop(monkeypatch):
 
     assert active_hours.is_active() is True
     assert active_hours.may_act() is False
+
+
+@pytest.fixture
+def pause(settings_override):
+    settings_override(HOURLY_BREAK_MINUTES=10)
+    windows = [hours.break_window(datetime(2026, 10, 23, h, tzinfo=TORONTO))
+               for h in range(24)]
+    return next(window for window in windows if window)
+
+
+def test_break_plan_is_repeatable_ten_minutes_and_only_during_waking_hours(settings_override):
+    settings_override(HOURLY_BREAK_MINUTES=10)
+    for day in (datetime(2026, 3, 8, tzinfo=TORONTO),
+                datetime(2026, 10, 23, tzinfo=TORONTO),
+                datetime(2026, 11, 1, tzinfo=TORONTO)):
+        windows = [hours.break_window(day.replace(hour=h)) for h in range(24)]
+        assert any(windows[6:]) and not all(windows[6:])
+        assert not any(windows[:5])
+        for window in filter(None, windows):
+            start, end = window
+            assert end - start == timedelta(minutes=10)
+            assert 35 <= start.minute <= 50
+            assert hours.is_active(start) and end <= hours.bedtime(start)
+            assert hours.break_window(start + timedelta(minutes=3)) == window
+            assert hours.break_until(start - timedelta(seconds=1)) is None
+            assert hours.break_until(start) == end
+            assert hours.break_until(end - timedelta(seconds=1)) == end
+            assert hours.break_until(end) is None
+
+
+def test_break_gates_jobs_browser_and_publication_then_resumes(monkeypatch, pause, unwalled):
+    from src.x import safari
+    start, end = pause
+    clock(monkeypatch, start)
+    ran = []
+    job = hours.awake_job(lambda: ran.append(True))
+    assert hours.is_active() and not hours.may_act()
+    assert job() is None and not ran
+    for action in (ag.POST, ag.REPLY, ag.QUOTE, ag.RETWEET):
+        assert not ag.can_post(action)[0]
+    with pytest.raises(hours.ScheduledBreak):
+        hours.require_active()
+    with pytest.raises(hours.ScheduledBreak):
+        unwalled["_run_js"]("document.title")
+    with pytest.raises(hours.ScheduledBreak):
+        with safari._safari_lock:
+            pytest.fail("Safari lock admitted work during a break")
+    clock(monkeypatch, end)
+    assert hours.may_act()
+    job()
+    assert ran == [True]
+
+
+def test_model_budget_stops_at_break_and_breaks_are_not_failures(monkeypatch, pause):
+    from src.core import health
+    start, end = pause
+    clock(monkeypatch, start - timedelta(seconds=42))
+    assert hours.seconds_until_pause() == 42
+    clock(monkeypatch, start)
+    assert hours.seconds_until_pause() == 0
+    monkeypatch.setattr(health, "record_failure", lambda *a: pytest.fail("break counted as failure"))
+    monkeypatch.setattr(health, "record_success", lambda *a: pytest.fail("break counted as success"))
+    health.wrap_job(hours.require_active, "test")()
+    clock(monkeypatch, end)
+    assert hours.seconds_until_pause() > 0
+
+
+def test_zero_break_minutes_keeps_bedtime_budget(monkeypatch, settings_override):
+    settings_override(HOURLY_BREAK_MINUTES=0)
+    clock(monkeypatch, datetime(2026, 10, 23, 12, tzinfo=TORONTO))
+    assert hours.break_window() is None
+    assert hours.break_until() is None
+    assert hours.seconds_until_pause() == hours.seconds_until_bedtime() == 12 * 3600

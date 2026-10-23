@@ -689,6 +689,26 @@ def test_post_ships_the_reviewed_text_and_its_source_link(monkeypatch):
     assert parse_qs(urlparse(opened[0]).query)["text"] == [text]
 
 
+def test_original_normalizes_si_before_validation_and_browser_write(monkeypatch):
+    from urllib.parse import parse_qs, urlparse
+    from src.guards import content_guard
+    from src.x import safari, twitter_client as tc
+    _live_browser(monkeypatch)
+    monkeypatch.setattr(content_guard, "is_duplicate", lambda *a, **k: False)
+    opened, validated = [], []
+    validate = content_guard.validate
+    monkeypatch.setattr(content_guard, "validate", lambda text, **kw:
+                        (validated.append(text), validate(text, **kw))[1])
+    monkeypatch.setattr(safari, "open_url", lambda url, *a, **k: opened.append(url) or True)
+    text = ("AI and Artificial Intelligence tools from OpenAI still need careful testing.\n\n"
+            "https://example.ai/AI")
+    expected = ("SI and Super Intelligence tools from OpenAI still need careful testing.\n\n"
+                "https://example.ai/AI")
+    assert tc.post_tweet(text) is W.SHIPPED
+    assert validated == [expected]
+    assert parse_qs(urlparse(opened[0]).query)["text"] == [expected]
+
+
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 def test_post_naming_a_respected_account_writes_nothing(monkeypatch, dry_run, respected):
     """The respect list is judged before the dry-run exit: the Original is

@@ -2,12 +2,26 @@
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
-`.env.example` is the starting point for @TheAIShrink; its bounded settings
+`.env.example` is the starting point for @thesimaximalist; its bounded settings
 stay commented, at their default, so that an Account's `[limits]` holds.
 What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
 `[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
+
+The Account keeps `BOT_ACCOUNT=theaishrink` for its state namespace while its
+handle is `thesimaximalist`; `previous_handles` includes `TheAIShrink`.
+Its `[limits]` selects `FEED_SCROLL_PASSES=20`, `FEED_SWEEP_SCAN_LIMIT=160` and
+`HOURLY_BREAK_MINUTES=10`. Other Accounts default to eight scrolls and no
+breaks. Feed reads collect every viewport and stop after three with no new
+posts. Breaks occupy ten minutes in roughly three of four waking hours,
+starting between minute 35 and 50 after the first waking hour. The account,
+date and hour determine a repeatable plan shared by all workers and restarts.
+
+The optional `publication_si_wording` boolean defaults to false. The live
+Account enables it for Originals as well as Replies: drafting, editorial
+review and the final write use SI / Super Intelligence in publication prose.
+Source evidence and literal references remain unchanged.
 
 The optional Account boolean `reply_si_wording` defaults to false. The live
 Account sets it to true: Reply prose uses SI / Super Intelligence while research
@@ -30,8 +44,7 @@ this operator-owned policy requires an explicit operator request.
 
 `previous_handles` is an optional list of valid X handles without `@`. Together
 with the Account handle and the runtime `BOT_HANDLE`, it protects all known own
-identities from Replies. The renamed identity is included on this restored
-baseline so preserved URLs remain recognizable. This list does not rename the
+identities from Replies. The former identity remains included so preserved URLs stay recognizable. This list does not rename the
 profile or migrate state. Replied status IDs are retained permanently for all
 Accounts, with no configurable eviction limit.
 
@@ -201,7 +214,9 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` | floor `1` | Posts the feed sweep scrapes per feed. |
+| `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
+| `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length in roughly three of four waking hours; 0 disables breaks. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |

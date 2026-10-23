@@ -1,5 +1,22 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-23 — The SI Maximalist, deep feeds and hourly pauses
+
+The Operator requests the new SI Maximalist identity, English conversational
+humor, SI wording on every publication, and enthusiasm for Musk, X, SpaceX
+and Grok Imagine. The handle changes while the old alias and state namespace
+remain. Both Voice files carry the new preferences with factual support and
+honest bot identity. Discovery includes the named ecosystem while keeping
+existing query counts, publication bounds and standalone-only Replies.
+
+Inspection found that Home scraping read only the last viewport after scrolling
+and did not explicitly select For You. The scraper now verifies each tab and
+collects/deduplicates posts on every screen. The Account config selects 20
+scrolls and 160 posts per feed. Ten-minute pauses in most waking hours use a
+shared deterministic clock plan. All activity gates and model timeouts honor
+them; a pause is not a Safari failure. No bot restart or production-state
+migration accompanies the requested PR, merge, push and release.
+
 ## 2026-10-23 — English only; sleep from midnight to 04:30
 
 The Operator requires English on every publication surface and moves sleep

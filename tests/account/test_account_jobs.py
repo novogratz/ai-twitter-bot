@@ -809,7 +809,7 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
     monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    state = {"page": "/TheAIShrink/followers", "followers": [], "profile": "CLICKED",
+    state = {"page": "/thesimaximalist/followers", "followers": [], "profile": "CLICKED",
              "visits": []}
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
@@ -858,7 +858,7 @@ def test_followback_never_revisits_an_account_found_already_followed(followback,
     chokepoint records it now, without a ledger row, and the next cycle
     skips it."""
     fb, state = followback
-    followers_page = "https://x.com/TheAIShrink/followers"
+    followers_page = "https://x.com/thesimaximalist/followers"
 
     fb.run_followback_cycle()
     assert state["visits"] == [followers_page, "https://x.com/Alreadyfan"]
@@ -879,7 +879,7 @@ def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeyp
 
     fb.run_followback_cycle()
 
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/thesimaximalist/followers", "https://x.com/Realfan"]
 
 
 def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger,
@@ -897,7 +897,7 @@ def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeyp
     fb.run_followback_cycle()
 
     assert [h for h, _ in asked] == ["Realfan"]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/thesimaximalist/followers", "https://x.com/Realfan"]
 
 
 def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_path):
@@ -927,7 +927,7 @@ def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, 
     fb.safe_run_followback_cycle()
 
     assert failures == ["followback"]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
     assert memory_ledger.rows == []
     assert (operator_folder / "whitelist.json").read_text() == "{not json"
 
@@ -950,7 +950,7 @@ def test_followback_never_follows_a_stranger_its_scrape_hands_over(followback, m
     fb.run_followback_cycle()
 
     assert outcomes == [("Suggested", FollowOutcome.REFUSED)]
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
     _no_follow_written(memory_ledger, tmp_path)
 
 
@@ -965,7 +965,7 @@ def test_followback_follows_no_one_off_the_followers_page(followback, monkeypatc
     fb.run_followback_cycle()
 
     assert outcomes == []
-    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
+    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
     assert not (tmp_path / "followers_seen.json").exists()
     _no_follow_written(memory_ledger, tmp_path)
 
@@ -1176,9 +1176,9 @@ var sidebar = new El('div', {'data-testid': 'sidebarColumn'}, [
 """
 
 
-def _followers_page(primary_column: bool = True, path: str = "/TheAIShrink/followers") -> str:
+def _followers_page(primary_column: bool = True, path: str = "/thesimaximalist/followers") -> str:
     column = ("new El('div', {'data-testid': 'primaryColumn'}, ["
-              "link('/TheAIShrink'), link('/TheAIShrink/followers'), "
+              "link('/TheAIShrink'), link('/thesimaximalist/followers'), "
               "cell('fan_one', ['mentioned_one']), cell('fan_two'), cell('xkprz9821'), "
               "cell('fan_one')])") if primary_column else "null"
     return _FOLLOWERS_PAGE_JS + f"""
@@ -1230,7 +1230,7 @@ def test_the_followers_scrape_reads_the_account_of_each_primary_column_cell(monk
     _followers_page(primary_column=False),
     _followers_page(path="/i/flow/login"),
     _followers_page(path="/someoneelse/followers"),
-    _followers_page(path="/TheAIShrink/following"),
+    _followers_page(path="/thesimaximalist/following"),
 ])
 def test_the_followers_scrape_reads_nothing_off_our_followers_page(monkeypatch, tmp_path, page):
     """A redirect, a login wall or a failed page load leaves another page in
@@ -1246,6 +1246,6 @@ def test_the_followers_scrape_reads_nothing_off_our_followers_page(monkeypatch, 
 def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(monkeypatch, tmp_path):
     from src.account import followback_bot as fb
 
-    _run_followers_script(monkeypatch, _followers_page(path="/theaishrink/followers/"))
+    _run_followers_script(monkeypatch, _followers_page(path="/THESIMAXIMALIST/followers/"))
 
     assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]

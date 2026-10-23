@@ -25,7 +25,7 @@ from datetime import timedelta
 from typing import Optional, Tuple
 
 from ..core import config, settings
-from .active_hours import is_active, now_local, stop_requested, window_label
+from .active_hours import break_until, is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
 from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW
@@ -142,6 +142,9 @@ def can_post(action: str) -> Tuple[bool, str]:
         return False, "stop requested"
     if not is_active():
         return False, f"asleep (active {window_label()})"
+    pause_end = break_until()
+    if pause_end is not None:
+        return False, f"scheduled break until {pause_end.isoformat(timespec='minutes')}"
     if action in (QUOTE, RETWEET):
         return False, "automatic quote/repost cap is 0 (editorial originals only)"
     if action == POST:

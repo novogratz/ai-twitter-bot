@@ -248,7 +248,9 @@ _declare("ENABLE_DEBATES", bool, True, "Let the debate job answer mentions; read
 _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may ship.")
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
-_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.")
+_declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.", floor=1)
+_declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
+_declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length in roughly three of four waking hours; 0 disables breaks.", floor=0, ceiling=10)
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 

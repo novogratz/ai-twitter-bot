@@ -1,10 +1,11 @@
-# @TheAIShrink — AI knowledge, useful updates, and conversation
+# The SI Maximalist · @thesimaximalist
 
-A Safari-driven AI account with the voice of a confident, warm, playfully flirty
-45-year-old mom who loves AI. The bot aims to give readers something useful in
-every post and respond naturally in conversations. That Voice lives only in
-the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
-English prompts): every post and reply prompt carries it as one block.
+A Safari-driven SI account with the voice of a fictional, sharp, warm and funny
+45-year-old woman. She loves SI tools and news, the Musk/X/SpaceX ecosystem,
+and especially Grok Imagine. Every reply aims for one useful observation in
+natural, conversational English. Facts stay grounded and bot identity stays
+honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
+name preserves the existing state and history after the account rename.
 
 ## Current publishing policy
 
@@ -13,6 +14,13 @@ English prompts): every post and reply prompt carries it as one block.
   final publication checks; uncertain language is skipped.
 - **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
+- **Ten-minute breaks in most waking hours.** A shared, repeatable daily plan
+  varies the start within minutes 35–50 and skips roughly one hour in four.
+  Jobs, model requests and browser activity stop during a break.
+- **Read both For You and Following deeply.** Verify the selected tab, collect
+  each screen before scrolling, and deduplicate posts. The Account allows
+  up to 20 scrolls and 160 collected posts per feed, stopping if no new posts
+  appear. Reply generation budgets and publication limits still apply.
 - **One Reply per original, ever.** Never answer our own posts or replies,
   comments or ongoing debates. Debate, replyback and babysitter jobs are
   disabled. The browser verifies the actual parent and clicks its own Reply
@@ -22,10 +30,9 @@ English prompts): every post and reply prompt carries it as one block.
   adult charm. Give one technically precise observation or useful implication
   that sparks curiosity, backed by evidence. No invented experience, insider
   claims or pretending to know everything.
-- **SI wording in Replies:** standalone AI becomes SI, and Artificial
-  Intelligence becomes Super Intelligence. The Account's `reply_si_wording`
-  preference is applied during drafting and after final formatting, before
-  publication checks. URLs, @handles, names such as OpenAI and French verb
+- **SI wording everywhere we publish:** standalone AI becomes SI, and Artificial
+  Intelligence becomes Super Intelligence. `publication_si_wording` applies
+  during drafting, before editorial review, and at final publication checks. URLs, @handles, names such as OpenAI and French verb
   forms such as j'ai stay intact.
 - **AI and SI in research:** searches and relevance filters retain AI and
   Artificial Intelligence and also recognize SI, Super Intelligence,
@@ -43,7 +50,7 @@ English prompts): every post and reply prompt carries it as one block.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
+- **Discovery covers SI and the named Musk/X/SpaceX ecosystem**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an

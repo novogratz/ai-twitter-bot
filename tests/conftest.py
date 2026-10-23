@@ -197,12 +197,15 @@ def respected(operator_folder):
 def _daylight_default(monkeypatch):
     """Legacy tests run during daytime independent of the CI host's clock.
 
-    Boundary tests replace this clock with their own explicit instants.
+    Boundary tests replace this clock and opt into scheduled breaks explicitly.
     """
     from src.guards import active_hours
+    from src.core import settings
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
-    yield
+    with settings.overriding() as override:
+        override(HOURLY_BREAK_MINUTES=0)
+        yield
 
 
 @_pytest.fixture(autouse=True)

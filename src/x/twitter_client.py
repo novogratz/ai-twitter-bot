@@ -185,7 +185,8 @@ def post_tweet(text: str) -> WriteOutcome:
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
-    text = _scrub_metadata_leaks(text)
+    from ..core import reply_wording
+    text = reply_wording.apply(_scrub_metadata_leaks(text), kind="original")
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13

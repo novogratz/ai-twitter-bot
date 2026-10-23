@@ -24,7 +24,7 @@ from .config import _PROJECT_ROOT
 from .logger import log
 from .state_errors import StateUnreadable
 from .state_store import DISPOSABLE, StateFile
-from ..guards.active_hours import OutsideActiveHours
+from ..guards.active_hours import OutsideActiveHours, ScheduledBreak
 
 HEALTH = StateFile("safari_health.json",
                    {"consecutive_failures": 0, "last_recovery_ts": 0, "total_recoveries": 0},
@@ -73,7 +73,9 @@ def _not_a_failure(label: str, exc: BaseException | None, safari_health: bool) -
     """Log a StateUnreadable or an OutsideActiveHours, never a cycle failure,
     and say whether `exc` was one. Only a job with `safari_health` is told
     that Safari is not restarted."""
-    if isinstance(exc, OutsideActiveHours):
+    if isinstance(exc, ScheduledBreak):
+        say, event, advice = log.info, str(exc), ""
+    elif isinstance(exc, OutsideActiveHours):
         say, event, advice = log.info, "stopped for the Overnight", ""
     elif isinstance(exc, StateUnreadable):
         say, event = log.error, f"halted: {exc}"
