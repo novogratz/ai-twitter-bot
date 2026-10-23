@@ -112,6 +112,68 @@ def test_a_codex_usage_limit_is_cached_for_the_next_calls(providers):
     assert [name for name, _ in providers.calls] == ["ollama"]
 
 
+def test_a_codex_lockout_cannot_reenable_disabled_fallbacks(providers):
+    providers.settings(LLM_DISABLE_FALLBACK=True, LLM_FALLBACK_CLI="ollama")
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    providers.ollama.answers = [TEXT]
+
+    for _ in range(2):
+        result = ask(provider="codex")
+        assert (result.status, result.provider, result.model, result.stdout) == (
+            LLMStatus.EXHAUSTED, "codex", "cloud-model", "")
+    assert [name for name, _ in providers.calls] == ["codex"]
+
+
+@pytest.mark.parametrize("surface_name", [
+    "REPLY", "PRIORITY_REPLY", "REPLY_SEARCH", "RELATION_REPLY",
+    "REPLY_ON_AI_CLI", "PRIORITY_REPLY_ON_AI_CLI",
+])
+def test_codex_reply_routes_pass_the_model_and_effort_to_the_cli(
+        monkeypatch, settings_override, surface_name):
+    from src.core import llm_client as llm
+
+    settings_override(AI_CLI="codex", REPLY_LLM_PROVIDER="codex",
+                      REPLY_MODEL="gpt-6.1-sol", PRIORITY_REPLY_MODEL="gpt-6.1-sol",
+                      CODEX_REASONING_EFFORT="xhigh", LLM_DISABLE_FALLBACK=True)
+    commands = []
+
+    def run(cmd, **options):
+        commands.append((cmd, options))
+        return LLMResult(0, TEXT, "")
+
+    monkeypatch.setattr(llm, "_run_cmd", run)
+    route = llm.resolve(llm.Surface[surface_name])
+    result = llm.run_llm("prompt", route.model, label="TEST", force_provider=route.provider,
+                         output_json=route.options.output_json, allowed_tools=route.options.allowed_tools,
+                         timeout=route.options.timeout, cwd=route.options.cwd)
+
+    assert (result.stdout, result.provider, result.model) == (TEXT, "codex", "gpt-6.1-sol")
+    [(cmd, options)] = commands
+    assert cmd[cmd.index("--model") + 1] == "gpt-6.1-sol"
+    assert cmd[cmd.index("-c") + 1] == 'model_reasoning_effort="xhigh"'
+    assert cmd[cmd.index("--sandbox") + 1] == "read-only"
+    assert "--ephemeral" in cmd and "--skip-git-repo-check" in cmd
+    assert options["cwd"] == route.options.cwd
+    assert ("--search" in cmd) == (surface_name == "REPLY_SEARCH")
+
+
+def test_blank_codex_effort_keeps_the_cli_default(settings_override):
+    from src.core.llm_client import _build_cmd
+
+    settings_override(CODEX_REASONING_EFFORT=" ")
+    assert "-c" not in _build_cmd("prompt", "model", True, None, "codex")
+
+
+@pytest.mark.parametrize("provider", ["claude", "gemini", "opencode"])
+def test_codex_effort_does_not_change_other_cli_commands(settings_override, provider):
+    from src.core.llm_client import _build_cmd
+
+    settings_override(CODEX_REASONING_EFFORT="")
+    before = _build_cmd("prompt", "model", True, None, provider)
+    settings_override(CODEX_REASONING_EFFORT="high")
+    assert _build_cmd("prompt", "model", True, None, provider) == before
+
+
 @pytest.mark.parametrize("answer", [
     f"Voici les replies :\n```json\n{COMPACT}\n```\nBonne chance !",
     f"Here are the replies: {COMPACT} — enjoy.",

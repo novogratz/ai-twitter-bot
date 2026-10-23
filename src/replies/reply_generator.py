@@ -14,9 +14,9 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
 
-from ..core import account, personality_store
+from ..core import account, personality_store, reply_wording
 from ..core.humanizer import smart_trim, strip_agent_preamble
-from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Surface, resolve, run_llm
+from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Output, Surface, resolve, run_llm
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
@@ -122,6 +122,10 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         return Generation(Outcome.FAILED, language=language)
     if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
         return Generation(Outcome.DECLINED, language=language)
+    # Structured search output also contains source URLs/text: only prose is
+    # normalized here. Its parsed Reply goes through the pipeline below.
+    if call.profile.output is Output.TEXT:
+        reply = reply_wording.apply(reply)
     if call.max_chars:
         reply = smart_trim(reply, call.max_chars)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
@@ -129,6 +133,8 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
 
 
 def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
+    if account.current().english_only:
+        return "en"
     rule = call.language
     if rule is LanguageRule.ENGLISH:
         return "en"
@@ -143,6 +149,8 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
 
 def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
     anchors = [personality_store.hard_rules_block()]
+    if account.current().english_only:
+        anchors.append(_LANGUAGE_OVERRIDE["en"] + "\nUse English even when the source is French or a template says to match its language.")
     if call.dossier:
         anchors = [personality_store.render_account_block(author)] + anchors
     prompt = call.template.format(**{
@@ -153,4 +161,5 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, *anchors]))
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
+                                    reply_wording.prompt_block(), *anchors]))

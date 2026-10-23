@@ -13,7 +13,7 @@ truncation gate, human typo).
 """
 from datetime import datetime
 
-from ..core import settings
+from ..core import account, settings
 from ..core.history import load_history
 from ..core.logger import log
 
@@ -28,6 +28,9 @@ def _latest_post_age_minutes() -> float:
 
 
 def run_babysit_cycle():
+    if account.current().standalone_replies_only:
+        log.info("[BABYSIT] Disabled by the Account's standalone Reply policy.")
+        return
     age = _latest_post_age_minutes()
     if age > settings.get("BABYSIT_WINDOW_MINUTES"):
         log.debug(f"[BABYSIT] Latest post is {age:.0f} min old — outside the hot window, nothing to do.")

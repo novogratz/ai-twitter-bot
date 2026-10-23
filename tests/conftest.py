@@ -20,6 +20,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def pytest_configure(config):
+    from src.core import settings
+    # Live credentials, identity, model choices and tighter quotas are not fixtures.
+    settings.load(env_file=os.devnull, environ={})
     from src.core.logger import setup_logging
 
     logger = setup_logging()
@@ -36,6 +39,7 @@ def pytest_configure(config):
         "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"))
     logger.addHandler(handler)
+    logger.propagate = True  # caplog must see the isolated bot logger.
     logger.info(f"[TEST] bot logger redirected to {tmp.name} for this pytest session.")
 
 
@@ -53,6 +57,27 @@ import pytest as _pytest
 
 
 _UNWALLED = {}
+
+
+@_pytest.fixture
+def bilingual_account(monkeypatch, settings_override):
+    """Exercise the engine's optional parent-language policy on another Account."""
+    from dataclasses import replace
+    from src.core import account
+    profile = replace(account.current(), english_only=False)
+    monkeypatch.setattr(account, "current", lambda: profile)
+    settings_override(FR_FORCED_REPLY_HANDLES="Graphseo")
+    return profile
+
+
+@_pytest.fixture
+def conversation_account(monkeypatch):
+    """An Account without the live standalone-only policy, for legacy engine tests."""
+    from dataclasses import replace
+    from src.core import account
+    profile = replace(account.current(), standalone_replies_only=False)
+    monkeypatch.setattr(account, "current", lambda: profile)
+    return profile
 
 
 @_pytest.fixture

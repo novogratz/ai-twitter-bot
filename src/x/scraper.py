@@ -304,9 +304,9 @@ def is_own_post(tweet: dict) -> bool:
     own posts and own QRTs live under /BOT_HANDLE/status/; retweets of
     others on our profile carry the ORIGINAL author's URL and are correctly
     excluded."""
-    from ..core.config import BOT_HANDLE
-    url = (tweet.get("url") or "").lower()
-    return f"x.com/{BOT_HANDLE.lower()}/status/" in url
+    from ..core import account
+    from . import x_urls
+    return x_urls.author(tweet.get("url") or "") in account.own_handles()
 
 
 def _profile_visit_allowed(username: str) -> bool:

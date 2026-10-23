@@ -201,7 +201,7 @@ _CASUAL_FIRST_WORDS = {
 # content_guard.looks_truncated safelist — dropping the period must never
 # create something that gate would refuse).
 _SAFE_SHORT_ENDINGS = {
-    "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+    "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
     "to", "of", "at", "by", "we", "be", "me", "my", "do",
 }
 

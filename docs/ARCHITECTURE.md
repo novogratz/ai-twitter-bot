@@ -30,7 +30,7 @@ At start, `main()`:
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
    `--reply-only`;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   pauses or resumes it at the 04:30 and 23:30 boundaries.
+   pauses or resumes it at the 04:30 and 00:00 boundaries.
 
 Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
@@ -38,7 +38,7 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 23:30, DST
+`src/guards/active_hours.py` owns the clock: from 04:30 until the next midnight, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
@@ -46,7 +46,7 @@ no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
 pause/resume loop must not treat a stop as a wake-up boundary.
 
-Pausing the scheduler is not enough, because a job queued at 23:29 would still
+Pausing the scheduler is not enough, because a job queued at 23:59 would still
 run. The check is repeated at each point where work leaves the process:
 
 - `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
@@ -57,11 +57,11 @@ run. The check is repeated at each point where work leaves the process:
 - `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
   relaunch never run outside waking hours;
 - `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
-  also caps every model call's timeout at the time left before 23:30;
+  also caps every model call's timeout at the time left before 00:00;
 - `action_guard.can_post`, which also refuses once a stop was requested, and
   `editorial_bot` before fetching a source and again before publishing.
 
-A request already sent to X or to a model can finish after 23:30; it cannot
+A request already sent to X or to a model can finish after 00:00; it cannot
 authorize a new action.
 
 ## Jobs
@@ -96,9 +96,9 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
-| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
-| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
-| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
+| `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
+| `babysit_job` | Disabled for the live Account | Runs an extra replyback cycle while our latest post is under an hour old. |
+| `debate_job` | Disabled for the live Account | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
 | `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
@@ -292,6 +292,11 @@ fails on an error, an empty answer, a limit or refusal message
 cached in `codex_lockout.json`: it sends the call to the fallback labelled
 `(codex locked)`, and later codex calls go to Ollama alone until it expires,
 `LLM_FALLBACK_CLI` set or not: Ollama is local, so no call leaves the machine.
+With `LLM_DISABLE_FALLBACK=1`, a cached lockout instead returns
+`LLMStatus.EXHAUSTED` without another model call. The live October 23 Reply
+configuration uses this switch and Codex `gpt-6.1-sol`; the adapter passes
+`CODEX_REASONING_EFFORT=xhigh` explicitly and accepts the Reply routes'
+`/tmp` directory with `--skip-git-repo-check`, retaining the read-only sandbox.
 When every provider tried failed on a usage limit (`_USAGE_LIMIT_PATTERNS`,
 a codex lockout seen or cached counting as one), the call comes back
 `LLMStatus.EXHAUSTED`. Only the CLI or the transport reports a limit: the
@@ -548,12 +553,22 @@ admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
 handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
 answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
-(dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
+  (dashes, `smart_trim`, `casualize`, Account language policy, typo) and
 validates it last. `reply_to_tweet` calls `judge_reply` once under the
 Safari lock, the lock that also records the reply, so the spacing and the
 Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
+
+The live Account's `standalone_replies_only` omits debate, replyback and
+babysitter from the scheduler, and their entry points return immediately.
+These legacy jobs remain available to other Accounts without that policy.
+Known nested replies and follow-up context are definitive admission refusals,
+including in VIP discovery. Own-author checks combine the Account handle,
+runtime handle and historical aliases. Before any optional parent like and
+again before clicking Reply, `_reply_target` verifies the exact opened author
+and status, its standalone position, no visible prior own answer, and its own
+Reply button. An ambiguous or unreadable page cannot authorize a click.
 
 Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
 `mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
@@ -590,7 +605,7 @@ generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
 one-second slices and raises `OutsideActiveHours` on a stop request or at
-23:30. The chokepoint still judges: when another job's reply lands during
+00:00. The chokepoint still judges: when another job's reply lands during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
 On a rate limit, bedtime or an unreadable state file the pipelined job
@@ -601,16 +616,28 @@ send too early is refused on spacing and stays replayable.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
-tweet already answered, and marks it just before writing, all under one lock.
+tweet already answered, and marks it just before writing, under a thread lock
+and an OS process lock at `replied_tweets.json.lock`. History has no eviction
+limit; every retained ID remains claimed permanently after a possible submission.
 A dry run stops before the claim and writes only a dry-run ledger row.
 The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty. If the reply keystroke or the paste fails, or a
-stop or 23:30 interrupts the sequence before the submit keystroke, nothing
+instead of reading as empty. If the target verification or paste fails, or a
+stop or 00:00 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
-reply.
+reply. A visibly pre-existing own answer also retains the claim permanently,
+even if that answer later leaves the visible viewport.
+
+`src/core/reply_wording.py` applies the Account's optional `reply_si_wording`
+preference to Reply prose. The generator normalizes plain text before its
+length limit; structured search output stays intact until the Reply pipeline
+extracts its reply. The pipeline normalizes before length checks and logging,
+and final Reply admission applies it again after formatting, before content validation. Literal
+references and source evidence retain their original wording. The optional
+search Reply job reads its research queries from the Account, including both
+AI and SI vocabularies for the live Account.
 
 Every Reply prompt is assembled by `src/replies/reply_generator.py`. A job
 passes its Reply call, a `ReplyCall` (template, Call surface, label,
@@ -727,12 +754,13 @@ These are how the code behaves today, not design intent:
   write is already UNCONFIRMED with its claim kept.
 - The debate, VIP and Graphseo Reply calls (`dossier=False`) carry the Voice and
   the hard rules but not the author's dossier.
-- The Graphseo Reply call forces the Claude CLI whenever it is installed
+- The Graphseo Reply call forces the Codex CLI whenever it is installed
   (his Relation's `provider`, applied by `direct_reply._own_call`), whatever
   `REPLY_LLM_PROVIDER` says, and falls back on `AI_CLI` when it is not: the
-  one cloud call without `LLM_FALLBACK_CLI`, pending the Operator's decision.
-  It runs `PRIORITY_REPLY_MODEL`, unset `claude-haiku-4-5-20251001`.
-- `early_bird` and `mega_watch` ignore `FR_FORCED_REPLY_HANDLES`: an
+  Relation override. The October 23 configuration runs `PRIORITY_REPLY_MODEL`
+  set to `gpt-6.1-sol`, like the other Replies.
+- On Accounts without `english_only`, `early_bird` and `mega_watch` ignore
+  `FR_FORCED_REPLY_HANDLES`: an
   English-looking post from @Graphseo gets English reply text, which
   `judge_reply` then refuses.
 - The replyback language test matches substrings, so "honestly" or "best"

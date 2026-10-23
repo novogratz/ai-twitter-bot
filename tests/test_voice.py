@@ -7,31 +7,33 @@ VOICE_FR = ACCOUNT / "voice_fr.md"
 VOICE_EN = ACCOUNT / "voice_en.md"
 
 
-def test_voice_has_ai_fan_voice():
+def test_voice_has_technical_si_voice():
     for path in (VOICE_FR, VOICE_EN):
-        text = path.read_text().lower()
-        assert "obsessed with ai" in text and "excited" in text
+        text = " ".join(path.read_text().lower().split())
+        assert "si / super intelligence" in text and "technical depth" in text
+        assert all(term in text for term in ("transformers", "inference", "evaluation", "gpus"))
         assert "45-year-old woman and mom" in text
 
 
 def test_voice_prioritizes_reader_value():
-    text = VOICE_FR.read_text().lower()
-    assert "reader takeaway" in text and "source" in text
-    assert "never fill a quota with filler" in text
+    text = " ".join(VOICE_FR.read_text().lower().split())
+    assert "useful new way" in text and "first-party sources" in text
+    assert "skip weak contributions" in text
 
 
 def test_voice_keeps_warmth_and_honest_criticism():
-    text = VOICE_FR.read_text().lower()
-    assert "kind and hopeful" in text and "never cruel" in text
-    assert "honest criticism" in text and "uncertainty" in text
+    text = " ".join(VOICE_FR.read_text().lower().split())
+    assert "kind, curious and constructive" in text and "never put down the person" in text
+    assert "qualify an inference" in text and "do not bluff" in text
 
 
 def test_voice_carries_editorial_strategy():
-    text = VOICE_FR.read_text().lower()
-    assert "at least three original ai posts" in text
-    assert "eight is the absolute ceiling" in text
-    assert "no automated quote tweets" in text
-    assert "replies remain uncapped" in text
+    text = " ".join(VOICE_FR.read_text().lower().split())
+    assert "at least three sourced originals" in text
+    assert "eight maximum" in text
+    assert "no quotes, reposts or burst threads" in text
+    assert "one reply" in text and "standalone original, permanently" in text
+    assert "no debate or follow-up exchanges" in text
 
 
 def test_persona_is_woman_mom_in_the_one_voice():
@@ -40,10 +42,11 @@ def test_persona_is_woman_mom_in_the_one_voice():
     anyone else'. The persona is pinned in the spine (the Voice), which
     the Voice block carries into every prompt (issue #192: no surface keeps
     its own copy). Also pins that the bestie bit moved big brother -> sister."""
-    spine = VOICE_FR.read_text().lower()
+    spine = " ".join(VOICE_FR.read_text().lower().split())
     assert "woman" in spine and "mom" in spine and "45-year-old" in spine
-    assert "sharpest ai mind" in spine
-    assert "bro" in spine  # the no-bro-speak rule is stated
+    assert "fictional 45-year-old woman and mom of one" in spine
+    assert "exceptional intelligence" in spine and "never announce that you know everything" in spine
+    assert "answer identity questions honestly as a bot" in spine
 
     from src.core import account
     bestie_prompt = account.current().relations.get("TheBTCTherapist").prompt.lower()
@@ -64,7 +67,7 @@ def test_relation_prompts_script_no_medical_metaphor():
         assert [w for w in ("clinical", "couch", "patient", "therapy", "session") if w in low] == []
 
 
-def test_the_voice_renders_the_operators_files_verbatim():
+def test_the_voice_renders_the_operators_files_verbatim(bilingual_account):
     """Issue #192: one reader, render_voice, and the Operator's text as is."""
     from src.core import personality_store
     for lang, path in (("fr", VOICE_FR), ("en", VOICE_EN)):
@@ -76,9 +79,9 @@ def test_savvy_tech_mom_register():
     """Operator 2026-07-19: 'be less a troll and more a savvy tech mom.'
     The spine carries the savvy-tech-mom-not-a-troll register so every
     surface inherits it."""
-    spine = VOICE_FR.read_text().lower()
-    assert "45-year-old woman and mom" in spine and "never cruel" in spine
-    assert "something useful" in spine, "helpful register must be stated"
+    spine = " ".join(VOICE_FR.read_text().lower().split())
+    assert "45-year-old woman and mom" in spine and "never put down the person" in spine
+    assert "useful new way" in spine and "patience, perspective and humor" in spine
 
 
 def test_spicy_dial_suggestive_never_explicit():
@@ -89,14 +92,14 @@ def test_spicy_dial_suggestive_never_explicit():
     rationed (~1 in 4), and the sharpest-AI-mind payload always required
     (smart IS the sexy). A spicy persona without the guardrails is a brand
     risk; guardrails without the dial ignores the mandate."""
-    spine = VOICE_FR.read_text().lower()
-    assert "spicy dial" in spine and ("flirty" in spine or "flirt" in spine)
-    assert "never explicit" in spine and "the wink, not the wardrobe" in spine
-    assert "1 post in 4" in spine or "1 in 4" in spine, "spice must be rationed"
-    assert "smart is the sexy" in spine, "authority must ride with the heat"
+    spine = " ".join(VOICE_FR.read_text().lower().split())
+    assert "adult charm" in spine and "flirty" in spine
+    assert "non-explicit" in spine and "never invent intimacy" in spine
+    assert "at most one in four posts" in spine
+    assert "let flirting replace the point" in spine
 
     from src.core import personality_store
     for lang in ("fr", "en"):
         low = personality_store.render_voice(lang).lower()
-        assert "flirt" in low and "never explicit" in low, \
+        assert "flirt" in low and "non-explicit" in low, \
             "the Voice every prompt carries must hold the dial WITH its guardrail"

@@ -8,18 +8,30 @@ English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-Restored on October 23, 2026 at the Operator's request to the code in use
-on September 26: `348c82bcade1230abcd670682b1e10be9cf6f1c7`, committed
-September 25 at 21:18:52 America/Toronto. September 26 had no main commit.
-Code, Account configuration, Voice and tests match that snapshot; only
-rollback notes in AGENTS, README, editorial policy and history are added.
-This restores the behavior below, including Originals, Startup posts,
-conversation jobs and standalone likes. Later ranked Reply review, the
-three-like minimum and the priority like → Reply → repost sequence are removed.
-Uncommitted local work is backed up. Runtime state and `.env` are preserved;
-this release does not start, stop or restart the bot or change the live X profile.
-
-- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
+- **English only:** every Original and Reply, including responses to French
+  parents and VIPs. The Account's `english_only` policy controls prompts and
+  final publication checks; uncertain language is skipped.
+- **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
+  model timeouts and Startup windows all use this boundary.
+- **One Reply per original, ever.** Never answer our own posts or replies,
+  comments or ongoing debates. Debate, replyback and babysitter jobs are
+  disabled. The browser verifies the actual parent and clicks its own Reply
+  button. History survives restarts without eviction; uncertain submissions
+  stay claimed. Current and historical account handles are protected.
+- **A sharper SI voice:** a fictional 45-year-old mom with confident, playful
+  adult charm. Give one technically precise observation or useful implication
+  that sparks curiosity, backed by evidence. No invented experience, insider
+  claims or pretending to know everything.
+- **SI wording in Replies:** standalone AI becomes SI, and Artificial
+  Intelligence becomes Super Intelligence. The Account's `reply_si_wording`
+  preference is applied during drafting and after final formatting, before
+  publication checks. URLs, @handles, names such as OpenAI and French verb
+  forms such as j'ai stay intact.
+- **AI and SI in research:** searches and relevance filters retain AI and
+  Artificial Intelligence and also recognize SI, Super Intelligence,
+  superintelligence and ASI. Source evidence keeps its original wording;
+  the preferred terms are not claims of an achieved capability.
+- **Active daily: 04:30–00:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -45,7 +57,7 @@ this release does not start, stop or restart the bot or change the live X profil
 
 The bot stays idle overnight and resumes automatically. Browser operations and
 model calls check the waking window too, so a queued daytime task cannot start
-a new action after 23:30. An already-issued request may still finish remotely.
+a new action after 00:00. An already-issued request may still finish remotely.
 
 ## Daily editorial mix
 
@@ -73,14 +85,23 @@ See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details
 
 ## Run
 
+The operator's October 23 response configuration uses Codex `gpt-6.1-sol`
+with xhigh reasoning effort for all Replies, including VIP Relations.
+Set `AI_CLI=codex`, `REPLY_LLM_PROVIDER=codex`, both `REPLY_MODEL` and
+`PRIORITY_REPLY_MODEL` to `gpt-6.1-sol`, and `CODEX_REASONING_EFFORT=xhigh`.
+`LLM_DISABLE_FALLBACK=1` prevents a quota lockout from routing back to Ollama.
+Originals retain `PROFILE_LLM_PROVIDER=ollama`. Codex must be installed and
+signed in; these settings take effect at the next explicitly requested restart.
+
 Requires macOS, Safari with JavaScript from Apple Events enabled (it need not be
 the default browser: the bot opens every page in Safari), Python 3.12+,
 [uv](https://docs.astral.sh/uv/), and the configured local Ollama models. Originals use `gemma4:31b` by default
-(`EDITORIAL_OLLAMA_MODEL`); replies use `OLLAMA_MODEL` (default
-`qwen3.6:35b-a3b`), the model `bin/run.sh` pre-warms. With the
-default providers, no call leaves Ollama unless `LLM_FALLBACK_CLI` names a
+(`EDITORIAL_OLLAMA_MODEL`). For Accounts selecting Ollama Replies,
+`OLLAMA_MODEL` defaults to `qwen3.6:35b-a3b`, the model `bin/run.sh`
+pre-warms. The live `.env` and template select Codex Replies as above.
+With the engine's default providers, calls use Ollama unless `LLM_FALLBACK_CLI` names a
 fallback, codex for instance, with one exception: the Replies to @Graphseo run
-on the Claude CLI whenever it is installed (his Relation's `provider` in
+on the Codex CLI whenever it is installed (his Relation's `provider` in
 `account.toml`). A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the

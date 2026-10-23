@@ -55,6 +55,16 @@ def corrupt_replied_store():
         f.write("[")
 
 
+def test_prepared_search_reply_uses_si_before_length_checks_and_logging(chokepoint):
+    draft = "Artificial Intelligence needs better evals."
+    expected = "Super Intelligence needs better evals."
+    item = rp.Candidate(fresh("someone"), "AI source text", "search", reply=draft)
+    assert run(job(text_bounds=(25, len(expected))), [item]) == 1
+    assert chokepoint.calls[0].text == expected
+    assert logged()[0].text == expected
+    assert item.text == "AI source text"
+
+
 # --- Reply admission comes first ----------------------------------------------
 
 
@@ -79,7 +89,7 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override):
+def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override, conversation_account):
     from src.guards import action_guard
     from src.guards.reply_admission import Refusal
 
@@ -129,6 +139,7 @@ def test_a_decline_is_set_aside_and_failures_are_replayed(llm, chokepoint, pipel
 
 
 @pytest.mark.parametrize("pipelined", MODES)
+@pytest.mark.usefixtures("bilingual_account")
 def test_a_reply_naming_a_respected_account_is_set_aside(llm, chokepoint, monkeypatch, pipelined):
     """Issue #190: the real chokepoint refuses a Reply naming another
     Respected account. The post is set aside as after a model SKIP, never
@@ -609,7 +620,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
         if cut == "stop":
             stop.set()
         else:
-            s.now = s.now.replace(hour=23, minute=30, second=0)
+            s.now = s.now.replace(hour=0, minute=0, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short

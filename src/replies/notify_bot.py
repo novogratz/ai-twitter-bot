@@ -52,6 +52,9 @@ def run_replyback_cycle():
     Threads boost both tweets in the algorithm. Every Reply is nested
     in-thread, under the engager's reply.
     """
+    if account.current().standalone_replies_only:
+        log.info("[REPLYBACK] Disabled by the Account's standalone Reply policy.")
+        return
     log.info("[REPLYBACK] Scanning for replies to engage with...")
 
     data = scrape_own_tweet_and_replies()

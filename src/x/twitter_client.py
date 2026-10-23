@@ -462,6 +462,66 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         steps=steps, close_tab=False)
 
 
+def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
+    """Verify the actual parent and optionally click its own Reply button.
+
+    The standalone Account policy also rejects comments and visible earlier
+    answers by any of our identities. `on_answered` preserves the claim for a
+    visible previous answer. Missing or ambiguous evidence refuses.
+    """
+    from ..core import account
+    from ..guards import reply_admission
+    from . import x_urls
+
+    sid, expected = x_urls.status_id(url), x_urls.author(url)
+    self_handles = account.own_handles()
+    if not sid or not expected or expected in self_handles or reply_admission.is_blocked_account(expected):
+        return False
+    js = r"""(() => {
+      const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__;
+      const standalone = __STANDALONE__;
+      const articles = [...document.querySelectorAll('article')];
+      const own = (article, selector) => [...article.querySelectorAll(selector)]
+        .filter(el => el.closest('article') === article
+          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+      const status = link => link?.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d+)\/?$/);
+      const permalink = article => own(article, 'a[href]').find(l => status(l) && l.querySelector('time'));
+      const page = location.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d+)\/?$/);
+      if (!page || page[2] !== id || page[1].toLowerCase() !== author) return 'refused';
+      const targets = articles.filter(a => status(permalink(a))?.[2] === id);
+      if (targets.length !== 1) return 'refused';
+      const article = targets[0], link = permalink(article), actual = status(link)[1].toLowerCase();
+      if (actual !== author || self.includes(actual)) return 'refused';
+      if (standalone) {
+        if (articles[0] !== article) return 'refused';
+        const text = own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
+        if (text.trim().startsWith('@') || /Replying to|En réponse à/i.test(article.innerText))
+          return 'refused';
+        if (articles.slice(1).some(a => self.includes(status(permalink(a))?.[1].toLowerCase())))
+          return JSON.stringify({url: link.href, already_replied: true, clicked: false});
+      }
+      const buttons = own(article, '[data-testid="reply"]');
+      if (buttons.length !== 1) return 'refused';
+      if (click) buttons[0].click();
+      return JSON.stringify({url: link.href, clicked: click});
+    })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
+    js = js.replace("__CLICK__", json.dumps(click)).replace("__SELF__", json.dumps(sorted(self_handles)))
+    js = js.replace("__STANDALONE__", json.dumps(account.current().standalone_replies_only))
+    try:
+        opened = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]") or "null")
+    except (TypeError, ValueError):
+        return False
+    if not (isinstance(opened, dict) and isinstance(opened.get("url"), str)
+            and x_urls.status_id(opened["url"]) == sid
+            and x_urls.author(opened["url"]) == expected):
+        return False
+    if opened.get("already_replied") is True:
+        if on_answered is not None:
+            on_answered()
+        return False
+    return opened.get("clicked") is click
+
+
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
                    on_refused=None) -> WriteOutcome:
     """Open a tweet, click reply, type the reply, and submit.
@@ -492,7 +552,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     rows into engagement_log (the "941 replies" day was mostly fiction;
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
-    Replies that shipped."""
+    Replies that shipped, were visibly pre-existing, or whose submission was uncertain."""
     from ..guards import action_guard, active_hours, replied_store, reply_admission
     # Set by an admitting verdict: the exact text to send, and its author.
     admitted_text = author = ""
@@ -528,9 +588,15 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         return None
 
     def steps():
-        # Every exit before the submit keystroke sent nothing: a failed step, a
-        # stop or bedtime releases the claim so a later cycle may answer.
+        # A pre-submit failure releases the claim unless the page proves
+        # that this conversation already has an answer from us.
         sent = False
+        answered_before = False
+
+        def remember_answered():
+            nonlocal answered_before
+            answered_before = True
+
         try:
             # Make sure Safari is focused first
             if not _activate_or_abort(tweet_url):
@@ -552,17 +618,16 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
+            if not _reply_target(tweet_url, on_answered=remember_answered):
+                log.info("[REPLY] Opened target is self, nested, already answered or unverifiable: %s", tweet_url)
+                return WriteOutcome.REFUSED
             _maybe_like_parent(tweet_url)
             time.sleep(1)
 
             log.info("Clicking reply...")
-            if not safari._run_applescript('''
-            tell application "System Events"
-                keystroke "r"
-            end tell
-            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
-                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
-                return WriteOutcome.FAILED
+            if not _reply_target(tweet_url, click=True, on_answered=remember_answered):
+                log.info(f"[REPLY] Reply target changed or its button is unreadable: {tweet_url}")
+                return WriteOutcome.REFUSED
             time.sleep(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)
@@ -582,7 +647,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             log.info("Reply posted!")
             return WriteOutcome.SHIPPED
         finally:
-            if not sent:
+            if not sent and not answered_before:
                 replied_store.release(tweet_url)
 
     def rows():

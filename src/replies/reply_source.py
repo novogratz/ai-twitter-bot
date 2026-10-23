@@ -72,7 +72,8 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         text = tweet.get("text") or ""
         if not url or not text.strip():
             continue
-        if declaration.root_only and x_urls.is_reply_like_tweet(tweet):
+        is_reply = x_urls.is_reply_like_tweet(tweet)
+        if (declaration.root_only or account.current().standalone_replies_only) and is_reply:
             continue
         if author and x_urls.author(url) not in ("", author):
             continue
@@ -81,5 +82,5 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:
             continue
-        candidates.append(Candidate(url, text, tag))
+        candidates.append(Candidate(url, text, tag, is_reply=is_reply))
     return candidates

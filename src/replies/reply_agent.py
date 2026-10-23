@@ -348,33 +348,13 @@ EXEMPLES SAVAGE (sur l'idée/marché/hype, JAMAIS la personne):
 
 {skip_urls_section}
 
-SEARCHES — AI ONLY. Run in this order, ENGLISH FIRST.
-⚠️ MANDATORY: add `since:{since_date}` to EVERY query. No filter = old tweets = wasted cycle.
+SEARCHES — {domain}. Run these Account queries in order.
+MANDATORY: keep every listed search alias, filter and since date. Search source
+wording as written; the Reply wording preference never narrows research.
 
-🌍 AI EN — labs / models / agents (top priority):
-1. "site:x.com OpenAI OR Anthropic OR xAI OR \"GPT-5\" since:{since_date}"
-2. "site:x.com ChatGPT OR Claude OR Gemini OR Grok OR Llama since:{since_date}"
-3. "site:x.com \"AI agents\" OR \"agentic AI\" OR \"reasoning model\" since:{since_date}"
-4. "site:x.com AGI OR superintelligence OR \"AI safety\" OR \"AI alignment\" since:{since_date}"
-5. "site:x.com from:OpenAI OR from:AnthropicAI OR from:sama OR from:karpathy since:{since_date}"
+{research_queries}
 
-🌍 AI EN — compute / chips / infra:
-6. "site:x.com Nvidia OR GPU OR \"AI datacenter\" OR \"AI capex\" since:{since_date}"
-7. "site:x.com \"AI chip\" OR TPU OR Broadcom OR CoreWeave since:{since_date}"
-8. "site:x.com \"humanoid robot\" OR \"embodied AI\" OR Figure OR \"Tesla Optimus\" since:{since_date}"
-9. "site:x.com from:ylecun OR from:demishassabis OR from:drfeifei OR from:AndrewYNg since:{since_date}"
-
-🌍 AI EN — money angle (AI stocks):
-10. "site:x.com Palantir OR \"AI stock\" OR \"AI bubble\" OR \"AI valuation\" since:{since_date}"
-11. "site:x.com \"AI startup\" OR \"AI funding\" OR \"AI round\" OR \"AI IPO\" since:{since_date}"
-
-🇫🇷 AI FR (tail — reply to French AI threads in French):
-12. "site:x.com IA OR ChatGPT OR Mistral OR OpenAI lang:fr since:{since_date}"
-13. "site:x.com Claude OR Anthropic OR \"agents IA\" OR Nvidia lang:fr since:{since_date}"
-14. "site:x.com from:arthurmensch OR from:GuillaumeLample OR from:Korben lang:fr since:{since_date}"
-
-EVERYTHING IS ABOUT AI. Skip any tweet that is not about AI (no pure space, no
-generic markets/crypto unless it's the AI trade). Reply in the tweet's language.
+Skip any tweet outside {domain}. Reply in the tweet's language.
 
 TYPE: Tout en "reply". Pas de quote tweets. Réponds directement.
 
@@ -499,7 +479,7 @@ def generate_replies(recent_topics=None, already_replied=None):
 
     # Global mood: this path searches broadly, so no author dossier. The
     # generator adds the Voice and the hard rules.
-    from ..core import personality_store
+    from ..core import account, personality_store
     mood = personality_store.render_global_mood()
     if mood:
         discovered_section = (discovered_section or "") + "\n\n" + mood
@@ -524,6 +504,10 @@ def generate_replies(recent_topics=None, already_replied=None):
         "discovered_section": discovered_section,
         "today": today.isoformat(),
         "since_date": since_date,
+        "research_queries": "\n".join(
+            f"{i}. site:x.com {query} since:{since_date}"
+            for i, query in enumerate(dict.fromkeys(
+                account.current().searches.replies + account.current().searches.trending), 1)),
     })
     if generation.outcome is not Outcome.WRITTEN:
         return None  # declined, failed or rate limited: nothing to post

@@ -648,11 +648,16 @@ def test_env_example_starts_within_every_bound(fresh):
     assert settings.startup_warnings() == []
 
 
-def test_env_example_describes_the_account_with_the_declared_defaults():
-    """The defaults carry the policy values: the example sets no other, so
-    it cannot offer more than the policy allows. No setting without effect
-    either, nor a key only an older account used."""
+def test_env_example_pins_the_operator_models_and_keeps_policy_defaults():
+    """The Operator's model choices do not change volume or content bounds.
+    No setting without effect, nor a key only an older account used."""
     example = _env_example()
+    operator_models = {
+        "AI_CLI": "codex", "REPLY_LLM_PROVIDER": "codex",
+        "REPLY_MODEL": "gpt-6.1-sol", "PRIORITY_REPLY_MODEL": "gpt-6.1-sol",
+        "CODEX_REASONING_EFFORT": "xhigh", "LLM_DISABLE_FALLBACK": True,
+    }
+    assert operator_models.keys() <= example.keys()
     assert example["BOT_ACCOUNT"] == "theaishrink"
     assert not {"BOT_HANDLE", "CONTENT_LANG_PRIMARY"} & set(example), "the Account carries them"
     assert not set(example) & settings.UNUSED
@@ -660,7 +665,7 @@ def test_env_example_describes_the_account_with_the_declared_defaults():
     for key, raw in example.items():
         if key in settings.DECLARED:
             setting = settings.DECLARED[key]
-            assert settings._parse(setting, raw) == setting.default, key
+            assert settings._parse(setting, raw) == operator_models.get(key, setting.default), key
 
 
 def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):

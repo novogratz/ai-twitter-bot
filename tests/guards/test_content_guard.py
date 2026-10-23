@@ -5,6 +5,25 @@ import pytest
 from src.guards import content_guard as cg
 
 
+@pytest.mark.parametrize("kind", ["original", "reply"])
+@pytest.mark.parametrize("text", [
+    "Le modèle apprend avec des données et répond dans cette langue.",
+    "The model is faster. Mais les erreurs sont toujours présentes.",
+    "Bonjour, magnifique démonstration !",
+    "Tensor parallelism; quantization benchmarks.",
+])
+def test_english_only_refuses_french_mixed_and_unidentified_prose(kind, text):
+    ok, reason = cg.validate(text, kind=kind)
+    assert not ok and "English-only" in reason
+
+
+@pytest.mark.parametrize("kind", ["original", "reply"])
+def test_english_only_overrides_a_french_environment_and_keeps_references(settings_override, kind):
+    settings_override(CONTENT_LANG_PRIMARY="fr", FR_FORCED_REPLY_HANDLES="someone")
+    text = "The model needs stronger evidence for this claim. https://example.com/les/modèles @LesDonnees"
+    assert cg.validate(text, kind=kind) == (True, "")
+
+
 # --- dedup v2 -------------------------------------------------------------
 
 
@@ -172,6 +191,7 @@ def test_skip_rationale_never_publishes():
     assert ok
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_burned_catchphrases_blocked_at_chokepoint():
     """2026-06-09: the prompts quoted exemplar phrases ("we are so early",
     "okay this is genuinely...") and the model parroted them — 6+ posts in
@@ -219,6 +239,7 @@ def test_burned_structure_contrast_reframe_blocked():
         assert ok, f"false positive on {text!r}: {why}"
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     """2026-07-28: the 'me [verb]ing' winner format shipped in 7 of 15
     posts (ollama ignores prompt-level rationing) — the winner became the
@@ -265,6 +286,7 @@ def test_rationed_winner_shape_enforced_at_chokepoint(monkeypatch, tmp_path):
     scraper._reset_blank_page_count()
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_violence_cruelty_gate_blocks_at_every_surface():
     """2026-07-29 — SHIPPED LIVE: 'Killing the right terrorist = higher ROI
     on every contract' as a PLTR reply (2026-07-28 15:29, uncensored local

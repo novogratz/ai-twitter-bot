@@ -7,8 +7,9 @@ Gates on every generated draft before it can publish, among them:
      vendredi", "x2 ce mois-ci") is rejected. Theses must be multi-year and
      reasoned (setup / catalyst / risk / asymmetry), never price-and-date.
 
-  2. LANGUAGE. Originals must be in CONTENT_LANG_PRIMARY. Replies are exempt
-     — they match the parent post's language and are checked elsewhere.
+  2. LANGUAGE. An English-only Account applies its policy to every surface.
+     Otherwise Originals use CONTENT_LANG_PRIMARY and Replies follow their
+     configured parent-language rules.
 
 Usage:
     ok, reason = content_guard.validate(text, kind="original")
@@ -16,7 +17,7 @@ Usage:
 import re
 from typing import Tuple
 
-from ..core import config, settings
+from ..core import account, config, reply_language, settings
 from ..core.state_errors import StateUnreadable
 
 # X composer limit for replies; Reply admission trims to it.
@@ -353,7 +354,7 @@ def looks_truncated(text: str) -> bool:
     m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
     if m and m.group(2).lower() not in {
         # legit short final words (EN + FR)
-        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
         "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
         "en", "et", "or", "if", "we", "be", "me", "my", "do",
     }:
@@ -449,8 +450,9 @@ def _rationed_shape_overused(text: str) -> bool:
 def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     """Validate a draft. kind ∈ {"original", "reply"}.
 
-    Originals must be in CONTENT_LANG_PRIMARY; replies are language-matched
-    to the parent elsewhere. Returns (ok, reason); reason is "" when ok.
+    English-only Accounts require English on both surfaces. Otherwise
+    Originals use CONTENT_LANG_PRIMARY and Replies match the parent elsewhere.
+    Returns (ok, reason); reason is "" when ok.
     Raises ValueError on any other kind: it would match no surface gate.
     """
     if kind not in ("original", "reply"):
@@ -475,7 +477,8 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
     if _violence_content(text):
         return (False, "violence/cruelty content (killing, terrorism, casualties) — never on-brand, SKIP")
 
-    if kind == "original":
+    english_only = account.current().english_only
+    if not english_only and kind == "original":
         # Enforce the CONFIGURED primary language (not hardcoded). Bug 2026-06-04:
         # this was pinned to "fr", so after the English flip it REJECTED our
         # English posts and let French through. Now: primary=en → reject French,
@@ -513,4 +516,10 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         if looks_truncated(text):
             return (False, "looks truncated mid-sentence (dangling fragment / connector ending)")
 
+    if english_only:
+        # Operator, 2026-10-23: every surface uses English; references are not prose.
+        prose = re.sub(r"https?://\S+|@[A-Za-z0-9_]+", "", text)
+        lang, conf = detect_language(prose)
+        if lang != "en" or reply_language.looks_french(prose):
+            return (False, f"English-only account: detected {lang} @ {conf:.0%}")
     return (True, "")
