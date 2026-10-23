@@ -20,7 +20,16 @@ name preserves the existing state and history after the account rename.
 - **Read both For You and Following deeply.** Verify the selected tab, collect
   each screen before scrolling, and deduplicate posts. The Account allows
   up to 20 scrolls and 160 collected posts per feed, stopping if no new posts
-  appear. Reply generation budgets and publication limits still apply.
+  appear. Both reads finish before Reply generation starts, so an exhausted
+  model quota cannot skip Following. Generation budgets and publication limits
+  still apply; sleep and breaks can interrupt discovery.
+- **Watch new Elon Musk originals every minute.** A dedicated Latest search
+  attempts one like, repost and Reply independently. First enable starts with
+  new posts; later passes inspect up to 20 posts from the past 24 hours.
+  Existing content checks, Reply dedup, sleep and breaks apply. Reposts consume
+  the same daily publication budget and spacing as Originals; uncertain
+  repost submissions remain reserved across restarts. Browser contention can
+  delay a poll, and policy limits may defer or skip an action.
 - **One Reply per original, ever.** Never answer our own posts or replies,
   comments or ongoing debates. Debate, replyback and babysitter jobs are
   disabled. The browser verifies the actual parent and clicks its own Reply
@@ -55,7 +64,8 @@ name preserves the existing state and history after the account rename.
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
   ambiguous outcome counts toward both until the operator clears it.
-- **No automatic quote tweets, reposts, self-recycling, or burst threads.**
+- **No automatic quote tweets, self-recycling, or burst threads.** Reposts are
+  restricted to `auto_engage_handles`, currently only `elonmusk`.
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -194,9 +204,9 @@ before any profile opens. The reply
 jobs live in `src/replies/`, the follow, like, pin and follower-count jobs in
 `src/account/`, and shared foundations in `src/core/`. The legacy
 content modules are gone (issue #110): every module under `src/` is reached
-from `main.py`. The quote, repost, thread and GIF write functions are removed
-from `src/x/twitter_client.py` (issue #111), and the scheduled jobs carry no
-such branch.
+from `main.py`. The legacy quote, general repost, thread and GIF write functions
+remain removed (issue #111). The October 23 operator request adds only the
+guarded watched-author `repost_tweet` path in `src/x/twitter_client.py`.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
 `.env` or strategy values cannot lift the eight-post ceiling or restore quotes.

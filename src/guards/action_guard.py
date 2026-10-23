@@ -5,8 +5,9 @@ the lowest-level write functions in twitter_client (post_tweet /
 reply_to_tweet, and follow_account through `follow_policy`, which asks it
 for today's follows, the follow spacing and the last touch of a handle) so
 every caller — whichever of the ~30 bots — is governed by the same rules
-without rewriting each bot. Likes and pins are recorded in the ledger, not
-governed: no cap or spacing applies to them here.
+without rewriting each bot. Likes share a daily cap across all callers.
+Watched-author reposts share the Originals' publication ceiling and spacing.
+Pins are recorded in the ledger without a cap or spacing here.
 
 This bot is Safari/AppleScript driven (no X API), so "respect API rate limits
 / back off on 429" maps to Safari write-pacing: per-action daily caps, a
@@ -72,8 +73,32 @@ def can_debate_turn(author: str) -> Tuple[bool, str]:
 
 
 def _seconds_since_last(action: str) -> float:
-    last = _ledger().last_write(action)
+    last = _last_write(action)
     return now_local().timestamp() - last.timestamp() if last else float("inf")
+
+
+def _last_write(action: str):
+    if action not in (POST, RETWEET):
+        return _ledger().last_write(action)
+    from . import repost_store
+    times = [_ledger().last_write(kind) for kind in (POST, QUOTE, RETWEET)]
+    return max([at for at in times if at] + repost_store.pending_times(), default=None)
+
+
+def profile_submission_refusal(journal, now) -> str:
+    """Include pending and operator-confirmed Originals and uncertain reposts."""
+    from . import repost_store
+    submitted = journal.submissions(now.date())
+    used = (max(count_today(POST), submitted.published) + count_today(QUOTE)
+            + count_today(RETWEET) + submitted.pending + repost_store.pending_today())
+    cap = config.posts_ceiling()
+    if used >= cap:
+        return f"daily ceiling reached with pending submissions ({used}/{cap})"
+    last = journal.last_submission()
+    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
+    if last and (now - last).total_seconds() < gap:
+        return f"too soon since the last submission (need ~{gap}s gap)"
+    return ""
 
 
 def within_churn_cooldown(target: str) -> bool:
@@ -98,6 +123,7 @@ def jitter_sleep(max_seconds: int) -> None:
 _SPACING = {
     REPLY: ("MIN_SECONDS_BETWEEN_REPLIES", "REPLY_JITTER_SECONDS"),
     POST: ("MIN_SECONDS_BETWEEN_POSTS", "POST_JITTER_SECONDS"),
+    RETWEET: ("MIN_SECONDS_BETWEEN_POSTS", "POST_JITTER_SECONDS"),
     FOLLOW: ("MIN_SECONDS_BETWEEN_FOLLOWS", "FOLLOW_SPACING_JITTER_SECONDS"),
 }
 
@@ -112,8 +138,8 @@ def _spacing_gap(action: str) -> float:
     if action not in _SPACING:
         raise ValueError(f"no write spacing for {action!r}")
     base, jitter = (getattr(config, name) for name in _SPACING[action])
-    last = _ledger().last_write(action)
-    seed = f"{action}:{last.isoformat() if last else ''}"
+    last = _last_write(action)
+    seed = f"{POST if action == RETWEET else action}:{last.isoformat() if last else ''}"
     return base + random.Random(seed).uniform(0, jitter)
 
 
@@ -136,7 +162,7 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
-def can_post(action: str) -> Tuple[bool, str]:
+def can_post(action: str, *, target: str = "") -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
     if stop_requested():
         return False, "stop requested"
@@ -145,13 +171,27 @@ def can_post(action: str) -> Tuple[bool, str]:
     pause_end = break_until()
     if pause_end is not None:
         return False, f"scheduled break until {pause_end.isoformat(timespec='minutes')}"
-    if action in (QUOTE, RETWEET):
-        return False, "automatic quote/repost cap is 0 (editorial originals only)"
-    if action == POST:
-        if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
-            return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"
-        if count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
+    if action == QUOTE:
+        return False, "automatic quote cap is 0"
+    if action == RETWEET:
+        from . import repost_store
+        if not repost_store.allowed_url(target):
+            return False, "reposts require an explicitly watched author and exact status URL"
+        from ..editorial.slot_journal import FileJournal
+        why = profile_submission_refusal(FileJournal(), now_local())
+        if why:
+            return False, why
+    if action in (POST, RETWEET):
+        from . import repost_store
+        cap = config.posts_ceiling()
+        if profile_count_today() + repost_store.pending_today() >= cap:
+            return False, f"daily profile publication cap reached ({cap})"
+        if action == POST and count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
+    elif action == LIKE:
+        if count_today(LIKE) >= settings.get("LIKE_BOT_DAILY_CAP"):
+            return False, "daily like cap reached"
+        return True, ""
     elif action != REPLY:
         return True, ""
     # No daily reply limit; replies retain spacing and per-tweet dedup.

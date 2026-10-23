@@ -66,7 +66,10 @@ PRE_187_BOUNDED = {
 }
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
-NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings"}
+NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
+            "auto_engage_handles"}
+WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
+                "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 2}
 
 
 @pytest.fixture
@@ -107,10 +110,13 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert set(shown) == set(PRE_187) | NEW_KEYS
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
+    expected["jobs"].insert(3, "priority_watch_job")
+    expected["reposts"] = "watched authors only"
+    assert shown["auto_engage_handles"] == ["elonmusk"]
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
-        **PRE_187_BOUNDED, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
+        **PRE_187_BOUNDED, **WATCH_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
         "HOURLY_BREAK_MINUTES": 10}
     assert shown["settings_warnings"] == []
 
@@ -127,6 +133,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     assert account.current().name == "example"
     assert settings.get("BOT_HANDLE") == "ExampleGardener"
     assert shown["jobs"] == PRE_187["jobs"]
+    assert shown["auto_engage_handles"] == [] and shown["reposts"] == 0
     assert shown["trend_slots"] == ["10:00", "15:00"]
     assert [clock for clock, _ in shown["slots"]] == ["06:30", "09:00", "10:00", "12:30", "15:00",
                                                      "17:30", "19:45"]
@@ -134,7 +141,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, **WATCH_BOUNDS, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100, "FEED_SCROLL_PASSES": 8,
                        "FEED_SWEEP_SCAN_LIMIT": 80, "HOURLY_BREAK_MINUTES": 0}
     assert shown["settings_warnings"] == []

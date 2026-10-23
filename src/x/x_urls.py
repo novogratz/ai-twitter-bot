@@ -8,12 +8,29 @@ the reply jobs which scraped tweets are nested replies they should not
 target.
 """
 import re
+from urllib.parse import urlsplit
 from datetime import datetime, timedelta, timezone
 
 # Snowflake epoch: ms since 2010-11-04T01:42:54.657Z.
 _TWITTER_EPOCH_MS = 1288834974657
 _AUTHOR_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/\d")
 _STATUS_RE = re.compile(r"/status/(\d+)")
+
+
+def canonical_status_url(url: str) -> str:
+    """An exact X status URL, with no foreign host, credentials or nested path."""
+    if not isinstance(url, str):
+        return ""
+    try:
+        parsed = urlsplit(url or "")
+        match = re.fullmatch(r"/([A-Za-z0-9_]{1,15})/status/(\d+)/?", parsed.path)
+        if (parsed.scheme != "https" or parsed.hostname not in {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}
+                or parsed.username or parsed.password or parsed.port or not match
+                or match[1].lower() == "i"):
+            return ""
+        return f"https://x.com/{match[1].lower()}/status/{match[2]}"
+    except (ValueError, TypeError):
+        return ""
 
 
 def author(url: str) -> str:
@@ -33,11 +50,19 @@ def status_id(url: str) -> str:
 def age(url: str, now: datetime | None = None) -> timedelta | None:
     """Time since the tweet was posted, read from its snowflake ID; None
     when the URL carries no status ID."""
+    posted = posted_at(url)
+    return (now or datetime.now(tz=timezone.utc)) - posted if posted is not None else None
+
+
+def posted_at(url: str) -> datetime | None:
+    """A status ID's creation time, without consulting a clock or the browser."""
     sid = status_id(url)
     if not sid:
         return None
-    posted = datetime.fromtimestamp(((int(sid) >> 22) + _TWITTER_EPOCH_MS) / 1000, tz=timezone.utc)
-    return (now or datetime.now(tz=timezone.utc)) - posted
+    try:
+        return datetime.fromtimestamp(((int(sid) >> 22) + _TWITTER_EPOCH_MS) / 1000, tz=timezone.utc)
+    except (ValueError, OverflowError, OSError):
+        return None
 
 
 def is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:

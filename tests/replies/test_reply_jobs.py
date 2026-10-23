@@ -318,7 +318,38 @@ def test_feed_sweep_stops_at_the_rate_limit(feed):
 
     fs.run_feed_sweep_cycle()
 
-    assert len(llm.calls) == 1 and feeds["read"] == ["FEED"] and chokepoint.sent == []
+    assert len(llm.calls) == 1 and feeds["read"] == ["FEED", "FOLLOWING"] and chokepoint.sent == []
+
+
+def test_both_feed_scans_finish_before_any_generation(feed, monkeypatch, settings_override):
+    fs, feeds, llm, chokepoint = feed
+    from src.x import scraper
+    from src.replies import reply_pipeline
+    settings_override(FEED_SWEEP_SCAN_LIMIT=160, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=3)
+    events = []
+    monkeypatch.setattr(scraper, "scrape_home_feed",
+                        lambda **kw: events.append(("for_you", kw["max_tweets"])) or [
+                            {"url": fresh("builder", n=1), "text": "SI models need useful tests"}])
+    monkeypatch.setattr(scraper, "scrape_following_feed",
+                        lambda **kw: events.append(("following", kw["max_tweets"])) or [
+                            {"url": fresh("other", n=2), "text": "SI models need useful tests"}])
+    monkeypatch.setattr(reply_pipeline, "run",
+                        lambda job, candidates, cycle, **kw: events.append((job.label, kw["max_generations"])) or 0)
+    fs.run_feed_sweep_cycle()
+    assert events == [("for_you", 160), ("following", 160),
+                      ("FEED-SWEEP-FEED", 3), ("FEED-SWEEP-FOLLOWING", 3)]
+
+
+def test_failed_for_you_scan_still_reads_and_answers_following(feed, monkeypatch):
+    fs, feeds, llm, chokepoint = feed
+    from src.x import scraper
+    def fail(**kw):
+        raise RuntimeError("feed unavailable")
+    monkeypatch.setattr(scraper, "scrape_home_feed", fail)
+    url = fresh("builder")
+    feeds["FOLLOWING"] = [{"url": url, "text": "SI models need useful tests"}]
+    fs.run_feed_sweep_cycle()
+    assert feeds["read"] == ["FOLLOWING"] and chokepoint.sent == [url]
 
 
 def test_feed_sweep_harvests_the_handle_from_the_status_url():

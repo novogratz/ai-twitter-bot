@@ -330,6 +330,7 @@ class LikeOutcome(Enum):
     LIKED = "liked"
     ALREADY_LIKED = "already_liked"
     BLOCKED = "blocked"
+    REFUSED = "refused"
     FAILED = "failed"
     UNCONFIRMED = "unconfirmed"
     DRY_RUN = "dry_run"
@@ -421,6 +422,10 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
     liked_url = tweet_url
 
     def admit():
+        ok, why = action_guard.can_post(action_guard.LIKE)
+        if not ok:
+            log.info("[LIKE] policy skip (%s).", why)
+            return LikeOutcome.REFUSED
         handle = x_urls.author(tweet_url)
         if handle and reply_admission.is_blocked_account(handle):
             log.info(f"[LIKE] @{handle} is a Blocked account; {tweet_url} not liked.")
@@ -460,7 +465,113 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         "LIKE", LikeOutcome, would=lambda: f"like {tweet_url[-50:]}.",
         rows=lambda: [(action_guard.LIKE, liked_url)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT, check_status_id),
+        under_lock=(admit,),
         steps=steps, close_tab=False)
+
+
+def _priority_source_ok(page: dict) -> bool:
+    from ..guards import content_guard, respect_list
+    text = page.get("text") or ""
+    ok, why = content_guard.validate(text, kind="original")
+    if ok:
+        _, why = respect_list.scrub_text_or_skip(text)
+    if not ok or why:
+        log.info("[PRIORITY] Source content refused (%s).", why)
+        return False
+    return True
+
+
+def like_priority_post(tweet_url: str) -> LikeOutcome:
+    """Open and verify a watched standalone original before its idempotent like."""
+    from ..core import config
+    from ..guards import action_guard, repost_store
+    from ..guards.active_hours import OutsideActiveHours
+    from . import repost_page
+    url = repost_store.allowed_url(tweet_url)
+    if not url or not action_guard.can_post(action_guard.LIKE)[0]:
+        return LikeOutcome.REFUSED
+    if _already_liked(url):
+        return LikeOutcome.ALREADY_LIKED
+    if config.dry_run():
+        return like_tweet(url)
+    with safari._safari_lock:
+        outcome = None
+        try:
+            if not _open_or_abort(url, "PRIORITY"):
+                return LikeOutcome.FAILED
+            time.sleep(6)
+            page = repost_page.read(url)
+            if not page or not _priority_source_ok(page):
+                return LikeOutcome.REFUSED
+            outcome = like_tweet(url)
+            return outcome
+        finally:
+            try:
+                safari.close_front_tab()
+            except OutsideActiveHours:
+                if not outcome:
+                    raise
+
+
+def repost_tweet(tweet_url: str) -> WriteOutcome:
+    """Repost a watched original once, retaining ambiguous claims across restarts."""
+    from ..guards import action_guard, repost_store
+    from . import repost_page
+    url = repost_store.allowed_url(tweet_url)
+
+    def admit():
+        if not url or repost_store.contains(url):
+            return WriteOutcome.REFUSED
+        ok, why = action_guard.can_post(action_guard.RETWEET, target=url)
+        if not ok:
+            log.info("[REPOST] policy skip (%s).", why)
+            return WriteOutcome.REFUSED
+        return None
+
+    def steps():
+        claimed = submitted = False
+        try:
+            if not _open_or_abort(url, "REPOST"):
+                return WriteOutcome.FAILED
+            time.sleep(6)
+            page = repost_page.read(url)
+            if not page or not _priority_source_ok(page):
+                return WriteOutcome.REFUSED
+            if page.get("state") == "reposted":
+                repost_store.remember(url, "observed")
+                return WriteOutcome.REFUSED
+            if page.get("state") != "ready" or admit() is not None:
+                return WriteOutcome.REFUSED
+            if not repost_store.claim(url):
+                return WriteOutcome.REFUSED
+            claimed = True
+            if repost_page.read(url, "open").get("state") != "menu_opened":
+                return WriteOutcome.FAILED
+            time.sleep(1)
+            require_active()
+            submitted = True
+            result = repost_page.read(url, "confirm")
+            if result.get("state") in {"ready", "unavailable", "reposted"}:
+                # A complete page response proves no confirmation was clicked.
+                submitted = False
+                if result["state"] == "reposted":
+                    repost_store.remember(url, "observed")
+                return WriteOutcome.REFUSED
+            if result.get("state") != "submitted":
+                return WriteOutcome.UNCONFIRMED
+            time.sleep(2)
+            if repost_page.read(url).get("state") != "reposted":
+                return WriteOutcome.UNCONFIRMED
+            return WriteOutcome.SHIPPED
+        finally:
+            if claimed and not submitted:
+                repost_store.release(url)
+
+    return confirmed_write.run(
+        "REPOST", WriteOutcome, would=lambda: f"repost {url or tweet_url}.",
+        rows=lambda: [(action_guard.RETWEET, url)],
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(admit,),
+        steps=steps, after_record=lambda: repost_store.remember(url, "shipped"))
 
 
 def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:

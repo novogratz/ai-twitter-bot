@@ -6,6 +6,27 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-23, both feeds and the priority watch — Finish the configured For You
+and Following reads before generating any Reply. A model quota failure on
+the first feed must not skip discovery on the second. The Operator explicitly
+authorizes likes, reposts and one Reply to new standalone originals by Elon
+Musk. `auto_engage_handles = ["elonmusk"]` is the only repost exception;
+the engine names no real account. A dedicated Latest search runs every minute
+while active. First enable saves a boundary without replaying old posts;
+subsequent passes inspect up to 20 posts from the past 24 hours, with at most
+two Reply generations. Sleep, breaks, source/content checks and permanent
+standalone Reply dedup still apply. Each action is attempted independently.
+
+Reposts share the existing combined profile ceiling and spacing with Originals,
+including pending editorial submissions. The browser verifies the exact
+standalone author/status and uses only explicit repost controls, never undo.
+`reposted_tweets.json` keeps process-locked permanent claims; uncertain writes
+retain their claim and publication reservation across restarts. Only a proven
+pre-submit failure releases one. `priority_watch_state.json` preserves the
+first-enable boundaries. Unreadable guarded state refuses. All like callers
+share the daily like ceiling at the write chokepoint. No restart, environment
+edit or production-state migration accompanies this change.
+
 2026-10-23, The SI Maximalist — The Operator renames the Account to
 `thesimaximalist`, retaining `TheAIShrink` in `previous_handles` and the
 `theaishrink` folder/state namespace. Both Voice files describe a fictional
@@ -90,7 +111,8 @@ environment edit or production-state migration accompanies this update.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
-- Quotes, reposts, self-recycling and threads stay at zero.
+- Quotes, self-recycling and threads stay at zero. Reposts are limited to the
+  explicitly watched author exception above, inside the same publication budget.
 - Replies are uncapped in waking hours, paced and permanently deduplicated
   per standalone original. Self-replies and conversation follow-ups are disabled.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
@@ -105,7 +127,7 @@ A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same
 change. The same holds for the operator-owned guardrails: the Account's
 Voice files (`accounts/<BOT_ACCOUNT>/voice_*.md`), which only the Operator
-edits, `BLOCKLIST` in `src/core/config.py`, the zero-repost rule,
+edits, `BLOCKLIST` in `src/core/config.py`, the restricted repost rule,
 `accounts/<BOT_ACCOUNT>/respect_list.json`, and
 `personality_store.hard_rules_block()`.
 
@@ -148,6 +170,8 @@ Account.
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: permanent status-ID history with process-locked claims | `src/guards/replied_store.py` |
+| Priority watch: first-enable boundaries, Latest discovery and independent like/repost/Reply attempts | `src/replies/priority_watch.py` |
+| Repost history: permanent claims and uncertain publication reservations; verified page controls | `src/guards/repost_store.py`, `src/x/repost_page.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |
 | Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |
 | Settings reference of `docs/CONFIGURATION.md`, generated from the declarations | `bin/configuration_doc.py` |

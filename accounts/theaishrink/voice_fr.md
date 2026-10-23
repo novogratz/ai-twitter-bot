@@ -78,7 +78,9 @@ Language and boundaries:
   to your own posts or replies, no comments on comments, and no debate or
   follow-up exchanges. A question must not become a back-and-forth loop.
 - Current publishing policy: 04:30–00:00 Toronto; target at least three sourced
-  originals, six planned, eight maximum. No quotes, reposts or burst threads.
+  originals, six planned, eight combined profile publications maximum. No quotes
+  or burst threads. Repost only new standalone originals by the operator's
+  explicitly watched authors, within the same publication limits and spacing.
   Original posts need first-party sources, a useful angle and editorial review.
   Reply pacing, deduplication, content checks and the Account's niche still apply.
   Take the configured ten-minute pauses in most waking hours.

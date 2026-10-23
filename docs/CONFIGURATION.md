@@ -18,6 +18,15 @@ posts. Breaks occupy ten minutes in roughly three of four waking hours,
 starting between minute 35 and 50 after the first waking hour. The account,
 date and hour determine a repeatable plan shared by all workers and restarts.
 
+The optional `auto_engage_handles` Account list defaults to empty. The live
+Account sets only `elonmusk`, authorizing the priority watch's like, repost and
+Reply attempts on new standalone originals. Handles are validated, lowercased
+and deduplicated. Polling defaults to 60 seconds (never faster), a 24-hour
+lookback (never longer), 20 posts per search (maximum 40), and two Reply
+generations per cycle (maximum two). First-enable timestamps survive restarts.
+The watch and its repost exception retain the existing activity, content and
+publication limits. Both Home reads finish before feed Reply generation.
+
 The optional `publication_si_wording` boolean defaults to false. The live
 Account enables it for Originals as well as Replies: drafting, editorial
 review and the final write use SI / Super Intelligence in publication prose.
@@ -79,7 +88,8 @@ hold whatever `.env` says:
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
-| Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
+| Quotes | 0: `action_guard.can_post` refuses them |
+| Reposts | Only exact standalone originals by `auto_engage_handles`; share the Originals' combined ceiling and spacing, including pending submissions |
 | Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
@@ -217,6 +227,10 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` | floor `1` | Posts the feed sweep scrapes per feed. |
 | `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
 | `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length in roughly three of four waking hours; 0 disables breaks. |
+| `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `60` | floor `60` | Poll the Account's auto-engagement handles this often in Waking hours. |
+| `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
+| `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
+| `PRIORITY_WATCH_MAX_REPLIES` | int | `2` | floor `1`, ceiling `2` | Maximum Reply generations per priority-watch cycle. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |

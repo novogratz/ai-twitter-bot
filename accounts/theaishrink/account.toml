@@ -14,6 +14,8 @@ publication_si_wording = true
 standalone_replies_only = true
 # Keep the old identity and state folder so historical own posts stay protected.
 previous_handles = ["TheAIShrink"]
+# Operator, 2026-10-23: watch new standalone originals for like, repost and Reply.
+auto_engage_handles = ["elonmusk"]
 
 [editorial]
 # The angle of every trend Slot and of the Startup post.

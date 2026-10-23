@@ -87,6 +87,7 @@ class Account:
     previous_handles: tuple[str, ...] = ()
     english_only: bool = False
     publication_si_wording: bool = False
+    auto_engage_handles: tuple[str, ...] = ()
 
 
 def current() -> Account:
@@ -127,7 +128,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                                              "niche": dict, "searches": dict},
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
-                           "english_only": bool, "publication_si_wording": bool})
+                           "english_only": bool, "publication_si_wording": bool,
+                           "auto_engage_handles": list})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -136,6 +138,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     for i, handle in enumerate(previous):
         if not _HANDLE.fullmatch(handle):
             top.fail(f"previous_handles[{i}]", "takes an X handle without @")
+    watched = tuple(top.items("auto_engage_handles", str)) if "auto_engage_handles" in top else ()
+    for i, handle in enumerate(watched):
+        if not _HANDLE.fullmatch(handle):
+            top.fail(f"auto_engage_handles[{i}]", "takes an X handle without @")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -152,6 +158,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         standalone_replies_only=top.get("standalone_replies_only", False), previous_handles=previous,
         english_only=top.get("english_only", False),
         publication_si_wording=top.get("publication_si_wording", False),
+        auto_engage_handles=tuple(dict.fromkeys(h.lower() for h in watched)),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

@@ -75,6 +75,11 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        if account.current().auto_engage_handles:
+            from src.replies.priority_watch import run_priority_watch_cycle
+            add(health.wrap_job(run_priority_watch_cycle, "priority_watch"),
+                settings.get("PRIORITY_WATCH_INTERVAL_SECONDS") / 60,
+                "priority_watch_job", first_seconds=1)
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         if not account.current().standalone_replies_only:
             add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
@@ -138,7 +143,10 @@ def main():
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": "unlimited",
-                          "quotes": 0, "reposts": 0, "slots": slots(),
+                          "quotes": 0,
+                          "reposts": "watched authors only" if account.current().auto_engage_handles else 0,
+                          "auto_engage_handles": list(account.current().auto_engage_handles),
+                          "slots": slots(),
                           "trend_slots": sorted(trend_slots()),
                           "startup_post": "every start in waking hours, restarts included",
                           "unknown_llm_providers": unknown,
