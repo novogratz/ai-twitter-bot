@@ -28,22 +28,19 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, outgoing_text, reply_language, reply_style
+from ..core import account, config, humanizer, reply_language, settings
 from ..x import x_urls
 from ..core.logger import log
 
 
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
-    PROTECTED_ACCOUNT = "protected account"
-    CONVERSATION = "comments and conversation follow-ups are disabled"
     BLOCKED_ACCOUNT = "Blocked account"
     OWN_POST = "own post"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
-    UNSELECTED = "reply has not won independent draft comparison"
     TEXT = "text refused"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
@@ -54,15 +51,8 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.PROTECTED_ACCOUNT, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
-
-MIN_PARENT_LIKES = 3
-
-
-def has_reply_engagement(likes=None) -> bool:
-    """Every parent needs three readable likes; other metrics cannot substitute."""
-    return type(likes) is int and likes >= MIN_PARENT_LIKES
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
+                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
 
 
 @dataclass(frozen=True)
@@ -82,24 +72,25 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
     author = x_urls.author(url)
     if not author:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
-    if account.current().replies.is_protected(author):
-        return Verdict(Refusal.PROTECTED_ACCOUNT, f"@{author} is protected from every Reply", author)
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if config.is_own_handle(author):
+    if author == config.BOT_HANDLE.lower():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
-    if debate_turn:
-        return Verdict(Refusal.CONVERSATION, "one Reply to an original post; no follow-ups", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
+    if debate_turn:
+        ok, why = action_guard.can_debate_turn(author)
+        if not ok:
+            return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
     return Verdict(None, author=author)
 
 
 def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
-    exact text to send. Ship `verdict.text`, never the unchecked draft."""
+    exact text to send. Casualize and the typo are random: call it once per
+    send and ship `verdict.text`, never the draft."""
     verdict = judge_parent(url, debate_turn=debate_turn)
     if not verdict:
         return verdict
@@ -108,36 +99,21 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
-    verdict = judge_text(author, draft)
-    if not verdict:
-        return verdict
-    if account.current().replies.ranked_selection:
-        from ..core import reply_queue
-        if not reply_queue.is_selected(url, verdict.text):
-            return Verdict(Refusal.UNSELECTED, "only the selected, reviewed draft may publish", author)
-    return verdict
-
-
-def judge_text(author: str, draft: str) -> Verdict:
-    """Validate a prepared draft without waiting for its future publishing slot."""
-
     # Every Reply loses its dashes here, including paths that skip humanize().
-    text = outgoing_text.normalize(humanizer.strip_dashes(draft))
+    text = humanizer.strip_dashes(draft)
     if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
         trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
         log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
         text = trimmed
-    # Preserve the chosen voice and punctuation; never manufacture typos.
+    text = humanizer.casualize(text)
+    # The language is judged on the text as written, before the typo.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
-    if reply_style.reaction_count(text) > 1:
-        return Verdict(Refusal.TEXT, "at most one optional emoji or text smiley", author)
-    if why := reply_style.repetition_reason(text):
-        return Verdict(Refusal.TEXT, why, author)
-    if mentions_blocked(text):
-        return Verdict(Refusal.TEXT, "reply mentions an account protected from interactions", author)
+    if author in _handles("HUMAN_TYPO_HANDLES"):
+        text = humanizer.inject_human_typo(text)
+        log.info(f"[REPLY] human-typo injected for @{author}.")
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
@@ -146,10 +122,6 @@ def judge_text(author: str, draft: str) -> Verdict:
     if why:
         return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)
     return Verdict(None, author=author, text=text)
-
-
-def mentions_blocked(text: str) -> bool:
-    return any(is_blocked_account(h) for h in re.findall(r"(?<!\w)@([A-Za-z0-9_]{1,15})\b", text))
 
 
 def _normalise(handle: str) -> str:
@@ -163,3 +135,7 @@ def is_blocked_account(author: str) -> bool:
     handle = _normalise(author)
     tokens = (*config.BLOCKLIST, *account.current().network.blocked_accounts)
     return any(token and token in handle for token in map(_normalise, tokens))
+
+
+def _handles(name: str) -> set:
+    return {h.strip().lstrip("@").lower() for h in settings.get(name).split(",") if h.strip()}

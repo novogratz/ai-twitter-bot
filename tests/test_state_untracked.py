@@ -23,8 +23,7 @@ OPERATOR_FILES = ("accounts/theaishrink/respect_list.json", "accounts/theaishrin
 WRITTEN_BY_BIN = ("mass_unfollow_results.json",)
 # State files declared after #207: they never lived at the root, so
 # bin/migrate_state.py has nothing of theirs to move.
-BORN_AFTER_207 = frozenset({"replied_tweets.lock", "reply_pacing.json", "reply_pacing.lock",
-                            "reply_draft_queue.json", "reply_draft_queue.lock", "reply_ranking.lock"})
+BORN_AFTER_207 = frozenset()
 
 
 def _modules():

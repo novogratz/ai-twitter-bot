@@ -12,9 +12,6 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
-pytestmark = pytest.mark.usefixtures("unranked_account")
-
 from src.core import config
 from src.core.llm_client import LLMResult
 from src.core.state_errors import StateUnreadable
@@ -82,7 +79,7 @@ def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, 
     assert set_aside() == set(refused) | {ok}, "definitive refusals and answered posts are set aside"
 
 
-def test_followups_are_set_aside_before_generation(llm, chokepoint, settings_override):
+def test_a_temporary_refusal_stays_replayable(llm, chokepoint, settings_override):
     from src.guards import action_guard
     from src.guards.reply_admission import Refusal
 
@@ -93,10 +90,10 @@ def test_followups_are_set_aside_before_generation(llm, chokepoint, settings_ove
 
     run(job(debate_turn=True), [candidate(capped, "post capped"), candidate(admitted, "post admitted")], cycle)
 
-    assert llm.parents("post capped", "post admitted") == []
-    assert chokepoint.calls == []
-    assert set_aside() == {capped, admitted}
-    assert cycle.refusals == {Refusal.CONVERSATION.value: 2}, "counted for the job's summary"
+    assert llm.parents("post capped", "post admitted") == ["post admitted"]
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
+    assert set_aside() == {admitted}, "the Debate turn cap is temporary"
+    assert cycle.refusals == {Refusal.DEBATE_TURN_CAP.value: 1}, "counted for the job's summary"
 
 
 def test_each_job_sets_aside_its_own_posts(llm, chokepoint):
@@ -504,7 +501,7 @@ def spacing(llm, chokepoint, monkeypatch, memory_ledger):
 
     s = SimpleNamespace(chokepoint=chokepoint, slept=[], waited_at_send=[], gap_after_send=[],
                         on_sleep=lambda: None, ledger=memory_ledger,
-                        now=datetime(2026, 9, 21, 12, 15, tzinfo=ZoneInfo("America/Toronto")))
+                        now=datetime(2026, 9, 21, 12, tzinfo=ZoneInfo("America/Toronto")))
     monkeypatch.setattr(active_hours, "now_local", lambda: s.now)
     monkeypatch.setattr(ag, "now_local", lambda: s.now)
 
@@ -542,7 +539,7 @@ def test_a_pipelined_job_does_not_wait_when_the_spacing_is_clear(spacing):
 
     s = spacing
     ag.record(ag.REPLY, fresh("earlier"))
-    s.now += timedelta(seconds=ag.seconds_until_allowed(ag.REPLY) + 1)
+    s.now += timedelta(seconds=60)
     url = fresh("someone", n=1)
 
     assert run(job(pipelined=True), [candidate(url, "post")]) == 1
@@ -600,12 +597,11 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
 
 
 @pytest.mark.parametrize("cut", ["stop", "overnight"])
-def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(limited_hours, spacing, monkeypatch, cut):
+def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypatch, cut):
     import threading
     from src.guards import action_guard as ag, active_hours
 
     s = spacing
-    submitted_day = s.now.date()
     stop = threading.Event()
     monkeypatch.setattr(active_hours, "_STOP", stop)
 
@@ -613,7 +609,7 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(limited_hours, sp
         if cut == "stop":
             stop.set()
         else:
-            s.now = (s.now + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+            s.now = s.now.replace(hour=23, minute=30, second=0)
 
     ag.record(ag.REPLY, fresh("earlier"))
     s.on_sleep = cut_short
@@ -623,6 +619,4 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(limited_hours, sp
 
     assert len(s.slept) == 1, "the next slice sees the stop or bedtime"
     assert s.chokepoint.sent == [], "nothing ships"
-    assert s.ledger.count(ag.REPLY, submitted_day) == 1
-    if cut == "overnight":
-        assert s.ledger.count(ag.REPLY, s.now.date()) == 0
+    assert s.ledger.count(ag.REPLY, s.now.date()) == 1

@@ -19,10 +19,10 @@ import random
 import time
 import traceback
 from collections import Counter
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import account, config, engagement_log, outgoing_text, reply_queue, reply_style, settings
+from ..core import engagement_log
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -75,11 +75,6 @@ class Cycle:
     tried: set = field(default_factory=set)  # admitted this cycle, in memory only
     rate_limited: bool = False
     refusals: Counter = field(default_factory=Counter)  # Reply admission refusals by value
-    preparations: int = 0  # Generation attempts, including corrections and declined drafts.
-
-    def work_done(self, shipped: int) -> int:
-        """Collectors count ranked preparation even though run() returns zero shipped."""
-        return self.preparations if account.current().replies.ranked_selection else shipped
 
 
 # Posts each job is done with until restart, by job name: definitive Reply
@@ -92,25 +87,18 @@ _SPACING_WAIT_SLICE_SECONDS = 1.0
 _sleep = time.sleep
 
 
-def discovery_available() -> bool:
-    """Leave the browser free for publishing while the ranked queue is full."""
-    return not account.current().replies.ranked_selection or reply_queue.has_capacity()
-
-
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
         max_shipped: int | None = None) -> int:
     """Answer `candidates` in order; returns the Replies shipped.
 
-    `max_generations` bounds generation attempts, including style corrections;
-    `max_shipped` bounds shipped Replies, or preparations for ranked Accounts. Nothing is admitted once
+    `max_generations` bounds the candidates admitted (the generations paid),
+    `max_shipped` the Replies shipped. Nothing is admitted once
     `cycle.rate_limited` is set. A job without a ReplyCall takes only
     candidates that carry their reply: ValueError before any admission."""
     if job.reply_call is None:
         candidates = list(candidates)
         if any(not c.reply for c in candidates):
             raise ValueError(f"[{job.label}] a job without a ReplyCall needs candidates that carry their reply")
-    if account.current().replies.ranked_selection:
-        return _prepare(job, candidates, cycle, max_generations=max_generations, max_shipped=max_shipped)
     if job.pipelined:
         return _run_pipelined(job, iter(candidates), cycle, max_generations, max_shipped)
     shipped = generations = 0
@@ -131,76 +119,8 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
         if generation.outcome is Outcome.RATE_LIMITED:
             _stop_for_rate_limit(job, cycle)
             break
-        shipped += send(job, candidate, author, generation)
+        shipped += _send(job, candidate, author, generation)
     return shipped
-
-
-def _prepare(job, candidates, cycle, *, max_generations=None, max_shipped=None):
-    """Collect and draft during cooldown; only the shared selector publishes."""
-    from ..guards.reply_admission import judge_text, mentions_blocked
-    from .reply_source import is_on_niche
-    from ..x import x_urls
-    if config.dry_run():
-        return 0
-    prepared = 0
-    for candidate in candidates:
-        if cycle.rate_limited or _reached(prepared, max_generations) or _reached(prepared, max_shipped):
-            break
-        if not discovery_available():
-            break
-        author = _admit(job, candidate, cycle)
-        if (author is None or not is_on_niche(candidate.text)
-                or account.current().relevance.off_topic.search(candidate.text)
-                or mentions_blocked(candidate.text)
-                or x_urls.is_reply_like_tweet({"url": candidate.url, "text": candidate.text})):
-            continue
-        length = reply_style.choose_length()
-        smiley = reply_style.choose_smiley()
-        sid = reply_queue.reserve(candidate, length=length, smiley=smiley)
-        if not sid:
-            continue
-        try:
-            correction = None
-            retries = settings.get("REPLY_STYLE_RETRIES") if job.reply_call and not candidate.reply else 0
-            for attempt in range(retries + 1):
-                require_active()
-                if attempt and not judge_parent(candidate.url):
-                    reply_queue.discard(sid, "parent admission changed before correction")
-                    break
-                prepared += 1
-                cycle.preparations += 1
-                generation = (_generate(job, candidate, author, length, smiley, correction) if correction else
-                              _generate(job, candidate, author, length, smiley))
-                if generation.outcome is Outcome.RATE_LIMITED:
-                    _stop_for_rate_limit(job, cycle)
-                if generation.outcome is not Outcome.WRITTEN:
-                    reply_queue.discard(sid, generation.outcome.value)
-                    break
-                text, pattern = extract_pattern(generation.text)
-                text = outgoing_text.normalize(humanize(text))
-                reason = reply_style.draft_refusal(text, length, smiley)
-                if reason:
-                    log.info("[%s] Draft style refused: %s", job.label, reason)
-                    if (attempt < retries and not _reached(prepared, max_generations)
-                            and not _reached(prepared, max_shipped)):
-                        correction = (text, reason)
-                        continue
-                    reply_queue.discard(sid, reason)
-                    break
-                verdict = judge_text(author, text)
-                if not verdict:
-                    reply_queue.discard(sid, verdict.reason)
-                    break
-                if reply_queue.prepared(sid, verdict.text, generation, pattern or candidate.pattern):
-                    log.info("[%s] Prepared %s (%s) for independent comparison; not published.",
-                             job.label, sid, length.name)
-                break
-        except (OutsideActiveHours, StateUnreadable):
-            raise
-        except Exception:
-            reply_queue.discard(sid, "generation failed")
-            log.exception("[%s] Draft preparation failed for %s", job.label, sid)
-    return 0
 
 
 def scrape(label: str, what: str, read: Callable[..., list | None], *args, **kwargs) -> list:
@@ -236,7 +156,7 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn or bool(candidate.context))
+    verdict = judge_parent(url, debate_turn=job.debate_turn)
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
@@ -249,20 +169,14 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     return verdict.author
 
 
-def _generate(job: Job, candidate: Candidate, author: str,
-              length: reply_style.Length | None = None, smiley: bool | None = None,
-              correction: tuple[str, str] | None = None) -> Generation:
+def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
     if candidate.reply:
         # The reply search prompt is English (LanguageRule.ENGLISH).
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
-    call = job.reply_call(author)
-    if account.current().replies.ranked_selection:
-        call = replace(call, text_limit=reply_queue.PARENT_TEXT_LIMIT)
-    return reply_generator.generate(call, author=author, text=candidate.text,
-                                    context=candidate.context, length=length, smiley=smiley,
-                                    correction=correction)
+    return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
+                                    context=candidate.context)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
@@ -270,7 +184,7 @@ def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
     cycle.rate_limited = True
 
 
-def send(job: Job, candidate: Candidate, author: str, generation: Generation) -> int:
+def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -> int:
     """Send a generation that is not a rate limit; 1 when the Reply shipped."""
     url = candidate.url
     if generation.outcome is Outcome.DECLINED:
@@ -280,7 +194,7 @@ def send(job: Job, candidate: Candidate, author: str, generation: Generation) ->
     if generation.outcome is not Outcome.WRITTEN:
         return 0  # a failed generation: the post stays replayable
     reply, pattern_id = extract_pattern(generation.text)
-    reply = outgoing_text.normalize(humanize(reply))
+    reply = humanize(reply)
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0
@@ -367,7 +281,7 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
                 break
             # No sleep after a ship: the spacing is waited out before the
             # next send, for the gap action_guard drew.
-            shipped += send(job, candidate, author, generation)
+            shipped += _send(job, candidate, author, generation)
             pending = upcoming
     finally:
         # Leave without waiting for the generation in flight: at a rate

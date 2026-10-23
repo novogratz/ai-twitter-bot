@@ -15,34 +15,102 @@ from src.editorial import editorial_bot as editorial
 ROOT = Path(__file__).resolve().parents[2]
 THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 
-def test_current_identity_keeps_the_storage_key_and_editorial_bounds():
+# The constants of src/editorial/editorial_bot.py and src/editorial/trending.py,
+# and the settings defaults, printed from the code before #202 moved them to
+# accounts/theaishrink/account.toml.
+TREND_PURPOSE = "Trending: the AI topic X is talking about right now, told from a trusted source"
+OLD = {
+    "SLOTS": [("05:00", "Priority: the AI update worth understanding this morning"),
+              ("07:15", "A useful AI workflow with a concrete first step"),
+              ("09:30", "Priority: an AI article or model update with a sharp consequence"),
+              ("10:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("11:45", "An AI concept explained through a clear example"),
+              ("13:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("14:00", "A model or tool update and what changes for its users"),
+              ("15:00", "Trending: the AI topic X is talking about right now, told from a trusted source"),
+              ("16:15", "Priority: an evidence-backed take on an AI tradeoff"),
+              ("18:30", "A practical AI idea worth saving or sharing"),
+              ("20:45", "Optional: an exceptional fresh AI update or unusually useful source")],
+    "TREND_SLOTS": ["10:00", "13:00", "15:00"],
+    "TREND_PURPOSE": TREND_PURPOSE,
+    "EXCEPTIONAL_SLOT": "20:45",
+    "FEEDS": [("OpenAI", "https://openai.com/news/rss.xml"),
+              ("Google AI", "https://blog.google/technology/ai/rss/"),
+              ("DeepMind", "https://deepmind.google/blog/rss.xml"),
+              ("Hugging Face", "https://huggingface.co/blog/feed.xml"),
+              ("NVIDIA", "https://blogs.nvidia.com/feed/"),
+              ("Microsoft Research", "https://www.microsoft.com/en-us/research/feed/"),
+              ("Mistral AI", "https://mistral.ai/rss.xml"),
+              ("Replicate", "https://replicate.com/blog/rss"),
+              ("The Decoder", "https://the-decoder.com/feed/"),
+              ("arXiv cs.AI", "https://rss.arxiv.org/rss/cs.AI")],
+    "KNOWLEDGE": [("chat_templates", "Why a chat template changes model behavior",
+                   "https://huggingface.co/docs/transformers/chat_templating"),
+                  ("evaluation", "How to evaluate an AI model on your own examples",
+                   "https://huggingface.co/docs/evaluate/index"),
+                  ("quantization", "What quantization trades for smaller AI models",
+                   "https://huggingface.co/docs/transformers/quantization/overview"),
+                  ("retrieval", "When retrieval can improve a language model's answers",
+                   "https://huggingface.co/learn/cookbook/en/advanced_rag"),
+                  ("structured_output", "Why structured output still needs factual checks",
+                   "https://huggingface.co/docs/inference-providers/guides/structured-output"),
+                  ("agents", "When an agent loop is useful and when it adds complexity",
+                   "https://huggingface.co/docs/smolagents/conceptual/tutorial"),
+                  ("tool_use", "What changes when a model can call tools",
+                   "https://huggingface.co/docs/transformers/chat_extras"),
+                  ("generation", "What temperature actually changes in generated text",
+                   "https://huggingface.co/docs/transformers/main_classes/text_generation"),
+                  ("lora", "What a small adapter changes during model fine tuning",
+                   "https://huggingface.co/docs/peft/conceptual_guides/lora"),
+                  ("tokenization", "Why tokenization matters for context budgets",
+                   "https://huggingface.co/docs/transformers/tokenizer_summary"),
+                  ("model_cards", "What to check in a model card before using a model",
+                   "https://huggingface.co/docs/hub/model-cards"),
+                  ("datasets", "Why the evaluation dataset matters as much as the score",
+                   "https://huggingface.co/docs/datasets/about_dataset_features")],
+    "KNOWLEDGE_PUBLISHER": "Hugging Face docs",
+    "HOSTS": ["arxiv.org", "blog.google", "blogs.nvidia.com", "deepmind.google", "huggingface.co",
+              "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
+    "AI_TOPIC": ("\\b(ai|artificial intelligence|model|llm|agent|machine "
+                 "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
+                 "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
+    "OFF_TOPIC": ("\\$[A-Za-z]{2,6}\\b|\\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\\b", 34),
+    "BOT_HANDLE": "TheAIShrink",
+    "CONTENT_LANG_PRIMARY": "en",
+}
+# trending.TREND_QUERIES before #208 moved them to [searches] trending.
+OLD_TREND_QUERIES = [
+    '"artificial intelligence" lang:en min_faves:50 -filter:replies',
+    'AI lang:en min_faves:200 -filter:replies',
+]
+
+
+def test_theaishrink_loads_the_old_constants():
     loaded = account.load("theaishrink")
-    assert loaded.handle == "thesimaximalist"
-    assert loaded.display_name == "The SI Maximalist"
-    assert loaded.previous_handles == ("TheAIShrink",)
-    assert loaded.bio == ("SI Maximalist: SI brain rot, Super Intelligence, SI news, "
-                          "celebrity parodies, and SI tech chaos.")
-    assert loaded.language == "en" and loaded.domain == "SI / Super intelligence and substantive technology"
-    assert loaded.limits == {}
     ed = loaded.editorial
-    assert [clock for clock, _ in ed.slots] == [
-        "05:00", "07:15", "09:30", "10:00", "11:45", "13:00", "14:00", "15:00", "16:15", "18:30", "20:45"]
-    assert ed.trend_clocks == {"10:00", "13:00", "15:00"}
-    assert ed.exceptional_clocks == {"20:45"}
-    assert loaded.replies.is_protected("elonmusk")
-    assert loaded.replies.ranked_selection is True
-    assert any(t.topic == "video_generation" and t.url.startswith("https://docs.x.ai/") for t in ed.evergreen)
-    assert {"x.ai", "docs.x.ai"} <= ed.trusted_hosts
-    assert loaded.relevance.off_topic.search("Bitcoin giveaway")
+    assert list(ed.slots) == OLD["SLOTS"]
+    assert sorted(ed.trend_clocks) == OLD["TREND_SLOTS"]
+    assert ed.trend_angle == OLD["TREND_PURPOSE"]
+    assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
+    assert list(ed.feeds) == OLD["FEEDS"]
+    assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
+    assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
+    assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
+    assert (loaded.relevance.topic.pattern, loaded.relevance.topic.flags) == OLD["AI_TOPIC"]
+    assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
+    assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
+    assert loaded.limits == {}
+    # The prompts said "AI" in the code before #208.
+    assert loaded.domain == "AI"
+    assert list(loaded.searches.trending) == OLD_TREND_QUERIES
 
 
 def test_the_editorial_reads_the_loaded_account():
-    loaded = account.current()
     assert settings.get("BOT_ACCOUNT") == "theaishrink"
-    assert [tuple(slot) for slot in editorial.slots()] == list(loaded.editorial.slots)
-    assert set(editorial.trend_slots()) == loaded.editorial.trend_clocks
-    assert config.BOT_HANDLE == "thesimaximalist"
-    assert config.BOT_PROFILE_URL == "https://x.com/thesimaximalist"
+    assert [tuple(slot) for slot in editorial.slots()] == OLD["SLOTS"]
+    assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
+    assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
+    assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
 # --- Loading: BOT_ACCOUNT, and the settings layers ------------------------------
@@ -78,7 +146,7 @@ def fresh(monkeypatch, tmp_path):
 
 
 def test_bot_account_picks_the_folder(accounts, fresh):
-    accounts("other", THEAISHRINK.replace('handle = "thesimaximalist"', 'handle = "OtherBot"')
+    accounts("other", THEAISHRINK.replace('handle = "TheAIShrink"', 'handle = "OtherBot"')
              .replace('language = "en"', 'language = "fr"'))
     fresh("BOT_ACCOUNT=other\n")
     assert account.current().name == "other"
@@ -127,7 +195,7 @@ def test_main_stops_on_an_unknown_bot_account():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "thesimaximalist"', 'handle = "thesimaximalist"\nnickname = "shrink"', "nickname"),
+    ('handle = "TheAIShrink"', 'handle = "TheAIShrink"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
@@ -145,7 +213,7 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('handle = "thesimaximalist"', "handle = 3", "handle"),
+    ('handle = "TheAIShrink"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
     ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
@@ -155,11 +223,11 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
      "editorial.evergreen[0].publisher"),
     ("off_topic = '", "off_topic = '(", "relevance.off_topic"),
     ('[limits]', '[limits]\nMAX_ORIGINALS_PER_DAY = "6"', "limits.MAX_ORIGINALS_PER_DAY"),
-    ('handle = "thesimaximalist"\n', "", "handle"),
-    ('domain = "SI / Super intelligence and substantive technology"', "domain = 3", "domain"),
-    ('domain = "SI / Super intelligence and substantive technology"', 'domain = " "', "domain is blank"),
-    ('domain = "SI / Super intelligence and substantive technology"\n', "", "domain is missing"),
-    ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
+    ('handle = "TheAIShrink"\n', "", "handle"),
+    ('domain = "AI"', "domain = 3", "domain"),
+    ('domain = "AI"', 'domain = " "', "domain is blank"),
+    ('domain = "AI"\n', "", "domain is missing"),
+    ('handle = "TheAIShrink"', 'handle = "TheAIShrink', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
     assert THEAISHRINK.count(old) == 1
@@ -192,7 +260,7 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     # The Operator's bounds of #201.
     ("FOLLOW_TOTAL_CAP = 5000", "FOLLOW_TOTAL_CAP", 3500),
     ("LIKE_BOT_DAILY_CAP = 1800", "LIKE_BOT_DAILY_CAP", 500),
-    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 20),
+    ("MIN_SECONDS_BETWEEN_REPLIES = 0", "MIN_SECONDS_BETWEEN_REPLIES", 8),
     ("DUP_TEXT_WINDOW_HOURS = 12", "DUP_TEXT_WINDOW_HOURS", 48.0),
     ("BAN_SHORT_TERM_PRICE_TARGETS = false", "BAN_SHORT_TERM_PRICE_TARGETS", True),
     ("FOLLOWBACK_CAP = -1", "FOLLOWBACK_CAP", 0),
@@ -240,8 +308,7 @@ def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh)
 # The network, niche and searches of accounts/theaishrink/account.toml. #204
 # moved them there from the code unchanged; #205 (Operator, 2026-09-25: AI
 # only, like the policy) removed REMOVED_205 from them and narrowed
-# NARROWED_205. On 2026-10-14 Latest discovery removes popularity minimums
-# and groups the same topics explicitly. A pattern is (source, flags).
+# NARROWED_205. A pattern is (source, flags).
 NETWORK = {
     "PROFILE_VISIT_ALLOWLIST": "TheBTCTherapist,Graphseo",
     "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
@@ -251,7 +318,7 @@ NETWORK = {
         "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
     ],
     "BIG_AI_HYPE_ACCOUNTS": [
-        "sama", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
+        "sama", "elonmusk", "DarioAmodei", "demishassabis", "satyanadella", "sundarpichai",
         "JensenHuang", "gdb", "miramurati", "AravSrinivas", "karpathy", "ylecun", "AndrewYNg",
         "drfeifei", "lexfridman", "ID_AA_Carmack", "fchollet", "EMostaque", "clementdelangue",
         "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai", "MistralAI", "perplexity_ai",
@@ -278,7 +345,7 @@ NETWORK = {
     ],
     "ALWAYS_REPLY_ACCOUNTS": [
         "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
-        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
+        "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", "elonmusk",
         "DarioAmodei", "satyanadella", "sundarpichai", "JensenHuang", "gdb", "miramurati",
         "AravSrinivas", "AndrewYNg", "drfeifei", "lexfridman", "ID_AA_Carmack", "EMostaque",
         "clementdelangue", "OpenAI", "AnthropicAI", "GoogleDeepMind", "GoogleAI", "xai",
@@ -302,7 +369,7 @@ NETWORK = {
     ],
     "REPLY_TARGET_ACCOUNTS": [
         "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI", "AnthropicAI",
-        "GoogleDeepMind", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
+        "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
         "MistralAI", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel",
         "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
         "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho", "DereeperVivre",
@@ -334,28 +401,28 @@ NETWORK = {
         r"(?:coding|autonomous)\s+agents?|building\s+agents?|ml|nvidia)\b",
         34),
     "SEARCH_QUERIES": [
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR (SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence")) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release OR research) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR chatbot) OR ChatGPT OR Claude OR Gemini OR Grok OR Llama) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR agentic OR reasoning) OR "reasoning model" OR AGI) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (coding) OR "Claude Code" OR Cursor OR Copilot) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (Meta OR Apple OR Microsoft OR Amazon OR Tesla) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia OR GPU) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (TSMC OR AMD OR Broadcom OR chips OR power OR energy)) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR electricity)) lang:en -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (startup OR funding OR layoffs OR jobs OR "open source") OR DeepSeek) lang:en -filter:replies',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
+        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:50',
+        "ChatGPT OR Claude OR Gemini OR Grok OR Llama lang:en min_faves:50",
+        '"AI agents" OR "agentic AI" OR "reasoning model" OR AGI lang:en min_faves:30',
+        '"Claude Code" OR Cursor OR Copilot OR "AI coding" lang:en min_faves:30',
+        'Meta AI OR "Apple Intelligence" OR Microsoft Copilot OR "Amazon AI" OR Tesla AI lang:en min_faves:50',
+        'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
+        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
+        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
+        '"AI startup" OR "AI funding" OR "AI layoffs" OR "AI jobs" OR "open source AI" OR DeepSeek lang:en min_faves:30',
     ],
     "HOT_TAB_QUERIES": [
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (model OR release) OR OpenAI OR Anthropic OR xAI OR "GPT-5") lang:en min_faves:3 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia) lang:en min_faves:3 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (agents OR reasoning) OR "reasoning model" OR AGI) lang:en min_faves:3 -filter:replies',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (assistant OR robotics) OR ChatGPT OR Claude OR Gemini OR "humanoid robot") lang:en min_faves:3 -filter:replies',
+        'OpenAI OR Anthropic OR xAI OR "GPT-5" lang:en min_faves:500',
+        'Nvidia OR "AI datacenter" OR "AI capex" lang:en min_faves:300',
+        '"AI agents" OR "reasoning model" OR AGI lang:en min_faves:300',
+        'ChatGPT OR Claude OR Gemini OR "humanoid robot" lang:en min_faves:500',
     ],
     "LIKE_QUERIES": [
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (megawatt OR gigawatt OR nuclear)) lang:en min_faves:50',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") ("compute cluster") OR Nvidia OR GPU) lang:en min_faves:50',
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (robotics OR robots) OR robotics OR "humanoid robots") lang:en min_faves:50',
+        "AI datacenter OR AI power demand lang:en min_faves:50",
+        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
+        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
+        "robotics OR humanoid robots lang:en min_faves:50",
     ],
 }
 
@@ -411,21 +478,21 @@ REMOVED_205 = {
 # paired with AI: before -> after.
 NARROWED_205 = {
     '"why would" OR "why is" OR "what am I missing" (fed OR gold OR rates OR Nvidia OR AI OR Bitcoin OR market) lang:en min_faves:30':
-        '("why would" OR "why is" OR "what am I missing") (Nvidia OR (SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence")) lang:en -filter:replies',
+        '("why would" OR "why is" OR "what am I missing") (Nvidia OR AI) lang:en min_faves:30',
     'Nvidia OR NVDA OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50':
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR capex) OR Nvidia OR GPU) lang:en -filter:replies',
+        'Nvidia OR GPU OR "AI datacenter" OR "AI capex" lang:en min_faves:50',
     'TSMC OR AMD OR Broadcom OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30':
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (TSMC OR AMD OR Broadcom OR chips OR power OR energy)) lang:en -filter:replies',
+        'TSMC AI OR AMD AI OR Broadcom AI OR "AI chips" OR "AI power" OR "AI energy" lang:en min_faves:30',
     'CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR "AI electricity" lang:en min_faves:30':
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (CoreWeave OR Nebius OR "Applied Digital" OR "data center" OR electricity)) lang:en -filter:replies',
+        'CoreWeave AI OR Nebius AI OR "Applied Digital" AI OR "data center" OR "AI electricity" lang:en min_faves:30',
     "AI datacenter OR power demand lang:en min_faves:50":
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (datacenter OR "power demand")) lang:en min_faves:50',
+        "AI datacenter OR AI power demand lang:en min_faves:50",
     "megawatt OR gigawatt OR nuclear AI lang:en min_faves:50":
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (megawatt OR gigawatt OR nuclear)) lang:en min_faves:50',
+        "megawatt AI OR gigawatt AI OR nuclear AI lang:en min_faves:50",
     "Nvidia OR GPU OR compute cluster lang:en min_faves:50":
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") ("compute cluster") OR Nvidia OR GPU) lang:en min_faves:50',
+        "Nvidia OR GPU OR AI compute cluster lang:en min_faves:50",
     "robotics OR humanoid robots OR frontier tech lang:en min_faves:50":
-        '((SI OR "super intelligence" OR superintelligence OR ASI OR AI OR "artificial intelligence") (robotics OR robots) OR robotics OR "humanoid robots") lang:en min_faves:50',
+        "robotics OR humanoid robots lang:en min_faves:50",
 }
 
 
@@ -446,11 +513,13 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.reply_targets) == NETWORK["REPLY_TARGET_ACCOUNTS"]
     assert sorted(net.follow_engagers_skip) == NETWORK["SKIP_HANDLES"]
     assert len(set(net.follow_engagers_skip)) == len(net.follow_engagers_skip)
+    assert (niche.post.pattern, niche.post.flags) == NETWORK["NICHE_PATTERN"]
     assert niche.ticker is None
-    assert set(NETWORK["SEARCH_QUERIES"]) <= set(searches.replies)
-    assert set(NETWORK["HOT_TAB_QUERIES"]) <= set(searches.hot_tab)
-    assert set(NETWORK["LIKE_QUERIES"]) <= set(searches.likes)
-    assert net.blocked_accounts == ("elonmusk",)
+    assert (niche.bio.pattern, niche.bio.flags) == NETWORK["NICHE_BIO_RE"]
+    assert list(searches.replies) == NETWORK["SEARCH_QUERIES"]
+    assert list(searches.hot_tab) == NETWORK["HOT_TAB_QUERIES"]
+    assert list(searches.likes) == NETWORK["LIKE_QUERIES"]
+    assert net.blocked_accounts == ()
 
 
 def test_the_removed_accounts_and_queries_are_gone():
@@ -555,35 +624,6 @@ def test_the_follow_bio_niche_is_ai_only(bio, on_niche):
     assert bool(account.load("theaishrink").niche.bio.search(bio)) is on_niche
 
 
-@pytest.mark.parametrize("text", [
-    "Semiconductors need better packaging to improve memory bandwidth.",
-    "Chip design changes how much heat the processor produces.",
-    "This compiler catches more memory errors before deployment.",
-    "Open source software makes this workflow reproducible.",
-    "Developer tools can show which query is blocking the database.",
-    "Distributed systems need a clear consistency model.",
-    "Cybersecurity starts with protecting credentials.",
-])
-def test_substantive_technology_without_si_keyword_qualifies_for_post_review(text):
-    from src.replies.reply_source import is_on_niche
-    loaded = account.current()
-    assert is_on_niche(text)
-    assert loaded.relevance.topic.search(text)
-    assert not loaded.relevance.off_topic.search(text)
-
-
-@pytest.mark.parametrize("text", ["These potato chips are delicious", "My new software subscription costs too much", "Best beach holiday ever"])
-def test_generic_lifestyle_or_product_mentions_do_not_widen_reply_scope(text):
-    from src.replies.reply_source import is_on_niche
-    assert not is_on_niche(text)
-
-
-def test_top_reply_discovery_uses_the_same_three_like_minimum():
-    for query in account.current().searches.hot_tab:
-        assert re.findall(r"min_faves:(\d+)", query) == ["3"]
-        assert "-filter:replies" in query
-
-
 def test_the_account_network_fills_four_settings_and_env_wins(accounts, fresh):
     accounts("theaishrink")
     fresh("VIP_SCAN_HANDLES=FromEnv\n")
@@ -633,8 +673,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
 @pytest.mark.parametrize("old, new, named", [
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
     ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
-    ('blocked_accounts = ["elonmusk"]', 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
-    ('blocked_accounts = ["elonmusk"]', "blocked_accounts = [3]", "network.blocked_accounts[0]"),
+    ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
+    ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
     ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
     ('fr_forced_reply = ["Graphseo"]', 'fr_forced_reply = "Graphseo"', "network.fr_forced_reply"),
     ("[niche]", "[niche]\nticker = '('", "niche.ticker"),
@@ -645,7 +685,7 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
     ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.
-    ('blocked_accounts = ["elonmusk"]', 'blocked_accounts = ["elonmusk"]\nunblocked_accounts = ["pgm_pm"]',
+    ("blocked_accounts = []", 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
      "network.unblocked_accounts"),
 ])
 def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new, named):
@@ -657,13 +697,42 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-def test_relations_load_current_operator_prompts_and_keep_routing():
+# sha256 of GRAPHSEO_PROMPT, BESTIE_REPLY_PROMPT and BUDDY_REPLY_PROMPT in
+# src/replies/direct_reply.py before #203 moved them to relations/. An
+# Operator edit of these files updates the hash here.
+OLD_RELATION_PROMPTS = {
+    "graphseo": (3173, "ce0bff9b595f5e7a74d7e941b9ad078cf2aacef94efa32a567bdd8bb024d3cbe"),
+    "bestie": (1225, "a71626b227d107ef059b8357bb84e21469d23c53f36937fc9dcc55ac05d5421e"),
+    "buddy": (641, "cbfc14614b789f68107917006c20a6948341ff95e209a965e7475922badfc3fb"),
+}
+# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
+OLD_MCNALLIEM = {
+    "first_seen": "2026-05-02",
+    "last_interaction": "2026-05-02",
+    "interaction_count": 0,
+    "category": "builder",
+    "stance": "fond",
+    "notes": [
+        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
+        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
+    ],
+    "predictions": [],
+    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
+    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
+    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
+}
+
+
+def _digest(text):
+    import hashlib
+    return len(text), hashlib.sha256(text.encode()).hexdigest()
+
+
+def test_theaishrink_relations_hold_the_old_prompts():
     relations = account.load("theaishrink").relations
     graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
-    folder = Path(account.current().folder) / "relations"
-    assert graphseo.prompt == (folder / "graphseo.md").read_text().strip()
-    assert bestie.prompt == (folder / "bestie.md").read_text().strip()
-    assert relations.default == (folder / "buddy.md").read_text().strip()
+    assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
+            "buddy": _digest(relations.default)} == OLD_RELATION_PROMPTS
     assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "claude", None)
     assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
     assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
@@ -674,13 +743,10 @@ def test_relations_load_current_operator_prompts_and_keep_routing():
     assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
 
 
-def test_current_fixed_dossier_overrides_old_learned_memory():
+def test_a_fixed_dossier_reads_as_the_old_one():
     from src.core import personality_store
-    personality_store.PERSONALITY.write({"accounts": {"mcnalliem": {"do": "OLD_PERSONA"}}, "topics": {}})
-    expected = {**personality_store.DEFAULT_ACCOUNT, **account.current().relations.get("McnallieM").dossier}
-    assert personality_store.get_account("McnallieM") == expected
-    assert personality_store.get_account("@mcnalliem") == expected
-    assert "OLD_PERSONA" not in personality_store.render_account_block("McnallieM")
+    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
+    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -799,7 +865,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert account.current().relations.default == (folder / "buddy_real.md").read_text().strip()
+    assert _digest(account.current().relations.default) == OLD_RELATION_PROMPTS["buddy"]
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)
@@ -816,99 +882,3 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     with pytest.raises(settings.SettingsError,
                        match=re.escape(f"theaishrink/{name}: the Voice file {problem}")):
         fresh()
-
-
-def test_protected_reply_handles_are_normalized_and_account_owned(accounts):
-    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', 'protected_handles = ["SomeAuthor"]'))
-    loaded = account.load("custom")
-    assert loaded.replies.is_protected("@SOMEAUTHOR")
-    assert not loaded.replies.is_protected("SomeAuthorFan")
-    assert not loaded.replies.is_protected("elonmusk")
-
-
-@pytest.mark.parametrize("raw", ['["@bad"]', '["bad-handle"]', '[17]', '"someone"'])
-def test_invalid_protected_reply_handles_stop_loading(accounts, raw):
-    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', 'protected_handles = ' + raw))
-    with pytest.raises(account.AccountError, match="protected_handles"):
-        account.load("custom")
-
-
-def test_protected_reply_handles_are_optional_for_other_accounts(accounts):
-    accounts("custom", THEAISHRINK.replace('protected_handles = ["elonmusk"]', ""))
-    assert account.load("custom").replies.protected_handles == frozenset()
-
-
-@pytest.mark.parametrize("text", [
-    "SI news and Super Intelligence", "SI brainrot with Grok Imagine",
-    "Super intelligence video creators", "ASI research is accelerating",
-    "Grok Imagine generated this clip", "Kling image-to-video workflow", "RunwayML filmmaker",
-])
-def test_si_and_video_creators_match_the_account_scope(text):
-    from src.replies.reply_source import is_on_niche
-    loaded = account.current()
-    assert is_on_niche(text)
-    assert loaded.niche.bio.search(text)
-    assert loaded.relevance.topic.search(text)
-
-
-@pytest.mark.parametrize("lane", ["replies", "hot_tab", "likes", "trending"])
-def test_every_research_lane_includes_si_terms_and_legacy_search_aliases(lane):
-    for query in getattr(account.current().searches, lane):
-        assert all(term in query for term in ('SI', '"super intelligence"', 'superintelligence', 'ASI',
-                                               'AI', '"artificial intelligence"'))
-        assert len(query) < 500
-        if lane != "likes":
-            assert "-filter:replies" in query
-
-
-@pytest.mark.parametrize("alias", ["SI", "Super intelligence", "superintelligence", "ASI"])
-@pytest.mark.parametrize("subject", ["research", "videos", "tools", "models", "agents"])
-def test_si_subjects_qualify_for_posts_bios_and_source_titles(alias, subject):
-    loaded = account.current()
-    text = f"Building {alias} {subject}"
-    assert loaded.niche.post.search(text)
-    assert loaded.niche.bio.search(text)
-    assert loaded.relevance.topic.search(text)
-
-
-@pytest.mark.parametrize("language", ["en", "fr"])
-def test_voice_research_aliases_and_hours_match_current_policy(language):
-    from src.core import personality_store
-    voice = personality_store.render_voice(language)
-    assert all(term in voice for term in ('SI', '"super intelligence"', 'superintelligence', '"artificial intelligence"'))
-    assert "24/7" in voice
-    assert "05:00–09:30" not in voice
-
-
-@pytest.mark.parametrize("text", ["Si tu viens demain", "si j'avais su", "My vacation video", "Celebrity gossip today"])
-def test_ordinary_si_and_unrelated_videos_do_not_match_the_niche(text):
-    from src.replies.reply_source import is_on_niche
-    assert not is_on_niche(text)
-    assert not account.current().niche.bio.search(text)
-
-
-@pytest.mark.parametrize("field,value", [
-    ("previous_handles", '["@old"]'), ("previous_handles", '[7]'),
-    ("previous_handles", '"old"'), ("display_name", '" "'),
-    ("bio", '"' + "x" * 161 + '"'),
-    ("publish_originals", '"false"'), ("publish_originals", '1'),
-    ("text_replacements", '["AI"]'), ("text_replacements", '{ "AI" = 1 }'),
-    ("text_replacements", '{ "AI" = " " }'), ("text_replacements", '{ " " = "SI" }'),
-])
-def test_invalid_profile_metadata_stops_loading(accounts, fresh, field, value):
-    updated = re.sub(r"^" + field + r" = .*", field + " = " + value, THEAISHRINK, flags=re.M, count=1)
-    accounts("theaishrink", updated)
-    with pytest.raises(settings.SettingsError, match=field):
-        fresh()
-
-
-def test_profile_metadata_defaults_for_existing_accounts(accounts, fresh):
-    header, body = THEAISHRINK.split("[editorial]", 1)
-    header = re.sub(r"^(display_name|bio|previous_handles|publish_originals|text_replacements) = .*\n", "", header, flags=re.M)
-    text = header + "[editorial]" + body
-    accounts("minimal", text)
-    fresh("BOT_ACCOUNT=minimal\n")
-    loaded = account.current()
-    assert loaded.display_name == loaded.handle
-    assert loaded.bio == "" and loaded.previous_handles == ()
-    assert loaded.publish_originals is True and loaded.text_replacements == {}

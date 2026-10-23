@@ -204,7 +204,6 @@ class Surface(Enum):
     """What a model call is for, named by its caller; `SURFACES` resolves it."""
     REPLY = "Reply"
     PRIORITY_REPLY = "priority Reply"
-    REPLY_REVIEW = "Reply comparison"
     REPLY_SEARCH = "reply search"
     RELATION_REPLY = "Relation Reply"
     # Provisional (#248): debate, replyback and the VIP scan's template run
@@ -236,7 +235,6 @@ SURFACES: dict[Surface, Route] = {
     # replies (operator 2026-06-24). cwd=/tmp: see REPLY_SEARCH.
     Surface.REPLY: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     Surface.PRIORITY_REPLY: Route("PRIORITY_REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
-    Surface.REPLY_REVIEW: Route("REPLY_MODEL", "REPLY_LLM_PROVIDER", CallOptions(cwd="/tmp")),
     # Needs a tool-capable provider: Ollama has no WebSearch tool and 503s
     # (op 2026-06-24). cwd=/tmp: run from the project, the Claude CLI loaded
     # its CLAUDE.md and git context, and parallel searches answered in prose
@@ -804,8 +802,7 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
     Ollama is floored at the default, then at the profile's floor: caller
     timeouts tuned for codex's ~5s answers killed qwen3.6 mid-generation
     (2026-05-15: 26 replies generated, 0 posted in an hour). Every timeout
-    stops at the time left before bedtime when the schedule has a closing time.
-    A 24/7 schedule keeps the provider's normal finite timeout."""
+    stops at the time left before bedtime."""
     from ..guards.active_hours import seconds_until_bedtime
     default = settings.get("LLM_TIMEOUT_SECONDS")
     if provider == "ollama":
@@ -816,7 +813,7 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
         seconds = min(requested or default, _CLI_AFTER_OLLAMA_CAP)
     else:
         seconds = requested or default
-    return int(min(seconds, max(1, seconds_until_bedtime())))
+    return min(seconds, max(1, int(seconds_until_bedtime())))
 
 
 def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMResult:

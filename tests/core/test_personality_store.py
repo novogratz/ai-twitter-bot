@@ -26,20 +26,5 @@ def test_the_dossier_block_is_in_english():
     assert block.startswith("# Personal memory: what you know about @someone")
     for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
                  "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
-                 "- What to avoid with them: dunk", "Treat this memory as historical context"):
+                 "- What to avoid with them: dunk", "React FROM this memory."):
         assert line in block
-
-
-def test_kindness_rules_override_hostile_memory_without_erasing_history():
-    from src.core import personality_store as ps
-    ps.upsert_account("someone", stance="hostile", do="roast their products", feelings="cold")
-    before = ps.PERSONALITY.read()
-    memory = ps.render_account_block("someone")
-    rules = ps.hard_rules_block()
-    assert "kindness rules override old hostile stances" in memory
-    assert "React FROM this memory" not in memory
-    assert "KINDNESS IN EVERY MESSAGE" in rules
-    assert "EVERY person, creator and product" in rules
-    assert "No insults, roasts" in rules
-    assert "If there is no kind, truthful, specific contribution, SKIP" in rules
-    assert ps.PERSONALITY.read() == before

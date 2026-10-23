@@ -574,15 +574,6 @@ def test_every_timeout_stops_at_bedtime(providers, monkeypatch):
     assert [request.timeout for _, request in providers.calls] == [42, 42]
 
 
-@pytest.mark.parametrize("stamp", ["2026-10-14T23:59:59-04:00", "2026-10-15T00:00:00-04:00"])
-def test_24_7_preserves_finite_provider_timeouts_across_midnight(providers, monkeypatch, stamp):
-    from datetime import datetime
-    from src.guards import active_hours
-    monkeypatch.setattr(active_hours, "now_local", lambda: datetime.fromisoformat(stamp))
-    ask(CallProfile(min_timeout=300), "ollama", timeout=500)
-    assert [request.timeout for _, request in providers.calls] == [500, 150]
-
-
 def test_only_the_timeout_function_reads_the_bedtime_clock():
     import ast
     import inspect

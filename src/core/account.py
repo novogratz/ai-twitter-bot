@@ -68,25 +68,11 @@ class Relevance:
 
 
 @dataclass(frozen=True)
-class Replies:
-    protected_handles: frozenset
-    ranked_selection: bool = False
-
-    def is_protected(self, handle: str) -> bool:
-        return handle.strip().lstrip("@").lower() in self.protected_handles
-
-
-@dataclass(frozen=True)
 class Account:
     name: str
     folder: str  # absolute: accounts/<name>/, where the Account's other files live
     file: str  # account.toml relative to the project root, for messages
     handle: str
-    display_name: str
-    bio: str
-    previous_handles: tuple
-    publish_originals: bool
-    text_replacements: dict
     language: str
     domain: str  # the domain the prompts name: "one original {domain} post"
     editorial: Editorial
@@ -96,7 +82,6 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
-    replies: Replies
 
 
 def current() -> Account:
@@ -128,23 +113,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict, "replies": dict,
-                           "display_name": str, "bio": str, "previous_handles": list,
-                           "publish_originals": bool, "text_replacements": dict})
-    replacements = top.get("text_replacements", {})
-    for term, replacement in replacements.items():
-        if not term.strip() or type(replacement) is not str or not replacement.strip():
-            top.fail("text_replacements", "takes nonempty terms and replacement strings")
-    if not _HANDLE.fullmatch(top["handle"]):
-        top.fail("handle", "takes an X handle without @")
-    previous = top.items("previous_handles", str) if "previous_handles" in top else []
-    for i, handle in enumerate(previous):
-        if not _HANDLE.fullmatch(handle):
-            top.fail(f"previous_handles[{i}]", "takes an X handle without @")
-    if not top.get("display_name", top["handle"]).strip():
-        top.fail("display_name", "is blank")
-    if len(top.get("bio", "")) > 160:
-        top.fail("bio", "must fit the 160-character X bio")
+                 optional={"limits": dict, "relations": dict})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -158,13 +127,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     network = _network(top)
     return Account(
         name=name, folder=folder, file=shown, handle=top["handle"], language=top["language"],
-        display_name=top.get("display_name", top["handle"]), bio=top.get("bio", ""),
-        previous_handles=tuple(previous),
-        publish_originals=top.get("publish_originals", True), text_replacements=dict(replacements),
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top), replies=_replies(top),
+        searches=_searches(top),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -217,16 +183,6 @@ _NETWORK_HANDLES = ("profile_visits", "vip_scan", "pinned_tracked", "vip_reply",
                     "mid_size_ai", "high_traction_reply", "big_fr", "engage_vip",
                     "engage_targets", "reply_targets", "follow_engagers_skip")
 _SEARCHES = ("replies", "hot_tab", "likes", "trending")
-
-
-def _replies(top) -> Replies:
-    table = _Table(top.file, "replies", top.get("replies", {}), required={},
-                   optional={"protected_handles": list, "ranked_selection": bool})
-    handles = table.items("protected_handles", str) if "protected_handles" in table else []
-    for i, handle in enumerate(handles):
-        if not _HANDLE.fullmatch(handle):
-            table.fail(f"protected_handles[{i}]", f"takes an X handle without @, not {handle!r}")
-    return Replies(frozenset(handle.lower() for handle in handles), table.get("ranked_selection", False))
 
 
 @dataclass(frozen=True)

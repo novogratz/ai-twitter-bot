@@ -42,11 +42,9 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     now = datetime.now().isoformat()
     log_file = tmp_path / "log.csv"
     rows = []
-    # 3 on-lane engagements with an AI video creator
+    # 3 on-lane engagements with an EN markets author
     for i in range(3):
-        rows.append(f'{now},reply,"Grok Imagine makes this video workflow worth trying {i}",https://x.com/goodcreator/status/12345{i},SEARCH,,ai_video')
-    # Historical therapy/finance rows remain in the log but are no longer current evidence.
-    rows.append(f'{now},reply,"portfolio trauma",https://x.com/oldlane/status/999,SEARCH,,market_trauma')
+        rows.append(f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",https://x.com/goodfinance/status/12345{i},SEARCH,,market_trauma')
     # 4 FR-era engagements (classify "other") with a legacy author
     for i in range(4):
         rows.append(f'{now},reply,"très intéressant merci pour le partage {i}",https://x.com/legacyfr/status/2345{i},PROFILE,,')
@@ -57,8 +55,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
     ac.run_curator_cycle()
     handles = ac.tracked_handles(limit=10)
     assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo", "pins lead"
-    assert "goodcreator" in handles, "on-lane author must be tracked"
-    assert "oldlane" not in handles, "retired topic tags must not drive new discovery"
+    assert "goodfinance" in handles, "on-lane author must be tracked"
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
 
@@ -69,9 +66,9 @@ def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_ov
     from src.account import account_curator as ac
     settings_override(CURATOR_TRACKED_MAX=-1)
     now = datetime.now().isoformat()
-    rows = [f'{now},reply,"Grok Imagine makes this video workflow worth trying {i}",'
-            f'https://x.com/{author}/status/12345{i},SEARCH,,ai_video'
-            for author in ("goodcreator", "othercreator") for i in range(6)]
+    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
+            for author in ("goodfinance", "otherfinance") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
@@ -79,7 +76,7 @@ def test_a_negative_tracked_max_tracks_nobody(monkeypatch, tmp_path, settings_ov
     ac.run_curator_cycle()
 
     handles = ac.tracked_handles(limit=10)
-    assert "goodcreator" not in handles and "othercreator" not in handles
+    assert "goodfinance" not in handles and "otherfinance" not in handles
 
 
 def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_path, operator_folder):
@@ -91,9 +88,9 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     from src.core import config
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
     now = datetime.now().isoformat()
-    rows = [f'{now},reply,"Grok Imagine makes this video workflow worth trying {i}",'
-            f'https://x.com/{author}/status/12345{i},SEARCH,,ai_video'
-            for author in ("la_pique_off", "goodcreator") for i in range(6)]
+    rows = [f'{now},reply,"your drawdown is just the market invoicing your FOMO {i}",'
+            f'https://x.com/{author}/status/12345{i},SEARCH,,market_trauma'
+            for author in ("la_pique_off", "goodfinance") for i in range(6)]
     log_file = tmp_path / "log.csv"
     log_file.write_text("\n".join(rows) + "\n")
     monkeypatch.setattr("src.core.config.ENGAGEMENT_LOG_FILE", str(log_file))
@@ -102,7 +99,7 @@ def test_curator_never_tracks_nor_promotes_a_blocked_account(monkeypatch, tmp_pa
     ac.run_curator_cycle()
 
     assert "la_pique_off" not in ac.tracked_handles(limit=10)
-    assert follow_policy.DISCOVERED.read() == ["goodcreator"]
+    assert follow_policy.DISCOVERED.read() == ["goodfinance"]
     assert json.loads((operator_folder / "whitelist.json").read_text()) == {"tiers": {}}
 
 
@@ -275,8 +272,8 @@ FRESH_2 = "https://x.com/infra_two/status/2063500000000000202"
 CACHED = "https://x.com/infra_three/status/2063500000000000203"
 SHOWN_LIKED = "https://x.com/infra_four/status/2063500000000000204"
 BLOCKED = "https://x.com/BlockedOne/status/2063500000000000205"
-OWN = "https://x.com/thesimaximalist/status/2063500000000000206"
-OWN_OTHER = "https://x.com/thesimaximalist/status/2063500000000000302"
+OWN = "https://x.com/TheAIShrink/status/2063500000000000206"
+OWN_OTHER = "https://x.com/TheAIShrink/status/2063500000000000302"
 
 
 def _like_rows(like_job):
@@ -675,7 +672,6 @@ def test_dry_run_follow_engagers_leaves_its_state_unchanged(monkeypatch, tmp_pat
     assert [k["target"] for _, k in recorded] == ["fan1", "fan2"]
 
 
-@pytest.mark.usefixtures("originals_account")
 def test_pin_job_actually_scheduled_and_transient_refusals_dont_burn(monkeypatch, tmp_path,
                                                                      settings_override):
     """2026-07-28 nine-day health read — shipped features were dead:
@@ -813,7 +809,7 @@ def live_follow(monkeypatch, settings_override, memory_ledger, tmp_path):
     monkeypatch.setattr(config, "FOLLOW_SPACING_JITTER_SECONDS", 0)
     monkeypatch.setattr(config, "FOLLOW_ACTION_JITTER_SECONDS", 0)
     (tmp_path / "following_count.json").write_text(json.dumps({"count": 10}))
-    state = {"page": "/thesimaximalist/followers", "followers": [], "profile": "CLICKED",
+    state = {"page": "/TheAIShrink/followers", "followers": [], "profile": "CLICKED",
              "visits": []}
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
@@ -862,7 +858,7 @@ def test_followback_never_revisits_an_account_found_already_followed(followback,
     chokepoint records it now, without a ledger row, and the next cycle
     skips it."""
     fb, state = followback
-    followers_page = "https://x.com/thesimaximalist/followers"
+    followers_page = "https://x.com/TheAIShrink/followers"
 
     fb.run_followback_cycle()
     assert state["visits"] == [followers_page, "https://x.com/Alreadyfan"]
@@ -883,7 +879,7 @@ def test_followback_never_spends_a_pick_on_an_invalid_handle(followback, monkeyp
 
     fb.run_followback_cycle()
 
-    assert state["visits"] == ["https://x.com/thesimaximalist/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
 
 
 def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeypatch, memory_ledger,
@@ -901,7 +897,7 @@ def test_followback_never_spends_a_pick_on_a_blocked_account(followback, monkeyp
     fb.run_followback_cycle()
 
     assert [h for h, _ in asked] == ["Realfan"]
-    assert state["visits"] == ["https://x.com/thesimaximalist/followers", "https://x.com/Realfan"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers", "https://x.com/Realfan"]
 
 
 def test_followback_records_a_follow_it_shipped(followback, memory_ledger, tmp_path):
@@ -931,7 +927,7 @@ def test_followback_stops_on_an_unreadable_whitelist(followback, memory_ledger, 
     fb.safe_run_followback_cycle()
 
     assert failures == ["followback"]
-    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
     assert memory_ledger.rows == []
     assert (operator_folder / "whitelist.json").read_text() == "{not json"
 
@@ -954,7 +950,7 @@ def test_followback_never_follows_a_stranger_its_scrape_hands_over(followback, m
     fb.run_followback_cycle()
 
     assert outcomes == [("Suggested", FollowOutcome.REFUSED)]
-    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
     _no_follow_written(memory_ledger, tmp_path)
 
 
@@ -969,7 +965,7 @@ def test_followback_follows_no_one_off_the_followers_page(followback, monkeypatc
     fb.run_followback_cycle()
 
     assert outcomes == []
-    assert state["visits"] == ["https://x.com/thesimaximalist/followers"]
+    assert state["visits"] == ["https://x.com/TheAIShrink/followers"]
     assert not (tmp_path / "followers_seen.json").exists()
     _no_follow_written(memory_ledger, tmp_path)
 
@@ -1174,15 +1170,15 @@ function cell(handle, mentions) {
     var bio = new El('div', {}, (mentions || []).map(function(m) { return link('/' + m); }));
     return new El('div', {'data-testid': 'UserCell'}, [link('/' + handle), link('/' + handle), bio]);
 }
-var nav = new El('header', {}, [link('/home'), link('/explore'), link('/thesimaximalist')]);
+var nav = new El('header', {}, [link('/home'), link('/explore'), link('/TheAIShrink')]);
 var sidebar = new El('div', {'data-testid': 'sidebarColumn'}, [
     new El('aside', {'aria-label': 'Who to follow'}, [cell('suggested_one'), cell('suggested_two')])]);
 """
 
 
-def _followers_page(primary_column: bool = True, path: str = "/thesimaximalist/followers") -> str:
+def _followers_page(primary_column: bool = True, path: str = "/TheAIShrink/followers") -> str:
     column = ("new El('div', {'data-testid': 'primaryColumn'}, ["
-              "link('/thesimaximalist'), link('/thesimaximalist/followers'), "
+              "link('/TheAIShrink'), link('/TheAIShrink/followers'), "
               "cell('fan_one', ['mentioned_one']), cell('fan_two'), cell('xkprz9821'), "
               "cell('fan_one')])") if primary_column else "null"
     return _FOLLOWERS_PAGE_JS + f"""
@@ -1234,7 +1230,7 @@ def test_the_followers_scrape_reads_the_account_of_each_primary_column_cell(monk
     _followers_page(primary_column=False),
     _followers_page(path="/i/flow/login"),
     _followers_page(path="/someoneelse/followers"),
-    _followers_page(path="/thesimaximalist/following"),
+    _followers_page(path="/TheAIShrink/following"),
 ])
 def test_the_followers_scrape_reads_nothing_off_our_followers_page(monkeypatch, tmp_path, page):
     """A redirect, a login wall or a failed page load leaves another page in
@@ -1250,6 +1246,6 @@ def test_the_followers_scrape_reads_nothing_off_our_followers_page(monkeypatch, 
 def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(monkeypatch, tmp_path):
     from src.account import followback_bot as fb
 
-    _run_followers_script(monkeypatch, _followers_page(path="/TheSIMaximalist/followers/"))
+    _run_followers_script(monkeypatch, _followers_page(path="/theaishrink/followers/"))
 
     assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]

@@ -26,7 +26,7 @@ def test_reply_and_like_queries_are_ai_only():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ", "super intelligence", "superintelligence", "si brain")
+                "cursor", "copilot", "humanoid", "robotics", " ia ")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
@@ -116,7 +116,7 @@ def test_prompts_are_english_only():
     assert not any("lang:fr" in q for q in replies), "FR reply query still present"
 
 
-def test_vip_scan_uses_bestie_prompt_for_btctherapist(unranked_account, monkeypatch, llm, chokepoint, settings_override):
+def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
     """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
     to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
     generator (French + deliberate-typo style) to @TheBTCTherapist's
@@ -134,8 +134,8 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(unranked_account, monkeypa
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda q, max_tweets=20, tab="latest", text_limit=200:
-                        [{"likes": 3, "url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+                        lambda q, max_tweets=20, tab="latest":
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
 
@@ -143,7 +143,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(unranked_account, monkeypa
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
-    assert "You are replying to a familiar account, @thebtctherapist" in llm.prompts[0]
+    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
@@ -190,7 +190,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
                                                       Surface.RELATION_REPLY, "GRAPHSEO_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
-        False, 300, 278, False, 0)
+        False, 300, 220, False, 0)
     assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").provider is None

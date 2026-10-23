@@ -93,7 +93,7 @@ def run_pin_cycle():
 
     # Filter: must be authored by us, not already-pinned, has minimum likes.
     # 2026-07-19 (4th hit of the display-name-vs-handle family): the scraper's
-    # `author` is the DISPLAY NAME ("the Account display name"), never the @handle, so
+    # `author` is the DISPLAY NAME ("The AI Therapist"), never the @handle, so
     # comparing it to BOT_HANDLE filtered EVERY candidate — the pin could
     # never rotate. URL is ground truth: is_own_post().
     # Minimum likes to bother pinning. If the best post of the week didn't

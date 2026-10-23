@@ -186,7 +186,7 @@ def test_like_tweet_reads_and_clicks_under_the_safari_lock(like_job, monkeypatch
     monkeypatch.setattr(tc, "_page_posts", lambda *a: seen.append(bool(held)) or page(*a))
 
     assert tc.like_tweet(FRESH) is tc.LikeOutcome.LIKED
-    assert seen == [True, True, True]
+    assert seen == [True, True]
     assert held == []
 
 
@@ -463,7 +463,6 @@ def _run_posts_js(articles, mode, target_id="", path="/home"):
     if not node:
         pytest.skip("node is not installed: _POSTS_JS cannot be run")
     snippet = tc._POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
-    snippet = snippet.replace("__BLOCKED__", '["elonmusk"]').replace("__SELF__", '["theaishrink", "thesimaximalist"]')
     program = _FAKE_DOM_JS + f"""
 var root = new El({json.dumps({"tag": "html", "children": [{"tag": "body", "children": articles}]})});
 var document = {{
@@ -522,19 +521,3 @@ def test_js_lists_the_posts_in_page_order():
     articles = [_article(NEXT, "like", "a"), _article(POST, "unlike", "b", quoted=REPOST)]
     out, clicks = _run_posts_js(articles, "list")
     assert out == {"page": "https://x.com/home", "posts": [NEXT, POST]} and clicks == []
-
-
-@pytest.mark.parametrize("author", ["ElonMusk", "TheAIShrink", "thesimaximalist"])
-def test_like_refuses_misattributed_protected_or_own_author_before_click(browser, author):
-    from src.x import twitter_client as tc
-    actual = f"https://x.com/{author}/status/{POST_ID}"
-    page = browser["page"] = FakePage(posts=[{"url": actual, "liked": False}])
-    assert tc.like_tweet(POST) is tc.LikeOutcome.BLOCKED
-    assert page.clicks == [] and browser["recorded"] == []
-
-
-@pytest.mark.parametrize("author", ["ElonMusk", "TheAIShrink", "thesimaximalist"])
-def test_js_checks_actual_author_even_at_the_click(author):
-    actual = f"https://x.com/{author}/status/{POST_ID}"
-    out, clicks = _run_posts_js([_article(actual, "like", "protected")], "press", POST_ID)
-    assert out["result"] == "blocked" and clicks == []
