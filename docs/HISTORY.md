@@ -1,5 +1,24 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-23 — Finish both feeds; watch new Elon originals
+
+The feed sweep previously drafted after For You before reading Following, so
+model exhaustion could skip the second feed entirely. Both configured reads
+now finish before any generation. Activity boundaries still stop all work.
+
+The Operator requests automatic likes, reposts and Replies to new Elon Musk
+messages. A dedicated one-minute Latest watch replaces reliance on random
+account selection for this request. The Account owns its handle list; first
+enable persists a boundary and does not replay old posts. The named repost
+exception keeps the combined publication ceiling, spacing, content checks,
+sleep and breaks. Verified standalone page controls cannot undo an existing
+repost. Process-locked permanent claims retain uncertain submissions across
+restarts and reserve capacity alongside pending editorial submissions. Likes
+share their existing daily ceiling at the chokepoint; Replies use the existing
+standalone-only admission and Sol route. No bot restart or production-state
+migration accompanies the change. Focused tests also exposed early imports of
+live settings in nested test fixtures; test setup now reloads isolated defaults.
+
 ## 2026-10-23 — The SI Maximalist, deep feeds and hourly pauses
 
 The Operator requests the new SI Maximalist identity, English conversational

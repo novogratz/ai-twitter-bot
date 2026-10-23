@@ -105,6 +105,21 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.reply_si_wording is True
     assert loaded.publication_si_wording is True
     assert loaded.previous_handles == ("TheAIShrink",)
+    assert loaded.auto_engage_handles == ("elonmusk",)
+
+
+@pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', '[42]', '"Alias"'])
+def test_watch_handles_are_validated(accounts, fresh, value):
+    accounts("theaishrink", THEAISHRINK.replace('auto_engage_handles = ["elonmusk"]',
+                                               f"auto_engage_handles = {value}"))
+    with pytest.raises(settings.SettingsError, match="auto_engage_handles"):
+        account.load("theaishrink")
+
+
+def test_watch_handles_are_case_insensitive_and_unique(accounts, fresh):
+    accounts("theaishrink", THEAISHRINK.replace('auto_engage_handles = ["elonmusk"]',
+                                               'auto_engage_handles = ["Builder", "BUILDER", "other"]'))
+    assert account.load("theaishrink").auto_engage_handles == ("builder", "other")
 
 
 def test_the_editorial_reads_the_loaded_account():

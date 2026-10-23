@@ -1,5 +1,42 @@
 # Editorial policy — October 23, 2026
 
+## Both feeds before drafting; new Elon originals
+
+The Operator explicitly requests automatic likes, reposts and Replies to new
+Elon Musk posts. The Account's `auto_engage_handles = ["elonmusk"]` authorizes
+this named exception to the former zero-repost rule. A dedicated priority
+watch checks a Latest search every 60 seconds during active time, independently
+of random account pools. Browser contention or an ongoing cycle can delay a
+poll. First enable persists a timestamp and skips earlier posts; restarts keep
+that boundary. Later polls read up to 20 recent originals, no older than 24
+hours, with at most two Reply generations per cycle. As an explicitly picked
+author, this watch does not require a niche-keyword match. Blocked accounts,
+own identities, comments and unreadable parent pages still refuse; source
+content checks, respect rules, English output and Reply admission remain.
+
+Each discovered original gets independent like, repost and Reply attempts.
+Existing likes and reposts are never toggled off. Only the verified original's
+explicit controls are clicked. Repost claims are permanent and process-locked;
+an uncertain confirmation stays claimed across restart and reserves publication
+budget and spacing. Only a proven pre-submit failure releases the claim.
+Unreadable history stops the affected action. All like callers share the
+existing daily like ceiling at the write chokepoint.
+
+Reposts and Originals share the combined daily profile ceiling (eight or a
+tighter configured limit) and at least twenty-minute spacing. Pending editorial
+submissions and uncertain reposts also reserve capacity. There is no guarantee
+of an action on every post: caps, pauses, source checks, model SKIP and failures
+may defer or skip it. A native repost preserves its author's words; SI wording
+applies to our own prose. Quotes, general reposts, own-post recycling, threads,
+comments and follow-up exchanges remain disabled. Sleep and scheduled breaks
+apply. No live restart or state migration is part of this change.
+
+The feed sweep completes both bounded For You and Following reads before any
+model generation. Each read retains its verified tab, 20-scroll/160-post limit
+and stalled-feed stop. A quota failure can end drafting but cannot retroactively
+skip Following discovery. Activity boundaries and unreadable state still stop
+the cycle; ordinary scrape failures leave the other feed eligible.
+
 ## The SI Maximalist: voice, discovery and breaks
 
 The latest Operator request sets the Account handle to `thesimaximalist` and
@@ -283,12 +320,13 @@ must not repeat.
   outcome was ambiguous, has no ledger row: it counts toward the day's eight
   and toward the twenty-minute spacing until the operator clears it, and so
   does a slot the operator marked published after a check.
-- Quote/repost caps are zero, including urgency and mega-viral exceptions.
-  Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
-  write functions are removed from `src/x/twitter_client.py` (issue #111), and
-  no scheduled job carries such a branch (issue #107):
-  `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
-  code and an operator request, not a config change.
+- Quotes and general reposts remain disabled, including urgency and mega-viral
+  exceptions. The October 23 priority-watch request above permits reposts only
+  for the explicitly watched author, within the existing combined budget.
+  The legacy quote, repost, thread, GIF-post and self-reply functions remain
+  removed (issue #111); `tests/test_disabled_surfaces.py` pins those removals.
+  The new `repost_tweet` chokepoint enforces the narrow exception independently
+  of its caller. Further expansion needs an operator request and policy update.
 - Replies have no daily cap. Browser pacing and permanent status-ID dedup
   apply. The live Account accepts standalone originals only: self-replies,
   comments, debate turns and follow-up exchanges are refused.

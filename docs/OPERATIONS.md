@@ -321,6 +321,19 @@ not live, delete the slot entry. Either way, delete its entry (keyed
 source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
+**Priority-watch state and uncertain reposts.** `priority_watch_state.json`
+stores each watched handle's first-enable timestamp; preserve it on deploy and
+restart. The first enable skips older posts, and later passes read at most the
+configured recent window. `reposted_tweets.json` keeps permanent status-ID
+claims, with `pending`, `shipped` or `observed` status and an aware timestamp.
+An uncertain repost remains `pending` and reserves the day's publication budget
+and spacing. Do not delete either file to retry an action. With the bot stopped,
+inspect the exact post on X before manually reconciling a pending claim. If a
+repost shipped, retain its claim and ensure a matching `retweet` ledger row
+exists before marking it `shipped`; avoid duplicating a row already recorded.
+Leave uncertain cases pending. Only confirmed non-submissions may be released.
+Unreadable files require repair or restoration, never replacement with defaults.
+
 **Corrupt `editorial_state.json` or `action_ledger.json`.** Both fail closed:
 the editorial cycle errors out and the ledger refuses writes. Repair the JSON
 by hand, keeping today's entries, or restore a copy taken today. Never delete
@@ -360,6 +373,8 @@ Safari restart, and nothing writes over the file:
 | `followed_accounts.json` | `engage_job`, `followback_job`, `follow_engagers_job` (its Follow run, before any follow); every follow while `following_count.json` holds no count, as below. A follow that ships or finds the account already followed is not added to the file |
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
+| `priority_watch_state.json` | `priority_watch_job` before search or any action |
+| `reposted_tweets.json` | Repost writes and Original publication admission, which need its pending reservations |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
 | `personality.json` | The Reply cycles whose Reply call reads the author's dossier (the `direct_reply_job` search lane, `feed_sweep_job`, `early_bird_job`, `mega_watch_job`, `replyback_job`, `babysit_job`): the cycle stops at its first generation, so none ships. `debate_job` and the VIP lane read no dossier and continue; the dossier bump after a Reply is skipped |
@@ -461,7 +476,8 @@ a `[SETTINGS]` warning at start. The bounds are listed in
   `EDITORIAL_OLLAMA_MODEL`, `EDITORIAL_LLM_TIMEOUT_SECONDS`.
 
 What cannot be tuned from `.env` or `account.toml`: any bound of that list,
-the price-target ban, quotes and reposts at zero, and waking hours. The bounds
+the price-target ban, quotes at zero, the watched-author repost restriction
+and waking hours. The bounds
 live in the declarations of `src/core/settings.py`, the rest in
 `src/core/config.py`, `src/guards/action_guard.py` and
 `src/guards/active_hours.py`; changing them needs an operator request and an
@@ -525,6 +541,8 @@ root:
 | File | Written by | Holds | Policy |
 |---|---|---|---|
 | `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
+| `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
+| `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |

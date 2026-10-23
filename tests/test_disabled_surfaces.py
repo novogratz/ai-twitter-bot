@@ -1,4 +1,4 @@
-"""No live module can reach a quote, repost or thread write (issues #107, #111).
+"""Removed quote, general repost and thread writes stay absent (#107, #111).
 
 The 2026-09-20 policy sets these surfaces to zero. Caps at zero kept the old
 branches silent; this test pins that the branches themselves are gone, so a
@@ -6,7 +6,8 @@ config change cannot bring them back. It reads the source with `ast`: every
 module under `src/` that `main.py` reaches through imports, at any depth,
 the browser modules `twitter_client`, `scraper` and `safari` included. None of
 them defines these write functions (issue #111): bringing one back takes new
-code.
+code. The operator's 2026-10-23 watched-author exception uses the separately
+tested `repost_tweet` path; it restores none of these legacy names.
 
 No live module borrows a private helper from `reply_bot` (issue #108), and
 every module under `src/` is reached from `main.py`, so legacy code cannot

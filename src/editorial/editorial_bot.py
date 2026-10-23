@@ -406,22 +406,11 @@ _NO_DRAFT = object()
 def _pending_refusal(journal, now) -> str:
     """Why the pending submissions forbid another one now, or "".
 
-    An ambiguous submission writes no ledger row, so `can_post` never sees
-    it. Each one counts toward today's ceiling and the post spacing until
+    An ambiguous submission writes no ledger row. Its journal reservation
+    counts toward today's ceiling and the post spacing until
     the operator clears it; a Slot the operator marked published after a
     check counts too, since its post has no ledger row either."""
-    journal = _journal(journal)
-    submitted = journal.submissions(now.date())
-    used = max(action_guard.profile_count_today(), submitted.published) + submitted.pending
-    cap = config.posts_ceiling()
-    if used >= cap:
-        return f"daily ceiling reached with pending submissions ({used}/{cap})"
-    last = journal.last_submission()
-    # The jitter's upper bound: every draw action_guard can make is shorter.
-    gap = config.MIN_SECONDS_BETWEEN_POSTS + config.POST_JITTER_SECONDS
-    if last and (now - last).total_seconds() < gap:
-        return f"too soon since the last submission (need ~{gap}s gap)"
-    return ""
+    return action_guard.profile_submission_refusal(_journal(journal), now)
 
 
 def run_editorial_cycle(preview=False):

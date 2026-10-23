@@ -60,18 +60,23 @@ def _harvest_active_authors(tweets: list) -> None:
 
 
 def run_feed_sweep_cycle():
-    """Sweep BOTH For You and Following every cycle — the primary loop."""
+    """Finish both bounded feed reads before spending any model budget."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
+    feeds = []
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
-        cycle = reply_pipeline.Cycle()
-        _sweep_one_feed(source, scraper, cycle)
+        log.info("[SWEEP] Scanning %s before drafting...", source)
+        tweets = reply_pipeline.scrape("SWEEP", source, scraper,
+                                        max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
+        feeds.append((source, tweets))
+        log.info("[SWEEP] %s scan complete: %s posts.", source, len(tweets))
+    cycle = reply_pipeline.Cycle()
+    for source, tweets in feeds:
+        _sweep_one_feed(source, tweets, cycle)
         if cycle.rate_limited:
             break
 
 
-def _sweep_one_feed(source, scraper, cycle):
-    log.info(f"[SWEEP] Sweeping {source} (reply to every on-niche post)...")
-    tweets = reply_pipeline.scrape("SWEEP", source, scraper, max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
+def _sweep_one_feed(source, tweets, cycle):
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return

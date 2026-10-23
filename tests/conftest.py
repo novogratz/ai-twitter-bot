@@ -22,6 +22,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def pytest_configure(config):
     from src.core import settings
     # Live credentials, identity, model choices and tighter quotas are not fixtures.
+    # A nested conftest may import config before this hook on a focused run.
+    settings._values = None
     settings.load(env_file=os.devnull, environ={})
     from src.core.logger import setup_logging
 

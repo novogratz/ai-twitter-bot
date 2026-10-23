@@ -251,6 +251,10 @@ _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under wh
 _declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.", floor=1)
 _declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
 _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length in roughly three of four waking hours; 0 disables breaks.", floor=0, ceiling=10)
+_declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 60, "Poll the Account's auto-engagement handles this often in Waking hours.", floor=60)
+_declare("PRIORITY_WATCH_MAX_AGE_HOURS", int, 24, "Maximum age of new watched originals; never before the watch was first enabled.", floor=1, ceiling=24)
+_declare("PRIORITY_WATCH_SCAN_LIMIT", int, 20, "Recent standalone originals collected per watched handle.", floor=1, ceiling=40)
+_declare("PRIORITY_WATCH_MAX_REPLIES", int, 2, "Maximum Reply generations per priority-watch cycle.", floor=1, ceiling=2)
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 

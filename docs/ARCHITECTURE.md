@@ -100,7 +100,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Selects and verifies For You and Following, collects each viewport during bounded deep scrolling, and pipelines eligible standalone originals through admission and the generation budget. |
+| `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
+| `priority_watch_job` | 1 min, configurable slower | When `auto_engage_handles` is nonempty, searches Latest for their new standalone originals and independently attempts like, repost and Reply within existing limits. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -470,18 +471,31 @@ dry-run row; `pin_job` marks the day under `dry_run_date` in
 `pin_daily_state.json`, which stops further dry runs that day without
 spending the live attempt. A `pin` row is not a profile publication.
 
-No write function exists for quotes, reposts, threads, GIF posts or
-self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
+No legacy write function exists for quotes, general reposts, threads, GIF posts
+or self-replies: `quote_tweet`, `quote_tweet_with_gif`, `post_tweet_with_gif`,
 `retweet_post`, `retweet_own_latest`, `reboost_tweet`, `post_thread`,
 `reply_to_own_latest` and `reply_to_reply` were removed with their helpers
-(issue #111). `can_post` refusing quotes and retweets stays as a second
-line. The writes no job called went too (issue #168): the unfollow
+(issue #111). `can_post` refuses quotes and any repost without an exact URL
+whose author appears in the Account's `auto_engage_handles`. The writes no job
+called went too (issue #168): the unfollow
 chokepoint with its cap, the nested-reply alias, and `post_tweet`'s image
 path and non-editorial branch. The bot never unfollows;
 `bin/mass_unfollow.py` clicks on its own page and writes its ledger rows
 itself.
 
-Five modules sit behind them:
+The October 23 priority watch adds `repost_tweet`. `repost_page` verifies the
+opened standalone original's host, status, author, text and own controls before
+opening and confirming its repost menu. An existing repost is remembered without
+clicking undo. `repost_store` claims before submission with a process lock;
+uncertain outcomes keep their permanent claim and budget reservation. A confirmed
+repost alone writes a ledger row. The shared profile budget also counts pending
+editorial submissions; Originals and reposts share their last-publication clock.
+The watch's first-enable timestamps live in guarded `priority_watch_state.json`;
+old backlog is excluded, and subsequent polls use a bounded 24-hour Latest search.
+`like_priority_post` verifies the same standalone source before `like_tweet`,
+whose shared daily cap is checked again under the Safari lock.
+
+Shared modules sit behind them:
 
 - `src/core/config.py` holds the ceilings that `.env` cannot lift: eight
   profile publications a day, originals capped at 8 and spaced by at least
@@ -489,8 +503,8 @@ Five modules sit behind them:
 - `src/guards/action_guard.py` decides `can_post`, answers the follow
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
-  never knows where the ledger stores. Quotes and
-  retweets are always refused; replies only need their spacing
+  never knows where the ledger stores. Quotes are refused; watched-author
+  reposts share the profile budget and spacing. Replies retain their spacing
   (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
@@ -577,7 +591,7 @@ again before clicking Reply, `_reply_target` verifies the exact opened author
 and status, its standalone position, no visible prior own answer, and its own
 Reply button. An ambiguous or unreadable page cannot authorize a click.
 
-Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
+Every reply job (`direct_reply`, `feed_sweep`, `priority_watch`, `early_bird`,
 `mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
 search) hands its candidates to the Reply pipeline,
 `src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
@@ -601,8 +615,8 @@ lost at restart, the posts refused definitively, declined by the model
 temporary refusal, a failed generation or a failed write leaves the post
 replayable. A model rate limit, every provider exhausted, ends the job's
 generations for the cycle, with the post left replayable; in `direct_reply`
-it also stops the search
-lane, in `feed_sweep` the Following pass. `StateUnreadable` and
+it also stops the search lane. In `feed_sweep`, both feed reads have already
+finished; only remaining generations stop. `StateUnreadable` and
 `OutsideActiveHours` end the cycle from any step, a job's scrape included;
 any other error in a scrape, a generation or a write is logged and the
 cycle moves on.
@@ -871,7 +885,9 @@ missing module or an undefined name, imports a module under `src/` by its bare
 name instead of through its package, or crosses a package folder without
 `__init__.py`. `tests/test_disabled_surfaces.py` fails when a module that
 `main.py` reaches through imports, the three browser modules included, defines or
-names a quote, repost, thread or GIF write. It also fails when a
+names one of the removed quote, general repost, thread or GIF writes. The
+October 23 `repost_tweet` exception has separate target, claim and budget tests.
+It also fails when a
 module in any package under `src/` is not reached from `main.py`,
 function-local imports included, and when a package imports the job packages
 above it: nothing outside `src/replies/` and `src/account/` imports them, and
