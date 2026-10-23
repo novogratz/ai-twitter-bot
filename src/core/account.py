@@ -82,11 +82,22 @@ class Account:
     niche: "Niche"
     searches: "Searches"
     relations: "Relations"
+    reply_si_wording: bool = False  # Account's Reply terminology; research keeps both vocabularies
+    standalone_replies_only: bool = False
+    previous_handles: tuple[str, ...] = ()
+    english_only: bool = False
 
 
 def current() -> Account:
     """The Account BOT_ACCOUNT names."""
     return load(settings.get("BOT_ACCOUNT"))
+
+
+def own_handles() -> frozenset[str]:
+    """Current and historical identities, including the runtime handle override."""
+    profile = current()
+    return frozenset(h.strip().lstrip("@").lower() for h in (
+        profile.handle, settings.get("BOT_HANDLE"), *profile.previous_handles) if h.strip())
 
 
 def load(name: str) -> Account:
@@ -113,11 +124,17 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     top = _Table(shown, "", data, required={"handle": str, "language": str, "domain": str,
                                              "editorial": dict, "relevance": dict, "network": dict,
                                              "niche": dict, "searches": dict},
-                 optional={"limits": dict, "relations": dict})
+                 optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
+                           "standalone_replies_only": bool, "previous_handles": list,
+                           "english_only": bool})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
         top.fail("domain", "is blank")
+    previous = tuple(top.items("previous_handles", str)) if "previous_handles" in top else ()
+    for i, handle in enumerate(previous):
+        if not _HANDLE.fullmatch(handle):
+            top.fail(f"previous_handles[{i}]", "takes an X handle without @")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list})
@@ -130,7 +147,9 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         domain=top["domain"], editorial=_editorial(editorial), relevance=Relevance(
             topic=_pattern(relevance, "topic"), off_topic=_pattern(relevance, "off_topic")),
         limits=dict(top.get("limits", {})), network=network, niche=_niche(top),
-        searches=_searches(top),
+        searches=_searches(top), reply_si_wording=top.get("reply_si_wording", False),
+        standalone_replies_only=top.get("standalone_replies_only", False), previous_handles=previous,
+        english_only=top.get("english_only", False),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

@@ -27,8 +27,6 @@ QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Ja
 def _script_kind(script):
     if script == tc._SUBMIT_KEYSTROKE:
         return "submit"
-    if 'keystroke "r"' in script:
-        return "reply_key"
     if "activate" in script:
         return "activate"
     return "applescript"
@@ -80,6 +78,9 @@ def trace(monkeypatch):
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: step("maybe_like"))
+    monkeypatch.setattr(tc, "_reply_target", lambda url, click=False, **kw: step(
+        "reply_button" if click else "verify_parent",
+        ("reply_button" if click else "verify_parent") not in t.fail))
     monkeypatch.setattr(tc, "_mark_liked", lambda url: step("mark_liked"))
     monkeypatch.setattr(tc, "_already_liked", lambda url: False)
     monkeypatch.setattr(tc, "_record_posted", lambda text: step("history"))
@@ -171,7 +172,7 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "maybe_like", "reply_key", "paste", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "maybe_like", "reply_button", "paste", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):
@@ -192,10 +193,11 @@ def test_reply_already_claimed_never_opens(trace):
     assert trace.events == ["lock", "judge", "claim", "unlock"]
 
 
-@pytest.mark.parametrize("failing", ["reply_key", "paste"])
+@pytest.mark.parametrize("failing", ["verify_parent", "reply_button", "paste"])
 def test_reply_failing_before_submit_releases_the_claim(trace, failing):
     trace.fail.add(failing)
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
+    expected = W.FAILED if failing == "paste" else W.REFUSED
+    assert tc.reply_to_tweet(POST_URL, REPLY) is expected
     sent = REPLY_STEPS[:REPLY_STEPS.index(failing) + 1]
     assert trace.events == ["lock", "judge", "claim", *sent, "release", "close", "unlock"]
 
@@ -208,10 +210,10 @@ def test_reply_failed_submit_keeps_the_claim(trace):
 
 
 def test_reply_stop_mid_steps_releases_claim_and_lock(trace):
-    trace.raise_at = "reply_key"
+    trace.raise_at = "reply_button"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(POST_URL, REPLY)
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:6], "release", "unlock"]
 
 
 def test_reply_dry_run(trace, monkeypatch):

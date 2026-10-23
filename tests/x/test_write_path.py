@@ -27,11 +27,13 @@ def _fake_safari(monkeypatch):
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    monkeypatch.setattr(tc, "_reply_target", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     """Two reply bots racing on the same tweet: the second write MUST be
     refused at the chokepoint regardless of which bot it came from."""
@@ -69,6 +71,20 @@ def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     assert tc.reply_to_tweet(url, text) is W.SHIPPED
     # Store was marked by the chokepoint itself — second attempt refuses.
     assert tc.reply_to_tweet(url, text) is W.REFUSED
+
+
+def test_reply_pastes_si_wording_at_the_browser_boundary(monkeypatch):
+    from src.core import humanizer
+    from src.x import safari, twitter_client as tc
+
+    _fake_safari(monkeypatch)
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    pasted = []
+    monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
+    text = "AI and Artificial Intelligence models from OpenAI still need useful evals."
+    assert tc.reply_to_tweet(numbered_url(100), text) is W.SHIPPED
+    assert pasted == ["SI and Super Intelligence models from OpenAI still need useful evals."]
 
 
 def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
@@ -117,6 +133,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     assert "conviction is the hard part" in seen["text"]
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     """Operator 2026-06-07: 'i saw some english on Julien response'.
     @Graphseo is always-French; the chokepoint refuses an English reply to
@@ -172,7 +189,7 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_over
         "reply must not unconditionally like the parent"
 
 
-def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger):
+def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger, conversation_account):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
     share one count. Ordinary replies to the same author stay uncapped, a
@@ -187,6 +204,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(tc, "_reply_target", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
@@ -207,7 +225,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
         "a turn without a URL handle fails closed"
 
 
-def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_override, memory_ledger):
+def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_override, memory_ledger, conversation_account):
     """Another thread can ship the Engager's last turn while this one waits
     for the browser: admission, judged under the lock, refuses before Safari."""
     import contextlib
@@ -260,6 +278,7 @@ def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
     assert validated and validated[-1].endswith("(typo)")
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import reply_language
@@ -324,7 +343,7 @@ def test_dry_run_is_read_at_call_time(monkeypatch):
 def _live_browser(monkeypatch, failing_step=None):
     """Live (non-dry) write path with a scripted AppleScript outcome.
 
-    failing_step: "reply_key", "paste" or "submit" makes that step fail;
+    failing_step: "reply_button", "paste" or "submit" makes that step fail;
     "stop_before_submit", "stop_at_submit" and "stop_after_submit" request a
     stop at that point.
     """
@@ -338,11 +357,12 @@ def _live_browser(monkeypatch, failing_step=None):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
 
+    def reply_target(url, *, click=False, on_answered=None):
+        if click and failing_step == "stop_before_submit":
+            raise OutsideActiveHours("stop")
+        return not (click and failing_step == "reply_button")
+
     def run_applescript(script, *a, **k):
-        if 'keystroke "r"' in script:
-            if failing_step == "stop_before_submit":
-                raise OutsideActiveHours("stop")
-            return failing_step != "reply_key"
         if "keystroke return using command down" in script:
             return failing_step != "submit"
         return True
@@ -355,6 +375,7 @@ def _live_browser(monkeypatch, failing_step=None):
 
     monkeypatch.setattr(safari, "_paste_text", paste)
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    monkeypatch.setattr(tc, "_reply_target", reply_target)
     def close_front_tab():
         if failing_step == "stop_after_submit":
             raise OutsideActiveHours("stop")
@@ -380,24 +401,25 @@ def test_reply_ships_and_records_when_every_step_runs(monkeypatch):
     assert url in load_replied()
 
 
-def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monkeypatch):
+def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monkeypatch, conversation_account):
     from src.x import twitter_client as tc
     from src.guards.replied_store import load_replied, save_replied
 
     other = "https://x.com/else/status/2063500000000000119"
     save_replied({other})
-    for n, step in enumerate(("reply_key", "paste")):
+    for n, step in enumerate(("reply_button", "paste")):
         for debate_turn in (False, True):
             recorded = _live_browser(monkeypatch, failing_step=step)
             url = f"https://x.com/someone/status/20635000000000001{n}{int(debate_turn)}"
 
-            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.FAILED, step
+            expected = W.REFUSED if step == "reply_button" else W.FAILED
+            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is expected, step
             assert recorded == [], step
             assert url not in load_replied(), step
     assert other in load_replied()
 
 
-def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
+def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch, conversation_account):
     from src.x import twitter_client as tc
     from src.guards.replied_store import load_replied
 
@@ -410,7 +432,7 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
         assert url in load_replied()
 
 
-def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch):
+def test_debate_race_loser_leaves_the_tweet_fresh(monkeypatch, conversation_account):
     """Another thread takes the Engager's last turn while this one waits for
     the browser: admission, judged under the lock, refuses before the claim."""
     from src.guards import action_guard
@@ -528,11 +550,11 @@ def test_overnight_reply_is_refused_not_raised(monkeypatch):
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 24, 0, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 
-def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
+def test_dry_run_reply_never_claims_the_tweet(monkeypatch, conversation_account):
     """A simulated Reply writes a dry_run ledger row only: the Replied store
     holds Replies that shipped, so going live later can still answer it."""
     from src.x import twitter_client as tc

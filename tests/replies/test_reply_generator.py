@@ -14,6 +14,23 @@ FR_VOICE_FILE = "Voice file voice_fr.md"
 EN_VOICE_FILE = "Voice file voice_en.md"
 
 
+@pytest.mark.parametrize("rule", ["PARENT", "PARENT_OR_FR_FORCED", "ENGAGER_WORDS", "ENGLISH"])
+def test_english_only_overrides_each_reply_language_rule(llm, settings_override, rule):
+    from src.core import personality_store, reply_language
+    from src.core.llm_client import Surface
+    from src.replies.reply_generator import LanguageRule, ReplyCall, generate
+
+    settings_override(FR_FORCED_REPLY_HANDLES="someone", CONTENT_LANG_PRIMARY="fr")
+    call = ReplyCall("Parent: {tweet_text}", Surface.REPLY, "TEST", dossier=False,
+                     language=LanguageRule[rule])
+    result = generate(call, author="someone", text=FR)
+    assert result.language == "en"
+    assert "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in llm.prompts[-1]
+    assert "TARGET LANGUAGE OVERRIDE: FRENCH ONLY" not in llm.prompts[-1]
+    assert not reply_language.is_fr_forced("someone")
+    assert personality_store.voice_file("fr").endswith("voice_en.md")
+
+
 def language(prompt):
     """(Voice file language, target language line) a prompt carries: the
     French-reply Voice renders voice_fr.md, the English one voice_en.md
@@ -37,7 +54,7 @@ def voice_files(monkeypatch, tmp_path):
 
 
 @pytest.fixture
-def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
+def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, conversation_account, bilingual_account):
     """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
     from src.replies import reply_pipeline, reply_source
@@ -165,7 +182,7 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, settings_override):
     (None, "Graphseo", True), (None, "@graphseo", True), (None, "someone", False),
     (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
 ])
-def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced):
+def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced, bilingual_account):
     """The generator and Reply admission share this reader: one value, the
     Account's network.fr_forced_reply unless set, one handle normalisation."""
     from src.core.reply_language import is_fr_forced
@@ -189,6 +206,40 @@ EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird",
               ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
               ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
               ("reply_search", "", "")]
+
+
+@pytest.mark.parametrize("job, author, text", EVERY_PATH)
+def test_every_reply_prompt_has_si_wording_and_both_research_vocabularies(jobs, job, author, text):
+    prompt = jobs(job, author, text)
+    assert 'use "SI" instead of "AI"' in prompt
+    assert '"Super Intelligence" instead of "Artificial Intelligence"' in prompt
+    assert 'For research and discovery keep AI, SI' in prompt
+
+
+def test_reply_search_uses_account_queries_with_both_vocabularies(jobs):
+    from src.core import account
+
+    prompt = jobs("reply_search", "", "")
+    for query in account.current().searches.replies + account.current().searches.trending:
+        assert f"site:x.com {query} since:" in prompt
+
+
+def test_generated_reply_is_normalized_but_parent_evidence_is_not(llm):
+    from src.replies import reply_generator
+
+    parent = "Artificial Intelligence needs AI evals from OpenAI."
+    llm.default = "AI evals need broader coverage for Artificial Intelligence."
+    output = reply_generator.generate(reply_call(), text=parent)
+    assert output.text == "SI evals need broader coverage for Super Intelligence."
+    assert f"Parent: {parent}" in llm.prompts[-1]
+
+
+def test_json_search_output_is_not_rewritten_as_reply_prose(llm):
+    from src.core.llm_client import CallProfile, Output
+
+    llm.default = json.dumps([{"tweet_url": "https://x.com/AI/status/123", "text": "AI source",
+                               "reply": "Artificial Intelligence needs better evals."}])
+    assert generate(profile=CallProfile(output=Output.JSON)).text == llm.default
 
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
@@ -457,6 +508,7 @@ def test_reply_text_is_unquoted_and_trimmed_on_a_sentence(llm):
     assert generation.text == "Short first sentence here."
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_the_language_decided_for_the_prompt_comes_back(llm):
     from src.replies import reply_generator
     from src.core.llm_client import Surface

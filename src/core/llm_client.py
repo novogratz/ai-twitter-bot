@@ -473,6 +473,9 @@ def _build_cmd(
         cmd = [
             "codex",
         ]
+        effort = settings.get("CODEX_REASONING_EFFORT").strip()
+        if effort:
+            cmd.extend(["-c", f"model_reasoning_effort={json.dumps(effort)}"])
         if allowed_tools and any(t.lower() in {"websearch", "webfetch"} for t in allowed_tools):
             cmd.append("--search")
         cmd.extend([
@@ -480,6 +483,7 @@ def _build_cmd(
             "--model", model,
             "--sandbox", "read-only",
             "--ephemeral",
+            "--skip-git-repo-check",
             prompt,
         ])
         return cmd
@@ -878,9 +882,9 @@ def run_llm(
     does, at its rank, a CLI that is not installed. A call fails when
     `_should_fallback` says so or when its answer reads empty. A codex usage
     limit seen on this call is cached and sends the call to the fallback; a
-    cached one sends it to Ollama alone. When every provider tried hit its
-    usage limit, a cached codex lockout counting as one, the result is
-    EXHAUSTED. `output_json` asks a CLI for its JSON envelope; it does not
+    cached one sends it to Ollama alone unless fallbacks are disabled. When
+    every provider tried hit its usage limit, a cached codex lockout counting
+    as one, the result is EXHAUSTED. `output_json` asks a CLI for its JSON envelope; it does not
     set the output mode. `model` names the primary CLI's model, or is a
     `ModelSetting` read for it; a known fallback runs its own (`_fallback_model`),
     Ollama the profile's."""
@@ -894,6 +898,11 @@ def run_llm(
     if primary == "codex":
         lockout = _read_codex_lockout()
         if lockout is not None:
+            if settings.get("LLM_DISABLE_FALLBACK"):
+                return LLMResult(
+                    1, "", f"{label}: codex locked until {lockout.isoformat(timespec='minutes')}; "
+                    "fallbacks are disabled.", LLMStatus.EXHAUSTED, primary, request.model,
+                )
             local = replace(request, model=_model("ollama", chosen, profile))
             log.info(
                 f"[LLM] {label}: codex locked until "

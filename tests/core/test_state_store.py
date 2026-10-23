@@ -193,7 +193,7 @@ def _personality(monkeypatch):
     ("personality.json", _personality),
 ])
 def test_a_job_refuses_while_its_guarded_file_is_unreadable(name, job, monkeypatch, tmp_path,
-                                                            settings_override):
+                                                            settings_override, conversation_account):
     """Each of these files used to read as empty or default on a bad read,
     and the next save replaced it: a lost daily cap, a lost follow or pin
     record, a lost dedup corpus, lost dossiers or Operator tiers. The job now

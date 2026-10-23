@@ -1,5 +1,63 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-23 — English only; sleep from midnight to 04:30
+
+The Operator requires English on every publication surface and moves sleep
+to 00:00–04:30 Toronto time. The shared clock handles midnight as the end of
+the waking day, including Startup-window closure and model-call timeouts.
+The Account's new `english_only` preference overrides parent language,
+French-forced handles and environment language settings. Generation always
+uses the English Voice; content validation rejects French, mixed and
+unidentified prose before any publication. Existing bilingual behavior
+remains available to other Accounts. No new slot or publication surface is
+enabled. Tests isolate production settings and forward isolated log records
+to pytest so local validation matches CI. A PR, merge, push and release are
+requested; the bot process and runtime histories remain untouched.
+
+## 2026-10-23 — Replies use Codex Sol with xhigh effort
+
+The Operator requests a switch from local Ollama to Codex Sol for responses.
+The local configuration pins regular and priority Replies to `gpt-6.1-sol`,
+sets both Reply and shared primary routes to Codex, and uses the new
+`CODEX_REASONING_EFFORT=xhigh` setting. The Account's VIP Relation also switches
+from Claude to Codex. Originals retain their local Ollama route.
+Codex calls explicitly pass the effort and support `/tmp` outside a Git
+repository while retaining their read-only sandbox and ephemeral sessions.
+Inspection found that a cached Codex quota lockout ignored
+`LLM_DISABLE_FALLBACK=1`; it now returns an exhausted outcome without calling
+Ollama when fallbacks are disabled. The setup leaves the live process and
+production state alone; activation requires an explicitly requested restart.
+
+## 2026-10-23 — One Reply per original; technically sharper SI persona
+
+The Operator requires no repeated Replies, no self-replies and no debate
+loops. The Account enables standalone-only Replies; debate, replyback and
+babysitter jobs are disabled at scheduling and manual entry. Shared admission
+rejects comments and follow-up context before generation. Final Safari checks
+verify the actual original and author and click its own Reply button instead
+of using the keyboard selection. Current and historical own handles are
+protected. The Replied store no longer evicts after 50,000 entries and uses a
+process lock; uncertain submissions remain claimed. Existing state is preserved.
+
+The Operator then requests exceptional SI technical insight and an engaging,
+confident, playfully flirty fictional 45-year-old mom persona. Both Voice files and the Relation prompts
+now emphasize mechanisms, supported implications and useful questions, with
+warmth and adult charm, honest bot identity and no fabricated expertise or
+personal experiences. SI Reply wording and AI/SI research aliases remain.
+No start, restart, environment or production-state edit accompanies these changes.
+
+> **2026-10-23 — SI Reply wording on the hard-reset September 26 baseline:**
+> the Operator requested SI / Super Intelligence instead of AI / Artificial
+> Intelligence in Replies, with both vocabularies retained for research.
+> The Account's `reply_si_wording` preference drives shared prompt guidance
+> and normalization at generation, the pipeline and final Reply admission.
+> The final check follows formatting so the validated outgoing text keeps
+> the requested wording. Source evidence, literal references, embedded names
+> and French verb forms stay intact. Queries and relevance filters include
+> both vocabularies, with existing Account search counts and filters retained.
+> The optional Reply-search job takes its queries from the Account. No start,
+> restart, environment edit or production-state migration accompanies this update.
+
 > **2026-10-23 — Operator rollback to the September 26 code:** the target is
 > `348c82bcade1230abcd670682b1e10be9cf6f1c7`, the last main commit before
 > September 27 Toronto time, made September 25 at 21:18:52. There was no

@@ -45,7 +45,11 @@ def is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:
     and, on a scanned profile, for posts whose URL names another author.
     The scraped display name is never compared to `expected_author`."""
     text = (tweet.get("text") or "").lstrip()
-    if text.startswith("@") or bool(tweet.get("is_reply")):
+    if text.startswith("@") or bool(tweet.get("is_reply")) or any(
+            tweet.get(key) for key in ("in_reply_to_status_id", "in_reply_to_tweet_id")):
+        return True
+    conversation = tweet.get("conversation_id")
+    if conversation and str(conversation) != status_id(tweet.get("url") or ""):
         return True
     expected = (expected_author or "").lower().lstrip("@")
     url_handle = author(tweet.get("url") or "")

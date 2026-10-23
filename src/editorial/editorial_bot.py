@@ -293,7 +293,7 @@ def source_evidence(source):
 
 def draft_post(slot, sources, recent, feedback="", trending=None):
     from ..core.personality_store import render_voice, hard_rules_block
-    language = "French" if settings.get("CONTENT_LANG_PRIMARY") == "fr" else "English"
+    language = "French" if not account.current().english_only and settings.get("CONTENT_LANG_PRIMARY") == "fr" else "English"
     domain = account.current().domain
     evidence_sources = [{**{k: v for k, v in source.items() if k != "body"},
                          "evidence": source_evidence(source)} for source in sources]

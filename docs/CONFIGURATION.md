@@ -9,6 +9,32 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 `accounts/<BOT_ACCOUNT>/account.toml` ([Account](OPERATIONS.md#account)): its
 `[limits]` may tighten an engine bound, never lift it, and `.env` wins over it.
 
+The optional Account boolean `reply_si_wording` defaults to false. The live
+Account sets it to true: Reply prose uses SI / Super Intelligence while research
+retains AI and SI aliases in `[searches]`, `[niche]` and `[relevance]`. This
+preference applies to Replies, including prepared replies and final admission.
+It preserves literal references and source evidence; it is not a `.env` setting.
+
+The live Account also sets `english_only = true` (default false for other
+Accounts). All Originals and Replies use English, including those to French
+parents. It overrides `CONTENT_LANG_PRIMARY`, `FR_FORCED_REPLY_HANDLES` and
+per-job language selection, always uses `voice_en.md`, and checks the final
+outgoing text on every publication surface. French, mixed or unidentified
+prose is refused; literal URLs and @handles do not decide the language.
+
+The optional Account boolean `standalone_replies_only` defaults to false for
+other Accounts; the live Account sets it to true. It disables debate, replyback
+and babysitter jobs and refuses conversation continuations at admission and in
+the browser. `.env`, including `ENABLE_DEBATES`, cannot override it. Changing
+this operator-owned policy requires an explicit operator request.
+
+`previous_handles` is an optional list of valid X handles without `@`. Together
+with the Account handle and the runtime `BOT_HANDLE`, it protects all known own
+identities from Replies. The renamed identity is included on this restored
+baseline so preserved URLs remain recognizable. This list does not rename the
+profile or migrate state. Replied status IDs are retained permanently for all
+Accounts, with no configurable eviction limit.
+
 - `main.py` reads `.env` once at start. A variable already set in the
   process environment wins over `.env`.
 - A key `settings.py` does not know, or a value its type rejects (a switch
@@ -34,7 +60,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Working hours 04:30–00:00 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
@@ -54,6 +80,14 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 
 ## Models and providers
 
+The live operator configuration and `.env.example` (2026-10-23) set `AI_CLI=codex`,
+`REPLY_LLM_PROVIDER=codex`, `REPLY_MODEL=gpt-6.1-sol`,
+`PRIORITY_REPLY_MODEL=gpt-6.1-sol`, and `CODEX_REASONING_EFFORT=xhigh`.
+Originals retain `PROFILE_LLM_PROVIDER=ollama`. `LLM_DISABLE_FALLBACK=1`
+keeps Replies on Codex even during cached usage lockouts: those calls return
+a rate-limit outcome without calling a different model. The engine defaults
+below still apply to settings that the operator has not set.
+
 - `AI_CLI` picks the primary provider, `ollama` by default;
   `PROFILE_LLM_PROVIDER` and `REPLY_LLM_PROVIDER` route the profile surfaces
   and the Replies, `ollama` both. An unknown provider name fails every call
@@ -65,10 +99,13 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
   `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself
   without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
-- Two calls leave the configured provider without a fallback: the Replies to
-  @Graphseo run on the Claude CLI whenever it is installed, with
-  `PRIORITY_REPLY_MODEL`; a codex primary under a cached usage lockout
-  (`codex_lockout.json`) goes to local Ollama.
+- A Relation may override the provider with its installed CLI; the live
+  @Graphseo Relation uses Codex with `PRIORITY_REPLY_MODEL`. A codex primary
+  under a cached usage lockout (`codex_lockout.json`) goes to local Ollama
+  only when `LLM_DISABLE_FALLBACK` is false.
+- `CODEX_REASONING_EFFORT` sets `model_reasoning_effort` on every Codex
+  invocation; blank keeps the CLI's own configured default. It does not
+  change another provider or the operator's global Codex configuration.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
@@ -149,6 +186,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `LLM_TIMEOUT_SECONDS` | int | `180` |  | Default model-call timeout, and Ollama's floor. |
 | `LLM_FALLBACK_CLI` | str | blank |  | Fallback provider: codex, gemini or ollama; blank means none. |
 | `LLM_DISABLE_FALLBACK` | 0 or 1 | `0` |  | 1 turns the fallback off whatever LLM_FALLBACK_CLI says. |
+| `CODEX_REASONING_EFFORT` | str | blank |  | Codex reasoning effort (for example xhigh); blank keeps the CLI's configured default. |
 | `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |
 | `CODEX_FALLBACK_MODEL` | str | `gpt-5.4-mini` |  | Codex model as the fallback; blank means this default. |
 | `GEMINI_FALLBACK_MODEL` | str | `gemini-2.0-flash` |  | Gemini model as the fallback; blank means this default. |

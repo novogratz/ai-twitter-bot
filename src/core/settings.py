@@ -224,6 +224,7 @@ _declare("OLLAMA_NUM_PREDICT", int, 1800, "Tokens Ollama may generate per call."
 _declare("LLM_TIMEOUT_SECONDS", int, 180, "Default model-call timeout, and Ollama's floor.")
 _declare("LLM_FALLBACK_CLI", str, "", "Fallback provider: codex, gemini or ollama; blank means none.")
 _declare("LLM_DISABLE_FALLBACK", bool, False, "1 turns the fallback off whatever LLM_FALLBACK_CLI says.")
+_declare("CODEX_REASONING_EFFORT", str, "", "Codex reasoning effort (for example xhigh); blank keeps the CLI's configured default.")
 _declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, the fallback CLI's own below.")
 _declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
 _declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")

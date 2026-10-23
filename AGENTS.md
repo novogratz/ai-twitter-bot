@@ -6,31 +6,73 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
-2026-10-23 — The Operator explicitly requested a rollback to the code in use
-on September 26, followed by push, PR, merge and release. The target is
-`348c82bcade1230abcd670682b1e10be9cf6f1c7` (September 25, 21:18:52
-America/Toronto); there was no September 26 main commit. Tracked code,
-Account configuration, Voice, tests, tooling and documentation return to
-that snapshot, with this rollback recorded in four documentation files.
-This supersedes the later publishing mandates: Originals and Startup posts,
-conversation jobs, standalone likes and the 04:30–23:30 schedule return.
-The later ranked Reply review, three-like minimum, protected-handle additions
-and priority like → Reply → repost sequence are absent. Existing local work
-is backed up; runtime state, `.env`, logs and process controls are preserved.
-This code rollback does not start, stop or restart the bot or edit its X profile.
+2026-10-23, latest requests — Sleep from 00:00 through 04:29:59 Toronto time;
+resume at 04:30. Midnight is the end of the preceding waking day for model
+timeouts and Startup windows. Every Original and Reply is English, including
+Replies to French parents and VIPs. The Account sets `english_only = true`:
+generation always uses the English Voice, stale French language overrides
+cannot win, and final content validation rejects French, mixed or unidentified
+prose. Publication rules otherwise hold. The Operator requests a PR, merge,
+push and release; this does not authorize a bot restart or state migration.
+
+2026-10-23, Reply model switch — The Operator requests Codex Sol with xhigh
+reasoning effort for responses. The local `.env` sets `AI_CLI` and
+`REPLY_LLM_PROVIDER` to `codex`, both Reply model settings to `gpt-6.1-sol`,
+and `CODEX_REASONING_EFFORT=xhigh`. The Account's Relation provider also uses
+Codex. Originals keep their Ollama route. `LLM_DISABLE_FALLBACK=1` also
+blocks the cached Codex quota lockout from silently using Ollama. Codex calls
+pass the effort explicitly and allow the Reply routes' `/tmp` working directory
+with a read-only sandbox. This setup requires a separately requested restart;
+it does not start or restart the bot or migrate production state.
+
+2026-10-23, later requests — The Operator requires one Reply per standalone
+original permanently, no Replies to the Account's own originals or replies,
+and no debate or follow-up exchanges. `standalone_replies_only = true` in the
+Account disables debate, replyback and babysitter scheduling and their manual
+entry points. Admission refuses known comments before generation, including
+VIP sources; the browser verifies the actual parent, original status and own
+author identities before any optional like or Reply click. It clicks the
+verified parent's button, never X's keyboard selection. Configured, runtime
+and historical handles all count as our own. A visible earlier own Reply
+also closes the thread and keeps its claim permanently. Replied IDs never expire or get evicted; claims and
+updates use a process lock. Uncertain submissions stay claimed after restart;
+only proven pre-submit failures release a claim. Unreadable history refuses.
+
+The Operator also requests a sharper, emotionally engaging SI persona: a
+fictional 45-year-old woman and mom of one with confident, playful adult
+charm and deep technical perspective. Both Voice files and Relation prompts emphasize one useful
+mechanism, implication, tradeoff or precise question, grounded in the supplied
+evidence or stable knowledge. Kindness, factual support and honest bot identity
+remain; no fabricated biography, tests, internals or claims of omniscience.
+SI / Super Intelligence remains the Reply vocabulary; research keeps both
+AI and SI. No start, restart, environment edit or production-state migration.
+
+2026-10-23 — On the hard-reset September 26 baseline, the Operator requests
+SI wording in every Reply and both AI and SI vocabularies in research.
+The Account enables `reply_si_wording`: standalone AI becomes SI, and
+Artificial Intelligence becomes Super Intelligence in Reply prose. The shared
+generator and pipeline apply it before length checks, and final Reply admission
+enforces it again after formatting, before validating the text that ships.
+Literal URLs, domains, email addresses, @handles, embedded names such as OpenAI
+and French verb forms such as j'ai remain intact. Research retains AI and
+Artificial Intelligence and adds SI, Super Intelligence, superintelligence and
+ASI in queries and relevance filters. This terminology asserts no achieved
+capability. Existing Account search counts, engagement filters, hours, pacing
+and publication surfaces stay at the restored baseline. No start, restart,
+environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (2026-09-23) and supersedes every older mandate. It encodes:
 
-- Active 04:30–23:30 America/Toronto only; nothing external happens overnight.
+- Active 04:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
   in waking hours take their topic from rising AI posts on X, and their facts
   from a trusted article.
 - Quotes, reposts, self-recycling and threads stay at zero.
-- Replies are uncapped in waking hours, paced and deduplicated per tweet;
-  debate turns are capped per engager per day.
+- Replies are uncapped in waking hours, paced and permanently deduplicated
+  per standalone original. Self-replies and conversation follow-ups are disabled.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
@@ -74,6 +116,7 @@ Account.
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
 | Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Account's SI Reply wording, enforced before final validation; source evidence and literal references preserved | `src/core/reply_wording.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
 | Account jobs: engage, follow engagers, followback, likes, pin, follower count, tracked accounts | `src/account/` |
@@ -84,7 +127,7 @@ Account.
 | Write ledger: today's counts, last write, last follow or unfollow; file and in-memory adapters | `src/guards/ledger.py` |
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
-| Replied store: one reply per tweet, keyed on status ID | `src/guards/replied_store.py` |
+| Replied store: permanent status-ID history with process-locked claims | `src/guards/replied_store.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |
 | Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |
 | Settings reference of `docs/CONFIGURATION.md`, generated from the declarations | `bin/configuration_doc.py` |

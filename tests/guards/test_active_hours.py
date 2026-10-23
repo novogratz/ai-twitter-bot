@@ -12,38 +12,48 @@ from tests.helpers import TORONTO, stop_requested, clock
     ("2026-09-20T04:30:00-04:00", True),
     ("2026-09-20T22:00:00-04:00", True),
     ("2026-09-20T23:29:59-04:00", True),
-    ("2026-09-20T23:30:00-04:00", False),
+    ("2026-09-20T23:30:00-04:00", True),
+    ("2026-09-20T23:59:59-04:00", True),
     ("2026-09-21T00:00:00-04:00", False),
-    # 2026-11-01, fall back at 02:00: bed at 23:30 EDT the evening before,
-    # wake at 04:30 EST, bed at 23:30 EST.
-    ("2026-11-01T03:29:59+00:00", True),
-    ("2026-11-01T03:30:00+00:00", False),
+    # Midnight EDT, then wake after the autumn clock change in EST.
+    ("2026-11-01T03:59:59+00:00", True),
+    ("2026-11-01T04:00:00+00:00", False),
     ("2026-11-01T09:29:59+00:00", False),
     ("2026-11-01T09:30:00+00:00", True),
-    ("2026-11-02T04:29:59+00:00", True),
-    ("2026-11-02T04:30:00+00:00", False),
-    # 2026-03-08, spring forward at 02:00: bed at 23:30 EST the evening
-    # before, wake at 04:30 EDT, bed at 23:30 EDT.
-    ("2026-03-08T04:29:59+00:00", True),
-    ("2026-03-08T04:30:00+00:00", False),
+    ("2026-11-02T04:59:59+00:00", True),
+    ("2026-11-02T05:00:00+00:00", False),
+    # Midnight EST, then wake after the spring clock change in EDT.
+    ("2026-03-08T04:59:59+00:00", True),
+    ("2026-03-08T05:00:00+00:00", False),
     ("2026-03-08T08:29:59+00:00", False),
     ("2026-03-08T08:30:00+00:00", True),
-    ("2026-03-09T03:29:59+00:00", True),
-    ("2026-03-09T03:30:00+00:00", False),
+    ("2026-03-09T03:59:59+00:00", True),
+    ("2026-03-09T04:00:00+00:00", False),
 ])
 def test_exact_waking_boundaries_and_dst(when, awake):
     assert hours.is_active(datetime.fromisoformat(when)) is awake
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "04:30–23:30 America/Toronto"
+    assert hours.window_label() == "04:30–00:00 America/Toronto"
 
 
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 23, tzinfo=TORONTO))
-    assert hours.seconds_until_bedtime() == 1800
-    clock(monkeypatch, datetime(2026, 9, 20, 23, 45, tzinfo=TORONTO))
+    assert hours.seconds_until_bedtime() == 3600
+    clock(monkeypatch, datetime(2026, 9, 20, 23, 59, 59, tzinfo=TORONTO))
+    assert hours.seconds_until_bedtime() == 1
+    clock(monkeypatch, datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 0
+    clock(monkeypatch, datetime(2026, 9, 21, 4, 29, tzinfo=TORONTO))
+    assert hours.seconds_until_bedtime() == 0
+
+
+@pytest.mark.parametrize("day", [(2026, 3, 8), (2026, 11, 1), (2026, 12, 31)])
+def test_bedtime_is_the_next_midnight_after_wake(day):
+    from datetime import timedelta
+    now = datetime(*day, 23, 59, tzinfo=TORONTO)
+    assert hours.bedtime(now) == now.replace(hour=0, minute=0) + timedelta(days=1)
 
 
 @pytest.mark.parametrize("now,wake", [
@@ -106,7 +116,7 @@ def test_a_stored_day_is_over_before_today_in_toronto_or_when_unreadable(monkeyp
 
 
 def test_night_rejects_all_posting_and_queued_jobs(monkeypatch):
-    clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO))
     called = []
     hours.awake_job(lambda: called.append(True))()
     assert not called

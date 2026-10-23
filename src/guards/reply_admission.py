@@ -28,7 +28,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, reply_language, settings
+from ..core import account, config, humanizer, reply_language, reply_wording, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -37,6 +37,7 @@ class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
     OWN_POST = "own post"
+    CONVERSATION = "conversation follow-up or nested reply"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
     DEBATE_TURN_CAP = "Debate turn cap reached"
@@ -52,7 +53,7 @@ class Refusal(Enum):
 
 
 _DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
-                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT})
+                         Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
 
 @dataclass(frozen=True)
@@ -66,7 +67,7 @@ class Verdict:
         return self.refusal is None
 
 
-def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
+def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
     Blocked account is dropped for good even when judged Overnight."""
     author = x_urls.author(url)
@@ -74,8 +75,10 @@ def judge_parent(url: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if author == config.BOT_HANDLE.lower():
+    if author in account.own_handles():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
+    if account.current().standalone_replies_only and (debate_turn or is_reply):
+        return Verdict(Refusal.CONVERSATION, "one Reply to another account's standalone original only", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
@@ -100,7 +103,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.SPACING, why, author)
 
     # Every Reply loses its dashes here, including paths that skip humanize().
-    text = humanizer.strip_dashes(draft)
+    text = humanizer.strip_dashes(reply_wording.apply(draft))
     if len(text) > content_guard.REPLY_MAX_CHARS:
         # The generation is already paid for: trim on a sentence boundary
         # rather than discard; validate below still rejects what can't be saved.
@@ -114,6 +117,8 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if author in _handles("HUMAN_TYPO_HANDLES"):
         text = humanizer.inject_human_typo(text)
         log.info(f"[REPLY] human-typo injected for @{author}.")
+    # Keep the Account's wording authoritative after every formatting step.
+    text = reply_wording.apply(text)
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:

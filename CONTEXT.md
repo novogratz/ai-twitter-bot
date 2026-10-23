@@ -98,6 +98,12 @@ _Avoid_: try, cycle, poll
 
 ### Conversation
 
+**SI Reply wording**:
+An Account's optional `reply_si_wording` preference: Reply prose replaces AI
+with SI and Artificial Intelligence with Super Intelligence before validation.
+Research keeps both vocabularies; evidence and literal references are preserved.
+This vocabulary makes no claim about a system's achieved capabilities.
+
 **Reply**:
 A post answering someone else's post. Never a Profile publication, and no
 daily total applies to Replies.
@@ -168,8 +174,9 @@ that shipped. It sets aside, until restart, the posts a job is done with
 _Avoid_: reply loop, reply engine
 
 **Debate turn**:
-A Reply to an Engager, in answer to what they said to the account; capped per
-Engager per day.
+A Reply to an Engager, in answer to what they said to the account. Disabled
+for the live Account by its standalone-only policy; legacy Accounts without
+that policy retain their per-Engager daily bound.
 _Avoid_: rally, round, comeback
 
 **Reply admission**:
@@ -181,7 +188,9 @@ _Avoid_: gate, prefilter, reply filter
 
 **Replied store**:
 The record of every post the account has Replied to, keyed on the post's
-status ID: one Reply per post, ever. While it is unreadable, no Reply ships.
+status ID: one Reply per standalone original, ever for the live Account.
+Entries never expire or get evicted. Claims use a process lock and survive
+uncertain submissions and restarts. While it is unreadable, no Reply ships.
 _Avoid_: replied set, replied cache, dedup file
 
 ### Accounts
@@ -261,12 +270,13 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 04:30 to 23:30 Toronto
-time. `active_hours.WAKE` and `active_hours.BEDTIME` hold the two bounds.
+The only period when the account acts externally, 04:30 to 00:00 Toronto
+time, ending at the next midnight. `active_hours.WAKE` and
+`active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:
-The rest of the Toronto day, when nothing external happens.
+00:00 through 04:29:59 Toronto time, when nothing external happens.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:

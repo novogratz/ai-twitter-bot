@@ -143,7 +143,10 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
 
     assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
         "Graphseo FR generator must NEVER run for the bestie"
-    assert "(The Bitcoin Therapist) is your BEST FRIEND" in llm.prompts[0]
+    from src.core import account
+    expected = account.current().relations.get("TheBTCTherapist").prompt.format(
+        tweet_text="working the weekend because bitcoin")
+    assert expected in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
@@ -191,7 +194,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
                                                       Surface.RELATION_REPLY, "GRAPHSEO_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
         False, 300, 220, False, 0)
-    assert (own.provider, own.profile) == ("claude", TEXT_PROFILE)
+    assert (own.provider, own.profile) == ("codex", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").provider is None
 

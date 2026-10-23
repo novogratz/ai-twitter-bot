@@ -33,7 +33,7 @@ def test_a_post_of_unknown_or_negative_age_is_never_a_candidate():
     assert urls(reply_source.select(tweets, Declaration(max_age=HOUR), "TAG")) == [ok]
 
 
-def test_root_only_drops_nested_replies():
+def test_root_only_drops_nested_replies(conversation_account):
     root, nested, mention = fresh("a", n=1), fresh("b", n=2), fresh("c", n=3)
     tweets = [{"url": root, "text": "a root post"}, {"url": nested, "text": "a reply", "is_reply": True},
               {"url": mention, "text": "@someone a reply"}]

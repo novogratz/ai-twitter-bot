@@ -22,7 +22,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log
+from ..core import engagement_log, reply_wording
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -67,6 +67,7 @@ class Candidate:
     pattern: str = ""
     provider: str = ""  # the provider and model that wrote `reply`
     model: str = ""
+    is_reply: bool = False
 
 
 @dataclass
@@ -156,7 +157,9 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn)
+    verdict = judge_parent(url, debate_turn=job.debate_turn,
+                           is_reply=candidate.is_reply or bool(candidate.context)
+                           or candidate.text.lstrip().startswith("@"))
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
@@ -194,7 +197,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if generation.outcome is not Outcome.WRITTEN:
         return 0  # a failed generation: the post stays replayable
     reply, pattern_id = extract_pattern(generation.text)
-    reply = humanize(reply)
+    reply = reply_wording.apply(humanize(reply))
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0

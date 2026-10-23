@@ -22,7 +22,7 @@ from collections import Counter
 from datetime import timedelta
 
 from ..x import x_urls
-from ..core import settings
+from ..core import account, settings
 from ..core.llm_client import Surface
 from ..core.logger import log
 from . import reply_pipeline
@@ -71,6 +71,9 @@ def _debates_enabled() -> bool:
 
 
 def run_debate_cycle():
+    if account.current().standalone_replies_only:
+        log.info("[DEBATE] Disabled by the Account's standalone Reply policy.")
+        return
     if not _debates_enabled():
         log.info("[DEBATE] Disabled (ENABLE_DEBATES=0). Skipping.")
         return

@@ -241,7 +241,8 @@ def voice_file(lang: str) -> str:
     """The Account's Voice file for a reply language: voice_en.md for "en",
     voice_fr.md otherwise. The Operator's persona: NEVER overwritten by any
     agent — only the human edits it."""
-    return os.path.join(account.current().folder, "voice_en.md" if lang == "en" else "voice_fr.md")
+    profile = account.current()
+    return os.path.join(profile.folder, "voice_en.md" if profile.english_only or lang == "en" else "voice_fr.md")
 
 
 def render_voice(lang: str = "en") -> str:

@@ -238,7 +238,7 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
   paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes between 23:30 and 04:30; each restart
+  the bot roughly every 15 minutes between 00:00 and 04:30; each restart
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
@@ -257,7 +257,7 @@ real account from a second process. Before any of them:
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
    prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
-   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 23:30.
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 00:00.
 
 ## Watching
 
@@ -280,7 +280,7 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence between 23:30 and 04:30 Toronto time is normal. There is no
+Silence between 00:00 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
@@ -528,7 +528,8 @@ root:
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
-| `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
+| `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Permanent status-ID history of Replies and uncertain submissions; never evicted | own, fails closed |
+| `replied_tweets.json.lock` | `replied_store` | OS process lock for claims and every history update; held together with a thread lock | lock file; never delete while a writer may hold it |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |
@@ -816,7 +817,7 @@ name: compare them by hand.
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
   writer, and a row written beside the running bot can be lost. It drives
   Safari through the `safari` primitives and checks the bot's Toronto clock:
-  it refuses to start Overnight and stops before its next unfollow at 23:30
+  it refuses to start Overnight and stops before its next unfollow at 00:00
   or on SIGTERM. A primitive also refuses to start a page script at that
   point; between a click and its confirm, the run then ends with the modal
   open and nothing unfollowed or recorded, and the next run cancels that

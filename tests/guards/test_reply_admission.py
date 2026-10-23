@@ -59,7 +59,7 @@ def test_already_replied_on_status_id_whatever_the_url_author():
 
 def test_definitive_rules_win_over_overnight(monkeypatch):
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 24, 0, 0, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
     assert judge_parent(url("pgm_pm")).refusal is Refusal.BLOCKED_ACCOUNT
     overnight = judge_parent(url("someone"))
@@ -73,7 +73,7 @@ def test_stop_request_refuses_as_overnight(monkeypatch):
     assert judge_parent(url("someone")).refusal is Refusal.OVERNIGHT
 
 
-def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override):
+def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override, conversation_account):
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="challenger")
     capped = judge_parent(url("challenger"), debate_turn=True)
@@ -89,6 +89,16 @@ def test_unreadable_store_raises_instead_of_admitting():
 
 
 # --- spacing and text -------------------------------------------------------
+
+
+def test_english_only_rejects_french_and_accepts_english_for_a_former_french_vip(monkeypatch, settings_override):
+    settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    french = judge_reply(url("Graphseo"), "Le modèle est plus rapide mais les données restent le vrai problème.")
+    assert french.refusal is Refusal.TEXT and "English-only" in french.reason
+    english = judge_reply(url("Graphseo"), "The model is faster, but the evidence still needs a stronger baseline.")
+    assert english
+    assert not replied_store.load_replied(), "admission alone cannot claim a submission"
 
 
 def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
@@ -115,6 +125,42 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
     assert verdict.text.endswith("(typo)") and "—" not in verdict.text
 
 
+def test_final_reply_admission_applies_si_before_validation(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    checked = []
+    validate = content_guard.validate
+    monkeypatch.setattr(content_guard, "validate",
+                        lambda text, **kw: checked.append(text) or validate(text, **kw))
+    verdict = judge_reply(url("someone"), "AI evals still matter for Artificial Intelligence.")
+    assert verdict
+    assert verdict.text == checked[-1] == "SI evals still matter for Super Intelligence."
+
+
+def test_si_replacement_fits_before_the_final_length_check(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    prefix = "Today, " + "A concrete evaluation needs carefully chosen examples and stable measurements. " * 3
+    draft = prefix + "Artificial Intelligence needs tests."
+    assert len(draft) > content_guard.REPLY_MAX_CHARS
+    verdict = judge_reply(url("someone"), draft)
+    assert verdict and verdict.text == prefix + "Super Intelligence needs tests."
+
+
+def test_a_reply_ending_in_si_is_not_a_dangling_fragment(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    verdict = judge_reply(url("someone"), "Broader eval coverage is still useful for AI")
+    assert verdict and verdict.text.endswith("for SI")
+
+
+def test_final_formatting_cannot_reintroduce_ai_wording(monkeypatch, settings_override):
+    settings_override(HUMAN_TYPO_HANDLES="someone")
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text + " AI")
+    monkeypatch.setattr(humanizer, "inject_human_typo",
+                        lambda text: text + " and Artificial Intelligence need evals.")
+    verdict = judge_reply(url("someone"), "Coverage matters for every model.")
+    assert verdict
+    assert verdict.text == "Coverage matters for every model. SI and Super Intelligence need evals."
+
+
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     draft = "Batching decides the margin. " * 12
@@ -122,6 +168,7 @@ def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
     assert verdict and len(verdict.text) <= 278 and verdict.text.endswith(".")
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
     settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
@@ -131,6 +178,7 @@ def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override)
     assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
+@pytest.mark.usefixtures("bilingual_account")
 def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     """The respect list allows answering a Respected account on its content:
     its own @handle in the Reply is the addressee, not a mention."""
@@ -146,6 +194,7 @@ def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     ("@graphseo le support tient, @kindperson l'a bien montré hier.", "kindperson"),
     ("Kindperson qui parle de support ici, c'est du bullshit.", "kindperson"),
 ])
+@pytest.mark.usefixtures("bilingual_account")
 def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, draft, named,
                                                                   respected):
     """Mockery of the addressee by name, or any other Respected account
@@ -166,6 +215,6 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
 
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    assert judge_reply(url("someone"), TEXT, debate_turn=True)
+    assert judge_reply(url("someone"), TEXT)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []

@@ -9,7 +9,7 @@ from ..core.logger import log
 
 
 WAKE = time(4, 30)
-BEDTIME = time(23, 30)
+BEDTIME = time(0, 0)
 
 _STOP = threading.Event()
 
@@ -49,7 +49,10 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return WAKE <= local.time().replace(tzinfo=None) < BEDTIME
+    clock = local.time().replace(tzinfo=None)
+    if BEDTIME <= WAKE:
+        return clock >= WAKE or clock < BEDTIME
+    return WAKE <= clock < BEDTIME
 
 
 def stop_requested() -> bool:
@@ -92,7 +95,10 @@ def awake_job(fn):
 
 def bedtime(now: datetime) -> datetime:
     """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
-    return now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    end = now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    if BEDTIME <= WAKE and now.time().replace(tzinfo=None) >= WAKE:
+        end += timedelta(days=1)
+    return end
 
 
 def seconds_until_bedtime() -> float:

@@ -183,9 +183,8 @@ def test_direct_reply_search_skips_nested_replies(direct):
     assert chokepoint.sent == [root]
 
 
-def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
-    """Issue #241 leaves the VIP scan as it was: it answers everything its
-    accounts post, their replies included."""
+def test_direct_reply_vip_scan_skips_comments_before_generation(direct):
+    """VIP priority cannot bypass the live standalone-only policy."""
     dr, lanes, llm, chokepoint = direct
     marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
     lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
@@ -194,7 +193,8 @@ def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
-    assert chokepoint.sent == [marked, mention]
+    assert chokepoint.sent == []
+    assert llm.calls == []
 
 
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
@@ -540,7 +540,7 @@ def test_mega_watch_sends_replies_of_10_to_270_characters(profile_job):
 
 
 @pytest.fixture
-def debate(monkeypatch, llm, chokepoint, settings_override):
+def debate(monkeypatch, llm, chokepoint, settings_override, conversation_account):
     from src.replies import debate_bot as db
     from src.x import scraper
 
@@ -581,7 +581,7 @@ def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_o
 
 
 @pytest.fixture
-def replyback(monkeypatch, llm, chokepoint):
+def replyback(monkeypatch, llm, chokepoint, conversation_account):
     from src.replies import notify_bot as nb
 
     replies = []

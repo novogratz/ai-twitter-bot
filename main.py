@@ -76,10 +76,12 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
-        add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
-        add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
+        if not account.current().standalone_replies_only:
+            add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
+            add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
-        add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
+        if not account.current().standalone_replies_only:
+            add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
         add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
         if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import run_reply_cycle

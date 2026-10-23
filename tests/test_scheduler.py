@@ -8,8 +8,17 @@ def test_reply_only_still_registers_the_reply_engine():
     from main import build_scheduler
     scheduler = build_scheduler(reply_only=True)
     assert scheduler.get_job("direct_reply_job") is not None
-    assert scheduler.get_job("replyback_job") is not None
+    assert scheduler.get_job("replyback_job") is None
     assert scheduler.get_job("editorial_job") is None
+
+
+@pytest.mark.parametrize("reply_only", [False, True])
+def test_conversation_jobs_cannot_be_enabled_by_environment(settings_override, reply_only):
+    from main import build_scheduler
+    settings_override(ENABLE_DEBATES=True, ENABLE_REPLY_SEARCH=True)
+    jobs = {job.id for job in build_scheduler(reply_only=reply_only).get_jobs()}
+    assert not jobs & {"debate_job", "replyback_job", "babysit_job"}
+    assert {"direct_reply_job", "feed_sweep_job", "early_bird_job", "mega_watch_job", "reply_job"} <= jobs
 
 
 def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
@@ -91,7 +100,7 @@ REPLY_JOBS = [
 
 @pytest.mark.parametrize("job_id, module, run, label", REPLY_JOBS, ids=[j[0] for j in REPLY_JOBS])
 def test_each_reply_job_counts_toward_safari_health_under_its_label(
-        monkeypatch, settings_override, caplog, job_id, module, run, label):
+        monkeypatch, settings_override, caplog, job_id, module, run, label, conversation_account):
     """Issue #237: the scheduler wraps each Reply job's `run_*`; its failure
     is logged at ERROR with the traceback and counted under the health label
     its `safe_run_*` used, `babysitter` included."""
