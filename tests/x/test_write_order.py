@@ -3,15 +3,9 @@
 write, the Safari lock released on every path, one dry-run line per
 chokepoint. Every browser primitive is replaced by a tracer, so these
 tests never reach Safari."""
-import json
-import shutil
-import subprocess
 from types import SimpleNamespace
 
 import pytest
-
-# These engine tests exercise an Account explicitly permitted to publish Originals.
-pytestmark = pytest.mark.usefixtures("originals_account")
 
 from src.core.logger import log
 from src.core.state_errors import StateUnreadable
@@ -28,39 +22,6 @@ from src.x.twitter_client import FollowOutcome as F
 
 POST_URL = "https://x.com/someone/status/2063500000000000500"
 QUALITY = {"followers": "50K", "bio": "AI investor and GPU builder", "name": "Jane"}
-
-
-@pytest.mark.parametrize("path,label,allowed", [
-    ("/someone", "Follow @someone", True),
-    ("/SOMEONE", "Suivre @someone", True),
-    ("/elonmusk", "Follow @elonmusk", False),
-    ("/someone", "Follow @elonmusk", False),
-    ("/someone", "Follow", False),
-])
-def test_follow_click_verifies_the_opened_profile_and_button_author(trace, monkeypatch, path, label, allowed):
-    node = shutil.which("node")
-    if not node:
-        pytest.skip("node is required to exercise the browser script")
-    clicks = []
-
-    def page(js, *args, **kwargs):
-        program = """
-let clicked = false;
-const location = {pathname: PATH};
-const button = {getAttribute: () => LABEL, click: () => { clicked = true; }};
-const document = {querySelector: () => button};
-const status = eval(SCRIPT);
-console.log(JSON.stringify({status, clicked}));
-""".replace("PATH", json.dumps(path)).replace("LABEL", json.dumps(label)).replace("SCRIPT", json.dumps(js))
-        result = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=10)
-        assert result.returncode == 0, result.stderr
-        answer = json.loads(result.stdout)
-        clicks.append(answer["clicked"])
-        return answer["status"]
-
-    monkeypatch.setattr(safari, "_run_js", page)
-    assert tc.follow_account("someone") is (F.FOLLOWED if allowed else F.REFUSED)
-    assert clicks == [allowed]
 
 
 def _script_kind(script):
@@ -118,9 +79,6 @@ def trace(monkeypatch):
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
-    monkeypatch.setattr(tc, "_standalone_reply_target",
-                        lambda url, click=False: step("reply_button" if click else "target",
-                                                     ("reply_button" if click else "target") not in t.fail))
     monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: step("maybe_like"))
     monkeypatch.setattr(tc, "_mark_liked", lambda url: step("mark_liked"))
     monkeypatch.setattr(tc, "_already_liked", lambda url: False)
@@ -213,13 +171,13 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "target", "maybe_like", "reply_button", "paste", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "maybe_like", "reply_key", "paste", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
+    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.SHIPPED
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS,
-                            "record:reply", "close", "unlock"]
+                            "record:reply", "record:debate_turn", "close", "unlock"]
 
 
 def test_reply_refused_never_claims_nor_opens(trace):
@@ -234,10 +192,10 @@ def test_reply_already_claimed_never_opens(trace):
     assert trace.events == ["lock", "judge", "claim", "unlock"]
 
 
-@pytest.mark.parametrize("failing,outcome", [("target", W.REFUSED), ("reply_button", W.REFUSED), ("paste", W.FAILED)])
-def test_reply_failing_before_submit_releases_the_claim(trace, failing, outcome):
+@pytest.mark.parametrize("failing", ["reply_key", "paste"])
+def test_reply_failing_before_submit_releases_the_claim(trace, failing):
     trace.fail.add(failing)
-    assert tc.reply_to_tweet(POST_URL, REPLY) is outcome
+    assert tc.reply_to_tweet(POST_URL, REPLY) is W.FAILED
     sent = REPLY_STEPS[:REPLY_STEPS.index(failing) + 1]
     assert trace.events == ["lock", "judge", "claim", *sent, "release", "close", "unlock"]
 
@@ -250,16 +208,16 @@ def test_reply_failed_submit_keeps_the_claim(trace):
 
 
 def test_reply_stop_mid_steps_releases_claim_and_lock(trace):
-    trace.raise_at = "reply_button"
+    trace.raise_at = "reply_key"
     with pytest.raises(OutsideActiveHours):
         tc.reply_to_tweet(POST_URL, REPLY)
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:6], "release", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS[:5], "release", "unlock"]
 
 
 def test_reply_dry_run(trace, monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
-    assert tc.reply_to_tweet(POST_URL, REPLY) is W.DRY_RUN
-    assert trace.events == ["lock", "judge", "dry:reply", "unlock"]
+    assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.DRY_RUN
+    assert trace.events == ["lock", "judge", "dry:reply", "dry:debate_turn", "unlock"]
     assert _dry_run_line(trace, "REPLY")
 
 
@@ -352,9 +310,9 @@ def test_follow_dry_run(trace, monkeypatch):
 
 
 def test_like_confirmed_then_marked_then_recorded(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "not_liked"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "already_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.LIKED
-    assert trace.events == ["lock", "read", "press", "read", "mark_liked", "record:like", "unlock"]
+    assert trace.events == ["lock", "press", "read", "mark_liked", "record:like", "unlock"]
 
 
 def test_like_blocked_never_touches_the_page(trace, monkeypatch):
@@ -364,9 +322,9 @@ def test_like_blocked_never_touches_the_page(trace, monkeypatch):
 
 
 def test_like_unconfirmed_records_nothing(trace):
-    trace.likes.extend([{"url": POST_URL, "result": "not_liked"}, {"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
+    trace.likes.extend([{"url": POST_URL, "result": "clicked"}, {"url": POST_URL, "result": "not_liked"}])
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.UNCONFIRMED
-    assert trace.events == ["lock", "read", "press", "read", "unlock"]
+    assert trace.events == ["lock", "press", "read", "unlock"]
 
 
 def test_like_without_status_id_never_takes_the_lock(trace):

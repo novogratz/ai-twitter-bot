@@ -18,8 +18,6 @@ from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
-from ..guards.reply_admission import has_reply_engagement
-from ..core import reply_queue
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
@@ -27,7 +25,7 @@ from .reply_generator import LanguageRule
 
 # No FR-forced override on this job (pinned in the tests).
 JOB = reply_pipeline.Job("mega_watch", "MEGA", reply_call=lambda author: reply_call(author, LanguageRule.PARENT),
-                         pause=(8, 14))
+                         pause=(8, 14), text_bounds=(10, 270))
 
 # 2026-06-07 PM (operator): static list GONE.
 
@@ -56,13 +54,11 @@ def run_mega_watch_cycle():
 
     cycle = reply_pipeline.Cycle()
     for username in sample:
-        if (cycle.work_done(posted) >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited
-                or not reply_pipeline.discovery_available()):
+        if posted >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
-        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4,
-                                       text_limit=reply_queue.PARENT_TEXT_LIMIT)
+        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4)
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
-                                     max_shipped=MAX_REPLIES_PER_CYCLE - cycle.work_done(posted))
+                                     max_shipped=MAX_REPLIES_PER_CYCLE - posted)
 
     log.info(f"[MEGA] Cycle done: {posted} replies posted.")
 
@@ -71,7 +67,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
     candidates = []
     for t in tweets:
         url = t.get("url")
-        if not url or not has_reply_engagement(t.get("likes")):
+        if not url:
             continue
         text = (t.get("text") or "").strip()
         if not text:

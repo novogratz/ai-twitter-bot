@@ -141,7 +141,7 @@ def _dup_profile(text: str, age_hours: float = 0.0) -> dict:
         "bigrams": {f"{a} {b}" for a, b in zip(toks, toks[1:])},
         "entities": _entities(text),
         # Normalized full text — catches exact/near-exact rehash of SHORT
-        # stopword-heavy posts (short one-liners) that fall under the
+        # stopword-heavy posts (therapist one-liners) that fall under the
         # min-content-words guard below.
         "norm": " ".join(_dedup_clean(text).split()),
         "age_h": age_hours,
@@ -330,7 +330,7 @@ def _is_lazy_reply(text: str) -> bool:
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
     norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
-    return not norm or not any(c.isalnum() for c in norm) or norm in _LAZY_REPLIES
+    return norm in _LAZY_REPLIES
 
 
 def looks_truncated(text: str) -> bool:
@@ -353,7 +353,7 @@ def looks_truncated(text: str) -> bool:
     m = re.search(r"(\w{3,})\s+([A-Za-zÀ-ÿ]{1,2})$", t)
     if m and m.group(2).lower() not in {
         # legit short final words (EN + FR)
-        "ai", "si", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
+        "ai", "ok", "go", "no", "so", "up", "us", "it", "is", "on", "in",
         "to", "of", "at", "by", "ça", "là", "où", "eu", "vu", "du", "un",
         "en", "et", "or", "if", "we", "be", "me", "my", "do",
     }:
@@ -391,7 +391,7 @@ _BURNED_PATTERNS = (
 # 15:29). The persona's "never cruel" rule is prompt-level; the reply lane
 # runs on an uncensored local model that ignores it. The account has ZERO
 # need to tweet about killing people — glib violence torches the warm-
-# Account in one screenshot. Refused at the chokepoint for EVERY
+# therapist brand in one screenshot. Refused at the chokepoint for EVERY
 # surface. Idioms stay allowed ("killer app", "made a killing", "AI killed
 # my job" — no human target).
 _VIOLENCE_TERMS_RE = re.compile(

@@ -21,7 +21,7 @@ unfollow of a handle, and never knows where it stores them.
 import os
 import random
 import time
-from datetime import timedelta, timezone
+from datetime import timedelta
 from typing import Optional, Tuple
 
 from ..core import config, settings
@@ -73,10 +73,7 @@ def can_debate_turn(author: str) -> Tuple[bool, str]:
 
 def _seconds_since_last(action: str) -> float:
     last = _ledger().last_write(action)
-    if last is None:
-        return float("inf")
-    # Preserve microseconds without epoch-float cancellation, including across DST.
-    return (now_local().astimezone(timezone.utc) - last.astimezone(timezone.utc)).total_seconds()
+    return now_local().timestamp() - last.timestamp() if last else float("inf")
 
 
 def within_churn_cooldown(target: str) -> bool:
@@ -114,12 +111,8 @@ def _spacing_gap(action: str) -> float:
     """
     if action not in _SPACING:
         raise ValueError(f"no write spacing for {action!r}")
-    last = _ledger().last_write(action)
-    return spacing_gap_after(action, last)
-
-
-def spacing_gap_after(action: str, last) -> float:
     base, jitter = (getattr(config, name) for name in _SPACING[action])
+    last = _ledger().last_write(action)
     seed = f"{action}:{last.isoformat() if last else ''}"
     return base + random.Random(seed).uniform(0, jitter)
 
@@ -130,17 +123,13 @@ def seconds_until_allowed(action: str) -> float:
     gap: a ledger row stamped in the future (clock set back, copied ledger)
     must not park a waiting job for hours; can_post still refuses it."""
     gap = _spacing_gap(action)
-    wait = min(gap, max(0.0, gap - _seconds_since_last(action)))
-    if action == REPLY:
-        from . import reply_pacing
-        wait = max(wait, reply_pacing.remaining())
-    return wait
+    return min(gap, max(0.0, gap - _seconds_since_last(action)))
 
 
 def too_soon(action: str) -> str:
     """Why the spacing refuses the next write of `action`, "" when clear."""
     gap = _spacing_gap(action)
-    if _seconds_since_last(action) < gap or (action == REPLY and seconds_until_allowed(action) > 0):
+    if _seconds_since_last(action) < gap:
         return f"too soon since last {action} (need ~{int(gap)}s gap)"
     return ""
 
@@ -149,14 +138,12 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
-    if action == POST and not config.originals_enabled():
-        return False, "Originals disabled: this Account publishes Replies only"
     if stop_requested():
         return False, "stop requested"
     if not is_active():
         return False, f"asleep (active {window_label()})"
     if action in (QUOTE, RETWEET):
-        return False, "automatic quote/repost cap is 0"
+        return False, "automatic quote/repost cap is 0 (editorial originals only)"
     if action == POST:
         if profile_count_today() >= config.MAX_PROFILE_POSTS_PER_DAY:
             return False, f"daily profile publication cap reached ({config.MAX_PROFILE_POSTS_PER_DAY})"

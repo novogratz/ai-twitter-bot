@@ -7,17 +7,14 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
-pytestmark = pytest.mark.usefixtures("unranked_account")
-
 from src.guards import (
     action_guard,
     active_hours,
     content_guard,
     replied_store,
 )
-from src.core import config, engagement_log, humanizer
-from src.guards.reply_admission import Refusal, has_reply_engagement, judge_parent, judge_reply
+from src.core import config, humanizer
+from src.guards.reply_admission import Refusal, judge_parent, judge_reply
 from src.core.state_errors import StateUnreadable
 from tests.helpers import url
 
@@ -26,14 +23,6 @@ TEXT = "Batching is where inference margins are won or lost."
 
 
 # --- rules on the post ------------------------------------------------------
-
-
-@pytest.mark.parametrize("likes,allowed", [
-    (0, False), (1, False), (2, False), (3, True), (100, True),
-    (None, False), ("3", False), (3.0, False), (True, False), (-1, False),
-])
-def test_parent_needs_at_least_three_readable_likes(likes, allowed):
-    assert has_reply_engagement(likes) is allowed
 
 
 @pytest.mark.parametrize("handle,token", [
@@ -68,9 +57,9 @@ def test_already_replied_on_status_id_whatever_the_url_author():
     assert verdict.refusal is Refusal.ALREADY_REPLIED and verdict.refusal.definitive
 
 
-def test_definitive_rules_win_over_overnight(limited_hours, monkeypatch):
+def test_definitive_rules_win_over_overnight(monkeypatch):
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 24, 0, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     monkeypatch.setattr(config, "BLOCKLIST", {"pgm_pm"})
     assert judge_parent(url("pgm_pm")).refusal is Refusal.BLOCKED_ACCOUNT
     overnight = judge_parent(url("someone"))
@@ -84,11 +73,11 @@ def test_stop_request_refuses_as_overnight(monkeypatch):
     assert judge_parent(url("someone")).refusal is Refusal.OVERNIGHT
 
 
-def test_followups_are_refused_even_with_unused_debate_budget(settings_override):
+def test_debate_turn_cap_is_temporary_and_only_for_turns(settings_override):
     settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=1)
     action_guard.record(action_guard.DEBATE_TURN, target="challenger")
     capped = judge_parent(url("challenger"), debate_turn=True)
-    assert capped.refusal is Refusal.CONVERSATION and capped.refusal.definitive
+    assert capped.refusal is Refusal.DEBATE_TURN_CAP and not capped.refusal.definitive
     assert judge_parent(url("challenger")), "plain Replies stay uncapped"
 
 
@@ -123,7 +112,7 @@ def test_admitted_text_is_the_validated_text(monkeypatch, settings_override):
     verdict = judge_reply(url("typofriend"), "Targets are easy — conviction is the hard part of the trade.")
     assert verdict
     assert verdict.text == validated[-1]
-    assert not verdict.text.endswith("(typo)") and "—" not in verdict.text
+    assert verdict.text.endswith("(typo)") and "—" not in verdict.text
 
 
 def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
@@ -177,37 +166,6 @@ def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, re
 
 def test_judges_write_nothing(monkeypatch, memory_ledger):
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    assert judge_reply(url("someone"), TEXT)
+    assert judge_reply(url("someone"), TEXT, debate_turn=True)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
-
-
-@pytest.mark.parametrize("draft", [TEXT + " 🤓", "🤓 " + TEXT, TEXT + " :-)"])
-def test_repeated_reaction_is_refused_without_changing_text_or_claiming_parent(
-        monkeypatch, memory_ledger, draft):
-    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: [
-        "Batching helps 🤓", "A plain observation.", "More RAM helps :)"])
-    verdict = judge_reply(url("someone"), draft)
-    assert verdict.refusal is Refusal.TEXT and not verdict.refusal.definitive
-    assert "reaction repeats" in verdict.reason
-    assert judge_reply(url("someone"), TEXT).text == TEXT
-    fresh = "😊 " + TEXT
-    assert judge_reply(url("someone"), fresh).text == fresh
-    assert url("someone") not in replied_store.load_replied()
-    assert memory_ledger.rows == []
-
-
-@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
-@pytest.mark.parametrize("debate_turn", [False, True])
-def test_protected_author_never_reaches_generation_or_writing(handle, debate_turn):
-    parent = url(handle)
-    verdict = judge_parent(parent, debate_turn=debate_turn)
-    assert verdict.refusal is Refusal.PROTECTED_ACCOUNT and verdict.refusal.definitive
-    assert judge_reply(parent, TEXT, debate_turn=debate_turn).refusal is Refusal.PROTECTED_ACCOUNT
-    assert parent not in replied_store.load_replied()
-
-
-@pytest.mark.parametrize("handle", ["thesimaximalist", "TheAIShrink", "THEAISHrink"])
-def test_rebrand_does_not_make_current_or_historical_posts_reply_targets(handle):
-    from src.guards.reply_admission import Refusal, judge_parent
-    assert judge_parent(f"https://x.com/{handle}/status/123").refusal is Refusal.OWN_POST

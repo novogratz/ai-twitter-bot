@@ -1,4 +1,4 @@
-# The SI Maximalist — @thesimaximalist
+# @TheAIShrink
 
 A persona-driven X account that publishes a few sourced AI posts a day and
 converses through replies, within a ceiling set by the operator.
@@ -101,18 +101,7 @@ _Avoid_: try, cycle, poll
 **Reply**:
 A post answering someone else's post. Never a Profile publication, and no
 daily total applies to Replies.
-_Avoid_: comment, response
-
-**Reply draft**: An unpublished answer saved with its parent, source, provider
-and model in the shared queue. Independent comparison must approve its impact,
-sharpness, interest, relevance, factual support and positive tone before selection.
-
-**Reply selection**: The single worker that compares prepared Replies and
-publishes at most one approved winner when the shared cooldown expires.
-
-**Reply cooldown**: The persisted random 5–8 minute gap before another submit,
-including uncertain submissions. A lack of strong drafts or closed activity
-windows may extend the gap; no Reply is required to fill it.
+_Avoid_: comment, response, draft (reserved for Originals)
 
 **Voice**:
 The account's persona, written by the Operator in the Account's folder,
@@ -120,18 +109,11 @@ The account's persona, written by the Operator in the Account's folder,
 Original, and rendered as one block, under the
 configured handle, at the top of every Original and Reply prompt. A prompt
 says what to write; only the Voice says who writes it.
-The current Voice takes precedence over old examples and learned memories.
-The SI Maximalist covers sourced SI / Super intelligence news, SI videos, SI brainrot and fictional
-celebrity parodies; specific clip claims need supplied context. Her supplied
-character is a humble, fun, kind American mom from the San Francisco Bay Area.
-She is enthusiastic about SI, Trump, Elon and American builders, with Grok and
-Grok Imagine favorites. These preferences permit neither invented facts nor
-interaction with protected authors. Every message stays positive and respectful.
 _Avoid_: core identity, persona prompt, spine
 
 **Call surface**:
 What a model call is for, as its caller names it: a Reply, a priority
-Reply, independent Reply comparison, the reply search, a Relation's Reply, an Original. `llm_client`
+Reply, the reply search, a Relation's Reply, an Original. `llm_client`
 declares each once, in `SURFACES`, with its model setting, its provider
 setting and its CLI options; a caller names a surface and reads no model or
 provider setting. Only a Relation's CLI, forced by its caller, overrides the
@@ -180,8 +162,8 @@ _Avoid_: selection filters, candidate filter
 
 **Reply pipeline**:
 The one path from a job's candidates to shipped Replies: Reply admission
-before the Reply generator, shared preparation and independent selection for
-ranked Accounts, the write, then the engagement log for a Reply that shipped. It sets aside, until restart, the posts a job is done with
+before the Reply generator, the write, then the engagement log for a Reply
+that shipped. It sets aside, until restart, the posts a job is done with
 (refused for good, declined, answered) and leaves the others replayable.
 _Avoid_: reply loop, reply engine
 
@@ -207,7 +189,7 @@ _Avoid_: replied set, replied cache, dedup file
 **Account**:
 The X account the bot runs, one per process, chosen at start by
 `BOT_ACCOUNT`. Its folder `accounts/<name>/` holds `account.toml`: the
-current handle, display name, bio, historical handles and language, the domain its prompts name, the Slots and their angles, the feeds, Evergreen
+handle and language, the domain its prompts name, the Slots and their angles, the feeds, Evergreen
 topics and trusted hosts, the relevance filter, its network and niche:
 the accounts the jobs answer, scan, visit or skip, the niche patterns and
 the X searches, and the Relations; and next to it the Voice files and the
@@ -274,24 +256,17 @@ _Avoid_: banned, blacklisted
 An account engaged normally but never criticised or named in the account's
 own commentary. A Reply to its post may address it by its `@handle`, never
 mock it by name.
-_Avoid_: influencer
-
-**Protected account**:
-An author listed in the Account's `replies.protected_handles` who may never
-receive a Reply, including to comments and follow-ups. This does not change
-like or follow policy.
+_Avoid_: protected account, influencer
 
 ### Time and people
 
 **Waking hours**:
-The time when the account may act externally. The current policy is 24/7,
-with no scheduled pause or closing instant. `active_hours.WINDOWS` owns the
-schedule; Toronto still defines calendar days and explicit stops still win.
+The only period when the account acts externally, 04:30 to 23:30 Toronto
+time. `active_hours.WAKE` and `active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
 
 **Overnight**:
-The historical scheduled pause. The current 24/7 policy has no Overnight
-window; explicit stop requests still halt external work.
+The rest of the Toronto day, when nothing external happens.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:
@@ -331,14 +306,3 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
-
-**Reply-only Account**: `publish_originals = false` makes original publishing
-unavailable at every entry point, including startup. Existing editorial terms
-above describe retained engine support and history, not live publishing.
-**Outgoing wording**: Account `text_replacements` applied before final validation;
-SI / Super intelligence in prose, exact literal links and handles.
-
-**Discovery aliases**: SI, "super intelligence", superintelligence and ASI in
-every Account search query, alongside AI and "artificial intelligence" to find
-sources using those terms. Discovery vocabulary does not change outgoing wording
-or establish a system's capabilities.

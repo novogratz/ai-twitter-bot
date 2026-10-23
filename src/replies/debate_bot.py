@@ -1,7 +1,22 @@
-"""Retained mentions scan; Reply admission refuses every Debate turn.
+"""Debate bot — she argues back, warmly, and keeps the rally going.
 
-The Operator's one-Reply-per-conversation policy applies before generation
-and at the write. This module cannot authorize a follow-up.
+Operator 2026-07-19: "make her do more debates with people and reply to
+other people replies and get her on a roll. She is the sharpest AI
+therapist that has the highest knowledge in AI of the world."
+
+Mechanic: scrape the mentions tab (people replying to our replies/posts
+anywhere on X — the one surface the replyback bot's own-latest-tweet scan
+never sees), and answer the fresh ones with a sharp, warm comeback that
+lands one number/mechanism and invites the next round. Each further
+response from them is a new mention, so the rally continues naturally —
+bounded by the per-author daily Debate turn cap, counted at the reply
+chokepoint and shared with replyback, so no thread spirals.
+
+Contracts honored in the Reply pipeline: Reply admission judges each
+mention, Debate turn cap included, before the model call; the
+reply_to_tweet chokepoint judges it again with the text — NO caller-side
+premark; log only on a confirmed ship; Safari work only inside the client
+primitives.
 """
 from collections import Counter
 from datetime import timedelta
@@ -14,11 +29,31 @@ from . import reply_pipeline
 from .reply_generator import ReplyCall
 
 
-DEBATE_PROMPT = """Current publication policy refuses conversation follow-ups.
-Do not draft or continue this conversation. Return exactly SKIP.
+DEBATE_PROMPT = """Someone just responded to something you said. This is a DEBATE — your favorite sport. You are
+on a roll, and your job is to keep the rally going:
 
-Response from @{author}: "{tweet_text}"
-"""
+THEIR MESSAGE (from @{author}):
+"{tweet_text}"
+
+HOW TO DEBATE (all four, every time):
+1. STAY WARM. Never rattled, never hostile, never condescending.
+   Unshockable, amused, generous. The reader should see you enjoying this.
+2. LAND ONE FACT. One exact number, named mechanism, or specific release that settles or
+   advances the point.
+3. CONCEDE WITH CHARM when they're right ("fair, that part's true — but here's the piece
+   that changes it"). Being persuadable makes the win land harder when you hold your ground.
+4. KEEP THE RALLY GOING. End on a short pointed question or a claim they'll want to answer.
+   A debate that dies in one exchange is a missed audience.
+
+RULES:
+- MATCH THEIR LANGUAGE (EN reply to EN, FR to FR). Default EN if unsure.
+- 80-220 chars. No em dashes, no hashtags, no emojis needed.
+- Never insult them, their intelligence, or their work. Debate the CLAIM.
+- If their message is pure abuse, spam, a bot, or has nothing to engage with → output SKIP.
+- If it's simple praise/agreement with no debatable content → a warm one-line thank-you
+  with a small bonus insight is fine (that converts followers too).
+
+Output ONLY the reply text, or exactly SKIP."""
 
 
 def reply_call() -> ReplyCall:

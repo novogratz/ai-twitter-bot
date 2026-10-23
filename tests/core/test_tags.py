@@ -8,14 +8,14 @@ def test_pattern_tag_stripped():
     assert pid == "METAPHOR"
 
 
-def test_new_pillars_match_the_current_scope_without_reusing_retired_tags():
-    from src.core.pillar_tags import ACTIVE_PILLARS, classify
-    assert classify("Your portfolio is processing trauma.") == "other"
-    assert classify("Grok Imagine generated this short video.") == "ai_video"
-    assert classify("SI brainrot has eaten the entire timeline.") == "si_brainrot"
-    assert classify("A fictional AI celebrity parody in a generated clip.") == "celebrity_parody"
-    assert classify("OpenAI ships a new model and the GPU bill doubles.") == "ai_news_take"
+def test_pillar_classifier_buckets():
+    from src.core.pillar_tags import classify
+    assert classify("Your portfolio isn't down. It's processing trauma. Sit with it.") == "market_trauma"
+    assert classify("Saylor buys more bitcoin while the AI agents trade against him.") == "ai_vs_btc"
+    assert classify("OpenAI ships a new model and the GPU bill doubles overnight.") == "ai_news_take"
+    assert classify("Group session: what's the most you've ever panic-sold?") == "reply_bait"
+    # Explicit signals beat text heuristics.
     assert classify("anything", action_type="quote_gif") == "meme_reaction"
     assert classify("anything", source="GIF/this is fine") == "meme_reaction"
+    assert classify("Honest take on markets today.", source="QUESTION") == "reply_bait"
     assert classify("") == "other"
-    assert not {"market_trauma", "ai_vs_btc", "reply_bait"} & ACTIVE_PILLARS

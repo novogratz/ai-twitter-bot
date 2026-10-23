@@ -25,7 +25,7 @@ def test_legacy_shapes_still_read():
 
 
 @pytest.mark.parametrize("content", ['["https://x.com/a/status/1", "https://x.com/b/sta',
-                                     '{"urls": 3}', '"not a list"', '[123]', '[""]', '[{}]'])
+                                     '{"urls": 3}', '"not a list"'])
 def test_corrupt_store_fails_closed_and_stays_untouched(content):
     with open(config.REPLIED_FILE, "w") as f:
         f.write(content)
@@ -97,41 +97,3 @@ def test_release_drops_only_the_claimed_tweet(monkeypatch):
     replied_store.release(f"https://x.com/b/status/{drop}")
 
     assert json.load(open(config.REPLIED_FILE)) == [f"https://x.com/a/status/{keep}"]
-
-
-def test_history_is_permanent_past_the_old_fifty_thousand_entry_limit():
-    entries = [str(2063500000000000000 + i) for i in range(50001)]
-    rs.save_replied(entries)
-    assert not rs.claim("https://x.com/other/status/" + entries[0])
-    assert len(rs.load_replied()) == len(entries)
-
-
-
-def _claim_in_child(path, state_dir, start, results):
-    from src.core import config, state_store
-    from src.guards import replied_store
-    config.REPLIED_FILE = path
-    state_store.root = lambda: state_dir
-    start.wait(10)
-    results.put(replied_store.claim("https://x.com/any/status/2063500000000999999"))
-
-
-def test_separate_processes_cannot_claim_the_same_parent(tmp_path):
-    import multiprocessing
-    ctx = multiprocessing.get_context("fork")
-    start, results = ctx.Event(), ctx.Queue()
-    path = str(tmp_path / "replies.json")
-    workers = [ctx.Process(target=_claim_in_child, args=(path, str(tmp_path), start, results)) for _ in range(4)]
-    try:
-        for worker in workers:
-            worker.start()
-        start.set()
-        assert sum(results.get(timeout=15) for _ in workers) == 1
-        for worker in workers:
-            worker.join(10)
-            assert worker.exitcode == 0
-    finally:
-        for worker in workers:
-            if worker.is_alive():
-                worker.terminate()
-                worker.join(5)

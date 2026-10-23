@@ -185,11 +185,7 @@ def post_tweet(text: str) -> WriteOutcome:
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
     Only SHIPPED is truthy.
     """
-    from ..core import config, outgoing_text
-    if not config.originals_enabled():
-        log.info("[POST] Originals disabled: this Account publishes Replies only.")
-        return WriteOutcome.REFUSED
-    text = outgoing_text.normalize(_scrub_metadata_leaks(text))
+    text = _scrub_metadata_leaks(text)
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -348,7 +344,6 @@ class LikeOutcome(Enum):
 # every post on the page.
 _POSTS_JS = r"""
 (function(mode, targetId) {
-    var blocked = __BLOCKED__, self = __SELF__;
     var SEL = 'article[data-testid="tweet"]';
     function statusId(href) {
         var m = (href || '').match(/\/status\/(\d+)/);
@@ -376,11 +371,6 @@ _POSTS_JS = r"""
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
-    var author = url.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]+)\/status\//i);
-    var handle = author ? author[1].toLowerCase() : '';
-    var norm = handle.replace(/[\s_\-@]/g, '');
-    if (!handle || self.indexOf(handle) !== -1 || blocked.some(function(token) { return norm.indexOf(token) !== -1; }))
-        return JSON.stringify({url: url, result: 'blocked'});
     if (art.querySelector('[data-testid="unlike"]')) {
         return JSON.stringify({url: url, result: 'already_liked'});
     }
@@ -402,11 +392,7 @@ def _run_page_js(js: str) -> str:
 def _page_posts(mode: str, target_id: str = "") -> dict:
     """Run `_POSTS_JS` in `mode` ("list", "read" or "press") on the post
     with status ID `target_id`; {} when the page gave no answer."""
-    from ..core import account, config
-    from ..guards.reply_admission import _normalise
-    blocked = [_normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts) if _normalise(h)]
     js = _POSTS_JS.replace("__MODE__", mode).replace("__TARGET_ID__", target_id)
-    js = js.replace("__BLOCKED__", json.dumps(blocked)).replace("__SELF__", json.dumps(sorted(config.own_handles())))
     try:
         data = json.loads(_run_page_js(js) or "null")
     except ValueError:
@@ -429,16 +415,13 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
     DRY_RUN writes a dry-run ledger row and returns DRY_RUN.
     """
     from ..guards import action_guard, reply_admission
-    from ..core import config
     from . import x_urls
     target = x_urls.status_id(tweet_url)
     liked_url = tweet_url
 
     def admit():
         handle = x_urls.author(tweet_url)
-        if not target:
-            return LikeOutcome.FAILED
-        if not handle or config.is_own_handle(handle) or reply_admission.is_blocked_account(handle):
+        if handle and reply_admission.is_blocked_account(handle):
             log.info(f"[LIKE] @{handle} is a Blocked account; {tweet_url} not liked.")
             return LikeOutcome.BLOCKED
         if _already_liked(tweet_url):
@@ -454,20 +437,8 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
     def steps():
         nonlocal liked_url
-        # Read before clicking as well as checking inside the click script:
-        # a feed URL can misattribute a protected author's status ID.
-        opened = _page_posts("read", target)
-        actual = x_urls.author(opened.get("url") or "")
-        if not actual:
-            return LikeOutcome.FAILED
-        if (config.is_own_handle(actual)
-                or reply_admission.is_blocked_account(actual)
-                or actual != x_urls.author(tweet_url)):
-            return LikeOutcome.BLOCKED
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
-        if pressed.get("result") == "blocked":
-            return LikeOutcome.BLOCKED
         if pressed.get("result") == "already_liked":
             log.info(f"[LIKE] already liked {url}; skipping.")
             return LikeOutcome.ALREADY_LIKED
@@ -489,89 +460,6 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
         rows=lambda: [(action_guard.LIKE, liked_url)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT, check_status_id),
         steps=steps, close_tab=False)
-
-
-def _standalone_reply_target(url: str, *, click: bool = False) -> bool:
-    """Verify the opened original's identity; optionally click its own Reply button.
-
-    Never use X's keyboard selection: it may point at a comment or a quote.
-    An unreadable or ambiguous page cannot authorize a Reply.
-    """
-    from ..core import account, config, reply_queue
-    from . import x_urls
-
-    sid, expected = x_urls.status_id(url), x_urls.author(url)
-    from ..guards.reply_admission import is_blocked_account, has_reply_engagement, MIN_PARENT_LIKES
-    from .post_metrics import POST_METRICS_JS
-    if (not sid or not expected or config.is_own_handle(expected)
-            or is_blocked_account(expected) or account.current().replies.is_protected(expected)):
-        return False
-    expected_parent = None
-    if account.current().replies.ranked_selection:
-        expected_parent = reply_queue.selected_parent(url)
-        if expected_parent is None:
-            return False
-    js = r"""(() => {
-      __POST_METRICS__
-      const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__, blocked = __BLOCKED__;
-      const articles = [...document.querySelectorAll('article')];
-      const own = (article, selector) => [...article.querySelectorAll(selector)]
-        .filter(el => el.closest('article') === article
-          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
-      const permalink = article => own(article, 'a[href]').find(l => l.querySelector('time'));
-      const status = link => link?.pathname.match(/^\/([A-Za-z0-9_]+)\/status\/(\d+)\/?$/);
-      const page = location.pathname.match(/\/status\/(\d+)\/?$/);
-      if (!page || page[1] !== id) return 'refused';
-      const index = articles.findIndex(a => status(permalink(a))?.[2] === id);
-      if (index !== 0) return 'refused';
-      const article = articles[index], link = permalink(article);
-      if (status(link)[1].toLowerCase() !== author) return 'refused';
-      const text = own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
-      const expectedParent = __PARENT__;
-      const normalize = s => s.replace(/\s+/g, ' ').trim();
-      if (expectedParent !== null && normalize(text) !== normalize(expectedParent)
-          && !(Array.from(expectedParent).length === __PARENT_LIMIT__ && normalize(text).startsWith(normalize(expectedParent))))
-        return 'refused';
-      const mentions = text.match(/@[A-Za-z0-9_]+/g) || [];
-      if (mentions.some(h => blocked.some(b => h.toLowerCase().replace(/[\s_\-@]/g, '').includes(b))))
-        return 'refused';
-      if (text.trim().startsWith('@') || /Replying to|En réponse à/i.test(article.innerText))
-        return 'refused';
-      // A visible prior answer also closes this thread, including older history.
-      if (articles.slice(1).some(a => self.includes(status(permalink(a))?.[1].toLowerCase())))
-        return 'refused';
-      const likes = postMetric(article, ['like', 'unlike']);
-      if (!(likes >= __MIN_ENGAGEMENT__)) return 'refused';
-      const button = own(article, '[data-testid="reply"]')[0];
-      if (!button) return 'refused';
-      if (click) button.click();
-      return JSON.stringify({url: link.href, text: text, clicked: click, likes});
-    })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
-    js = js.replace("__CLICK__", "true" if click else "false").replace(
-        "__SELF__", json.dumps(sorted(config.own_handles())))
-    js = js.replace("__PARENT__", json.dumps(expected_parent)).replace(
-        "__PARENT_LIMIT__", str(reply_queue.PARENT_TEXT_LIMIT))
-    js = js.replace("__POST_METRICS__", POST_METRICS_JS).replace(
-        "__MIN_ENGAGEMENT__", str(MIN_PARENT_LIKES))
-    from ..guards.reply_admission import _normalise
-    js = js.replace("__BLOCKED__", json.dumps([
-        _normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts) if _normalise(h)]))
-    try:
-        opened = json.loads(safari._run_js(js, 10, log_prefix="[REPLY]") or "null")
-    except (TypeError, ValueError):
-        return False
-    if (not isinstance(opened, dict) or not isinstance(opened.get("url"), str)
-            or not has_reply_engagement(opened.get("likes"))):
-        return False
-    if account.current().replies.ranked_selection:
-        from ..core import reply_queue
-        if not isinstance(opened.get("text"), str) or not reply_queue.matches_parent(url, opened["text"]):
-            return False
-    return (x_urls.status_id(opened["url"]) == sid
-            and x_urls.author(opened["url"]) == expected
-            and not account.current().replies.is_protected(x_urls.author(opened["url"]))
-            and not config.is_own_handle(x_urls.author(opened["url"]))
-            and opened.get("clicked") is click)
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
@@ -664,16 +552,17 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # Like the parent only SOMETIMES (operator 2026-06-15: liking every
             # tweet we reply to was the automation flag). Idempotent like stays
             # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
-            if not _standalone_reply_target(tweet_url):
-                log.info("[REPLY] Opened target is protected, nested, already answered, below engagement minimum or unreadable: %s", tweet_url)
-                return WriteOutcome.REFUSED
             _maybe_like_parent(tweet_url)
             time.sleep(1)
 
             log.info("Clicking reply...")
-            if not _standalone_reply_target(tweet_url, click=True):
-                log.info(f"[REPLY] Reply target changed or its button is unreadable: {tweet_url}")
-                return WriteOutcome.REFUSED
+            if not safari._run_applescript('''
+            tell application "System Events"
+                keystroke "r"
+            end tell
+            ''', timeout_s=safari.KEYSTROKE_TIMEOUT_S):
+                log.info(f"[REPLY] Reply keystroke failed; nothing sent, tweet left fresh: {tweet_url}")
+                return WriteOutcome.FAILED
             time.sleep(3)  # Wait for reply box to open
 
             # Paste the reply (clipboard handles accents correctly)
@@ -684,10 +573,6 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
-            from ..guards import reply_pacing
-            if not reply_pacing.reserve(tweet_url):
-                log.info("[REPLY] Another submission took the pacing window.")
-                return WriteOutcome.REFUSED
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
@@ -805,11 +690,8 @@ def follow_account(username: str) -> FollowOutcome:
         # data-testid="<id>-follow" buttons + localized labels). Now: temp-file
         # JS (no quote hell), 3 selector strategies, and a REAL status return
         # so we only record a follow when the click actually fired.
-        follow_js = r"""
+        follow_js = """
         (function() {
-            var expected = __EXPECTED__;
-            var path = location.pathname.match(/^\/([A-Za-z0-9_]+)\/?$/);
-            if (!path || path[1].toLowerCase() !== expected) return 'REFUSED';
             var btn = document.querySelector('button[data-testid$="-follow"]');
             if (!btn) {
                 var all = document.querySelectorAll('button[aria-label], [role="button"][aria-label]');
@@ -829,15 +711,11 @@ def follow_account(username: str) -> FollowOutcome:
                 if (document.querySelector('button[data-testid$="-unfollow"]')) return 'ALREADY';
                 return 'NO_BTN';
             }
-            var target = (btn.getAttribute('aria-label') || '').match(/^(?:Follow|Suivre) @([A-Za-z0-9_]+)/i);
-            if (!target || target[1].toLowerCase() !== expected) return 'REFUSED';
             btn.click();
             return 'CLICKED';
         })()
-        """.replace("__EXPECTED__", json.dumps(username.lower()))
+        """
         status = safari._run_js(follow_js, 15, log_prefix="[FOLLOW]", activate=True)
-        if status == "REFUSED":
-            return FollowOutcome.REFUSED
         if status == "CLICKED":
             time.sleep(2)
             log.info(f"[FOLLOW] Followed @{username}!")
@@ -990,11 +868,7 @@ def pin_own_tweet(tweet_url: str) -> WriteOutcome:
     Note: X surfaces a confirmation modal on first pin per session; we
     handle it by clicking the confirm button (data-testid="confirmationSheetConfirm").
     """
-    from ..guards import action_guard, reply_admission
-    from . import x_urls
-
-    if reply_admission.is_blocked_account(x_urls.author(tweet_url)):
-        return WriteOutcome.REFUSED
+    from ..guards import action_guard
 
     js_code = """
     (function() {

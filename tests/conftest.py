@@ -176,7 +176,7 @@ def _daylight_default(monkeypatch):
     """
     from src.guards import active_hours
     real_now = active_hours.now_local
-    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=15))
+    monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     yield
 
 
@@ -202,9 +202,6 @@ def _fresh_job_memory(monkeypatch):
     monkeypatch.setattr(_pipeline, "_skipped", {})
     from src.replies import direct_reply as _dr
     monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSET", [0])
-    monkeypatch.setattr(_dr, "_VIP_ROTATION_OFFSET", [0])
-    from src.replies import feed_sweeper_bot as _fs
-    monkeypatch.setattr(_fs, "_FEED_ROTATION_OFFSET", [0])
     from src.guards import content_guard as _cg
     monkeypatch.setattr(_cg, "_RECENT_NORM", [])
     yield
@@ -228,16 +225,6 @@ def settings_override():
     from src.core import settings
     with settings.overriding() as override:
         yield override
-
-
-@_pytest.fixture
-def unranked_account(monkeypatch):
-    """Exercise the retained engine path for Accounts without ranked selection."""
-    from dataclasses import replace
-    from src.core import account
-    loaded = account.current()
-    monkeypatch.setattr(account, "current", lambda: replace(
-        loaded, replies=replace(loaded.replies, ranked_selection=False)))
 
 
 @_pytest.hookimpl(hookwrapper=True)
@@ -301,25 +288,3 @@ def like_job(monkeypatch, memory_ledger, settings_override):
         state["closed"] += 1
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
-
-
-@_pytest.fixture
-def originals_account(monkeypatch):
-    """Exercise retained original-writing machinery for a permitted Account.
-
-    The live Account's default refusal is tested without this fixture in
-    test_reply_only_policy.py. This changes no production configuration.
-    """
-    from dataclasses import replace
-    from src.core import account
-    profile = replace(account.current(), publish_originals=True)
-    monkeypatch.setattr(account, "current", lambda: profile)
-    return profile
-
-
-@_pytest.fixture
-def limited_hours(monkeypatch):
-    """A synthetic restricted schedule for tests of the retained closing guard."""
-    from datetime import time
-    from src.guards import active_hours
-    monkeypatch.setattr(active_hours, "WINDOWS", ((time(5), time.min),))

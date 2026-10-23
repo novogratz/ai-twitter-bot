@@ -34,7 +34,7 @@ The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
 launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
 bare interpreter and the bot fails on `import apscheduler`.
 
-`.env.example` describes @thesimaximalist with the policy values; every key is
+`.env.example` describes @TheAIShrink with the policy values; every key is
 in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 (`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
 default is the policy value, and a line set in `.env` wins over an Account's
@@ -69,7 +69,7 @@ keys and names them.
 One process runs one Account: the Safari lock and `bot.lock` stay global,
 and the state goes to `state/<BOT_ACCOUNT>/`.
 `BOT_ACCOUNT`, in `.env` or the shell, names its folder under `accounts/`;
-unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle, optional `display_name`, `bio` and `previous_handles`,
+unset, it is `theaishrink`. `accounts/<name>/account.toml` holds the handle,
 the language of the Originals (`en` or `fr`), the `domain` the editorial and
 Reply prompts name ("Write ONE original AI post"), the Slots and their
 angles, the feeds, Evergreen topics and trusted hosts, the relevance filter,
@@ -114,7 +114,7 @@ each call, and compare a handle with the one read from a status URL.
 - `[niche]`: Python regular expressions. `post` (case-insensitive) or the
   optional `ticker` (case-sensitive) must match a post the reply jobs find;
   `bio` must match the name and bio of a non-Engager the follow quality
-  gate judges. @thesimaximalist sets no `ticker`: its niche is SI/AI, including generated videos.
+  gate judges. @TheAIShrink sets no `ticker`: its niche is AI only.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
   `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
   it finds without the niche check; the Trend slots and the Startup post run
@@ -196,14 +196,13 @@ Because stdout is a pipe, the logger adds no console handler: log lines go
 only to `bot.log`, while stdout and tracebacks reach both the terminal and
 `bot.log`. Follow `tail -F bot.log`.
 
-Flags: `--reply-only` limits work to standalone Reply jobs; `--dry-run` prints
-policy and jobs without external calls. The live Account has `publish_originals`
-false: `--post-only` errors, no Startup window opens and no original publishes on
-restart. A start/restart still requires an explicit Operator request.
+Flags for `main.py`: `--post-only`, `--reply-only`, `--dry-run`. There is no
+other mode; `--monthly-recap-now` is gone. Every start in waking hours opens
+a Startup post: a restart publishes one trend post within 45 minutes when the
+daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
-The next daily openings are 05:00, 12:05, 17:15 and 22:00 Toronto time. Closing
-times are 09:30, 13:00, 20:00 and 23:00, exclusive, without jitter. Outside these
-windows the bot waits. Existing history, pending submissions and `.env` survive.
+Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
+waits. Nothing external happens until 04:30 Toronto time.
 
 ## Stop
 
@@ -238,8 +237,9 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
 - **`bin/watchdog.sh`**: every 120 seconds, starts `run.sh` if no bot runs and
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
-  current 24/7 schedule has no overnight pause; the watchdog still reacts to a
-  stale log regardless of the time.
+  paused scheduler logs almost nothing overnight, so this watchdog restarts
+  the bot roughly every 15 minutes between 23:30 and 04:30; each restart
+  comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
 
@@ -256,9 +256,8 @@ real account from a second process. Before any of them:
 3. No supervisor restarts it during the run: see [Supervisors](#supervisors).
 4. Waking hours, on the bot's own Toronto clock:
    `uv run python -c "from src.guards.active_hours import is_active; print(is_active())"`
-   prints `True` under the current 24/7 schedule. The `twitter_client` chokepoints
-   and `bin/mass_unfollow.py` still honor explicit stop requests. If a restricted
-   schedule is restored, both also enforce its closing times.
+   prints `True`. The `twitter_client` chokepoints refuse writes Overnight,
+   and `bin/mass_unfollow.py` refuses to start Overnight and stops at 23:30.
 
 ## Watching
 
@@ -268,12 +267,6 @@ real account from a second process. Before any of them:
 | `state/<account>/editorial_state.json` | Today's attempts per slot, slots `pending` or `published` (Startup posts as `startup@HH:MM:SS`), each pending submission (`pending_sources`, keyed `YYYY-MM-DD/<slot>`: source URL skipped by later drafts, text treated as a recent post, submission time), recent publications and used sources |
 | `editorial_review.jsonl` | One line per reviewed draft: draft, source, approval, rejection reason |
 | `editorial_reach.md` | Observed views of the last seven days of originals against the 500,000 target, with missing coverage |
-| `reply_draft_queue.json` | Guarded shared drafts with assigned length limits and smiley choices, comparison scores/support, selected and attempted outcomes; never treat a selected draft left by a crash as permission to retry |
-| `reply_draft_queue.lock` | Serializes preparation, review and selection updates across threads and processes |
-| `reply_ranking.lock` | Allows one independent comparison/publication worker at a time |
-| `reply_pacing.json` | Guarded submit timestamp and next permitted Reply time, including uncertain submits; preserve across restarts |
-| `reply_pacing.lock` | Atomic global cooldown reservation immediately before submit |
-| `replied_tweets.lock` | Process lock for permanent Reply claims; never clear a live lock to bypass deduplication |
 | `action_ledger.json` | Every counted write with its Toronto timestamp, one JSON object per line; the source of today's budget |
 
 The other files of the table are in the same `state/<account>/` folder,
@@ -287,21 +280,10 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence outside the four Toronto activity windows is normal. There is no
+Silence between 23:30 and 04:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery
-
-For Replies, preserve `reply_pacing.json` even after an unconfirmed submit.
-A missing first-use store starts empty; malformed contents halt admission rather
-than resetting the cooldown. Queue drafts expire after 30 minutes and reviews
-after 10 minutes. Reviews saved before the required `positive` verdict remain
-readable, but never count as approved. Waiting drafts are independently reviewed
-again; old selected drafts cannot publish or be automatically replayed.
-A selected draft has a five-minute write authorization, and
-is never automatically replayed after a crash. Check X and the permanent Replied
-store before repairing an ambiguous submission; do not clear a live process
-lock or pacing deadline to force another reply.
 
 The state files named below are in `state/<BOT_ACCOUNT>/`
 ([State files](#state-files)), the Operator files in `accounts/<BOT_ACCOUNT>/`.
@@ -547,9 +529,6 @@ root:
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Tweets already answered, by status ID | own, fails closed |
-| `reply_draft_queue.json` | `reply_queue` (collectors and selector) | Prepared drafts, assigned length limits and smiley choices, reviewed parent text, scores/support and selection outcomes | guarded |
-| `reply_pacing.json` | `reply_pacing` (`reply_to_tweet`) | Last submit attempt and persisted next permitted Reply time | guarded |
-| `reply_draft_queue.lock`, `reply_ranking.lock`, `reply_pacing.lock` | `state_store.process_lock` | Cross-process exclusion for queue transactions, selection and final cooldown reservation | lock files, never clear to bypass a live lock |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
 | `followed_accounts.json` | `follow_policy.record_followed` (`follow_account`) | Accounts followed by the bot or found already followed | guarded |
@@ -573,7 +552,7 @@ too:
 |---|---|---|---|
 | `whitelist_discovered.json` | `follow_policy`, `bin/mass_unfollow.py`; written by `account_curator.run_curator_cycle`, not scheduled | Handles the curator promoted to the whitelist, split from `whitelist.json` in issue #206 | guarded |
 | `discovered_accounts.json` | `engage_bot`, `reply_agent` | Handles found by the removed discovery agents | disposable |
-| `directives.md` | `evolution_store` | Archived rules; no longer injected into prompts | outside the store |
+| `directives.md` | `evolution_store` | Rules the removed evolution agent last wrote | outside the store |
 | `pruned_accounts.json`, `reinforced_accounts.json` | `evolution_store` | Handles skipped or weighted by the selectors | disposable |
 | `tracked_accounts.json` | `account_curator.tracked_handles` | Scan pool for `early_bird` and `mega_watch` | disposable |
 | `engagement_targets_log.json` | `account_curator.run_curator_cycle`, not scheduled | Per-author conversion weights | disposable |
@@ -837,7 +816,7 @@ name: compare them by hand.
   ledger. Keep the bot stopped even with `--force`: the ledger has a single
   writer, and a row written beside the running bot can be lost. It drives
   Safari through the `safari` primitives and checks the bot's Toronto clock:
-  it refuses to start Overnight and stops before its next unfollow at the current activity-window close
+  it refuses to start Overnight and stops before its next unfollow at 23:30
   or on SIGTERM. A primitive also refuses to start a page script at that
   point; between a click and its confirm, the run then ends with the modal
   open and nothing unfollowed or recorded, and the next run cancels that
@@ -862,19 +841,3 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
-
-## Identity changes
-
-The SI Maximalist uses `BOT_ACCOUNT=theaishrink` and the same production state.
-Update the current handle, display name and bio in `account.toml`; keep prior
-handles in `previous_handles` so older posts remain our own. Check any `.env`
-`BOT_HANDLE` override too. Do not rename the storage folder or recreate history.
-Profile metadata documents the supplied identity; changing it does not edit X.
-Code and loaded Account configuration take effect on the next explicitly
-requested start or restart.
-
-The Account's `publish_originals` and `text_replacements` fields are Operator-owned.
-The former cannot be overridden by `.env`; the latter affects only outgoing
-prose, not source evidence or URLs. `network.blocked_accounts` now includes
-@elonmusk for likes/follows as well as the existing Reply protection. Never clear
-his protected status as part of a routine configuration or whitelist update.

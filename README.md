@@ -1,112 +1,75 @@
-# The SI Maximalist — @thesimaximalist
+# @TheAIShrink — AI knowledge, useful updates, and conversation
 
-SI Maximalist: SI brain rot, Super Intelligence, SI news, celebrity parodies, and SI tech chaos.
-
-A Safari-driven SI account combining useful news and clear technical explanations
-with surreal brainrot, clearly fictional celebrity parodies and SI-created
-videos. The Operator creates and publishes videos with Grok Imagine and reports
-strong engagement with them. Her character is an American mom from the San Francisco
-Bay Area: a knowledgeable SI geek who is humble, fun, welcoming and super nice.
-She supports Super intelligence, SI/AI, Trump, Elon and the American team of
-researchers, builders and creators. She privately adores Elon and his
-products, especially Grok and Grok Imagine; their creative influence comes up
-often when relevant, with exuberant praise grounded in a specific detail and
-without invented relationships or product claims.
-Her signature "BANGER" is welcome freely when a specific detail earns it:
-"what a BANGER", "absolute BANGER", "ultimate BANGER" or "BANGER of all time".
-It can recur in consecutive Replies with distinct points and varied phrasing;
-no copied sentences or automatic suffix.
-It stays within the assigned length and smiley choice and passes the same review.
-It lives in `accounts/theaishrink/voice_en.md` and `voice_fr.md`, shared by every
-Original and Reply prompt. Particular video scenes, settings and metrics need
-supplied context; a caption alone is not proof of unseen footage.
-
-`account.toml` holds the current handle, display name and exact bio. The existing
-`theaishrink` folder remains the storage key, and `previous_handles` keeps old
-posts recognized as our own. Publication history and duplicate protection survive
-the rebrand. This change updates the text bot's identity and discovery; video
-creation and uploads remain Operator-managed.
+A Safari-driven AI account with the voice of a confident, warm, playfully flirty
+45-year-old mom who loves AI. The bot aims to give readers something useful in
+every post and respond naturally in conversations. That Voice lives only in
+the Account's folder, `accounts/theaishrink/voice_fr.md` (`voice_en.md` for
+English prompts): every post and reply prompt carries it as one block.
 
 ## Current publishing policy
 
-- **Replies only:** no new original posts, including startup/restart posts. The
-  Account's `publish_originals = false` wins over engine settings and CLI flags.
-- **24/7 activity:** no overnight or daytime pauses. Toronto still defines
-  calendar days for history and the existing like/follow limits.
-- **At least three likes per Reply target:** zero, one, two or unreadable like counts
-  are skipped, regardless of reposts or views. Discovery and the final write
-  check the parent's own count, including posts already liked by the bot.
-- **Never interact with @elonmusk:** no replies, likes, follows, unfollows or @mentions,
-  including his comments and responses. Saved approvals and whitelist entries
-  cannot bypass protection; the browser checks the actual author before clicking.
-- **One Reply per entire conversation, permanently:** another account's
-  standalone original only. Never our own posts/replies, comments or someone
-  else's response. Current and historical handles count as ours. An ambiguous
-  submission stays claimed, and a process lock prevents concurrent double claims.
-- **SI wording and research:** outgoing prose uses SI and Super intelligence in place of AI
-  and artificial intelligence. Literal links, handles and embedded names such as
-  OpenAI stay valid. Every reply, video, trend and like query explicitly includes
-  SI, "super intelligence", superintelligence and ASI, alongside AI and
-  "artificial intelligence" as discovery aliases.
-- **Always kind and positive:** encourage creators, explain useful ideas and
-  use gentle humor. No roasts, sarcastic digs, put-downs or negative takes about
-  anyone or any product. Admit uncertainty; skip when no kind, truthful detail fits.
-- **Context-led variety:** a few words when enough, a fuller technical answer
-  when useful, or a specific joke. Each new draft gets a random ceiling: five
-  words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
-  The existing 278-character maximum stays fixed. Limits include spaces and
-  reactions, never require padding, and remain enforced through publication.
-  Oversized drafts are skipped. Each draft also draws an independent choice:
-  no smiley (50%), or exactly one friendly smiley/positive text emoticon (50%)
-  in a natural position. The saved choice is enforced through publication; no automatic
-  ending or fake typos. Flags and decorative emojis cannot substitute for plain
-  text or become a signature. There is no default 🤓: a reaction used in the last
-  six logged shipped Replies is refused, including cosmetic variants and even
-  with plain replies between uses. If the last two replies with reactions in that
-  history both ended with one, the next reaction must fit earlier in the prose
-  or the draft is skipped. Preparation, selection and the final write recheck
-  history; approved text is never rewritten to fix its style.
-- **More active Replies:** no daily or hourly Reply-count cap; a shared
-  20–30 second cooldown around the clock.
-  Actual volume depends on qualifying posts, approved drafts and model/browser
-  time; there is no forced quota. Collectors prepare a shared
-  pool during the cooldown. Independent review scores impact, sharpness and
-  interest, requires positive tone, relevance and factual support, and chooses one strong winner.
-  Weak pools send nothing. Uncertain submits consume the cooldown too; the
-  deadline and permanent parent claims survive restarts.
-  The selector checks every five seconds and gives a new pool five seconds for
-  choices; startup still allows 60 seconds. One approved winner per cycle.
-  Valid approvals remain reusable until expiry when new drafts arrive.
-- **Broader SI and technology discovery:** direct scans run every 30 seconds, rotating one
-  permitted VIP and three searches mixing Latest and Top. Latest searches cover
-  models, research, tools, workflows, generated videos, robotics, chips,
-  developer tools, databases and infrastructure; their results still
-  pass the shared three-like minimum. Top queries also use this minimum instead
-  of requiring viral engagement. Feed sweeps run every 30 seconds, with For You
-  first in three of every four cycles and Following first in the fourth.
-  Each scan selects and verifies the intended native tab before reading posts.
-  Each direct scan or feed allows up to twelve generation attempts and pauses when
-  the eight-draft queue fills, leaving browser time for publishing. Every draft
-  still needs independent approval.
-  An unreviewed generated draft with an invalid length, smiley or repeated
-  reaction gets at most one correction, counted within that budget. Its original
-  assignments stay fixed; declines, provider failures and content refusals do not
-  trigger retries. `REPLY_STYLE_RETRIES=0` disables corrections; the default is one.
-  Each collector saves the initial viewport and every scroll before posts
-  disappear, deduplicates by status ID and stops at its result limit, an empty
-  view or two consecutive views without a new status ID.
-  Collectors and drafting retain up to 4,000 visible parent characters, so
-  evidence after character 200 is available. The write still verifies the
-  actual author and matches the reviewed parent text before submitting.
-- Sourcing, content checks, respect rules and permanent history remain. Replies have no daily quota. No quotes, reposts or threads.
-  Non-publishing like/follow jobs keep their existing limits and exclude Elon.
+Restored on October 23, 2026 at the Operator's request to the code in use
+on September 26: `348c82bcade1230abcd670682b1e10be9cf6f1c7`, committed
+September 25 at 21:18:52 America/Toronto. September 26 had no main commit.
+Code, Account configuration, Voice and tests match that snapshot; only
+rollback notes in AGENTS, README, editorial policy and history are added.
+This restores the behavior below, including Originals, Startup posts,
+conversation jobs and standalone likes. Later ranked Reply review, the
+three-like minimum and the priority like → Reply → repost sequence are removed.
+Uncommitted local work is backed up. Runtime state and `.env` are preserved;
+this release does not start, stop or restart the bot or change the live X profile.
 
-Conversation jobs and automatic pinning are unscheduled. The historical editorial
-slots and state remain available for other Accounts, but cannot publish for this
-Account. Browser calls, model calls and the final Reply submit all check the
-stop request. Starting, stopping and restarting require an explicit Operator
-request; code and configuration load at process start.
-See [editorial policy](docs/EDITORIAL_POLICY.md) for the complete rules.
+- **Active daily: 04:30–23:30 America/Toronto**, with daylight saving handled automatically.
+- **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
+- **Unlimited replies during waking hours**, with spacing and duplicate protection.
+  Every reply passes Reply admission before generation (before sending for
+  the optional search job, whose one model call finds and drafts together)
+  and again at the write: blocked accounts, the account's own posts and links without an
+  author handle are refused. Every reply prompt carries the Voice, the
+  operator's hard rules and the respect list, and a reply or original that
+  names a Respected account is refused at the write, dry run included; a
+  reply may still address the Respected account it answers by its `@handle`.
+  If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
+  it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
+- **Replies, likes and follows keep to AI**: `[niche]`, `[searches]` and `[network]`
+  in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
+- **One Startup post each time the bot starts in waking hours**, restarts included,
+  within the daily ceiling and the twenty-minute spacing. A submission with an
+  ambiguous outcome counts toward both until the operator clears it.
+- **No automatic quote tweets, reposts, self-recycling, or burst threads.**
+- Every scheduled original uses a fetched trusted source, prefers fresh AI
+  launches/articles when available, carries a specific takeaway, duplicate
+  checks, and a separate editorial review before publishing.
+- The 500,000-view target is tracked using observed views of originals published
+  in the last seven days. Public view counters cannot identify home-timeline views.
+
+The bot stays idle overnight and resumes automatically. Browser operations and
+model calls check the waking window too, so a queued daytime task cannot start
+a new action after 23:30. An already-issued request may still finish remotely.
+
+## Daily editorial mix
+
+| Toronto time | Reader value |
+|---|---|
+| 05:00 | Priority AI update worth understanding |
+| 07:15 | A practical AI workflow |
+| 09:30 | Priority AI article or model update with a sharp consequence |
+| 10:00 | Trend: the AI topic X is talking about, told from a trusted article |
+| 11:45 | A clear explanation of an AI concept |
+| 13:00 | Trend |
+| 14:00 | A model or tool update and its consequences |
+| 15:00 | Trend |
+| 16:15 | Priority informed take on an AI tradeoff |
+| 18:30 | An idea worth saving or sharing |
+| 20:45 | Optional post for an exceptional update or unusually useful source |
+
+Each slot has a short retry window and missed slots are not caught up. Every
+start in waking hours opens one extra trend post, the Startup post. Eleven
+slots plus the Startup post compete for eight publications a day. Trend posts
+pick their topic from the five fastest-rising AI posts on X from the last 24
+hours; the facts and the link still come from a trusted article.
+Originals have their own scheduler worker so reply scans cannot starve them.
+See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details.
 
 ## Run
 
@@ -132,7 +95,7 @@ mkdir -p state/theaishrink
 uv run python main.py
 ```
 
-`.env.example` describes @thesimaximalist with the policy values, its bounded
+`.env.example` describes @TheAIShrink with the policy values, its bounded
 settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
@@ -141,7 +104,7 @@ does not know, or a badly typed value, stops the start with a message naming
 the key, and `--dry-run` names the same keys.
 
 One process runs one Account. `BOT_ACCOUNT` (default `theaishrink`) picks
-`accounts/<name>/account.toml`, which holds the handle, display name, bio, historical handles and the language of the
+`accounts/<name>/account.toml`, which holds the handle, the language of the
 Originals, the domain its prompts name, the Slots and their angles, the
 feeds, Evergreen topics, trusted hosts, the relevance filter and the
 searches of the Trending posts, and the network and niche the reply, like and
@@ -154,15 +117,15 @@ particular account, by handle, and the default prompt of the VIP scan, in
 missing Account, an unknown key or a badly typed value stops the start with a
 message naming the file and the key. Its `[limits]` may tighten an engine
 ceiling or floor, never lift it; a value past the bound is brought back to it
-with a `[SETTINGS]` warning. `.env` still wins over bounded engine values, but cannot enable Originals while
-`publish_originals` is false.
+with a `[SETTINGS]` warning. `.env` still wins over the Account.
 The engine names no account: `accounts/example/`, a fictitious gardener with
 no Relation, runs with `BOT_ACCOUNT=example` and serves as the template of a
 new Account ([Creating an Account](docs/OPERATIONS.md#creating-an-account)).
 
 ```bash
 uv run --with-requirements requirements.txt python main.py --dry-run  # print policy/jobs/bounded settings and exit; no browser or LLM
-uv run --with-requirements requirements.txt python main.py --reply-only  # standalone Reply jobs only
+uv run --with-requirements requirements.txt python main.py --reply-only  # daytime conversations only
+uv run --with-requirements requirements.txt python main.py --post-only   # editorial originals only
 uv run --with pytest --with-requirements requirements.txt python -m pytest tests/ -q
 ```
 
@@ -208,7 +171,7 @@ from `src/x/twitter_client.py` (issue #111), and the scheduled jobs carry no
 such branch.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
-`.env` or strategy values cannot enable Originals or restore quotes.
+`.env` or strategy values cannot lift the eight-post ceiling or restore quotes.
 The configured reply provider and browser pacing still apply.
 
 ## License

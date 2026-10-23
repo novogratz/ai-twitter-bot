@@ -52,13 +52,13 @@ def test_safari_warmup_logs_a_failed_clear_and_a_silent_render_check(monkeypatch
 
 
 @pytest.mark.parametrize("when", ["day", "night", "stop"])
-def test_restart_safari_does_nothing_outside_waking_hours(limited_hours, monkeypatch, when):
+def test_restart_safari_does_nothing_outside_waking_hours(monkeypatch, when):
     """health.record_failure and the blank-page recovery restart Safari:
     at night, or once a stop was requested, the restart touches nothing."""
     from src.x import safari_hygiene as sh
 
     if when == "night":
-        clock(monkeypatch, datetime(2026, 9, 21, 0, 30, tzinfo=TORONTO))
+        clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
     elif when == "stop":
         stop_requested(monkeypatch)
     touched = []

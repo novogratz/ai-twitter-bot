@@ -10,11 +10,10 @@ import io
 import json
 import logging
 import signal
-import shutil
 import subprocess
 import sys
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
 from zoneinfo import ZoneInfo
@@ -26,36 +25,6 @@ from src.core import config
 from src.x import safari
 
 SCRIPT = Path(__file__).resolve().parent.parent / "bin" / "mass_unfollow.py"
-
-
-@pytest.mark.parametrize("handle,label,allowed", [
-    ("elonmusk", "Following @elonmusk", False),
-    ("ElonMusk", "Following @ElonMusk", False),
-    ("someone", "Following @elonmusk", False),
-    ("someone", "Following", False),
-    ("someone", "Following @someone", True),
-])
-def test_unfollow_click_refuses_protected_or_unverified_authors(handle, label, allowed):
-    spec = importlib.util.spec_from_file_location("mass_unfollow_dom", SCRIPT)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    node = shutil.which("node")
-    if not node:
-        pytest.skip("node is required to exercise the browser script")
-    program = """
-let clicked = false;
-const link = {getAttribute: () => '/' + HANDLE};
-const cell = {querySelectorAll: () => [link]};
-const button = {closest: () => cell, getAttribute: () => LABEL,
-                setAttribute: () => {}, click: () => { clicked = true; }};
-const document = {querySelectorAll: () => [button]};
-const result = eval(SCRIPT);
-console.log(JSON.stringify({result, clicked}));
-""".replace("HANDLE", json.dumps(handle)).replace("LABEL", json.dumps(label)).replace("SCRIPT", json.dumps(mod._pick_js(set())))
-    result = subprocess.run([node, "-e", program], capture_output=True, text=True, timeout=10)
-    assert result.returncode == 0, result.stderr
-    answer = json.loads(result.stdout)
-    assert answer == {"result": "CLICK:someone" if allowed else "NONE", "clicked": allowed}
 
 
 def _toronto(hour, minute=0, second=0):
@@ -134,7 +103,7 @@ def script(monkeypatch, tmp_path):
     monkeypatch.setattr(follow_policy, "adjust_following", lambda delta: None)
     monkeypatch.setattr(sys, "argv", ["mass_unfollow.py"])
 
-    clock = {"now": _toronto(12, 15)}
+    clock = {"now": _toronto(12)}
     monkeypatch.setattr(active_hours, "now_local", lambda: clock["now"])
 
     mod.browser, mod.clock, mod.ledger, mod.handlers = browser, clock, ledger, handlers
@@ -142,8 +111,8 @@ def script(monkeypatch, tmp_path):
     return mod
 
 
-@pytest.mark.parametrize("now", [_toronto(0, 0), _toronto(1, 15), _toronto(4, 59)])
-def test_refuses_to_start_overnight(limited_hours, script, now):
+@pytest.mark.parametrize("now", [_toronto(23, 30), _toronto(0, 0), _toronto(4, 29)])
+def test_refuses_to_start_overnight(script, now):
     script.clock["now"] = now
     with pytest.raises(SystemExit) as exit_:
         script.main()
@@ -167,11 +136,11 @@ def test_refuses_while_the_state_waits_at_the_project_root(script, monkeypatch, 
     assert not script.results.exists()
 
 
-def test_stops_between_two_unfollows_when_waking_hours_end(limited_hours, script):
-    script.clock["now"] = _toronto(23, 59, 50)
+def test_stops_between_two_unfollows_when_waking_hours_end(script):
+    script.clock["now"] = _toronto(23, 29, 50)
 
     def ten_seconds_pass():
-        script.clock["now"] = _toronto(0, 0) + timedelta(days=1)
+        script.clock["now"] = _toronto(23, 30)
 
     script.browser.on_confirm = ten_seconds_pass
     script.main()
@@ -181,11 +150,11 @@ def test_stops_between_two_unfollows_when_waking_hours_end(limited_hours, script
     assert json.loads(script.results.read_text()) == ["user1"]
 
 
-def test_never_confirms_a_click_made_before_bedtime(limited_hours, script):
-    script.clock["now"] = _toronto(23, 59, 59)
+def test_never_confirms_a_click_made_before_bedtime(script):
+    script.clock["now"] = _toronto(23, 29, 59)
 
     def one_second_passes():
-        script.clock["now"] = _toronto(0, 0) + timedelta(days=1)
+        script.clock["now"] = _toronto(23, 30)
 
     script.browser.on_pick = one_second_passes
     script.main()
@@ -214,15 +183,15 @@ def test_sigterm_stops_before_the_next_unfollow(script):
     assert json.loads(script.results.read_text()) == ["user1"]
 
 
-def test_bedtime_before_the_confirm_script_leaves_the_account_followed(limited_hours, script, capsys):
+def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, capsys):
     """Bedtime between the last stop check and the confirm: `_run_js` refuses
     before its osascript starts, so the modal stays open, nothing is
     recorded and the run ends with its report."""
-    script.clock["now"] = _toronto(23, 59, 59)
+    script.clock["now"] = _toronto(23, 29, 59)
 
     def bedtime_at_confirm(js):
         if js == script.CONFIRM_JS:
-            script.clock["now"] = _toronto(0, 0) + timedelta(days=1)
+            script.clock["now"] = _toronto(23, 30)
 
     script.browser.before_js = bedtime_at_confirm
     script.main()
@@ -232,7 +201,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(limited_h
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (05:00–24:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (04:30–23:30 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 

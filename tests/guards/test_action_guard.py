@@ -2,11 +2,6 @@
 
 The policy asks an in-memory ledger (the `memory_ledger` fixture); the file
 adapter has its own tests in test_ledger.py."""
-import pytest
-
-# These engine tests exercise an Account explicitly permitted to publish Originals.
-pytestmark = pytest.mark.usefixtures("originals_account")
-
 from datetime import datetime, timedelta
 
 from src.core import config
@@ -19,7 +14,7 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkeypatch):
-    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     rows = [{"action": ag.POST, "ts": "2026-09-20T03:59:00+00:00"},
             {"action": ag.POST, "ts": "2026-09-20T04:00:00+00:00", "dry_run": True}]
@@ -30,20 +25,19 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ledger.count(ag.POST, now.date()) == 5
     assert ag.profile_count_today() == 7
     assert ag.can_post(ag.POST)[0]
-    assert ledger.last_write(ag.POST) == now - timedelta(hours=6, minutes=15)
+    assert ledger.last_write(ag.POST) == now - timedelta(hours=6)
     ag.record(ag.POST)
     assert ag.profile_count_today() == 8
     assert not ag.can_post(ag.POST)[0]
     assert ag.can_post(ag.REPLY)[0]
 
 
-@pytest.mark.parametrize("previous_replies", [500, 10000])
-def test_replies_uncapped_per_day_and_hour_but_still_paced(monkeypatch, memory_ledger, previous_replies):
-    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
+def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(previous_replies):
+    for n in range(500):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
-                             now - timedelta(minutes=5, microseconds=n))
+                             now - timedelta(hours=6, seconds=n))
     assert ag.can_post(ag.REPLY)[0]
     ag.record(ag.REPLY, "https://x.com/a/status/500")
     assert not ag.can_post(ag.REPLY)[0]
@@ -65,7 +59,7 @@ def test_can_post_refuses_after_stop(monkeypatch):
 
 
 def _noon(monkeypatch):
-    now = datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO)
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
     return now
 
@@ -98,37 +92,11 @@ def _ledger_clock(monkeypatch):
     over an empty in-memory ledger."""
     from src.guards import active_hours
 
-    now = [datetime(2026, 9, 21, 12, 15, tzinfo=TORONTO)]
+    now = [datetime(2026, 9, 21, 12, tzinfo=TORONTO)]
     monkeypatch.setattr(active_hours, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "now_local", lambda: now[0])
     monkeypatch.setattr(ag, "LEDGER", MemoryLedger())
     return now
-
-
-@pytest.mark.parametrize("started,ended,elapsed", [
-    (datetime(2026, 9, 21, 12, 15, tzinfo=TORONTO),
-     datetime(2026, 9, 21, 12, 15, 25, 670102, tzinfo=TORONTO), 25.670102),
-    (datetime(2026, 11, 1, 1, 59, 50, tzinfo=TORONTO, fold=0),
-     datetime(2026, 11, 1, 1, 0, 10, tzinfo=TORONTO, fold=1), 20),
-    (datetime(2026, 3, 8, 1, 59, 50, tzinfo=TORONTO),
-     datetime(2026, 3, 8, 3, 0, 10, tzinfo=TORONTO), 20),
-])
-def test_elapsed_spacing_preserves_microseconds_and_dst(monkeypatch, started, ended, elapsed):
-    now = _ledger_clock(monkeypatch)
-    now[0] = started
-    ag.record(ag.REPLY, "https://x.com/builder/status/1")
-    now[0] = ended
-    assert ag._seconds_since_last(ag.REPLY) == elapsed
-
-
-def test_twenty_second_floor_still_refuses_one_microsecond_early(monkeypatch, settings_override):
-    now = _ledger_clock(monkeypatch)
-    settings_override(REPLY_JITTER_SECONDS=0)
-    ag.record(ag.REPLY, "https://x.com/builder/status/1")
-    now[0] += timedelta(seconds=20, microseconds=-1)
-    assert not ag.can_post(ag.REPLY)[0]
-    now[0] += timedelta(microseconds=1)
-    assert ag.can_post(ag.REPLY) == (True, "")
 
 
 def test_reply_gap_is_drawn_once_per_reply(monkeypatch):

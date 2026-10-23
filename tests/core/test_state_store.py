@@ -5,9 +5,6 @@ import threading
 
 import pytest
 
-# These engine tests exercise an Account explicitly permitted to publish Originals.
-pytestmark = pytest.mark.usefixtures("originals_account")
-
 from src.core import state_store
 from src.core.state_errors import StateUnreadable
 from src.core.state_store import DISPOSABLE, GUARDED, StateFile
@@ -336,7 +333,7 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
     assert path.read_text() == CORRUPT
 
 
-def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(unranked_account, monkeypatch, operator_folder, caplog):
+def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
@@ -346,7 +343,7 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(unranked_account, m
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
     monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: scraped.append(a) or [
-        {"url": fresh("someone", n=i), "text": "post", "likes": 3} for i in range(3)])
+        {"url": fresh("someone", n=i), "text": "post"} for i in range(3)])
     monkeypatch.setattr(dr, "is_on_niche", lambda text: True)
     from src.replies import reply_generator
     from src.x import twitter_client

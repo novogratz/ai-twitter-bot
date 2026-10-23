@@ -1,4 +1,4 @@
-"""Reply bot: discovers the Account's topics and submits drafts to shared admission."""
+"""Reply bot: finds AI tweets and posts troll replies."""
 from datetime import timedelta
 from ..x import x_urls
 from ..core import config, settings
@@ -30,7 +30,7 @@ def _reply_search_enabled() -> bool:
 
 
 def run_reply_cycle():
-    """Search the Account's configured topics and prepare useful Replies."""
+    """Search for popular AI tweets and reply with a sharp one-liner."""
     if not _reply_search_enabled():
         log.info("[REPLY] LLM-search reply surface disabled (ENABLE_REPLY_SEARCH=0) — direct_reply carries reply volume.")
         return

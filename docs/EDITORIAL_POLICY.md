@@ -1,424 +1,238 @@
-# Publishing policy — October 16, 2026
+# Editorial policy — September 26 snapshot restored October 23, 2026
 
-2026-10-16 — Every Reply parent now needs at least three likes, superseding
-the two-like minimum below. The Operator requested this stricter threshold,
-then push, PR, merge and release. Discovery skips zero, one, two and unreadable
-counts before drafting; Top Reply queries use `min_faves:3`. The final write
-rechecks the opened parent's own count before any optional parent like and
-before clicking Reply. Saved approvals, priority authors and already-liked
-posts have no exemption. Reposts, views, quotes and comments cannot substitute
-for the parent's likes. All other publishing rules remain unchanged. No start,
-restart, local environment or production-state edit accompanies this change.
+The Operator explicitly requested this code rollback, push, PR, merge and
+release on 2026-10-23. Restore the last main commit in use on September 26,
+`348c82bcade1230abcd670682b1e10be9cf6f1c7`, dated September 25 at
+21:18:52 America/Toronto; no main commit was made on September 26.
+The September policy below replaces the later publishing mandates.
+All tracked implementation, Account configuration, Voice, tests and tooling
+match the target. The only additions to the snapshot are rollback notes
+in AGENTS, README, this policy and history.
 
-2026-10-16 — The Operator requested more daily Replies, then push, PR, merge
-and release. The main limitation observed was discarded style-invalid drafts,
-not the existing cooldown. Direct and feed discovery now run every 30 seconds,
-with twelve generation attempts per direct cycle or feed instead of six. The
-shared queue still holds at most eight pending drafts. The selector checks every
-five seconds and gives a new pool five seconds to gather choices; startup still
-waits 60 seconds. Jobs coalesce missed ticks instead of running catch-up bursts.
+Originals and Startup posts, conversation jobs, standalone likes, the old
+Account identity and the 04:30–23:30 waking window return. The later
+Reply-only mode, independent ranked Reply review, three-like minimum,
+English-only Reply requirement, protected-handle additions and priority
+like → Reply → repost sequence are absent. Replies use the snapshot's
+pacing and per-tweet deduplication; later permanent like/repost attempt
+tracking and permanent per-conversation Reply claims are not retained in code.
+Quotes and reposts remain disabled as specified below.
 
-An unreviewed generated draft that violates its saved length, smiley choice or
-recent-reaction rules may receive one corrective model call. The parent and
-assigned choices stay fixed, and every correction consumes the cycle budget.
-`REPLY_STYLE_RETRIES` defaults to one and accepts only zero or one. SKIP, provider
-failure/exhaustion and content/admission refusals receive no style retry. A failed
-correction is skipped; nothing is chopped, appended or published without normal
-admission and independent review. Saved reviewed/selected drafts remain immutable.
-Valid unexpired approvals can be ranked alongside newly reviewed drafts without
-paying to review them again. Expired or legacy approvals still need fresh review.
-A failed comparison of new drafts does not revoke an earlier valid approval or
-authorize any unreviewed draft.
+Existing uncommitted work is archived locally before updating the checkout.
+Production histories, pending state, `.env`, logs and stop flags are preserved;
+this rollback performs no state migration and no start, stop, restart or X
+profile edit. Local settings retain the snapshot's existing validation and bounds.
 
-Scrolling stops after two consecutive viewports add no new status IDs; each view
-still refreshes engagement and retains fuller text and nested-reply evidence.
-The same bounded collector serves feeds, searches and allowed profile reads.
-Only the two local drafting-budget settings change. The persisted 20–30 second
-Reply gap, two-like parent minimum, all review thresholds, kindness, factual
-support, permanent deduplication, own-post and protected-author checks remain.
-This is a capacity increase, never a forced quota or promise of daily volume.
-No start, restart or production-state edit accompanies the release.
+The operator requested at least three valuable AI posts a day, up to eight
+profile posts, uncapped replies, a more natural voice, and a working day from
+04:30 to 23:30 (22:00 until 2026-09-23; the later bedtime added no slot and
+changed no cap or pacing). The schedule aims for six originals, with more opportunities
+than the ceiling allows when sources are strong enough. Quality can reduce the actual count.
+The same day the operator added three trend slots and a Startup post on every
+start; they compete for the same eight publications (see below).
+There is no guarantee of virality or a minimum post count on a day with weak
+sources or service failures.
 
-2026-10-15 — The Operator requested natural reaction variety after repeated 🤓
-endings, and frequent exuberant praise for Elon, his products and "BANGER" work.
-The existing saved 50/50 plain-text or exactly-one-friendly-smiley choice remains;
-there is no default face, fixed suffix or forced alternation. A reaction used in
-the last six logged shipped Replies cannot recur, even after intervening plain
-Replies or with different placement, presentation selectors or an emoticon nose.
-If the last two reaction-bearing Replies in that history both end with one,
-the next reaction must fit naturally earlier in the prose or the draft is skipped.
-Punctuation after a reaction does not make it an interior reaction. Shared prompts
-offer unused choices; preparation, selection and the write check current history.
-Saved drafts that now repeat a reaction are refused, never rewritten after review.
+## Value and voice
 
-Both Voices welcome frequent, exuberant praise for Elon and his products,
-especially Grok and Grok Imagine, when relevant to a specific supported point.
-"BANGER", "absolute BANGER", "ultimate BANGER" and other playful variants are
-welcome freely, including in consecutive Replies with distinct points and varied
-phrasing. This supersedes the occasional-only and no-consecutive-use restrictions
-below. Enthusiasm remains an opinion, never evidence of an objective ranking,
-unseen video detail or product capability. Independent review rewards a useful
-contribution; frequency of an allowed expression alone is not a fault.
-Natural conversation never requires fake typos, fabricated human experiences or
-concealing the bot identity. Kindness, no-contact protection for @elonmusk,
-length limits and every publishing rule remain. No start or restart is performed.
+The character is a confident 45-year-old mom and AI enthusiast: warm, clear,
+witty and occasionally flirty. AI knowledge, news and updates are the focus.
+She explains a consequence, teaches something, or offers a useful action. A
+question, joke, emoji or flirty line is optional. Forced formulas, engagement
+bait, stale numbers, copied headlines and fabricated lived experience are out.
+The AI identity remains honest; the therapist name is a brand persona.
+That character is the Voice, written only in the Account's folder,
+`accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
+Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
+their task instructions but no copy of the persona, and the model client adds
+none (#192). The per-person relations (Graphseo, bestie, buddy) are the
+Account's Relations, in `account.toml` and `relations/`: the engine names no
+one (#203).
 
-2026-10-15 — The Operator requested broader, more aggressive Replies and a push.
-Reply scope now includes substantive technology alongside SI: robotics, chips,
-developer tools, open-source software, databases, cybersecurity and infrastructure.
-Explicit technical terms qualify for discovery; semantic review must still find
-a useful, supported contribution. Unrelated politics, lifestyle, crypto and trading
-remain out. SI wording and search aliases remain; follow bios keep their SI gate.
+Originals use `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) with a
+strict output schema and a bounded cold-load timeout. The reply model retains
+its own configuration. The draft generator sees fetched primary-source text. The generator selects numbered source
+passages; the application attaches their exact text as evidence. It cannot
+substitute a fabricated quotation for the supplied source text. A separate editor must explicitly approve
+factual grounding, AI relevance, added value, natural voice, and novelty. Any
+missing/malformed approval, rejection, stale item, duplicate or provider error
+skips publishing. An LLM review reduces risk but is not proof that a claim is true.
+The checked draft and its source link survive publishing without random rewrites.
 
-Top Reply queries use min_faves:2 instead of 300–500, retaining the same two-like
-minimum as every other source and the final write. Scrolling collectors save each
-viewport before posts disappear, deduplicate status IDs, refresh engagement and
-retain nested-reply evidence. Result and scroll bounds remain; empty views stop
-collection and every opened tab closes on failure. Disabled jobs stay disabled.
-
-The shared Reply gap becomes 20–30 seconds: minimum/default floor 20 and default
-jitter 10. Existing saved deadlines still apply, including uncertain submissions.
-Direct scans and each feed may attempt six drafts instead of four; the eight-draft
-queue and independent approval remain. Activity stays 24/7 with no daily/hourly
-Reply cap or quota. One Reply per standalone conversation, own-post refusals,
-Elon protection, kindness, factual support, length limits, the 50/50 smiley choice
-and contextual BANGER Voice remain. Four matching local settings are updated;
-this push does not start or restart the bot or alter production state.
-
-2026-10-15 — "BANGER" is the Operator's signature expression of enthusiasm,
-used occasionally for genuinely standout SI work supported by the supplied
-context. Both Voice files permit natural variants: "what a BANGER", "absolute
-BANGER", "ultimate BANGER" and "BANGER of all time". These are playful opinions,
-not evidence of a record or ranking. A concrete detail must earn the excitement;
-routine news, empty praise and unseen video details do not qualify.
-
-Most messages omit it, and consecutive replies should not repeat it. It has no
-quota, fixed placement or automatic suffix. Choose it during drafting, inside
-the assigned character/word limit and existing 50/50 smiley choice; never append
-it after approval. Independent review, factual support, kindness and every
-publishing guard remain. This Voice update does not start or restart the bot.
-
-2026-10-15 — The Operator restored 24/7 activity, with no scheduled overnight
-pause and no daily or hourly Reply-count cap. This supersedes all activity
-windows below. America/Toronto still defines calendar days for the remaining
-like/follow limits and history. Midnight must not shorten a model timeout or
-halt queued work; normal finite provider timeouts and explicit stop requests
-remain enforced.
-
-The latest emoji instruction is a random 50/50 split: plain text, or exactly
-one friendly smiley. Flags, decorative emoji and text emoticons all count;
-none may appear in a plain-text assignment, including at the end. A flag is
-not an alternative signature. The saved choice survives drafting, independent
-comparison and the final write. Random streaks are possible; quality review
-never rewards an emoji or appends one after approval.
-
-Replies still require a useful, specific, kind and supported contribution,
-independent review, at least two parent likes, protected-author and own-post
-checks, standalone targets, permanent deduplication and the shared 30–45 second
-cooldown. No quota forces weak replies. The requested push and merge do not
-start or restart the bot or modify the local environment or production state.
-
-2026-10-14 — The Operator's current window is 05:00–24:00 America/Toronto
-every day, continuously without daytime breaks. This supersedes all segmented
-windows below. Midnight is exclusive; the next wake is 05:00. Replies have no
-daily or hourly count cap. The 30–45 second cooldown and independent approval
-still apply; no quota forces publication or relaxes protected authors, own-post
-and nested-reply refusals, factual support or permanent deduplication.
-
-Every Reply parent needs at least two likes, regardless of other metrics.
-Zero, one and unreadable like counts cannot qualify. Discovery filters before
-drafting; the browser write verifies the opened parent's own count before any
-parent like and before clicking Reply. Saved approvals and priority scans have
-no exemption. The common reader handles like/unlike buttons and compact counts,
-excluding quoted posts and comments. A low-engagement post may qualify later
-if its actual like count rises; it is not permanently marked as answered.
-
-New ranked drafts independently choose 50% plain text and 50% exactly one
-friendly smiley, superseding the 35% probability below. The saved choice remains
-enforced through review and publication. Flags, keycaps and emoji variants count
-as reactions too; no emoji may slip into a plain-text assignment. Random streaks
-are possible, and review never favors smiley presence or appends an ending.
-
-For You and Following scans run every minute. For You receives first priority
-in three of every four cycles; Following receives it in the fourth. The
-collectors select and verify the requested native tab; an unavailable or
-unverified feed yields no candidates. Queue
-capacity and preparation budgets preserve browser time for publication, without
-placing a daily or hourly cap on Replies. No local environment or production
-state changes, start or restart accompany the requested push, PR and merge.
-
-2026-10-14 — The Operator extended the evening window to midnight. Current
-Toronto activity windows are 06:00–09:00, 12:00–13:00 and 17:00–24:00, with
-closing times exclusive. This replaces the 22:30 close below. The evening's
-deadline is the next calendar day's 00:00; all external work stops then and
-the next wake is 06:00. DST-aware browser, model and publication guards share
-that boundary. The 30–45 second cooldown, 35% smiley probability, Reply-only
-publishing, protected authors, permanent deduplication and review remain.
-The requested push, PR and merge do not start or restart the bot.
-
-2026-10-14 — The Operator requested smileys in roughly 35% of Replies. Each new
-ranked draft independently chooses exactly one friendly smiley/positive text
-emoticon with 35% probability and no reaction with 65%. This supersedes the
-50/50 choice below. The saved assignment remains enforced through preparation,
-selection and publication, within the existing length limit. Random streaks are
-possible; no forced alternation or quota changes which draft wins quality review.
-Existing queued drafts retain their reviewed assignment until normal expiry.
-The update does not start or restart the bot.
-
-2026-10-14 — The Operator requested SI / Super intelligence terminology throughout
-research and more aggressive Replies. Every Account query now includes SI,
-"super intelligence", superintelligence and ASI, with AI and "artificial
-intelligence" retained as discovery aliases. This applies to reply, video, Top,
-like and trend research. Account-authored prompt and profile prose uses SI;
-verified publisher/product names, handles and literal links remain exact. The
-terminology does not establish that a system has achieved super intelligence.
-
-The shared cooldown is now 30–45 seconds: minimum/floor 30 and default jitter 15,
-superseding the earlier gap below. The selector runs every ten seconds, with a
-15-second collection delay for a new pool and the existing 60-second startup
-delay. One independently approved draft may ship per cycle; every dimension must
-still score at least 4/5, with positive tone, relevance and explicit factual
-support. Saved cooldowns and uncertain submissions remain binding. No volume
-quota forces a Reply. The three Toronto windows remain 06:00–09:00, 12:00–13:00
-and 17:00–22:30, including in both Voice files.
-
-Collectors and ranked drafting retain up to 4,000 visible parent characters
-instead of 200-character snippets. Browser and Python limits count Unicode
-characters consistently. The final write still verifies the actual author,
-standalone target and the reviewed text; changed or expanded content outside
-that existing bound remains refused. Elon protection, no own/nested replies,
-permanent deduplication, Reply-only publishing and random reply style remain.
-Only two local pacing settings change. The requested PR, push, merge and release
-do not start or restart the bot.
-
-2026-10-14 — The Operator requested more aggressive Replies to interesting
-AI/SI posts during 06:00–09:00, 12:00–13:00 and 17:00–22:30 Toronto every day.
-These fixed windows supersede the four windows below. The shared gap becomes
-60–80 seconds (minimum/floor 60, default jitter 20); existing saved deadlines
-remain honored. Discovery runs direct scans every minute and feed sweeps every
-two minutes. Direct scans rotate one permitted VIP and three interleaved
-Latest/Top queries; Latest has no like minimum and covers research, tools,
-workflows and generated videos as well as models and infrastructure.
-
-Ranked collection counts preparation attempts, including declines, against
-its cycle budget: four for direct discovery and four per feed by default, with
-40 posts read per feed. Feed priority alternates. Every collector skips new
-browser reads when the eight-draft queue is full; locked reservation still
-enforces capacity. This frees browser time for the independent selector.
-Only useful, supported, kind drafts passing all existing scores may publish.
-No protected author, own post, nested reply or duplicate becomes eligible.
-Reply-only publishing, dynamic lengths and random smileys remain. Greater
-coverage is not a promise to answer every post or a forced volume quota.
-Local configuration changes the minimum gap and these three collection limits;
-all other settings and production history are preserved. No start or restart
-accompanies this update.
-
-2026-10-14 — The Operator now wants a pace near 300 Replies per full Toronto
-day and a random mix with and without smileys. This supersedes the earlier
-5–8 minute cooldown and optional reaction guidance below. The shared gap is
-75–95 seconds (minimum/floor 75, default jitter 20). Existing 9h10 activity
-windows, selector ticks and browser/model time determine capacity. About 300
-is an aim, never a forced quota or guarantee; all quality and target checks win.
-Local pacing keys are updated to 75 and 20. Existing saved deadlines are not
-shortened, and uncertain submits still consume the gap across restarts.
-
-Each new ranked draft independently chooses no smiley or exactly one friendly
-smiley/positive text emoticon, roughly 50/50. The saved choice joins the length
-limit at generation, preparation, selection and the final write. Nothing is
-added after review. Position and smiley vary naturally; random streaks are
-allowed, with no fixed alternating pattern. Legacy drafts without the field
-keep their previous optional-one allowance until expiry. Malformed choices
-stop admission without overwriting state. Length ceilings include the smiley;
-kindness, evidence, protected authors and permanent deduplication remain.
-The Operator requested PR, merge, push and release; the bot remains stopped.
-
-2026-10-14 — Reply lengths now vary through per-draft limits, with the existing
-278-character maximum unchanged. Before generating each new ranked draft, choose
-five words/60 characters (30%), 120 characters (30%), 200 (20%) or 278 (20%).
-The limit is saved with the parent and enforced through preparation, independent
-selection and the final write. Spaces and any optional reaction count. These
-are ceilings, not targets; every size may produce a meaningful few-word reply.
-Oversized drafts are skipped rather than cut to fit. Existing saved drafts
-without a limit retain the prior 278-character ceiling until normal expiry.
-No quota forces short or long Replies, and the same kindness, evidence and
-quality rules apply. No start, restart or live X action accompanies this release.
-
-2026-10-14 — The Operator clarified a consistently positive persona: an
-American mom from the San Francisco Bay Area, a knowledgeable SI geek who is
-humble, fun, welcoming and super nice. She supports Super intelligence, SI/AI,
-Donald Trump, Elon Musk and the American team of researchers, builders and
-creators. Grok and Grok Imagine remain particular favorites, mentioned naturally
-when relevant. This is a supplied bot character, not a fabricated real biography;
-identity answers remain honest and family anecdotes or personal tests cannot
-be invented. Political preferences never widen discovery beyond the SI niche.
-
-Every outgoing message must be kind, positive and constructive toward everyone
-and every product. Roasts, put-downs, sarcastic digs, condescension, backhanded
-compliments and negative takes are out. Gentle humor, useful explanations and
-respectful curiosity are welcome. Old hostile memories and Relation prompts
-cannot override this. When no kind, truthful, specific contribution fits, skip;
-positivity never authorizes fabricated facts, capabilities or praise.
-
-Independent Reply review now requires an explicit boolean `positive = true`,
-in addition to factual support, topic approval and all three scores of at least
-4/5. The saved approval and final write enforce it. Older reviews without this
-verdict are readable but do not authorize publication; waiting drafts need a
-fresh comparison and previously selected drafts are never automatically retried.
-No-contact protection for @elonmusk, Reply-only publishing, permanent one Reply
-per standalone conversation, four Toronto windows and the shared 5–8 minute
-cooldown remain in force. The Operator requested a PR, merge and new release;
-no start, restart or X profile edit accompanies this change.
-
-2026-10-14 — Replies now share a random 5–8 minute cooldown across every job
-and process. The engine minimum is 300 seconds, with 0–180 seconds of jitter
-(default 180). The deadline is persisted before submit, so uncertain writes
-also consume the cooldown; restarts and retries cannot redraw it. Existing
-ledger writes still count. Longer gaps are valid when no strong draft qualifies
-or the activity window is closed; there is no quota to fill.
-
-The live Account enables `replies.ranked_selection`. Collectors prepare up to
-eight pending drafts across jobs instead of publishing immediately. A separate
-comparison scores impact, sharpness and interest from 0–5; every score must be
-at least 4, with explicit factual support and topic approval. The highest scored
-eligible draft alone reaches the write after the cooldown. Preparation continues
-during the gap; stale drafts, failed reviews and uncertain submissions cannot
-bypass admission. The browser verifies the selected parent text, and the write
-accepts only the exact selected draft. Startup allows at least 60 seconds to
-collect choices. No change to the four activity windows, no-contact protection,
-Reply-only publishing or permanent one-Reply-per-conversation rule.
-
-The Operator also made her private fondness for Elon Musk and his products,
-especially Grok and Grok Imagine, part of the Voice in both languages. Their
-life-changing creative influence is supplied personality context, used only
-occasionally when relevant. It establishes no real romantic relationship,
-private access, celebrity endorsement, product test or performance claim.
-Affection never permits contacting or interacting with @elonmusk.
-
-The local Reply pacing keys are updated to 300 and 180; production history and
-other configuration are preserved. Code and configuration take effect on the
-next explicit start or restart. This implementation does neither.
-
-2026-10-14 — The Operator now requires Replies only. `publish_originals = false`
-in the Account prevents Originals at the scheduler, Startup path, editorial entry
-point and browser write; `.env` and `--post-only` cannot restore them. Conversation
-jobs and automatic pinning are unscheduled. Daily Toronto activity windows are
-05:00–09:30, 12:05–13:00, 17:15–20:00 and 22:00–23:00, start inclusive and end
-exclusive, without jitter. Never interact with @elonmusk: no Reply, like, follow,
-unfollow or @mention. Both `replies.protected_handles` and `network.blocked_accounts`
-protect him, regardless of saved priorities or whitelist entries. Actual opened
-authors are checked before browser clicks; a Reply parent mentioning a Blocked
-account is refused too. Only another account's standalone original qualifies,
-once per entire conversation permanently. Our current and historical handles,
-comments, replies and follow-ups are forbidden. Permanent claims use a process
-lock, and uncertain submissions stay claimed across restarts.
-
-Outgoing prose replaces standalone AI with SI and artificial intelligence
-(including Airtificial intelligence) with Super intelligence. Literal URLs,
-@handles, embedded names such as OpenAI and French verbs are preserved. Discovery
-still searches both vocabularies. Reply length and tone follow context: very short,
-fuller technical, sharp or funny; no fixed suffix, automatic smiley or manufactured
-typo. At most one optional emoji/text smiley. The minimum length floor is lowered
-from 25 to 2 characters; generic reactions and all factual/content checks remain.
-Recent shipped replies guide variation. Production history and pending state
-are preserved; the later pacing mandate above changes only the two Reply spacing keys. This implementation does not start or restart the bot.
-
-## Reply targets and no-contact protection
-
-The Account is The SI Maximalist, @thesimaximalist; its existing `theaishrink`
-storage key and all production history remain. Only another account's standalone
-original may receive one Reply. Comments, responses, Debate turns, replyback,
-conversation context, and our own posts/replies are refused. Historical handles
-remain ours. Scrapers reject nested candidates; admission runs before drafting
-and again at the write. The opened target must match the requested author and
-status ID, be first in the conversation, have no reply context and no visible
-prior answer by us. Unknown or mismatched pages cannot authorize a click.
-
-@elonmusk is protected from all interaction, including replies to his comments,
-likes, follows, unfollows and direct mentions in our text. A root post mentioning a Blocked
-account is not answered, to avoid including that account in reply recipients.
-His engagement with us grants no exception. URL misattribution cannot bypass
-the browser's actual-author check. This is enforced at every write, including
-manual calls and dry runs. Previously saved whitelist entries do not authorize
-interaction. Manual unfollow selection checks both the profile link and button's
-author label and skips Blocked accounts regardless of its keep-set. No unfollow
-or change to an existing relationship is requested by this mandate.
-
-Permanent `replied_tweets.json` IDs are never evicted. Claims are serialized by
-both a thread lock and `replied_tweets.lock` across processes. Only a known
-pre-submit failure may release its own claim. A possibly submitted Reply keeps
-its claim forever until an Operator verifies and repairs it; no automatic retry.
-An unreadable guarded store stops admission and is never overwritten.
-
-## Wording, variety and evidence
-
-Every outgoing message uses SI and Super intelligence instead of the standalone
-acronym AI and the phrase artificial intelligence, including the misspelling
-Airtificial intelligence. `text_replacements` in the Account declares this
-wording; the shared Reply pipeline and final write normalize it before content
-validation. Links and handles are literal identifiers, embedded product names
-such as OpenAI/xAI remain exact, and French verbs are not technology acronyms.
-This is Account terminology, not a factual assertion that every model has
-achieved super intelligence. Searches and incoming source evidence retain both
-AI and SI vocabulary.
-
-The Voice is humble, welcoming, positive and specific about SI news, models, research,
-Grok Imagine video creation, brainrot and clearly fictional celebrity parodies.
-The Operator's video work and reported strong engagement are supplied context;
-particular scenes, settings, authorship and metrics still need evidence. Never
-pretend a caption establishes unseen footage or that parody is real conduct.
-The supplied mom character is a bot persona, never a real human biography.
-No invented family anecdotes, capabilities, benchmarks or current news facts.
-Respect-list and positive-only subject rules still apply.
-
-Let the parent determine the thought and tone within its assigned limit: a sharp
-few words, a fuller technical explanation, a useful answer or an apt joke. The
-random limits above vary the space available without requiring it to be filled.
-Maximum 278 characters, not a target; the brief option allows at most five words
-and 60 characters. A draft that cannot fit meaningfully is skipped.
-The 2-character floor permits meaningful brevity; generic praise and standalone
-reactions remain refused. New ranked drafts use the saved random choice: no
-smiley (50%) or exactly one friendly smiley/positive text emoticon (50%), at any
-natural position and within the length limit. No automatic ending, random
-case/period changes or manufactured spelling errors. Recent shipped replies are
-shown as untrusted examples to avoid repeating, never as instructions or facts.
-The same last-six history also enforces reaction variety: no reused reaction,
-including cosmetic variants, and no third reaction ending when the last two
-reaction-bearing Replies in that history both ended with one. Plain replies do
-not reset this check. The write rechecks waiting drafts without changing them.
+Trusted AI feeds supply news and articles no older than 48 hours: first-party
+labs, model/tool launch blogs, The Decoder and arXiv. Fresh launches, methods,
+projects and sharp recent articles are preferred; on quiet days, curated AI
+documentation supplies practical, evergreen topics, without calling them new
+announcements. Used source URLs are rested for seven days. The optional 20:45
+slot needs news from the last twelve hours or a useful AI teaching source, plus
+an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
 
-SI/Super intelligence and related models, research, infrastructure and generated
-videos remain the focus. Discovery uses the Account's niche patterns, configured
-searches and network lists; video or celebrity mentions alone do not establish
-relevance. Standalone SI/ASI terms are case-sensitive to avoid the French `si`.
-Existing on-topic and content checks remain. Protected authors, our own content
-and nested replies have no VIP exception.
+Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
+patterns, `[searches]` queries and `[network]` lists in
+`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
+speaks only of crypto, markets or space is off the niche for the search
+lane, the feed sweep, early bird and mega watch; the follow quality gate
+refuses a non-Engager whose bio shows no AI term; the reply and like
+searches look for AI posts only. Crypto, markets and space accounts left
+the reply and scan lists. The accounts the Operator picked by hand stay
+whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
+Mindset4Money_X in the curator's pins, and so do the few handles whose
+topic is still to be confirmed by the Operator. The VIP scan still answers
+Graphseo's and TheBTCTherapist's posts without the niche filter, and
+answers to Engagers still follow the conversation.
 
-## Scheduler and publishing permissions
+The search lane, the feed sweep, early bird and mega watch answer root
+posts only: a post X marks as a reply, or whose text opens on a mention,
+never reaches the model, which would see it without the post it answers
+(issue #241). The VIP scan still answers everything its accounts post,
+their replies included.
 
-Activity is permitted 24/7 with no scheduled closing instant. Toronto still
-defines calendar days for history and non-Reply limits. Browser locks, browser
-scripts, model calls, queued jobs and the final submit all honor explicit stop
-requests. Model calls keep their normal finite timeouts across midnight.
+The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
+artificial intelligence, machine and deep learning, computer vision,
+superintelligence, agentic, context windows, open weights, vibe coding),
+its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
+Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
+TPUs, data centers) and robotics. Some words no longer suffice alone:
+`token`, `coding`, `agent`, `meta`, `google`, `apple`, `software`, `tech`,
+`engineer`, `founder`; a post or bio needs an AI term beside them (AI
+agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
+French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
+`bio` leaves out the model names that are also first names or common
+words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
+Known false positives, kept: Nvidia, an AI hardware maker, keeps its stock
+and earnings chatter on the niche, and `robot` keeps a trading robot.
 
-The live Account publishes Replies only. `publish_originals = false` gives an
-effective original ceiling and target of zero, omits the editorial job, prevents
-Startup windows and refuses direct `post_tweet`/editorial calls before browser,
-model or publication-state work. `--post-only` errors. Original permission is
-Operator-owned; `.env` cannot override it. Stored editorial slots, pending
-submissions and history are preserved, not cleared or retried. Their old
-three/six/eight targets are inactive for this Account. Quotes, reposts, threads
-and self-recycling stay disabled.
+Every reply and like query finds posts `post` keeps, read with AND before
+OR or OR before AND: a company or energy word goes with AI (TSMC AI,
+CoreWeave AI, megawatt AI). The like job checks no niche, so its queries
+are its only filter.
 
-Direct search, feed sweep, early bird and mega watch continue to discover root
-posts. The optional search job retains its switch and the same final guards.
-Replyback, Debate, babysitter and notification jobs remain unscheduled; their
-retained manual paths cannot publish conversation replies. Automatic pinning is
-unscheduled. Non-publishing likes, follows, browser upkeep and measurement jobs
-keep their existing limits and respect the no-contact rule. Reply volume has no
-forced quota or daily/hourly count cap; actual volume depends on the
-shared cooldown, model/browser time, quality and per-cycle preparation bounds.
+## Trend slots and the Startup post
+
+The 10:00, 13:00 and 15:00 slots, and the Startup post, take their topic from
+X. Two Top-tab searches for AI and "artificial intelligence" (`[searches]
+trending` in `account.toml`) supply posts from
+the last 24 hours; the five with the most likes per minute are kept. Own posts,
+Blocked accounts, nested replies, posts without AI vocabulary and crypto or
+ticker posts are dropped. Handles, mentions and links, with or without a
+scheme, are stripped before the text reaches the model. Fewer than three usable posts skips the pass.
+
+The trending posts choose the topic and never supply a fact. The generator must
+write from a fresh news article from the trusted feeds that covers their shared
+topic, with the usual evidence and source link; evergreen documentation is not
+offered. The draft carries no @mention. The editor must also approve
+`trending`: the published text covers the topic the trending posts share. No
+covering article, no post.
+
+The Startup post (operator, 2026-09-23) is a trend slot opened for 45 minutes
+each time the bot starts in waking hours, restarts included: a crash, a
+watchdog relaunch or a deploy each opens one. It has its own three attempts
+and pending guard per start, goes before a slot whose window is open, and
+obeys the waking hours, the eight-publication ceiling and the post spacing. A
+pass that gives it no draft falls through to the open slots in the same pass,
+so a restart never hides a slot. A start overnight opens nothing, even just
+before 04:30. A restart loop in daytime therefore publishes
+up to one post every twenty minutes until the daily ceiling, at the expense of
+later slots. An ambiguous submission counts as a publication for that: the
+next Startup post waits twenty minutes after it, the day's pending submissions
+count toward the eight, and its text is a recent post the next draft and review
+must not repeat.
+
+## Runtime rules
+
+- Toronto time is explicit and used for budgets and waking hours, including DST.
+- The scheduler pauses overnight. Queued jobs, browser-lock acquisition,
+  AppleScript execution and model calls also check the window. Already-issued
+  remote work can finish; it cannot authorize a later out-of-hours submission.
+  A stop request (SIGTERM, Ctrl-C) counts as overnight: no job starts and no
+  write is admitted after it.
+- Slots: 05:00, 07:15, 09:30, 10:00 (trend), 11:45, 13:00 (trend), 14:00,
+  15:00 (trend), 16:15, 18:30, optional 20:45, plus the Startup post.
+  Eleven slots and the Startup post compete for eight publications: on a full
+  day the evening slots are the ones left out.
+- A slot permits at most three attempts over 45 minutes, and no window runs
+  past 23:30: the 20:45 slot ends at 21:30, a Startup post window at bedtime.
+  An attempt is a draft submitted to the editor; a pass without a draft
+  spends none. A slot out of attempts, or one whose pass yields no draft, no
+  longer holds an overlapping one; a pass still submits once at most.
+  There is no backlog catchup. At least twenty minutes separate originals.
+- Eight profile publications per local day is absolute. The ledger includes
+  originals, quotes and reposts already made that day. Deploying this change
+  does not erase history or grant extra slots. A `pending` submission, whose
+  outcome was ambiguous, has no ledger row: it counts toward the day's eight
+  and toward the twenty-minute spacing until the operator clears it, and so
+  does a slot the operator marked published after a check.
+- Quote/repost caps are zero, including urgency and mega-viral exceptions.
+  Feed sweeps now reply. The quote, repost, thread, GIF-post and self-reply
+  write functions are removed from `src/x/twitter_client.py` (issue #111), and
+  no scheduled job carries such a branch (issue #107):
+  `tests/test_disabled_surfaces.py` pins both. Bringing one back takes new
+  code and an operator request, not a config change.
+- Replies have no daily cap. Browser pacing, per-tweet dedup and bounded
+  per-author debate turns protect conversation quality. Every answer to
+  someone who answered the account is a debate turn, whichever job sends it.
+  The per-tweet dedup store fails closed: while it is unreadable, no reply
+  ships. The gap after each reply is `MIN_SECONDS_BETWEEN_REPLIES` plus a
+  jitter drawn once per reply, the same for every caller: retrying cannot
+  shorten it. The direct-reply and feed-sweep pipeline waits out that gap
+  before sending instead of discarding a paid generation; the chokepoint
+  still judges, and the wait ends on a stop request or at 23:30.
+- Reply admission (`src/guards/reply_admission.py`) runs at the reply chokepoint
+  for every job: a reply is refused when the author handle in the parent's
+  URL contains a `BLOCKLIST` token or one of the Account's
+  `network.blocked_accounts`, which add to it and never remove from it
+  (case, spaces, dashes and underscores ignored on both sides), when the parent is the account's own post, or
+  when the URL carries no author handle. The scheduled reply jobs ask
+  the same admission before paying for a generation and keep no copy of
+  these rules (issue #100). The legacy `reply_job`
+  (`ENABLE_REPLY_SEARCH=1`) finds and drafts in one model call, so it asks
+  admission for each target before sending (issue #109). `BLOCKLIST` is matched on the URL
+  handle only: `direct_reply`, `feed_sweep`, `mega_watch` and `replyback`
+  no longer match it against the scraper's display name, which is not an
+  identity. The replyback profile likes read the Engager's handle from
+  the reply's URL and still check both. `like_tweet`
+  refuses a post whose URL handle is a Blocked account with the same match,
+  and so does the follow policy for every `follow_account` caller, jobs and
+  seeding script alike (issue #188).
+  `early_bird` and `mega_watch` keep a watched account's post when its URL
+  handle is that account, whatever its display name: comparing the display
+  name dropped every account whose name differs from its handle (#162).
+- Every Reply prompt, in every job, opens on the Voice and carries the hard
+  rules and the respect list (`personality_store.hard_rules_block()`):
+  `src/replies/reply_generator.py` assembles them all (issues #155, #192). A model SKIP sets the post aside for good;
+  a model rate limit, every provider at its usage limit, ends the job's
+  generations for the cycle. The prompt names every Respected account.
+- Model calls stay on their configured provider, Ollama by default. Only an
+  explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
+  fails, for Originals and Replies alike. A provider name the code does not
+  know fails every call it routes and runs nothing, and the start logs it
+  (issue #189). One exception, pending the Operator's decision: the Replies
+  to @Graphseo run on the Claude CLI whenever it is installed (his
+  Relation's `provider` in `account.toml`), with
+  `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
+  (issue #197).
+- An outgoing text that names a Respected account, by `@handle` or by its
+  handle in a sentence with a derisive word, is refused at the write
+  chokepoint, dry run included: `post_tweet` for an Original, Reply
+  admission for a Reply. A Reply may carry the `@handle` of the Respected
+  account it answers, never mock it by name nor name another one. A
+  refused Reply sets the post aside for good, as a model SKIP does, and
+  leaves the replied store unmarked. A dry-run Original never reaches
+  `post_tweet`: the editorial judges its text with the same check
+  (issue #190).
+- Publishing checks the budget again after obtaining the browser lock.
+  Preview and dry-run records do not consume the real daily budget.
+- `DRY_RUN=1` stops every browser write. The profile likes (`engage_job`,
+  and replyback's likes to Engagers), the notify likes and the `like_job`
+  likes go through `like_tweet` and its ledger: under `DRY_RUN` they open
+  nothing. `like_job` likes at most 10 posts a cycle and 500 a day, and
+  starts no like 30 s after taking the browser. A dry-run pin writes a
+  dry-run ledger row through `pin_own_tweet` and leaves `pin_job`'s live
+  daily attempt unspent. A
+  dry-run reply never marks the tweet as answered, and a dry-run follow
+  never enters `followed_accounts.json` or the follow-engagers state.
 
 ## Bounds on volume and check settings
 
@@ -432,8 +246,8 @@ warnings under `settings_warnings`.
 | Setting | Bound | Default |
 |---|---|---|
 | `DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY`, Debate turns per Engager per day | 0 to 4 | 4 |
-| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 30 s | 30 |
-| `REPLY_JITTER_SECONDS`, Reply jitter | 0 to 180 s | 15 |
+| `MIN_SECONDS_BETWEEN_REPLIES`, gap between Replies | at least 8 s | 8 |
+| `REPLY_JITTER_SECONDS`, Reply jitter | at least 0 | 7 |
 | `LIKE_BOT_PER_CYCLE`, likes per `like_job` cycle | 0 to 10 | 10 |
 | `LIKE_BOT_DAILY_CAP`, `like_job` likes per day | 0 to 500 | 500 |
 | `FOLLOW_TOTAL_CAP`, accounts followed in total | 0 to 3500 | 300 |
@@ -448,7 +262,7 @@ warnings under `settings_warnings`.
 | `DUP_TOPIC_SHARED_WORDS`, shared words that make a same story | 0 to 3 | 3 |
 | `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
-| `REPLY_MIN_CHARS`, shortest Reply | at least 2 characters | 2 |
+| `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,
@@ -475,11 +289,17 @@ The active scheduler omits autonomous code/prompt rewriting and older profile
 publishing jobs. Hard caps in `src/core/config.py` also override stale strategy data.
 Reply pacing remains configurable within its floors. Restart after changing code or configuration.
 
+## Reach target
+
+`editorial_reach.md` and `.json` show observed lifetime views of original posts
+published in the last seven days against a 500,000-view target. The report counts
+each observed post once, excludes replies and reports missing coverage. It does
+not claim unique viewers or home-timeline attribution, which public counters do
+not expose. This goal never relaxes the post ceiling or quality checks.
+
 ## Verification
 
-Run the full isolated test suite and the scheduler dry run from `AGENTS.md`.
-Validate all three windows and their boundaries, no startup or direct originals, protected
-and misattributed authors, own/historical handles, nested targets, permanent and
-concurrent deduplication, SI normalization, short and long replies and optional
-smileys. Tests must not open Safari, call live models or change production state.
-No start, restart, live profile edit or video upload accompanies implementation.
+CI runs the guard suite plus scheduler, Toronto/DST boundaries, queued browser
+work at bedtime, cap concurrency, source evidence and review rejection, restart
+idempotency, unsuccessful submission, dry-run isolation, and reach accounting.
+No test may drive Safari or publish a post.

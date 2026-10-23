@@ -48,18 +48,6 @@ def __getattr__(name):
 _served("BOT_HANDLE")
 _served_as("BOT_PROFILE_URL")(lambda: f"https://x.com/{settings.get('BOT_HANDLE')}")
 
-
-def own_handles() -> frozenset[str]:
-    """Current and historical handles, so a rebrand never makes old posts foreign."""
-    from . import account
-    profile = account.current()
-    return frozenset(h.lower().lstrip("@") for h in
-                     (settings.get("BOT_HANDLE"), profile.handle, *profile.previous_handles) if h)
-
-
-def is_own_handle(handle: str) -> bool:
-    return (handle or "").strip().lstrip("@").lower() in own_handles()
-
 # State files outside the state store, under state/<BOT_ACCOUNT>/
 # (src/core/state_store.py)
 REPLIED_FILE = state_store.StatePath("replied_tweets.json")
@@ -154,16 +142,10 @@ def dry_run() -> bool:
 # minutes apart and the Startup post can land next to any slot.
 _served("MAX_ORIGINALS_PER_DAY", "MIN_SECONDS_BETWEEN_POSTS")
 
-def originals_enabled() -> bool:
-    """An Account's publishing permission cannot be raised by an engine setting."""
-    from . import account
-    return account.current().publish_originals
-
-
 def posts_ceiling() -> int:
     """The day's ceiling of profile publications: the policy's eight, or
     MAX_ORIGINALS_PER_DAY when an Account or .env sets it lower."""
-    return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY")) if originals_enabled() else 0
+    return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY"))
 
 def post_targets() -> tuple[int, int]:
     """The minimum and the planned Originals of a day, neither above

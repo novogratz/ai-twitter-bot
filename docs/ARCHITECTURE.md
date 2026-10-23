@@ -1,6 +1,6 @@
 # Architecture
 
-How the restored September 26 bot is built, with the October 15 Reply-only, 24/7 policy. The rules
+How the running bot is built, as of the 2026-09-20 policy (PR #97). The rules
 it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
 debug it is in [OPERATIONS.md](OPERATIONS.md). `main.py` is the source of truth
 for what runs: where this page and the code disagree, trust the code.
@@ -20,54 +20,68 @@ other job). Reply scans cannot starve the editorial job of a thread, but all
 browser work shares `_safari_lock`, so a post can still wait behind a reply.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
 which wraps it in `active_hours.awake_job`. There are no cron triggers and
-no warmup phase. The live Account disables Originals: no editorial job, Startup window or automatic
-pin is scheduled. Original support is retained for Accounts explicitly permitting it.
+no warmup phase. The Startup post is not a job: `main()` opens its window and
+`editorial_job` publishes it.
 
 At start, `main()`:
 
 1. takes `bot.lock` with `fcntl.flock` and exits if another instance holds it;
 2. installs SIGTERM/SIGINT handlers that call `active_hours.request_stop()`;
 3. opens the Startup post window (`editorial_bot.open_startup_window`) unless
-   `--reply-only`, and only when `config.originals_enabled()` permits it;
+   `--reply-only`;
 4. starts the scheduler paused, then checks `is_active()` every 15 seconds and
-   resumes it immediately under the 24/7 policy. The loop retains support for
-   restricted schedules; an explicit stop ends the process.
+   pauses or resumes it at the 04:30 and 23:30 boundaries.
 
-Flags: `--post-only` (refused for this Reply-only Account), `--reply-only` (standalone Reply jobs
+Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
 before touching the browser or a model).
 
 ## Waking hours
 
-`src/guards/active_hours.py` permits activity 24/7. Toronto defines calendar
-days for the remaining quotas and history, without a midnight publishing pause.
-`WINDOWS` represents a full day; `window_label()` reports `24/7 America/Toronto`.
-`bedtime()` returns `None` and `seconds_until_bedtime()` is unbounded while work
-is permitted. `llm_client._timeout` clamps to the provider's finite timeout before
-converting to an integer, so midnight neither truncates nor breaks a model call.
-Original slots, for Accounts permitted to publish them, retain their 45-minute
-expiry. The live Account still permits Replies only.
+`src/guards/active_hours.py` owns the clock: 04:30 ≤ Toronto time < 23:30, DST
+handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
+`window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
+that window or once a stop was requested; `awake_job()` turns a job into a
+no-op in the same cases (`may_act()`), and a job already running halts at its
+next `require_active()`. `is_active()` reads the clock only: the scheduler's
+pause/resume loop must not treat a stop as a wake-up boundary.
 
-Explicit stops remain checked before and after acquiring the Safari lock,
-before browser scripts, at model calls and before publication. `require_active()`
-raises `OutsideActiveHours` on a stop; `awake_job()` skips queued work and ends
-an interrupted cycle. `is_active()` deliberately ignores the stop so the
-scheduler cannot interpret shutdown as a change in schedule. Model and browser
-calls already issued may finish, but cannot authorize another write after stop.
+Pausing the scheduler is not enough, because a job queued at 23:29 would still
+run. The check is repeated at each point where work leaves the process:
 
-The same guards retain closing-time enforcement for a restricted schedule,
-covered with synthetic windows in tests. The shipped schedule has no such close.
+- `safari._AwakeSafariLock`, before and after acquiring the Safari lock;
+- `safari._run_applescript` and `safari._run_js`, through which every page
+  JavaScript runs. A caller that falls back on an unparsable answer still
+  lets `OutsideActiveHours` through, and `health.record_failure` does not
+  count it toward a Safari restart;
+- `safari_hygiene.restart_safari`, so its direct `osascript` quit and the
+  relaunch never run outside waking hours;
+- `llm_client.run_llm`, `_run_cmd` and `_run_ollama_http`; `llm_client._timeout`
+  also caps every model call's timeout at the time left before 23:30;
+- `action_guard.can_post`, which also refuses once a stop was requested, and
+  `editorial_bot` before fetching a source and again before publishing.
+
+A request already sent to X or to a model can finish after 23:30; it cannot
+authorize a new action.
 
 ## Jobs
 
-`build_scheduler()` registers 12 jobs for the live Reply-only Account, plus
-`reply_job` when `ENABLE_REPLY_SEARCH=1`. Editorial and pin jobs require explicit
-Account permission for Originals. Replyback, Debate, babysitter and notification
-registrations are disabled; retained manual paths still pass the conversation
-refusal. Reply jobs use `health.wrap_job`; `reach_report_job` excludes model or
-measurement failures from the Safari failure counter. Every job uses the shared
-24/7 schedule and stop guard. Browser target verification and permanent claims enforce
-one Reply per original, with no protected-author or own-post exception.
+`build_scheduler()` registers 17 jobs, plus `reply_job` when
+`ENABLE_REPLY_SEARCH=1`. The reply jobs register their `run_*` under
+`health.wrap_job`, which counts them toward Safari health under their label
+(`babysitter` for `babysit_job`, the job name without `_job` for the
+others); `editorial_job` and `reach_report_job` register theirs under
+`health.wrap_job(..., safari_health=False)`. The account jobs and
+`session_refresh_job` still expose a `safe_run_*` that catches its own
+exceptions and reports to `health` (see [Adding a job](#adding-a-job)). The
+editorial stays out of the Safari failure counter because its failures are
+model timeouts, not Safari outages: the scraper already swallows most Safari
+errors, and the blank-page counter is the real Safari guard. Counted there, a
+slow model would restart a healthy Safari. A missed reach measurement says
+nothing about Safari either. The wrapper logs a job's error at ERROR with the
+traceback, as `[<label>] Cycle failed.`; it names a `StateUnreadable` (with
+the repair in [OPERATIONS.md](OPERATIONS.md#recovery)) at ERROR, and a stop
+for the Overnight at INFO.
 
 The reply jobs live in `src/replies/`; `engage_job`,
 `followback_job`, `follow_engagers_job`, `like_job`, `pin_job` and
@@ -77,15 +91,20 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `direct_reply_job` | 30 sec | Rotates one permitted VIP and three interleaved Latest/Top searches; every result needs at least three likes. Allows twelve generation attempts including corrections in the shared queue by default. Never publishes for the ranked Account. |
-| `feed_sweep_job` | 30 sec | Reads up to 40 posts each from For You and Following; For You is first in three of four cycles. Allows twelve generation attempts including corrections per feed by default. |
-| `early_bird_job` | 5 min | Prepares drafts for fresh eligible posts from configured profiles and tracked accounts. |
-| `mega_watch_job` | 2 min | Prepares drafts for eligible posts under four minutes old from tracked handles. |
-| `reply_selection_job` | 5 sec; first run after 60 sec | Dedicated worker gives a new pool five seconds to gather choices, independently reviews new/expired drafts and ranks them alongside valid approvals, then publishes at most one approved winner. |
+| `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `feed_sweep_job` | 8 min | Reads For You and Following and replies to every on-niche post, pipelined like the `direct_reply_job` search lane. |
+| `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
+| `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
+| `replyback_job` | 3 min | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
+| `babysit_job` | 5 min | Runs an extra replyback cycle while our latest post is under an hour old. |
+| `debate_job` | 12 min | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |
+| `notify_job` | 20 min | Likes replies under our latest post. It no longer self-retweets. |
 | `engage_job` | 8 min | Tries to follow the Seed accounts among a handful of pool accounts, and likes the posts of each when profile visits are allowed. The pool comes from the feeds; its followers and Engagers are left to `followback_job` and `follow_engagers_job`. |
 | `followback_job` | 20 min | Scrapes the account link of each user cell in the primary column of our followers page, nothing when the tab shows another page, records the real-looking handles in `followers_seen.json`, and follows back the ones missing from the followed accounts; a too-soon or cap-reached refusal ends the cycle. |
 | `follow_engagers_job` | 50 min | Follows Engagers through a Follow run: the authors of the ledger's debate turns, then the frozen `replied_back.json` (until about 2026-12-22), less the followed accounts. A too-soon or cap-reached refusal ends the cycle and keeps the Engager for later; a pick that raised keeps it too, counts in the per-cycle bound and fails the cycle for the health watchdog; any other outcome marks it tried. |
 | `like_job` | 4 min | Likes posts from one of the Account's `searches.likes`. |
+| `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
 | `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
 | `reach_report_job` | 60 min | Writes `editorial_reach.json` and `.md`. See [Reach report](#reach-report). |
@@ -93,7 +112,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 Two settings decide how much of the table does anything:
 
 - `PROFILE_VISIT_ALLOWLIST` (the Account's `network.profile_visits` unless
-  `.env` sets it: `TheBTCTherapist,Graphseo` for @thesimaximalist). Profile
+  `.env` sets it: `TheBTCTherapist,Graphseo` for @TheAIShrink). Profile
   scrapes and profile likes return nothing for other handles, so
   `early_bird_job`, `mega_watch_job`, the like step of `engage_job` and the
   replyback profile likes only act on allowlisted accounts.
@@ -107,8 +126,6 @@ Two settings decide how much of the table does anything:
   (`follower_history.json` empty or unreadable) refuses every follow.
 
 ## Editorial pipeline
-
-Retained for Accounts permitting Originals; disabled for the live Account.
 
 `src/editorial/editorial_bot.py` runs one slot at a time under a non-blocking
 lock. The Slots, feeds, Evergreen topics, trusted hosts and relevance filter
@@ -128,7 +145,7 @@ new Toronto day is saved with the pass's first change.
 
 1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
    11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
-   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, only within waking hours, only if
+   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
    the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
@@ -242,7 +259,7 @@ the label, sets what the call gets on Ollama, whether Ollama answers first
 or as a fallback: `EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`), the
 Draft or review schema as `format`, temperature 0.65 or 0.2, and a
 timeout of at least `EDITORIAL_LLM_TIMEOUT_SECONDS` (300) capped by
-a configured closing time, if any. A call without a profile, every Reply, gets
+bedtime. A call without a profile, every Reply, gets
 `llm_client.TEXT_PROFILE`: `OLLAMA_MODEL`, no schema, temperature 1.0.
 A CLI runs the model setting of the call's surface. Each is an
 `llm_client.ModelSetting`, read when the call runs for the primary CLI:
@@ -286,9 +303,8 @@ leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
 `_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`
 (180) and the profile's floor, a CLI primary at most 360s, a CLI after
-Ollama at most 150s, a CLI after a CLI the requested timeout, with a closing-time
-cap only if a restricted schedule applies. Under 24/7
-activity, normal finite provider timeouts remain in force.
+Ollama at most 150s, a CLI after a CLI the requested timeout, all capped by
+bedtime.
 
 `run_llm` reads the answer once, in the output mode the profile declares,
 whatever the provider and the rank. It unwraps NDJSON events and CLI JSON
@@ -462,18 +478,14 @@ Five modules sit behind them:
   policy's ledger questions (today's follows, the follow spacing, anti-churn),
   and records every write through `record`. It asks the action ledger and
   never knows where the ledger stores. Quotes and
-  retweets are always refused. Reply spacing defaults to 20 seconds plus 0–10
-  seconds of jitter; browser work, selector ticks and model time also affect
-  throughput. The minimum floor is 20; jitter may be 0–180. Independent
-  review and the rest of admission also apply. The jitter of the reply,
+  retweets are always refused; replies only need their spacing
+  (`MIN_SECONDS_BETWEEN_REPLIES` plus jitter). The jitter of the reply,
   original and follow gaps is drawn once per write, seeded on the
   timestamp of the last write of that action (dry runs excluded): every
   caller sees the same gap, and retrying cannot fish for a smaller draw. `seconds_until_allowed` returns what is left of it,
   capped at one gap so that a ledger row stamped in the future (clock set
   back, copied ledger) cannot park a waiting job; `can_post` still refuses
-  until the spacing clears. Reply waits also include the persisted deadline in
-  `reply_pacing.json`, reserved atomically just before submit under a process
-  lock. An uncertain result keeps this deadline and its permanent parent claim.
+  until the spacing clears.
 - `src/guards/ledger.py` is that ledger (90 days, Toronto timestamps). Its
   interface answers four questions: shipped rows of an action on a Toronto
   day (per target for Debate turns), the last shipped write of an action,
@@ -533,110 +545,68 @@ Five modules sit behind them:
 
 `reply_to_tweet` takes every rule from `src/guards/reply_admission.py` (Reply
 admission, CONTEXT.md). `judge_parent(url)` judges the post alone: author
-handle from the URL (`src/x/x_urls.py`), protected or Blocked account, own post,
-already answered, Waking hours and conversation refusal. `judge_reply(url, draft)` replays
+handle from the URL (`src/x/x_urls.py`), Blocked account, own post, already
+answered, Waking hours, Debate turn cap. `judge_reply(url, draft)` replays
 those rules, adds the reply spacing, then builds the exact text that ships
-(dashes, Account wording normalization, `smart_trim`, FR-forced language check, optional reaction limit) and
+(dashes, `smart_trim`, `casualize`, FR-forced language check, typo) and
 validates it last. `reply_to_tweet` calls `judge_reply` once under the
-Safari lock, the lock that also records the reply, so another caller cannot
-ship between the spacing check and the write. Each refusal
+Safari lock, the lock that also records the reply, so the spacing and the
+Debate turn cap cannot move between the check and the write. Each refusal
 says whether it is definitive for the post or temporary. Neither judgement
 writes anything.
 
-Every Reply job hands candidates to `src/replies/reply_pipeline.py`. With
-`replies.ranked_selection = true`, its preparation path applies parent admission,
-root/niche/blocked-mention checks, reserves one draft per status ID, generates
-and validates the text, and saves the provider/model and parent snapshot in
-`reply_draft_queue.json`. Collectors do not publish or wait out the cooldown.
-The queue has at most eight active drafts; drafts expire after 30 minutes.
-All Reply searches and profile/feed collectors request up to 4,000 visible
-parent characters. The scraper uses rendered text, like the final verifier, and
-counts Unicode characters consistently with Python. Ranked generation receives
-the same limit instead of the old 200/300-character snippet. Independent review
-sees the saved parent; author/standalone checks and exact parent matching still
-run at the write, including refusal of changed or newly expanded text.
-All four collectors check queue capacity before starting another browser read.
-This is a read-only hint; reservation still enforces the bound under its process
-lock. Per-cycle budgets count generation attempts, including declined or
-invalid generations and style corrections, while the pipeline still returns only actual shipped
-Replies. Direct discovery shares its budget across VIP and search passes;
-feed sweeps give For You first use of available capacity in three of four cycles,
-with Following first in the fourth. Both feeds run every 30 seconds while capacity remains.
-Each feed collector selects and verifies the intended native tab before scrolling;
-an unverified tab yields no candidates instead of silently reading another feed.
-All scrolling readers save the first viewport and each later viewport before
-virtualization can remove posts. They deduplicate by status ID, refresh counters,
-retain fuller text and any observed nested-reply marker, and stop at the requested
-result limit, first empty viewport or two consecutive viewports without new status
-IDs. Stalled views still refresh evidence before stopping. Scroll budgets stay bounded. Profile and
-mention readers use the same collection helper without enabling disabled jobs.
-Top Reply searches now use the three-like minimum, with explicit substantive
-technology searches alongside SI research, videos, tools and news.
-Every Reply collector requires at least three readable likes before drafting. The
-final write rechecks the opened parent before a parent like or Reply click, using
-the same article-local like/unlike counter reader (`src/x/post_metrics.py`) as
-discovery. Quoted posts, comments, reposts and views cannot supply that count.
+Every reply job (`direct_reply`, `feed_sweep`, `early_bird`,
+`mega_watch`, `debate`, `replyback` and `babysit`, the disabled reply
+search) hands its candidates to the Reply pipeline,
+`src/replies/reply_pipeline.py`. A job keeps its sub-sources (the feeds,
+searches or handle pools it scrapes), its budgets, its Reply call, its pace
+after a shipped Reply and its log tag. `feed_sweep` declares what it
+answers to the Reply source, `src/replies/reply_source.py`: the oldest post
+(`DIRECT_REPLY_MAX_AGE_MINUTES`, read on each pass), root posts only, the
+Account's niche, fresh and rising first. `reply_source.select` applies the
+declaration without side effects and never keeps a post without a URL or
+text, or of unknown or negative age; a declaration can also require the
+author a scanned profile's posts carry in their URL. The other jobs still
+select their candidates themselves (niche, age threshold, thread-reply
+shape) until they move to it. The
+pipeline alone calls `judge_parent` before paying for a generation, writes
+through `twitter_client.reply_to_tweet`, and calls
+`engagement_log.log_reply` after a shipped Reply only, with the provider and
+model the Generation names (the reply search's, for its candidates); the
+log never guesses them from `AI_CLI`. It keeps, per job and
+lost at restart, the posts refused definitively, declined by the model
+(SKIP) or answered; `direct_reply`'s VIP and search lanes share theirs. A
+temporary refusal, a failed generation or a failed write leaves the post
+replayable. A model rate limit, every provider exhausted, ends the job's
+generations for the cycle, with the post left replayable; in `direct_reply`
+it also stops the search
+lane, in `feed_sweep` the Following pass. `StateUnreadable` and
+`OutsideActiveHours` end the cycle from any step, a job's scrape included;
+any other error in a scrape, a generation or a write is logged and the
+cycle moves on.
 
-`reply_style.choose_length()` assigns each new ranked draft a random ceiling:
-five words/60 characters, 120, 200 or the unchanged 278-character maximum.
-The queue saves the enum name with the draft so retries and restarts keep its
-limit. Preparation checks the normalized, complete text without trimming to a
-smaller ceiling. Queue admission, selection and the write's selected-draft gate
-recheck that limit. Old rows without it retain the previous 278-character ceiling
-until expiry; invalid length metadata stops the queue without overwriting it.
-Each new draft also saves an independent random `smiley` boolean: 50% true,
-50% false. Plain drafts require zero reactions, including flags and keycaps;
-smiley drafts require exactly one friendly face
-or positive text emoticon within the same length budget. The prompt carries the
-choice and the queue, selector and selected-draft write gate enforce it. The
-publisher never appends or removes a smiley after review. Older rows without the
-field retain the earlier optional-one rule until expiry; invalid fields fail closed.
-
-`REPLY_STYLE_RETRIES` permits at most one corrective generation for an unreviewed
-generated draft that violates its length, smiley or recent-reaction rules. It
-keeps the saved assignment and parent; the correction consumes another attempt
-within the same cycle budget and still requires independent review. Declines,
-provider failures/exhaustion and content/admission refusals do not trigger it.
-Reviewed or selected text is never corrected. Specific style refusals are logged.
-
-`reply_selection_job` has its own worker and process lock. Startup gives the
-collectors at least 60 seconds. A new pool gets five seconds to gather choices.
-During a cooldown it waits until the final 90
-seconds to request an independent comparison on `Surface.REPLY_REVIEW`, using
-the Reply model/provider settings. Strict JSON requires exactly one review per
-supplied ID. Impact, sharpness and interest must each score at least 4/5, with
-explicit factual support, topic approval and `positive=true`. Kindness covers
-every person and product: a clever insult, sarcastic dig or negative take fails
-regardless of score. Existing reviews missing `positive` require fresh review;
-selected rows without it cannot pass the write. A model failure or malformed
-comparison authorizes nothing. Reviews expire after ten minutes.
-New candidates do not force a second review of already-approved drafts. Only
-new, expired or legacy approvals go to comparison; the winner is chosen across
-all currently eligible approved drafts, including those approved earlier.
-
-When the shared cooldown is clear, the selector chooses the approved draft with
-the highest total score, breaking ties by its weakest dimension and freshness.
-Only one selected draft reaches `reply_pipeline.send` and the browser write.
-Every admission check runs again; the writer requires that exact selected text
-and compares the actual opened parent text with the reviewed snapshot before
-clicking. Selection expires after five minutes. Attempted and interrupted selected
-drafts are never automatically replayed. A weak pool leaves the slot empty.
-
-The Reply source still supplies each collector's age, niche and ordering rules;
-`StateUnreadable` and `OutsideActiveHours` stop collection/selection. A provider
-rate limit stops preparation for that cycle. The generic unranked Account path
-retains sequential and overlapping generation; it still shares the 30-second
-engine floor, persisted submit cooldown and all other write guards. It is not
-the live Account's publishing path.
+The `direct_reply` search lane and `feed_sweep` run pipelined: the pipeline
+generates reply N+1 while reply N is posted, so its text is ready as soon
+as reply N's ledger row is written. Before calling `reply_to_tweet`,
+outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
+one-second slices and raises `OutsideActiveHours` on a stop request or at
+23:30. The chokepoint still judges: when another job's reply lands during
+the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
+post stays replayable in a later cycle, at the cost of a new generation.
+On a rate limit, bedtime or an unreadable state file the pipelined job
+returns at once: the generation in flight finishes in the worker thread,
+unread, and its post stays replayable.
+The other jobs answer their candidates in turn and never wait: a Reply they
+send too early is refused on spacing and stays replayable.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
 tweet already answered, and marks it just before writing, all under one lock.
 A dry run stops before the claim and writes only a dry-run ledger row.
-The permanent store is keyed on status ID, never evicted, written through a temp file and
+The store is keyed on status ID, written through a temp file and
 `os.replace`, and fails closed like the ledger: an unreadable file raises
-instead of reading as empty. If the target check, Reply button or paste fails, or a
-stop or a window close interrupts the sequence before the submit keystroke, nothing
+instead of reading as empty. If the reply keystroke or the paste fails, or a
+stop or 23:30 interrupts the sequence before the submit keystroke, nothing
 was sent: `replied_store.release` removes the claim before the Safari lock
 is released, so a thread waiting for the lock never sees it. If the submit keystroke fails,
 the outcome is unknown: the claim stays, so the tweet never gets a second
@@ -767,11 +737,12 @@ These are how the code behaves today, not design intent:
   `judge_reply` then refuses.
 - The replyback language test matches substrings, so "honestly" or "best"
   ("est") selects the French Voice file.
-- The retained babysitter and replyback modules call the same
-  `run_replyback_cycle`; both are unscheduled and conversation Replies are refused.
-- Ranked Reply comparison uses supplied parent text and stable model knowledge;
-  it does not independently retrieve sources. Unsupported current facts must fail
-  review, and a changed opened parent invalidates the selected draft.
+- `babysit_job` and `replyback_job` call the same `run_replyback_cycle` and
+  can overlap.
+- Only the pipelined Reply jobs wait out the reply spacing. A Reply that
+  `early_bird`, `mega_watch`, `debate`, replyback or the VIP lane generates
+  inside the gap is refused on spacing, and its generation is paid again in
+  a later cycle.
 - The state store lock is per process: `bin/seed_fr_influencers.py`
   following while the bot runs can still lose a follow from
   `followed_accounts.json`.
@@ -788,10 +759,9 @@ bots that no job reached were deleted (issue #110); git history keeps them.
 Every module under `src/` is now reached from `main.py`, and
 `tests/test_disabled_surfaces.py` fails when one is not. Live code still reads
 some files those bots used to write, as frozen data with no writer left:
-`pruned_accounts.json` and
+`directives.md` (`reply_agent`), `pruned_accounts.json` and
 `reinforced_accounts.json` (`evolution_store.filter_and_weight`, used by
-`engage_bot` and `early_bird_bot`). `directives.md` remains archived but no longer
-enters a generation prompt.
+`engage_bot` and `early_bird_bot`).
 
 ## Adding a job
 
@@ -852,7 +822,7 @@ state file resolves under `state/<BOT_ACCOUNT>/`), `test_migrate_state.py`
 ignores every state file and tracks the Operator's), `test_scheduler.py` (the jobs
 `build_scheduler()` registers), `test_voice.py` (the Account's Voice files
 and the Voice block rendered from them), `test_engine_names_no_account.py`
-(no token of `main.py` or `src/` names thesimaximalist, TheAIShrink, Graphseo or
+(no token of `main.py` or `src/` names TheAIShrink, Graphseo or
 TheBTCTherapist, save two listed values that name the theaishrink folder,
 and a comment or docstring only in a passage dated or numbered),
 `test_example_account.py` (the dry run of the fictitious `accounts/example/`,
@@ -894,31 +864,3 @@ content guard's dedup memory of this run's posts.
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and
 every push to `main`.
-
-## Account identity and current content tags
-
-`account.toml` supplies the handle, display name, bio and historical handles.
-The shared Voice renderer names the current Account and places its operator
-Voice ahead of legacy examples and learned memories. Ownership checks use
-`config.own_handles()` across Reply admission, browser target verification,
-feed discovery, follows, pin candidates and reach matching. State stays in its
-existing Account folder; no publication history is migrated or erased.
-
-New engagement tags are `ai_news_take`, `ai_video`, `si_brainrot`,
-`celebrity_parody`, `meme_reaction` or `other`. Existing CSV rows keep their old
-tags. The curator counts only current pillars, so historical therapy/finance
-rows do not drive new discovery. Video tags reflect supplied text or an explicit
-source label, not visual analysis of an unseen clip.
-
-## Reply wording and style, 2026-10-14
-
-`outgoing_text.normalize` applies Account `text_replacements` to outgoing prose,
-leaving literal links/handles intact. The pipeline logs normalized text and the
-write validates the normalized text. `reply_style.prompt` gives every generation
-context-led length/tone guidance and a bounded tail of recent shipped replies.
-The write preserves punctuation, adds no suffix and manufactures no typos. New
-ranked drafts must match their saved plain-or-friendly-smiley choice; unranked
-and legacy drafts retain the at-most-one reaction rule. `REPLY_MIN_CHARS` defaults to 2.
-`replied_store` serializes permanent claims with `replied_tweets.lock`, including
-separate manual processes. Actual-author checks happen inside the like-click
-script, and the follow click must identify the requested account on its button.

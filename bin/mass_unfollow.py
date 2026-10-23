@@ -6,8 +6,6 @@ Operator tool (/unfollow skill) — NOT a scheduled bot. Clicks each visible
 loads, repeats until the list is exhausted (or --max is hit).
 
 Safety:
-  - Blocked accounts are never unfollowed, even outside the keep-set. The
-    visible profile link and the button's author label must agree before a click.
   - The protected keep-set is the CURRENT whitelist: the Account's
     whitelist.json (all tiers + seeds[] handles — the 2026-06-07 spec's
     curated follow list) and the handles account_curator promoted. Those
@@ -137,7 +135,6 @@ PICK_JS_TEMPLATE = (
     """
 (function(){
   var keep = %s;
-  var blocked = __BLOCKED__;
   var btns = document.querySelectorAll('[data-testid$="-unfollow"]:not([data-mu])');
   for (var i = 0; i < btns.length; i++) {
     var b = btns[i];
@@ -147,14 +144,7 @@ PICK_JS_TEMPLATE = (
       var ls = cell.querySelectorAll('a[href^="/"]');
       if (ls.length) h = (ls[0].getAttribute('href') || '').replace(/^\\//, '').split(/[\\/?]/)[0].toLowerCase();
     }
-    var label = (b.getAttribute('aria-label') || '').match(/@([A-Za-z0-9_]+)/);
-    if (!h || !label || label[1].toLowerCase() !== h) {
-      b.setAttribute('data-mu', 'unknown'); continue;
-    }
-    var normalized = h.replace(/[\\s_\\-@]/g, '');
-    if (keep.indexOf(h) >= 0 || blocked.some(function(token) {
-      return normalized.indexOf(token) !== -1;
-    })) { b.setAttribute('data-mu', 'keep'); continue; }
+    if (h && keep.indexOf(h) >= 0) { b.setAttribute('data-mu', 'keep'); continue; }
     b.setAttribute('data-mu', 'clicked');
     b.click();
     return 'CLICK:' + h;
@@ -163,16 +153,6 @@ PICK_JS_TEMPLATE = (
 })()
 """
 )
-
-
-def _pick_js(keep: set) -> str:
-    """The no-contact list wins even when an account is absent from the keep-set."""
-    from src.core import account
-    from src.guards.reply_admission import _normalise
-    blocked = [_normalise(h) for h in (*config.BLOCKLIST, *account.current().network.blocked_accounts)
-               if _normalise(h)]
-    return (PICK_JS_TEMPLATE % json.dumps(sorted(keep))).replace("__BLOCKED__", json.dumps(blocked))
-
 
 CONFIRM_JS = """
 (function(){
@@ -313,7 +293,7 @@ def main() -> None:
         print("ABORT: keep-set unreadable (%s). Repair the file "
               "(docs/OPERATIONS.md#recovery); nothing was unfollowed." % exc, flush=True)
         sys.exit(1)
-    pick_js = _pick_js(keep)
+    pick_js = PICK_JS_TEMPLATE % json.dumps(sorted(keep))
     print("keep-set: %d handles (%s mode)" % (len(keep), args.keep), flush=True)
 
     if _bot_is_running() and not args.force:

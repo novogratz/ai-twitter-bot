@@ -2,7 +2,7 @@
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
-`.env.example` is the starting point for @thesimaximalist; its bounded settings
+`.env.example` is the starting point for @TheAIShrink; its bounded settings
 stay commented, at their default, so that an Account's `[limits]` holds.
 What describes the Account rather than the engine (handle, language, Slots,
 feeds, trusted hosts, relevance filter, network, niche and searches) lives in
@@ -29,34 +29,24 @@ not know.
 
 ## Policy ceilings
 
-The live Account has `publish_originals = false`: original targets and ceiling are
-zero, and neither `.env` nor CLI flags enable them. `text_replacements` declares
-the SI wording applied before validating outgoing prose. The existing engine
-original limits below apply only to Accounts permitted to publish Originals.
 The current rules are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). These
 hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| 24/7 activity; America/Toronto remains the calendar for non-Reply limits | `active_hours.WINDOWS`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Working hours 04:30–23:30 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
 | `MIN_SECONDS_BETWEEN_POSTS` | Floor 1200 (20 minutes): `.env` may lengthen it only |
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes and reposts | 0: `action_guard.can_post` refuses them, and no setting restores them |
-| Reply count | Subject to quality and model/browser time; no forced quota or daily/hourly cap. `MIN_SECONDS_BETWEEN_REPLIES` (floor/default 20) plus `REPLY_JITTER_SECONDS` (0–180, default 10) space them |
-| Reply parent likes | At least 3; discovery and the opened-target check enforce `reply_admission.has_reply_engagement`. Other metrics cannot substitute. |
+| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
-
-The live Account requires `replies.ranked_selection = true`: shared preparation
-and independent comparison before any Reply write. It is Account configuration,
-not an `.env` bypass. Pending deadlines in `reply_pacing.json` also apply to
-uncertain submissions; there is no catch-up burst after a restart.
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
 settings, and `REPLY_MIN_CHARS`, carry the Operator's bounds of 2026-09-25
-(issue #201), with Reply pacing revised on 2026-10-15, listed in
+(issue #201), listed in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md#bounds-on-volume-and-check-settings)
 and in the Bounds column below. `BAN_SHORT_TERM_PRICE_TARGETS` has floor `1`:
 `0` reads as `1`. `main.py --dry-run` prints each bounded setting's effective
@@ -116,8 +106,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
-| `MIN_SECONDS_BETWEEN_REPLIES` | int | `20` | floor `20` | Minimum gap between Replies, including uncertain submissions; actual throughput depends on approved drafts and browser/model time. |
-| `REPLY_JITTER_SECONDS` | int | `10` | floor `0`, ceiling `180` | Stable random delay added to the Reply gap; default total is 20–30 seconds. |
+| `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
+| `REPLY_JITTER_SECONDS` | int | `7` | floor `0` | Random delay added to the Reply spacing. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |
 | `FOLLOW_ENFORCE_RATIO` | 0 or 1 | `0` |  | Keep following under FOLLOW_RATIO_CEILING x followers. |
@@ -141,12 +131,13 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_WINDOW_HOURS` | finite float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
-| `REPLY_MIN_CHARS` | int | `2` | floor `2` | Shortest Reply; substantive short answers are allowed, generic reactions still refused. |
+| `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
 | `FOLLOW_REQUIRE_ENGLISH` | 0 or 1 | `1` |  | Refuse to follow a profile that does not read English. |
 | `FOLLOW_REQUIRE_NICHE` | 0 or 1 | `1` |  | Refuse to follow a non-Engager whose bio is off-niche. |
+| `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
 | `REPLY_LIKE_PARENT_PROB` | finite float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
@@ -166,15 +157,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `12` |  | Draft preparation attempts, including style corrections, per ranked direct_reply cycle, or shipped Replies for an unranked Account. |
-| `REPLY_STYLE_RETRIES` | int | `1` | floor `0`, ceiling `1` | Additional generation attempts to correct an unreviewed ranked draft's assigned style; counted within the cycle budget. |
-| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `3` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
+| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
-| `FEED_SWEEP_SCAN_LIMIT` | int | `40` |  | Posts the feed sweep scrapes per feed. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `12` |  | Reply generations per feed, including any style correction attempts. |
+| `FEED_SWEEP_SCAN_LIMIT` | int | `80` |  | Posts the feed sweep scrapes per feed. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |
@@ -209,7 +199,6 @@ sets them starts; delete them from it.
 
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
-| `HUMAN_TYPO_HANDLES` | str | blank |  | No effect: remove it from .env. |
 | `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
 | `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |
@@ -235,15 +224,3 @@ Not read by the engine: these scripts read them after sourcing `.env`.
 | `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
 <!-- END settings reference -->
-
-Account Reply protection is configured in `[replies] protected_handles` in
-`account.toml`, with exact X handles without `@`, compared case-insensitively.
-The live Account protects `elonmusk`. Only an explicit Operator request may
-remove that protection. Conversation follow-ups are refused regardless of
-legacy Debate settings; only standalone originals may receive one Reply.
-
-The Account's optional `display_name` and `bio` are included in every Voice block;
-`bio` must fit 160 characters. `previous_handles` lists old X handles without `@`.
-Own-post checks recognize those aliases as well as the current Account handle
-and any `BOT_HANDLE` override. The live identity is The SI Maximalist,
-@thesimaximalist; `BOT_ACCOUNT=theaishrink` continues to select its existing data.

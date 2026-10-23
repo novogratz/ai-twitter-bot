@@ -8,9 +8,6 @@ from pathlib import Path
 
 import pytest
 
-# The ranked live Account is covered in test_reply_selection; these pin generic engine behavior.
-pytestmark = pytest.mark.usefixtures("unranked_account")
-
 from src.core import config
 from src.core.state_errors import StateUnreadable
 from src.guards import replied_store
@@ -145,8 +142,8 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     never shipped. A post one lane tried is not tried again by the other."""
     dr, lanes, llm, chokepoint = direct
     vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
-    lanes["vip"] = [{"likes": 3, "url": vip, "text": "vip post"}]
-    lanes["search"] = [{"likes": 3, "url": searched, "text": "search post"}, {"likes": 3, "url": vip, "text": "vip post"}]
+    lanes["vip"] = [{"url": vip, "text": "vip post"}]
+    lanes["search"] = [{"url": searched, "text": "search post"}, {"url": vip, "text": "vip post"}]
     llm.answers["vip post"] = "réponse précise sur le trafic organique"
     chokepoint.answer = WriteOutcome.REFUSED
 
@@ -160,8 +157,8 @@ def test_direct_reply_lanes_share_the_cycle(direct):
 def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
     dr, lanes, llm, chokepoint = direct
     ok, off, old = fresh("someone", n=1), fresh("other", n=2), fresh("third", minutes=5 * 24 * 60 + 1, n=3)
-    lanes["search"] = [{"likes": 3, "url": off, "text": "off-niche post"}, {"likes": 3, "url": old, "text": "old post"},
-                       {"likes": 3, "url": ok, "text": "post admitted"}, {"likes": 3, "url": "https://x.com/nostatus", "text": "no id"}]
+    lanes["search"] = [{"url": off, "text": "off-niche post"}, {"url": old, "text": "old post"},
+                       {"url": ok, "text": "post admitted"}, {"url": "https://x.com/nostatus", "text": "no id"}]
 
     dr.run_direct_reply_cycle()
 
@@ -176,9 +173,9 @@ def test_direct_reply_search_skips_nested_replies(direct):
     neither the model nor the chokepoint, as in the feed sweep."""
     dr, lanes, llm, chokepoint = direct
     root, marked, mention = fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3)
-    lanes["search"] = [{"likes": 3, "url": marked, "text": "a nested reply", "is_reply": True},
-                       {"likes": 3, "url": mention, "text": "  @someone a mention first"},
-                       {"likes": 3, "url": root, "text": "a root post"}]
+    lanes["search"] = [{"url": marked, "text": "a nested reply", "is_reply": True},
+                       {"url": mention, "text": "  @someone a mention first"},
+                       {"url": root, "text": "a root post"}]
 
     dr.run_direct_reply_cycle()
 
@@ -186,24 +183,24 @@ def test_direct_reply_search_skips_nested_replies(direct):
     assert chokepoint.sent == [root]
 
 
-def test_direct_reply_vip_scan_never_answers_comments(direct):
-    """VIP status never exempts comments from the one-Reply-per-thread rule."""
+def test_direct_reply_vip_scan_still_answers_its_accounts_replies(direct):
+    """Issue #241 leaves the VIP scan as it was: it answers everything its
+    accounts post, their replies included."""
     dr, lanes, llm, chokepoint = direct
     marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
-    lanes["vip"] = [{"likes": 3, "url": marked, "text": "vip nested reply", "is_reply": True},
-                    {"likes": 3, "url": mention, "text": "@someone vip mention"}]
+    lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
+                    {"url": mention, "text": "@someone vip mention"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
-    assert chokepoint.sent == []
-    assert llm.prompts == []
+    assert chokepoint.sent == [marked, mention]
 
 
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
     recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
-    lanes["vip"] = [{"likes": 3, "url": old, "text": "vip old"}, {"likes": 3, "url": recent, "text": "vip recent"}]
+    lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
@@ -215,7 +212,7 @@ def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"likes": 3, "url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
+    lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
     llm.default = EXHAUSTED
 
     dr.run_direct_reply_cycle()
@@ -228,7 +225,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
 def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     """Both lanes ran inside `except Exception`, which swallowed bedtime."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"likes": 3, "url": fresh("graphseo"), "text": "vip post"}]
+    lanes["vip"] = [{"url": fresh("graphseo"), "text": "vip post"}]
     chokepoint.answer = error
     with pytest.raises(type(error)):
         dr.run_direct_reply_cycle()
@@ -251,7 +248,7 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
 
     def fresh_posts(query, **k):
         lanes["queries"].append(query)
-        return [{"likes": 3, "url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
+        return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
     monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
     settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3)
@@ -287,9 +284,9 @@ def test_feed_sweep_replies_to_fresh_on_niche_posts(feed):
     ok, thread, off, old = (fresh("someone", n=1), fresh("other", n=2), fresh("third", n=3),
                             fresh("fourth", minutes=5 * 24 * 60 + 1, n=4))
     feeds["FEED"] = [
-        {"likes": 3, "url": thread, "text": "OpenAI ships a model", "is_reply": True},
-        {"likes": 3, "url": off, "text": "my sandwich today"},
-        {"likes": 3, "url": old, "text": "OpenAI ships an old model"},
+        {"url": thread, "text": "OpenAI ships a model", "is_reply": True},
+        {"url": off, "text": "my sandwich today"},
+        {"url": old, "text": "OpenAI ships an old model"},
         {"url": ok, "text": "OpenAI ships a new model", "likes": 50_000, "replies": 900},
     ]
 
@@ -305,8 +302,8 @@ def test_feed_sweep_reads_its_age_limit_at_call_time(feed, settings_override):
     DIRECT_REPLY_MAX_AGE_MINUTES applies without a restart of the module."""
     fs, feeds, llm, chokepoint = feed
     recent, older = fresh("someone", minutes=5, n=1), fresh("other", minutes=30, n=2)
-    feeds["FEED"] = [{"likes": 3, "url": older, "text": "OpenAI ships a model"},
-                     {"likes": 3, "url": recent, "text": "OpenAI ships a new model"}]
+    feeds["FEED"] = [{"url": older, "text": "OpenAI ships a model"},
+                     {"url": recent, "text": "OpenAI ships a new model"}]
     settings_override(DIRECT_REPLY_MAX_AGE_MINUTES=10)
 
     fs.run_feed_sweep_cycle()
@@ -316,7 +313,7 @@ def test_feed_sweep_reads_its_age_limit_at_call_time(feed, settings_override):
 
 def test_feed_sweep_stops_at_the_rate_limit(feed):
     fs, feeds, llm, chokepoint = feed
-    feeds["FEED"] = [{"likes": 3, "url": fresh("someone"), "text": "OpenAI ships a new model"}]
+    feeds["FEED"] = [{"url": fresh("someone"), "text": "OpenAI ships a new model"}]
     llm.default = EXHAUSTED
 
     fs.run_feed_sweep_cycle()
@@ -481,7 +478,7 @@ def profile_job(request, monkeypatch, llm, chokepoint):
 
 
 def post(handle, text, minutes=1, n=0, **fields):
-    return {"likes": 3, "url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
+    return {"url": fresh(handle, minutes=minutes, n=n), "text": text, "author": handle, **fields}
 
 
 def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
@@ -492,7 +489,7 @@ def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
         post("someone", "post stale", minutes=max_minutes + 1, n=2),
         post("someone", "off-niche post", n=3),
         post("someone", "post in a thread", n=4, is_reply=True),
-        {"likes": 3, "url": "https://x.com/someone", "text": "no status ID"},
+        {"url": "https://x.com/someone", "text": "no status ID"},
         ok,
     ]
 
@@ -529,14 +526,14 @@ def test_profile_jobs_stop_at_the_rate_limit(profile_job):
     assert len(llm.calls) == 1 and chokepoint.sent == []
 
 
-def test_mega_watch_leaves_context_length_to_shared_admission(profile_job):
+def test_mega_watch_sends_replies_of_10_to_270_characters(profile_job):
     name, run, profiles, llm, chokepoint = profile_job
     profiles["someone"] = [post("someone", "post", n=1)]
     llm.default = "Yes."
 
     run()
 
-    assert chokepoint.sent == [profiles["someone"][0]["url"]]
+    assert chokepoint.sent == ([] if name == "mega_watch" else [profiles["someone"][0]["url"]])
 
 
 # --- debate (mentions) ------------------------------------------------------
@@ -553,20 +550,20 @@ def debate(monkeypatch, llm, chokepoint, settings_override):
     return db, mentions, llm, chokepoint
 
 
-def test_debate_never_answers_mentions(debate, settings_override):
+def test_debate_answers_fresh_mentions_as_debate_turns(debate, settings_override):
     db, mentions, llm, chokepoint = debate
     settings_override(DEBATE_MAX_PER_CYCLE=2, DEBATE_MAX_AGE_HOURS=24.0)
     old = fresh("old", minutes=25 * 60, n=1)
     first, second, third = fresh("someone", n=2), fresh("other", minutes=10, n=3), fresh("third", minutes=20, n=4)
-    mentions += [{"likes": 3, "url": third, "text": "mention three"}, {"likes": 3, "url": old, "text": "mention old"},
-                 {"likes": 3, "url": second, "text": "mention two"}, {"likes": 3, "url": first, "text": "mention one"},
-                 {"likes": 3, "url": fresh("empty", n=5), "text": "  "}]
+    mentions += [{"url": third, "text": "mention three"}, {"url": old, "text": "mention old"},
+                 {"url": second, "text": "mention two"}, {"url": first, "text": "mention one"},
+                 {"url": fresh("empty", n=5), "text": "  "}]
 
     db.run_debate_cycle()
 
-    assert chokepoint.calls == []
-    assert llm.prompts == []
-    assert logged() == []
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(first, True), (second, True)], \
+        "freshest first, DEBATE_MAX_PER_CYCLE Replies"
+    assert [r.source for r in logged()] == ["DEBATE/someone", "DEBATE/other"]
 
 
 def test_debate_kill_switch_is_read_at_call_time(debate, monkeypatch, settings_override):
@@ -595,33 +592,33 @@ def replyback(monkeypatch, llm, chokepoint):
     return nb, replies, llm, chokepoint
 
 
-def test_replyback_never_answers_comments_on_own_posts(replyback, blocked_pgm_pm):
+def test_replyback_answers_engagers_in_thread_and_logs_it(replyback, blocked_pgm_pm):
     """Issue #156: replyback logs its shipped Replies like every other job."""
     nb, replies, llm, chokepoint = replyback
     admitted = fresh("someone", n=1)
     replies += [
-        {"likes": 3, "user": "No link @nolink", "text": "no status URL", "url": ""},
-        {"likes": 3, "user": "Brief @brief", "text": "ok", "url": fresh("brief", n=2)},
-        {"likes": 3, "user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
+        {"user": "No link @nolink", "text": "no status URL", "url": ""},
+        {"user": "Brief @brief", "text": "ok", "url": fresh("brief", n=2)},
+        {"user": "pgm_pm fan club @someone", "text": "display name is not an identity", "url": admitted},
     ]
 
     nb.run_replyback_cycle()
 
-    assert llm.prompts == []
-    assert chokepoint.calls == []
-    assert logged() == []
+    assert llm.parents("no status URL", "display name is not an identity") == ["display name is not an identity"]
+    assert "our post about GPUs" in llm.prompts[0], "the post they answered is in the prompt"
+    assert [(c.url, c.debate_turn) for c in chokepoint.calls] == [(admitted, True)]
+    assert [(r.url, r.source) for r in logged()] == [(admitted, "REPLYBACK/someone")]
     assert set_aside("replyback") == {admitted}
 
 
-def test_replyback_never_answers_multiple_comments_under_a_busy_post(replyback):
+def test_replyback_answers_more_engagers_under_a_busier_post(replyback):
     nb, replies, llm, chokepoint = replyback
-    replies += [{"likes": 3, "user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
+    replies += [{"user": f"@fan{i}", "text": f"reply number {i}", "url": fresh(f"fan{i}", n=i)}
                 for i in range(12)]
 
     nb.run_replyback_cycle()
 
-    assert chokepoint.sent == []
-    assert llm.prompts == []
+    assert len(chokepoint.sent) == 9, "10 to 19 replies under the post: 9 answered"
 
 
 def test_replyback_reciprocity_never_follows(monkeypatch):

@@ -5,9 +5,6 @@ from datetime import datetime
 
 import pytest
 
-# These engine tests exercise an Account explicitly permitted to publish Originals.
-pytestmark = pytest.mark.usefixtures("originals_account", "unranked_account")
-
 from src.editorial import editorial_bot as editorial
 from src.guards import action_guard as ag
 from src.guards import follow_policy
@@ -25,7 +22,6 @@ def _fake_safari(monkeypatch):
     """Live (non-dry) reply path with every Safari step succeeding: the
     Replied store is only claimed when a Reply really ships."""
     import src.x.twitter_client as tc
-    monkeypatch.setattr(tc, "_standalone_reply_target", lambda *a, **k: True)
     from src.x import safari
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
@@ -176,15 +172,39 @@ def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_over
         "reply must not unconditionally like the parent"
 
 
-@pytest.mark.parametrize("budget", [0, 4])
-def test_followups_never_ship_even_with_debate_budget(monkeypatch, settings_override, memory_ledger, budget):
-    from src.x import twitter_client as tc
-    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=budget)
-    monkeypatch.setenv("DRY_RUN", "0")
-    parent = numbered_url(501)
-    assert tc.reply_to_tweet(parent, "Batching changes the cost curve.", debate_turn=True) is W.REFUSED
-    assert parent not in rs.load_replied()
-    assert memory_ledger.rows == []
+def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger):
+    """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
+    the reply chokepoint, whichever bot answers: debate_bot and replyback
+    share one count. Ordinary replies to the same author stay uncapped, a
+    refused turn leaves the tweet unmarked, and the cap is read at call time."""
+    from src.guards import action_guard as ag
+    from src.guards import content_guard as cg
+    from src.x import safari, twitter_client as tc
+
+    # The Reply spacing has a floor of 8 s (#201); it is not what this test judges.
+    monkeypatch.setattr(ag, "too_soon", lambda action: "")
+    monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
+    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=2)
+
+    text = "Inference cost falls when batching works, so the margin story depends on utilisation."
+    url = lambda author, n: f"https://x.com/{author}/status/{n}"
+    assert tc.reply_to_tweet(url("Challenger", 1), text, debate_turn=True)
+    assert tc.reply_to_tweet(url("challenger", 2), text, debate_turn=True)
+    assert not tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
+    assert url("challenger", 3) not in rs.load_replied(), "refused turn must stay fresh"
+    assert tc.reply_to_tweet(url("challenger", 4), text), "plain replies stay uncapped"
+    assert tc.reply_to_tweet(url("someone_else", 5), text, debate_turn=True)
+    assert memory_ledger.count(ag.DEBATE_TURN, ag.now_local().date(), "challenger") == 2
+    settings_override(DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY=3)
+    assert tc.reply_to_tweet(url("challenger", 3), text, debate_turn=True)
+    assert not tc.reply_to_tweet("https://x.com/i/web/status/6", text, debate_turn=True), \
+        "a turn without a URL handle fails closed"
 
 
 def test_debate_turn_cap_judged_under_the_safari_lock(monkeypatch, settings_override, memory_ledger):
@@ -222,7 +242,7 @@ def _dry_run_reply_path(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "1")
 
 
-def test_legacy_typo_setting_does_not_mutate_validated_text(monkeypatch, settings_override):
+def test_human_typo_text_is_the_validated_text(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
@@ -237,10 +257,10 @@ def test_legacy_typo_setting_does_not_mutate_validated_text(monkeypatch, setting
 
     url = "https://x.com/typofriend/status/2063500000000000101"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.DRY_RUN
-    assert validated and not validated[-1].endswith("(typo)")
+    assert validated and validated[-1].endswith("(typo)")
 
 
-def test_language_and_content_checks_judge_the_same_text(monkeypatch, settings_override):
+def test_language_check_judges_the_text_before_the_typo(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import reply_language
     from src.core import humanizer
@@ -258,10 +278,10 @@ def test_language_and_content_checks_judge_the_same_text(monkeypatch, settings_o
     url = "https://x.com/typofriend/status/2063500000000000103"
     assert twitter_client.reply_to_tweet(url, "Le calcul est le vrai fossé, pas le modèle.") is W.DRY_RUN
     assert judged and not judged[-1].endswith("(typo)")
-    assert not validated[-1].endswith("(typo)")
+    assert validated[-1].endswith("(typo)")
 
 
-def test_refused_normalized_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
+def test_refused_typo_text_leaves_the_tweet_fresh(monkeypatch, settings_override):
     from src.guards import content_guard
     from src.core import humanizer
     from src.x import twitter_client
@@ -271,7 +291,7 @@ def test_refused_normalized_text_leaves_the_tweet_fresh(monkeypatch, settings_ov
     settings_override(HUMAN_TYPO_HANDLES="typofriend")
     monkeypatch.setattr(humanizer, "inject_human_typo", lambda text: text + " (typo)")
     monkeypatch.setattr(content_guard, "validate",
-                        lambda text, kind="post": (False, "content refused"))
+                        lambda text, kind="post": (not text.endswith("(typo)"), "typo refused"))
 
     url = "https://x.com/typofriend/status/2063500000000000102"
     assert twitter_client.reply_to_tweet(url, "Compute is the moat, not the model.") is W.REFUSED
@@ -328,11 +348,6 @@ def _live_browser(monkeypatch, failing_step=None):
         return True
 
     monkeypatch.setattr(safari, "_run_applescript", run_applescript)
-    def target(url, click=False):
-        if click and failing_step == "stop_before_submit":
-            raise OutsideActiveHours("stop")
-        return not (click and failing_step == "reply_key")
-    monkeypatch.setattr(tc, "_standalone_reply_target", target)
     def paste(text):
         if failing_step == "stop_at_submit":
             stop_requested(monkeypatch)
@@ -372,11 +387,11 @@ def test_reply_failing_before_submit_records_nothing_and_leaves_tweet_fresh(monk
     other = "https://x.com/else/status/2063500000000000119"
     save_replied({other})
     for n, step in enumerate(("reply_key", "paste")):
-        for debate_turn in (False,):
+        for debate_turn in (False, True):
             recorded = _live_browser(monkeypatch, failing_step=step)
             url = f"https://x.com/someone/status/20635000000000001{n}{int(debate_turn)}"
 
-            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is (W.REFUSED if step == "reply_key" else W.FAILED), step
+            assert tc.reply_to_tweet(url, REPLY, debate_turn=debate_turn) is W.FAILED, step
             assert recorded == [], step
             assert url not in load_replied(), step
     assert other in load_replied()
@@ -386,7 +401,7 @@ def test_reply_failing_at_submit_records_nothing_but_stays_marked(monkeypatch):
     from src.x import twitter_client as tc
     from src.guards.replied_store import load_replied
 
-    for n, debate_turn in enumerate((False,)):
+    for n, debate_turn in enumerate((False, True)):
         recorded = _live_browser(monkeypatch, failing_step="submit")
         url = f"https://x.com/someone/status/206350000000000013{n}"
 
@@ -441,7 +456,7 @@ def test_live_reply_pastes_the_validated_text(monkeypatch, settings_override):
 
     assert tc.reply_to_tweet(url, "Targets are easy — conviction is the hard part.") is W.SHIPPED
     assert pasted == [validated[-1]]
-    assert not pasted[0].endswith("(typo)") and "—" not in pasted[0]
+    assert pasted[0].endswith("(typo)") and "—" not in pasted[0]
 
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
@@ -502,7 +517,7 @@ def test_spacing_is_judged_under_the_safari_lock(monkeypatch):
     assert url not in load_replied()
 
 
-def test_overnight_reply_is_refused_not_raised(limited_hours, monkeypatch):
+def test_overnight_reply_is_refused_not_raised(monkeypatch):
     """_safari_lock raises OutsideActiveHours on entry; the chokepoint must
     refuse with False before it, like any other skip."""
     from datetime import datetime
@@ -513,7 +528,7 @@ def test_overnight_reply_is_refused_not_raised(limited_hours, monkeypatch):
 
     _live_browser(monkeypatch)
     monkeypatch.setattr(active_hours, "now_local",
-                        lambda: datetime(2026, 9, 24, 0, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
+                        lambda: datetime(2026, 9, 23, 23, 30, tzinfo=ZoneInfo(config.BOT_TIMEZONE)))
     assert tc.reply_to_tweet("https://x.com/someone/status/2063500000000000167", REPLY) is W.REFUSED
 
 
@@ -529,9 +544,10 @@ def test_dry_run_reply_never_claims_the_tweet(monkeypatch):
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     url = "https://x.com/someone/status/2063500000000000170"
 
-    assert tc.reply_to_tweet(url, REPLY) is W.DRY_RUN
+    assert tc.reply_to_tweet(url, REPLY, debate_turn=True) is W.DRY_RUN
     assert url not in load_replied()
-    assert [k for _, k in recorded] == [{"target": url, "dry_run": True}]
+    assert [k for _, k in recorded] == [{"target": url, "dry_run": True},
+                                        {"target": "someone", "dry_run": True}]
 
 
 def test_refused_reply_never_reaches_safari(monkeypatch):
@@ -687,7 +703,7 @@ def test_concurrent_posts_cannot_both_take_last_slot(monkeypatch, settings_overr
     from concurrent.futures import ThreadPoolExecutor
     from threading import Barrier
     from src.x import safari, twitter_client as tc
-    clock(monkeypatch, datetime(2026, 9, 20, 12, 15, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 12, tzinfo=TORONTO))
     for _ in range(7):
         ag.record(ag.POST)
     settings_override(MIN_SECONDS_BETWEEN_POSTS=0, POST_JITTER_SECONDS=0)

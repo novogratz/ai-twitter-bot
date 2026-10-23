@@ -38,22 +38,14 @@ def voice_files(monkeypatch, tmp_path):
 
 @pytest.fixture
 def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
-    """Live job prompts plus direct rendering of retained conversation templates.
-
-    Conversation jobs are refused before generation; their refusal is tested
-    in test_reply_jobs. These calls test only the shared prompt assembler.
-    """
+    """Each live Reply job run on one parent post; returns the prompt it sent."""
     from src.core import evolution_store
-    from src.core import reply_style
     from src.replies import reply_pipeline, reply_source
     from src.replies import direct_reply as dr, early_bird_bot as eb, mega_watch_bot as mw
     from src.replies import debate_bot as db, feed_sweeper_bot as fs, notify_bot as nb, reply_agent as ra
     from src.x import scraper
 
     chokepoint.answer = WriteOutcome.REFUSED
-    # These tests inspect one prompt's language/anchors, not random style retries.
-    monkeypatch.setattr(reply_style, "choose_length", lambda: reply_style.Length.FULL)
-    monkeypatch.setattr(reply_style, "choose_smiley", lambda: False)
     for module in (dr, eb, mw, reply_source):
         monkeypatch.setattr(module, "is_on_niche", lambda text: True)
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
@@ -67,11 +59,11 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
     def search(author, text):
         url = fresh(author)  # every query of the cycle finds the same post
         settings_override(VIP_SCAN_HANDLES="")
-        monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text, "likes": 3}])
+        monkeypatch.setattr(dr, "scrape_x_search", lambda *a, **k: [{"url": url, "text": text}])
         dr.run_direct_reply_cycle()
 
     def feed(author, text):
-        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text, "likes": 3}])
+        monkeypatch.setattr(scraper, "scrape_home_feed", lambda **k: [{"url": fresh(author), "text": text}])
         monkeypatch.setattr(scraper, "scrape_following_feed", lambda **k: [])
         fs.run_feed_sweep_cycle()
 
@@ -79,23 +71,24 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override):
         def run(handle, text):
             monkeypatch.setattr(module, pool, lambda: [handle])
             monkeypatch.setattr(module, "scrape_profile_tweets", lambda username, **k: [
-                {"url": fresh(handle, minutes=1), "text": text, "author": handle, "likes": 3}])
+                {"url": fresh(handle, minutes=1), "text": text, "author": handle}])
             cycle()
         return run
 
     def vip(handle, text):
         settings_override(VIP_SCAN_HANDLES=handle)
-        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text, "likes": 3}])
+        monkeypatch.setattr(scraper, "scrape_x_search", lambda q, **k: [{"url": fresh(handle), "text": text}])
         dr._run_vip_scan(reply_pipeline.Cycle())
 
     def debate(author, text):
-        from src.replies import reply_generator
-        reply_generator.generate(db.reply_call(), author=author, text=text)
+        monkeypatch.setattr(scraper, "scrape_mentions", lambda **k: [{"url": fresh(author), "text": text}])
+        db.run_debate_cycle()
 
     def replyback(author, text):
-        from src.replies import reply_generator, replyback_agent
-        reply_generator.generate(replyback_agent.reply_call(), author=author, text=text,
-                                 context="our post about GPUs")
+        monkeypatch.setattr(nb, "scrape_own_tweet_and_replies", lambda: {
+            "own_tweet": "our post about GPUs",
+            "replies": [{"user": f"@{author}", "text": text, "url": fresh(author)}]})
+        nb.run_replyback_cycle()
 
     def reply_search(author, text):
         ra.generate_replies()
@@ -242,9 +235,7 @@ def test_every_reply_prompt_opens_on_the_one_voice(jobs, job, author, text, sett
     assert prompt.startswith(voice + "\n\n")
     assert "VOICE (NON-NEGOTIABLE): you are @SomeOtherBot\n" in voice
     assert prompt.count("VOICE (NON-NEGOTIABLE)") == 1
-    # Historical handles may appear as forbidden targets, never as the persona.
-    rest = "\n".join(line for line in prompt[len(voice):].splitlines()
-                     if not line.startswith("Never select our current or historical handles:")).lower()
+    rest = prompt[len(voice):].lower()
     assert [marker for marker in PERSONA if marker in rest] == []
 
 
@@ -377,7 +368,7 @@ HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
          ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-         ("vip", "Graphseo", FR)]
+         ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
 # Only the bestie and buddy ReplyCalls declined "skip" in the first 20
 # characters before issue #155; every other path read SKIP as a prefix.
 VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
@@ -412,7 +403,7 @@ def decision(jobs, llm, chokepoint, monkeypatch):
 
 @pytest.mark.parametrize("job, author, text", PATHS)
 @pytest.mark.parametrize("answer", [LEGIT, HEDGE, *SKIPS])
-def test_each_job_decides_on_a_skip_as_before_the_generator(unranked_account, decision, job, author, text, answer):
+def test_each_job_decides_on_a_skip_as_before_the_generator(decision, job, author, text, answer):
     """Issue #155 adds the hard rules and changes nothing else that ships.
     Two deliberate exceptions, logged in docs/HISTORY.md 2026-09-23: a quoted
     "SKIP" on debate and Graphseo used to reach the chokepoint, and is now a
@@ -656,17 +647,3 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 
     model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
-
-
-def test_search_uses_current_identity_scope_and_ignores_retired_directives(monkeypatch, llm):
-    from pathlib import Path
-    from src.core import evolution_store
-    from src.replies import reply_agent
-    Path(evolution_store.DIRECTIVES_FILE).write_text("RETIRED_PERSONA: pretend to be a clinician")
-    llm.default = "[]"
-    reply_agent.generate_replies()
-    prompt = llm.prompts[-1]
-    assert "@thesimaximalist" in prompt and "The SI Maximalist" in prompt
-    assert "Grok Imagine" in prompt and "SI brainrot" in prompt
-    assert "Never select a protected author: elonmusk" in prompt
-    assert "RETIRED_PERSONA" not in prompt

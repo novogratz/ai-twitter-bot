@@ -13,34 +13,16 @@ read-merge-write runs under one lock so parallel jobs cannot drop each
 other's entries. Recovery: docs/OPERATIONS.md#recovery.
 """
 import json
-import fcntl
 import os
 import tempfile
 import threading
-from contextlib import contextmanager
 
 from ..core import config
 from ..x import x_urls
 from ..core.state_errors import StateUnreadable
-from ..core.state_store import StatePath
 
+_REPLIED_CAP = 50000
 _write_lock = threading.Lock()
-CLAIM_LOCK = StatePath("replied_tweets.lock")
-
-
-@contextmanager
-def _locked():
-    """Serialize claims across scheduler threads and separate manual processes."""
-    with _write_lock:
-        try:
-            with open(CLAIM_LOCK, "a+") as handle:
-                fcntl.flock(handle, fcntl.LOCK_EX)
-                try:
-                    yield
-                finally:
-                    fcntl.flock(handle, fcntl.LOCK_UN)
-        except OSError as exc:
-            raise StateUnreadable("Replied store lock unavailable; refusing replies") from exc
 
 
 def canonical_tweet_id(url: str) -> str:
@@ -89,12 +71,11 @@ def _read_entries() -> list:
         data = data.get("urls")
     if not isinstance(data, list):
         raise StateUnreadable("Replied store is not a list; refusing replies that could duplicate")
-    if any(not isinstance(u, str) or not u.strip() for u in data):
-        raise StateUnreadable("Replied store contains invalid entries; refusing replies")
-    return data
+    return [u for u in data if isinstance(u, str) and u]
 
 
 def _write_entries(entries: list) -> None:
+    entries = entries[-_REPLIED_CAP:]
     path = config.REPLIED_FILE
     fd, tmp = tempfile.mkstemp(dir=os.path.dirname(os.path.abspath(path)),
                                prefix=".replied_tweets.", suffix=".tmp")
@@ -136,13 +117,13 @@ def load_replied() -> CanonReplied:
 
 
 def save_replied(urls) -> None:
-    """Merge `urls` into the permanent on-disk store, newest last.
+    """Merge `urls` into the on-disk store, newest last, capped at 50k.
 
     Bug 2026-05-16: slicing a Python set (`list(urls)[-2000:]`) randomly
     dropped half the store and let bots reply twice days later. The merge
     re-reads the file under the lock, so a parallel job's entries survive.
     """
-    with _locked():
+    with _write_lock:
         entries = _read_entries()
         if _merge(entries, urls):
             _write_entries(entries)
@@ -154,7 +135,7 @@ def claim(url: str) -> bool:
     Check and mark happen under one lock, so two threads claiming the same
     tweet cannot both win.
     """
-    with _locked():
+    with _write_lock:
         entries = _read_entries()
         if not _merge(entries, [url]):
             return False
@@ -170,7 +151,7 @@ def release(url: str) -> None:
     may save it back later: the tweet then stays taken, the safe side.
     """
     cid = canonical_tweet_id(url)
-    with _locked():
+    with _write_lock:
         entries = _read_entries()
         kept = [u for u in entries if canonical_tweet_id(u) != cid]
         if len(kept) != len(entries):

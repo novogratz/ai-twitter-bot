@@ -16,8 +16,6 @@ import random
 from datetime import timedelta
 from ..x import x_urls
 from ..core.logger import log
-from ..guards.reply_admission import has_reply_engagement
-from ..core import reply_queue
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
@@ -74,14 +72,13 @@ def run_early_bird_cycle():
 
     cycle = reply_pipeline.Cycle()
     for username in picks:
-        if (cycle.work_done(posted) >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE or cycle.rate_limited
-                or not reply_pipeline.discovery_available()):
+        if posted >= EARLY_BIRD_MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
 
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
         # Only the top 3 tweets — anything older isn't fresh anyway.
         tweets = reply_pipeline.scrape("EARLYBIRD", f"@{username}", scrape_profile_tweets, username,
-                                       max_tweets=3, text_limit=reply_queue.PARENT_TEXT_LIMIT)
+                                       max_tweets=3)
         # One reply per scanned account, then move on.
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle, max_shipped=1)
 
@@ -96,7 +93,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
     for tweet in tweets:
         url = tweet.get("url", "")
         text = tweet.get("text", "")
-        if not url or not has_reply_engagement(tweet.get("likes")):
+        if not url:
             continue
         if x_urls.is_reply_like_tweet(tweet, expected_author=username):
             log.info(f"[EARLYBIRD] Looks like a thread reply — skipping {url}")
