@@ -152,15 +152,16 @@ def pause(settings_override):
     return next(window for window in windows if window)
 
 
-def test_break_plan_is_repeatable_ten_minutes_and_only_during_waking_hours(settings_override):
+def test_break_plan_has_six_repeatable_ten_minute_windows_and_no_overnight_breaks(settings_override):
     settings_override(HOURLY_BREAK_MINUTES=10)
     for day in (datetime(2026, 3, 8, tzinfo=TORONTO),
-                datetime(2026, 10, 23, tzinfo=TORONTO),
+                datetime(2026, 10, 24, tzinfo=TORONTO),
                 datetime(2026, 11, 1, tzinfo=TORONTO)):
         windows = [hours.break_window(day.replace(hour=h)) for h in range(24)]
-        assert any(windows[6:]) and not all(windows[6:])
-        assert not any(windows[:5])
-        for window in filter(None, windows):
+        breaks = list(filter(None, windows))
+        assert [start.hour for start, end in breaks] == [7, 10, 13, 16, 19, 22]
+        assert sum((end - start for start, end in breaks), timedelta()) == timedelta(hours=1)
+        for window in breaks:
             start, end = window
             assert end - start == timedelta(minutes=10)
             assert 35 <= start.minute <= 50
@@ -170,6 +171,19 @@ def test_break_plan_is_repeatable_ten_minutes_and_only_during_waking_hours(setti
             assert hours.break_until(start) == end
             assert hours.break_until(end - timedelta(seconds=1)) == end
             assert hours.break_until(end) is None
+
+
+def test_intervening_hours_stay_active_and_model_budget_reaches_the_next_break(monkeypatch, settings_override):
+    settings_override(HOURLY_BREAK_MINUTES=10)
+    day = datetime(2026, 10, 24, tzinfo=TORONTO)
+    for hour, next_hour in ((5, 7), (6, 7), (8, 10), (9, 10), (20, 22), (21, 22)):
+        now = day.replace(hour=hour, minute=45)
+        clock(monkeypatch, now)
+        assert hours.break_until() is None and hours.may_act()
+        following = hours.break_window(day.replace(hour=next_hour))
+        assert hours.seconds_until_pause() == (following[0] - now).total_seconds()
+    clock(monkeypatch, day.replace(hour=23, minute=15))
+    assert hours.may_act() and hours.seconds_until_pause() == hours.seconds_until_bedtime() == 45 * 60
 
 
 def test_break_gates_jobs_browser_and_publication_then_resumes(monkeypatch, pause, unwalled):

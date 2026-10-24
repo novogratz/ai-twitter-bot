@@ -6,6 +6,15 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-24, fewer daytime breaks — The Operator requests less frequent breaks.
+Keep `HOURLY_BREAK_MINUTES=10`, but schedule one break about every three waking
+hours: six daily windows, in hours 07, 10, 13, 16, 19 and 22 Toronto time.
+The start minute remains deterministic in 35–50 for the Account/date/hour,
+shared by every worker and preserved across restarts. This supersedes the
+plan with breaks in three of four hours. Midnight–04:30 sleep, publication limits, the
+confirmed-like Reply prerequisite and all other admission checks remain.
+No environment edit, restart or production-state migration accompanies this change.
+
 2026-10-23, always like before replying — Every Reply must first confirm that
 the verified parent's own like is visible on X. An existing like satisfies
 the requirement without another click or like allowance. A new like uses
@@ -54,8 +63,8 @@ Both Home feeds are explicitly selected and verified. Collect each viewport
 before scrolling; deduplicate by status ID and stop on a stalled feed. The
 Account selects up to 20 scrolls and 160 collected posts per feed. Publication
 counts and generation budgets stay bounded as before. `HOURLY_BREAK_MINUTES=10`
-pauses new jobs, model requests and browser activity in roughly three of four
-waking hours, starting at minute 35–50 after the first waking hour. The plan
+pauses new jobs, model requests and browser activity every three waking hours
+under the October 24 amendment, starting at minute 35–50. The plan
 is stable across workers and restarts and creates no state file. No restart,
 profile edit or production-state migration accompanies the PR/merge/release.
 
@@ -115,7 +124,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23 amendments) and supersedes older mandates. It encodes:
+(including the October 23–24 amendments) and supersedes older mandates. It encodes:
 
 - Active 04:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
