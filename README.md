@@ -38,8 +38,10 @@ name preserves the existing state and history after the account rename.
   stay claimed. Current and historical account handles are protected.
 - **Like before every Reply.** Confirm the verified parent's own visible like
   before opening the Reply composer. Existing likes are left alone. A failed
-  or unconfirmed like, or an exhausted daily like allowance, leaves the Reply
-  unsent and retryable. A cached like alone is insufficient; the former random
+  or unconfirmed like leaves the Reply unsent and retryable. The required
+  parent like is exempt from the daily like threshold, so that threshold cannot
+  impose a daily Reply cap. Background likes remain limited. A cached like
+  alone is insufficient; the former random
   parent-like setting no longer applies.
 - **A sharper SI voice:** a fictional 45-year-old mom with confident, playful
   adult charm. Give one technically precise observation or useful implication

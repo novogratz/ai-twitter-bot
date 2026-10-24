@@ -5,6 +5,7 @@ import json
 import re
 import time
 import urllib.parse
+from contextvars import ContextVar
 from enum import Enum
 from ..core import settings
 from ..core.logger import log
@@ -15,6 +16,7 @@ from . import confirmed_write, safari, scraper
 from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
+_REPLY_LIKE_PARENT = ContextVar("reply_like_parent", default="")
 
 
 def _open_or_abort(url: str, tag: str) -> bool:
@@ -434,6 +436,9 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
     UNCONFIRMED and records nothing. A post in the liked cache or shown as
     liked is left alone. The page is read and clicked under the Safari lock.
     DRY_RUN writes a dry-run ledger row and returns DRY_RUN.
+    Only the verified parent of a currently admitted Reply is exempt from
+    the daily like threshold. Its context is local to the Reply's worker;
+    other callers and other posts keep the normal cap.
     """
     from ..guards import action_guard, reply_admission
     from . import x_urls
@@ -441,7 +446,9 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
     liked_url = tweet_url
 
     def admit():
-        ok, why = action_guard.can_post(action_guard.LIKE)
+        parent = x_urls.canonical_status_url(_REPLY_LIKE_PARENT.get())
+        required = bool(parent and parent == x_urls.canonical_status_url(tweet_url))
+        ok, why = action_guard.can_post(action_guard.LIKE, reply_parent=required)
         if not ok:
             log.info("[LIKE] policy skip (%s).", why)
             return LikeOutcome.REFUSED
@@ -749,7 +756,14 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             if not _reply_target(tweet_url, on_answered=remember_answered):
                 log.info("[REPLY] Opened target is self, nested, already answered or unverifiable: %s", tweet_url)
                 return WriteOutcome.REFUSED
-            if not _ensure_parent_liked(tweet_url):
+            # Authorize only this parent's required like, after admission,
+            # the permanent claim and the actual standalone-page verification.
+            token = _REPLY_LIKE_PARENT.set(tweet_url)
+            try:
+                liked = _ensure_parent_liked(tweet_url)
+            finally:
+                _REPLY_LIKE_PARENT.reset(token)
+            if not liked:
                 log.info("[REPLY] Parent like not confirmed; leaving Reply unsent: %s", tweet_url)
                 return WriteOutcome.REFUSED
             time.sleep(1)

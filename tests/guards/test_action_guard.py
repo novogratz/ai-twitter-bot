@@ -48,6 +48,18 @@ def test_quotes_and_reposts_are_refused(memory_ledger):
     assert not ag.can_post(ag.RETWEET)[0]
 
 
+def test_uncapped_reply_parent_likes_still_obey_sleep_breaks_and_stop(monkeypatch, memory_ledger):
+    from src.guards import active_hours
+    with monkeypatch.context() as patch:
+        patch.setattr(ag, "is_active", lambda: False)
+        assert not ag.can_post(ag.LIKE, reply_parent=True)[0]
+    with monkeypatch.context() as patch:
+        patch.setattr(ag, "break_until", lambda: active_hours.now_local())
+        assert not ag.can_post(ag.LIKE, reply_parent=True)[0]
+    stop_requested(monkeypatch)
+    assert not ag.can_post(ag.LIKE, reply_parent=True)[0]
+
+
 def test_can_post_refuses_after_stop(monkeypatch):
     from src.guards import action_guard
 

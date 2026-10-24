@@ -1,5 +1,28 @@
 # Editorial policy — October 24, 2026
 
+## Uncapped Replies and required parent likes
+
+The Operator requests unlimited responses after the total-like threshold of
+500 halted most Replies at 11:42 Toronto. There is no daily Reply cap, and the
+required like for a verified, admitted Reply is now exempt from the daily
+like threshold. This permission exists only for that parent in the Reply's
+worker, after admission, permanent claim and actual standalone-page checks;
+it is cleared even if the like fails. It cannot authorize another post or
+background worker. All confirmed likes still write their usual ledger row.
+Background likes continue to stop when total daily likes reach the existing
+threshold; the change neither resets history nor increases their allowance.
+
+English/SI content checks, the confirmed-like prerequisite, permanent one
+Reply per standalone original, no self-replies or follow-ups, spacing, sleep
+and breaks remain. A failed or unconfirmed like still leaves the Reply unsent.
+This supersedes the daily-like dependency in the earlier October 23 change.
+
+The repost reader also accepts the older `{status_id: "confirmed"}` history
+without rewriting those completed claims or inventing missing timestamps and
+URLs. Their daily action counts remain the ledger's responsibility. Malformed
+entries and unknown legacy values still fail closed. No production-state
+migration or environment edit accompanies these repairs.
+
 ## Fewer daytime breaks
 
 The October 24 Operator request reduces break frequency to one ten-minute
@@ -23,10 +46,11 @@ entries, other posts' likes and embedded quoted controls cannot authorize it.
 
 If the like is refused, fails or cannot be confirmed, the Reply stays unsent
 and its pre-submit claim is released for a later attempt. Sleep, breaks,
-unreadable guarded state and the daily like ceiling still stop new likes.
+unreadable guarded state still stop new likes. Required parent likes are
+exempt from the daily threshold under the later October 24 amendment above.
 Reposts remain independent, but no Reply route, including the priority watch,
 can bypass the confirmed-like prerequisite. Replies have no separate daily
-cap; exhausting the like allowance can defer Replies to unliked parents.
+cap; exhausting the background-like threshold does not stop their required likes.
 The former `REPLY_LIKE_PARENT_PROB` setting remains accepted for compatibility
 and has no effect. No environment edit, bot restart or state migration is
 included in this update.
@@ -50,8 +74,8 @@ Existing likes and reposts are never toggled off. Only the verified original's
 explicit controls are clicked. Repost claims are permanent and process-locked;
 an uncertain confirmation stays claimed across restart and reserves publication
 budget and spacing. Only a proven pre-submit failure releases the claim.
-Unreadable history stops the affected action. All like callers share the
-existing daily like ceiling at the write chokepoint.
+Unreadable history stops the affected action. Background likes keep the
+existing daily threshold; required Reply-parent likes are exempt.
 
 Reposts and Originals share the combined daily profile ceiling (eight or a
 tighter configured limit) and at least twenty-minute spacing. Pending editorial

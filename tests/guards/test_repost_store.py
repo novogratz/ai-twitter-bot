@@ -54,13 +54,31 @@ def test_only_pending_claim_can_be_released():
     assert store.contains(URL)
 
 
-@pytest.mark.parametrize("raw", ['{', '[]', '{"1": {}}'])
+@pytest.mark.parametrize("raw", ['{', '[]', '{"1": {}}', '{"1": "pending"}', '{"1": "unknown"}'])
 def test_corrupt_repost_history_refuses_without_overwrite(tmp_path, raw):
     path = tmp_path / "reposted_tweets.json"
     path.write_text(raw)
     with pytest.raises(StateUnreadable):
         store.claim(URL)
     assert path.read_text() == raw
+
+
+def test_legacy_confirmed_reposts_are_preserved_and_never_replayed(tmp_path, memory_ledger):
+    sid = URL.rsplit("/", 1)[1]
+    raw = '{"' + sid + '": "confirmed"}\n'
+    path = tmp_path / "reposted_tweets.json"
+    path.write_text(raw)
+    assert store.contains(URL) and not store.claim(URL)
+    assert store.pending_times() == [] and store.pending_today() == 0
+    assert ag.can_post(ag.POST)[0], "Old confirmed IDs must not halt Originals"
+    store.release(URL)
+    store.remember(URL, "observed")
+    assert path.read_text() == raw, "Read and duplicate checks must not rewrite history"
+    assert store.claim(NEXT)
+    assert store.entries()[sid] == "confirmed"
+    assert store.pending_today() == 1
+    store.release(NEXT)
+    assert store.entries() == {sid: "confirmed"}
 
 
 def test_reposts_and_originals_share_spacing_and_pending_budget(monkeypatch, memory_ledger, settings_override):
