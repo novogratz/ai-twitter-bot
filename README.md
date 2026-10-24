@@ -14,8 +14,9 @@ name preserves the existing state and history after the account rename.
   final publication checks; uncertain language is skipped.
 - **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
-- **Ten-minute breaks in most waking hours.** A shared, repeatable daily plan
-  varies the start within minutes 35–50 and skips roughly one hour in four.
+- **Ten-minute breaks about every three hours.** Six daily breaks start during
+  hours 07, 10, 13, 16, 19 and 22 Toronto time. A shared, repeatable daily plan
+  varies the start within minutes 35–50.
   Jobs, model requests and browser activity stop during a break.
 - **Read both For You and Following deeply.** Verify the selected tab, collect
   each screen before scrolling, and deduplicate posts. The Account allows

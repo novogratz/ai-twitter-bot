@@ -39,8 +39,9 @@ before touching the browser or a model).
 ## Waking hours
 
 `break_window()` derives a shared account/day/hour plan with no state file.
-With `HOURLY_BREAK_MINUTES=10`, roughly three of four hours include a ten-minute
-pause between minutes 35 and 60, after the first waking hour. `break_until()`
+With `HOURLY_BREAK_MINUTES=10`, a ten-minute pause starts between minutes 35 and
+50 every three waking hours: 07, 10, 13, 16, 19 and 22 Toronto time. This is
+six pauses per day, with the first after three waking hours. `break_until()`
 reports an active pause. `may_act()` and `require_active()` gate it everywhere;
 `ScheduledBreak` is an `OutsideActiveHours` subclass and never a health failure.
 `seconds_until_pause()` bounds model requests at the next break or midnight.

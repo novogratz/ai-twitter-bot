@@ -11,6 +11,7 @@ from ..core.logger import log
 
 WAKE = time(4, 30)
 BEDTIME = time(0, 0)
+_BREAK_INTERVAL_HOURS = 3
 
 _STOP = threading.Event()
 
@@ -28,18 +29,18 @@ class ScheduledBreak(OutsideActiveHours):
 
 
 def break_window(now: datetime | None = None) -> tuple[datetime, datetime] | None:
-    """A stable per-hour plan shared by workers and preserved across restarts."""
+    """One stable break every three waking hours, shared across workers/restarts."""
     minutes = settings.get("HOURLY_BREAK_MINUTES")
     if not minutes:
         return None
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    if (local.hour - WAKE.hour) % _BREAK_INTERVAL_HOURS:
+        return None
     key = f"{settings.get('BOT_ACCOUNT')}:{local:%Y-%m-%d-%H}"
     seed = hashlib.sha256(key.encode()).digest()
-    if seed[0] % 4 == 0:
-        return None
     start = local.replace(minute=35 + seed[1] % 16, second=0, microsecond=0)
     wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    if not is_active(start) or start < wake + timedelta(hours=1):
+    if not is_active(start) or start < wake + timedelta(hours=_BREAK_INTERVAL_HOURS):
         return None
     return start, min(start + timedelta(minutes=minutes), bedtime(start))
 

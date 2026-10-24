@@ -14,9 +14,11 @@ handle is `thesimaximalist`; `previous_handles` includes `TheAIShrink`.
 Its `[limits]` selects `FEED_SCROLL_PASSES=20`, `FEED_SWEEP_SCAN_LIMIT=160` and
 `HOURLY_BREAK_MINUTES=10`. Other Accounts default to eight scrolls and no
 breaks. Feed reads collect every viewport and stop after three with no new
-posts. Breaks occupy ten minutes in roughly three of four waking hours,
-starting between minute 35 and 50 after the first waking hour. The account,
-date and hour determine a repeatable plan shared by all workers and restarts.
+posts. Breaks occupy ten minutes every three waking hours: six windows in
+hours 07, 10, 13, 16, 19 and 22 Toronto time, starting between minute 35 and 50.
+The legacy `HOURLY_BREAK_MINUTES` name controls duration; frequency is fixed
+at every three waking hours. The account, date and hour determine a repeatable
+plan shared by all workers and restarts.
 
 The optional `auto_engage_handles` Account list defaults to empty. The live
 Account sets only `elonmusk`, authorizing the priority watch's like, repost and
@@ -231,7 +233,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` | floor `1` | Posts the feed sweep scrapes per feed. |
 | `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
-| `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length in roughly three of four waking hours; 0 disables breaks. |
+| `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length every three waking hours; 0 disables breaks. |
 | `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `60` | floor `60` | Poll the Account's auto-engagement handles this often in Waking hours. |
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |

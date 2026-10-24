@@ -1,4 +1,15 @@
-# Editorial policy — October 23, 2026
+# Editorial policy — October 24, 2026
+
+## Fewer daytime breaks
+
+The October 24 Operator request reduces break frequency to one ten-minute
+pause about every three waking hours, replacing pauses in roughly three of
+four hours. The six daily windows start in hours 07, 10, 13, 16, 19 and 22
+Toronto time, between minutes 35 and 50. The Account/date/hour still determines
+the start minute, so workers and restarts agree. `HOURLY_BREAK_MINUTES=10`
+continues to control duration. Midnight–04:30 sleep and every publication,
+like and Reply admission limit remain. No environment edit, restart or state
+migration accompanies this change.
 
 ## Always like before a Reply
 
@@ -85,8 +96,8 @@ deduplicates by status ID, and stops after three screens with no new posts.
 The Account's discovery budget is 20 scrolls and 160 posts per feed. Failed
 tab selection skips that feed. No Reply or publication budget is raised.
 
-The Account sets `HOURLY_BREAK_MINUTES=10`. Breaks start between minute 35 and
-50 in roughly three of four waking hours, after the first waking hour. Their
+The Account sets `HOURLY_BREAK_MINUTES=10`. Under the October 24 amendment,
+breaks start between minute 35 and 50 every three waking hours. Their
 account/day/hour plan is deterministic across workers and restarts and creates
 no state file. The scheduler pauses, running jobs stop at the next activity
 check, model timeouts end at the next break, and no new external request or

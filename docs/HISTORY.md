@@ -1,5 +1,17 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-24 — Fewer daytime breaks
+
+The Operator asks for fewer breaks. The shared activity clock now schedules
+six ten-minute pauses, about three hours apart, instead of pausing in roughly
+three of four waking hours. Start minutes still depend on the Account, date
+and hour and remain stable across workers and restarts. The existing duration setting
+stays at ten minutes; no environment edit is needed. Scheduler gates, browser
+checks and model deadlines all read the same reduced plan. Midnight–04:30
+sleep and publication guardrails remain. Boundary and daylight-saving tests
+pin the six windows, uninterrupted intervening hours and next-pause deadline.
+No restart or production-state migration accompanies this change.
+
 ## 2026-10-23 — Always like before replying
 
 The Operator requires every Reply to follow a parent like, superseding the
