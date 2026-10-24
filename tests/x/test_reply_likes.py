@@ -53,16 +53,31 @@ def test_existing_page_like_allows_reply_at_daily_like_cap(parent, settings_over
     assert [r["action"] for r in memory_ledger.rows] == [ag.LIKE, ag.REPLY]
 
 
-def test_like_cap_blocks_reply_and_releases_claim_for_later(parent, settings_override, memory_ledger):
-    settings_override(LIKE_BOT_DAILY_CAP=1)
-    ag.record(ag.LIKE, numbered_url(6101))
+@pytest.mark.parametrize("used", [500, 1000])
+def test_required_parent_like_and_reply_continue_past_daily_threshold(parent, settings_override, memory_ledger, used):
+    settings_override(LIKE_BOT_DAILY_CAP=500)
+    for n in range(used):
+        ag.record(ag.LIKE, numbered_url(7000 + n))
     page, events = parent
-    assert tc.reply_to_tweet(URL, TEXT) is W.REFUSED
-    assert not page.clicks and "reply_button" not in events
-    assert URL not in replied_store.load_replied()
-    settings_override(LIKE_BOT_DAILY_CAP=2)
+    assert tc.like_tweet(URL) is tc.LikeOutcome.REFUSED
     assert tc.reply_to_tweet(URL, TEXT) is W.SHIPPED
-    assert [r["action"] for r in memory_ledger.rows] == [ag.LIKE, ag.LIKE, ag.REPLY]
+    assert page.clicks == [URL] and events.index("press") < events.index("reply_button")
+    assert ag.count_today(ag.LIKE) == used + 1 and ag.count_today(ag.REPLY) == 1
+    assert tc.like_tweet(URL) is tc.LikeOutcome.REFUSED, "Reply authorization must be cleared"
+
+
+def test_required_like_exception_is_only_for_this_parent_and_this_worker(parent, monkeypatch, settings_override):
+    from concurrent.futures import ThreadPoolExecutor
+    settings_override(LIKE_BOT_DAILY_CAP=0)
+    real = tc._ensure_parent_liked
+    def check(url):
+        assert tc.like_tweet(numbered_url(6101)) is tc.LikeOutcome.REFUSED
+        with ThreadPoolExecutor(1) as pool:
+            assert pool.submit(tc.like_tweet, url).result(timeout=2) is tc.LikeOutcome.REFUSED
+        return real(url)
+    monkeypatch.setattr(tc, "_ensure_parent_liked", check)
+    assert tc.reply_to_tweet(URL, TEXT) is W.SHIPPED
+    assert tc.like_tweet(URL) is tc.LikeOutcome.REFUSED
 
 
 def test_unconfirmed_like_blocks_reply_without_consuming_its_claim(parent, memory_ledger):
@@ -95,13 +110,27 @@ def test_unreadable_or_wrong_like_state_blocks_reply(parent, monkeypatch, memory
 
 
 @pytest.mark.parametrize("error", [StateUnreadable("bad ledger"), OutsideActiveHours("break"), RuntimeError("page failed")])
-def test_like_errors_stop_reply_and_release_claim(parent, monkeypatch, memory_ledger, error):
+def test_like_errors_stop_reply_and_release_claim(parent, monkeypatch, memory_ledger, settings_override, error):
+    settings_override(LIKE_BOT_DAILY_CAP=0)
+    real = tc.like_tweet
     def fail(url):
         raise error
     monkeypatch.setattr(tc, "like_tweet", fail)
     with pytest.raises(type(error)):
         tc.reply_to_tweet(URL, TEXT)
     assert "reply_button" not in parent[1] and not memory_ledger.rows
+    assert URL not in replied_store.load_replied()
+    monkeypatch.setattr(tc, "like_tweet", real)
+    assert tc.like_tweet(URL) is tc.LikeOutcome.REFUSED, "Error leaked the Reply's like exemption"
+
+
+def test_required_like_still_refuses_an_unreadable_ledger(parent, monkeypatch, memory_ledger):
+    def unreadable(action):
+        raise StateUnreadable("unreadable ledger")
+    monkeypatch.setattr(ag, "count_today", unreadable)
+    with pytest.raises(StateUnreadable):
+        tc.reply_to_tweet(URL, TEXT)
+    assert not parent[0].clicks and "reply_button" not in parent[1] and not memory_ledger.rows
     assert URL not in replied_store.load_replied()
 
 

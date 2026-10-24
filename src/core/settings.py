@@ -272,7 +272,7 @@ _declare("PIN_MAX_AGE_DAYS", int, 7, "Days after which a pin no longer defends i
 _declare("LIKE_TOP_TAB_PROBABILITY", float, 0.55, "Probability like_job searches the Top tab instead of Live.")
 _declare("LIKE_BOT_PER_CYCLE", int, 10, "Search posts like_job hands to like_tweet per cycle.",
          floor=0, ceiling=10)
-_declare("LIKE_BOT_DAILY_CAP", int, 500, "Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED.",
+_declare("LIKE_BOT_DAILY_CAP", int, 500, "Daily background-like threshold; required Reply-parent likes are exempt. like_job also counts UNCONFIRMED clicks.",
          floor=0, ceiling=500)
 _declare("LIKE_BOT_CYCLE_SECONDS", float, 30.0, "Seconds after taking the Safari lock past which like_job starts no like.")
 _declare("FOLLOWBACK_CAP", int, 8, "Follow-back attempts per followback_job cycle.", floor=0, ceiling=8)

@@ -5,7 +5,8 @@ the lowest-level write functions in twitter_client (post_tweet /
 reply_to_tweet, and follow_account through `follow_policy`, which asks it
 for today's follows, the follow spacing and the last touch of a handle) so
 every caller — whichever of the ~30 bots — is governed by the same rules
-without rewriting each bot. Likes share a daily cap across all callers.
+without rewriting each bot. Background likes stop at the daily like threshold;
+the verified parent like required by an admitted Reply is exempt.
 Watched-author reposts share the Originals' publication ceiling and spacing.
 Pins are recorded in the ledger without a cap or spacing here.
 
@@ -162,7 +163,7 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
-def can_post(action: str, *, target: str = "") -> Tuple[bool, str]:
+def can_post(action: str, *, target: str = "", reply_parent: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
     if stop_requested():
         return False, "stop requested"
@@ -189,7 +190,10 @@ def can_post(action: str, *, target: str = "") -> Tuple[bool, str]:
         if action == POST and count_today(POST) >= config.MAX_ORIGINALS_PER_DAY:
             return False, f"daily post cap reached ({config.MAX_ORIGINALS_PER_DAY})"
     elif action == LIKE:
-        if count_today(LIKE) >= settings.get("LIKE_BOT_DAILY_CAP"):
+        # Always read the guarded ledger, even for uncapped required likes.
+        # The Reply chokepoint alone authorizes this narrow exception.
+        likes = count_today(LIKE)
+        if not reply_parent and likes >= settings.get("LIKE_BOT_DAILY_CAP"):
             return False, "daily like cap reached"
         return True, ""
     elif action != REPLY:

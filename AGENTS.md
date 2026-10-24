@@ -6,6 +6,22 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-24, uncapped responses — The Operator requests unlimited Replies after
+the shared 500-like threshold prevented most responses from 11:42 Toronto.
+An admitted Reply's verified parent like is now exempt from that threshold.
+The Reply chokepoint grants this permission only after admission, claim and
+standalone-page verification, only for that parent and worker, and clears it
+on success or error. All likes remain recorded. Background likes still stop
+at the existing total-like threshold; no allowance is reset or increased for
+them. Sleep, breaks, spacing, content checks and permanent one-Reply-per-original
+dedup remain. A failed or unconfirmed parent like still stops the Reply.
+
+The repost reader accepts legacy status-ID values of exactly `"confirmed"`
+as permanent completed claims. It preserves them without inventing a URL or
+timestamp; unknown strings or malformed structured records still refuse.
+This repairs the compatibility error that halted the priority watch and
+Originals. No production-state migration or environment edit is needed.
+
 2026-10-24, fewer daytime breaks — The Operator requests less frequent breaks.
 Keep `HOURLY_BREAK_MINUTES=10`, but schedule one break about every three waking
 hours: six daily windows, in hours 07, 10, 13, 16, 19 and 22 Toronto time.
@@ -18,7 +34,7 @@ No environment edit, restart or production-state migration accompanies this chan
 2026-10-23, always like before replying — Every Reply must first confirm that
 the verified parent's own like is visible on X. An existing like satisfies
 the requirement without another click or like allowance. A new like uses
-the shared write chokepoint and daily cap; refusal, failure, uncertainty or
+the shared write chokepoint (with the October 24 quota exception above); refusal, failure, uncertainty or
 unreadable state stops the Reply before composition. The pre-submit Reply
 claim is released so a later attempt remains possible. A historical cache
 entry or a quoted post's like does not prove the parent is currently liked.
@@ -44,8 +60,8 @@ standalone author/status and uses only explicit repost controls, never undo.
 `reposted_tweets.json` keeps process-locked permanent claims; uncertain writes
 retain their claim and publication reservation across restarts. Only a proven
 pre-submit failure releases one. `priority_watch_state.json` preserves the
-first-enable boundaries. Unreadable guarded state refuses. All like callers
-share the daily like ceiling at the write chokepoint. No restart, environment
+first-enable boundaries. Unreadable guarded state refuses. Background likes
+keep their daily threshold; required Reply-parent likes are exempt. No restart, environment
 edit or production-state migration accompanies this change.
 
 2026-10-23, The SI Maximalist — The Operator renames the Account to

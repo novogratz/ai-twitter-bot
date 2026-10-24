@@ -27,7 +27,13 @@ def entries() -> dict:
     data = STATE.read()
     try:
         for sid, entry in data.items():
-            if (not sid.isdigit() or not isinstance(entry, dict)
+            if not isinstance(sid, str) or not sid.isdigit():
+                raise ValueError("invalid repost ID")
+            # Legacy confirmed IDs remain permanently claimed. They contain
+            # no URL or time; never invent either or rewrite them on read.
+            if entry == "confirmed":
+                continue
+            if (not isinstance(entry, dict)
                     or entry.get("status") not in {"pending", "shipped", "observed"}
                     or x_urls.status_id(x_urls.canonical_status_url(entry.get("url"))) != sid
                     or not datetime.fromisoformat(entry.get("ts", "")).tzinfo):
@@ -79,6 +85,8 @@ def remember(url: str, status: str) -> None:
     with _locked():
         data = entries()
         sid = x_urls.status_id(url)
+        if data.get(sid) == "confirmed":
+            return
         data[sid] = dict(url=url, status=status, ts=data.get(sid, {}).get("ts", active_hours.now_local().isoformat()))
         STATE.write(data)
 
@@ -88,13 +96,15 @@ def release(url: str) -> None:
     with _locked():
         data = entries()
         sid = x_urls.status_id(url)
-        if data.get(sid, {}).get("status") == "pending":
+        entry = data.get(sid)
+        if isinstance(entry, dict) and entry.get("status") == "pending":
             del data[sid]
             STATE.write(data)
 
 
 def pending_times() -> list[datetime]:
-    return [datetime.fromisoformat(e["ts"]) for e in entries().values() if e["status"] == "pending"]
+    return [datetime.fromisoformat(e["ts"]) for e in entries().values()
+            if isinstance(e, dict) and e["status"] == "pending"]
 
 
 def pending_today() -> int:

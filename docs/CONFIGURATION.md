@@ -36,7 +36,10 @@ Source evidence and literal references remain unchanged.
 
 Every Reply now requires its verified parent to be visibly liked before
 composition. Existing likes need no new click; failed or unconfirmed likes
-and the daily like ceiling stop the Reply. `REPLY_LIKE_PARENT_PROB` is retired:
+stop the Reply. Required likes for verified, admitted Replies are exempt from
+`LIKE_BOT_DAILY_CAP`, so it cannot become a daily Reply cap. All confirmed likes
+remain counted in the ledger; background likes stop at the existing total-like
+threshold. `REPLY_LIKE_PARENT_PROB` is retired:
 old values are still accepted so existing `.env` files load, but cannot disable
 this requirement. No environment change is needed to adopt the policy at restart.
 
@@ -251,7 +254,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PIN_MAX_AGE_DAYS` | int | `7` |  | Days after which a pin no longer defends its slot with the 1.3x rule. |
 | `LIKE_TOP_TAB_PROBABILITY` | finite float | `0.55` |  | Probability like_job searches the Top tab instead of Live. |
 | `LIKE_BOT_PER_CYCLE` | int | `10` | floor `0`, ceiling `10` | Search posts like_job hands to like_tweet per cycle. |
-| `LIKE_BOT_DAILY_CAP` | int | `500` | floor `0`, ceiling `500` | Likes like_job clicks per Toronto day, LIKED and UNCONFIRMED. |
+| `LIKE_BOT_DAILY_CAP` | int | `500` | floor `0`, ceiling `500` | Daily background-like threshold; required Reply-parent likes are exempt. like_job also counts UNCONFIRMED clicks. |
 | `LIKE_BOT_CYCLE_SECONDS` | finite float | `30.0` |  | Seconds after taking the Safari lock past which like_job starts no like. |
 | `FOLLOWBACK_CAP` | int | `8` | floor `0`, ceiling `8` | Follow-back attempts per followback_job cycle. |
 | `ENABLE_FOLLOW_ENGAGERS` | 0 or 1 | `1` |  | Run follow_engagers_job. |

@@ -326,6 +326,11 @@ stores each watched handle's first-enable timestamp; preserve it on deploy and
 restart. The first enable skips older posts, and later passes read at most the
 configured recent window. `reposted_tweets.json` keeps permanent status-ID
 claims, with `pending`, `shipped` or `observed` status and an aware timestamp.
+Older status-ID entries whose value is exactly `"confirmed"` are also valid:
+they remain permanently claimed, with no invented URL or timestamp. The reader
+preserves them, including when newer structured claims are added. Do not delete
+this older history or migrate it merely to satisfy the newer reader. Unknown
+string values, especially undated uncertainty, still require operator repair.
 An uncertain repost remains `pending` and reserves the day's publication budget
 and spacing. Do not delete either file to retry an action. With the bot stopped,
 inspect the exact post on X before manually reconciling a pending claim. If a

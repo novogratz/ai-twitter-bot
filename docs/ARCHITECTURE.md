@@ -474,6 +474,14 @@ claim. Like errors propagate; no Reply ledger row is recorded. Both timestamp
 and like-control lookup exclude nested articles and embedded quote cards.
 `REPLY_LIKE_PARENT_PROB` remains accepted but unused for configuration compatibility.
 
+The verified-parent phase sets a worker-local `ContextVar` for that exact
+parent while confirming its like, then resets it in `finally`. `like_tweet`
+uses that context to exempt only this required like from the daily threshold.
+Other posts, background jobs and concurrent workers keep normal admission.
+The guarded ledger is still read before any click and still records every
+confirmed like. Background likes continue to stop when the total daily like
+count reaches the threshold. This avoids a hidden daily cap on Replies.
+
 `pin_own_tweet` writes a `pin` ledger row and returns `SHIPPED` only when it
 clicked X's confirm dialog. With no confirm dialog (`NO_CONFIRM`) it logs
 it, writes no row and returns `UNCONFIRMED`: `pin_job` then spends its daily
@@ -501,10 +509,13 @@ clicking undo. `repost_store` claims before submission with a process lock;
 uncertain outcomes keep their permanent claim and budget reservation. A confirmed
 repost alone writes a ledger row. The shared profile budget also counts pending
 editorial submissions; Originals and reposts share their last-publication clock.
+Legacy `"confirmed"` status-ID values remain completed, permanent claims without
+rewriting them or inventing metadata. Only timestamped structured `pending`
+entries reserve capacity; the ledger owns the daily counts of completed writes.
 The watch's first-enable timestamps live in guarded `priority_watch_state.json`;
 old backlog is excluded, and subsequent polls use a bounded 24-hour Latest search.
 `like_priority_post` verifies the same standalone source before `like_tweet`,
-whose shared daily cap is checked again under the Safari lock.
+whose background daily threshold is checked again under the Safari lock.
 
 Shared modules sit behind them:
 

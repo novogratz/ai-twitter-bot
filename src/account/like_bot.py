@@ -28,7 +28,8 @@ from ..guards import active_hours
 from ..x import twitter_client
 from ..x.twitter_client import LikeOutcome
 
-# Guarded: the only record of the daily like cap.
+# Guarded: this job's daily clicks, including unconfirmed ones. The shared
+# write guard also checks the ledger's background-like threshold.
 LIKE_BOT_STATE = StateFile("like_bot_state.json", {}, GUARDED)
 
 

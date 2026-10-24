@@ -1,5 +1,26 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-24 — Required likes must not cap Replies; older repost history
+
+Investigation at 19:06 Toronto found 500 recorded likes, with the threshold
+reached at 11:42:56. The bot remained active and generated drafts, but the new
+like-before-Reply rule refused almost all new parents afterward. One Reply
+was recorded in the previous five hours, at 16:30:27. The interaction between
+the shared daily like threshold and mandatory parent likes was missed in the
+earlier implementation. The Operator explicitly requests unlimited responses.
+Only the required like for an admitted, claimed and verified Reply now bypasses
+that daily threshold. A worker-local parent context prevents other posts or
+jobs from using the exception and is cleared on every exit. All other checks
+and the like ledger remain; background likes are still limited.
+
+The same investigation found 48 older repost entries with value `"confirmed"`.
+The new structured-history reader rejected them, halting the priority watch
+and Originals since morning. It now reads those completed claims without
+rewriting them, releasing their IDs or inventing metadata. Unknown entries
+still refuse. Tests cover required likes above the threshold, isolation and
+cleanup of the exception, guarded-ledger failures, and mixed repost formats.
+No production-state migration or environment edit is required.
+
 ## 2026-10-24 — Fewer daytime breaks
 
 The Operator asks for fewer breaks. The shared activity clock now schedules
