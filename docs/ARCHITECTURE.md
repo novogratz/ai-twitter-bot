@@ -463,6 +463,16 @@ lock, and fills the caller's outcome list as it goes: `like_job` adds the
 still counts them, and a click that may have landed on X counts toward the
 cap without a ledger row.
 
+Every `reply_to_tweet` call invokes `_ensure_parent_liked` after verifying the
+parent and before opening its composer. It reads that parent's current page
+state; an existing visible like requires no write, even when the daily like
+budget is spent. Otherwise it calls `like_tweet` and requires another visible
+confirmation. The liked cache alone does not satisfy this prerequisite. A
+failed, refused or unconfirmed like stops the Reply and releases its pre-submit
+claim. Like errors propagate; no Reply ledger row is recorded. Both timestamp
+and like-control lookup exclude nested articles and embedded quote cards.
+`REPLY_LIKE_PARENT_PROB` remains accepted but unused for configuration compatibility.
+
 `pin_own_tweet` writes a `pin` ledger row and returns `SHIPPED` only when it
 clicked X's confirm dialog. With no confirm dialog (`NO_CONFIRM`) it logs
 it, writes no row and returns `UNCONFIRMED`: `pin_job` then spends its daily
@@ -586,7 +596,7 @@ babysitter from the scheduler, and their entry points return immediately.
 These legacy jobs remain available to other Accounts without that policy.
 Known nested replies and follow-up context are definitive admission refusals,
 including in VIP discovery. Own-author checks combine the Account handle,
-runtime handle and historical aliases. Before any optional parent like and
+runtime handle and historical aliases. Before the required parent like and
 again before clicking Reply, `_reply_target` verifies the exact opened author
 and status, its standalone position, no visible prior own answer, and its own
 Reply button. An ambiguous or unreadable page cannot authorize a click.

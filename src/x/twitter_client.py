@@ -2,7 +2,6 @@
 reply, like, follow and pin has one function here that owns its rules, and
 runs them through `confirmed_write`."""
 import json
-import random
 import re
 import time
 import urllib.parse
@@ -271,22 +270,34 @@ def _record_posted(text: str):
         log.info(f"[POST] history record failed (non-fatal): {e}")
 
 
-def _maybe_like_parent(tweet_url: str) -> None:
-    """Like the tweet we just replied to with REPLY_LIKE_PARENT_PROB.
+def _ensure_parent_liked(tweet_url: str) -> bool:
+    """Confirm the verified parent's current like before allowing a Reply.
 
-    Operator 2026-06-15: "we got hit by spam/automation flags — cool down
-    the number of likes you give." Liking the parent of EVERY reply (743/day)
-    and EVERY quote was the automation signature. A human likes only some of
-    what they reply to, so gate it behind a low probability (read at CALL
-    time — side-effect setting). Replies still ship; we just stop the
-    one-like-per-reply firehose. prob<=0 disables parent-likes entirely."""
-    prob = settings.get("REPLY_LIKE_PARENT_PROB")
-    if prob <= 0 or random.random() > prob:
-        return
-    try:
-        like_tweet(tweet_url)
-    except Exception as e:
-        log.info(f"[LIKE] parent-like skipped ({e}).")
+    Operator 2026-10-23: every Reply requires a like first. A cache entry alone
+    is insufficient; existing page likes need no new click or daily allowance.
+    A failed or refused like leaves the Reply unsent and retryable.
+    """
+    from . import x_urls
+    url = x_urls.canonical_status_url(tweet_url)
+    if not url:
+        return False
+    target = x_urls.status_id(url)
+
+    def state():
+        page = _page_posts("read", target)
+        if x_urls.canonical_status_url(page.get("url")) != url:
+            return ""
+        return page.get("result")
+
+    before = state()
+    if before == "already_liked":
+        return True
+    if before != "not_liked":
+        return False
+    outcome = like_tweet(url)
+    if outcome not in (LikeOutcome.LIKED, LikeOutcome.ALREADY_LIKED):
+        return False
+    return state() == "already_liked"
 
 
 # Disposable: a like clicks only a "like" button, never "unlike", so a lost
@@ -347,13 +358,19 @@ class LikeOutcome(Enum):
 _POSTS_JS = r"""
 (function(mode, targetId) {
     var SEL = 'article[data-testid="tweet"]';
+    function own(art, selector) {
+        return Array.from(art.querySelectorAll(selector)).filter(function(el) {
+            return el.closest('article') === art && !el.closest('[data-testid="quoteTweet"]')
+                && !el.closest('div[role="link"]');
+        });
+    }
     function statusId(href) {
         var m = (href || '').match(/\/status\/(\d+)/);
         return m ? m[1] : '';
     }
     // A quoted post's timestamp link can come before the post's own.
     function statusLink(art) {
-        var times = art.querySelectorAll('a[href*="/status/"] time');
+        var times = own(art, 'a[href*="/status/"] time');
         for (var j = 0; j < times.length; j++) {
             var a = times[j].closest('a');
             if (a && a.closest('article') === art) return a.href;
@@ -373,11 +390,13 @@ _POSTS_JS = r"""
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
-    if (art.querySelector('[data-testid="unlike"]')) {
+    if (own(art, '[data-testid="unlike"]').length === 1) {
         return JSON.stringify({url: url, result: 'already_liked'});
     }
-    var button = art.querySelector('[data-testid="like"]');
-    if (!button) return JSON.stringify({url: url, result: 'failed'});
+    var buttons = own(art, '[data-testid="like"]');
+    if (buttons.length !== 1 || buttons[0].disabled || buttons[0].getAttribute('aria-disabled') === 'true')
+        return JSON.stringify({url: url, result: 'failed'});
+    var button = buttons[0];
     if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
@@ -636,7 +655,7 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
                    on_refused=None) -> WriteOutcome:
-    """Open a tweet, click reply, type the reply, and submit.
+    """Verify the parent, confirm its like, then compose and submit the Reply.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
     run, REFUSED when Reply admission or the replied store refuses
@@ -727,13 +746,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             time.sleep(0.5)
 
-            # Like the parent only SOMETIMES (operator 2026-06-15: liking every
-            # tweet we reply to was the automation flag). Idempotent like stays
-            # un-toggle-safe. REPLY_LIKE_PARENT_PROB (default 0.12) ≈ like ~1 in 8.
             if not _reply_target(tweet_url, on_answered=remember_answered):
                 log.info("[REPLY] Opened target is self, nested, already answered or unverifiable: %s", tweet_url)
                 return WriteOutcome.REFUSED
-            _maybe_like_parent(tweet_url)
+            if not _ensure_parent_liked(tweet_url):
+                log.info("[REPLY] Parent like not confirmed; leaving Reply unsent: %s", tweet_url)
+                return WriteOutcome.REFUSED
             time.sleep(1)
 
             log.info("Clicking reply...")

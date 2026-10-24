@@ -213,7 +213,7 @@ _declare("FOLLOW_REQUIRE_NICHE", bool, True, "Refuse to follow a non-Engager who
 _declare("HUMAN_TYPO_HANDLES", str, "", "Comma-separated handles whose Replies get a human typo.")
 _declare("BLANK_GRACE_AFTER_RESTART_SECONDS", int, 120, "Seconds after a Safari restart when blank pages do not count.")
 _declare("PROFILE_VISIT_ALLOWLIST", str, "", "Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set.")
-_declare("REPLY_LIKE_PARENT_PROB", float, 0.12, "Chance to like the post a Reply answers; 0 or less never.")
+_declare_unused("REPLY_LIKE_PARENT_PROB", float, 0.12)
 _declare("NOTIFY_LIKE_REPLIES_COUNT", int, 3, "Replies under our latest post the notify job likes.")
 
 # ── #197 · src/core ─────────────────────────────────────────────────────────
