@@ -136,7 +136,7 @@ def test_nested_target_cannot_reach_parent_like_or_submission(monkeypatch, memor
     for name in ("_activate_or_abort", "_open_or_abort"):
         monkeypatch.setattr(tc, name, lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an ineligible parent"))
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: pytest.fail("liked an ineligible parent"))
     monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("submitted to an ineligible parent"))
     clicks = mock_page(monkeypatch, [{"url": numbered_url(799)}, {"url": PARENT}], PARENT)
     assert tc.reply_to_tweet(PARENT, TEXT) is WriteOutcome.REFUSED
@@ -150,7 +150,7 @@ def test_visible_earlier_reply_is_remembered_even_after_it_leaves_the_page(monke
     for name in ("_activate_or_abort", "_open_or_abort"):
         monkeypatch.setattr(tc, name, lambda *a, **k: True)
     monkeypatch.setattr(tc.time, "sleep", lambda *a: None)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: pytest.fail("liked an answered parent"))
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: pytest.fail("liked an answered parent"))
     articles = [{"url": PARENT}, {"url": numbered_url(801, "thesimaximalist")}]
     clicks = mock_page(monkeypatch, articles, PARENT)
     assert tc.reply_to_tweet(PARENT, TEXT) is WriteOutcome.REFUSED

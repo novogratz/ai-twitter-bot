@@ -77,7 +77,7 @@ def trace(monkeypatch):
     monkeypatch.setattr(tc.time, "sleep", lambda *_: None)
     monkeypatch.setattr(tc, "_page_posts",
                         lambda mode, target="": step(mode, t.likes.pop(0) if t.likes else {}))
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: step("maybe_like"))
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a, **k: step("confirm_like", "confirm_like" not in t.fail))
     monkeypatch.setattr(tc, "_reply_target", lambda url, click=False, **kw: step(
         "reply_button" if click else "verify_parent",
         ("reply_button" if click else "verify_parent") not in t.fail))
@@ -172,7 +172,7 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "maybe_like", "reply_button", "paste", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "confirm_like", "reply_button", "paste", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):
@@ -193,7 +193,7 @@ def test_reply_already_claimed_never_opens(trace):
     assert trace.events == ["lock", "judge", "claim", "unlock"]
 
 
-@pytest.mark.parametrize("failing", ["verify_parent", "reply_button", "paste"])
+@pytest.mark.parametrize("failing", ["verify_parent", "confirm_like", "reply_button", "paste"])
 def test_reply_failing_before_submit_releases_the_claim(trace, failing):
     trace.fail.add(failing)
     expected = W.FAILED if failing == "paste" else W.REFUSED

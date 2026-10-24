@@ -6,6 +6,18 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-23, always like before replying — Every Reply must first confirm that
+the verified parent's own like is visible on X. An existing like satisfies
+the requirement without another click or like allowance. A new like uses
+the shared write chokepoint and daily cap; refusal, failure, uncertainty or
+unreadable state stops the Reply before composition. The pre-submit Reply
+claim is released so a later attempt remains possible. A historical cache
+entry or a quoted post's like does not prove the parent is currently liked.
+`REPLY_LIKE_PARENT_PROB` is accepted for old configuration compatibility but
+has no effect. This supersedes probabilistic parent likes on every Reply
+route, including the priority watch, without changing sleep, breaks, caps,
+standalone admission or permanent dedup. No restart or environment edit.
+
 2026-10-23, both feeds and the priority watch — Finish the configured For You
 and Following reads before generating any Reply. A model quota failure on
 the first feed must not skip discovery on the second. The Operator explicitly
@@ -72,7 +84,7 @@ and no debate or follow-up exchanges. `standalone_replies_only = true` in the
 Account disables debate, replyback and babysitter scheduling and their manual
 entry points. Admission refuses known comments before generation, including
 VIP sources; the browser verifies the actual parent, original status and own
-author identities before any optional like or Reply click. It clicks the
+author identities before the required parent like or Reply click. It clicks the
 verified parent's button, never X's keyboard selection. Configured, runtime
 and historical handles all count as our own. A visible earlier own Reply
 also closes the thread and keeps its claim permanently. Replied IDs never expire or get evicted; claims and

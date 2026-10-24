@@ -1,5 +1,25 @@
 # Editorial policy — October 23, 2026
 
+## Always like before a Reply
+
+The latest Operator request requires a like before every Reply. The common
+`reply_to_tweet` write path first verifies the eligible standalone parent and
+author, then confirms that parent's own like on the page before opening the
+composer. An existing visible like satisfies this requirement without another
+click or daily allowance. Otherwise the shared like chokepoint must succeed,
+and the parent's like is checked again before composition. Historical cache
+entries, other posts' likes and embedded quoted controls cannot authorize it.
+
+If the like is refused, fails or cannot be confirmed, the Reply stays unsent
+and its pre-submit claim is released for a later attempt. Sleep, breaks,
+unreadable guarded state and the daily like ceiling still stop new likes.
+Reposts remain independent, but no Reply route, including the priority watch,
+can bypass the confirmed-like prerequisite. Replies have no separate daily
+cap; exhausting the like allowance can defer Replies to unliked parents.
+The former `REPLY_LIKE_PARENT_PROB` setting remains accepted for compatibility
+and has no effect. No environment edit, bot restart or state migration is
+included in this update.
+
 ## Both feeds before drafting; new Elon originals
 
 The Operator explicitly requests automatic likes, reposts and Replies to new
@@ -126,7 +146,7 @@ Admission rejects known replies and follow-up context before drafting,
 including VIP discoveries. The final browser check requires the exact status
 ID and author on the opened page, a standalone original, no visible prior
 Reply by us, and that original's own Reply button. Unreadable, ambiguous,
-redirected or nested targets are skipped before optional parent likes and
+redirected or nested targets are skipped before required parent likes and
 checked again before clicking Reply. Both the configured and runtime handles,
 plus `previous_handles`, identify our own posts even after a rename. A visible
 earlier own Reply permanently retains the claim even if it later disappears.

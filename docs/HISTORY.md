@@ -1,5 +1,20 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-23 — Always like before replying
+
+The Operator requires every Reply to follow a parent like, superseding the
+June probabilistic rule. The shared Reply write path now verifies the parent,
+confirms its visible like, then opens the composer. Existing page likes need
+no new click; failed or unconfirmed likes and the existing daily cap stop the
+Reply and release its pre-submit claim. The old probability setting remains
+accepted but unused, avoiding an environment edit. A cached historical like
+cannot stand in for the current page state. Review also found that embedded
+quote controls could be mistaken for the parent's like; timestamp and button
+lookup now exclude those cards as well as nested articles. Tests cover the
+ordering, old settings, caps, uncertainty, stale cache, quoted controls and
+retry behavior. No bot restart or production-state migration accompanies this
+change.
+
 ## 2026-10-23 — Finish both feeds; watch new Elon originals
 
 The feed sweep previously drafted after For You before reading Following, so

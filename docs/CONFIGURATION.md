@@ -32,6 +32,12 @@ Account enables it for Originals as well as Replies: drafting, editorial
 review and the final write use SI / Super Intelligence in publication prose.
 Source evidence and literal references remain unchanged.
 
+Every Reply now requires its verified parent to be visibly liked before
+composition. Existing likes need no new click; failed or unconfirmed likes
+and the daily like ceiling stop the Reply. `REPLY_LIKE_PARENT_PROB` is retired:
+old values are still accepted so existing `.env` files load, but cannot disable
+this requirement. No environment change is needed to adopt the policy at restart.
+
 The optional Account boolean `reply_si_wording` defaults to false. The live
 Account sets it to true: Reply prose uses SI / Super Intelligence while research
 retains AI and SI aliases in `[searches]`, `[niche]` and `[relevance]`. This
@@ -200,7 +206,6 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `HUMAN_TYPO_HANDLES` | str | blank |  | Comma-separated handles whose Replies get a human typo. |
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
-| `REPLY_LIKE_PARENT_PROB` | finite float | `0.12` |  | Chance to like the post a Reply answers; 0 or less never. |
 | `NOTIFY_LIKE_REPLIES_COUNT` | int | `3` |  | Replies under our latest post the notify job likes. |
 | `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Ollama model of a call profile that names none; bin/run.sh pre-warms it. |
 | `OLLAMA_BASE_URL` | str | `http://localhost:11434` |  | Ollama HTTP endpoint; bin/run.sh pre-warms there. |
@@ -266,6 +271,7 @@ sets them starts; delete them from it.
 
 | Setting | Type | Default | Bounds | Description |
 |---|---|---|---|---|
+| `REPLY_LIKE_PARENT_PROB` | finite float | `0.12` |  | No effect: remove it from .env. |
 | `OPENCODE_FALLBACK_MODEL` | str | `opencode/big-pickle` |  | No effect: remove it from .env. |
 | `BESTIE_HANDLE` | str | blank |  | No effect: remove it from .env. |
 | `DIRECT_REPLY_MAX_EN_PER_CYCLE` | int | `9999` |  | No effect: remove it from .env. |

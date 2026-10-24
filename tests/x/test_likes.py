@@ -411,6 +411,7 @@ function El(spec, parent) {
     this.children = (spec.children || []).map(function(c) { return new El(c, self); });
 }
 Object.defineProperty(El.prototype, 'href', {get: function() { return this.attrs.href || ''; }});
+El.prototype.getAttribute = function(name) { return this.attrs[name] || null; };
 El.prototype.matchesCompound = function(c) {
     if (c.tag && c.tag !== this.tagName) return false;
     if (!c.attr) return true;
@@ -521,3 +522,27 @@ def test_js_lists_the_posts_in_page_order():
     articles = [_article(NEXT, "like", "a"), _article(POST, "unlike", "b", quoted=REPOST)]
     out, clicks = _run_posts_js(articles, "list")
     assert out == {"page": "https://x.com/home", "posts": [NEXT, POST]} and clicks == []
+
+
+@pytest.mark.parametrize("wrapper", [
+    {"tag": "article"}, {"tag": "div", "attrs": {"data-testid": "quoteTweet"}},
+    {"tag": "div", "attrs": {"role": "link"}},
+])
+def test_quoted_like_state_never_stands_in_for_the_parent(wrapper):
+    parent = _article(POST, "like", "parent")
+    card = dict(wrapper, children=[
+        {"tag": "a", "attrs": {"href": NEXT}, "children": [{"tag": "time"}]},
+        {"tag": "button", "attrs": {"data-testid": "unlike", "id": "quoted-button"}},
+    ])
+    parent["children"].insert(0, card)
+    assert _run_posts_js([parent], "read", POST_ID) == ({"url": POST, "result": "not_liked"}, [])
+    assert _run_posts_js([parent], "press", POST_ID) == ({"url": POST, "result": "clicked"}, ["parent-button"])
+    assert _run_posts_js([parent], "press", NEXT_ID) == ({"url": "", "result": "failed"}, [])
+
+
+@pytest.mark.parametrize("button", ["like", "unlike"])
+def test_missing_parent_controls_cannot_use_a_quoted_control(button):
+    parent = _article(POST, "like", "parent")
+    parent["children"][-1] = {"tag": "div", "attrs": {"data-testid": "quoteTweet"}, "children": [
+        {"tag": "button", "attrs": {"data-testid": button, "id": "quoted-button"}}]}
+    assert _run_posts_js([parent], "press", POST_ID) == ({"url": POST, "result": "failed"}, [])

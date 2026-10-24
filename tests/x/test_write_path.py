@@ -26,7 +26,7 @@ def _fake_safari(monkeypatch):
     monkeypatch.setenv("DRY_RUN", "0")
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a, **k: True)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_reply_target", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a, **k: True)
@@ -162,33 +162,6 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
         assert not ok, f"{leak!r} must never publish"
 
 
-def test_parent_like_is_probabilistic_not_every_reply(monkeypatch, settings_override):
-    """2026-06-15 (operator: "hit by automation flag — cool down likes").
-    Liking the parent of EVERY reply (743/day) was the automation
-    signature. _maybe_like_parent gates the like behind a low
-    probability: prob<=0 disables it; the reply chokepoint must route
-    through the gate, not an unconditional like_tweet on the parent."""
-    import inspect
-    from src.x import twitter_client as tc
-
-    liked = []
-    monkeypatch.setattr(tc, "like_tweet", lambda url=None: liked.append(url))
-
-    settings_override(REPLY_LIKE_PARENT_PROB=0.0)
-    for _ in range(20):
-        tc._maybe_like_parent("https://x.com/a/status/1")
-    assert liked == [], "prob=0 must disable parent-likes entirely"
-
-    settings_override(REPLY_LIKE_PARENT_PROB=1.0)
-    tc._maybe_like_parent("https://x.com/a/status/2")
-    assert liked == ["https://x.com/a/status/2"]
-
-    rsrc = inspect.getsource(tc.reply_to_tweet)
-    assert "_maybe_like_parent" in rsrc
-    assert "like_tweet(tweet_url)" not in rsrc, \
-        "reply must not unconditionally like the parent"
-
-
 def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_override, memory_ledger, conversation_account):
     """A Debate turn (CONTEXT.md) is capped per author per Toronto day at
     the reply chokepoint, whichever bot answers: debate_bot and replyback
@@ -203,7 +176,7 @@ def test_debate_turn_cap_is_owned_by_the_reply_chokepoint(monkeypatch, settings_
     monkeypatch.setattr(cg, "validate", lambda *a, **k: (True, ""))
     monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
     monkeypatch.setattr(safari, "_paste_text", lambda *a: True)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a: None)
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: True)
     monkeypatch.setattr(tc, "_reply_target", lambda *a, **k: True)
     monkeypatch.setattr(safari, "close_front_tab", lambda: None)
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
@@ -374,7 +347,7 @@ def _live_browser(monkeypatch, failing_step=None):
         return failing_step != "paste"
 
     monkeypatch.setattr(safari, "_paste_text", paste)
-    monkeypatch.setattr(tc, "_maybe_like_parent", lambda *a, **k: None)
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a, **k: True)
     monkeypatch.setattr(tc, "_reply_target", reply_target)
     def close_front_tab():
         if failing_step == "stop_after_submit":
