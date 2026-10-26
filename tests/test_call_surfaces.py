@@ -19,6 +19,7 @@ DEFAULT_TIMEOUT = 120
 # The CLI options a call hands its adapter: output_json, allowed_tools,
 # timeout and cwd.
 DEFAULTS = (True, None, DEFAULT_TIMEOUT, None)
+CODEX_DEFAULTS = (True, None, 300, None)
 NEUTRAL_CWD = (True, None, DEFAULT_TIMEOUT, "/tmp")
 
 
@@ -106,13 +107,13 @@ ROUTES = {
     "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", DEFAULTS),
+    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", CODEX_DEFAULTS),
     "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "codex",
-                                (False, None, 60, None)),
+                                (False, None, 300, None)),
     "Relation, CLI missing": (lambda mp: _uninstalled(mp, "codex") or _vip_scan("Graphseo"),
-                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 60, None)),
-    "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", DEFAULTS),
-    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", DEFAULTS),
+                              "PRIORITY_REPLY_MODEL", "codex", (False, None, 300, None)),
+    "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
+    "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
     "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT, "/tmp")),
     "Draft": (lambda mp: _draft(), "NEWS_MODEL", "claude", DEFAULTS),
     "review": (_review, "NEWS_MODEL", "claude", DEFAULTS),

@@ -1,5 +1,36 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-26 — Reply timeouts and monotonous delivery
+
+The Operator stopped the bot at 05:22:34 Toronto after noticing quiet periods.
+Logs and the engagement ledger show 15 shipped Replies after waking at 04:30,
+the last at 05:16:52, with 20 model requests cut off at the configured 120-second
+timeout. The prior daily-like dependency was not the morning blocker. Two
+isolated preview calls also returned no answer before their 125/180-second
+deadlines; disabling tools and user configuration alone did not resolve this.
+The investigation establishes stalled generation, not an upstream root cause.
+
+Primary Codex generation now gets a 300-second minimum budget within the
+existing 360-second/pause limits. Drafts disable built-in web search, shell tools
+and apps; research retains search. Structured errors are retained on timeout,
+but partial text never becomes a published Reply. The selected model remains
+Sol/xhigh, and fallback remains disabled.
+
+Three final preview calls through the revised generator returned in 15.8–17.6
+seconds and passed final content validation, including "One minute to write,
+sixty to trust." They were not published. An initial preview caught the new
+JSON parser dropping Codex's completed `agent_message` event; the reader now
+uses only the last answer of a completed turn, excluding commentary and tools.
+
+Among 622 Replies recorded October 25–26, none was shorter than 80 characters
+and the average was 177. Voice and Relation prompts now permit specific brief
+reactions, one sentence, dry wit and occasional smileys, without adding a
+compulsory explanation or caveat. Shared delivery directions vary by parent;
+the 25-character floor becomes 8, with a narrow short-English fallback and
+the generic/unknown-language refusals preserved. Main Reply prompts receive
+1,200 source characters instead of 200. No state migration, environment edit
+or bot start is part of this change.
+
 ## 2026-10-24 — Required likes must not cap Replies; older repost history
 
 Investigation at 19:06 Toronto found 500 recorded likes, with the threshold

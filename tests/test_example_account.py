@@ -70,6 +70,7 @@ NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings"
             "auto_engage_handles"}
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 2}
+REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300}
 
 
 @pytest.fixture
@@ -116,7 +117,7 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
-        **PRE_187_BOUNDED, **WATCH_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
+        **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
         "HOURLY_BREAK_MINUTES": 10}
     assert shown["settings_warnings"] == []
 
@@ -141,7 +142,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     # Its [limits] lowers the day's ceiling to 4, and the targets under it.
     assert (shown["min_target_posts"], shown["target_posts"], shown["max_profile_posts"]) == (3, 4, 4)
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
-    assert bounded == {**PRE_187_BOUNDED, **WATCH_BOUNDS, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
+    assert bounded == {**PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100, "FEED_SCROLL_PASSES": 8,
                        "FEED_SWEEP_SCAN_LIMIT": 80, "HOURLY_BREAK_MINUTES": 0}
     assert shown["settings_warnings"] == []

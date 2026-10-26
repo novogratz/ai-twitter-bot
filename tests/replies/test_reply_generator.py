@@ -14,6 +14,30 @@ FR_VOICE_FILE = "Voice file voice_fr.md"
 EN_VOICE_FILE = "Voice file voice_en.md"
 
 
+def test_delivery_varies_length_and_rations_smileys_without_rewriting_output(llm):
+    from src.replies.reply_generator import _delivery, generate
+    from src.replies.direct_reply import reply_call
+
+    directions = [_delivery("builder", f"Local model project {i}") for i in range(100)]
+    assert any("3–8 words" in d for d in directions)
+    assert any("one conversational sentence" in d for d in directions)
+    assert any("one or two short sentences" in d for d in directions)
+    assert 5 < sum("At most one smiley" in d for d in directions) < 30
+    assert _delivery("builder", "same post") == _delivery("BUILDER", "same post")
+    llm.default = "Offline wins. 🙂"
+    result = generate(reply_call("builder"), author="builder", text="A local model works offline.")
+    assert result.text == "Offline wins. 🙂"
+    assert "DELIVERY FOR THIS REPLY" in llm.prompts[-1]
+
+
+def test_reply_prompt_keeps_context_beyond_the_old_200_character_cutoff(llm):
+    from src.replies.reply_generator import generate
+    from src.replies.direct_reply import reply_call
+    parent = "Opening detail. " * 20 + "Important qualification: this only works offline."
+    generate(reply_call("builder"), author="builder", text=parent)
+    assert parent in llm.prompts[-1]
+
+
 @pytest.mark.parametrize("rule", ["PARENT", "PARENT_OR_FR_FORCED", "ENGAGER_WORDS", "ENGLISH"])
 def test_english_only_overrides_each_reply_language_rule(llm, settings_override, rule):
     from src.core import personality_store, reply_language

@@ -2,8 +2,9 @@
 
 A Safari-driven SI account with the voice of a fictional, sharp, warm and funny
 45-year-old woman. She loves SI tools and news, the Musk/X/SpaceX ecosystem,
-and especially Grok Imagine. Every reply aims for one useful observation in
-natural, conversational English. Facts stay grounded and bot identity stays
+and especially Grok Imagine. Replies vary from a few specific words to one
+conversational sentence, with occasional dry wit or a smiley. Longer explanations
+earn their space; no compulsory lecture or caveat. Facts stay grounded and bot identity stays
 honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
 name preserves the existing state and history after the account rename.
 
@@ -12,6 +13,11 @@ name preserves the existing state and history after the account rename.
 - **English only:** every Original and Reply, including responses to French
   parents and VIPs. The Account's `english_only` policy controls prompts and
   final publication checks; uncertain language is skipped.
+- **Short, varied Replies:** most drafting prompts request one sentence, some
+  a few words and some two short sentences. About one in six permits a single
+  smiley if appropriate. Specific English replies can be as short as 8 characters;
+  generic applause and emoji-only responses still fail validation. Main reply
+  prompts receive up to 1,200 source characters instead of 200.
 - **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
 - **Ten-minute breaks about every three hours.** Six daily breaks start during
@@ -44,8 +50,8 @@ name preserves the existing state and history after the account rename.
   alone is insufficient; the former random
   parent-like setting no longer applies.
 - **A sharper SI voice:** a fictional 45-year-old mom with confident, playful
-  adult charm. Give one technically precise observation or useful implication
-  that sparks curiosity, backed by evidence. No invented experience, insider
+  adult charm. React to the person and their actual point; use technical depth
+  when it helps. No invented experience, insider
   claims or pretending to know everything.
 - **SI wording everywhere we publish:** standalone AI becomes SI, and Artificial
   Intelligence becomes Super Intelligence. `publication_si_wording` applies
@@ -117,6 +123,13 @@ Set `AI_CLI=codex`, `REPLY_LLM_PROVIDER=codex`, both `REPLY_MODEL` and
 `LLM_DISABLE_FALLBACK=1` prevents a quota lockout from routing back to Ollama.
 Originals retain `PROFILE_LLM_PROVIDER=ollama`. Codex must be installed and
 signed in; these settings take effect at the next explicitly requested restart.
+
+Primary Codex calls now have a 300-second minimum budget, controlled by
+`CODEX_MIN_TIMEOUT_SECONDS`, so the older 120-second general timeout does not
+cut xhigh reasoning short. The existing 360-second maximum and sleep/break
+boundaries still apply. Drafting disables built-in web search, shell tools and
+apps; the research route keeps search. This reduces unnecessary work but cannot
+guarantee a response from a stalled provider. Timed-out partial drafts never ship.
 
 Requires macOS, Safari with JavaScript from Apple Events enabled (it need not be
 the default browser: the bot opens every page in Safari), Python 3.12+,

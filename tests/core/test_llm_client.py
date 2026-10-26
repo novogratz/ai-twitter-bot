@@ -155,13 +155,35 @@ def test_codex_reply_routes_pass_the_model_and_effort_to_the_cli(
     assert "--ephemeral" in cmd and "--skip-git-repo-check" in cmd
     assert options["cwd"] == route.options.cwd
     assert ("--search" in cmd) == (surface_name == "REPLY_SEARCH")
+    assert "--json" in cmd
+    assert ('web_search="disabled"' in cmd) == (surface_name != "REPLY_SEARCH")
+    assert ("features.shell_tool=false" in cmd) == (surface_name != "REPLY_SEARCH")
 
 
 def test_blank_codex_effort_keeps_the_cli_default(settings_override):
     from src.core.llm_client import _build_cmd
 
     settings_override(CODEX_REASONING_EFFORT=" ")
-    assert "-c" not in _build_cmd("prompt", "model", True, None, "codex")
+    assert not any("model_reasoning_effort" in part
+                   for part in _build_cmd("prompt", "model", True, None, "codex"))
+
+
+@pytest.mark.parametrize("complete", [False, True])
+def test_codex_json_reads_only_the_last_answer_of_a_completed_turn(providers, complete):
+    events = [
+        {"type": "thread.started", "thread_id": "test"},
+        {"type": "turn.started"},
+        {"type": "item.completed", "item": {"type": "agent_message", "text": "I will think about this."}},
+        {"type": "item.completed", "item": {"type": "command_execution", "text": "private tool result"}},
+        {"type": "item.completed", "item": {"type": "agent_message", "text": "Offline wins. 🙂"}},
+    ]
+    if complete:
+        events.append({"type": "turn.completed", "usage": {"output_tokens": 10}})
+    providers.settings(LLM_DISABLE_FALLBACK=True)
+    providers.codex.answers = [LLMResult(0, "\n".join(json.dumps(e) for e in events), "")]
+    result = ask(provider="codex")
+    assert result.stdout == ("Offline wins. 🙂" if complete else "")
+    assert result.status is (LLMStatus.ANSWERED if complete else LLMStatus.FAILED)
 
 
 @pytest.mark.parametrize("provider", ["claude", "gemini", "opencode"])
@@ -634,6 +656,51 @@ def test_every_timeout_stops_at_the_next_pause(providers, monkeypatch):
     monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 42)
     ask(CallProfile(min_timeout=300), "ollama", timeout=500)
     assert [request.timeout for _, request in providers.calls] == [42, 42]
+
+
+@pytest.mark.parametrize("requested", [None, 60, 120])
+def test_primary_codex_budget_handles_the_short_legacy_timeouts(settings_override, monkeypatch, requested):
+    from src.core import llm_client as llm
+    from src.guards import active_hours
+    settings_override(LLM_TIMEOUT_SECONDS=120, CODEX_MIN_TIMEOUT_SECONDS=300)
+    monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 1000)
+    assert llm._timeout("codex", requested, CallProfile()) == 300
+    assert llm._timeout("claude", requested, CallProfile()) == (requested or 120)
+    assert llm._timeout("codex", requested, CallProfile(), after="ollama") == (requested or 120)
+    monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 37)
+    assert llm._timeout("codex", requested, CallProfile()) == 37
+
+
+def test_codex_budget_can_be_disabled_and_never_exceeds_primary_ceiling(settings_override, monkeypatch):
+    from src.core import llm_client as llm
+    from src.guards import active_hours
+    monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 1000)
+    settings_override(LLM_TIMEOUT_SECONDS=120, CODEX_MIN_TIMEOUT_SECONDS=0)
+    assert llm._timeout("codex", None, CallProfile()) == 120
+    assert llm._timeout("codex", 900, CallProfile()) == 360
+
+
+def test_timed_out_cli_discards_partial_draft_but_reports_provider_error(monkeypatch):
+    from src.core import llm_client as llm
+    from src.guards import active_hours
+    monkeypatch.setattr(active_hours, "require_active", lambda: None)
+
+    class Process:
+        pid = 123456
+        def communicate(self, timeout=None):
+            if timeout is not None:
+                raise llm.subprocess.TimeoutExpired("codex", timeout)
+            return ('{"type":"item.completed","item":{"type":"agent_message","text":"partial reply"}}\n'
+                    '{"type":"error","message":"rate limit exceeded"}', "private prompt echo")
+
+    monkeypatch.setattr(llm.subprocess, "Popen", lambda *a, **k: Process())
+    monkeypatch.setattr(llm.os, "getpgid", lambda pid: pid)
+    killed = []
+    monkeypatch.setattr(llm.os, "killpg", lambda *args: killed.append(args))
+    result = llm._run_cmd(["codex"], label="TEST", timeout=120, cwd="/tmp")
+    assert result.returncode == 124 and not result.stdout and killed
+    assert "rate limit exceeded" in result.stderr
+    assert "partial reply" not in result.stderr and "private prompt" not in result.stderr
 
 
 def test_only_the_timeout_function_reads_the_pause_clock():
