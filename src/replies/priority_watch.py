@@ -1,5 +1,6 @@
 """Frequent, deterministic discovery of new originals by operator-picked handles."""
 from datetime import datetime, timedelta
+import time
 
 from ..core import account, config, settings
 from ..core.logger import log
@@ -13,6 +14,7 @@ from .direct_reply import reply_call
 
 STATE = StateFile("priority_watch_state.json", {}, GUARDED)
 JOB = reply_pipeline.Job("priority_watch", "PRIORITY", reply_call=reply_call, pipelined=True)
+_retry_after = {}  # process-local backoff only; permanent claims stay at the chokepoints
 
 
 def _start_times(handles) -> dict:
@@ -66,17 +68,34 @@ def run_priority_watch_cycle():
             max_tweets=settings.get("PRIORITY_WATCH_SCAN_LIMIT"), text_limit=1000)
         candidates.extend(_candidates(handle, tweets, started[handle]))
 
+    attempts = 0
     for candidate in candidates:
         require_active()
         # One failed or rate-limited action must not hide the other action types.
-        for action in (twitter_client.like_priority_post, twitter_client.repost_tweet):
+        for action_id, action in (("like", twitter_client.like_priority_post),
+                                  ("repost", twitter_client.repost_tweet)):
+            key = (x_urls.status_id(candidate.url), action_id)
+            if attempts >= 8 or _retry_after.get(key, 0) > time.monotonic():
+                continue
+            attempts += 1
             try:
                 outcome = action(candidate.url)
                 log.info("[PRIORITY] %s %s: %s", action.__name__, candidate.url, outcome.value)
+                # Avoid reopening the same refused short post every minute.
+                # No permanent skip: transient refusals retry in five minutes.
+                delay = (3600 if outcome or outcome.value == "already_liked" else
+                         120 if outcome.value in {"failed", "unconfirmed"} else 300)
+                _retry_after[key] = time.monotonic() + delay
             except (OutsideActiveHours, StateUnreadable):
                 raise
             except Exception:
+                _retry_after[key] = time.monotonic() + 120
                 log.exception("[PRIORITY] %s failed for %s", action.__name__, candidate.url)
+
+    now = time.monotonic()
+    for key in list(_retry_after):
+        if _retry_after[key] <= now:
+            del _retry_after[key]
 
     reply_pipeline.run(JOB, candidates, reply_pipeline.Cycle(),
                        max_generations=settings.get("PRIORITY_WATCH_MAX_REPLIES"))

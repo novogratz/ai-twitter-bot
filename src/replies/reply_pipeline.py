@@ -17,7 +17,9 @@ leaves the post replayable.
 """
 import random
 import time
+import threading
 import traceback
+from contextlib import contextmanager
 from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
@@ -46,8 +48,8 @@ class Job:
     reply_call: Callable[[str], ReplyCall] | None
     debate_turn: bool = False
     # Generate the next candidate while this one posts, and wait out the
-    # Reply spacing before each send (#131). Sequential jobs never wait: the
-    # chokepoint refuses a Reply sent too early, and the post stays replayable.
+    # Reply spacing before each send (#131). Every job takes a send turn and
+    # waits; pipelining only changes whether generation overlaps posting.
     pipelined: bool = False
     # Seconds slept after a shipped Reply, drawn in this range.
     pause: tuple[int, int] = (0, 0)
@@ -86,6 +88,19 @@ _skipped: dict[str, set] = {}
 
 _SPACING_WAIT_SLICE_SECONDS = 1.0
 _sleep = time.sleep
+_SEND_LOCK = threading.Lock()
+
+
+@contextmanager
+def _send_turn():
+    """Serialize wait + submit across Reply jobs, without holding Safari while waiting."""
+    while not _SEND_LOCK.acquire(timeout=1):
+        require_active()
+    try:
+        require_active()
+        yield
+    finally:
+        _SEND_LOCK.release()
 
 
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
@@ -157,9 +172,7 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
         return None
-    verdict = judge_parent(url, debate_turn=job.debate_turn,
-                           is_reply=candidate.is_reply or bool(candidate.context)
-                           or candidate.text.lstrip().startswith("@"))
+    verdict = _parent_verdict(job, candidate)
     if not verdict:
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
@@ -170,6 +183,12 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     # refuses anything already in it (2026-06-05 premark bug).
     cycle.tried.add(url)
     return verdict.author
+
+
+def _parent_verdict(job: Job, candidate: Candidate):
+    return judge_parent(candidate.url, debate_turn=job.debate_turn,
+                        is_reply=candidate.is_reply or bool(candidate.context)
+                        or candidate.text.lstrip().startswith("@"))
 
 
 def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
@@ -201,13 +220,23 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0
-    if job.pipelined:
-        _wait_out_reply_spacing(job.label)
-    log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
     refusals = []
     try:
-        shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
-                                                on_refused=refusals.append)
+        with _send_turn():
+            # Another worker may have shipped while this draft generated or
+            # queued. A duplicate must not spend a spacing gap ahead of a
+            # useful new Reply. This is still the shared admission rule.
+            verdict = _parent_verdict(job, candidate)
+            if not verdict:
+                if verdict.refusal.definitive:
+                    _set_aside(job).add(url)
+                log.info("[%s] Parent no longer admitted before spacing (%s): %s",
+                         job.label, verdict.refusal.value, url)
+                return 0
+            _wait_out_reply_spacing(job.label)
+            log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
+            shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
+                                                    on_refused=refusals.append)
     except (OutsideActiveHours, StateUnreadable):
         raise
     except Exception:
@@ -225,7 +254,8 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     try:
         engagement_log.log_reply(url, reply, "reply", source=candidate.source,
                                  pattern_id=pattern_id or candidate.pattern,
-                                 provider=generation.provider, model=generation.model)
+                                 provider=generation.provider, model=generation.model,
+                                 parent_text=candidate.text)
     except Exception:
         log.info(f"[{job.label}] Engagement log failed for a shipped Reply {url}:")
         traceback.print_exc()

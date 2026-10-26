@@ -723,3 +723,12 @@ def test_the_reply_search_gets_its_json_array_whole(monkeypatch, route, answer, 
 
     model = settings.get("OLLAMA_MODEL") if route == "ollama" else config.REPLY_MODEL.for_provider(route)
     assert ra.generate_replies() == [{**item, "provider": route, "model": model} for item in FOUND]
+
+
+def test_unreadable_optional_reply_memory_cannot_stop_generation(monkeypatch):
+    import csv
+    from src.replies import reply_generator
+    def unreadable(*args):
+        raise csv.Error("bad optional CSV row")
+    monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", unreadable)
+    assert reply_generator._recent_memory() == ""

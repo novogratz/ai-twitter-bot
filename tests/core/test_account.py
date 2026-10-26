@@ -22,12 +22,12 @@ THEAISHRINK = (ROOT / "accounts" / "theaishrink" / "account.toml").read_text()
 TREND_PURPOSE = "Trending: the SI topic X is talking about right now, told from a trusted source"
 OLD = {
     "SLOTS": [("05:00", "Priority: the SI update worth understanding this morning"),
-              ("07:15", "A useful SI workflow with a concrete first step"),
+              ("07:15", "A useful SI video or image workflow: concrete first step, output and limitation"),
               ("09:30", "Priority: an SI article or model update with a sharp consequence"),
               ("10:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
               ("11:45", "An SI concept explained through a clear example"),
               ("13:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
-              ("14:00", "A model or tool update and what changes for its users"),
+              ("14:00", "An SI video, image or model tool update and what changes for creators"),
               ("15:00", "Trending: the SI topic X is talking about right now, told from a trusted source"),
               ("16:15", "Priority: an evidence-backed take on an SI tradeoff"),
               ("18:30", "A practical SI idea worth saving or sharing"),
@@ -71,7 +71,7 @@ OLD = {
                    "https://huggingface.co/docs/datasets/about_dataset_features")],
     "KNOWLEDGE_PUBLISHER": "Hugging Face docs",
     "HOSTS": ["arxiv.org", "blog.google", "blogs.nvidia.com", "deepmind.google", "huggingface.co",
-              "mistral.ai", "openai.com", "replicate.com", "the-decoder.com", "www.microsoft.com"],
+              "mistral.ai", "openai.com", "replicate.com", "rss.arxiv.org", "the-decoder.com", "www.microsoft.com"],
     "AI_TOPIC": ("\\b(ai|artificial intelligence|model|llm|agent|machine "
                  "learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|"
                  "robotics|transformer|inference|training|neural|diffusion|gpu)\\b", 34),
@@ -100,7 +100,8 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
-                             "HOURLY_BREAK_MINUTES": 10}
+                             "HOURLY_BREAK_MINUTES": 10, "REPLY_DAILY_TARGET_MIN": 700,
+                             "REPLY_DAILY_TARGET_MAX": 1400}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
     assert loaded.publication_si_wording is True

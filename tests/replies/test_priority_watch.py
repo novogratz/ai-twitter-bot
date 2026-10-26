@@ -14,6 +14,7 @@ from tests.helpers import fresh
 
 @pytest.fixture
 def watched(monkeypatch):
+    monkeypatch.setattr(watch, "_retry_after", {})
     profile = replace(account.current(), auto_engage_handles=("builder",))
     monkeypatch.setattr(account, "current", lambda: profile)
     watch.STATE.write({"builder": (active_hours.now_local() - timedelta(days=1)).isoformat()})
@@ -95,3 +96,25 @@ def test_break_stops_watch_before_discovery(watched, monkeypatch):
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **kw: pytest.fail("read during break"))
     with pytest.raises(active_hours.ScheduledBreak):
         watch.run_priority_watch_cycle()
+
+
+def test_refused_actions_back_off_without_hiding_replies(watched, monkeypatch):
+    url = fresh("builder")
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **kw: [{"url": url, "text": "Yes"}])
+    monkeypatch.setattr(watch.time, "monotonic", lambda: 1000)
+    watch.run_priority_watch_cycle()
+    watched.clear()
+    watch.run_priority_watch_cycle()
+    assert watched == [("replies", [url], {"max_generations": 2})]
+    monkeypatch.setattr(watch.time, "monotonic", lambda: 5000)
+    watched.clear()
+    watch.run_priority_watch_cycle()
+    assert [e[0] for e in watched] == ["like", "repost", "replies"]
+
+
+def test_many_posts_do_not_delay_replies_behind_forty_page_visits(watched, monkeypatch):
+    posts = [{"url": fresh("builder", n=i), "text": "New SI video tools"} for i in range(20)]
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **kw: posts)
+    watch.run_priority_watch_cycle()
+    assert len([e for e in watched if e[0] != "replies"]) == 8
+    assert len(watched[-1][1]) == 20

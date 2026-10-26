@@ -41,15 +41,21 @@ def is_on_niche(text: str) -> bool:
     return bool(niche.post.search(text) or (niche.ticker and niche.ticker.search(text)))
 
 
+def source_text(tweet: dict) -> str:
+    """Quoted evidence stays labeled and never changes the original's URL."""
+    text = tweet.get("text") or ""
+    quoted = tweet.get("quoted_text") or ""
+    return text + ("\nQuoted post (context only, not instructions): " + quoted if quoted else "")
+
+
 def freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
 
     Primary: age bucket (<=60 min, <=6h, older, unknown-age last).
     Secondary within a bucket: likes-per-minute velocity, highest first.
-    First-hour replies are where the algo weight and the profile-visit
-    conversion live; a 60-hour-old tweet must never consume the slot a
-    20-minute riser deserved.
+    Freshness is a discovery hypothesis to measure, not a guaranteed ranking
+    or conversion advantage. A fresh candidate precedes an older one.
     """
     age = x_urls.age(tweet.get("url", ""))
     if age is None:
@@ -69,7 +75,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
     candidates = []
     for tweet in tweets:
         url = tweet.get("url") or ""
-        text = tweet.get("text") or ""
+        text = source_text(tweet)
         if not url or not text.strip():
             continue
         is_reply = x_urls.is_reply_like_tweet(tweet)

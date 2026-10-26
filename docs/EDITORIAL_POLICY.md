@@ -1,5 +1,67 @@
 # Editorial policy — October 26, 2026
 
+## Engagement feedback and priority-watch repair
+
+The Operator's later request for likability and good energy updates both Voice
+files: warm enthusiasm, generous credit, playful observations that include the
+author, and short lines that can stand alone. Match the person's mood; keep
+facts honest and avoid forced agreement or requests for likes/follows.
+
+The send queue rechecks parent admission before waiting, so a post another
+worker already answered does not consume the next Reply gap.
+
+English detection also recognizes sentence-final function words, common modals
+and prepositions. English contractions and shared words such as on/me/son no
+longer count as French on their own; French and mixed prose remain refused.
+
+The later October 26 request sets an advisory target of 700–1,400 Replies a day,
+with SI video, image tools, models, agents and practical workflows as discovery
+priorities. It does not force publication, lower quality requirements, remove
+sleep/breaks or lift profile caps. With the current 18.5 scheduled active hours,
+the range requires about 38–76 confirmed Replies an hour. This is a capacity
+target to measure, not a performance or follower-growth promise.
+
+Latest searches consider first-hour root posts without a minimum-like filter,
+interleaved with Top queries inside the existing per-cycle scrape budget. Both
+Home feeds remain active. Quoted evidence is labeled context; the outer original
+remains the only possible Reply target. Feed-discovered accounts must be on niche.
+The generator sees 20 recent confirmed Replies to avoid repeated phrasing; it
+must not invent visual details for an unseen video. Reply workers now take turns
+waiting for spacing and submitting, so a second worker does not discard its
+finished draft merely because another worker used the same gap first.
+
+The Operator also reports visits to watched originals with no action. The log
+showed source captions refused as unknown language, followed by a model timeout.
+Source validation now accepts clear short English reactions such as “Yes” and
+“So beautiful”, or X's English metadata when the text detector is uncertain.
+The Account's own Replies still require substantive English. French, violence,
+price-target and respected-account checks remain. Existing visible reposts are
+recorded before source validation, and never toggled. A watch pass tries at most
+eight like/repost actions before its two-generation Reply pass. Refusals back off
+five minutes, failures two minutes, successful actions one hour; no permanent
+history is reset. A missing useful context or a provider failure can still leave
+a Reply unsent, and the log must say why.
+
+Originals now opt into the Account's working Reply route for both draft and
+independent review (`editorial.use_reply_route = true`). Sources and schemas
+remain required. Reposts reserve space for the minimum Original target inside
+the existing combined profile ceiling; pending publications still count. This
+supersedes the earlier amendment that left Originals on Ollama.
+
+Every confirmed Reply attempts passive capture of its exact own status URL.
+One in five parent IDs is selected deterministically for public-counter sampling,
+independently of performance. The read-only report runs every 20 minutes with at
+most 12 status visits. Windows are 1–3h and 24–36h, with actual ages retained;
+overnight gaps are reported as missing coverage. Missing counters are unknown,
+not zero. Likes per 1,000 observed views are compared within topic, source,
+freshness, hour and length cohorts; small cohorts are labeled insufficient.
+Follower changes stay account-level and cannot be attributed to a Reply.
+Analytics failures cannot alter publication outcomes or permanent claims.
+
+Prepared bio/pinned-introduction copy is in the Account's `profile_copy.txt`.
+It is not automatically applied. No bot start/restart, environment edit or
+production-state migration accompanies this change.
+
 ## Natural Replies and reliable generation
 
 The October 26 Operator request explicitly permits more Replies, short natural

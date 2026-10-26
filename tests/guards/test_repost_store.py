@@ -84,7 +84,9 @@ def test_legacy_confirmed_reposts_are_preserved_and_never_replayed(tmp_path, mem
 def test_reposts_and_originals_share_spacing_and_pending_budget(monkeypatch, memory_ledger, settings_override):
     now = datetime(2026, 10, 23, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    settings_override(POST_JITTER_SECONDS=0, MAX_ORIGINALS_PER_DAY=2)
+    settings_override(POST_JITTER_SECONDS=0, MAX_ORIGINALS_PER_DAY=5)
+    for _ in range(3):
+        memory_ledger.append(ag.POST, "", False, now - timedelta(hours=2))
     assert ag.can_post(ag.RETWEET, target=URL)[0]
     assert store.claim(URL)
     assert not ag.can_post(ag.POST)[0]

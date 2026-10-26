@@ -100,7 +100,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `direct_reply_job` | 2 min | Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
+| `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
 | `priority_watch_job` | 1 min, configurable slower | When `auto_engage_handles` is nonempty, searches Latest for their new standalone originals and independently attempts like, repost and Reply within existing limits. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
@@ -116,6 +116,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `pin_job` | 60 min | Once a day, pins our best recent post if it beats the current pin. |
 | `session_refresh_job` | 120 min | Quits and relaunches Safari to clear a stale x.com session. |
 | `follower_tracker_job` | 30 min | Records the follower count in `follower_history.json`. |
+| `reply_report_job` | 20 min | Present unless post-only. At most 12 read-only own-status observations from a deterministic one-in-five Reply sample, then a volume/coverage/cohort report; no model call or social write. |
 | `reach_report_job` | 60 min | Writes `editorial_reach.json` and `.md`. See [Reach report](#reach-report). |
 
 Two settings decide how much of the table does anything:
@@ -639,6 +640,7 @@ text, or of unknown or negative age; a declaration can also require the
 author a scanned profile's posts carry in their URL. The other jobs still
 select their candidates themselves (niche, age threshold, thread-reply
 shape) until they move to it. The
+pipeline rechecks parent admission, then serializes the spacing wait and submit across all Reply workers using a send lock, separate from Safari; the chokepoint still enforces admission. The
 pipeline alone calls `judge_parent` before paying for a generation, writes
 through `twitter_client.reply_to_tweet`, and calls
 `engagement_log.log_reply` after a shipped Reply only, with the provider and
@@ -660,14 +662,15 @@ generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
 one-second slices and raises `OutsideActiveHours` on a stop request or at
-00:00. The chokepoint still judges: when another job's reply lands during
+00:00. The chokepoint still judges: when a caller outside the pipeline lands a Reply during
 the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
 post stays replayable in a later cycle, at the cost of a new generation.
 On a rate limit, bedtime or an unreadable state file the pipelined job
 returns at once: the generation in flight finishes in the worker thread,
 unread, and its post stays replayable.
-The other jobs answer their candidates in turn and never wait: a Reply they
-send too early is refused on spacing and stays replayable.
+Other jobs generate in turn but share the same send lock and spacing wait.
+Only callers outside the pipeline can race that wait; the chokepoint still
+refuses their too-soon writes and leaves the parent replayable.
 
 After admission, `reply_to_tweet` deduplicates through
 `src/guards/replied_store.py`. `claim` re-reads `replied_tweets.json`, refuses a
@@ -949,3 +952,25 @@ content guard's dedup memory of this run's posts.
 CI (`.github/workflows/ci.yml`) runs `python -m pytest tests/ -q` on Python
 3.12 with only `pytest` and `apscheduler` installed, on every pull request and
 every push to `main`.
+
+### Reply feedback and source context (October 26)
+
+`twitter_client.reply_to_tweet` captures an exact own URL after the confirmed
+ledger row and before closing the page. The receipt must match own identity,
+submitted text and timestamp, uniquely. Failure stays unknown and never changes
+SHIPPED. `engagement_log` appends the URL in column 10 and annotates sampled
+records with source/provider/model/topic. Its small recent-text cache reads old
+CSV headers positionally and updates on confirmed appends.
+
+`reply_feedback` retains three days of sampled outcomes and writes
+`reply_performance.json`/`.md`. Counters come from `reply_metrics`, which visits
+only own status URLs and matches exact IDs. Missing values remain null. Actual
+observation ages accompany the 1h and 24h windows. The report separates volume,
+coverage, observed engagement and account-level follower change.
+
+The live Account chooses the REPLY call surface for Original draft/review via
+`editorial.use_reply_route`; other Accounts keep ORIGINAL by default. Structured
+draft/review profiles still apply. Watched-source content uses the `source`
+validation kind; it does not inherit our Original style rules or change the
+outgoing Reply language check. Quoted text is supplied as labeled evidence,
+never as a new parent URL. Watch action backoffs are process-local only.

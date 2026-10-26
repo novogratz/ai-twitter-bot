@@ -179,9 +179,17 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False) -> Tu
         if not repost_store.allowed_url(target):
             return False, "reposts require an explicitly watched author and exact status URL"
         from ..editorial.slot_journal import FileJournal
-        why = profile_submission_refusal(FileJournal(), now_local())
+        journal = FileJournal()
+        why = profile_submission_refusal(journal, now_local())
         if why:
             return False, why
+        submissions = journal.submissions(now_local().date())
+        originals = max(count_today(POST), submissions.published) + submissions.pending
+        reserved = max(0, min(config.post_targets()[0], config.posts_ceiling()) - originals)
+        committed = (max(count_today(POST), submissions.published) + count_today(QUOTE)
+                     + count_today(RETWEET) + submissions.pending + repost_store.pending_today())
+        if config.posts_ceiling() - committed <= reserved:
+            return False, "remaining profile slots reserved for the minimum Original target"
     if action in (POST, RETWEET):
         from . import repost_store
         cap = config.posts_ceiling()

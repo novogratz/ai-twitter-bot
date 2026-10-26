@@ -163,7 +163,8 @@ def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
     dr.run_direct_reply_cycle()
 
     assert chokepoint.sent == [ok]
-    assert [(r.url, r.source.split("/")[0]) for r in logged()] == [(ok, "SEARCH-HOT")]
+    assert [r.url for r in logged()] == [ok]
+    assert logged()[0].source.split("/")[0] in {"SEARCH-HOT", "SEARCH-FRESH"}
     assert set_aside("direct_reply") == {ok}
 
 
@@ -359,10 +360,10 @@ def test_feed_sweep_harvests_the_handle_from_the_status_url():
     from src.replies import feed_sweeper_bot as fs
 
     fs._harvest_active_authors([
-        {"url": "https://x.com/sama/status/1", "author": "Sam Altman", "likes": 500},
-        {"url": "https://x.com/someone/status/2", "author": "Claude", "likes": 500},
-        {"url": "https://x.com/i/web/status/3", "author": "Tesla", "likes": 500},
-        {"url": "https://x.com/pgm_pm/status/4", "author": "Friendly", "likes": 500},
+        {"url": "https://x.com/sama/status/1", "author": "Sam Altman", "likes": 500, "text": "New SI inference results"},
+        {"url": "https://x.com/someone/status/2", "author": "Claude", "likes": 500, "text": "New SI inference results"},
+        {"url": "https://x.com/i/web/status/3", "author": "Tesla", "likes": 500, "text": "New SI inference results"},
+        {"url": "https://x.com/pgm_pm/status/4", "author": "Friendly", "likes": 500, "text": "New SI inference results"},
         {"url": "https://x.com/quiet/status/5", "author": "quiet", "likes": 1},
     ])
 
@@ -378,8 +379,8 @@ def test_feed_sweep_never_harvests_a_blocked_account(monkeypatch):
     monkeypatch.setattr(config, "BLOCKLIST", {"la pique"})
 
     fs._harvest_active_authors([
-        {"url": "https://x.com/La_Pique_Off/status/1", "author": "La Pique", "likes": 500},
-        {"url": "https://x.com/sama/status/2", "author": "Sam Altman", "likes": 500},
+        {"url": "https://x.com/La_Pique_Off/status/1", "author": "La Pique", "likes": 500, "text": "New SI inference results"},
+        {"url": "https://x.com/sama/status/2", "author": "Sam Altman", "likes": 500, "text": "New SI inference results"},
     ])
 
     assert get_dynamic_accounts()["en"] == ["sama"]

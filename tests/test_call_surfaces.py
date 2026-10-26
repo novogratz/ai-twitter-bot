@@ -115,8 +115,8 @@ ROUTES = {
     "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
     "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
     "reply search": (_reply_search, "REPLY_MODEL", "gemini", (True, ("WebSearch",), DEFAULT_TIMEOUT, "/tmp")),
-    "Draft": (lambda mp: _draft(), "NEWS_MODEL", "claude", DEFAULTS),
-    "review": (_review, "NEWS_MODEL", "claude", DEFAULTS),
+    "Draft": (lambda mp: _draft(), "REPLY_MODEL", "gemini", (True, None, DEFAULT_TIMEOUT, "/tmp")),
+    "review": (_review, "REPLY_MODEL", "gemini", (True, None, DEFAULT_TIMEOUT, "/tmp")),
 }
 MODELS = ("NEWS_MODEL", "REPLY_MODEL", "PRIORITY_REPLY_MODEL")
 

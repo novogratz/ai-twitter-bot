@@ -162,3 +162,15 @@ def test_reply_dry_run_does_not_read_or_click_parent_like(parent, monkeypatch, m
     assert parent[1] == [] and not parent[0].clicks
     assert [r["action"] for r in memory_ledger.rows] == [ag.REPLY]
     assert memory_ledger.rows[0]["dry_run"]
+
+
+def test_analytics_failure_never_hides_a_shipped_reply_or_releases_its_claim(parent, monkeypatch, memory_ledger):
+    from src.core import reply_feedback
+    from src.x import reply_metrics
+    def fail(*a, **kw):
+        raise RuntimeError("analytics unavailable")
+    monkeypatch.setattr(reply_metrics, "capture", fail)
+    monkeypatch.setattr(reply_feedback, "record_confirmed", fail)
+    assert tc.reply_to_tweet(URL, TEXT) is W.SHIPPED
+    assert URL in replied_store.load_replied()
+    assert ag.count_today(ag.REPLY) == 1

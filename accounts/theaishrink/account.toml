@@ -18,18 +18,20 @@ previous_handles = ["TheAIShrink"]
 auto_engage_handles = ["elonmusk"]
 
 [editorial]
+# Operator, 2026-10-26: use the working Codex Reply route for originals too.
+use_reply_route = true
 # The angle of every trend Slot and of the Startup post.
 trend_angle = "Trending: the SI topic X is talking about right now, told from a trusted source"
 # Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
 # only news under twelve hours old or an unusually useful source.
 slots = [
     { clock = "05:00", angle = "Priority: the SI update worth understanding this morning" },
-    { clock = "07:15", angle = "A useful SI workflow with a concrete first step" },
+    { clock = "07:15", angle = "A useful SI video or image workflow: concrete first step, output and limitation" },
     { clock = "09:30", angle = "Priority: an SI article or model update with a sharp consequence" },
     { clock = "10:00", trend = true },
     { clock = "11:45", angle = "An SI concept explained through a clear example" },
     { clock = "13:00", trend = true },
-    { clock = "14:00", angle = "A model or tool update and what changes for its users" },
+    { clock = "14:00", angle = "An SI video, image or model tool update and what changes for creators" },
     { clock = "15:00", trend = true },
     { clock = "16:15", angle = "Priority: an evidence-backed take on an SI tradeoff" },
     { clock = "18:30", angle = "A practical SI idea worth saving or sharing" },
@@ -52,7 +54,7 @@ feeds = [
 trusted_hosts = [
     "openai.com", "blog.google", "deepmind.google", "huggingface.co",
     "blogs.nvidia.com", "www.microsoft.com", "mistral.ai",
-    "replicate.com", "the-decoder.com", "arxiv.org",
+    "replicate.com", "the-decoder.com", "arxiv.org", "rss.arxiv.org",
 ]
 
 # Evergreen topics fill quiet news days, rotated daily; never presented as new.
@@ -132,7 +134,7 @@ publisher = "Hugging Face docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b(ai|(?-i:SI)|asi|artificial\s+intelligence|super\s*intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|gpu|spacex|starship|starlink|elon\s+musk|twitter|x\s+(?:premium|payments|money)|grok(?:\s+imagine)?|xai)\b'
+topic = '\b(ai|(?-i:SI)|asi|artificial\s+intelligence|super\s*intelligence|model|llm|agent|machine learning|openai|anthropic|claude|chatgpt|gpt|gemini|deepmind|deepseek|mistral|qwen|llama|robotics|transformer|inference|training|neural|diffusion|sora|veo|kling|seedance|midjourney|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|gpu|spacex|starship|starlink|elon\s+musk|twitter|x\s+(?:premium|payments|money)|grok(?:\s+imagine)?|xai)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto|bitcoin|btc|ethereum|memecoin|airdrop|giveaway|presale)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -181,6 +183,9 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
 HOURLY_BREAK_MINUTES = 10
+# Advisory goals only: never override quality, sleep or spacing.
+REPLY_DAILY_TARGET_MIN = 700
+REPLY_DAILY_TARGET_MAX = 1400
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────
 # A handle here is compared with the handle read from a status URL, never with
@@ -281,7 +286,7 @@ follow_engagers_skip = [
 [niche]
 # A post a reply job finds is on the niche when `post` matches it,
 # case-insensitively, or the optional `ticker` does, case-sensitively.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo\s*\d|midjourney|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|spacex|starship|starlink|elon\s+musk|twitter|x\s+(?:premium|payments|money)|grok(?:\s+imagine)?|xai)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo(?:\s*\d)?|midjourney|kling|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|seedance|flux\s*(?:\d|kontext)|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|nvidia|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|altman|ml|codex|copilot|cursor|windsurf|replit|spacex|starship|starlink|elon\s+musk|twitter|x\s+(?:premium|payments|money)|grok(?:\s+imagine)?|xai)\b'
 # The follow quality gate refuses a non-Engager whose name and bio do not
 # match `bio`, case-insensitively. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
@@ -291,6 +296,15 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # X search queries. Both vocabularies are discovery aliases, including
 # Artificial Intelligence and Super Intelligence; exact product names stay literal.
 [searches]
+# First-hour discoveries: no min_faves floor; root posts only, still niche checked.
+latest = [
+    '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (video OR animation OR filmmaking OR image) lang:en -filter:replies -filter:retweets',
+    '("Grok Imagine" OR Sora OR Veo OR Kling OR Seedance OR "Runway video") lang:en -filter:replies -filter:retweets',
+    '("Luma Dream Machine" OR "Pika Labs" OR "HunyuanVideo" OR "Wan 2" OR Midjourney) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("I built" OR "we built" OR "my workflow" OR "open source") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "super intelligence" OR superintelligence OR ASI) (demo OR benchmark OR inference OR robotics) lang:en -filter:replies -filter:retweets',
+    '(Codex OR "Claude Code" OR "coding agent" OR "Grok Imagine") (demo OR workflow OR release) lang:en -filter:replies -filter:retweets',
+]
 # Every alternative of a query, read with AND before OR or OR before AND,
 # finds posts `post` keeps: a company or energy word goes with AI.
 # direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,

@@ -41,6 +41,8 @@ def _harvest_active_authors(tweets: list) -> None:
         min_likes = settings.get("FEED_SWEEP_HARVEST_MIN_LIKES")
         new_handles = []
         for t in tweets:
+            if not reply_source.is_on_niche(t.get("text") or ""):
+                continue
             likes = int(t.get("likes") or 0)
             if likes < min_likes:
                 continue

@@ -117,7 +117,7 @@ each call, and compare a handle with the one read from a status URL.
   gate judges. @thesimaximalist sets no `ticker`: its niche covers SI and
   the named Musk/X/SpaceX ecosystem.
 - `[searches]`: X search queries. `direct_reply_job` rotates through
-  `replies` then `hot_tab`; `like_job` picks one of `likes` and likes what
+  interleaved optional `latest` (first-hour, no popularity floor) and `replies`/`hot_tab` (Top); `like_job` picks one of `likes` and likes what
   it finds without the niche check; the Trend slots and the Startup post run
   every `trending` query on the Top tab and keep what passes the relevance
   filter.
@@ -261,6 +261,20 @@ real account from a second process. Before any of them:
    and `bin/mass_unfollow.py` refuses to start Overnight and stops at 00:00.
 
 ## Watching
+
+For engagement results, read `reply_performance.md` in the Account state folder.
+The new CSV tenth column is `published_url`; an empty value is unknown. Existing
+four-to-nine-column headers are retained, so read rows positionally. Sampling
+starts after this deployment; prior Replies are not assigned invented metrics.
+The report is read-only and respects sleep/breaks. Code and Account changes
+require an explicitly requested start/restart; no lifecycle action is implied.
+
+The Account may set `editorial.use_reply_route = true` to route Original drafts
+and independent reviews through the configured Reply provider/model. This is
+explicit selection, not a hidden fallback; it supersedes PROFILE_LLM_PROVIDER
+for these two calls. The default is false. `[EDITORIAL] Waiting:` logs publication
+refusals, and generation errors name the provider/model. Prepared `profile_copy.txt`
+is operator-facing copy, never a command to change the profile automatically.
 
 | Where | What it tells you |
 |---|---|
@@ -549,6 +563,8 @@ root:
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
+| `reply_feedback.json` | `reply_feedback` | Three-day deterministic one-in-five Reply sample; exact own URL, actual observation ages, nullable counters and source/model/topic | disposable; never an admission history |
+| `reply_performance.json`, `.md` | `reply_feedback` | Advisory targets, confirmed volume, coverage, likes per 1,000 views, cohorts and separate follower delta | disposable; `.md` outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |

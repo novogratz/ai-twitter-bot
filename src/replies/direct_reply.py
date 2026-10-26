@@ -11,7 +11,7 @@ from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline
 from .reply_generator import LanguageRule, ReplyCall
-from .reply_source import freshness_sort_key, is_on_niche
+from .reply_source import freshness_sort_key, is_on_niche, source_text
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
@@ -130,17 +130,20 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
 SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)
 
 
-def _search_candidates(tweets: list, query: str) -> list:
+def _search_candidates(tweets: list, query: str, tab: str = "top") -> list:
     """Root search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the
     niche (queries are broad), fresh and rising first. A nested reply is
     skipped, as in the feed sweep: the model would see it without its root
     post (issue #241, lost in 3857e1ba). The query joins the log tag so
     per-query conversion is measurable (2026-06-08)."""
     limit = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
-    return [reply_pipeline.Candidate(t["url"], t.get("text") or "", f"SEARCH-HOT/{query[:60]}")
+    if tab == "latest":
+        limit = min(limit, timedelta(hours=1))
+    tag = "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+    return [reply_pipeline.Candidate(t["url"], source_text(t), f"{tag}/{query[:60]}")
             for t in sorted(tweets, key=freshness_sort_key)
             if t.get("url") and not x_urls.is_reply_like_tweet(t)
-            and _fresh_enough(t["url"], limit) and is_on_niche(t.get("text") or "")]
+            and _fresh_enough(t["url"], limit) and is_on_niche(source_text(t))]
 
 
 # Rotation cursor for the per-cycle query slice. Process-lifetime state:
@@ -199,20 +202,26 @@ def run_direct_reply_cycle(max_replies=None):
     #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
     #    Safari time goes to POSTING replies.
     searches = account.current().searches
-    all_queries = list(searches.replies + searches.hot_tab)
+    # Interleave Latest and Top without adding scrapes to the cycle's budget.
+    # Latest has no min_faves threshold: relevant builders can be discovered
+    # before they have accumulated a large audience.
+    from itertools import zip_longest
+    all_queries = [item for pair in zip_longest(
+        [(q, "latest") for q in searches.latest],
+        [(q, "top") for q in searches.replies + searches.hot_tab]) for item in pair if item]
     cycle_queries = _queries_for_cycle(all_queries)
     random.shuffle(cycle_queries)
-    for query in cycle_queries:
+    for query, tab in cycle_queries:
         if cycle.rate_limited:
             break
         if remaining is not None and remaining <= 0:
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
         tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab="top")
+                                       max_tweets=25, tab=tab, text_limit=1200)
         # The budget bounds each query's generations; only the Replies
         # shipped come off it.
-        n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query), cycle,
+        n = reply_pipeline.run(SEARCH_JOB, _search_candidates(tweets, query, tab), cycle,
                                max_generations=remaining)
         total += n
         if remaining is not None:

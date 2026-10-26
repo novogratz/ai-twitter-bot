@@ -332,3 +332,26 @@ def test_violence_cruelty_gate_blocks_at_every_surface():
                    "this is the killer app for AI agents"):
         ok, why = validate(benign, kind="reply")
         assert ok, f"idiom must pass: {benign!r} ({why})"
+
+
+@pytest.mark.parametrize("text", [
+    "A future worth building launchpads for.",
+    "I’d use it to turn messy notes into readable drafts on flights, where the cloud is just scenery.",
+    "My son and I work on the model together.",
+])
+def test_english_punctuation_contractions_and_shared_words_are_not_french(text):
+    assert cg.validate(text, kind="reply")[0]
+
+
+@pytest.mark.parametrize("text", [
+    "On me dit que le modèle fonctionne très bien.",
+    "The model is useful, mais cette réponse est en français.",
+    "Je travaille avec mon fils sur ce modèle.",
+])
+def test_french_and_mixed_text_stay_refused_after_shared_word_fix(text):
+    assert not cg.validate(text, kind="reply")[0]
+
+
+def test_natural_video_reply_with_modal_and_preposition_is_english():
+    text = "A well-chosen cut can turn separate Grok Imagine clips into a story."
+    assert cg.validate(text, kind="reply")[0]

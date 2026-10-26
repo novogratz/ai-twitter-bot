@@ -149,6 +149,7 @@ def exhausted(monkeypatch, providers, settings_override):
     from src.x import twitter_client as tc
     monkeypatch.setattr(tc, "post_tweet", lambda *a, **k: pytest.fail("published without a model answer"))
     settings_override(PROFILE_LLM_PROVIDER="claude")
+    use_editorial(monkeypatch, use_reply_route=False)
     monkeypatch.setattr(editorial, "_json_call", REAL_JSON_CALL)
     providers.claude.answers = [LLMResult(1, "", "Claude AI usage limit reached|1790000000")]
     providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
@@ -402,15 +403,27 @@ def last_call(editor, label):
     return [call for call in editor.calls if call.label == label][-1]
 
 
-def test_the_draft_and_the_review_run_on_the_profile_provider(settings_override, editor):
+def test_the_draft_and_the_review_run_on_the_profile_provider(monkeypatch, settings_override, editor):
     """PROFILE_LLM_PROVIDER routes the Originals apart from AI_CLI, each
     call with its own profile."""
     from src.core import config
     settings_override(PROFILE_LLM_PROVIDER="gemini")
+    use_editorial(monkeypatch, use_reply_route=False)
     assert draft_and_review(editor)[1][0]
     assert [(c.label, c.model, c.force_provider, c.profile) for c in editor.calls] == [
         ("EDITORIAL_DRAFT", config.NEWS_MODEL, "gemini", schemas.draft_profile()),
         ("EDITORIAL_REVIEW", config.NEWS_MODEL, "gemini", schemas.review_profile()),
+    ]
+
+
+def test_account_can_use_working_reply_route_for_both_draft_and_review(monkeypatch, settings_override, editor):
+    from src.core import config
+    settings_override(PROFILE_LLM_PROVIDER="ollama", REPLY_LLM_PROVIDER="codex", REPLY_MODEL="gpt-6.1-sol")
+    use_editorial(monkeypatch, use_reply_route=True)
+    assert draft_and_review(editor)[1][0]
+    assert [(c.model, c.force_provider, c.profile) for c in editor.calls] == [
+        (config.REPLY_MODEL, "codex", schemas.draft_profile()),
+        (config.REPLY_MODEL, "codex", schemas.review_profile()),
     ]
 
 
@@ -422,6 +435,7 @@ def test_a_review_that_falls_back_to_ollama_keeps_the_review_schema(monkeypatch,
     import urllib.request
     from src.core import llm_client as llm
     settings_override(PROFILE_LLM_PROVIDER="claude", LLM_FALLBACK_CLI="ollama", LLM_DISABLE_FALLBACK=False)
+    use_editorial(monkeypatch, use_reply_route=False)
     cloud = []
     monkeypatch.setattr(llm, "_run_cmd",
                         lambda cmd, **k: cloud.append(k["label"]) or llm.LLMResult(1, "", "claude down"))
