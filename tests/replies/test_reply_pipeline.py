@@ -558,9 +558,8 @@ def test_a_pipelined_job_does_not_wait_when_the_spacing_is_clear(spacing):
     assert s.slept == [] and s.chokepoint.sent == [url]
 
 
-def test_a_job_in_turn_never_waits_for_the_spacing(spacing):
-    """The wait is the pipelined jobs' own: a job in turn keeps its rhythm,
-    and the chokepoint refuses a Reply sent too early."""
+def test_a_job_in_turn_also_waits_for_the_spacing(spacing):
+    """Every job takes a send turn; the chokepoint still makes the final decision."""
     from src.guards import action_guard as ag
 
     s = spacing
@@ -570,7 +569,7 @@ def test_a_job_in_turn_never_waits_for_the_spacing(spacing):
 
     assert run(job(), [candidate(url, "post")]) == 0
 
-    assert s.slept == [] and s.chokepoint.sent == [url]
+    assert sum(s.slept) >= 8 and s.chokepoint.sent == [url]
     assert url not in set_aside(), "the post stays replayable"
 
 
@@ -631,3 +630,41 @@ def test_the_spacing_wait_ends_on_a_stop_request_and_overnight(spacing, monkeypa
     assert len(s.slept) == 1, "the next slice sees the stop or bedtime"
     assert s.chokepoint.sent == [], "nothing ships"
     assert s.ledger.count(ag.REPLY, s.now.date()) == 1
+
+
+def test_concurrent_workers_recheck_spacing_inside_their_send_turn(monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    from src.replies.reply_generator import Generation, Outcome
+    first_url, second_url = fresh("first"), fresh("second")
+    entered, release = threading.Event(), threading.Event()
+    events = []
+    monkeypatch.setattr(rp, "_wait_out_reply_spacing", lambda label: events.append("wait:" + label))
+    def send(url, text, **kwargs):
+        events.append("send:" + url)
+        if url == first_url:
+            entered.set()
+            assert release.wait(2)
+        return WriteOutcome.REFUSED
+    monkeypatch.setattr(rp.twitter_client, "reply_to_tweet", send)
+    generation = Generation(Outcome.WRITTEN, "en", "A specific useful reaction.")
+    with ThreadPoolExecutor(2) as pool:
+        first = pool.submit(rp._send, rp.Job("one", "one", None), rp.Candidate(first_url, "p", "s"), "a", generation)
+        assert entered.wait(2)
+        second = pool.submit(rp._send, rp.Job("two", "two", None), rp.Candidate(second_url, "p", "s"), "b", generation)
+        assert events == ["wait:one", "send:" + first_url]
+        release.set()
+        first.result(2)
+        second.result(2)
+    assert events == ["wait:one", "send:" + first_url, "wait:two", "send:" + second_url]
+
+
+def test_parent_answered_during_generation_does_not_spend_a_spacing_gap(monkeypatch):
+    from src.replies.reply_generator import Generation, Outcome
+    url = fresh("builder")
+    assert replied_store.claim(url), "another worker's confirmed or uncertain submission"
+    monkeypatch.setattr(rp, "_wait_out_reply_spacing", lambda label: pytest.fail("waited for an answered post"))
+    monkeypatch.setattr(rp.twitter_client, "reply_to_tweet", lambda *a, **kw: pytest.fail("opened an answered post"))
+    generation = Generation(Outcome.WRITTEN, "en", "A useful specific reaction.")
+    assert rp._send(job(), candidate(url, "SI model"), "builder", generation) == 0
+    assert url in replied_store.load_replied()

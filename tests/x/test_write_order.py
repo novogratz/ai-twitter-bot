@@ -34,7 +34,7 @@ def _script_kind(script):
 
 def _js_kind(js):
     for marker, kind in (("confirmationSheetConfirm", "confirm"),
-                         ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item")):
+                         ("NO_BTN", "follow"), ("caret", "more"), ("PIN_NOT_FOUND", "pin_item"), ("function count(el)", "reply_metrics")):
         if marker in js:
             return kind
     return "js"
@@ -178,7 +178,7 @@ REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "confirm_like", 
 def test_reply_ships_then_records_then_closes(trace):
     assert tc.reply_to_tweet(POST_URL, REPLY, debate_turn=True) is W.SHIPPED
     assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS,
-                            "record:reply", "record:debate_turn", "close", "unlock"]
+                            "record:reply", "record:debate_turn", "js:reply_metrics", "close", "unlock"]
 
 
 def test_reply_refused_never_claims_nor_opens(trace):
@@ -398,7 +398,7 @@ def test_stop_at_the_final_close_never_hides_a_shipped_write(trace):
     stop raised there returns SHIPPED, so the caller logs what shipped."""
     trace.raise_at = "close"
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "js:reply_metrics", "close", "unlock"]
     assert POST_URL in trace.claimed
 
 
@@ -453,7 +453,7 @@ def test_a_reply_whose_page_does_not_open_stays_replayable(trace):
     trace.fail.clear()
     trace.events.clear()
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "js:reply_metrics", "close", "unlock"]
 
 
 @pytest.mark.parametrize("failing, events", [
@@ -482,7 +482,7 @@ def test_a_reply_whose_safari_does_not_come_to_the_front_sends_nothing(trace, mo
     assert POST_URL not in trace.claimed
     trace.events.clear()
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.SHIPPED
-    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "close", "unlock"]
+    assert trace.events == ["lock", "judge", "claim", *REPLY_STEPS, "record:reply", "js:reply_metrics", "close", "unlock"]
 
 
 def test_every_applescript_run_of_the_reply_and_the_post_is_bounded(trace, monkeypatch):

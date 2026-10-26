@@ -45,8 +45,8 @@ def test_engagement_log_records_the_provider_and_model_it_is_given(monkeypatch, 
     el.log_reply("https://x.com/someone/status/123", "test reply", "reply", source="TEST",
                  provider="codex", model="gpt-5.4-mini")
     rows = list(csv.reader(open(p)))
-    assert rows[0][-2:] == ["provider", "model"]
-    assert rows[1][7:] == ["codex", "gpt-5.4-mini"]
+    assert rows[0][7:] == ["provider", "model", "published_url"]
+    assert rows[1][7:] == ["codex", "gpt-5.4-mini", ""]
 
 
 def test_unreadable_state_never_restarts_safari(monkeypatch, tmp_path):

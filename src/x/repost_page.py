@@ -20,9 +20,10 @@ SCRIPT = r"""(() => {
   if (targets.length !== 1 || articles[0] !== targets[0]) return '{}';
   const article = targets[0], link = permalink(article);
   if (status(link)[1].toLowerCase() !== author) return '{}';
-  const text = own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
+  const textEl = own(article, '[data-testid="tweetText"]')[0];
+  const text = textEl?.innerText || '';
   if (!text.trim() || text.trim().startsWith('@') || /Replying to|En réponse à/i.test(article.innerText)) return '{}';
-  const result = {url: link.href, text, state: 'unavailable'};
+  const result = {url: link.href, text, language:textEl?.getAttribute('lang') || '', state: 'unavailable'};
   const existing = own(article, '[data-testid="unretweet"]');
   if (existing.length === 1) {
     result.state = 'reposted';

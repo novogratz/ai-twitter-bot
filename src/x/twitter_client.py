@@ -498,11 +498,11 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 def _priority_source_ok(page: dict) -> bool:
     from ..guards import content_guard, respect_list
     text = page.get("text") or ""
-    ok, why = content_guard.validate(text, kind="original")
+    ok, why = content_guard.validate(text, kind="source", source_language=page.get("language") or "")
     if ok:
         _, why = respect_list.scrub_text_or_skip(text)
     if not ok or why:
-        log.info("[PRIORITY] Source content refused (%s).", why)
+        log.info("[PRIORITY] Source content refused (%s): %s", why, page.get("url", ""))
         return False
     return True
 
@@ -561,10 +561,10 @@ def repost_tweet(tweet_url: str) -> WriteOutcome:
                 return WriteOutcome.FAILED
             time.sleep(6)
             page = repost_page.read(url)
-            if not page or not _priority_source_ok(page):
-                return WriteOutcome.REFUSED
             if page.get("state") == "reposted":
                 repost_store.remember(url, "observed")
+                return WriteOutcome.REFUSED
+            if not page or not _priority_source_ok(page):
                 return WriteOutcome.REFUSED
             if page.get("state") != "ready" or admit() is not None:
                 return WriteOutcome.REFUSED
@@ -694,6 +694,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     from ..guards import action_guard, active_hours, replied_store, reply_admission
     # Set by an admitting verdict: the exact text to send, and its author.
     admitted_text = author = ""
+    submitted_at = None
 
     def admit():
         # Not a second admission rule: _safari_lock raises OutsideActiveHours on
@@ -726,6 +727,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         return None
 
     def steps():
+        nonlocal submitted_at
         # A pre-submit failure releases the claim unless the page proves
         # that this conversation already has an answer from us.
         sent = False
@@ -785,6 +787,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True
+            submitted_at = active_hours.now_local()
             if not _submit_or_abort("REPLY", target=tweet_url):
                 return WriteOutcome.UNCONFIRMED
             time.sleep(2)  # Wait for submission
@@ -798,11 +801,26 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         return [(action_guard.REPLY, tweet_url)] + (
             [(action_guard.DEBATE_TURN, author)] if debate_turn else [])
 
+    def after_record():
+        # Passive bookkeeping only, after the confirmed ledger row. Neither a
+        # missing URL nor a failed analytics write can undo a shipped outcome.
+        from ..core import reply_feedback
+        from . import reply_metrics
+        own_url = ""
+        try:
+            own_url = reply_metrics.capture(admitted_text, since=submitted_at, parent=tweet_url)
+        except Exception:
+            log.info("[REPLY-FEEDBACK] Published URL not visible for %s", tweet_url)
+        try:
+            reply_feedback.record_confirmed(tweet_url, admitted_text, own_url, now=submitted_at)
+        except Exception:
+            log.exception("[REPLY-FEEDBACK] Could not save shipped Reply %s", tweet_url)
+
     # Admission needs the lock, so a dry run stops under it; it never claims.
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
         rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
-        steps=steps)
+        steps=steps, after_record=after_record)
 
 
 class FollowOutcome(Enum):

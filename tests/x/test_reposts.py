@@ -179,3 +179,17 @@ def test_page_clicks_only_verified_repost_and_confirmation_controls():
     assert confirmed["counts"] == {"open": 0, "confirm": 1, "undo": 0}
     assert _page_js("confirm", menu=False)["counts"]["confirm"] == 0
     assert _page_js("confirm", undo_menu=True)["counts"]["confirm"] == 0
+
+
+@pytest.mark.parametrize("text", ["So beautiful", "Yes", "Wow"])
+def test_short_watched_sources_can_be_reposted(browser, text):
+    browser["content"] = text
+    assert tc.repost_tweet(URL) is W.SHIPPED
+
+
+def test_existing_repost_is_remembered_before_its_source_language_is_checked(browser, monkeypatch):
+    browser.update(reposted=True, content="Bonjour")
+    monkeypatch.setattr(tc, "_priority_source_ok", lambda page: pytest.fail("judged an already reposted source"))
+    assert tc.repost_tweet(URL) is W.REFUSED
+    assert repost_store.contains(URL)
+    assert browser["modes"] == ["read"]

@@ -15,9 +15,12 @@ Show engagement stats, read-only, from the Account's state folder
 3. `editorial_review.jsonl` - approvals and rejection reasons of recent drafts
 4. `editorial_reach.md` - observed views of the last seven days of originals
    against the 500,000 target
-5. `engagement_log.csv` - append-only action log
-6. `replied_tweets.json` - tweets already answered, by status ID
-7. `followed_accounts.json` - accounts followed
+5. `reply_performance.md` / `reply_performance.json` — advisory daily Reply target,
+   confirmed volume, exact own-URL coverage, sampled 1h/24h likes/views and
+   topic/source/freshness/hour/length cohorts; missing counters are unknown
+6. `engagement_log.csv` - append-only action log
+7. `replied_tweets.json` - tweets already answered, by status ID
+8. `followed_accounts.json` - accounts followed
 
 Present a clean summary:
 - Today: originals published against the target of six (Profile
@@ -25,4 +28,6 @@ Present a clean summary:
 - Last 7 days per day
 - Last 5 originals and last 5 replies
 - Reach against target, with the missing coverage the report states
+- Reply performance: show sample coverage and actual observation windows; do not
+  infer follower attribution or claim a winning style from small observational cohorts
 - Patterns (review rejection reasons, most active hour)

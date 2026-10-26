@@ -191,3 +191,16 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch, settings_override)
     now[0] += timedelta(seconds=2)
     assert ag.seconds_until_allowed(ag.POST) == 0
     assert ag.can_post(ag.POST) == (True, "")
+
+
+def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, settings_override):
+    from src.core import account
+    now = datetime(2026, 10, 26, 12, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+    settings_override(MAX_ORIGINALS_PER_DAY=7, POST_JITTER_SECONDS=0)
+    target = f"https://x.com/{account.current().auto_engage_handles[0]}/status/2114612551787147343"
+    for n in range(4):
+        memory_ledger.append(ag.RETWEET, str(n), False, now - timedelta(hours=2))
+    allowed, why = ag.can_post(ag.RETWEET, target=target)
+    assert not allowed and "reserved" in why
+    assert ag.can_post(ag.POST)[0] and ag.can_post(ag.REPLY)[0]

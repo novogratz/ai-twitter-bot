@@ -225,3 +225,25 @@ def test_the_vip_scan_skips_a_handle_without_a_prompt(monkeypatch, llm, settings
     assert dr._vip_call("vision_ia") is None
     assert dr._run_vip_scan(reply_pipeline.Cycle()) == 0
     assert scraped == [] and llm.calls == []
+
+
+def test_latest_lane_keeps_first_hour_posts_without_a_popularity_floor():
+    from src.replies import direct_reply
+    fresh_url, old_url = _url_with_age(20), _url_with_age(120)
+    posts = [{"url": fresh_url, "text": "My SI video workflow", "likes": 0},
+             {"url": old_url, "text": "My SI video workflow", "likes": 9000}]
+    selected = direct_reply._search_candidates(posts, "SI video", "latest")
+    assert [c.url for c in selected] == [fresh_url]
+    assert selected[0].source.startswith("SEARCH-FRESH/")
+
+
+def test_quoted_evidence_reaches_generation_without_changing_the_parent():
+    from src.replies import direct_reply
+    parent = _url_with_age(20)
+    posts = [{"url": parent, "text": "Yes", "quoted_text": "New SI video generation workflow"}]
+    selected = direct_reply._search_candidates(posts, "SI video", "latest")
+    assert len(selected) == 1 and selected[0].url == parent
+    assert selected[0].text.startswith("Yes\nQuoted post")
+    assert not selected[0].is_reply
+    posts[0]["is_reply"] = True
+    assert direct_reply._search_candidates(posts, "SI video", "latest") == []

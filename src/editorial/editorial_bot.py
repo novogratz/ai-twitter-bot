@@ -267,14 +267,16 @@ def collect_sources(journal, now=None, news_only=False) -> list:
 
 
 def _json_call(prompt: str, label: str, profile: CallProfile) -> dict:
-    route = resolve(Surface.ORIGINAL)
+    surface = Surface.REPLY if account.current().editorial.use_reply_route else Surface.ORIGINAL
+    route = resolve(surface)
     options = route.options
     result = run_llm(prompt, route.model, label=label, output_json=options.output_json,
                      allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
                      force_provider=route.provider, profile=profile)
     if result.status is not LLMStatus.ANSWERED:
         # Failed or exhausted alike: no Draft, or no approval.
-        log.info("[EDITORIAL] %s generation unavailable (%s).", label, result.status.value)
+        log.info("[EDITORIAL] %s generation unavailable (%s; provider=%s, model=%s): %s",
+                 label, result.status.value, result.provider, result.model, (result.stderr or "")[:200])
         return {}
     try:
         value = json.loads(result.stdout)
@@ -427,7 +429,10 @@ def run_editorial_cycle(preview=False):
         load_history()
         today = _local().date()
         journal.roll_to(today)
-        if not action_guard.can_post(action_guard.POST)[0] or _pending_refusal(journal, _local()):
+        allowed, reason = action_guard.can_post(action_guard.POST)
+        refusal = reason if not allowed else _pending_refusal(journal, _local())
+        if not allowed or refusal:
+            log.info("[EDITORIAL] Waiting: %s", refusal)
             return None
         # The Startup post goes first, then every open Slot of the grid. A
         # pass that gives a Slot no Draft moves on to the next one, so a

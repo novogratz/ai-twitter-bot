@@ -1,5 +1,55 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-26 — Measured growth, source captions and competing senders
+
+The Operator's later request for likability and good energy updates both Voice
+files: warm enthusiasm, generous credit, playful observations that include the
+author, and short lines that can stand alone. Match the person's mood; keep
+facts honest and avoid forced agreement or requests for likes/follows.
+
+The send queue rechecks parent admission before waiting, so a post another
+worker already answered does not consume the next Reply gap.
+
+English detection also recognizes sentence-final function words, common modals
+and prepositions. English contractions and shared words such as on/me/son no
+longer count as French on their own; French and mixed prose remain refused.
+
+The Operator requests 700–1,400 Replies/day, better natural responses and SI
+video discovery, then reports the watch visiting Elon Musk originals without
+acting. Read-only investigation found 607 Replies on October 25, with a median
+parent age near three hours; existing analytics did not record earned Reply
+likes/views. Follower observations cannot establish individual Reply attribution.
+
+Originals had continued using Ollama/gemma4:31b while Replies used Codex; Ollama
+was unavailable. The Account now explicitly selects its Reply route for both
+Original draft and independent review. The arXiv RSS URL's exact host was also
+missing from trusted_hosts. Reposts now preserve room for the minimum Original
+target inside the existing combined publication ceiling.
+
+The watch log at 06:30–06:33 repeatedly refused source text as unknown language.
+A subsequent read-only page check found “So beautiful” (lang=en), “Yes” and
+“Wow” (lang=qst); the first was already visibly reposted. The watcher had applied
+our Original-writing validator before checking existing repost state. Sources
+now have a separate validation kind; short English reactions are recognized,
+X's English tag can resolve an uncertain detector, and existing reposts are
+remembered first. Outgoing Reply checks are unchanged. Quoted evidence is
+preserved for drafting while the outer original remains the verified parent.
+Bounded action attempts and backoffs prevent repeated refused visits consuming
+the whole cycle. A 300-second priority model timeout was also observed; this
+change does not claim to repair an external provider stall.
+
+At 06:31 and 06:32 two Reply jobs finished the same spacing wait, one submitted,
+and the other immediately lost its finished draft to a too-soon refusal. A
+shared send lock now covers the wait plus submission, separately from the Safari
+lock. All writes still pass the existing admission and permanent-claim checks.
+
+Fresh Latest discovery, 20-text recent memory, exact own-URL receipts and a
+bounded one-in-five outcome sample support measuring the change. Reports expose
+coverage, actual observation ages, cohort sizes and separate follower change.
+The 700–1,400 target is advisory; there is no quota-filling or catch-up burst.
+No production history was migrated or cleared, and no lifecycle or profile write
+was performed. Profile copy was prepared for review.
+
 ## 2026-10-26 — Reply timeouts and monotonous delivery
 
 The Operator stopped the bot at 05:22:34 Toronto after noticing quiet periods.

@@ -10,6 +10,32 @@ name preserves the existing state and history after the account rename.
 
 ## Current publishing policy
 
+The Operator's later request for likability and good energy updates both Voice
+files: warm enthusiasm, generous credit, playful observations that include the
+author, and short lines that can stand alone. Match the person's mood; keep
+facts honest and avoid forced agreement or requests for likes/follows.
+
+The send queue rechecks parent admission before waiting, so a post another
+worker already answered does not consume the next Reply gap.
+
+English detection also recognizes sentence-final function words, common modals
+and prepositions. English contractions and shared words such as on/me/son no
+longer count as French on their own; French and mixed prose remain refused.
+
+The latest update adds fresh SI video/builder searches, recent-reply memory,
+serialized Reply sends and an advisory **700–1,400 Replies/day** report. It fixes
+watched-source captions such as “Yes” being judged as our own Original drafts.
+Reposts still obey the existing profile ceiling and spacing, with room reserved
+for the minimum Original target. Originals now use the configured Codex Reply
+route for both drafting and independent review.
+
+`state/<BOT_ACCOUNT>/reply_performance.md` reports confirmed volume, URL coverage,
+sampled 1h/24h outcomes, likes per 1,000 views and separate follower change.
+It samples one in five Replies, with bounded read-only checks; missing data is
+unknown. Targets do not force weak replies or promise likes/follows. Profile
+copy is prepared in `accounts/theaishrink/profile_copy.txt`, not applied to X.
+Code and Account changes take effect at the next explicitly requested start.
+
 - **English only:** every Original and Reply, including responses to French
   parents and VIPs. The Account's `english_only` policy controls prompts and
   final publication checks; uncertain language is skipped.

@@ -196,15 +196,28 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         if (articles.length === 0) return 'NO_ARTICLES';
         for (var i = 0; i < Math.min(articles.length, MAX_TWEETS); i++) {
             var a = articles[i];
-            var textEl = a.querySelector('[data-testid="tweetText"]');
+            var textEl = Array.from(a.querySelectorAll('[data-testid="tweetText"]'))
+                .find(el => el.closest('article') === a
+                    && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
             var text = textEl ? textEl.textContent.trim() : '';
             if (!text) continue;
+            // A short original may quote the actual SI announcement. Keep
+            // that context separate: it must never become the Reply target.
+            var quoted = Array.from(a.querySelectorAll('[data-testid="tweetText"]'))
+                .filter(el => el !== textEl && el.closest('article') === a
+                    && el.closest('[data-testid="quoteTweet"], div[role="link"]'))
+                .map(el => el.textContent.trim()).filter(Boolean).join(' | ');
             var links = a.querySelectorAll('a[href*="/status/"]');
             var url = '';
+            var timeEl = null;
             for (var l of links) {
                 var h = l.getAttribute('href');
-                if (h && h.match(/\\/status\\/\\d+$/)) {
+                if (l.closest('article') === a
+                    && !l.closest('[data-testid="quoteTweet"], div[role="link"]')
+                    && l.querySelector('time[datetime]')
+                    && h && h.match(/\\/status\\/\\d+$/)) {
                     url = 'https://x.com' + h;
+                    timeEl = l.querySelector('time[datetime]');
                     break;
                 }
             }
@@ -214,14 +227,13 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             var replies = extractCount(a, 'reply');
             var tl = detectTranslatedLang(a);
             var isReply = detectReplyArticle(a, text);
-            var timeEl = a.querySelector('time[datetime]');
             var ts = timeEl ? timeEl.getAttribute('datetime') : '';
             // Views: the analytics link's aria-label carries the count
             // ("12.3K views"). Powers performance.scrape_own_metrics.
             var views = 0;
             var an = a.querySelector('a[href*="/analytics"]');
             if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -271,6 +283,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         tweets = [{
             "url": t["u"],
             "text": t["t"],
+            "quoted_text": t.get("qt") or "",
             "author": t["a"],
             "likes": int(t.get("l") or 0),
             "replies": int(t.get("r") or 0),

@@ -289,6 +289,10 @@ _EN_MARKERS = (
     " this ", " that ", " these ", " their ", " you ", " your ", " it's ",
     " they ", " we ", " will ", " just ", " market", " growth", " company ",
     " here ", " there ", " about ", " than ", " because ",
+    " my ", " our ", " i ", " can ", " could ", " would ", " should ", " might ", " must ",
+    " has ", " have ", " does ", " did ", " how ", " why ", " what ", " which ",
+    " without ", " through ", " into ", " across ", " between ", " before ", " after ",
+    " when ", " where ", " while ", " then ",
 )
 _FR_ACCENTS_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]")
 
@@ -346,7 +350,10 @@ def detect_language(text: str) -> Tuple[str, float]:
     ambiguous text confidence is low and the caller decides (the mandate:
     default to French only when low-confidence AND the account is FR-leaning).
     """
-    t = f" {(text or '').lower()} "
+    # Sentence-final words still count: "...building launchpads for." is
+    # English even though the old literal " for " marker missed the period.
+    prose = re.sub(r"[.,!?;:()\[\]{}\"“”]", " ", (text or '').lower())
+    t = f" {prose} "
     fr = sum(t.count(m) for m in _FR_MARKERS) + 2 * len(_FR_ACCENTS_RE.findall(t))
     en = sum(t.count(m) for m in _EN_MARKERS)
     total = fr + en
@@ -492,15 +499,15 @@ def _rationed_shape_overused(text: str) -> bool:
     return False
 
 
-def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
-    """Validate a draft. kind ∈ {"original", "reply"}.
+def validate(text: str, kind: str = "original", *, source_language: str = "") -> Tuple[bool, str]:
+    """Validate a draft or a watched source. kind ∈ {"original", "reply", "source"}.
 
-    English-only Accounts require English on both surfaces. Otherwise
-    Originals use CONTENT_LANG_PRIMARY and Replies match the parent elsewhere.
+    English-only Accounts require English on all surfaces. Otherwise
+    Originals and sources use CONTENT_LANG_PRIMARY; Replies match the parent elsewhere.
     Returns (ok, reason); reason is "" when ok.
     Raises ValueError on any other kind: it would match no surface gate.
     """
-    if kind not in ("original", "reply"):
+    if kind not in ("original", "reply", "source"):
         raise ValueError(f"unknown content kind: {kind!r}")
     if not text or not text.strip():
         return (False, "empty")
@@ -523,7 +530,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         return (False, "violence/cruelty content (killing, terrorism, casualties) — never on-brand, SKIP")
 
     english_only = account.current().english_only
-    if not english_only and kind == "original":
+    if not english_only and kind in {"original", "source"}:
         # Enforce the CONFIGURED primary language (not hardcoded). Bug 2026-06-04:
         # this was pinned to "fr", so after the English flip it REJECTED our
         # English posts and let French through. Now: primary=en → reject French,
@@ -566,6 +573,23 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         prose = re.sub(r"https?://\S+|@[A-Za-z0-9_]+", "", text)
         lang, conf = detect_language(prose)
         short_english = kind == "reply" and lang == "unknown" and _short_english_reply(prose)
-        if (lang != "en" and not short_english) or reply_language.looks_french(prose):
+        # A source is someone else's post, not our drafted Original. X's
+        # English tag or an unambiguous short reaction can resolve an unknown
+        # result. Neither relaxes the language/quality gate on our Reply.
+        source_english = (kind == "source" and lang == "unknown"
+                          and (source_language.lower() == "en" or _short_english_source(prose)))
+        if ((lang != "en" and not short_english and not source_english)
+                or reply_language.looks_french(prose) or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):
             return (False, f"English-only account: detected {lang} @ {conf:.0%}")
     return (True, "")
+
+
+def _short_english_source(text: str) -> bool:
+    """Short source reactions only; never an outgoing-text exemption."""
+    words = re.findall(r"[A-Za-z]+", text.lower())
+    vocabulary = {"yes", "no", "wow", "so", "very", "beautiful", "amazing", "incredible",
+                  "exactly", "true", "indeed", "agreed", "absolutely", "cool", "nice",
+                  "interesting", "awesome", "excellent", "love", "lovely", "great", "wonderful",
+                  "brilliant", "this", "is", "really", "it", "works"}
+    return (len(text) <= 80 and not _FR_ACCENTS_RE.search(text)
+            and (bool(words) and set(words) <= vocabulary or not re.search(r"\w", text)))

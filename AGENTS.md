@@ -6,6 +6,57 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+The Operator's later request for likability and good energy updates both Voice
+files: warm enthusiasm, generous credit, playful observations that include the
+author, and short lines that can stand alone. Match the person's mood; keep
+facts honest and avoid forced agreement or requests for likes/follows.
+
+The send queue rechecks parent admission before waiting, so a post another
+worker already answered does not consume the next Reply gap.
+
+English detection also recognizes sentence-final function words, common modals
+and prepositions. English contractions and shared words such as on/me/son no
+longer count as French on their own; French and mixed prose remain refused.
+
+2026-10-26, engagement feedback and priority-watch repair — The Operator asks
+for 700–1,400 daily Replies and better engagement, then explicitly asks to fix
+the watched author's visits without likes, reposts or Replies. Targets are
+advisory, never a requirement to fill weak Replies or a new cap. Daily Replies
+remain uncapped. All Reply pipeline workers serialize their spacing wait and
+submission through a separate send lock; Safari is free while they wait. The
+write chokepoint still enforces admission, sleep, parent likes and permanent dedup.
+
+The Account adds first-hour Latest searches without a popularity floor, covering
+SI video, images, models, agents and builder workflows. Latest and Top share the
+existing search-count budget; both Home feeds still finish discovery before
+generation. Quoted text is labeled context and never replaces the target URL.
+Feed author harvesting now requires niche relevance. Prompts carry the last 20
+confirmed Replies to avoid repeated openings, with no invented video observations.
+
+Watched sources use source validation rather than our Original-writing style
+rules. A short English reaction or X's English language tag can resolve unknown
+language; explicit French, content restrictions and respected-account checks
+remain. This exemption never applies to our own outgoing text. Already-visible
+reposts are remembered before source validation. The watch attempts at most eight
+like/repost actions per pass and backs off refusals for five minutes; successful
+actions for one hour. Its Reply budget remains two generations per pass.
+
+The Account opts into `editorial.use_reply_route`: both Original drafting and
+independent review use the configured Reply route (currently Codex Sol/xhigh),
+without changing `.env`. Reposts leave room inside the existing profile ceiling
+for the minimum Original target. The configured arXiv RSS host is trusted.
+
+After confirmed Replies, passive receipt capture records an exact own status
+URL when visible, never guesses. The CSV adds a tenth `published_url` column;
+old headers are read positionally. A deterministic one-in-five sample keeps
+three days of disposable outcome data. A read-only report every 20 minutes
+visits at most 12 due own statuses, observes 1–3h and 24–36h counters with actual
+ages, reports coverage, likes per 1,000 views, topic/source/freshness/hour/length
+cohorts and separate follower change. Missing counters remain unknown; no causal
+attribution or automatic winner claim. Analytics failure cannot hide a shipped
+write or release its permanent claim. `profile_copy.txt` contains reviewable
+profile copy only. No profile write, bot start/restart or state migration.
+
 2026-10-26, natural Replies and generation reliability — The Operator asks for
 more Replies, a more conversational voice, occasional smileys and sometimes
 just a few words or one sentence. Both Voice files and Relation prompts allow
@@ -215,7 +266,7 @@ Account.
 | Model calls: the Call surfaces, each with its model setting, provider setting and CLI options (`SURFACES`; callers name a surface, only a Relation's CLI overrides its provider), provider adapters, the one fallback ladder (no fallback unless `LLM_FALLBACK_CLI` names one; an unknown provider fails the call and runs nothing), the CLI model a model setting gives the provider called, timeouts, the answer read once in the profile's text or JSON mode, call profile (the label only names the call in logs), status (answered, failed, provider exhausted) and the provider and model that answered | `src/core/llm_client.py` |
 | Trending posts for Trend slots and the Startup post: Top search, filters, ranking, prompt blocks | `src/editorial/trending.py` |
 | Reply jobs: direct, feed sweep, early bird, mega watch, debate, replyback, babysit, notify, search | `src/replies/` |
-| Reply prompts: Voice, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
+| Reply prompts: Voice, recent confirmed text, hard rules, dossier, language, SKIP, failure and rate-limit outcomes (provider exhausted) | `src/replies/reply_generator.py` |
 | Account's SI publication wording, applied before review and final validation; evidence and literal references preserved | `src/core/reply_wording.py` |
 | Reply source: the candidates a job's declaration (oldest post, root posts only, expected author, niche, order) selects among its scraped posts, the niche filter, the fresh-and-rising order | `src/replies/reply_source.py` |
 | Reply pipeline: admission before generation, set-aside posts, rate-limit stop, spacing wait, write, log after ship with the provider and model that wrote the Reply | `src/replies/reply_pipeline.py` |
@@ -229,6 +280,7 @@ Account.
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: permanent status-ID history with process-locked claims | `src/guards/replied_store.py` |
 | Priority watch: first-enable boundaries, Latest discovery and independent like/repost/Reply attempts | `src/replies/priority_watch.py` |
+| Reply outcomes: exact own receipts, sampled public counters and advisory daily targets | `src/core/reply_feedback.py`, `src/x/reply_metrics.py` |
 | Repost history: permanent claims and uncertain publication reservations; verified page controls | `src/guards/repost_store.py`, `src/x/repost_page.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |
 | Engine settings: each `.env` key declared once with type, default, floor or ceiling; `.env` read once at start, an unknown or badly typed key stops it; the `settings_override` fixture's overrides; the only reader of the environment with `config.dry_run()` | `src/core/settings.py` |

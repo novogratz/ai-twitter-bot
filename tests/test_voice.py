@@ -30,7 +30,7 @@ def test_si_maximalist_preferences_keep_natural_style_and_honest_identity():
 
 def test_voice_prioritizes_reader_value():
     text = " ".join(VOICE_FR.read_text().lower().split())
-    assert "useful new way" in text and "first-party sources" in text
+    assert "notice the detail that helps this person" in text and "first-party sources" in text
     assert "skip weak contributions" in text
 
 
@@ -59,7 +59,8 @@ def test_persona_is_woman_mom_in_the_one_voice():
     spine = " ".join(VOICE_FR.read_text().lower().split())
     assert "woman" in spine and "mom" in spine and "45-year-old" in spine
     assert "fictional 45-year-old woman and mom of one" in spine
-    assert "exceptional intelligence" in spine and "never announce that you know everything" in spine
+    assert "sharp technical judgment with warmth and curiosity" in spine
+    assert "never announce that you know everything" in spine
     assert "answer identity questions honestly as a bot" in spine
 
     from src.core import account
@@ -95,7 +96,7 @@ def test_savvy_tech_mom_register():
     surface inherits it."""
     spine = " ".join(VOICE_FR.read_text().lower().split())
     assert "45-year-old woman and mom" in spine and "never put down the person" in spine
-    assert "useful new way" in spine and "patience, perspective and humor" in spine
+    assert "generous with credit" in spine and "patience, perspective and humor" in spine
 
 
 def test_spicy_dial_suggestive_never_explicit():

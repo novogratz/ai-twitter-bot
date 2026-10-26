@@ -321,3 +321,13 @@ whitelist, the respect list, the following baseline. The bot reads it and
 never writes it; missing or unreadable, the job that needs it stops, and
 nothing recreates it. What the bot keeps beside it is a state file.
 _Avoid_: config file, Operator state, seed file
+
+## Reply outcome measurements (2026-10-26)
+
+A **Reply receipt** is an exact own status URL captured after SHIPPED; it is not
+the parent URL and never an admission claim. A **Reply sample** selects one in
+five parent IDs independently of results. Its **1h/24h observations** are bounded
+windows (1–3h/24–36h), with actual ages and nullable counters. A **cohort** groups
+observations by topic, source, parent freshness, send hour and Reply length;
+it describes associations, not causal uplift. The **daily Reply target** is an
+advisory range, distinct from a publication cap or a requirement to send.

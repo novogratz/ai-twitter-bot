@@ -72,9 +72,11 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.replies.debate_bot import run_debate_cycle
         from src.replies.mega_watch_bot import run_mega_watch_cycle
         from src.replies.first_hour_babysitter import run_babysit_cycle
+        from src.core.reply_feedback import run_reply_report
 
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        add(health.wrap_job(run_reply_report, "reply_report", safari_health=False), 20, "reply_report_job")
         if account.current().auto_engage_handles:
             from src.replies.priority_watch import run_priority_watch_cycle
             add(health.wrap_job(run_priority_watch_cycle, "priority_watch"),
@@ -143,6 +145,9 @@ def main():
                           "target_posts": target,
                           "max_profile_posts": config.posts_ceiling(),
                           "replies": "unlimited",
+                          "advisory_reply_targets": [settings.get("REPLY_DAILY_TARGET_MIN"),
+                                                     settings.get("REPLY_DAILY_TARGET_MAX")],
+                          "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
                           "quotes": 0,
                           "reposts": "watched authors only" if account.current().auto_engage_handles else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),

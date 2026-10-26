@@ -59,6 +59,7 @@ class Editorial:
     feeds: tuple  # (publisher, url) pairs
     evergreen: tuple  # EvergreenTopic
     trusted_hosts: frozenset
+    use_reply_route: bool = False  # opt in to the configured Reply provider/model for draft and review
 
 
 @dataclass(frozen=True)
@@ -144,7 +145,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
             top.fail(f"auto_engage_handles[{i}]", "takes an X handle without @")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
-                                 "evergreen": list, "trusted_hosts": list})
+                                 "evergreen": list, "trusted_hosts": list},
+                       optional={"use_reply_route": bool})
     relevance = _Table(shown, "relevance", top["relevance"],
                        required={"topic": str, "off_topic": str})
     _check_voice(folder, os.path.dirname(shown))
@@ -194,7 +196,8 @@ def _editorial(table) -> Editorial:
     return Editorial(slots=tuple(slots), trend_angle=table["trend_angle"],
                      trend_clocks=frozenset(trend), exceptional_clocks=frozenset(exceptional),
                      feeds=feeds, evergreen=evergreen,
-                     trusted_hosts=frozenset(table.items("trusted_hosts", str)))
+                     trusted_hosts=frozenset(table.items("trusted_hosts", str)),
+                     use_reply_route=table.get("use_reply_route", False))
 
 
 def _pattern(table, key, flags=re.I) -> re.Pattern:
@@ -252,6 +255,7 @@ class Searches:
     hot_tab: tuple
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
+    latest: tuple = ()  # fresh builder/demo discoveries without a popularity threshold
 
 
 def _network(top) -> Network:
@@ -279,12 +283,16 @@ def _niche(top) -> Niche:
 
 
 def _searches(top) -> Searches:
-    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES})
-    for key in _SEARCHES:
+    table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
+                   optional={"latest": list})
+    for key in (*_SEARCHES, "latest"):
+        if key not in table:
+            continue
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
-    return Searches(**{key: tuple(table[key]) for key in _SEARCHES})
+    return Searches(**{key: tuple(table[key]) for key in _SEARCHES},
+                    latest=tuple(table.get("latest", [])))
 
 
 class _Table:

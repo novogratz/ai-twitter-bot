@@ -268,6 +268,44 @@ def _node_run(js, document_js):
     return res.stdout.strip()
 
 
+def test_scrape_keeps_outer_original_and_quote_context_separate(monkeypatch, browser):
+    fake = browser()
+    _tweets(monkeypatch)
+    fake_dom = r'''
+    const article = {innerHTML:'', innerText:'Worth trying. SI video with consistent characters.'};
+    const nested = {};
+    const at = '2026-10-26T11:00:00Z';
+    function element(text, href, quoted=false, owner=article, timestamp=at) {
+        return {
+            textContent:text,
+            closest:selector => selector === 'article' ? owner : quoted ? {} : null,
+            getAttribute:name => name === 'href' ? href : name === 'datetime' ? timestamp : '',
+            querySelector:selector => selector === 'time[datetime]' ? element('', '', quoted, owner, timestamp) : null
+        };
+    }
+    const quote = element('SI video with consistent characters.', '', true);
+    const outer = element('Worth trying.', '');
+    const inner = element('Unrelated nested comment.', '', false, nested);
+    const quotedLink = element('', '/quoted/status/100', true, article, '2026-10-25T09:00:00Z');
+    const nestedLink = element('', '/nested/status/200', false, nested);
+    const originalLink = element('', '/builder/status/300');
+    article.querySelectorAll = selector => {
+        if (selector.includes('tweetText')) return [quote, inner, outer];
+        if (selector.includes('/status/')) return [quotedLink, nestedLink, originalLink];
+        return [];
+    };
+    article.querySelector = selector => selector.includes('User-Name') ? element('Builder', '') : null;
+    const document = {querySelectorAll:() => [article]};
+    '''
+    result = json.loads(_node_run(fake.calls[0].js, fake_dom))
+    assert len(result) == 1
+    assert result[0]["u"] == "https://x.com/builder/status/300"
+    assert result[0]["t"] == "Worth trying."
+    assert result[0]["qt"] == "SI video with consistent characters."
+    assert result[0]["ts"] == "2026-10-26T11:00:00Z"
+    assert result[0]["ir"] is False
+
+
 def test_own_replies_script_reads_a_thread(monkeypatch, browser):
     fake = browser()
     _own_replies(monkeypatch)
@@ -383,5 +421,5 @@ def test_scrape_text_limit_reaches_the_page_script(monkeypatch, browser):
     monkeypatch.setattr(scraper, "_record_blank_page", lambda **k: None)
     scraper._scrape_tweets_from_page("search 'ai'", 10)
     scraper._scrape_tweets_from_page("search 'ai'", 10, text_limit=600)
-    assert "text.substring(0, 200), a: author" in fake.calls[0].js
-    assert "text.substring(0, 600), a: author" in fake.calls[1].js
+    assert "text.substring(0, 200), qt: quoted.substring(0, 200), a: author" in fake.calls[0].js
+    assert "text.substring(0, 600), qt: quoted.substring(0, 600), a: author" in fake.calls[1].js

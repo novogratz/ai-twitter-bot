@@ -12,17 +12,23 @@ _FR_MARKERS = re.compile(r"\b(le|la|les|un|une|des|du|de|d|dans|pour|sur|avec|pa
 _FR_ACCENT_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]", re.IGNORECASE)
 _FR_SLANG_RE = re.compile(r"\b(ptdr|mdr|wesh|frerot|frérot|voila|voilà|délivrance|refait)\b", re.IGNORECASE)
 _EN_MARKERS = re.compile(r"\b(the|this|that|with|from|just|was|were|are|is|you|your|market|portfolio|ride|ticket|line|bug|beta|test|rug|deliverance|original|inevitable|called|expected)\b", re.IGNORECASE)
+_EN_CONTRACTIONS = re.compile(r"\b(?:i|you|we|they|he|she|it|that|there|who)['’](?:d|ll|ve|re|s|m)\b", re.I)
+_SHARED_WORDS = {"on", "me", "son", "ton", "grave", "d", "c", "j"}
 
 
 def looks_french(text: str) -> bool:
     if not text:
         return False
-    markers = len(_FR_MARKERS.findall(text))
-    if markers >= 2:
+    # "I'd" is not the French elision d', and English "on/me/son" do
+    # not establish French by themselves (observed refusals, 2026-10-26).
+    prose = _EN_CONTRACTIONS.sub(" ", text)
+    words = [w.lower() for w in _FR_MARKERS.findall(prose)]
+    markers = len(words)
+    if markers >= 2 and any(w not in _SHARED_WORDS for w in words):
         return True
-    if markers >= 1 and _FR_ACCENT_RE.search(text):
+    if markers >= 1 and _FR_ACCENT_RE.search(prose):
         return True
-    return bool(_FR_SLANG_RE.search(text))
+    return bool(_FR_SLANG_RE.search(prose))
 
 
 def looks_english(text: str) -> bool:

@@ -46,7 +46,7 @@ PRE_187 = {
     "trend_slots": ["10:00", "13:00", "15:00"],
     "startup_post": "every start in waking hours, restarts included",
     "jobs": [
-        "editorial_job", "direct_reply_job", "feed_sweep_job", "early_bird_job", "replyback_job",
+        "editorial_job", "direct_reply_job", "feed_sweep_job", "reply_report_job", "early_bird_job", "replyback_job",
         "debate_job", "mega_watch_job", "babysit_job", "notify_job", "engage_job", "followback_job",
         "follow_engagers_job", "like_job", "pin_job", "session_refresh_job", "follower_tracker_job",
         "reach_report_job",
@@ -67,7 +67,7 @@ PRE_187_BOUNDED = {
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
-            "auto_engage_handles"}
+            "auto_engage_handles", "advisory_reply_targets", "editorial_route"}
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 2}
 REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300}
@@ -111,14 +111,16 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert set(shown) == set(PRE_187) | NEW_KEYS
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
-    expected["jobs"].insert(3, "priority_watch_job")
+    expected["jobs"].insert(4, "priority_watch_job")
     expected["reposts"] = "watched authors only"
     assert shown["auto_engage_handles"] == ["elonmusk"]
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
+    expected["slots"][1][1] = "A useful SI video or image workflow: concrete first step, output and limitation"
+    expected["slots"][6][1] = "An SI video, image or model tool update and what changes for creators"
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 10}
+        "HOURLY_BREAK_MINUTES": 10, "REPLY_DAILY_TARGET_MIN": 700, "REPLY_DAILY_TARGET_MAX": 1400}
     assert shown["settings_warnings"] == []
 
 
@@ -144,7 +146,7 @@ def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):
     bounded = {name: bound["value"] for name, bound in shown["bounded_settings"].items()}
     assert bounded == {**PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "MAX_ORIGINALS_PER_DAY": 4, "MAX_FOLLOWS_PER_DAY": 5,
                        "LIKE_BOT_DAILY_CAP": 100, "FEED_SCROLL_PASSES": 8,
-                       "FEED_SWEEP_SCAN_LIMIT": 80, "HOURLY_BREAK_MINUTES": 0}
+                       "FEED_SWEEP_SCAN_LIMIT": 80, "HOURLY_BREAK_MINUTES": 0, "REPLY_DAILY_TARGET_MIN": 0, "REPLY_DAILY_TARGET_MAX": 0}
     assert shown["settings_warnings"] == []
     assert state_store.root() == str(project / "state" / "example")
     assert os.listdir(project / "state") == ["theaishrink"]

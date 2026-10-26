@@ -88,6 +88,14 @@ after adding or changing one, run
 fails while it is stale, and on any key this page names that the engine does
 not know.
 
+
+The Account's optional `editorial.use_reply_route` selects REPLY rather than
+ORIGINAL for both Original draft and review (default false). The live Account
+sets it true. Optional `searches.latest` adds first-hour Latest discoveries to
+the existing rotating search budget. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
+report values only; the live Account sets 700/1400. They change neither admission,
+spacing, generation budgets nor the uncapped daily Reply policy.
+
 ## Policy ceilings
 
 The current rules are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). These
@@ -239,6 +247,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
+| `REPLY_DAILY_TARGET_MIN` | int | `0` | floor `0` | Advisory daily Reply target; never changes admission or pacing. |
+| `REPLY_DAILY_TARGET_MAX` | int | `0` | floor `0` | Upper advisory daily Reply target; neither a cap nor a quota to fill. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
