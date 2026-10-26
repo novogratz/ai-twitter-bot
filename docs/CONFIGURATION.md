@@ -55,6 +55,8 @@ parents. It overrides `CONTENT_LANG_PRIMARY`, `FR_FORCED_REPLY_HANDLES` and
 per-job language selection, always uses `voice_en.md`, and checks the final
 outgoing text on every publication surface. French, mixed or unidentified
 prose is refused; literal URLs and @handles do not decide the language.
+For Replies up to 80 characters, a narrow English-word fallback also recognizes
+clear short reactions. Generic applause and emoji-only text remain refused.
 
 The optional Account boolean `standalone_replies_only` defaults to false for
 other Accounts; the live Account sets it to true. It disables debate, replyback
@@ -140,6 +142,12 @@ below still apply to settings that the operator has not set.
 - `CODEX_REASONING_EFFORT` sets `model_reasoning_effort` on every Codex
   invocation; blank keeps the CLI's own configured default. It does not
   change another provider or the operator's global Codex configuration.
+- `CODEX_MIN_TIMEOUT_SECONDS` gives primary Codex calls a minimum of 300
+  seconds by default, including Relations that requested 60 seconds. Set 0
+  to keep caller/general deadlines. The primary ceiling remains 360 seconds;
+  bedtime and breaks can shorten every call. Fallback budgets are unchanged.
+  Codex emits JSON events; text drafting explicitly disables built-in web
+  search, shell tools and apps, while the research route retains search.
 - `NEWS_MODEL`, `REPLY_MODEL` and `PRIORITY_REPLY_MODEL` name the model of a
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
@@ -202,7 +210,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DUP_TOPIC_WINDOW_HOURS` | finite float | `24.0` | floor `24.0` | Hours a post counts for the same-story check. |
 | `DUP_TOPIC_SHARED_WORDS` | int | `3` | floor `0`, ceiling `3` | Content words shared with a same-entity post that make a same story. |
 | `DUP_TEXT_WINDOW_HOURS` | finite float | `48.0` | floor `48.0` | Hours a post counts for the text-similarity checks. |
-| `REPLY_MIN_CHARS` | int | `25` | floor `25` | Shortest Reply content_guard accepts. |
+| `REPLY_MIN_CHARS` | int | `8` | floor `8` | Shortest Reply content_guard accepts; generic applause is still refused. |
 | `RATIONED_SHAPE_WINDOW_HOURS` | int | `6` |  | Hours a rationed opener shape blocks its reuse. |
 | `FOLLOWING_COUNT_OVERRIDE` | str | unset |  | Following count the ceiling uses instead of following_count.json; digits only. |
 | `FOLLOW_MIN_FOLLOWERS` | int | `2000` |  | Followers a non-Engager needs to pass the follow quality gate. |
@@ -220,6 +228,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `LLM_FALLBACK_CLI` | str | blank |  | Fallback provider: codex, gemini or ollama; blank means none. |
 | `LLM_DISABLE_FALLBACK` | 0 or 1 | `0` |  | 1 turns the fallback off whatever LLM_FALLBACK_CLI says. |
 | `CODEX_REASONING_EFFORT` | str | blank |  | Codex reasoning effort (for example xhigh); blank keeps the CLI's configured default. |
+| `CODEX_MIN_TIMEOUT_SECONDS` | int | `300` | floor `0`, ceiling `360` | Minimum primary Codex call budget, still cut short by sleep or breaks; 0 keeps the caller's timeout. |
 | `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |
 | `CODEX_FALLBACK_MODEL` | str | `gpt-5.4-mini` |  | Codex model as the fallback; blank means this default. |
 | `GEMINI_FALLBACK_MODEL` | str | `gemini-2.0-flash` |  | Gemini model as the fallback; blank means this default. |

@@ -9,6 +9,7 @@ that name), which hands back the answer already read in the output mode of
 the call profile the ReplyCall declares. The ReplyCall names its call
 surface; `llm_client.resolve` gives its model, provider and CLI options.
 """
+import hashlib
 import re
 from dataclasses import dataclass
 from enum import Enum
@@ -161,5 +162,30 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
     })
-    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt,
+    delivery = _delivery(author, text) if call.profile.output is Output.TEXT else ""
+    return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, delivery,
                                     reply_wording.prompt_block(), *anchors]))
+
+
+def _delivery(author: str, text: str) -> str:
+    """Vary length and occasional smileys consistently for the same parent.
+
+    These are drafting directions, never padding, truncation or appended emoji.
+    Evidence and the Voice still decide whether the contribution fits.
+    """
+    seed = hashlib.sha256(f"{author.lower()}\n{text}".encode()).digest()
+    shape = seed[0] % 10
+    if shape < 2:
+        length = "Aim for 3–8 words: a specific reaction or a small joke about this post. Stop when it lands."
+    elif shape < 8:
+        length = "Aim for one conversational sentence, roughly 9–22 words. No second sentence explaining the first."
+    else:
+        length = "Use one or two short sentences, roughly 20–35 words, only if the point needs that space."
+    smiley = ("At most one smiley is welcome if it suits the mood; omit it for serious or sensitive subjects."
+              if seed[1] % 6 == 0 else "Use no emoji or smiley in this reply.")
+    return ("DELIVERY FOR THIS REPLY (within the task's character limit):\n"
+            f"{length}\n{smiley}\n"
+            "A relevant reaction can be enough; do not bolt on a lesson, caveat or question. "
+            "Be specific to the supplied post, never generic applause. Accuracy wins over brevity. "
+            "Do not research, browse or call tools for this reply. Use the supplied context and stable "
+            "knowledge; SKIP if a worthwhile reply needs facts you do not have.")

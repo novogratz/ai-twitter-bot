@@ -1,4 +1,37 @@
-# Editorial policy — October 24, 2026
+# Editorial policy — October 26, 2026
+
+## Natural Replies and reliable generation
+
+The October 26 Operator request explicitly permits more Replies, short natural
+reactions, one-sentence answers and occasional smileys. This supersedes the
+25-character Reply floor and Relation prompts' 80-character minimum. The new
+floor is 8; Accounts may tighten it. Generic applause, emoji-only text, French,
+mixed and unidentified prose remain refused. Only short Replies can use the
+narrow English-word fallback; Originals keep the existing language check.
+
+Both Voice files and Relation prompts favor specific reactions, direct answers
+and dry wit, using technical explanation when it helps. No compulsory caveat,
+lesson or question ending. Shared text drafting assigns a stable direction per
+parent: roughly 20% a few words, 60% one sentence and 20% up to two short
+sentences. About one in six prompts permits one smiley if the subject fits;
+most request none. This is a prompt distribution, not a forced output quota.
+No emoji is appended and no answer is padded or cut to fit a word target.
+The main Reply prompt sees up to 1,200 source characters rather than 200.
+Original drafts may use 80–210 characters when their sourced point is complete.
+
+The morning investigation recorded 15 shipped Replies between 04:33 and 05:16,
+20 generation timeouts at 120 seconds, and the operator's stop at 05:22.
+Primary Codex calls now get a 300-second minimum budget through
+`CODEX_MIN_TIMEOUT_SECONDS` (0 disables the floor), still bounded by 360 seconds
+and the next sleep/break. Other providers and fallback budgets are unchanged.
+Drafting disables built-in web search, shell tools and apps; research keeps
+its search tools. Codex returns structured events so timeout diagnostics can
+retain provider errors without publishing partial answers. This does not assert
+that an external provider stall is repaired.
+
+Sol/xhigh, fallback disabled, English/SI wording, uncapped daily Replies,
+like-before-Reply, spacing, standalone-only permanent dedup and profile ceilings
+remain. No environment edit, production-state migration or bot start is included.
 
 ## Uncapped Replies and required parent likes
 
@@ -474,7 +507,7 @@ warnings under `settings_warnings`.
 | `DUP_TOPIC_SHARED_WORDS`, shared words that make a same story | 0 to 3 | 3 |
 | `DUP_TOPIC_WINDOW_HOURS`, same-story window | at least 24 h | 24 |
 | `DUP_TEXT_WINDOW_HOURS`, text-similarity window | at least 48 h | 48 |
-| `REPLY_MIN_CHARS`, shortest Reply | at least 25 characters | 25 |
+| `REPLY_MIN_CHARS`, shortest Reply (October 26 amendment) | at least 8 characters | 8 |
 
 The duplicate settings may only get stricter: a lower threshold or count, or
 a longer window, catches more duplicates; `DUP_SHARED_BIGRAMS` stops at 1,

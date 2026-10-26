@@ -722,9 +722,9 @@ def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new
 
 # Operator-approved Relation prompts, updated for the October 23 SI Voice.
 RELATION_PROMPTS = {
-    "graphseo": (1450, "39e57dec81bdcf17e3b63a27b73bb1e446d87f29ea526742dd224f87dff8adde"),
-    "bestie": (1117, "eb0fc04361dc40d6e622f82ea552b57d41ed941abbd088eb8e654f9398d96c4b"),
-    "buddy": (1018, "171825f63ff84330b590cda4a4230f0741eecdd38b53aa6aea468111d645f097"),
+    "graphseo": (1598, "cfa6f0e75be102d03e578069100a68654b380585a014ddaaf8f241213d23b432"),
+    "bestie": (1228, "5f1e09d5ee1f84dd71fbd1173c34962a1c30e1e27e0098f2dfe01654601bb79a"),
+    "buddy": (1157, "1576628dde4c3a827044d898e220763e1a162262715c15170baa3b89f0f783ff"),
 }
 # personality_store.get_account("mcnalliem") before #203, a dossier in the code.
 OLD_MCNALLIEM = {

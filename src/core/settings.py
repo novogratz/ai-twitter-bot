@@ -204,7 +204,7 @@ _declare("DUP_TOPIC_WINDOW_HOURS", float, 24.0, "Hours a post counts for the sam
 _declare("DUP_TOPIC_SHARED_WORDS", int, 3, "Content words shared with a same-entity post that make a same story.",
          floor=0, ceiling=3)
 _declare("DUP_TEXT_WINDOW_HOURS", float, 48.0, "Hours a post counts for the text-similarity checks.", floor=48.0)
-_declare("REPLY_MIN_CHARS", int, 25, "Shortest Reply content_guard accepts.", floor=25)
+_declare("REPLY_MIN_CHARS", int, 8, "Shortest Reply content_guard accepts; generic applause is still refused.", floor=8)
 _declare("RATIONED_SHAPE_WINDOW_HOURS", int, 6, "Hours a rationed opener shape blocks its reuse.")
 _declare("FOLLOWING_COUNT_OVERRIDE", str, None, "Following count the ceiling uses instead of following_count.json; digits only.")
 _declare("FOLLOW_MIN_FOLLOWERS", int, 2000, "Followers a non-Engager needs to pass the follow quality gate.")
@@ -225,6 +225,7 @@ _declare("LLM_TIMEOUT_SECONDS", int, 180, "Default model-call timeout, and Ollam
 _declare("LLM_FALLBACK_CLI", str, "", "Fallback provider: codex, gemini or ollama; blank means none.")
 _declare("LLM_DISABLE_FALLBACK", bool, False, "1 turns the fallback off whatever LLM_FALLBACK_CLI says.")
 _declare("CODEX_REASONING_EFFORT", str, "", "Codex reasoning effort (for example xhigh); blank keeps the CLI's configured default.")
+_declare("CODEX_MIN_TIMEOUT_SECONDS", int, 300, "Minimum primary Codex call budget, still cut short by sleep or breaks; 0 keeps the caller's timeout.", floor=0, ceiling=360)
 _declare("LLM_FALLBACK_MODEL", str, "", "Model of every fallback call; blank, the fallback CLI's own below.")
 _declare("CODEX_FALLBACK_MODEL", str, "gpt-5.4-mini", "Codex model as the fallback; blank means this default.")
 _declare("GEMINI_FALLBACK_MODEL", str, "gemini-2.0-flash", "Gemini model as the fallback; blank means this default.")

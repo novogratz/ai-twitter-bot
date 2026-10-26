@@ -315,10 +315,22 @@ with the lines of the prompt dropped since `codex exec` echoes it
 one, and the codex lockout reads the same signal. A limit at one rank only, or any other failure,
 leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
+The October 26 Reply generator assigns stable length and occasional-smiley
+directions per parent, with no automatic emoji insertion or word-count trimming.
+Direct Reply routes supply up to 1,200 source characters. The content guard
+accepts specific short English Replies down to 8 characters, while generic
+applause, emoji-only and unclear-language text remain refused.
+
+Codex emits JSON events. Drafting explicitly disables built-in web search, shell
+tools and apps; the search surface retains search. A timed-out process yields
+no usable draft, while structured provider errors remain available to diagnostics.
+
 `_timeout` computes every timeout: Ollama at least `LLM_TIMEOUT_SECONDS`
 (180) and the profile's floor, a CLI primary at most 360s, a CLI after
 Ollama at most 150s, a CLI after a CLI the requested timeout, all capped by
-bedtime.
+bedtime or the next break. A primary Codex call additionally has the
+`CODEX_MIN_TIMEOUT_SECONDS` floor (default 300, 0 to disable), inside that
+360-second ceiling. This does not alter other providers or fallback budgets.
 
 `run_llm` reads the answer once, in the output mode the profile declares,
 whatever the provider and the rank. It unwraps NDJSON events and CLI JSON

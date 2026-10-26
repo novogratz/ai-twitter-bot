@@ -309,7 +309,10 @@ fresh source earns a sharper post.
 Make ONE useful point, in one or two complete conversational sentences.
 Choose a concrete action with its reason, OR a clear concept with an example,
 OR a sourced update with its consequence. Do not squeeze all formats together.
-Aim for 150–210 characters; finish the thought before {schemas.TEXT_MAX_CHARS} characters.
+Use the space the idea needs, roughly 80–210 characters; finish the thought before {schemas.TEXT_MAX_CHARS} characters.
+Lead with the interesting detail. Contractions and a little dry wit are welcome.
+A second sentence should add something, not restate the first. No routine caveat
+or question ending. An occasional single smiley can fit a light subject.
 No hashtags, markdown, URLs, or engagement bait.
 Sound like a real person who read the piece and pulled out the useful bit, not
 a headline bot or a classroom handout.

@@ -292,6 +292,51 @@ _EN_MARKERS = (
 )
 _FR_ACCENTS_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]")
 
+# Short English reactions often have no function-word markers. This narrow
+# fallback applies only to Replies of at most 80 characters, never Originals.
+_SHORT_ENGLISH_CUES = re.compile(
+    r"\b(?:my|mine|your|yours|that's|it's|i'm|i'd|i'll|isn't|doesn't|can't|won't|"
+    r"less|more|still|finally|worth|wait|love|lovely|please|thanks|ouch|yep|nope|"
+    r"tiny|cheap|cheaper|expensive|faster|slower|wins|hurts|hurt|works|working|"
+    r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
+    r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
+    r"required|without|better|worse|good|neat|pay|rent|checking|shipped)\b", re.IGNORECASE)
+_FRENCH_REPLY_CUES = re.compile(
+    r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
+    r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
+_SHORT_ENGLISH_WORDS = set("""
+a an the and or but of to for with this that these those their you your yours
+they we i it is are was were be been my mine our ours its that's it's i'm i'd
+i'll isn't doesn't can't won't don't didn't you're you've there's who's let's
+less more still finally worth wait love lovely please thanks ouch yep nope tiny
+cheap cheaper expensive faster slower wins win hurts hurt works working nicely
+quietly neatly honestly exactly saved saving belongs beats beautifully
+delightfully well done fair enough offline online local model models big small
+tokens token mistakes mistake lag latency time money compute memory budget
+price bill costs cost benchmarks benchmark quantization context speed useful
+use detail distinction result results test tests laptop gpu si inference training code
+coding power cooling heat bandwidth retry retries starts cold warm really
+actually already now then back again too much so little looks feels needed
+old new same fewer empty seats tricks required internet without better worse
+good neat pay pays paid rent checking checked check shipped ship shipping
+can could should would might may must never ever yet before after off under
+out over only even also each every all any some none no yes not because while
+if when where what which why how who whom whose being having has have had
+get gets got getting make makes made making do does did doing need needs
+want wants try trying tried keep keeps kept let lets left right going gone
+way thing things part job work doing enough almost finally actually both
+""".split())
+
+
+def _short_english_reply(prose: str) -> bool:
+    normalized = prose.replace("’", "'")
+    words = re.findall(r"[^\W\d_]+(?:'[^\W\d_]+)?", normalized.lower())
+    return (len(prose.strip()) <= 80 and len(words) >= 2
+            and all(word in _SHORT_ENGLISH_WORDS for word in words)
+            and bool(_SHORT_ENGLISH_CUES.search(normalized))
+            and not _FRENCH_REPLY_CUES.search(normalized)
+            and not _FR_ACCENTS_RE.search(normalized.lower()))
+
 
 def detect_language(text: str) -> Tuple[str, float]:
     """Lightweight FR/EN detector. Returns (lang, confidence in 0..1).
@@ -520,6 +565,7 @@ def validate(text: str, kind: str = "original") -> Tuple[bool, str]:
         # Operator, 2026-10-23: every surface uses English; references are not prose.
         prose = re.sub(r"https?://\S+|@[A-Za-z0-9_]+", "", text)
         lang, conf = detect_language(prose)
-        if lang != "en" or reply_language.looks_french(prose):
+        short_english = kind == "reply" and lang == "unknown" and _short_english_reply(prose)
+        if (lang != "en" and not short_english) or reply_language.looks_french(prose):
             return (False, f"English-only account: detected {lang} @ {conf:.0%}")
     return (True, "")

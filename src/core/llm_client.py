@@ -478,12 +478,18 @@ def _build_cmd(
             cmd.extend(["-c", f"model_reasoning_effort={json.dumps(effort)}"])
         if allowed_tools and any(t.lower() in {"websearch", "webfetch"} for t in allowed_tools):
             cmd.append("--search")
+        else:
+            # Draft from supplied evidence; cached web search is otherwise
+            # enabled by the CLI even without --search (operator 2026-10-26).
+            cmd.extend(["-c", 'web_search="disabled"',
+                        "-c", "features.shell_tool=false", "-c", "features.apps=false"])
         cmd.extend([
             "exec",
             "--model", model,
             "--sandbox", "read-only",
             "--ephemeral",
             "--skip-git-repo-check",
+            "--json",
             prompt,
         ])
         return cmd
@@ -588,8 +594,14 @@ def _run_cmd(
                 os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
             except (ProcessLookupError, PermissionError):
                 proc.kill()
-            proc.communicate()
-            return LLMResult(124, "", f"{label} timed out after {timeout}s")
+            stdout, _stderr = proc.communicate()
+            # Preserve structured provider errors for quota classification;
+            # never turn partial text from a killed process into a Reply.
+            error = _envelope_error(stdout or "")
+            note = f"{label} timed out after {timeout}s"
+            if error:
+                note += f"; provider error: {error[:300]}"
+            return LLMResult(124, "", note)
     except FileNotFoundError as exc:
         return LLMResult(127, "", f"{label} command not found: {exc.filename}")
     return LLMResult(proc.returncode, stdout or "", stderr or "")
@@ -812,7 +824,10 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
     if provider == "ollama":
         seconds = max(requested or 0, default, profile.min_timeout)
     elif after is None and provider in _CAPPED_PRIMARY_CLIS:
-        seconds = min(requested or default, _CLI_PRIMARY_CAP)
+        budget = requested or default
+        if provider == "codex":
+            budget = max(budget, settings.get("CODEX_MIN_TIMEOUT_SECONDS"))
+        seconds = min(budget, _CLI_PRIMARY_CAP)
     elif after == "ollama":
         seconds = min(requested or default, _CLI_AFTER_OLLAMA_CAP)
     else:
@@ -992,7 +1007,7 @@ def _text_from_event(obj: dict) -> str:
 
 
 def _unwrap_ndjson(raw: str) -> str | None:
-    """Try parsing OpenCode JSON events and return concatenated text.
+    """Read CLI event streams, keeping only a completed Codex turn's last answer.
 
     Tolerant of truncated tails: if the stream was cut mid-line (provider
     killed by timeout), drop the partial line and return whatever text the
@@ -1001,6 +1016,9 @@ def _unwrap_ndjson(raw: str) -> str | None:
     lines = raw.strip().splitlines()
     parts: list[str] = []
     saw_any_json = False
+    codex_stream = False
+    codex_complete = False
+    codex_answer = ""
     for line in lines:
         line = line.strip()
         if not line:
@@ -1021,10 +1039,28 @@ def _unwrap_ndjson(raw: str) -> str | None:
         saw_any_json = True
         if not isinstance(obj, dict):
             continue
+        event = obj.get("type")
+        if event in {"thread.started", "turn.started", "turn.completed", "turn.failed"}:
+            codex_stream = True
+            if event == "turn.started":
+                codex_answer = ""
+                codex_complete = False
+            elif event == "turn.completed":
+                codex_complete = True
+            elif event == "turn.failed":
+                codex_complete = False
+            continue
+        item = obj.get("item")
+        if event == "item.completed" and isinstance(item, dict) and item.get("type") == "agent_message":
+            codex_stream = True
+            codex_answer = str(item.get("text") or "")
+            continue
         text = _text_from_event(obj)
         if text:
             parts.append(text)
     if saw_any_json:
+        if codex_stream:
+            return codex_answer if codex_complete else ""
         return "".join(parts)
     return None
 

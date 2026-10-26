@@ -5,6 +5,31 @@ import pytest
 from src.guards import content_guard as cg
 
 
+@pytest.mark.parametrize("text", [
+    "Offline wins.", "Less lag. 🙂", "Worth the wait.", "Tiny model, big win.",
+    "Cheap tokens, expensive mistakes.", "That's a useful distinction.",
+    "Old laptop, new tricks, no internet required.", "Same model, fewer empty GPU seats.",
+])
+def test_short_specific_english_replies_are_allowed(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("text", [
+    "great post 🙂", "Exactly!", "lol 😂", "🙂🙂🙂🙂🙂🙂🙂🙂",
+    "Merci beaucoup 🙂", "Love merci", "Tiny model mais pas utile", "J'adore, lovely",
+    "Lovely абракадабра", "Cheap wunderbar",
+    "Quantization benchmarks.",
+])
+def test_short_reply_support_keeps_generic_unknown_and_french_closed(text):
+    assert not cg.validate(text, kind="reply")[0]
+
+
+def test_short_english_exception_is_reply_only_and_respects_tighter_minimum(settings_override):
+    assert not cg.validate("Offline wins.", kind="original")[0]
+    settings_override(REPLY_MIN_CHARS=40)
+    assert not cg.validate("Offline wins.", kind="reply")[0]
+
+
 @pytest.mark.parametrize("kind", ["original", "reply"])
 @pytest.mark.parametrize("text", [
     "Le modèle apprend avec des données et répond dans cette langue.",

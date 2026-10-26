@@ -6,6 +6,27 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-26, natural Replies and generation reliability — The Operator asks for
+more Replies, a more conversational voice, occasional smileys and sometimes
+just a few words or one sentence. Both Voice files and Relation prompts allow
+specific reactions and dry wit without a compulsory lesson or caveat. The
+shared text generator varies delivery by parent: roughly 20% brief, 60% one
+sentence and 20% up to two sentences; about one in six prompts permits a single
+smiley when appropriate. These are drafting directions, never appended emoji
+or mechanically shortened text. The main Reply routes see up to 1,200 source
+characters. The Reply minimum is 8 characters instead of 25; generic applause,
+emoji-only and unclear-language text still refuse. A narrow short-English
+fallback recognizes clear reactions without weakening Original language checks.
+
+Primary Codex calls receive at least `CODEX_MIN_TIMEOUT_SECONDS` (300 by
+default), capped by the existing 360-second ceiling and next sleep/break.
+Other providers and fallback deadlines keep their existing behavior. Drafting
+calls explicitly disable built-in web search, shell tools and apps; the
+research surface retains search. Structured CLI errors survive a timeout but
+partial drafts never ship. Sol/xhigh, disabled fallback, uncapped daily Replies,
+confirmed parent likes, spacing and permanent standalone dedup remain. No
+environment edit, state migration or bot start accompanies this update.
+
 2026-10-24, uncapped responses — The Operator requests unlimited Replies after
 the shared 500-like threshold prevented most responses from 11:42 Toronto.
 An admitted Reply's verified parent like is now exempt from that threshold.
@@ -140,7 +161,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23–24 amendments) and supersedes older mandates. It encodes:
+(including the October 23–26 amendments) and supersedes older mandates. It encodes:
 
 - Active 04:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
