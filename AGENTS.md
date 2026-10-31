@@ -6,6 +6,14 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-31, provider refusals are not Replies — Live verification caught a
+provider's refusal boilerplate published as a Reply. Shared final validation now
+rejects recognized self-referential refusal openings on Originals and Replies.
+The Reply generator treats them as a decline before trimming or stripping
+preambles, and checks again afterward. Refusals are skipped, never rewritten
+into an opinion. Ordinary technical caveats, honest bot disclosures and source
+text retain their existing checks. No bot restart or state edit accompanies this fix.
+
 2026-10-31, faster watched-post response and one less sleeping hour — The
 Operator requests immediate priority for newly seen watched originals and more
 daytime Replies. Wake moves to 03:30 Toronto; midnight bedtime and the six daytime

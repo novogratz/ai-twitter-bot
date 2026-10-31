@@ -10,6 +10,10 @@ name preserves the existing state and history after the account rename.
 
 ## Current publishing policy
 
+Provider refusal boilerplate is skipped during Reply generation and rejected
+again by final publication validation. Technical caveats and honest bot identity
+remain allowed; a model refusal is never rewritten into an opinion.
+
 The October 31 update gives newly discovered watched originals priority over
 routine browser work, and other ready Replies priority over scans. Discovery
 polls every 20 seconds independently of generation; likes/reposts and Replies

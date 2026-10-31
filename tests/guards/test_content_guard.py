@@ -199,6 +199,41 @@ def test_validate_refuses_unknown_kind():
 # --- skips, burned phrases and shapes, violence ------------------------------
 
 
+@pytest.mark.parametrize("kind", ["original", "reply"])
+@pytest.mark.parametrize("text", [
+    "I'm trained to not give opinions for or against political figures. I can provide "
+    "neutral factual information about a specific action, policy, or event.",
+    "“I’m trained not to give political opinions.”",
+    "I am instructed to avoid political endorsements.",
+    "I was programmed not to provide that kind of content.",
+    "I'm sorry, but I can't help with that request.",
+    "Sorry, I cannot assist you with this.",
+    "I’m unable to comply with your request.",
+    "As an AI assistant, I can't help with that.",
+    "As a SI language model, I cannot offer political opinions.",
+    "I cannot give opinions about political figures.",
+])
+def test_provider_refusal_boilerplate_never_publishes(kind, text):
+    ok, reason = cg.validate(text, kind=kind)
+    assert not ok and "model refusal" in reason
+
+
+@pytest.mark.parametrize("text", [
+    "I'm a bot, and this account uses a fictional persona.",
+    "As an SI assistant, I can't personally test that tool.",
+    "I can't run that model on an 8 GB laptop without quantization.",
+    "I cannot verify that benchmark without the test settings.",
+    "I can't help with that memory limit, but a smaller model might fit.",
+    'The model said "I cannot help with that request" during the test.',
+])
+def test_refusal_check_preserves_disclosure_technical_limits_and_quoted_analysis(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+
+
+def test_refusal_check_does_not_apply_our_drafting_rules_to_source_text():
+    assert cg.validate("I'm trained not to give political opinions.", kind="source") == (True, "")
+
+
 def test_skip_rationale_never_publishes():
     """2026-06-07 live leak: the model wrote 'SKIP.' + its whole rationale
     ('The tweet is incomplete (cuts off mid-sentence)...') and an

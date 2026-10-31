@@ -499,6 +499,29 @@ def _rationed_shape_overused(text: str) -> bool:
     return False
 
 
+# 2026-10-31: a provider refusal passed English/length checks and shipped.
+# Match self-referential refusal openings, not technical limitations or a
+# discussion quoting a model's refusal. Honest bot disclosures stay allowed.
+_MODEL_REFUSAL = re.compile(
+    r"^(?:(?:i'm sorry|i am sorry|sorry|apologies)[,!.:; ]*(?:but )?)?"
+    r"(?:as an? (?:(?:ai|si) )?(?:assistant|(?:large )?language model)[,; ]+)?"
+    r"(?:i(?:'m| am| was) (?:trained|programmed|designed|instructed) "
+    r"(?:to not|not to|to avoid)\b"
+    r"|i(?: (?:cannot|can't|won't)|(?:'m| am) unable to) "
+    r"(?:(?:help|assist)(?: you)? with (?:that|this|your)(?: request| task)?(?:[.!?,]|$)"
+    r"|comply with (?:that|this|your) (?:request|instruction)\b"
+    r"|(?:give|provide|express|offer) (?:political (?:opinions?|views?|endorsements?)\b"
+    r"|(?:opinions?|views?|endorsements?) (?:on|about|for or against) political\b)))",
+    re.IGNORECASE,
+)
+
+
+def is_model_refusal(text: str) -> bool:
+    """Recognize provider boilerplate; never rewrite a refusal into a draft."""
+    normalized = " ".join((text or "").replace("’", "'").split())
+    return bool(_MODEL_REFUSAL.match(normalized.lstrip(" \"'“”‘`*")))
+
+
 def validate(text: str, kind: str = "original", *, source_language: str = "") -> Tuple[bool, str]:
     """Validate a draft or a watched source. kind ∈ {"original", "reply", "source"}.
 
@@ -521,6 +544,9 @@ def validate(text: str, kind: str = "original", *, source_language: str = "") ->
     # starting with "Skipping..." is sacrificed; SKIP is free.)
     if re.match(r"^[\s\"'«]*skip", text, re.IGNORECASE):
         return (False, "SKIP-rationale leak (model refusal as content)")
+
+    if kind != "source" and is_model_refusal(text):
+        return (False, "model refusal boilerplate (not a publication draft)")
 
     if config.ban_short_term_price_targets() and has_near_term_price_target(text):
         return (False, "near-term price target (price + near-term timeframe)")
