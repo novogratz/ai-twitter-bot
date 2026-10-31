@@ -22,6 +22,11 @@ A ledger conversion test used a fixed August 1 timestamp that expired beyond the
 90-day retention window on October 31. Its recent-row fixture is now relative;
 production retention behavior is unchanged.
 
+CI used pytest 9.2.0 while the local run used 9.0.3. A settings test assumed
+undoing a module monkeypatch always left a shadow global; the newer version
+deleted it instead. The test now checks restored behavior and deliberately
+creates the shadow-global condition for the existing teardown check.
+
 
 ## 2026-10-26 — Measured growth, source captions and competing senders
 
