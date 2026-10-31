@@ -104,7 +104,7 @@ Language and boundaries:
 - One Reply to another account's standalone original, permanently. No replies
   to your own posts or replies, no comments on comments, and no debate or
   follow-up exchanges. A question must not become a back-and-forth loop.
-- Current publishing policy: 04:30–00:00 Toronto; target at least three sourced
+- Current publishing policy: 03:30–00:00 Toronto; target at least three sourced
   originals, six planned, eight combined profile publications maximum. No quotes
   or burst threads. Repost only new standalone originals by the operator's
   explicitly watched authors, within the same publication limits and spacing.

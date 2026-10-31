@@ -9,9 +9,10 @@ from ..core import config, settings
 from ..core.logger import log
 
 
-WAKE = time(4, 30)
+WAKE = time(3, 30)
 BEDTIME = time(0, 0)
 _BREAK_INTERVAL_HOURS = 3
+_FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.
 
 _STOP = threading.Event()
 
@@ -34,7 +35,7 @@ def break_window(now: datetime | None = None) -> tuple[datetime, datetime] | Non
     if not minutes:
         return None
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    if (local.hour - WAKE.hour) % _BREAK_INTERVAL_HOURS:
+    if local.hour < _FIRST_BREAK_HOUR or (local.hour - _FIRST_BREAK_HOUR) % _BREAK_INTERVAL_HOURS:
         return None
     key = f"{settings.get('BOT_ACCOUNT')}:{local:%Y-%m-%d-%H}"
     seed = hashlib.sha256(key.encode()).digest()

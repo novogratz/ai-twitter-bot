@@ -111,7 +111,7 @@ def script(monkeypatch, tmp_path):
     return mod
 
 
-@pytest.mark.parametrize("now", [_toronto(0, 0), _toronto(1, 0), _toronto(4, 29)])
+@pytest.mark.parametrize("now", [_toronto(0, 0), _toronto(1, 0), _toronto(3, 29)])
 def test_refuses_to_start_overnight(script, now):
     script.clock["now"] = now
     with pytest.raises(SystemExit) as exit_:
@@ -201,7 +201,7 @@ def test_bedtime_before_the_confirm_script_leaves_the_account_followed(script, c
     assert json.loads(script.results.read_text()) == []
     assert "var keep" in script.browser.calls[-1][0], "a page script ran after the refusal"
     out = capsys.readouterr().out
-    assert "STOP: Waking hours ended (04:30–00:00 America/Toronto)" in out
+    assert "STOP: Waking hours ended (03:30–00:00 America/Toronto)" in out
     assert "TOTAL unfollowed: 0" in out
 
 

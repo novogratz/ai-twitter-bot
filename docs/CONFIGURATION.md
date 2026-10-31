@@ -23,11 +23,18 @@ plan shared by all workers and restarts.
 The optional `auto_engage_handles` Account list defaults to empty. The live
 Account sets only `elonmusk`, authorizing the priority watch's like, repost and
 Reply attempts on new standalone originals. Handles are validated, lowercased
-and deduplicated. Polling defaults to 60 seconds (never faster), a 24-hour
-lookback (never longer), 20 posts per search (maximum 40), and two Reply
-generations per cycle (maximum two). First-enable timestamps survive restarts.
-The watch and its repost exception retain the existing activity, content and
-publication limits. Both Home reads finish before feed Reply generation.
+and deduplicated. Polling defaults to 20 seconds (floor 20), a 24-hour
+lookback (never longer), and 20 posts from the first viewport (maximum 40).
+Separate action and Reply dispatchers check every two seconds (floor two), with
+four like/repost attempts and one Reply generation per dispatch by default.
+`PRIORITY_WATCH_QUEUE_LIMIT` bounds each disposable handoff/dispatch queue to 80
+newest originals by default. A slow model call cannot block the polling worker.
+First-enable timestamps survive restarts. Browser and send turns prioritize
+watched work, then other ready Replies, then routine work; ongoing transactions
+finish first. The existing activity, content and publication limits still apply.
+Both Home reads finish before ordinary feed Reply generation; watched discoveries
+can generate independently while feed discovery continues.
+
 
 The optional `publication_si_wording` boolean defaults to false. The live
 Account enables it for Originals as well as Replies: drafting, editorial
@@ -103,7 +110,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 04:30–00:00 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Working hours 03:30–00:00 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |
@@ -256,10 +263,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` | floor `1` | Posts the feed sweep scrapes per feed. |
 | `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
 | `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length every three waking hours; 0 disables breaks. |
-| `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `60` | floor `60` | Poll the Account's auto-engagement handles this often in Waking hours. |
+| `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `20` | floor `20` | Poll watched authors independently of generation; running browser transactions may delay a poll. |
+| `PRIORITY_WATCH_DISPATCH_SECONDS` | int | `2` | floor `2` | Check discovered watched posts for independent action and Reply work. |
+| `PRIORITY_WATCH_QUEUE_LIMIT` | int | `80` | floor `1`, ceiling `200` | Maximum discovered watched originals retained in process memory, newest first. |
+| `PRIORITY_WATCH_ACTIONS_PER_CYCLE` | int | `4` | floor `1`, ceiling `8` | Maximum independent like/repost attempts per watch action dispatch. |
+| `PRIORITY_WATCH_REPLY_RETRY_SECONDS` | int | `60` | floor `20` | Back off a tried watched Reply before another attempt; permanent claims still govern admission. |
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
-| `PRIORITY_WATCH_MAX_REPLIES` | int | `2` | floor `1`, ceiling `2` | Maximum Reply generations per priority-watch cycle. |
+| `PRIORITY_WATCH_MAX_REPLIES` | int | `1` | floor `1`, ceiling `2` | Maximum Reply generations per dispatch; one selects the newest parent again after each generation. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |

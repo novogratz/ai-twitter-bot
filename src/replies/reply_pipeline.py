@@ -17,14 +17,13 @@ leaves the post replayable.
 """
 import random
 import time
-import threading
 import traceback
 from contextlib import contextmanager
 from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import engagement_log, reply_wording
+from ..core import account, engagement_log, reply_wording, work_priority
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -32,7 +31,7 @@ from ..core.state_errors import StateUnreadable
 from ..guards import action_guard
 from ..guards.active_hours import OutsideActiveHours, require_active
 from ..guards.reply_admission import judge_parent
-from ..x import twitter_client
+from ..x import twitter_client, x_urls
 from . import reply_generator
 from .reply_generator import Generation, Outcome, ReplyCall
 
@@ -88,19 +87,19 @@ _skipped: dict[str, set] = {}
 
 _SPACING_WAIT_SLICE_SECONDS = 1.0
 _sleep = time.sleep
-_SEND_LOCK = threading.Lock()
+_SEND_LOCK = work_priority.PriorityLock(check=lambda: require_active())
 
 
 @contextmanager
 def _send_turn():
     """Serialize wait + submit across Reply jobs, without holding Safari while waiting."""
-    while not _SEND_LOCK.acquire(timeout=1):
-        require_active()
+    _SEND_LOCK.acquire()
     try:
         require_active()
         yield
     finally:
-        _SEND_LOCK.release()
+        if _SEND_LOCK.owned():
+            _SEND_LOCK.release()
 
 
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
@@ -222,7 +221,9 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
         return 0
     refusals = []
     try:
-        with _send_turn():
+        priority = (work_priority.WATCH if x_urls.author(url) in account.current().auto_engage_handles
+                    else work_priority.REPLY)
+        with work_priority.scope(priority), _send_turn():
             # Another worker may have shipped while this draft generated or
             # queued. A duplicate must not spend a spacing gap ahead of a
             # useful new Reply. This is still the shared admission rule.
@@ -330,13 +331,17 @@ def _wait_out_reply_spacing(label: str) -> None:
     """Wait, outside the Safari lock, for the Reply spacing action_guard will
     require: the next generation is often ready 0-2 s after the last Reply
     and would be refused on spacing, its model call wasted. The chokepoint
-    still judges: a Reply from another job during the wait makes it refuse.
+    still judges. Re-read spacing after a competing sender or urgent handoff,
+    preserving the finished draft instead of knowingly submitting too soon.
     Short slices so a stop request or bedtime raises OutsideActiveHours."""
     remaining = action_guard.seconds_until_allowed(action_guard.REPLY)
     if remaining > 0:
         log.info(f"[{label}] Waiting {remaining:.1f}s for Reply spacing...")
     while remaining > 0:
         require_active()
+        if _SEND_LOCK.yield_to_urgent():
+            remaining = action_guard.seconds_until_allowed(action_guard.REPLY)
+            continue
         step = min(remaining, _SPACING_WAIT_SLICE_SECONDS)
         _sleep(step)
-        remaining -= step
+        remaining = action_guard.seconds_until_allowed(action_guard.REPLY)

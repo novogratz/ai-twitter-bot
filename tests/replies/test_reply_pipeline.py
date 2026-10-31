@@ -573,13 +573,9 @@ def test_a_job_in_turn_also_waits_for_the_spacing(spacing):
     assert url not in set_aside(), "the post stays replayable"
 
 
-def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing, monkeypatch, settings_override):
-    """The chokepoint stays the judge: another job's Reply lands mid-wait,
-    the real reply_to_tweet refuses on spacing before Safari, writes no
-    ledger row, and the post stays replayable."""
-    from src.guards import action_guard as ag, reply_admission
-    from src.guards.reply_admission import Refusal
-    from src.x import twitter_client as tc
+def test_another_sender_extends_the_wait_without_losing_the_finished_draft(spacing, settings_override):
+    """A competing send changes the gap; retain and submit the paid draft."""
+    from src.guards import action_guard as ag
 
     s = spacing
     settings_override(REPLY_JITTER_SECONDS=0)  # every gap is exactly the minimum
@@ -590,20 +586,14 @@ def test_a_reply_from_another_job_during_the_wait_is_refused_unconsumed(spacing,
             ag.record(ag.REPLY, fresh("elsewhere", n=9))
 
     s.on_sleep = another_job_replies_after_the_first_slice
-    verdicts = []
-    judge = reply_admission.judge_reply
-    monkeypatch.setattr(reply_admission, "judge_reply",
-                        lambda *a, **k: verdicts.append(judge(*a, **k)) or verdicts[-1])
-    monkeypatch.setattr(tc, "reply_to_tweet", REAL_REPLY_TO_TWEET)
     url, cycle = fresh("someone", n=1), rp.Cycle()
 
-    assert run(job(pipelined=True), [candidate(url, "post")], cycle) == 0
+    assert run(job(pipelined=True), [candidate(url, "post")], cycle) == 1
 
-    assert sum(s.slept) == config.MIN_SECONDS_BETWEEN_REPLIES
-    assert [v.refusal for v in verdicts] == [Refusal.SPACING]
-    assert s.ledger.count(ag.REPLY, s.now.date()) == 2, "only the earlier Reply and the other job's"
-    assert url not in set_aside() and url not in replied_store.load_replied()
-    assert url in cycle.tried, "tried again next cycle, with a new generation"
+    assert sum(s.slept) == config.MIN_SECONDS_BETWEEN_REPLIES + 1
+    assert s.ledger.count(ag.REPLY, s.now.date()) == 3
+    assert s.chokepoint.sent == [url]
+    assert url in set_aside() and url in cycle.tried
 
 
 @pytest.mark.parametrize("cut", ["stop", "overnight"])
@@ -668,3 +658,49 @@ def test_parent_answered_during_generation_does_not_spend_a_spacing_gap(monkeypa
     generation = Generation(Outcome.WRITTEN, "en", "A useful specific reaction.")
     assert rp._send(job(), candidate(url, "SI model"), "builder", generation) == 0
     assert url in replied_store.load_replied()
+
+
+@pytest.mark.parametrize("watched, expected", [(False, 1), (True, 0)])
+def test_ready_replies_have_browser_priority_and_watched_authors_go_first(monkeypatch, watched, expected):
+    from dataclasses import replace
+    from src.core import account, work_priority
+    from src.replies.reply_generator import Generation, Outcome
+    profile = replace(account.current(), auto_engage_handles=("builder",) if watched else ())
+    monkeypatch.setattr(account, "current", lambda: profile)
+    seen = []
+    monkeypatch.setattr(rp.twitter_client, "reply_to_tweet", lambda *a, **kw:
+                        seen.append(work_priority._priority.get()) or WriteOutcome.REFUSED)
+    url = fresh("builder")
+    generation = Generation(Outcome.WRITTEN, "en", "A specific useful reaction.")
+    rp._send(job(), candidate(url, "SI tools"), "builder", generation)
+    assert seen == [expected]
+    assert work_priority._priority.get() == work_priority.BACKGROUND
+
+
+def test_stop_during_an_urgent_handoff_releases_the_send_queue(monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    from src.core import work_priority
+    from src.guards.active_hours import OutsideActiveHours
+    from tests.core.test_work_priority import queued
+    stop = threading.Event()
+    def check():
+        if stop.is_set():
+            raise OutsideActiveHours("stopped")
+    lock = work_priority.PriorityLock(check=check)
+    monkeypatch.setattr(rp, "_SEND_LOCK", lock)
+    def urgent():
+        with work_priority.scope(work_priority.WATCH), lock:
+            stop.set()
+    with ThreadPoolExecutor(1) as pool:
+        with work_priority.scope(work_priority.REPLY):
+            with pytest.raises(OutsideActiveHours, match="stopped"):
+                with rp._send_turn():
+                    task = pool.submit(urgent)
+                    queued(lock, 1)
+                    lock.yield_to_urgent()
+            task.result(2)
+    assert not lock.owned() and not lock._waiters
+    stop.clear()
+    with lock:
+        assert lock.owned()

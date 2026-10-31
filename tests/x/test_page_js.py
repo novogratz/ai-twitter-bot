@@ -231,6 +231,16 @@ def test_scrape_parses_the_page_answer(monkeypatch, browser):
     assert [(t["url"], t["likes"], t["replies"]) for t in tweets] == [(OWN_POST, 3, 1)]
 
 
+def test_each_scraped_viewport_is_offered_before_the_feed_finishes(monkeypatch, browser):
+    from src.core import watch_discovery
+    from src.x import scraper
+    offered = []
+    monkeypatch.setattr(watch_discovery, "offer", lambda tweets: offered.append(tweets))
+    browser(json.dumps([{"u": OWN_POST, "t": "A watched post", "a": "Someone"}]))
+    result = scraper._scrape_tweets_from_page("home feed", 10)
+    assert offered == [result]
+
+
 def test_follow_ships_only_on_a_clicked_answer(monkeypatch, browser):
     from src.guards import action_guard, follow_policy
 

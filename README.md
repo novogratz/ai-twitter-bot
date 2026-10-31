@@ -10,6 +10,19 @@ name preserves the existing state and history after the account rename.
 
 ## Current publishing policy
 
+The October 31 update gives newly discovered watched originals priority over
+routine browser work, and other ready Replies priority over scans. Discovery
+polls every 20 seconds independently of generation; likes/reposts and Replies
+have separate workers checking discoveries every two seconds. Posts seen in
+For You, Following or any search join the same bounded queue. A running browser
+transaction or model call finishes first, so these are scheduling intervals,
+not an instant-publication guarantee. Reposts keep the existing profile limits.
+
+Wake-up is now **03:30 Toronto**, one hour earlier; midnight bedtime and daytime
+breaks stay unchanged. Reply-spacing waits keep finished drafts when another
+sender uses the gap, and yield to ready watched Replies. Code takes effect on
+an explicitly requested restart.
+
 The Operator's later request for likability and good energy updates both Voice
 files: warm enthusiasm, generous credit, playful observations that include the
 author, and short lines that can stand alone. Match the person's mood; keep
@@ -44,7 +57,7 @@ Code and Account changes take effect at the next explicitly requested start.
   smiley if appropriate. Specific English replies can be as short as 8 characters;
   generic applause and emoji-only responses still fail validation. Main reply
   prompts receive up to 1,200 source characters instead of 200.
-- **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
+- **Sleep from midnight to 03:30 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
 - **Ten-minute breaks about every three hours.** Six daily breaks start during
   hours 07, 10, 13, 16, 19 and 22 Toronto time. A shared, repeatable daily plan
@@ -53,11 +66,12 @@ Code and Account changes take effect at the next explicitly requested start.
 - **Read both For You and Following deeply.** Verify the selected tab, collect
   each screen before scrolling, and deduplicate posts. The Account allows
   up to 20 scrolls and 160 collected posts per feed, stopping if no new posts
-  appear. Both reads finish before Reply generation starts, so an exhausted
+  appear. Both reads finish before ordinary feed Reply generation starts, so an exhausted
   model quota cannot skip Following. Generation budgets and publication limits
   still apply; sleep and breaks can interrupt discovery.
-- **Watch new Elon Musk originals every minute.** A dedicated Latest search
-  attempts one like, repost and Reply independently. First enable starts with
+- **Prioritize new Elon Musk originals.** A dedicated Latest search polls every
+  20 seconds; separate action and Reply workers check discoveries every two seconds.
+  Feed discoveries join the same queue. First enable starts with
   new posts; later passes inspect up to 20 posts from the past 24 hours.
   Existing content checks, Reply dedup, sleep and breaks apply. Reposts consume
   the same daily publication budget and spacing as Originals; uncertain
@@ -87,7 +101,7 @@ Code and Account changes take effect at the next explicitly requested start.
   Artificial Intelligence and also recognize SI, Super Intelligence,
   superintelligence and ASI. Source evidence keeps its original wording;
   the preferred terms are not claims of an achieved capability.
-- **Active daily: 04:30–00:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 03:30–00:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for

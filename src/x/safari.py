@@ -8,19 +8,19 @@ never through a `from` import, so the test walls patched here reach them."""
 import os
 import subprocess
 import tempfile
-import threading
 import time
 from ..core.config import RETRY_DELAY_SECONDS
 from ..core.logger import log
+from ..core.work_priority import PriorityLock
 from ..guards.active_hours import require_active
 
 # Global lock: only one bot can use Safari at a time.
-# Without this, the reply bot and engage bot type over each other. RLock is
+# Without this, the reply bot and engage bot type over each other. Reentrancy is
 # intentional: blank-page recovery can be triggered from inside a scrape that
 # already owns the lock, and it must restart Safari before releasing control.
 class _AwakeSafariLock:
     def __init__(self):
-        self._lock = threading.RLock()
+        self._lock = PriorityLock(check=lambda: require_active())
 
     def __enter__(self):
         require_active()

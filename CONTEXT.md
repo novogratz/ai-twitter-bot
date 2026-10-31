@@ -270,7 +270,7 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 04:30 to 00:00 Toronto
+The only period when the account acts externally, 03:30 to 00:00 Toronto
 time, ending at the next midnight. `active_hours.WAKE` and
 `active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
@@ -331,3 +331,10 @@ windows (1–3h/24–36h), with actual ages and nullable counters. A **cohort** 
 observations by topic, source, parent freshness, send hour and Reply length;
 it describes associations, not causal uplift. The **daily Reply target** is an
 advisory range, distinct from a publication cap or a requirement to send.
+
+A **watched discovery** (2026-10-31) is a candidate offered by a feed/search
+viewport into a bounded process-local queue. It is never a Reply or repost
+claim. **Work priority** orders waiting browser/send transactions: watched work,
+other ready Replies, routine work; FIFO within each class. A current browser
+transaction finishes before priority takes effect. An idle spacing wait may
+yield, then re-read the ledger gap.

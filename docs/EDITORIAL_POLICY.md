@@ -1,4 +1,38 @@
-# Editorial policy — October 26, 2026
+# Editorial policy — October 31, 2026
+
+## Faster watched-post response and a longer waking day
+
+2026-10-31, faster watched-post response and one less sleeping hour — The
+Operator requests immediate priority for newly seen watched originals and more
+daytime Replies. Wake moves to 03:30 Toronto; midnight bedtime and the six daytime
+breaks stay unchanged. This provides 19.5 scheduled active hours with ten-minute
+breaks enabled. The previous 04:30 wake is superseded.
+
+The watch now separates discovery, like/repost actions and Reply generation into
+three dedicated scheduler workers. Latest polling defaults to 20 seconds and
+reads the first viewport without extra scrolling; action and Reply dispatchers
+check discovered work every two seconds. Every scraped viewport also offers
+watched originals to a bounded in-memory handoff. The existing first-enable
+boundary, root/author/age checks and permanent histories remain authoritative.
+The queue keeps the newest 80 originals by default, never claims a Reply, and
+needs no state migration. One Reply generation per dispatch selects the newest
+eligible parent again after each call; a failed attempt backs off for a minute.
+Action retries keep their existing backoffs and attempt four actions per dispatch.
+
+Browser and send queues choose watched work first, other ready Replies second,
+and routine reads/actions third, FIFO within each priority. They never interrupt
+a browser transaction or an in-flight model call. An idle Reply-spacing wait can
+yield its turn to an urgent sender, then re-read the ledger gap and keep its
+finished draft. Sleep, required parent likes and final admission still apply.
+Ordinary feed Reply batches finish both Home reads before generation; independent
+watched-post work may begin while those reads continue. Full bounded feed scans
+are preserved. Poll and dispatch intervals are not guaranteed publication latency.
+
+Sol/xhigh and all language/content checks remain. Reposts still share the existing
+profile ceiling, spacing and minimum-Original reservation; these can defer or
+refuse a repost even when a like or Reply succeeds. No environment edit, live
+bot start/restart, profile edit or production-state migration is included.
+
 
 ## Engagement feedback and priority-watch repair
 
@@ -17,8 +51,8 @@ longer count as French on their own; French and mixed prose remain refused.
 The later October 26 request sets an advisory target of 700–1,400 Replies a day,
 with SI video, image tools, models, agents and practical workflows as discovery
 priorities. It does not force publication, lower quality requirements, remove
-sleep/breaks or lift profile caps. With the current 18.5 scheduled active hours,
-the range requires about 38–76 confirmed Replies an hour. This is a capacity
+sleep/breaks or lift profile caps. At that time, 18.5 scheduled active hours meant
+the range required about 38–76 confirmed Replies an hour. This is a capacity
 target to measure, not a performance or follower-growth promise.
 
 Latest searches consider first-hour root posts without a minimum-like filter,
