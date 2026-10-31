@@ -350,13 +350,14 @@ def test_a_setting_config_derives_follows_its_override(settings_override):
     assert REPLY_MODEL.for_provider("claude") == "set-model"
 
 
-def test_undoing_a_config_monkeypatch_leaves_a_global_behind():
-    """Why tests/conftest.py drops these globals after every test: monkeypatch
-    sets back the value it read instead of deleting the attribute."""
+def test_config_monkeypatch_restores_the_value_and_teardown_cleans_shadow_globals():
+    """Older pytest restores a shadow global; newer pytest deletes it.
+    Exercise our cleanup explicitly without depending on pytest's version."""
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr(config, "MAX_FOLLOWS_PER_DAY", 5)
         assert config.MAX_FOLLOWS_PER_DAY == 5
-    assert vars(config)["MAX_FOLLOWS_PER_DAY"] == settings.get("MAX_FOLLOWS_PER_DAY")
+    assert config.MAX_FOLLOWS_PER_DAY == settings.get("MAX_FOLLOWS_PER_DAY")
+    vars(config)["MAX_FOLLOWS_PER_DAY"] = settings.get("MAX_FOLLOWS_PER_DAY")
 
 
 def test_no_test_starts_with_a_global_hiding_a_setting(settings_override):

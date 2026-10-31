@@ -8,8 +8,8 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 
 @pytest.mark.parametrize("when,awake", [
-    ("2026-09-20T04:29:59-04:00", False),
-    ("2026-09-20T04:30:00-04:00", True),
+    ("2026-09-20T03:29:59-04:00", False),
+    ("2026-09-20T03:30:00-04:00", True),
     ("2026-09-20T22:00:00-04:00", True),
     ("2026-09-20T23:29:59-04:00", True),
     ("2026-09-20T23:30:00-04:00", True),
@@ -18,15 +18,15 @@ from tests.helpers import TORONTO, stop_requested, clock
     # Midnight EDT, then wake after the autumn clock change in EST.
     ("2026-11-01T03:59:59+00:00", True),
     ("2026-11-01T04:00:00+00:00", False),
-    ("2026-11-01T09:29:59+00:00", False),
-    ("2026-11-01T09:30:00+00:00", True),
+    ("2026-11-01T08:29:59+00:00", False),
+    ("2026-11-01T08:30:00+00:00", True),
     ("2026-11-02T04:59:59+00:00", True),
     ("2026-11-02T05:00:00+00:00", False),
     # Midnight EST, then wake after the spring clock change in EDT.
     ("2026-03-08T04:59:59+00:00", True),
     ("2026-03-08T05:00:00+00:00", False),
-    ("2026-03-08T08:29:59+00:00", False),
-    ("2026-03-08T08:30:00+00:00", True),
+    ("2026-03-08T07:29:59+00:00", False),
+    ("2026-03-08T07:30:00+00:00", True),
     ("2026-03-09T03:59:59+00:00", True),
     ("2026-03-09T04:00:00+00:00", False),
 ])
@@ -35,7 +35,7 @@ def test_exact_waking_boundaries_and_dst(when, awake):
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "04:30–00:00 America/Toronto"
+    assert hours.window_label() == "03:30–00:00 America/Toronto"
 
 
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
@@ -45,7 +45,7 @@ def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
     assert hours.seconds_until_bedtime() == 1
     clock(monkeypatch, datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 0
-    clock(monkeypatch, datetime(2026, 9, 21, 4, 29, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 21, 3, 29, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 0
 
 
@@ -57,9 +57,9 @@ def test_bedtime_is_the_next_midnight_after_wake(day):
 
 
 @pytest.mark.parametrize("now,wake", [
-    ("2026-09-20T23:45:00-04:00", "2026-09-21T04:30:00-04:00"),
-    ("2026-09-21T03:00:00-04:00", "2026-09-21T04:30:00-04:00"),
-    ("2026-10-31T23:45:00-04:00", "2026-11-01T04:30:00-05:00"),
+    ("2026-09-20T23:45:00-04:00", "2026-09-21T03:30:00-04:00"),
+    ("2026-09-21T03:00:00-04:00", "2026-09-21T03:30:00-04:00"),
+    ("2026-10-31T23:45:00-04:00", "2026-11-01T03:30:00-05:00"),
 ])
 def test_next_wake_after_bedtime(now, wake):
     local = datetime.fromisoformat(now).astimezone(TORONTO)

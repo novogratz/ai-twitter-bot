@@ -73,7 +73,7 @@ def test_append_keeps_the_row_format(ledger, path):
 def test_legacy_list_is_read_as_is_then_converted_on_the_first_write(ledger, path):
     today = NOW.replace(hour=9, minute=0).isoformat()
     legacy = [_row(ag.POST, today), _row(ag.POST, today, dry_run=True),
-              _row(ag.FOLLOW, "2026-08-01T10:00:00", target="alice"),
+              _row(ag.FOLLOW, (NOW - timedelta(days=2)).isoformat(), target="alice"),
               _row(ag.REPLY, today, target="https://x.com/c/status/3")]
     raw = json.dumps(legacy)
     path.write_text(raw)

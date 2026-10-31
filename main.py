@@ -45,7 +45,9 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
-        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1)},
+        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
+                   "watch": ThreadPoolExecutor(1), "watch_actions": ThreadPoolExecutor(1),
+                   "watch_reply": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
     )
 
@@ -78,10 +80,17 @@ def build_scheduler(*, post_only=False, reply_only=False):
         add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
         add(health.wrap_job(run_reply_report, "reply_report", safari_health=False), 20, "reply_report_job")
         if account.current().auto_engage_handles:
-            from src.replies.priority_watch import run_priority_watch_cycle
+            from src.replies.priority_watch import (
+                run_priority_watch_cycle, run_priority_actions_cycle, run_priority_reply_cycle)
             add(health.wrap_job(run_priority_watch_cycle, "priority_watch"),
                 settings.get("PRIORITY_WATCH_INTERVAL_SECONDS") / 60,
-                "priority_watch_job", first_seconds=1)
+                "priority_watch_job", executor="watch", first_seconds=1)
+            add(health.wrap_job(run_priority_actions_cycle, "priority_actions"),
+                settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
+                "priority_actions_job", executor="watch_actions", first_seconds=2)
+            add(health.wrap_job(run_priority_reply_cycle, "priority_reply"),
+                settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
+                "priority_reply_job", executor="watch_reply", first_seconds=2)
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         if not account.current().standalone_replies_only:
             add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")

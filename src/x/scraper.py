@@ -298,6 +298,10 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
+        # Handoff each viewport immediately, including before a long Home
+        # discovery pass finishes. The watch alone decides eligible parents.
+        from ..core.watch_discovery import offer
+        offer(tweets)
         return tweets
     except OutsideActiveHours:
         raise
@@ -447,7 +451,8 @@ def scrape_following_feed(max_tweets: int = 15):
     return _scrape_feed("following feed", ("following", "abonnements", "suivi(e)s"), max_tweets)
 
 
-def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200):
+def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200,
+                    scroll_passes: int = 2):
     """Search X and scrape results, each text cut to `text_limit` characters.
 
     tab: "live" = chronological (default, current behavior), "top" = X's hot/algorithmic
@@ -461,8 +466,8 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
         safari.open_url(search_url)
         time.sleep(8)
-        safari._scroll_page()
-        safari._scroll_page()
+        for _ in range(scroll_passes):
+            safari._scroll_page()
 
         tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
         safari.close_front_tab()

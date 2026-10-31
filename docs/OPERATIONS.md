@@ -203,7 +203,7 @@ a Startup post: a restart publishes one trend post within 45 minutes when the
 daily ceiling and the twenty-minute spacing allow it. `--reply-only` opens none.
 
 Started outside waking hours, the bot logs `[HOURS] Asleep. Next wake: …` and
-waits. Nothing external happens until 04:30 Toronto time.
+waits. Nothing external happens until 03:30 Toronto time.
 
 ## Stop
 
@@ -239,7 +239,7 @@ matches `com.kzer.ai-twitter-bot-improve`, the daily improve agent.
   restarts it if `bot.log` has not changed for 15 minutes. It deletes
   `.bot_disabled` at start. `touch .watchdog_off` makes it hands-off. The
   paused scheduler logs almost nothing overnight, so this watchdog restarts
-  the bot roughly every 15 minutes between 00:00 and 04:30; each restart
+  the bot roughly every 15 minutes between 00:00 and 03:30; each restart
   comes back asleep.
 - **`bot_watchdog.sh`** (repo root): legacy, runs from `$HOME/ai-twitter-bot`
   and exports old LLM variables.
@@ -261,6 +261,15 @@ real account from a second process. Before any of them:
    and `bin/mass_unfollow.py` refuses to start Overnight and stops at 00:00.
 
 ## Watching
+
+The watched-author scheduler has separate `priority_watch`, `priority_actions`
+and `priority_reply` workers. Discovery polls every 20 seconds by default;
+actions and Replies check pending discoveries every two seconds. These intervals
+are not action deadlines: an existing browser transaction, model call, spacing,
+break or publication ceiling can delay work. Discovered queues are in memory,
+bounded, and use existing guarded first-enable boundaries and permanent action
+histories. No new state file or migration is needed. Wake-up is 03:30 Toronto;
+midnight bedtime and six daytime breaks remain. Restart only on explicit request.
 
 For engagement results, read `reply_performance.md` in the Account state folder.
 The new CSV tenth column is `published_url`; an empty value is unknown. Existing
@@ -295,7 +304,7 @@ tail -n 5 $S/editorial_review.jsonl | jq '{ts, slot, approved, reason}'
 jq '{date, slots, attempts}' $S/editorial_state.json
 ```
 
-Silence between 00:00 and 04:30 Toronto time is normal. There is no
+Silence between 00:00 and 03:30 Toronto time is normal. There is no
 heartbeat line.
 
 ## Recovery

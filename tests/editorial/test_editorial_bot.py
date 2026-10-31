@@ -602,9 +602,8 @@ def test_startup_window_opens_on_every_waking_start():
     editorial.open_startup_window(at(11, 30))
     done = {"date": "2026-09-20", "slots": {key: "published"}}
     assert editorial.startup_slot(at(11, 31), done)[0] == "startup@11:30:00"
-    # Nothing overnight: the watchdog relaunches at night, and a 04:20 start
-    # must not publish at 04:30.
-    editorial.open_startup_window(at(4, 20))
+    # Nothing overnight: a 03:20 start must not publish at 03:30.
+    editorial.open_startup_window(at(3, 20))
     assert editorial.startup_key() is None
     assert editorial.startup_slot(at(4, 35), {}) is None
     assert editorial.next_slot(at(4, 35), {}) is None

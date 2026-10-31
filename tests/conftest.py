@@ -260,7 +260,7 @@ def settings_override():
 @_pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_teardown(item, nextitem):
     """config serves its settings through a module `__getattr__`. Undoing
-    `monkeypatch.setattr(config, NAME, ...)` sets back the value it read, as a
+    `monkeypatch.setattr(config, NAME, ...)` on older pytest sets back the value it read, as a
     global that hides that `__getattr__` for good: once every fixture is torn
     down, drop it, so the next test reads the settings again."""
     yield

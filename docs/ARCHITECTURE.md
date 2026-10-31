@@ -46,7 +46,7 @@ reports an active pause. `may_act()` and `require_active()` gate it everywhere;
 `ScheduledBreak` is an `OutsideActiveHours` subclass and never a health failure.
 `seconds_until_pause()` bounds model requests at the next break or midnight.
 
-`src/guards/active_hours.py` owns the clock: from 04:30 until the next midnight, DST
+`src/guards/active_hours.py` owns the clock: from 03:30 until the next midnight, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
@@ -102,7 +102,9 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
-| `priority_watch_job` | 1 min, configurable slower | When `auto_engage_handles` is nonempty, searches Latest for their new standalone originals and independently attempts like, repost and Reply within existing limits. |
+| `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |
+| `priority_actions_job` | 2 sec, configurable slower | Dedicated `watch_actions` executor; bounded like/repost attempts on discovered watched originals, newest first. |
+| `priority_reply_job` | 2 sec, configurable slower | Dedicated `watch_reply` executor; generate and send one newest eligible watched Reply per dispatch by default. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -662,9 +664,11 @@ generates reply N+1 while reply N is posted, so its text is ready as soon
 as reply N's ledger row is written. Before calling `reply_to_tweet`,
 outside the Safari lock, it sleeps `seconds_until_allowed(REPLY)` in
 one-second slices and raises `OutsideActiveHours` on a stop request or at
-00:00. The chokepoint still judges: when a caller outside the pipeline lands a Reply during
-the wait, `reply_to_tweet` refuses on spacing, writes no ledger row, and the
-post stays replayable in a later cycle, at the cost of a new generation.
+00:00. The send lock gives watched Replies the next turn; an idle spacing
+wait yields to an urgent sender, then re-reads the ledger gap. All spacing waits
+recompute that gap after each slice, retaining a finished draft if another send
+extends it. The chokepoint still judges immediately before the actual write;
+a caller outside the pipeline can still race the final spacing read.
 On a rate limit, bedtime or an unreadable state file the pipelined job
 returns at once: the generation in flight finishes in the worker thread,
 unread, and its post stays replayable.
@@ -974,3 +978,19 @@ draft/review profiles still apply. Watched-source content uses the `source`
 validation kind; it does not inherit our Original style rules or change the
 outgoing Reply language check. Quoted text is supplied as labeled evidence,
 never as a new parent URL. Watch action backoffs are process-local only.
+
+### Priority scheduling (October 31)
+
+`core.watch_discovery` provides the bounded raw-viewport handoff to
+`replies.priority_watch`; readers never import a job. The watch revalidates
+first-enable boundaries and selects root/author/age-qualified candidates into
+its bounded process-local queue. Losing either queue authorizes no publication.
+Three dedicated scheduler workers separate polling, actions and model generation.
+
+`core.work_priority.PriorityLock` is reentrant and orders waiting turns by
+priority then arrival. Safari transactions are non-preemptive: watched work goes
+next, then other ready Replies, then routine work. The send lock uses the same
+ordering; only an idle spacing wait yields, and recomputes the remaining ledger
+gap after another sender. Required parent likes, browser verification and final
+admission stay in the write chokepoints. No queue holds the browser during a
+model call. A long browser transaction or provider stall can still delay action.

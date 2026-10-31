@@ -69,8 +69,8 @@ def test_report_uses_weighted_rates_and_never_attributes_followers(settings_over
     report = feedback.summarize(rows, [{"at": NOW, "source": "search", "url": ""}],
                                 [{"ts": (NOW - timedelta(hours=1)).isoformat(), "count": 100},
                                  {"ts": NOW.isoformat(), "count": 103}], NOW)
-    assert report["active_hours"] == 18.5
-    assert report["required_replies_per_active_hour"] == [37.8, 75.7]
+    assert report["active_hours"] == 19.5
+    assert report["required_replies_per_active_hour"] == [35.9, 71.8]
     assert report["cohorts"][0]["likes_per_1000_views"] == 5
     assert report["cohorts"][0]["enough_to_compare"] is False
     assert report["observed"] == {"1h": 2, "24h": 0}

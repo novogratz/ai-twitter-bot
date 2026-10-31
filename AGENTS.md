@@ -6,6 +6,37 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-10-31, faster watched-post response and one less sleeping hour — The
+Operator requests immediate priority for newly seen watched originals and more
+daytime Replies. Wake moves to 03:30 Toronto; midnight bedtime and the six daytime
+breaks stay unchanged. This provides 19.5 scheduled active hours with ten-minute
+breaks enabled. The previous 04:30 wake is superseded.
+
+The watch now separates discovery, like/repost actions and Reply generation into
+three dedicated scheduler workers. Latest polling defaults to 20 seconds and
+reads the first viewport without extra scrolling; action and Reply dispatchers
+check discovered work every two seconds. Every scraped viewport also offers
+watched originals to a bounded in-memory handoff. The existing first-enable
+boundary, root/author/age checks and permanent histories remain authoritative.
+The queue keeps the newest 80 originals by default, never claims a Reply, and
+needs no state migration. One Reply generation per dispatch selects the newest
+eligible parent again after each call; a failed attempt backs off for a minute.
+Action retries keep their existing backoffs and attempt four actions per dispatch.
+
+Browser and send queues choose watched work first, other ready Replies second,
+and routine reads/actions third, FIFO within each priority. They never interrupt
+a browser transaction or an in-flight model call. An idle Reply-spacing wait can
+yield its turn to an urgent sender, then re-read the ledger gap and keep its
+finished draft. Sleep, required parent likes and final admission still apply.
+Ordinary feed Reply batches finish both Home reads before generation; independent
+watched-post work may begin while those reads continue. Full bounded feed scans
+are preserved. Poll and dispatch intervals are not guaranteed publication latency.
+
+Sol/xhigh and all language/content checks remain. Reposts still share the existing
+profile ceiling, spacing and minimum-Original reservation; these can defer or
+refuse a repost even when a like or Reply succeeds. No environment edit, live
+bot start/restart, profile edit or production-state migration is included.
+
 The Operator's later request for likability and good energy updates both Voice
 files: warm enthusiasm, generous credit, playful observations that include the
 author, and short lines that can stand alone. Match the person's mood; keep
@@ -212,9 +243,9 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23–26 amendments) and supersedes older mandates. It encodes:
+(including the October 23–31 amendments) and supersedes older mandates. It encodes:
 
-- Active 04:30–00:00 America/Toronto only; nothing external happens overnight.
+- Active 03:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
@@ -280,6 +311,7 @@ Account.
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: permanent status-ID history with process-locked claims | `src/guards/replied_store.py` |
 | Priority watch: first-enable boundaries, Latest discovery and independent like/repost/Reply attempts | `src/replies/priority_watch.py` |
+| Work priority: bounded viewport handoff and reentrant browser/send queues, watched work before ready Replies before routine work | `src/core/watch_discovery.py`, `src/core/work_priority.py` |
 | Reply outcomes: exact own receipts, sampled public counters and advisory daily targets | `src/core/reply_feedback.py`, `src/x/reply_metrics.py` |
 | Repost history: permanent claims and uncertain publication reservations; verified page controls | `src/guards/repost_store.py`, `src/x/repost_page.py` |
 | State files: one folder, `state/<BOT_ACCOUNT>/`, resolved by `root()`; atomic writes, guarded or disposable; the files still at the root before issue #207, which stop the start | `src/core/state_store.py`; the move: `bin/migrate_state.py` |

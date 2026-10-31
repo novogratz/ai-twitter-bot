@@ -1,5 +1,33 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-31 — Watched work waited behind routine browser traffic
+
+The Operator requests faster automatic watched-author likes, reposts and Replies,
+more daytime responses, and one less sleeping hour. At 10:45:33 a watched Reply
+was ready; background likes/profile visits occupied Safari until the 10:46 break
+stopped the priority cycle. The old watcher also combined polling, all actions
+and slow model generation in one scheduler job, delaying discovery of newer posts.
+
+Discovery now has its own 20-second worker, with independent two-second action
+and Reply dispatchers. Viewport discoveries join a bounded process-local handoff;
+first-enable boundaries and write histories stay authoritative. Priority locks
+give watched work the next available turn, followed by other ready Replies.
+Idle spacing waits can yield and recompute the ledger gap; active browser writes
+are never interrupted. Wake moves to 03:30, keeping midnight and the six existing
+daytime breaks. Publication ceilings and Sol/xhigh remain; external model stalls
+and already-running browser transactions still limit latency. No bot lifecycle
+action, environment edit or production-state migration accompanies this release.
+
+A ledger conversion test used a fixed August 1 timestamp that expired beyond the
+90-day retention window on October 31. Its recent-row fixture is now relative;
+production retention behavior is unchanged.
+
+CI used pytest 9.2.0 while the local run used 9.0.3. A settings test assumed
+undoing a module monkeypatch always left a shadow global; the newer version
+deleted it instead. The test now checks restored behavior and deliberately
+creates the shadow-global condition for the existing teardown check.
+
+
 ## 2026-10-26 — Measured growth, source captions and competing senders
 
 The Operator's later request for likability and good energy updates both Voice
