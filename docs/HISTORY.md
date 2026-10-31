@@ -1,5 +1,21 @@
 # History — mandates and incidents, June to October 2026
 
+## 2026-10-31 — Provider refusal published as a Reply
+
+After the Operator independently started the bot at 11:21 Toronto, live
+verification confirmed the new wake time and watched-author actions. At
+11:23:54 a model returned a refusal beginning “I'm trained to not give opinions”;
+the browser confirmed the Reply at 11:24:17. English and length validation
+accepted the prose, while the existing SKIP-prefix check did not recognize it.
+
+Final content validation now rejects recognized provider-refusal openings on
+every outgoing surface. The shared Reply generator returns DECLINED for the
+same text, including refusals around stripped preambles. It never turns a
+refusal into an opinion. Regression tests cover the live sentence, common
+variants, final formatting, ordinary technical limits, honest bot identity and
+quoted analysis. No live post was removed, no state was changed and no lifecycle
+action was performed as part of this fix.
+
 ## 2026-10-31 — Watched work waited behind routine browser traffic
 
 The Operator requests faster automatic watched-author likes, reposts and Replies,

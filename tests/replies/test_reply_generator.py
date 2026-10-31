@@ -422,6 +422,21 @@ def test_a_skip_prefix_is_a_definitive_decline(llm, stdout):
     assert generate().outcome is Outcome.DECLINED
 
 
+@pytest.mark.parametrize("stdout", [
+    "I'm trained to not give opinions for or against political figures.",
+    "Sorry, I can't help with that request.",
+    "Draft follows.\n---\nI'm unable to comply with your request.",
+    "I cannot assist with that request.\n---\nA plausible alternative that must not ship.",
+])
+def test_model_refusal_declines_without_shipping_or_rewriting_a_tail(llm, stdout):
+    from src.replies.reply_generator import Outcome
+
+    llm.default = stdout
+    result = generate(strip_preamble=True)
+    assert result.outcome is Outcome.DECLINED
+    assert result.text == ""
+
+
 @pytest.mark.parametrize("stdout", ["You can skip the hype, the moat is data.", "I'd skip this one honestly."])
 def test_skip_inside_a_reply_is_reply_text_outside_the_vip_window(llm, stdout):
     from src.replies.reply_generator import Outcome

@@ -22,6 +22,14 @@ from tests.helpers import url
 TEXT = "Batching is where inference margins are won or lost."
 
 
+def test_provider_refusal_is_checked_after_reply_formatting(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text:
+                        "I'm trained to not give opinions for or against political figures.")
+    verdict = judge_reply(url("someone"), TEXT)
+    assert verdict.refusal is Refusal.TEXT
+    assert "model refusal" in verdict.reason
+
+
 # --- rules on the post ------------------------------------------------------
 
 

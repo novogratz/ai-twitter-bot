@@ -1,5 +1,15 @@
 # Editorial policy — October 31, 2026
 
+## Provider refusals are not publication drafts
+
+The October 31 live log exposed a provider refusal published as a Reply.
+Recognized self-referential refusal openings now fail final content validation
+on Originals and Replies. The shared Reply generator declines them before
+preamble stripping or trimming and checks again after stripping. No refusal is
+rewritten into an opinion or used to force another answer. Technical caveats,
+honest bot disclosures and discussion quoting a refusal remain allowed. Source
+validation keeps its existing rules. This fix makes no lifecycle or state change.
+
 ## Faster watched-post response and a longer waking day
 
 2026-10-31, faster watched-post response and one less sleeping hour — The

@@ -22,11 +22,12 @@ from ..core.llm_client import TEXT_PROFILE, CallProfile, LLMStatus, Output, Surf
 from ..core.logger import log
 from ..core.reply_language import is_fr_forced, looks_french
 from ..guards.active_hours import OutsideActiveHours
+from ..guards.content_guard import is_model_refusal
 
 
 class Outcome(Enum):
     WRITTEN = "written"  # reply text the job may send
-    DECLINED = "declined"  # the model said SKIP: definitive for this post
+    DECLINED = "declined"  # the model said SKIP or refused: definitive for this post
     FAILED = "failed"  # no usable answer: the post stays replayable
     RATE_LIMITED = "rate limited"  # provider exhausted: the job generates nothing more this cycle
 
@@ -115,6 +116,9 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         log.info(f"[{call.label}] LLM error (rc={result.returncode}): {(result.stderr or '')[:200]}")
         return Generation(Outcome.FAILED, language=language)
     reply = result.stdout
+    if call.profile.output is Output.TEXT and is_model_refusal(reply):
+        log.info(f"[{call.label}] Model declined the request; skipping its refusal text.")
+        return Generation(Outcome.DECLINED, language=language)
     if call.strip_preamble:
         reply = strip_agent_preamble(reply)
     reply = reply.strip()
@@ -122,7 +126,8 @@ def generate(call: ReplyCall, *, author: str = "", text: str = "", context: str 
         reply = reply[1:-1].strip()
     if not reply:
         return Generation(Outcome.FAILED, language=language)
-    if _SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]:
+    if (_SKIP_PREFIX.match(reply) or "skip" in reply.lower()[:call.skip_window]
+            or (call.profile.output is Output.TEXT and is_model_refusal(reply))):
         return Generation(Outcome.DECLINED, language=language)
     # Structured search output also contains source URLs/text: only prose is
     # normalized here. Its parsed Reply goes through the pipeline below.
