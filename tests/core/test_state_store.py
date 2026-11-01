@@ -448,3 +448,6 @@ def test_an_unreadable_codex_lockout_is_removed_after_one_warning(monkeypatch, t
 
     assert not path.exists()
     assert len(warnings) == 1
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

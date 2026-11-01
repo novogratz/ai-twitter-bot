@@ -107,10 +107,10 @@ ROUTES = {
     "feed sweep": (lambda mp: _feed_sweep(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "early bird": (lambda mp: _early_bird(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
     "mega watch": (lambda mp: _mega_watch(), "REPLY_MODEL", "gemini", NEUTRAL_CWD),
-    "VIP scan": (lambda mp: _vip_scan("TheBTCTherapist"), "PRIORITY_REPLY_MODEL", "codex", CODEX_DEFAULTS),
-    "Relation, CLI installed": (lambda mp: _vip_scan("Graphseo"), "PRIORITY_REPLY_MODEL", "codex",
+    "VIP scan": (lambda mp: _vip_scan("FriendlyVip"), "PRIORITY_REPLY_MODEL", "codex", CODEX_DEFAULTS),
+    "Relation, CLI installed": (lambda mp: _vip_scan("SpecialVip"), "PRIORITY_REPLY_MODEL", "codex",
                                 (False, None, 300, None)),
-    "Relation, CLI missing": (lambda mp: _uninstalled(mp, "codex") or _vip_scan("Graphseo"),
+    "Relation, CLI missing": (lambda mp: _uninstalled(mp, "codex") or _vip_scan("SpecialVip"),
                               "PRIORITY_REPLY_MODEL", "codex", (False, None, 300, None)),
     "debate": (lambda mp: _debate(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
     "replyback": (lambda mp: _replyback(), "REPLY_MODEL", "codex", CODEX_DEFAULTS),
@@ -144,3 +144,6 @@ def test_the_jobs_read_no_model_or_provider_setting():
              for package in ("replies", "editorial") for path in sorted((ROOT / "src" / package).glob("*.py"))
              for number, line in enumerate(path.read_text().splitlines(), 1) if setting.search(line)]
     assert found == []
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

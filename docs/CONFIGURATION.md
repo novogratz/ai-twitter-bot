@@ -20,9 +20,19 @@ The legacy `HOURLY_BREAK_MINUTES` name controls duration; frequency is fixed
 at every three waking hours. The account, date and hour determine a repeatable
 plan shared by all workers and restarts.
 
+The optional Account boolean `engagement_niche_only` defaults to false. The
+live Account enables it: `niche.post` supplies AI/SI evidence and
+`relevance.off_topic` rejects finance/crypto even alongside AI terms. Replies
+check before generation and on the verified parent, likes read the actual
+article before clicking, and watched reposts validate their source. Every
+follow profile must match `niche.bio` without excluded terms, including seeds
+and Engagers. Missing evidence refuses. The live profile, VIP-scan and pinned
+lists and their `.env` overrides are empty; the Account's blocklist prevents
+retired targets from being rediscovered or promoted.
+
 The optional `auto_engage_handles` Account list defaults to empty. The live
 Account sets only `elonmusk`, authorizing the priority watch's like, repost and
-Reply attempts on new standalone originals. Handles are validated, lowercased
+Reply attempts on new AI/SI standalone originals. Handles are validated, lowercased
 and deduplicated. Polling defaults to 20 seconds (floor 20), a 24-hour
 lookback (never longer), and 20 posts from the first viewport (maximum 40).
 Separate action and Reply dispatchers check every two seconds (floor two), with
@@ -163,7 +173,7 @@ below still apply to settings that the operator has not set.
   without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
 - A Relation may override the provider with its installed CLI; the live
-  @Graphseo Relation uses Codex with `PRIORITY_REPLY_MODEL`. A codex primary
+  Account has no Relation-specific providers. A codex primary
   under a cached usage lockout (`codex_lockout.json`) goes to local Ollama
   only when `LLM_DISABLE_FALLBACK` is false.
 - `CODEX_REASONING_EFFORT` sets `model_reasoning_effort` on every Codex

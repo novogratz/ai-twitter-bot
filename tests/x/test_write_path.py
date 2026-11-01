@@ -46,7 +46,7 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
-    url = "https://x.com/Graphseo/status/1234567890123456789"
+    url = "https://x.com/SpecialVip/status/1234567890123456789"
     reply = "le signal des fautes tient exactement un cycle de finetuning, profites-en tant que ça marche"
     tc.reply_to_tweet(url, reply)
     tc.reply_to_tweet(url, reply + " v2")          # same tweet, second bot
@@ -136,7 +136,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
 @pytest.mark.usefixtures("bilingual_account")
 def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     """Operator 2026-06-07: 'i saw some english on Julien response'.
-    @Graphseo is always-French; the chokepoint refuses an English reply to
+    @SpecialVip is always-French; the chokepoint refuses an English reply to
     him from ANY bot, BEFORE the dedup mark (post stays fresh for an FR
     retry). SKIPPED-variant leaks are also pinned here."""
     from src.x import twitter_client as tc
@@ -148,7 +148,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setenv("DRY_RUN", "1")
 
-    url = "https://x.com/Graphseo/status/2063500000000000099"
+    url = "https://x.com/SpecialVip/status/2063500000000000099"
     english = "The market just told you what your conviction is worth this week."
     assert tc.reply_to_tweet(url, english) is W.REFUSED
     # Post must stay UNMARKED — a later FR draft can still ship.
@@ -803,3 +803,6 @@ def test_pin_own_tweet_records_only_a_shipped_pin(monkeypatch, memory_ledger, st
     assert tc.pin_own_tweet(OWN_BEST) is outcome
     assert [r["target"] for r in pin_rows(memory_ledger)] == ([OWN_BEST.lower()] if outcome else [])
     assert action_guard.profile_count_today() == 0
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

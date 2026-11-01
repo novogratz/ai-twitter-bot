@@ -89,11 +89,32 @@ class Account:
     english_only: bool = False
     publication_si_wording: bool = False
     auto_engage_handles: tuple[str, ...] = ()
+    engagement_niche_only: bool = False
 
 
 def current() -> Account:
     """The Account BOT_ACCOUNT names."""
     return load(settings.get("BOT_ACCOUNT"))
+
+
+def matches_niche(text: str, *, profile: bool = False) -> bool:
+    """Account topic evidence, with explicit exclusions for strict engagement.
+
+    Profiles use the narrower bio pattern. An author, search query, VIP status
+    or prior engagement is never topic evidence for a new post.
+    """
+    loaded = current()
+    text = text or ""
+    pattern = loaded.niche.bio if profile else loaded.niche.post
+    positive = pattern.search(text) or (
+        not profile and loaded.niche.ticker and loaded.niche.ticker.search(text))
+    return bool(positive and not (
+        loaded.engagement_niche_only and loaded.relevance.off_topic.search(text)))
+
+
+def engagement_allowed(text: str, *, profile: bool = False) -> bool:
+    """Strict Accounts require topic evidence even on privileged routes."""
+    return not current().engagement_niche_only or matches_niche(text, profile=profile)
 
 
 def own_handles() -> frozenset[str]:
@@ -130,7 +151,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
                            "english_only": bool, "publication_si_wording": bool,
-                           "auto_engage_handles": list})
+                           "auto_engage_handles": list, "engagement_niche_only": bool})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -161,6 +182,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         english_only=top.get("english_only", False),
         publication_si_wording=top.get("publication_si_wording", False),
         auto_engage_handles=tuple(dict.fromkeys(h.lower() for h in watched)),
+        engagement_niche_only=top.get("engagement_niche_only", False),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

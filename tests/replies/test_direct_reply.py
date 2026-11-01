@@ -1,5 +1,7 @@
 """src/replies/direct_reply: reply lane, query rotation and the VIP
 ReplyCalls."""
+import pytest
+
 
 
 def _url_with_age(minutes: int) -> str:
@@ -31,7 +33,8 @@ def test_queries_stay_in_si_and_the_named_musk_ecosystem():
     for banned in ("bitcoin", "btc", "crypto", "ethereum", "bittensor", "stock", "market",
                    "earnings", "etf", "portfolio", "sell off", "vix", "nasa", "satellite", "orbit"):
         assert banned not in joined, f"{banned!r} is off the niche"
-    assert all(term in joined for term in ("grok imagine", "spacex", "starlink", "starship", "x premium"))
+    assert "grok imagine" in joined
+    assert not any(term in joined for term in ("spacex", "starlink", "starship", "x premium", "twitter"))
 
 
 def _query_clauses(query: str, and_first: bool) -> list:
@@ -116,34 +119,34 @@ def test_prompts_are_english_only():
 
 def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoint, settings_override):
     """Bug 2026-06-07 (shipped live, operator: 'why did it reply in french
-    to the bitcoin therapist?'): the VIP lane applied the Graphseo FR
-    generator (French + deliberate-typo style) to @TheBTCTherapist's
+    to the bitcoin therapist?'): the VIP lane applied the SpecialVip FR
+    generator (French + deliberate-typo style) to @FriendlyVip's
     English post. Pin: VIP replies to the bestie use the EN bestie prompt,
-    never the Graphseo prompt (its own Relation prompt); output passes through humanize."""
+    never the SpecialVip prompt (its own Relation prompt); output passes through humanize."""
     import src.replies.direct_reply as dr
     from src.replies import reply_pipeline
 
     # ⚠️ The VIP scan imports scrape_x_search FUNCTION-LOCALLY from scraper:
     # patch THERE, not on direct_reply. (First version of this test patched
     # dr.* — the real Safari fired and posted live replies to
-    # @TheBTCTherapist mid-test. conftest's _no_safari wall now makes that
+    # @FriendlyVip mid-test. conftest's _no_safari wall now makes that
     # mistake fail loudly instead.)
     from src.x import scraper
-    settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
-    url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
+    settings_override(VIP_SCAN_HANDLES="FriendlyVip")
+    url = _url_with_age(30).replace("/someone/", "/FriendlyVip/")
     monkeypatch.setattr(scraper, "scrape_x_search",
                         lambda q, max_tweets=20, tab="latest", text_limit=200:
-                        [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
+                        [{"url": url, "text": "working the weekend because bitcoin", "author": "FriendlyVip"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
-    assert [c.label for c in llm.calls] == ["VIP_REPLY/TheBTCTherapist"], \
-        "Graphseo FR generator must NEVER run for the bestie"
+    assert [c.label for c in llm.calls] == ["VIP_REPLY/FriendlyVip"], \
+        "SpecialVip FR generator must NEVER run for the bestie"
     from src.core import account
-    expected = account.current().relations.get("TheBTCTherapist").prompt.format(
-        tweet_text="working the weekend because bitcoin")
+    expected = account.current().relations.get("FriendlyVip").prompt.format(
+        author="friendlyvip", tweet_text="working the weekend because bitcoin")
     assert expected in llm.prompts[0]
     assert len(chokepoint.calls) == 1
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
@@ -187,18 +190,18 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
 
     relations = account.current().relations
     monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
-    own = dr._vip_call("graphseo")
-    assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
-                                                      Surface.RELATION_REPLY, "GRAPHSEO_VIP")
+    own = dr._vip_call("specialvip")
+    assert (own.template, own.surface, own.label) == (relations.get("SpecialVip").prompt,
+                                                      Surface.RELATION_REPLY, "SPECIALVIP_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
         False, 1200, 220, False, 0)
     assert (own.provider, own.profile) == ("codex", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
-    assert dr._vip_call("Graphseo").provider is None
+    assert dr._vip_call("SpecialVip").provider is None
 
-    bestie, buddy = dr._vip_call("thebtctherapist"), dr._vip_call("vision_ia")
-    assert (bestie.template, bestie.label) == (relations.get("TheBTCTherapist").prompt,
-                                               "VIP_REPLY/thebtctherapist")
+    bestie, buddy = dr._vip_call("friendlyvip"), dr._vip_call("vision_ia")
+    assert (bestie.template, bestie.label) == (relations.get("FriendlyVip").prompt,
+                                               "VIP_REPLY/friendlyvip")
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
@@ -247,3 +250,6 @@ def test_quoted_evidence_reaches_generation_without_changing_the_parent():
     assert not selected[0].is_reply
     posts[0]["is_reply"] = True
     assert direct_reply._search_candidates(posts, "SI video", "latest") == []
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

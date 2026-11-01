@@ -1,9 +1,9 @@
 {
-  "_README": "Curated whitelist for @TheAIShrink (2026-06-07 agent spec \u2014 Part 1 Following). The bot may ONLY follow accounts listed here (whitelist-only mode) and uses tier1/tier2 as the source list for replies, quote-reposts and engagement targeting. Tiers follow the spec's priority order: tier1 = foils / persona ecosystem (follow FIRST, highest ROI); tier2 = niche reply targets (behavioral finance + fin-meme, primary reply/QRT targets); tier3 = AI signal (content fuel, occasional reply); tier4 = crypto/markets crossover (AI-vs-BTC lane). Handles are HINTS, not ground truth \u2014 resolve by display name + keywords in seeds[] before following; skip and log anything unresolved, suspended, or off-niche. Auto-add exception (operator grant 2026-06-07): account_curator may promote its strongest finds into tiers['discovered'] (capped 3/day, 50 total, logged). Other discovery candidates (Phase 2: peers of tier1-2, 1k-200k followers, active <14d, on-niche, no spam/airdrop/shill) go to suggestions[] for human approval.",
+  "_README": "AI/SI follow candidates for @thesimaximalist, updated by the Operator on 2026-11-01. Finance, Bitcoin and crypto exceptions are retired. Every follow still passes the shared admission and AI/SI profile checks; a seed or past engagement does not exempt its profile from the topic requirement. Runtime policy and settings own caps and pacing.",
   "review_required": true,
-  "generated": "2026-06-07",
+  "generated": "2026-11-01",
   "generated_from": [
-    "operator agent spec 2026-06-07 (Part 1 \u2014 Following, seed list)"
+    "Operator request 2026-11-01: remove Bitcoin/finance targets; focus only on AI/SI"
   ],
   "follow_policy": {
     "total_cap": 300,
@@ -14,17 +14,8 @@
     "note": "Never burst-follow. No follow/unfollow churn. Back off immediately on any follow rate-limit response."
   },
   "tiers": {
-    "tier1": [
-      "TheBTCTherapist"
-    ],
-    "tier2": [
-      "morganhousel",
-      "ParikPatelCFA",
-      "litcapital",
-      "greg16676935420",
-      "ReformedBroker",
-      "jasonzweigwsj"
-    ],
+    "tier1": [],
+    "tier2": [],
     "tier3": [
       "karpathy",
       "sama",
@@ -35,90 +26,9 @@
       "lexfridman",
       "kaifulee"
     ],
-    "tier4": [
-      "saylor",
-      "APompliano",
-      "balajis"
-    ]
+    "tier4": []
   },
   "seeds": [
-    {
-      "priority": 1,
-      "handle": "TheBTCTherapist",
-      "display_name": "The Bitcoin Therapist",
-      "tier": "tier1",
-      "keywords": [
-        "bitcoin",
-        "therapist",
-        "persona"
-      ],
-      "why": "Already dueting our pinned post. AI-vs-Bitcoin feud = free engagement."
-    },
-    {
-      "priority": 3,
-      "handle": "morganhousel",
-      "display_name": "Morgan Housel",
-      "tier": "tier2",
-      "keywords": [
-        "psychology of money",
-        "behavior",
-        "risk"
-      ]
-    },
-    {
-      "priority": 4,
-      "handle": "ParikPatelCFA",
-      "display_name": "Parik Patel",
-      "tier": "tier2",
-      "keywords": [
-        "fin-meme",
-        "satire",
-        "markets"
-      ]
-    },
-    {
-      "priority": 5,
-      "handle": "litcapital",
-      "display_name": "Litquidity",
-      "tier": "tier2",
-      "keywords": [
-        "finance memes",
-        "markets"
-      ]
-    },
-    {
-      "priority": 6,
-      "handle": "greg16676935420",
-      "display_name": "greg",
-      "tier": "tier2",
-      "keywords": [
-        "markets",
-        "doge",
-        "meme"
-      ]
-    },
-    {
-      "priority": 7,
-      "handle": "ReformedBroker",
-      "display_name": "Josh Brown",
-      "tier": "tier2",
-      "keywords": [
-        "markets",
-        "sarcasm",
-        "Ritholtz"
-      ]
-    },
-    {
-      "priority": 8,
-      "handle": "jasonzweigwsj",
-      "display_name": "Jason Zweig",
-      "tier": "tier2",
-      "keywords": [
-        "WSJ",
-        "behavioral",
-        "retail investors"
-      ]
-    },
     {
       "priority": 10,
       "handle": "karpathy",
@@ -127,8 +37,7 @@
       "keywords": [
         "LLMs",
         "AI research"
-      ],
-      "note": "reportedly at Anthropic as of 2026 \u2014 verify"
+      ]
     },
     {
       "priority": 11,
@@ -195,47 +104,16 @@
       "keywords": [
         "AI strategy"
       ]
-    },
-    {
-      "priority": 18,
-      "handle": "saylor",
-      "display_name": "Michael Saylor",
-      "tier": "tier4",
-      "keywords": [
-        "Bitcoin maxi",
-        "natural foil"
-      ]
-    },
-    {
-      "priority": 19,
-      "handle": "APompliano",
-      "display_name": "Anthony Pompliano",
-      "tier": "tier4",
-      "keywords": [
-        "crypto",
-        "markets"
-      ]
-    },
-    {
-      "priority": 20,
-      "handle": "balajis",
-      "display_name": "Balaji Srinivasan",
-      "tier": "tier4",
-      "keywords": [
-        "crypto",
-        "tech",
-        "macro"
-      ]
     }
   ],
   "discovery_rule": {
     "phase": "after seed list, expand following to ~120-150 then stop and hold",
     "sources": [
-      "accounts tier1-2 seeds frequently converse with",
-      "accounts in replies under our own reply targets"
+      "AI/SI authors discovered in Home feeds and AI/SI searches",
+      "AI/SI creators and builders with confirmed on-topic engagement"
     ],
     "filters_all_required": [
-      "bio/recent posts on-niche: AI, markets, trading, finance, crypto, fin-meme/persona",
+      "AI/SI topic evidence in the name/bio, with no finance, trading, Bitcoin or crypto focus; applies to seeds and Engagers too",
       "1k-200k followers (skip mega >1M beyond named anchors)",
       "active within ~14 days",
       "not spam/airdrop/giveaway/shill"
@@ -245,7 +123,8 @@
       "airdrop & giveaway accounts",
       "crypto-shill bots",
       "off-niche mega-accounts",
-      "anything failing resolution / active / niche checks"
+      "anything failing resolution / active / niche checks",
+      "finance, trading, Bitcoin and crypto accounts"
     ]
   },
   "suggestions": []

@@ -1,8 +1,8 @@
 # The SI Maximalist · @thesimaximalist
 
 A Safari-driven SI account with the voice of a fictional, sharp, warm and funny
-45-year-old woman. She loves SI tools and news, the Musk/X/SpaceX ecosystem,
-and especially Grok Imagine. Replies vary from a few specific words to one
+45-year-old woman. She focuses on SI tools, research, creators and builders,
+and especially loves Grok Imagine. Replies vary from a few specific words to one
 conversational sentence, with occasional dry wit or a smiley. Longer explanations
 earn their space; no compulsory lecture or caveat. Facts stay grounded and bot identity stays
 honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
@@ -15,6 +15,14 @@ joke can help the point land. Useful thinking and enjoyable company are the
 aim, with no requests for likes/follows or promises of growth.
 
 ## Current publishing policy
+
+The November 1 targeting update makes engagement AI/SI-only. Bitcoin, crypto
+and finance targets and special prompts are removed, including Graphseo and
+TheBTCTherapist. Replies, likes and watched reposts require AI/SI evidence in
+the actual source; seeds and Engagers also need an AI/SI profile before a follow.
+Fandom, old saved candidates and a search result cannot bypass the topic check.
+The profile/VIP/pinned overrides are empty. The bot remains paused until the
+Operator explicitly starts it; no X unfollows accompany this target cleanup.
 
 For artists sharing their generated videos or artwork, Replies now favor
 **2–6 words of warm appreciation and usually one heart**: “Love this ❤️” or
@@ -164,7 +172,7 @@ start; Voice files are read for each generation.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Discovery covers SI and the named Musk/X/SpaceX ecosystem**: `[niche]`, `[searches]` and `[network]`
+- **Discovery and engagement cover AI/SI only**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **One Startup post each time the bot starts in waking hours**, restarts included,
   within the daily ceiling and the twenty-minute spacing. A submission with an
@@ -229,9 +237,8 @@ the default browser: the bot opens every page in Safari), Python 3.12+,
 `OLLAMA_MODEL` defaults to `qwen3.6:35b-a3b`, the model `bin/run.sh`
 pre-warms. The live `.env` and template select Codex Replies as above.
 With the engine's default providers, calls use Ollama unless `LLM_FALLBACK_CLI` names a
-fallback, codex for instance, with one exception: the Replies to @Graphseo run
-on the Codex CLI whenever it is installed (his Relation's `provider` in
-`account.toml`). A CLI runs `NEWS_MODEL`,
+fallback, codex for instance. An Account can configure a Relation-specific
+provider; the live Account has no such exceptions. A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
 call and is logged at start, as is a fallback the code ignores.

@@ -58,3 +58,6 @@ def test_separate_originals_from_the_same_author_are_still_eligible():
     replied_store.claim(first)
     assert judge_parent(first).refusal is Refusal.ALREADY_REPLIED
     assert judge_parent(second)
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

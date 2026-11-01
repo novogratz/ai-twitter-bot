@@ -132,7 +132,7 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override
     from src.core.config import BOT_HANDLE
 
     default = ",".join(account.current().network.profile_visits)
-    assert default == "TheBTCTherapist,Graphseo"
+    assert default == ""
     settings_override(PROFILE_VISIT_ALLOWLIST=default)  # whatever .env says
     monkeypatch.setattr(
         safari, "open_url",
@@ -145,16 +145,16 @@ def test_profile_visits_blocked_outside_allowlist(monkeypatch, settings_override
     # pinned above: the two reply-everything friends (operator 2026-06-07).
     assert scraper._profile_visit_allowed(BOT_HANDLE)
     assert scraper._profile_visit_allowed(f"{BOT_HANDLE}/with_replies")
-    assert scraper._profile_visit_allowed("TheBTCTherapist")
-    assert scraper._profile_visit_allowed("@thebtctherapist")
-    assert scraper._profile_visit_allowed("Graphseo")
+    assert not scraper._profile_visit_allowed("TheBTCTherapist")
+    assert not scraper._profile_visit_allowed("@thebtctherapist")
+    assert not scraper._profile_visit_allowed("Graphseo")
     assert not scraper._profile_visit_allowed("zerohedge")
     assert not scraper._profile_visit_allowed("")
 
     # Read at CALL time: a later override reaches the next check.
-    settings_override(PROFILE_VISIT_ALLOWLIST="TheBTCTherapist")
+    settings_override(PROFILE_VISIT_ALLOWLIST="Builder")
     assert not scraper._profile_visit_allowed("graphseo")
-    assert scraper._profile_visit_allowed("thebtctherapist")
+    assert scraper._profile_visit_allowed("builder")
 
 
 def test_blank_page_storm_post_restart_grace_and_label_diversity(monkeypatch):

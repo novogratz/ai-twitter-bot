@@ -10,10 +10,10 @@ import pytest
 from tests.helpers import FRESH, SearchPage, stop_requested
 
 
-POST = "https://x.com/thebtctherapist/status/2063500000000000101"
+POST = "https://x.com/friendlyvip/status/2063500000000000101"
 
 
-NEXT = "https://x.com/thebtctherapist/status/2063500000000000102"
+NEXT = "https://x.com/friendlyvip/status/2063500000000000102"
 
 
 REPOST = "https://x.com/someoneelse/status/2063500000000000103"
@@ -31,7 +31,7 @@ BLOCKED = "https://x.com/BlockedOne/status/2063500000000000107"
 class FakePage:
     """Answers `_page_posts` like `_POSTS_JS` would on a page of posts."""
 
-    def __init__(self, page="https://x.com/thebtctherapist", posts=()):
+    def __init__(self, page="https://x.com/friendlyvip", posts=()):
         self.page = page
         self.posts = [dict(p) for p in posts]
         self.clicks = []
@@ -148,14 +148,14 @@ def test_walk_stops_at_an_unconfirmed_click(browser):
     page = browser["page"] = FakePage(
         posts=[{"url": POST, "liked": False}, {"url": NEXT, "liked": False}])
     page.click_sticks = False
-    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=2) == [tc.LikeOutcome.UNCONFIRMED]
+    assert tc.visit_profile_and_like("FriendlyVip", like_count=2) == [tc.LikeOutcome.UNCONFIRMED]
     assert page.clicks == [POST]
 
 
 @pytest.mark.parametrize("page_url, url", [
     (POST, ""),                                 # no URL: the open status page is not a target
     (POST, NEXT),                               # requested post not on the page
-    (POST, "https://x.com/thebtctherapist"),    # URL without a status ID
+    (POST, "https://x.com/friendlyvip"),    # URL without a status ID
 ])
 def test_nothing_clicked_when_the_post_is_not_identified(browser, page_url, url):
     from src.x import twitter_client as tc
@@ -267,7 +267,7 @@ def test_profile_visit_likes_their_own_posts_and_reports_each(browser):
         {"url": POST, "liked": True},
         {"url": NEXT, "liked": False},
     ])
-    outcomes = tc.visit_profile_and_like("TheBTCTherapist", like_count=2)
+    outcomes = tc.visit_profile_and_like("FriendlyVip", like_count=2)
     assert outcomes == [tc.LikeOutcome.ALREADY_LIKED, tc.LikeOutcome.LIKED]
     assert page.clicks == [NEXT]
     assert browser["closed"] == 1
@@ -280,7 +280,7 @@ def test_profile_visit_opens_nothing_for_zero_likes_or_dry_run(monkeypatch, dry_
     # conftest fails the test on any safari.open_url or _run_applescript.
     monkeypatch.setenv("DRY_RUN", dry_run)
     monkeypatch.setattr(tc, "_page_posts", lambda *a: pytest.fail("read the page"))
-    assert tc.visit_profile_and_like("TheBTCTherapist", like_count=like_count) == []
+    assert tc.visit_profile_and_like("FriendlyVip", like_count=like_count) == []
 
 
 def test_notify_likes_replies_but_never_our_own_posts(browser, settings_override):
@@ -317,7 +317,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
     monkeypatch.setattr(action_guard, "record", unreadable)
     browser["page"] = FakePage(posts=[{"url": POST, "liked": False}])
     with pytest.raises(StateUnreadable):
-        tc.visit_profile_and_like("TheBTCTherapist", like_count=1)
+        tc.visit_profile_and_like("FriendlyVip", like_count=1)
     browser["page"] = FakePage(page=OWN, posts=[{"url": REPLY, "liked": False}])
     with pytest.raises(StateUnreadable):
         tc.like_own_tweet_replies()
@@ -326,7 +326,7 @@ def test_tab_closes_when_the_walk_is_interrupted(browser, monkeypatch):
 
 @pytest.mark.parametrize("walk", [
     lambda tc: tc.like_search_posts("https://x.com/search?q=AI", 3, 60),
-    lambda tc: tc.visit_profile_and_like("TheBTCTherapist", like_count=2),
+    lambda tc: tc.visit_profile_and_like("FriendlyVip", like_count=2),
     lambda tc: tc.like_own_tweet_replies(),
 ], ids=["search", "profile", "notify"])
 def test_a_walk_whose_page_does_not_open_clicks_nothing(browser, monkeypatch, settings_override, walk):
@@ -405,6 +405,7 @@ function parseCompound(s) {
 }
 function El(spec, parent) {
     this.tagName = spec.tag;
+    this.innerText = spec.text || '';
     this.attrs = spec.attrs || {};
     this.parent = parent || null;
     var self = this;
@@ -492,17 +493,17 @@ def test_js_clicks_like_on_the_target_article_only():
 
 def test_js_never_clicks_an_unlike_button():
     articles = [_article(POST, "unlike", "a")]
-    assert _run_posts_js(articles, "press", POST_ID) == ({"url": POST, "result": "already_liked"}, [])
+    assert _run_posts_js(articles, "press", POST_ID) == ({"url": POST, "text": "", "result": "already_liked"}, [])
 
 
 def test_js_read_mode_clicks_nothing():
     articles = [_article(POST, "like", "a")]
-    assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "result": "not_liked"}, [])
+    assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "text": "", "result": "not_liked"}, [])
 
 
 @pytest.mark.parametrize("articles, target, path", [
     ([_article(POST, "like", "a")], "", "/home"),                 # no target
-    ([_article(POST, "like", "a")], "", f"/thebtctherapist/status/{POST_ID}"),  # not even the status page's post
+    ([_article(POST, "like", "a")], "", f"/friendlyvip/status/{POST_ID}"),  # not even the status page's post
     ([_article(POST, "like", "a")], NEXT_ID, "/home"),            # requested post absent
     ([_article(POST, "like", "a", quoted=NEXT)], NEXT_ID, "/home"),  # only quoted
     ([_article(POST, "like", "a", quoted=NEXT, quoted_first=True)], NEXT_ID, "/home"),
@@ -535,7 +536,7 @@ def test_quoted_like_state_never_stands_in_for_the_parent(wrapper):
         {"tag": "button", "attrs": {"data-testid": "unlike", "id": "quoted-button"}},
     ])
     parent["children"].insert(0, card)
-    assert _run_posts_js([parent], "read", POST_ID) == ({"url": POST, "result": "not_liked"}, [])
+    assert _run_posts_js([parent], "read", POST_ID) == ({"url": POST, "text": "", "result": "not_liked"}, [])
     assert _run_posts_js([parent], "press", POST_ID) == ({"url": POST, "result": "clicked"}, ["parent-button"])
     assert _run_posts_js([parent], "press", NEXT_ID) == ({"url": "", "result": "failed"}, [])
 
@@ -546,3 +547,18 @@ def test_missing_parent_controls_cannot_use_a_quoted_control(button):
     parent["children"][-1] = {"tag": "div", "attrs": {"data-testid": "quoteTweet"}, "children": [
         {"tag": "button", "attrs": {"data-testid": button, "id": "quoted-button"}}]}
     assert _run_posts_js([parent], "press", POST_ID) == ({"url": POST, "result": "failed"}, [])
+
+
+def test_js_read_carries_topic_evidence_from_the_exact_parent_and_quote():
+    article = _article(POST, "like", "parent-like")
+    article["children"] += [
+        {"tag": "div", "attrs": {"data-testid": "tweetText"}, "text": "Grok Imagine film"},
+        {"tag": "div", "attrs": {"data-testid": "quoteTweet"}, "children": [
+            {"tag": "div", "attrs": {"data-testid": "tweetText"}, "text": "Bitcoin promo"}]},
+    ]
+    result, clicks = _run_posts_js([article], "read", POST_ID)
+    assert result == {"url": POST, "text": "Grok Imagine film\nBitcoin promo", "result": "not_liked"}
+    assert not clicks
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

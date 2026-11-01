@@ -268,3 +268,6 @@ def test_reply_backoff_preserves_a_longer_configured_retry(watched, settings_ove
     for _ in range(2):
         watch._backoff_reply(url)
         assert watch._reply_retry_delays[url] == 1800
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

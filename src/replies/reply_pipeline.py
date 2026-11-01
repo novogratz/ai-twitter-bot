@@ -30,7 +30,7 @@ from ..core.pattern_tags import extract_pattern
 from ..core.state_errors import StateUnreadable
 from ..guards import action_guard
 from ..guards.active_hours import OutsideActiveHours, require_active
-from ..guards.reply_admission import judge_parent
+from ..guards.reply_admission import Refusal, Verdict, judge_parent
 from ..x import twitter_client, x_urls
 from . import reply_generator
 from .reply_generator import Generation, Outcome, ReplyCall
@@ -185,9 +185,12 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
 
 
 def _parent_verdict(job: Job, candidate: Candidate):
-    return judge_parent(candidate.url, debate_turn=job.debate_turn,
-                        is_reply=candidate.is_reply or bool(candidate.context)
-                        or candidate.text.lstrip().startswith("@"))
+    verdict = judge_parent(candidate.url, debate_turn=job.debate_turn,
+                           is_reply=candidate.is_reply or bool(candidate.context)
+                           or candidate.text.lstrip().startswith("@"))
+    if verdict and not account.engagement_allowed(candidate.text):
+        return Verdict(Refusal.TOPIC, "source is outside the Account's engagement niche", verdict.author)
+    return verdict
 
 
 def _generate(job: Job, candidate: Candidate, author: str) -> Generation:

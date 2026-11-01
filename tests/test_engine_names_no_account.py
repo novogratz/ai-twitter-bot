@@ -144,11 +144,11 @@ def test_the_rule_reads_code_and_historical_passages(source, kinds):
     assert [kind for _, kind, _ in mentions(source)] == kinds
 
 
-def test_the_vip_prompts_come_from_the_account():
+def test_the_vip_prompts_come_from_the_account(relation_account):
     from src.core import account
     from src.replies import direct_reply
 
     relations = account.current().relations
-    templates = {direct_reply._vip_call(handle).template for handle in ("Graphseo", "TheBTCTherapist", "vision_ia")}
-    assert templates == {relations.get("Graphseo").prompt, relations.get("TheBTCTherapist").prompt,
+    templates = {direct_reply._vip_call(handle).template for handle in ("SpecialVip", "FriendlyVip", "vision_ia")}
+    assert templates == {relations.get("SpecialVip").prompt, relations.get("FriendlyVip").prompt,
                          relations.default}

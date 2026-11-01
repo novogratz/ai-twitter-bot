@@ -1,5 +1,7 @@
 """src/replies/reply_source: the candidates a Reply job's declaration
 selects among scraped posts, in its order, without side effects."""
+import pytest
+
 from datetime import timedelta
 
 from src.replies import reply_pipeline, reply_source
@@ -105,3 +107,6 @@ def test_select_leaves_the_scraped_posts_as_they_were():
     reply_source.select(tweets, Declaration(max_age=HOUR, order=Order.FRESH_AND_RISING), "TAG")
 
     assert tweets == before
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

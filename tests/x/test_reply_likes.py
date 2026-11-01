@@ -174,3 +174,6 @@ def test_analytics_failure_never_hides_a_shipped_reply_or_releases_its_claim(par
     assert tc.reply_to_tweet(URL, TEXT) is W.SHIPPED
     assert URL in replied_store.load_replied()
     assert ag.count_today(ag.REPLY) == 1
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

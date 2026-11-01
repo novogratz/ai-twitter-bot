@@ -6,6 +6,27 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, AI/SI-only engagement — The Operator removes Bitcoin and finance
+accounts, including Graphseo and TheBTCTherapist, and retires all finance/crypto
+exceptions. The Account removes their priority, profile, pinned, reply-target
+and follow-seed entries and special Relations; named retired accounts join its
+engagement blocklist. The live profile/VIP/pinned environment overrides are
+cleared. Protective respect rules and permanent action/follow histories remain.
+
+`engagement_niche_only = true` requires concrete AI/SI evidence and no excluded
+finance/crypto terms before Reply generation and on the verified source at the
+Reply, like and watched-repost chokepoints. Watched authors have no topic
+exception. All follows, including seeds and Engagers, need an on-topic name/bio.
+Searches and positive topic patterns no longer admit unrelated Musk, SpaceX,
+Starlink, Twitter/X or financial posts. Generated art, models, tools, robotics
+and relevant compute remain in scope. An AI keyword alone cannot excuse a
+crypto/trading post. English, spacing, parent likes and permanent dedup remain.
+
+The explicitly requested target cleanup prunes finance/crypto entries from
+saved candidate pools and promotions, with backups, while the bot is paused.
+It does not unfollow anyone on X or restart the bot. The 1,200+ advisory Reply
+target never overrides the narrower topic policy.
+
 2026-11-01, brief appreciation for artists' videos — The Operator asks for
 short, varied praise with hearts when an artist shares a generated video,
 naming Déborah (@dvorahfr) as an example. Both Voice files now prefer 2–6 clear
@@ -343,10 +364,9 @@ environment edit or production-state migration accompanies this update.
 - Likes, follows, Reply spacing, Debate turns and the content checks carry
   the Operator's bounds (2026-09-25) in their `src/core/settings.py`
   declarations; `.env` and `account.toml` may only tighten them.
-- Replies, likes and follows cover SI and the named Musk/X/SpaceX ecosystem
-  (2026-10-23). Research retains both vocabularies. Crypto, general markets
-  and unrelated space topics remain excluded, apart from the Operator's
-  hand-picked accounts. Known pattern false positives remain in the policy.
+- Replies, likes and follows cover AI/SI only (2026-11-01). Research retains
+  both vocabularies. Finance, crypto, general markets and unrelated space or
+  social-platform topics are excluded, including posts by hand-picked authors.
 
 A change that raises volume, restores a disabled surface or relaxes a check
 needs an explicit operator request, and updates that policy file in the same

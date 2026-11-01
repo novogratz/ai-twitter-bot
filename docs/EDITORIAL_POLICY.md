@@ -1,5 +1,28 @@
 # Editorial policy — November 1, 2026
 
+## AI/SI-only engagement
+
+2026-11-01, AI/SI-only engagement — The Operator removes Bitcoin and finance
+accounts, including Graphseo and TheBTCTherapist, and retires all finance/crypto
+exceptions. The Account removes their priority, profile, pinned, reply-target
+and follow-seed entries and special Relations; named retired accounts join its
+engagement blocklist. The live profile/VIP/pinned environment overrides are
+cleared. Protective respect rules and permanent action/follow histories remain.
+
+`engagement_niche_only = true` requires concrete AI/SI evidence and no excluded
+finance/crypto terms before Reply generation and on the verified source at the
+Reply, like and watched-repost chokepoints. Watched authors have no topic
+exception. All follows, including seeds and Engagers, need an on-topic name/bio.
+Searches and positive topic patterns no longer admit unrelated Musk, SpaceX,
+Starlink, Twitter/X or financial posts. Generated art, models, tools, robotics
+and relevant compute remain in scope. An AI keyword alone cannot excuse a
+crypto/trading post. English, spacing, parent likes and permanent dedup remain.
+
+The explicitly requested target cleanup prunes finance/crypto entries from
+saved candidate pools and promotions, with backups, while the bot is paused.
+It does not unfollow anyone on X or restart the bot. The 1,200+ advisory Reply
+target never overrides the narrower topic policy.
+
 ## Brief appreciation for artists' videos
 
 The Operator's later November 1 request asks for simple, varied praise and
@@ -527,7 +550,7 @@ That character is the Voice, written only in the Account's folder,
 `accounts/theaishrink/voice_fr.md` (`voice_en.md` for English prompts). Every
 Original and Reply prompt opens on it, under `BOT_HANDLE`; the prompts keep
 their task instructions but no copy of the persona, and the model client adds
-none (#192). The per-person relations (Graphseo, bestie, buddy) are the
+none (#192). The Account's remaining generic Relation prompt is the
 Account's Relations, in `account.toml` and `relations/`: the engine names no
 one (#203).
 
@@ -551,45 +574,33 @@ an exceptional-value approval.
 
 ## Niche of Replies, likes and follows
 
-Operator, 2026-09-25: AI only, like the Originals. The Account's `[niche]`
-patterns, `[searches]` queries and `[network]` lists in
-`accounts/theaishrink/account.toml` keep to AI (issue #205). A post that
-speaks only of crypto, markets or space is off the niche for the search
-lane, the feed sweep, early bird and mega watch; the follow quality gate
-refuses a non-Engager whose bio shows no AI term; the reply and like
-searches look for AI posts only. Crypto, markets and space accounts left
-the reply and scan lists. The accounts the Operator picked by hand stay
-whatever their topic: Graphseo, TheBTCTherapist and McnallieM, and
-Mindset4Money_X in the curator's pins, and so do the few handles whose
-topic is still to be confirmed by the Operator. The VIP scan still answers
-Graphseo's and TheBTCTherapist's posts without the niche filter, and
-answers to Engagers still follow the conversation.
+Operator, 2026-11-01: AI/SI only, including creators' generated images and
+videos, model/tool releases, research, agents, robotics and relevant compute.
+The Account's `engagement_niche_only = true` applies across every Reply, like,
+watched repost and follow. This supersedes the former finance/crypto, VIP,
+Engager and named Musk/X/SpaceX topic exceptions. No account's identity is
+itself evidence that a particular post concerns AI/SI.
 
-The search lane, the feed sweep, early bird and mega watch answer root
-posts only: a post X marks as a reply, or whose text opens on a mention,
-never reaches the model, which would see it without the post it answers
-(issue #241). The VIP scan still answers everything its accounts post,
-their replies included.
+The shared Reply pipeline checks source text before generation. The write
+chokepoints check the verified article before the parent like or Reply button,
+the actual post before a like click, and the verified watched source before
+reposting. An on-topic search query cannot authorize an off-topic result. Missing
+source evidence refuses. Existing reposts are still remembered before source
+validation without toggling them. Standalone admission and permanent claims
+retain their existing rules.
 
-The `post` and `bio` patterns name AI itself (AI, IA, AGI, LLMs, GenAI,
-artificial intelligence, machine and deep learning, computer vision,
-superintelligence, agentic, context windows, open weights, vibe coding),
-its labs and models (OpenAI, Anthropic, DeepMind, Mistral, Llama, Qwen,
-Veo, Sora, Midjourney, Apple Intelligence…), its hardware (Nvidia, GPUs,
-TPUs, data centers) and robotics. Some words no longer suffice alone:
-`token`, `coding`, `agent`, `meta`, `google`, `apple`, `software`, `tech`,
-`engineer`, `founder`; a post or bio needs an AI term beside them (AI
-agents, coding agents, Meta AI). `ai` in lower or mixed case skips the
-French verb (j'ai, J’ai, je vous ai, ai-je); AI in capitals always counts.
-`bio` leaves out the model names that are also first names or common
-words (Claude, Sora, Gemini, Cursor), since it reads the display name too.
-Known false positives, kept: Nvidia, an AI hardware maker, keeps its stock
-and earnings chatter on the niche, and `robot` keeps a trading robot.
+The Account's `niche.post` supplies positive evidence; `relevance.off_topic`
+rejects crypto, Bitcoin, finance and trading even when an AI keyword is present.
+Bare Musk, SpaceX, Starship, Starlink, Twitter and X Premium no longer qualify.
+Nvidia alone no longer qualifies; technical GPU and inference content can.
+The former accepted stock/earnings and trading-robot false positives are removed.
+`niche.bio` applies to every follow profile, including seeds, promoted candidates
+and Engagers; a missing or off-topic profile fails before clicking Follow.
 
-Every reply and like query finds posts `post` keeps, read with AND before
-OR or OR before AND: a company or energy word goes with AI (TSMC AI,
-CoreWeave AI, megawatt AI). The like job checks no niche, so its queries
-are its only filter.
+English, AI and SI discovery aliases, source age, standalone-only Replies,
+confirmed parent likes, pacing, sleep and permanent deduplication all remain.
+Retired finance/crypto accounts are excluded by the Account blocklist even if
+an old candidate, curator record or environment override still names them.
 
 ## Trend slots and the Startup post
 
@@ -691,11 +702,8 @@ must not repeat.
   explicit `LLM_FALLBACK_CLI` adds a fallback: without it, a failed call
   fails, for Originals and Replies alike. A provider name the code does not
   know fails every call it routes and runs nothing, and the start logs it
-  (issue #189). One exception, pending the Operator's decision: the Replies
-  to @Graphseo run on the Claude CLI whenever it is installed (his
-  Relation's `provider` in `account.toml`), with
-  `PRIORITY_REPLY_MODEL`, unset Claude's default `claude-haiku-4-5-20251001`
-  (issue #197).
+  (issue #189). An Account can name a Relation-specific provider, but the
+  live Account has no such exceptions after the November 1 target cleanup.
 - An outgoing text that names a Respected account, by `@handle` or by its
   handle in a sentence with a derisive word, is refused at the write
   chokepoint, dry run included: `post_tweet` for an Original, Reply

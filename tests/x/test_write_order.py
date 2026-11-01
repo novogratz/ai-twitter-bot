@@ -521,3 +521,6 @@ def test_a_like_walk_skipping_liked_posts_logs_one_line_each(trace, monkeypatch)
     monkeypatch.setattr(tc, "_already_liked", lambda url: True)
     assert tc.like_tweet(POST_URL) is tc.LikeOutcome.ALREADY_LIKED
     assert trace.logs == [f"[LIKE] already liked {POST_URL[-50:]}; skipping."]
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

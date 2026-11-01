@@ -9,10 +9,11 @@ Strategy:
   - Open /search?q=... in live or top mode.
   - Like up to LIKE_BOT_PER_CYCLE listed posts through
     twitter_client.like_search_posts, so each like goes through like_tweet:
-    liked cache, Blocked accounts, click then confirmation, ledger row.
+    liked cache, Blocked accounts, Account topic policy, click confirmation
+    and the ledger row.
     No like starts after LIKE_BOT_CYCLE_SECONDS, so the Safari lock is
     released for the reply jobs.
-  - No replies, no follows — pure engagement noise. Cheap and effective.
+  - The actual post must meet the Account's engagement topic policy.
 
 Rate-conscious: 10 likes per cycle by default, at most LIKE_BOT_DAILY_CAP
 (500) a day.

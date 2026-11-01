@@ -488,7 +488,10 @@ def _quality_decision(followers: int, bio: str, name: str,
     already replied to/engaged US, which is the highest follow-back-
     probability signal there is AND proves the niche by behavior — so the
     min-followers and bio-niche gates are skipped. The English gate,
-    blocklist, caps, spacing and churn cooldown still apply."""
+    blocklist, caps, spacing and churn cooldown still apply. A strict Account
+    always requires topic evidence, including for seeds and Engagers."""
+    if not account.engagement_allowed(f"{name or ''} {bio or ''}", profile=True):
+        return (False, "off-niche profile (strict Account policy applies to seeds and engagers too)")
     if whitelisted:
         return (True, "whitelisted seed (gate exempt)")
     min_followers = settings.get("FOLLOW_MIN_FOLLOWERS")

@@ -100,9 +100,10 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
     search lane.
     """
     from ..x.scraper import scrape_x_search
+    from ..guards.reply_admission import is_blocked_account
 
     vip_scan_handles = [h.strip().lstrip("@") for h in settings.get("VIP_SCAN_HANDLES").split(",")
-                        if h.strip()]
+                        if h.strip() and not is_blocked_account(h)]
     posted = 0
     for handle in vip_scan_handles:
         if cycle.rate_limited or (remaining is not None and posted >= remaining):
