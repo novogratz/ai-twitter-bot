@@ -467,6 +467,7 @@ def test_a_review_leaves_ollama_only_for_an_explicit_fallback(monkeypatch, setti
     import urllib.request
     from src.core import llm_client as llm
     settings_override(PROFILE_LLM_PROVIDER="ollama", LLM_DISABLE_FALLBACK=False, LLM_FALLBACK_CLI=fallback or "")
+    use_editorial(monkeypatch, use_reply_route=False)
     monkeypatch.setattr(llm.shutil, "which", lambda name: f"/usr/local/bin/{name}")
 
     def ollama_down(request, timeout=None):

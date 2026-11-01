@@ -99,9 +99,8 @@ _served_model("NEWS_MODEL")
 _served_model("REPLY_MODEL")
 _served_model("PRIORITY_REPLY_MODEL")
 
-# Profile and reply provider overrides. Default both to Ollama, with no
-# fallback: only LLM_FALLBACK_CLI (codex, say) adds one. Claude is not used by
-# default. Blank means none.
+# Profile and reply provider overrides. Both default to Codex, with
+# fallbacks disabled. Blank inherits AI_CLI.
 @_served_as("PROFILE_LLM_PROVIDER")
 def profile_llm_provider() -> str | None:
     return settings.get("PROFILE_LLM_PROVIDER").strip() or None

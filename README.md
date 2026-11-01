@@ -16,6 +16,14 @@ aim, with no requests for likes/follows or promises of growth.
 
 ## Current publishing policy
 
+The November 1 launcher fix makes the local configuration and provider defaults
+Codex-only, with fallbacks disabled. Replies keep Sol/xhigh; this Account's
+editorial drafts/reviews and video inspection already use that Reply model.
+`bin/run.sh` no longer contacts Ollama, displays the configured handle, loads
+the required dependencies with video on or off, and preserves terminal logs.
+Codex quota lockouts cannot silently select a local model. These changes take
+effect on the next operator start; this fix does not start the live bot.
+
 The November 1 targeting update makes engagement AI/SI-only. Bitcoin, crypto
 and finance targets and special prompts are removed, including Graphseo and
 TheBTCTherapist. Replies, likes and watched reposts require AI/SI evidence in
@@ -75,7 +83,7 @@ For You, Following or any search join the same bounded queue. A running browser
 transaction or model call finishes first, so these are scheduling intervals,
 not an instant-publication guarantee. Reposts keep the existing profile limits.
 
-Wake-up is now **03:30 Toronto**, one hour earlier; midnight bedtime and daytime
+Wake-up is now **04:00 Toronto** under the latest video amendment; midnight bedtime and daytime
 breaks stay unchanged. Reply-spacing waits keep finished drafts when another
 sender uses the gap, and yield to ready watched Replies. Code takes effect on
 an explicitly requested restart.
@@ -116,7 +124,7 @@ start; Voice files are read for each generation.
   are drafting directions, not output quotas. Specific English replies can be as short as 8 characters;
   generic applause and emoji-only responses still fail validation. Main reply
   prompts receive up to 1,200 source characters instead of 200.
-- **Sleep from midnight to 03:30 Toronto time.** The scheduler, browser writes,
+- **Sleep from midnight to 04:00 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
 - **Ten-minute breaks about every three hours.** Six daily breaks start during
   hours 07, 10, 13, 16, 19 and 22 Toronto time. A shared, repeatable daily plan
@@ -160,7 +168,7 @@ start; Voice files are read for each generation.
   Artificial Intelligence and also recognize SI, Super Intelligence,
   superintelligence and ASI. Source evidence keeps its original wording;
   the preferred terms are not claims of an achieved capability.
-- **Active daily: 03:30–00:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 04:00–00:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -215,12 +223,12 @@ See [editorial policy](docs/EDITORIAL_POLICY.md) for review and recovery details
 
 ## Run
 
-The operator's October 23 response configuration uses Codex `gpt-6.1-sol`
-with xhigh reasoning effort for all Replies, including VIP Relations.
-Set `AI_CLI=codex`, `REPLY_LLM_PROVIDER=codex`, both `REPLY_MODEL` and
+The operator's November 1 configuration uses Codex for every model route,
+with `gpt-6.1-sol` and xhigh reasoning effort for all Replies.
+Set `AI_CLI=codex`, `PROFILE_LLM_PROVIDER=codex`, `REPLY_LLM_PROVIDER=codex`, both `REPLY_MODEL` and
 `PRIORITY_REPLY_MODEL` to `gpt-6.1-sol`, and `CODEX_REASONING_EFFORT=xhigh`.
 `LLM_DISABLE_FALLBACK=1` prevents a quota lockout from routing back to Ollama.
-Originals retain `PROFILE_LLM_PROVIDER=ollama`. Codex must be installed and
+Codex must be installed and
 signed in; these settings take effect at the next explicitly requested restart.
 
 Primary Codex calls now have a 300-second minimum budget, controlled by
@@ -232,12 +240,10 @@ guarantee a response from a stalled provider. Timed-out partial drafts never shi
 
 Requires macOS, Safari with JavaScript from Apple Events enabled (it need not be
 the default browser: the bot opens every page in Safari), Python 3.12+,
-[uv](https://docs.astral.sh/uv/), and the configured local Ollama models. Originals use `gemma4:31b` by default
-(`EDITORIAL_OLLAMA_MODEL`). For Accounts selecting Ollama Replies,
-`OLLAMA_MODEL` defaults to `qwen3.6:35b-a3b`, the model `bin/run.sh`
-pre-warms. The live `.env` and template select Codex Replies as above.
-With the engine's default providers, calls use Ollama unless `LLM_FALLBACK_CLI` names a
-fallback, codex for instance. An Account can configure a Relation-specific
+[uv](https://docs.astral.sh/uv/), and Codex installed and signed in.
+The live `.env`, template and engine provider defaults select Codex; no local
+Ollama service or model download is required. Fallbacks default off, including
+under cached Codex quota lockouts. An Account can configure a Relation-specific
 provider; the live Account has no such exceptions. A CLI runs `NEWS_MODEL`,
 `REPLY_MODEL` or `PRIORITY_REPLY_MODEL` when set, else its own default
 (`settings.MODEL_DEFAULTS`). An unknown provider name fails the
@@ -252,7 +258,7 @@ mkdir -p state/theaishrink
 uv run python main.py
 ```
 
-`.env.example` describes @TheAIShrink with the policy values, its bounded
+`.env.example` describes @thesimaximalist with the policy values, its bounded
 settings commented out at their default, since `.env` would win over an
 Account's `[limits]`; every setting, its default and bounds are in
 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md).
@@ -334,3 +340,48 @@ The configured reply provider and browser pacing still apply.
 ## License
 
 [MIT](LICENSE) — © 2026 Benoit Floch.
+# Optional licensed-video pipeline
+
+For **video first, then replies**, run the explicit activation with
+`bin/video.py activate --live --before-replies --request-id YOUR_STABLE_ID`
+using the documented `uv run --with-requirements requirements-video.txt python`
+prefix before starting the bot. The persistent hold prevents ordinary jobs and
+Reply writes until that startup video is confirmed. Preparation continues while
+prerequisites are missing. Empty supply, failed checks or expiry keep Replies
+held; they never silently switch to replying. Ordinary worker starts do not
+create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
+
+The existing-video feature is implemented behind `VIDEO_ENABLED=0` and
+`VIDEO_LIVE=0`. When enabled it replaces the main-post schedule with 07:00,
+07:15, 09:00, 12:00, 17:00, 21:00 and 21:15 Toronto slots. A separately
+requested persistent live activation can add one startup video per day. Replies
+keep their engine and prompts; interactions now pause from midnight to 04:00,
+while independent video discovery/media workers can continue overnight.
+
+The five main windows **07:00, 09:00, 12:00, 17:00 and 21:00** have inventory
+priority. Before a second post in a pair, the publisher protects one distinct
+eligible clip for each of the next five windows, including tomorrow morning.
+`video.py status` reports coverage and shortages. The sixteen-clip buffer is
+the supply target; an empty eligible queue still cannot guarantee a post.
+
+Video posts use the existing **Safari/AppleScript** composer and shared Reply
+browser lock. Discovery and media processing remain separate processes; the
+publishing job runs in `main.py`'s dedicated executor. No X API token is needed.
+
+This Account's captions contain **BANGER**, emojis and two short sentences with
+a blank line between them, without optional source/disclosure footers. The
+operator's standing permission covers these platforms and their music until
+revoked; provenance and synthetic-parody evidence stay in the private records.
+Source subtitles/credits may remain under the configured retention policy.
+Uncertain inspection, failed quality checks, duplicates or unavailable
+sources prevent posting. The configured inspector now uses a **fresh Codex
+session** with timestamped frames, local Mac audio classification and OCR.
+It reuses the existing Codex login/model. Build its local helper once with
+`uv run --with-requirements requirements-video.txt python bin/video.py prepare-inspector`.
+Public-web discovery can identify candidates on all four platforms. Bilibili's
+normal signed-in Safari player can supply verified timestamps and actual media
+URLs to the independent downloader. Other platforms still need permitted media
+access through a feed/provider; search results alone never qualify a video.
+See [setup, connector status, tests and exact
+activation/rollback commands](docs/VIDEO_PIPELINE.md). The explicit `probe-upload`
+command tests attachment and discards its draft without publishing.

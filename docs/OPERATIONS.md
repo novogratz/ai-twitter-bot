@@ -12,8 +12,9 @@ operator asks.
 Requirements: macOS, Safari logged in to x.com with **Develop → Allow
 JavaScript from Apple Events** enabled (Safari need not be the default
 browser: the bot opens every page in Safari by name), Python 3.12+,
-[uv](https://docs.astral.sh/uv/), and a local Ollama with the reply model and
-`EDITORIAL_OLLAMA_MODEL` (default `gemma4:31b`) pulled.
+[uv](https://docs.astral.sh/uv/), and Codex installed and signed in. The local
+configuration and provider defaults use Codex with fallbacks disabled; no
+Ollama installation or local model is required.
 
 ```bash
 uv venv
@@ -30,11 +31,11 @@ checkout not migrated yet never runs without them: a new install starts it
 empty, as above, and a checkout from before issue #206 or #207 runs
 [the migrations](#deploying-issue-207) instead.
 
-The repo has no `pyproject.toml`. `uv run`, used by `bin/run.sh` and the
-launchd plist, picks up the `.venv` in the repo root; without it, uv runs a
-bare interpreter and the bot fails on `import apscheduler`.
+The repo has no `pyproject.toml`. `bin/run.sh` explicitly supplies the relevant
+requirements file to `uv run`. Direct `uv run python main.py` and older launchd
+commands still need the dependencies installed in the repo's `.venv`.
 
-`.env.example` describes @TheAIShrink with the policy values; every key is
+`.env.example` describes @thesimaximalist with the policy values; every key is
 in [CONFIGURATION.md](CONFIGURATION.md). Its bounded settings
 (`MAX_ORIGINALS_PER_DAY`, `LIKE_BOT_DAILY_CAP`…) stay commented: their
 default is the policy value, and a line set in `.env` wins over an Account's
@@ -185,17 +186,17 @@ with no Relation, that never runs live.
 
 The script:
 
-1. kills every process matching `python.*main.py` on the machine, not only
+1. validates configuration and resolves the current handle and video flag;
+2. kills every process matching `python.*main.py` on the machine, not only
    this repo's;
-2. pre-warms `OLLAMA_MODEL` at `OLLAMA_BASE_URL`, the values the bot calls,
-   as `src/core/settings.py` resolves them from `.env`, during waking hours
-   only. It does not warm the editorial model;
 3. clears `__pycache__`;
-4. runs `uv run python main.py` in the foreground through `tee -a bot.log`.
+4. runs `uv run --with-requirements requirements.txt python -u main.py` in
+   the foreground, using `requirements-video.txt` when video is enabled.
 
-Because stdout is a pipe, the logger adds no console handler: log lines go
-only to `bot.log`, while stdout and tracebacks reach both the terminal and
-`bot.log`. Follow `tail -F bot.log`.
+The launcher performs no model warm-up. Its terminal stays attached, so the
+logger writes to both the terminal and its rotating `bot.log`. Startup errors
+remain visible on stderr and the exit code is preserved. Background launches
+can still follow `tail -F bot.log`.
 
 Flags for `main.py`: `--post-only`, `--reply-only`, `--dry-run`. There is no
 other mode; `--monthly-recap-now` is gone. Every start in waking hours opens
@@ -532,7 +533,7 @@ copy in `state/theaishrink/` or differs from its copy there, and so do
 
 `bot.log`, `bot.lock`, `autonomous_log.md`, `.bot_disabled` and
 `.watchdog_off` stay at the root: they belong to the process and its
-supervisors, not to an Account. `bin/run.sh` tees into `bot.log` and the
+supervisors, not to an Account. The logger writes `bot.log` and the
 watchdog reads its age, one `bot.lock` guards the one Safari, and
 `autonomous_log.md` is also the journal `operator_prompt.md` keeps. The
 Operator's files stay tracked: the Account's Voice files and the Operator
@@ -569,6 +570,11 @@ root:
 | File | Written by | Holds | Policy |
 |---|---|---|---|
 | `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
+| `video_pipeline.sqlite3`, `-wal`, `-shm` | `video.store` | Durable candidates, worker leases, inspection evidence, metrics, source/model budgets, profile history, explicit video-first interaction hold, startup requests, slots and unknown/confirmed sends | guarded SQLite journal; preserve across deploys |
+| `video_assets/` | `video.media` | Unchanged originals, branded outputs and bounded temporary artifacts | retained while needed; automatic expiry cleanup |
+| `video_tools/` | `video.inspection.prepare` | Compiled local Apple audio/OCR helper, keyed by trusted source hash | disposable build cache; rebuild with `prepare-inspector` |
+| `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |
+| `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |

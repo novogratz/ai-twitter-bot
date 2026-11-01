@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "sha256": "bb89be78066cbbc918771d69146e3cf21a5de517a861d32fdd9a0249c423f052",
+  "performance": "unsuitable",
+  "cast": [],
+  "confidence": 0.99,
+  "watermark_present": true,
+  "overlays_clean": false,
+  "audio_inspected": false,
+  "reason": "All 40 supplied samples across four sheets show a diagnostic animation without people or qualifying parody. Audio classifications do not establish music or singing. Additional burned-in timecodes and frame counters fail output overlay requirements. Audio fidelity cannot be assessed from classifications.",
+  "coverage": {
+    "method": "temporal frames + full audio classification",
+    "fps": 2,
+    "sample_count": 40,
+    "first": 0.0,
+    "last": 19.5,
+    "duration": 20.015011,
+    "every_original_frame": false
+  },
+  "session": {
+    "provider": "codex",
+    "model": "gpt-6.1-sol",
+    "fresh_session": true,
+    "completed_at": 1793537928.198074,
+    "usage": {
+      "input_tokens": 32974,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1165,
+      "reasoning_output_tokens": 778
+    },
+    "thread_id": "01a19730-47be-7181-8031-6697102ada06",
+    "tools": [],
+    "cost_usd": null,
+    "billing": "existing CLI login; observed token counts, no invented dollar cost"
+  },
+  "ocr_watermark_fraction": 0.95,
+  "inspected_at": 1793537928.203289,
+  "audio_evidence": {
+    "backend": "Apple SoundAnalysis version1",
+    "completed": true,
+    "music_fraction": 0.0,
+    "singing_fraction": 0.0,
+    "speech_fraction": 0.0,
+    "threshold": 0.65,
+    "limitations": "sound categories, not lyrics, song identity or proof of lip synchronization"
+  },
+  "ocr_frames": 40,
+  "unexpected_text_examples": [
+    {
+      "at": 0,
+      "text": "00:00:00.208"
+    },
+    {
+      "at": 0,
+      "text": "5"
+    },
+    {
+      "at": 0.5,
+      "text": "00:00:00.708"
+    },
+    {
+      "at": 0.5,
+      "text": "17"
+    }
+  ],
+  "sample": "owned diagnostic animation; not eligible for publication",
+  "published": false
+}

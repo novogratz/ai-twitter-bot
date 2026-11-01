@@ -77,6 +77,7 @@ def after_codex_lock(p, answer):
 
 def while_codex_locked(p, answer):
     from src.core import llm_client as llm
+    p.settings(LLM_FALLBACK_CLI="ollama")
     llm._write_codex_lockout(datetime.now() + timedelta(days=1))
     p.ollama.answers = [answer]
     return "codex", ["ollama"]
@@ -121,6 +122,37 @@ def test_a_codex_lockout_cannot_reenable_disabled_fallbacks(providers):
         result = ask(provider="codex")
         assert (result.status, result.provider, result.model, result.stdout) == (
             LLMStatus.EXHAUSTED, "codex", "cloud-model", "")
+    assert [name for name, _ in providers.calls] == ["codex"]
+
+
+@pytest.mark.parametrize("fallback", ["", "  ", "codex"])
+def test_a_cached_codex_lockout_never_invents_a_local_fallback(providers, fallback):
+    providers.settings(LLM_DISABLE_FALLBACK=False, LLM_FALLBACK_CLI=fallback)
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    for _ in range(2):
+        result = ask(provider="codex")
+        assert (result.status, result.provider, result.stdout) == (LLMStatus.EXHAUSTED, "codex", "")
+    assert [name for name, _ in providers.calls] == ["codex"]
+
+
+def test_a_cached_codex_lockout_uses_only_the_explicit_fallback(providers):
+    providers.settings(LLM_FALLBACK_CLI="gemini", LLM_FALLBACK_MODEL="explicit-model")
+    providers.codex.answers = [LLMResult(1, "", USAGE_LIMIT)]
+    providers.gemini.answers = [TEXT]
+    for _ in range(2):
+        result = ask(provider="codex")
+        assert (result.provider, result.model, result.stdout) == ("gemini", "explicit-model", TEXT)
+    assert [name for name, _ in providers.calls] == ["codex", "gemini", "gemini"]
+
+
+@pytest.mark.parametrize("primary", ["", "  "])
+def test_a_blank_primary_provider_uses_codex(providers, primary):
+    from src.core import config, llm_client as llm
+
+    providers.settings(AI_CLI=primary, LLM_DISABLE_FALLBACK=True)
+    providers.codex.answers = [TEXT]
+    result = llm.run_llm("prompt", config.REPLY_MODEL, label="TEST")
+    assert result.provider == "codex" and result.stdout == TEXT
     assert [name for name, _ in providers.calls] == ["codex"]
 
 

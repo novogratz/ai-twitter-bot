@@ -100,6 +100,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | Job | Every | What the cycle does today |
 |---|---|---|
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Owns eight Toronto video slots and persistent explicit startup. Uses existing Safari lock/write wrapper; no parallel browser publisher. Separate discovery/media processes do public discovery, Codex inspection and rendering through the durable SQLite queue. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
 | `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |

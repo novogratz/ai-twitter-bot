@@ -1,0 +1,138 @@
+{
+  "tiktok": {
+    "result": "ok",
+    "health": {
+      "status": "blocked",
+      "checked_at": 1793537945.374728,
+      "reason": "Public web search for the supplied TikTok domains was blocked by robots.txt. No candidates or publication dates could be established. No creator profiles were configured. Video/audio inspection and operator permission checks remain separate and mandatory.",
+      "accepted": 0
+    },
+    "search": {
+      "next": 1793544730.931686,
+      "checked_at": 1793537530.931686,
+      "items": 0,
+      "access_note": "Public web search for the supplied TikTok domains was blocked by robots.txt. No candidates or publication dates could be established. No creator profiles were configured. Video/audio inspection and operator permission checks remain separate and mandatory.",
+      "session": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "fresh_session": true,
+        "completed_at": 1793537551.2647738,
+        "usage": {
+          "input_tokens": 26325,
+          "cached_input_tokens": 12928,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 546,
+          "reasoning_output_tokens": 325
+        },
+        "thread_id": "01a1972a-dcd2-7e40-97ed-1ba8be397faa",
+        "tools": [
+          "web_search"
+        ],
+        "cost_usd": null,
+        "billing": "existing CLI login; observed token counts, no invented dollar cost"
+      }
+    }
+  },
+  "bilibili": {
+    "result": "ok",
+    "health": {
+      "status": "limited",
+      "checked_at": 1793537551.2711492,
+      "reason": "Public search checked; candidates require authorized original, verified upload time and actual inspection.",
+      "accepted": 0
+    },
+    "search": {
+      "next": 1793544751.273673,
+      "checked_at": 1793537551.273673,
+      "items": 0,
+      "access_note": "Searched all six supplied queries with 72-hour and seven-day fallback filters. No reportable individual video URL was established within that window: plausible titles lacked individual URLs, appeared in inaccessible listings, or had older publication dates. No creator profiles were configured. Video/audio inspection and the operator\u2019s video/music permission records remain mandatory.",
+      "session": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "fresh_session": true,
+        "completed_at": 1793537702.3212612,
+        "usage": {
+          "input_tokens": 570566,
+          "cached_input_tokens": 481280,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4425,
+          "reasoning_output_tokens": 2711
+        },
+        "thread_id": "01a1972b-2c2c-74d2-9260-a206a80466d8",
+        "tools": [
+          "web_search"
+        ],
+        "cost_usd": null,
+        "billing": "existing CLI login; observed token counts, no invented dollar cost"
+      }
+    }
+  },
+  "rednote": {
+    "result": "ok",
+    "health": {
+      "status": "limited",
+      "checked_at": 1793537702.327056,
+      "reason": "Public search checked; candidates require authorized original, verified upload time and actual inspection.",
+      "accepted": 0
+    },
+    "search": {
+      "next": 1793544902.3291001,
+      "checked_at": 1793537702.3291001,
+      "items": 0,
+      "access_note": "Public web searches using all six queries with 72-hour and seven-day filters returned no qualifying individual video URLs on the supplied domains. No creator profiles were configured. Video/audio inspection and the operator\u2019s video/music permission records remain separate mandatory checks.",
+      "session": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "fresh_session": true,
+        "completed_at": 1793537739.247539,
+        "usage": {
+          "input_tokens": 78514,
+          "cached_input_tokens": 54272,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1186,
+          "reasoning_output_tokens": 411
+        },
+        "thread_id": "01a1972d-7a2c-7b22-bb02-d515ddb946e5",
+        "tools": [
+          "web_search"
+        ],
+        "cost_usd": null,
+        "billing": "existing CLI login; observed token counts, no invented dollar cost"
+      }
+    }
+  },
+  "instagram": {
+    "result": "ok",
+    "health": {
+      "status": "limited",
+      "checked_at": 1793537426.668907,
+      "reason": "Public search checked; candidates require authorized original, verified upload time and actual inspection.",
+      "accepted": 0
+    },
+    "search": {
+      "next": 1793544626.675214,
+      "checked_at": 1793537426.675214,
+      "items": 0,
+      "access_note": "No individual video results found for the six supplied queries in the 72-hour, seven-day, or unrestricted searches. The ai_xiaomu profile fetch was throttled. Video/audio inspection and operator permission-record checks remain separate and mandatory.",
+      "session": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "fresh_session": true,
+        "completed_at": 1793537467.108021,
+        "usage": {
+          "input_tokens": 68748,
+          "cached_input_tokens": 54528,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1197,
+          "reasoning_output_tokens": 506
+        },
+        "thread_id": "01a19729-452f-7982-8656-7043b41438de",
+        "tools": [
+          "web_search"
+        ],
+        "cost_usd": null,
+        "billing": "existing CLI login; observed token counts, no invented dollar cost"
+      }
+    }
+  }
+}

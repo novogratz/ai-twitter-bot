@@ -58,6 +58,18 @@ def pytest_configure(config):
 import pytest as _pytest
 
 
+@_pytest.fixture(autouse=True)
+def _no_video_api(monkeypatch):
+    """Native video API calls are walled off just like Safari in every test."""
+    from src.video import security
+    from src.x import video_client
+
+    def blocked(*args, **kwargs):
+        raise AssertionError("TEST TRIED TO ACCESS VIDEO NETWORK — mock the transport explicitly")
+
+    monkeypatch.setattr(security._PinnedHTTPS, "connect", blocked)
+
+
 _UNWALLED = {}
 
 

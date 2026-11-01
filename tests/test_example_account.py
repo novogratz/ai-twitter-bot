@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "03:30–00:00",
+    "active": "04:00–00:00",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
@@ -67,7 +67,7 @@ PRE_187_BOUNDED = {
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
-            "auto_engage_handles", "advisory_reply_targets", "editorial_route"}
+            "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held"}
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
@@ -122,6 +122,7 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 
 def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     shown = dry_run({})
+    assert shown["startup_interactions_held"] is False
     assert set(shown) == set(PRE_187) | NEW_KEYS
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])

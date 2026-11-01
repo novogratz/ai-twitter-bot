@@ -165,6 +165,15 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str, *, target: str = "", reply_parent: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
+    if action in (POST, RETWEET):
+        from ..video.config import owns_profile, legacy_usage
+        if owns_profile():
+            return False, "main profile publications reserved for the video scheduler"
+        video_count, video_last = legacy_usage(now_local())
+        if video_count and profile_count_today() + video_count >= config.posts_ceiling():
+            return False, "daily profile ceiling includes confirmed video publications"
+        if video_last is not None and now_local().timestamp() - video_last < config.MIN_SECONDS_BETWEEN_POSTS:
+            return False, "profile spacing includes the latest confirmed video"
     if stop_requested():
         return False, "stop requested"
     if not is_active():

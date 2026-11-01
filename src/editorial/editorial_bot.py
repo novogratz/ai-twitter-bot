@@ -419,6 +419,9 @@ def _pending_refusal(journal, now) -> str:
 
 
 def run_editorial_cycle(preview=False):
+    from ..core import settings
+    if settings.get("VIDEO_ENABLED"):
+        return None
     if not _CYCLE_LOCK.acquire(blocking=False):
         return None
     try:

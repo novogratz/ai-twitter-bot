@@ -9,7 +9,14 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 touch "$REPO/.bot_disabled"
 
 killed=""
-for pid in $(pgrep -if 'python[3]? main\.py' 2>/dev/null); do
+for pid in $(pgrep -if '[p]ython.*[[:space:]/]main\.py([[:space:]]|$)' 2>/dev/null); do
+    # The launcher uses Python -u; match interpreter flags and absolute script
+    # paths, but never a shell merely mentioning the command in its arguments.
+    process_command=$(ps -p "$pid" -o comm= 2>/dev/null)
+    case "${process_command##*/}" in
+        [Pp]ython*) ;;
+        *) continue ;;
+    esac
     cwd=$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p')
     if [ "$cwd" = "$REPO" ]; then
         kill "$pid" 2>/dev/null && killed="$killed $pid"

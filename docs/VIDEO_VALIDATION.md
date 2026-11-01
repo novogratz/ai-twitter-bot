@@ -1,0 +1,111 @@
+# Video validation — November 1, 2026
+
+## Actual publication
+
+The operator-selected Bilibili clip `BV13bnE6ZEg2` was downloaded from media URLs
+provided by the normal signed-in Safari player. No cookies were exported and no
+login, CAPTCHA or DRM was bypassed. Video and AAC audio were remuxed unchanged
+into a 31,350,995-byte original: 118.485 seconds, 1920×1080, approximately 30 fps.
+
+Original SHA-256:
+`858f1d56c13ce843efda425abb6ef415a94571875857e75076a90e9fa7b4508a`.
+
+The final 100,758,091-byte MP4 adds the exact Account watermark, preserving source
+subtitles, logos and credits under the operator's explicit instruction. Source
+permission, including music and future videos from all four platforms, is saved
+as the operator's standing attestation until revoked. Output SHA-256:
+`1043340b99944a9e99017ce9ca74108bcd5f7945340fd692ee31f4247bf239eb`.
+
+Complete decode, duration/frame-rate preservation, audio correlation 1.0 and
+no-added-black/frozen-frame checks passed. Source and output encoded AAC packet
+hashes match. An earlier export that introduced a detected freeze was rejected.
+
+A fresh CLI inspection reviewed 237 temporal samples with local OCR and audio
+classification. It recognized dance but declined character identification and
+returned confidence 0.3. That raw verdict remains unchanged. A separate Codex
+session reviewed 70 source and 70 output images, including full-resolution
+close-ups across the entire duration. It recognized synthetic portrayals of the
+two requested public characters and coordinated dance, with confidence 0.92.
+It found no introduced overlay beyond the exact Account watermark. This was
+sampled visual review plus measured sound categories, not every-frame playback,
+direct listening, lyric verification or proof of singing.
+
+The explicit selection permits an older clip and a score below the automatic
+threshold. Its explainable components were fit 18/20, entertainment 13/20,
+quality 11/15, stale freshness 0/10 and unknown engagement momentum. A real X
+source-identifier search returned no match. This does not establish global
+absence. The direct operator publication used the imported account history;
+older archive backfill remains incomplete and is reported as such.
+
+First receipt: `2116952283934294114`. The operator reported manually deleting it
+because the caption included unwanted source/disclosure lines and explicitly
+requested a corrected replacement. No history or content identity was erased.
+The replacement retains the same startup-day claim and both receipts.
+
+**Confirmed replacement:**
+[https://x.com/thesimaximalist/status/2116954024935362893](https://x.com/thesimaximalist/status/2116954024935362893)
+
+> Another BANGER: Elon Musk and Jensen Huang formed a boy band 😂
+>
+> The group project finally found its rhythm 🕺🔥
+
+Confirmation used the exact own profile status, matching caption and submission
+window, and an actual browser-frame fingerprint matching the reviewed output.
+The transient composer receipt initially failed, so the request was held as
+`publish_unknown`; it was reconciled positively without resending. The reader
+now falls back to the own profile when the composer provides no receipt link.
+
+## Tests and concurrent load
+
+The final full suite passed **2,393 tests in 49.64 seconds**. Focused
+retained-overlay, source-player and Safari checks passed **58 tests**. Scheduler
+dry-run confirmed seven slots, an eight-publication ceiling including explicit
+startup, and the released startup interaction hold. `git diff --check` passed.
+Tests use isolated storage and never publish test posts.
+
+The saved [concurrent-load result](video-codex-load-check.json) exercised the real
+Reply send queue with simulated model/X delays, real single-thread FFmpeg, local
+Mac audio/OCR and fixture discovery in independent processes:
+
+| Measurement | Baseline | Concurrent |
+|---|---:|---:|
+| Replies completed | 600 | 600 |
+| p95 send latency | 77.86 ms | 76.31 ms |
+| Throughput | 42.51/s | 42.89/s |
+
+427 discovery operations and seven renders overlapped Reply handling. CPU
+pressure caused automatic throttle/resume. A terminated media worker's durable
+job was reclaimed under a new lease token; the recovery clock was accelerated
+in the harness. These results do not certify production X latency, real model
+quota behavior, Internet throughput or a sustained production p95 target.
+
+## Current source capability
+
+| Source | Actual capability and remaining requirement |
+|---|---|
+| Instagram Reels | Limited: real Codex public research and creator seed monitoring; permitted original-media retrieval/feed still required. Safari login alone is not a working downloader. |
+| TikTok | Limited: public research; permitted original-media retrieval/feed still required. Research Tools are not assumed available to a commercial creator. |
+| Bilibili | Normal signed-in player capture implemented and exercised on `BV1VSxr63ENv`; real timestamps, creator, metrics and unencrypted stream URLs observed. Downloads enforce expiry, actual MIME/length, host, byte and storage checks. Individual pages may remain restricted. |
+| RedNote | Limited: public research; permitted media retrieval/feed required. Login/CAPTCHA restrictions are not bypassed. |
+| X | Safari native video publication and visible-frame reconciliation verified on the actual requested post. No X API token required. Historical archive import remains incomplete. |
+| Media inspection | Fresh Codex sessions with measured local OCR/audio evidence. Uncertain automated verdicts hold clips; independent selected-clip review is separately recorded. |
+| Inpainting | Unavailable. Safe cropping or explicitly permitted source-overlay retention is used. |
+
+Earlier JSON diagnostics are dated snapshots and may report the former disabled,
+API-oriented or unlicensed state. They are not current capability claims.
+The seven scheduled posts are configured targets. There is no guarantee of a
+post when the eligible buffer is empty, a connector is unavailable or a quality
+check fails. No missing metrics, ready candidates or completed history coverage
+are fabricated to fill a slot. Source search and model calls share bounded
+budgets and reserve Reply capacity.
+
+The owned-pattern fixture command remains available:
+
+```bash
+uv run --with-requirements requirements-video.txt python bin/video_fixture_demo.py --output /tmp/video-fixture-demo
+```
+
+It demonstrates real download/render/QC plumbing but remains ineligible as a
+celebrity clip. It is not presented as a live connector or semantic-inspection
+success. Setup, worker start, explicit startup activation, pause and rollback
+commands are in [VIDEO_PIPELINE.md](VIDEO_PIPELINE.md).

@@ -257,6 +257,92 @@ def post_tweet(text: str) -> WriteOutcome:
         steps=steps, after_record=after_record)
 
 
+def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:
+    """Reserved video Original, using the existing Reply/Original Safari lock.
+
+    Attachment readiness and an exact own-status receipt are required. A click
+    without a receipt retains its durable publish_unknown claim.
+    """
+    from ..core import config as core_config
+    from ..video import config as video_config, publisher
+    from ..video.workers import owns_role
+    from . import safari_video
+    rows = store.rows("SELECT * FROM reservations WHERE id=? AND token=?", (ident, token))
+    if not rows:
+        return WriteOutcome.REFUSED
+    reservation = rows[0]
+
+    def admit():
+        if core_config.dry_run():
+            return None
+        if not video_config.live() or cfg.publishing_transport != "safari":
+            return WriteOutcome.REFUSED
+        try:
+            publisher.guard(store, ident, token, time.time(), cfg)
+        except ValueError:
+            return WriteOutcome.REFUSED
+
+    def owner():
+        safari_video.require_browser_owner()
+        return None if owns_role("publisher") else WriteOutcome.REFUSED
+
+    def steps():
+        document = store.candidate(reservation["candidate"])["document"]
+        page = None
+        try:
+            page = safari_video.Composer(document["output_path"], reservation["caption"], cfg,
+                check=lambda: publisher.guard(store, ident, token, time.time(), cfg))
+            evidence = page.prepare()
+            with store.transaction() as db:
+                changed = db.execute("UPDATE reservations SET state='uploading',browser_evidence=?,updated=? "
+                    "WHERE id=? AND token=? AND state IN ('reserved','uploading')", (json.dumps(evidence), time.time(), ident, token)).rowcount
+                if changed != 1:
+                    raise ValueError("Safari reservation was lost during upload")
+            publisher.authorize_submit(store, ident, token, time.time(), cfg)
+            if not page.submit(store, ident, token):
+                publisher.fail_before_submit(store, ident, token, time.time(), "verified composer did not click Post", rejected=True)
+                return WriteOutcome.FAILED
+            submitted = store.rows("SELECT submitted FROM reservations WHERE id=?", (ident,))[0]["submitted"]
+            post_id = page.receipt(submitted)
+            if not post_id:
+                publisher.unknown(store, ident, token, time.time(), "Safari submit has no exact own-video receipt")
+                return WriteOutcome.UNCONFIRMED
+            publisher.confirm(store, ident, token, time.time(), post_id)
+            return WriteOutcome.SHIPPED
+        except Exception as exc:
+            row = store.rows("SELECT state,network_started FROM reservations WHERE id=?", (ident,))[0]
+            if row["state"] == "confirmed":
+                return WriteOutcome.SHIPPED
+            if row["state"] == "submitting" and row["network_started"] is not None:
+                publisher.unknown(store, ident, token, time.time(), "Safari submission interrupted: " + type(exc).__name__)
+                return WriteOutcome.UNCONFIRMED
+            publisher.fail_before_submit(store, ident, token, time.time(), "Safari preparation failed: " + type(exc).__name__,
+                                          rejected=row["state"] == "submitting")
+            return WriteOutcome.FAILED
+        finally:
+            if page is not None:
+                try:
+                    page.close()
+                except Exception as exc:
+                    log.warning("[VIDEO] Safari cleanup failed (%s); publication state retained.", type(exc).__name__)
+
+    def record_text():
+        from ..guards import content_guard
+        content_guard.note_posted(reservation["caption"])
+        _record_posted(reservation["caption"])
+
+    # 2026-11-01: due videos share ready-Reply FIFO priority so ordinary Reply
+    # arrivals cannot starve a reserved slot. Watched work remains first and an
+    # existing browser transaction always finishes before this one begins.
+    from ..core.work_priority import REPLY, scope
+    with scope(REPLY):
+        return confirmed_write.run("VIDEO", WriteOutcome,
+            would=lambda: "publish reserved video " + ident,
+            rows=lambda: [("video_post", store.rows("SELECT post_url FROM reservations WHERE id=?", (ident,))[0]["post_url"])],
+            before_lock=(admit, confirmed_write.DRY_RUN_EXIT, owner), under_lock=(admit,),
+            steps=steps, after_record=record_text, close_tab=False)
+
+
 def _record_posted(text: str):
     """Persist a published original/quote into tweet_history.json from the
     write chokepoint — so EVERY surface (spicy, breakout, longform, quote…)
@@ -805,6 +891,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
+            startup = reply_admission.judge_startup()
+            if not startup:
+                log.info("[REPLY] Startup video is not confirmed; leaving the prepared Reply unsent.")
+                if on_refused is not None:
+                    on_refused(startup.refusal)
+                return WriteOutcome.REFUSED
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
             sent = True

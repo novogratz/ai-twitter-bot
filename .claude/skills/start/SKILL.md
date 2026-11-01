@@ -15,9 +15,18 @@ publishes on a real account. See `docs/OPERATIONS.md#start`.
    `pgrep -f bin/watchdog.sh` prints a PID. If one is active, it starts the
    bot by itself: report it instead of launching a second copy.
 3. Start: `nohup ./bin/run.sh >/tmp/aitwitter_run.out 2>&1 &`
-   - `run.sh` kills every `python.*main.py` on the machine, pre-warms the
-     reply model during waking hours, then runs `uv run python main.py`
-     with output appended to `bot.log`.
+   - If the operator requested **video first, then replies**, first run
+     `uv run --with-requirements requirements-video.txt python bin/video.py resume-workers`
+     and `uv run --with-requirements requirements-video.txt python bin/video.py activate --live --before-replies --request-id STABLE_OPERATOR_REQUEST_ID`.
+     A blocked preflight must retain the interaction hold. Start only with that
+     hold armed; never fall through to ordinary replying. The publisher releases
+     it after the startup video is confirmed. See `docs/VIDEO_PIPELINE.md`.
+   - `run.sh` validates configuration, stops other matching `python.*main.py`
+     processes, selects the existing requirements file (including video
+     dependencies when enabled), then runs `main.py`. It performs no model
+     warm-up; the logger writes `bot.log`.
 4. Wait 10 seconds, confirm the PID with `pgrep -if "python.*main\.py"`.
 5. Show the last lines of `bot.log`. Started Overnight, the bot logs
-   `[HOURS] Asleep. Next wake: …` and does nothing until Waking hours.
+   `[HOURS] Asleep. Next wake: …`; interactions wait until waking hours, while
+   isolated video discovery/media can continue. A video-first hold remains until
+   the startup video is confirmed.

@@ -50,7 +50,7 @@ def test_state_files_resolve_under_the_accounts_state_folder(monkeypatch, unwall
 
 def test_the_process_files_stay_at_the_project_root():
     """bot.log, bot.lock and autonomous_log.md belong to the process and its
-    supervisors, not to an Account: run.sh tees into bot.log, the watchdog
+    supervisors, not to an Account: the logger writes bot.log, the watchdog
     reads its age, and one bot.lock guards the one Safari."""
     from src.core import config, health, logger
     repo = Path(__file__).resolve().parent.parent

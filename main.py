@@ -52,13 +52,20 @@ def build_scheduler(*, post_only=False, reply_only=False):
     )
 
     def add(fn, minutes, job_id, *, executor="default", first_seconds=None):
+        if job_id != "video_health_job":
+            from src.video.startup import after_startup_video
+            fn = after_startup_video(fn)
         options = {}
         if first_seconds is not None:
             options["next_run_time"] = datetime.now(timezone.utc) + timedelta(seconds=first_seconds)
         scheduler.add_job(awake_job(fn), trigger=IntervalTrigger(minutes=minutes),
                           id=job_id, executor=executor, **options)
 
-    if not reply_only:
+    if not reply_only and settings.get("VIDEO_ENABLED"):
+        from src.video.workers import health_job
+        add(health.wrap_job(health_job, "video_health", safari_health=False), 2 / 60,
+            "video_health_job", executor="editorial", first_seconds=2)
+    elif not reply_only:
         # Polling retries only the current window. State survives restarts;
         # a dedicated worker prevents reply scans from starving originals.
         # Its failures are model timeouts, not Safari outages: kept out of
@@ -130,7 +137,11 @@ def main():
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
+    parser.add_argument("--video", nargs=argparse.REMAINDER, help="Video administration (same as bin/video.py)")
     args = parser.parse_args()
+    if args.video is not None:
+        from src.video.cli import main as video_main
+        return video_main((["--dry-run"] if args.dry_run else []) + args.video)
     try:
         state_store.require_migrated()
     except state_store.Unmigrated as exc:
@@ -149,20 +160,25 @@ def main():
         log.error(f"[LLM] Fallback ignored: {note}. A call that fails there fails.")
     min_target, target = config.post_targets()
     if args.dry_run:
+        from src.video.startup import waiting_reason
+        from src.video.config import load as video_config
+        from src.video.schedule import clocks as video_clocks
+        video_slots = len(video_clocks(video_config())) if settings.get("VIDEO_ENABLED") else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
-                          "min_target_posts": min_target,
-                          "target_posts": target,
-                          "max_profile_posts": config.posts_ceiling(),
+                          "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else min_target,
+                          "target_posts": video_slots if settings.get("VIDEO_ENABLED") else target,
+                          "max_profile_posts": video_slots + 1 if settings.get("VIDEO_ENABLED") else config.posts_ceiling(),
                           "replies": "unlimited",
                           "advisory_reply_targets": [settings.get("REPLY_DAILY_TARGET_MIN"),
                                                      settings.get("REPLY_DAILY_TARGET_MAX")],
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
                           "quotes": 0,
-                          "reposts": "watched authors only" if account.current().auto_engage_handles else 0,
+                          "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),
-                          "slots": slots(),
-                          "trend_slots": sorted(trend_slots()),
-                          "startup_post": "every start in waking hours, restarts included",
+                          "slots": _main_slots(),
+                          "trend_slots": [] if settings.get("VIDEO_ENABLED") else sorted(trend_slots()),
+                          "startup_post": "explicit persistent video activation only" if settings.get("VIDEO_ENABLED") else "every start in waking hours, restarts included",
+                          "startup_interactions_held": bool(waiting_reason()),
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
                           "bounded_settings": settings.bounded(),
@@ -172,10 +188,12 @@ def main():
 
     _acquire_singleton_lock()
     state_store.ensure_root()
-    if not args.reply_only:
+    if not args.reply_only and not settings.get("VIDEO_ENABLED"):
         # The editorial job publishes it, after every restart too.
         open_startup_window()
     stop = threading.Event()
+    from src.video.workers import Supervisor
+    video_supervisor = Supervisor() if settings.get("VIDEO_ENABLED") and not args.reply_only else None
 
     def shutdown(signum, frame):
         from src.guards.active_hours import request_stop
@@ -187,16 +205,45 @@ def main():
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     scheduler.start(paused=True)
     was_active = None
-    log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-             f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
+    was_startup_held = None
+    if settings.get("VIDEO_ENABLED"):
+        from src.video.config import load as video_config
+        from src.video.schedule import clocks as video_clocks
+        log.info("Bot started: %s video slots plus explicit startup; transport=%s; replies unlimited; active %s.",
+                 len(video_clocks(video_config())), video_config().publishing_transport, window_label())
+    else:
+        log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
+                 f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
     try:
         while not stop.is_set():
+            from src.video.startup import waiting_reason
+            startup_held = bool(waiting_reason())
+            if startup_held != was_startup_held:
+                if startup_held:
+                    log.info("[VIDEO-FIRST] Interactions held until the startup video is confirmed.")
+                elif was_startup_held:
+                    log.info("[VIDEO-FIRST] Startup hold released; normal interaction jobs may resume.")
+                was_startup_held = startup_held
+            if settings.get("VIDEO_ENABLED"):
+                from src.video.workers import record_main_mode
+                try:
+                    record_main_mode()
+                except Exception as exc:
+                    log.warning("[VIDEO] Main-mode heartbeat failed (%s).", type(exc).__name__)
+            if video_supervisor:
+                try:
+                    video_supervisor.tick()
+                except Exception as exc:
+                    log.warning("[VIDEO] Supervisor failed (%s); reply scheduler continues.", type(exc).__name__)
             pause_end = break_until()
             active = is_active() and pause_end is None
             if active != was_active:
                 if active:
                     scheduler.resume()
-                    log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
+                    if startup_held:
+                        log.info("[HOURS] Awake. Video preparation active; interactions held for the startup video.")
+                    else:
+                        log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
                 else:
                     scheduler.pause()
                     if pause_end is not None:
@@ -206,8 +253,18 @@ def main():
                 was_active = active
             stop.wait(15)
     finally:
+        if video_supervisor:
+            video_supervisor.stop()
         scheduler.shutdown(wait=False)
         log.info("Bot stopped.")
+
+
+def _main_slots():
+    if settings.get("VIDEO_ENABLED"):
+        from src.video.config import load
+        from src.video.schedule import clocks
+        return list(clocks(load()))
+    return slots()
 
 
 if __name__ == "__main__":

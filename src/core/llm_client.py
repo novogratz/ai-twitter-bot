@@ -457,7 +457,7 @@ def _provider() -> str:
     """The provider AI_CLI names, opencode read as Ollama. An unknown or
     uninstalled one comes back as is: its call fails by name."""
     from . import config
-    requested = config.AI_CLI or "ollama"
+    requested = config.AI_CLI.strip().lower() or "codex"
     return "ollama" if requested == "opencode" else requested
 
 
@@ -736,7 +736,9 @@ def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
             return LLMResult(127, "", f"{request.label}: {provider} is not installed; nothing was run.")
         cmd = _build_cmd(request.prompt, request.model, request.output_json,
                          request.allowed_tools, provider)
-        return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
+        from .video_pressure import model_call
+        with model_call(provider, request.timeout):
+            return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
     return run
 
 
@@ -897,7 +899,7 @@ def run_llm(
     does, at its rank, a CLI that is not installed. A call fails when
     `_should_fallback` says so or when its answer reads empty. A codex usage
     limit seen on this call is cached and sends the call to the fallback; a
-    cached one sends it to Ollama alone unless fallbacks are disabled. When
+    cached one uses only the explicitly enabled fallback, if any. When
     every provider tried hit its usage limit, a cached codex lockout counting
     as one, the result is EXHAUSTED. `output_json` asks a CLI for its JSON envelope; it does not
     set the output mode. `model` names the primary CLI's model, or is a
@@ -910,31 +912,19 @@ def run_llm(
     request = _Request(prompt, _model(primary, chosen, profile), label, timeout, profile,
                        output_json, allowed_tools, cwd)
 
-    if primary == "codex":
-        lockout = _read_codex_lockout()
-        if lockout is not None:
-            if settings.get("LLM_DISABLE_FALLBACK"):
-                return LLMResult(
-                    1, "", f"{label}: codex locked until {lockout.isoformat(timespec='minutes')}; "
-                    "fallbacks are disabled.", LLMStatus.EXHAUSTED, primary, request.model,
-                )
-            local = replace(request, model=_model("ollama", chosen, profile))
+    locked_until = _read_codex_lockout() if primary == "codex" else None
+    if locked_until is None:
+        log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
+        raw = _call(primary, request)
+        locked_until = _detect_codex_lockout(raw, prompt) if primary == "codex" else None
+        if locked_until is not None:
+            _write_codex_lockout(locked_until)
             log.info(
-                f"[LLM] {label}: codex locked until "
-                f"{lockout.isoformat(timespec='minutes')} — using {_describe('ollama', local)}."
+                f"[LLM] Codex usage limit detected — locking out until "
+                f"{locked_until.isoformat(timespec='minutes')}."
             )
-            return _answer("ollama", local, _call("ollama", local))
-
-    log.info(f"[LLM] {label}: {primary} primary → {_describe(primary, request)}.")
-    raw = _call(primary, request)
-    locked_until = _detect_codex_lockout(raw, prompt) if primary == "codex" else None
     if locked_until is not None:
-        _write_codex_lockout(locked_until)
-        log.info(
-            f"[LLM] Codex usage limit detected — locking out until "
-            f"{locked_until.isoformat(timespec='minutes')}."
-        )
-        first = LLMResult(raw.returncode or 1, "", f"{label}: codex usage limit.",
+        first = LLMResult(1, "", f"{label}: codex locked until {locked_until.isoformat(timespec='minutes')}.",
                           LLMStatus.EXHAUSTED, primary, request.model)
     else:
         first = _answer(primary, request, raw)
@@ -1063,6 +1053,26 @@ def _unwrap_ndjson(raw: str) -> str | None:
             return codex_answer if codex_complete else ""
         return "".join(parts)
     return None
+
+
+def codex_background_response(raw: LLMResult, prompt: str) -> tuple[dict, list]:
+    """Read a completed media/search session with the same refusal/quota handling.
+
+    Background callers supply their own bounded image-aware invocation because
+    they run overnight; normal Reply calls retain run_llm's active-hours check.
+    """
+    locked = _detect_codex_lockout(raw, prompt)
+    if locked:
+        _write_codex_lockout(locked)
+    if raw.returncode or _envelope_error(raw.stdout):
+        raise ValueError("Codex background session failed; no partial result accepted")
+    events = [json.loads(line) for line in raw.stdout.splitlines() if line.startswith("{")]
+    if not any(e.get("type") == "turn.completed" for e in events):
+        raise ValueError("Codex background turn did not complete")
+    answer = json.loads(_unwrap_ndjson(raw.stdout) or "null")
+    if not isinstance(answer, dict):
+        raise ValueError("Codex background answer is not a JSON object")
+    return answer, events
 
 
 def _provider_text(raw: str) -> str:
