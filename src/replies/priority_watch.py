@@ -16,6 +16,7 @@ from .direct_reply import reply_call
 STATE = StateFile("priority_watch_state.json", {}, GUARDED)
 JOB = reply_pipeline.Job("priority_watch", "PRIORITY", reply_call=reply_call)
 _retry_after = {}  # process-local backoff only; permanent claims stay at the chokepoints
+_reply_retry_delays = {}  # repeated attempts on one parent must leave room for new Replies
 _pending = {}
 _queue_lock = threading.RLock()
 
@@ -87,6 +88,9 @@ def _prune():
     for key in list(_retry_after):
         if key[0] not in _pending or _retry_after[key] <= time.monotonic():
             del _retry_after[key]
+    for url in list(_reply_retry_delays):
+        if url not in _pending:
+            del _reply_retry_delays[url]
 
 
 def _discovered():
@@ -126,6 +130,21 @@ def _ready(url, action):
 def _backoff(url, action, delay):
     with _queue_lock:
         _retry_after[(url, action)] = time.monotonic() + delay
+
+
+def _backoff_reply(url):
+    """Retry temporary failures less often; new parents keep immediate priority."""
+    base = settings.get("PRIORITY_WATCH_REPLY_RETRY_SECONDS")
+    maximum = max(base, settings.get("PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS"))
+    with _queue_lock:
+        # Keep this disposable memory bounded with the discovery queue, even
+        # when a slow generation finishes after its parent was pruned.
+        if url not in _pending:
+            return
+        delay = min(max(base, _reply_retry_delays.get(url, 0) * 2), maximum)
+        _reply_retry_delays[url] = delay
+        _backoff(url, "reply", delay)
+    log.debug("[PRIORITY] Next Reply attempt for %s in %ss if still admitted.", url, delay)
 
 
 def run_priority_actions_cycle():
@@ -168,4 +187,4 @@ def run_priority_reply_cycle():
                                       max_generations=settings.get("PRIORITY_WATCH_MAX_REPLIES"))
     finally:
         for url in cycle.tried:
-            _backoff(url, "reply", settings.get("PRIORITY_WATCH_REPLY_RETRY_SECONDS"))
+            _backoff_reply(url)

@@ -71,7 +71,8 @@ NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings"
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
-                "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60}
+                "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60,
+                "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
 REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300}
 
 
@@ -133,7 +134,8 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 10, "REPLY_DAILY_TARGET_MIN": 700, "REPLY_DAILY_TARGET_MAX": 1400}
+        "HOURLY_BREAK_MINUTES": 10, "REPLY_JITTER_SECONDS": 4,
+        "REPLY_DAILY_TARGET_MIN": 1200, "REPLY_DAILY_TARGET_MAX": 1400}
     assert shown["settings_warnings"] == []
 
 

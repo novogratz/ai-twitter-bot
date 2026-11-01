@@ -6,6 +6,67 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, pursue 1,200+ daily Replies — The Operator explicitly asks to
+push volume above 1,200 Replies/day. The Account's advisory reporting range is
+now 1,200–1,400; the upper number is not a cap, and targets never force weak
+Replies. Account settings and local `.env` select the existing eight-second
+Reply-spacing floor plus zero to four seconds of jitter (previous local values:
+20 plus zero to ten). Local direct-cycle and per-feed generation budgets rise
+from 12 to 24, using the same discovery, source and quality checks. Daily Replies
+remain uncapped. These are budgets and minimum gaps, not a throughput guarantee.
+
+Repeated watched-parent Reply attempts now double their temporary cooldown from
+the configured initial retry (60 seconds by default) to at most 15 minutes;
+an explicitly configured longer initial retry is preserved. Rediscovery does
+not reset the cooldown. Memory is bounded by the existing discovery queue and
+never claims a Reply. New parents keep immediate priority; like/repost retries
+remain independent. This prevents repeatedly unverifiable parents from consuming
+model and browser time every minute. Sol/xhigh, refusal handling, English/SI
+wording, parent likes, standalone admission and permanent dedup remain. No sleep
+or break change, bot lifecycle action, manual social action or production-state
+edit accompanies this update. Code and settings require the next explicitly
+requested restart.
+
+2026-11-01, technical sharpness with cute, funny delivery — The Operator
+clarifies that SI and technology expertise must remain central. Both Voice
+files pair precise technical answers with playful curiosity, shared geek
+enthusiasm and warm adult charm. Humor should help a supported point land;
+accuracy wins over a punchline. Simple reactions remain welcome when the post
+calls for one. Earn repeat readers through useful thinking and enjoyable
+company, without promising growth or asking for engagement. No additional
+posting, settings, state changes or restart accompanies this Voice refinement.
+
+2026-11-01, warmer and more varied Replies — The Operator asks for better
+traction through a more natural, funny and fun voice, including smileys.
+Both Voice files now give concrete fictional examples of celebrating a win,
+joining a joke and answering directly. Address the person's actual mood and
+detail; avoid headline recaps, repeated metaphors and decorative praise.
+Humor includes the author. Plain sincere reactions are welcome, without fake
+human identity, invented experience, unseen visual details or engagement bait.
+
+Shared text drafting now suggests roughly 30% brief reactions, 60% one sentence
+and 10% up to two short sentences. About one in three prompts invites trying a
+single natural smiley on a lighthearted post; serious/sensitive subjects omit
+it and most prompts still request none. These replace the October 26 delivery
+mix, are not output quotas, and never append emoji or cut a draft mechanically.
+Recent confirmed Reply memory discourages repeated structures as well as words
+and now also reaches structured search drafting. The optional search prompt
+follows the current Voice instead of old mandatory sarcasm and joke templates;
+its enable switch is unchanged. Existing reports measure outcomes without a
+promise of growth or an automatic winning-style claim. All admission, language,
+evidence, refusal, pacing and permanent dedup rules remain. No environment edit,
+state migration, manual social action or bot start/restart accompanies this work.
+
+The follow-up quality review found that Home, Following, allowlisted profile
+reads and VIP searches still cut source text to 200 characters before the
+1,200-character Reply prompt could use it. Reply jobs now explicitly request
+up to 1,200 visible source characters; VIP prompt limits match that bound.
+VIP, early-bird and mega-watch candidates also preserve separately labeled
+quoted context, with the outer original remaining the sole Reply target.
+Other scraper callers keep their existing 200-character default. No extra
+page visits, media inspection, scrolls or generations are added. The same
+scan limits, profile allowlist, parent checks and publication rules remain.
+
 2026-10-31, provider refusals are not Replies — Live verification caught a
 provider's refusal boilerplate published as a Reply. Shared final validation now
 rejects recognized self-referential refusal openings on Originals and Replies.
@@ -251,7 +312,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23–31 amendments) and supersedes older mandates. It encodes:
+(including the October 23–November 1 amendments) and supersedes older mandates. It encodes:
 
 - Active 03:30–00:00 America/Toronto only; nothing external happens overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight

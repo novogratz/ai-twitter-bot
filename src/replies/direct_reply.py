@@ -22,11 +22,15 @@ def always_reply_accounts() -> tuple:
     return account.current().network.always_reply
 
 
-REPLY_PROMPT = """Respond to the actual person and point in the tweet below. A specific reaction,
-dry joke, direct answer or useful observation can each stand alone. If they ask
-a question, answer it directly. Let an exciting development be exciting; do not
-automatically append a warning or a technical lesson. Correct only a material
-mistake. Avoid exaggerated hype, generic applause, flattery and catchphrases.
+REPLY_PROMPT = """Respond to the actual person and point in the tweet below. First notice what
+they are doing: sharing a win, making a joke, asking for help or discussing a
+claim. Meet that intent. A specific reaction, dry joke, direct answer or useful
+observation can each stand alone. Talk to the author when that fits; do not just
+recap their headline for an audience. If they ask a question, answer it directly.
+Let an exciting development be exciting; do not automatically append a warning
+or a technical lesson. Correct only a material mistake. Avoid exaggerated hype,
+generic applause, flattery and catchphrases. A simple sincere line is welcome;
+do not force every reply into an analogy or punchline.
 
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.
@@ -51,7 +55,7 @@ def _own_call(relation) -> ReplyCall:
     force = relation.provider if relation.provider and shutil.which(relation.provider) else None
     # dossier=False: whether the author's dossier joins it is the Operator's call.
     return ReplyCall(relation.prompt, Surface.RELATION_REPLY, f"{relation.handle.upper()}_VIP",
-                     dossier=False, text_limit=300, max_chars=220, provider=force)
+                     dossier=False, text_limit=1200, max_chars=220, provider=force)
 
 
 def _vip_call(handle: str) -> ReplyCall | None:
@@ -69,7 +73,7 @@ def _vip_call(handle: str) -> ReplyCall | None:
         return None
     # dossier=False: see _own_call.
     return ReplyCall(template, Surface.PRIORITY_REPLY_ON_AI_CLI, f"VIP_REPLY/{handle}", dossier=False,
-                     text_limit=300, strip_preamble=True, skip_window=20)
+                     text_limit=1200, strip_preamble=True, skip_window=20)
 
 
 def _vip_job(handle: str) -> reply_pipeline.Job:
@@ -107,8 +111,8 @@ def _run_vip_scan(cycle: reply_pipeline.Cycle, remaining=None) -> int:
             continue
         log.info(f"[VIP] Scanning @{handle} recent posts (search, no profile visit)...")
         tweets = reply_pipeline.scrape("VIP", f"@{handle}", scrape_x_search, f"from:{handle}",
-                                       max_tweets=20, tab="latest")
-        candidates = [reply_pipeline.Candidate(t["url"], t["text"], f"VIP/{handle}",
+                                       max_tweets=20, tab="latest", text_limit=1200)
+        candidates = [reply_pipeline.Candidate(t["url"], source_text(t), f"VIP/{handle}",
                                                is_reply=x_urls.is_reply_like_tweet(t)) for t in tweets
                       if t.get("url") and t.get("text") and _fresh_enough(t["url"], timedelta(hours=48))]
         posted += reply_pipeline.run(_vip_job(handle), candidates, cycle,

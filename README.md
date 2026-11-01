@@ -8,7 +8,43 @@ earn their space; no compulsory lecture or caveat. Facts stay grounded and bot i
 honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
 name preserves the existing state and history after the account rename.
 
+The November 1 voice clarification keeps technical expertise central while
+adding cute, funny delivery: playful curiosity, shared geek enthusiasm and
+warm adult charm. Technical questions get accurate, direct answers; a small
+joke can help the point land. Useful thinking and enjoyable company are the
+aim, with no requests for likes/follows or promises of growth.
+
 ## Current publishing policy
+
+The latest November 1 volume request raises the advisory target to **1,200+
+Replies/day** (reported against a 1,200–1,400 range, with no daily cap). The
+Account and local `.env` select an eight-second minimum Reply gap plus zero to
+four seconds of jitter. Local direct-cycle and per-feed generation budgets
+rise from 12 to 24 so existing discoveries can produce more useful Replies
+before another scan. Actual throughput also depends on model calls, Safari,
+eligible parents and validation; the target is not a promise or a filler quota.
+Repeated watched-parent failures back off from one minute to at most 15 minutes
+by doubling after each attempt; a longer configured initial wait is preserved.
+Fresh discoveries keep immediate priority and all publication checks still
+apply. These code/settings changes need an explicitly requested restart; none
+is performed here.
+
+The November 1 Reply update favors direct, warm reactions to the person's mood,
+with concrete Voice examples and humor that includes the author. Recent-reply
+memory discourages repeated metaphors and sentence patterns on text and
+structured search routes. The optional search prompt follows the same Voice;
+its enable switch is unchanged. Smileys get an explicit invitation on suitable
+posts, never automatic insertion. Compare observed 24h outcomes in the existing
+Reply report; this change makes no engagement promise. Voice files are read for
+each generation; code and Relation prompts need an explicitly requested restart.
+No restart is performed as part of this update.
+
+The follow-up context fix removes the earlier 200-character cutoff from Reply
+feed/profile reads and VIP searches. These jobs request up to 1,200 visible
+source characters, and VIP drafting uses the same prompt bound. Quoted text
+stays labeled context on VIP, early-bird and mega-watch routes too; the outer
+original remains the Reply target. This uses the existing page reads and scan
+budgets, without opening media or expanding profile access.
 
 Provider refusal boilerplate is skipped during Reply generation and rejected
 again by final publication validation. Technical caveats and honest bot identity
@@ -39,8 +75,8 @@ English detection also recognizes sentence-final function words, common modals
 and prepositions. English contractions and shared words such as on/me/son no
 longer count as French on their own; French and mixed prose remain refused.
 
-The latest update adds fresh SI video/builder searches, recent-reply memory,
-serialized Reply sends and an advisory **700–1,400 Replies/day** report. It fixes
+The October 26 update adds fresh SI video/builder searches, recent-reply memory,
+serialized Reply sends and an advisory daily volume report. It fixes
 watched-source captions such as “Yes” being judged as our own Original drafts.
 Reposts still obey the existing profile ceiling and spacing, with room reserved
 for the minimum Original target. Originals now use the configured Codex Reply
@@ -51,14 +87,16 @@ sampled 1h/24h outcomes, likes per 1,000 views and separate follower change.
 It samples one in five Replies, with bounded read-only checks; missing data is
 unknown. Targets do not force weak replies or promise likes/follows. Profile
 copy is prepared in `accounts/theaishrink/profile_copy.txt`, not applied to X.
-Code and Account changes take effect at the next explicitly requested start.
+Code and cached Account settings take effect at the next explicitly requested
+start; Voice files are read for each generation.
 
 - **English only:** every Original and Reply, including responses to French
   parents and VIPs. The Account's `english_only` policy controls prompts and
   final publication checks; uncertain language is skipped.
-- **Short, varied Replies:** most drafting prompts request one sentence, some
-  a few words and some two short sentences. About one in six permits a single
-  smiley if appropriate. Specific English replies can be as short as 8 characters;
+- **Short, varied Replies:** drafting prompts suggest roughly 30% a few words,
+  60% one sentence and 10% up to two short sentences. About one in three invites
+  a single smiley if appropriate; serious or sensitive subjects omit it. These
+  are drafting directions, not output quotas. Specific English replies can be as short as 8 characters;
   generic applause and emoji-only responses still fail validation. Main reply
   prompts receive up to 1,200 source characters instead of 200.
 - **Sleep from midnight to 03:30 Toronto time.** The scheduler, browser writes,

@@ -15,6 +15,7 @@ from tests.helpers import fresh
 @pytest.fixture
 def watched(monkeypatch):
     monkeypatch.setattr(watch, "_retry_after", {})
+    monkeypatch.setattr(watch, "_reply_retry_delays", {})
     monkeypatch.setattr(watch, "_pending", {})
     monkeypatch.setattr(watch.watch_discovery, "_tweets", {})
     profile = replace(account.current(), auto_engage_handles=("builder",))
@@ -213,3 +214,57 @@ def test_reply_retry_backoff_does_not_hide_a_newer_discovery(watched, monkeypatc
     now[0] = 1045
     watch.run_priority_reply_cycle()
     assert attempted == [older, newer, older]
+
+
+@pytest.mark.parametrize("maximum, delays", [(900, (60, 120, 240, 480, 900, 900)),
+                                           (180, (60, 120, 180, 180))])
+def test_repeated_reply_failures_back_off_across_polls_and_remain_retryable(watched, monkeypatch,
+                                                                         settings_override, maximum, delays):
+    from src.guards import replied_store
+    settings_override(PRIORITY_WATCH_REPLY_RETRY_SECONDS=60, PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS=maximum)
+    now = [1000]
+    monkeypatch.setattr(watch.time, "monotonic", lambda: now[0])
+    url = fresh("builder")
+    post = {"url": url, "text": "New SI tools"}
+    attempts = []
+    def fail(job, candidates, cycle, **kwargs):
+        attempts.append(candidates[0].url)
+        cycle.tried.add(candidates[0].url)
+        return 0
+    monkeypatch.setattr(reply_pipeline, "run", fail)
+    watch.observe([post])
+    watch.run_priority_reply_cycle()
+    for count, delay in enumerate(delays, start=1):
+        now[0] += delay - 1
+        # Rediscovering the same post must not reset its growing cooldown.
+        watch.observe([post])
+        watch.run_priority_reply_cycle()
+        assert len(attempts) == count
+        now[0] += 1
+        watch.run_priority_reply_cycle()
+        assert len(attempts) == count + 1
+    assert not replied_store.load_replied(), "a cooldown is never a permanent Reply claim"
+    watch.run_priority_actions_cycle()
+    assert watched == [("like", url), ("repost", url)], "Reply backoff must not delay other actions"
+
+
+def test_reply_backoff_memory_is_pruned_with_discoveries(watched, settings_override):
+    settings_override(PRIORITY_WATCH_QUEUE_LIMIT=1)
+    older, newer = fresh("builder", minutes=2), fresh("builder", minutes=1)
+    watch.observe([{"url": older, "text": "SI tools"}])
+    watch._backoff_reply(older)
+    watch.observe([{"url": newer, "text": "New SI tools"}])
+    # Also cover a generation finishing after its parent left the bounded queue.
+    watch._backoff_reply(older)
+    assert watch._reply_retry_delays == {}
+    assert (older, "reply") not in watch._retry_after
+    assert watch._ready(newer, "reply")
+
+
+def test_reply_backoff_preserves_a_longer_configured_retry(watched, settings_override):
+    settings_override(PRIORITY_WATCH_REPLY_RETRY_SECONDS=1800)
+    url = fresh("builder")
+    watch.observe([{"url": url, "text": "SI tools"}])
+    for _ in range(2):
+        watch._backoff_reply(url)
+        assert watch._reply_retry_delays[url] == 1800

@@ -68,7 +68,7 @@ def run_feed_sweep_cycle():
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
         log.info("[SWEEP] Scanning %s before drafting...", source)
         tweets = reply_pipeline.scrape("SWEEP", source, scraper,
-                                        max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"))
+                                        max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"), text_limit=1200)
         feeds.append((source, tweets))
         log.info("[SWEEP] %s scan complete: %s posts.", source, len(tweets))
     cycle = reply_pipeline.Cycle()

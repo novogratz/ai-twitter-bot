@@ -183,8 +183,11 @@ dont = "Do not mock him, his work, his results, or his credibility. Never make h
 FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
 HOURLY_BREAK_MINUTES = 10
-# Advisory goals only: never override quality, sleep or spacing.
-REPLY_DAILY_TARGET_MIN = 700
+# Operator, 2026-11-01: pursue 1,200+ Replies at the existing spacing floor.
+MIN_SECONDS_BETWEEN_REPLIES = 8
+REPLY_JITTER_SECONDS = 4
+# Advisory goals only: never override quality, sleep or spacing; no daily cap.
+REPLY_DAILY_TARGET_MIN = 1200
 REPLY_DAILY_TARGET_MAX = 1400
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────

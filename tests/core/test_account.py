@@ -100,7 +100,8 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
-                             "HOURLY_BREAK_MINUTES": 10, "REPLY_DAILY_TARGET_MIN": 700,
+                             "HOURLY_BREAK_MINUTES": 10, "MIN_SECONDS_BETWEEN_REPLIES": 8,
+                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1200,
                              "REPLY_DAILY_TARGET_MAX": 1400}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
@@ -285,7 +286,9 @@ def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, pr
     ("DUP_SHARED_BIGRAMS = 0", "DUP_SHARED_BIGRAMS", 1),
 ])
 def test_an_account_value_past_an_engine_bound_is_brought_back_to_it(accounts, fresh, limit, name, bound):
-    accounts("theaishrink", THEAISHRINK.replace("[limits]", f"[limits]\n{limit}"))
+    # Replace an existing Account override rather than duplicating its TOML key.
+    source = re.sub(rf"(?m)^{re.escape(name)}\s*=.*\n", "", THEAISHRINK)
+    accounts("theaishrink", source.replace("[limits]", f"[limits]\n{limit}"))
     fresh()
     assert settings.get(name) == bound
     assert [w for w in settings.startup_warnings()

@@ -21,6 +21,7 @@ from ..core.logger import log
 from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
+from .reply_source import source_text
 from .reply_generator import LanguageRule
 
 # No FR-forced override on this job (pinned in the tests).
@@ -56,7 +57,8 @@ def run_mega_watch_cycle():
     for username in sample:
         if posted >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
-        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username, max_tweets=4)
+        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username,
+                                       max_tweets=4, text_limit=1200)
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
                                      max_shipped=MAX_REPLIES_PER_CYCLE - posted)
 
@@ -86,5 +88,5 @@ def _fresh_candidates(username: str, tweets: list) -> list:
             continue
         # Our own Reply in the watched thread (2026-05-16: the bot answered
         # itself under @sama) is refused by Reply admission on its URL handle.
-        candidates.append(reply_pipeline.Candidate(url, text, f"MEGA/{username}"))
+        candidates.append(reply_pipeline.Candidate(url, source_text(t).strip(), f"MEGA/{username}"))
     return candidates
