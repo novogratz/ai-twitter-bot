@@ -188,8 +188,11 @@ def _recent_memory() -> str:
             "Avoid reusing their opening phrases, punchlines, metaphors or sentence structures. "
             "Changing the product name or swapping one metaphor's nouns is still repetition. "
             "If recent replies keep making jokes, a plain, warm reaction can be the fresh choice. "
-            "Write for each parent. Before answering, silently check: "
-            "which concrete detail in the parent makes this reply fit? If none, rewrite or SKIP. "
+            "Write for each parent. Before answering, silently check whether the reply fits "
+            "the parent's intent and the Voice's guidance. Where the Voice permits brief "
+            "appreciation, that is enough: do not invent a detail or add a technical takeaway "
+            "just to sound specific. Vary short reactions naturally and avoid repeating an "
+            "exact recent reply. Otherwise, use a concrete detail from this parent or SKIP. "
             "No requests for likes/follows, bait questions, invented tests or invented visual details. "
             "For a video you have not seen, react only to the supplied description. "
             "Being friendly does not require agreeing with an unsupported claim.")
@@ -214,9 +217,13 @@ def _delivery(author: str, text: str) -> str:
               "joke's tone clearer; omit it for serious or sensitive subjects. The words must work alone."
               if seed[1] % 3 == 0 else "Use no emoji or smiley in this reply; warmth can come from the words.")
     return ("DELIVERY FOR THIS REPLY (within the task's character limit):\n"
+            "Follow the Voice's post-specific style first. If it applies, use its length and "
+            "emoji guidance instead of the defaults below.\n"
+            "OTHERWISE, use these defaults:\n"
             f"{length}\n{smiley}\n"
             "Let the parent's mood and meaning lead; these length suggestions are not quotas. "
             "A relevant reaction can be enough; do not bolt on a lesson, caveat or question. "
-            "Be specific to the supplied post, never generic applause. Accuracy wins over brevity. "
+            "Be specific to the supplied post outside the Voice's brief-appreciation cases. "
+            "For every reply, accuracy wins over brevity. "
             "Do not research, browse or call tools for this reply. Use the supplied context and stable "
             "knowledge; SKIP if a worthwhile reply needs facts you do not have.")

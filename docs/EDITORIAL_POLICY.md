@@ -1,5 +1,33 @@
 # Editorial policy — November 1, 2026
 
+## Brief appreciation for artists' videos
+
+The Operator's later November 1 request asks for simple, varied praise and
+hearts when an artist shares a generated video, with Déborah (@dvorahfr) as
+an example. For these creative showcases, both Voice files prefer 2–6 clear
+English words and usually one heart. “Love this ❤️”, “This is beautiful 💖”
+and similar brief appreciation can be the whole Reply. There is no need to
+add a technical lesson, critique, caveat, metaphor or question.
+
+This is a style exception to the general demand for a specific observation,
+not an exception to final content validation. The shared delivery directions,
+recent Reply memory and optional search prompt defer to the Voice's guidance
+for the kind of post. Recent confirmed text helps vary brief reactions; neither
+a fixed rotation nor automatic emoji insertion is used. Existing banned
+one-word applause, emoji-only text and uncertain language remain refused.
+The documented short English examples pass the unchanged final checks.
+
+An artist's technical question, request for critique, product announcement,
+benchmark, news or sensitive post retains its appropriate normal response.
+Identity alone does not select appreciation. Never invent visual/audio details,
+claim to have watched or replayed a video, or guess its generation tool.
+Use only the supplied context to recognize a creative showcase.
+
+This changes no target list, follow policy, model, volume setting, admission
+rule, sleep/break boundary or permanent deduplication. No manual social action,
+state migration or restart accompanies it. Voice changes are read per draft;
+shared prompt changes need the next explicitly requested restart.
+
 ## Pursue 1,200+ daily Replies
 
 The Operator's later November 1 request explicitly asks for 1,200+ responses
