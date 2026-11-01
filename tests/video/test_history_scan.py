@@ -9,6 +9,24 @@ from src.video.store import Store
 from src.x import safari_video as browser
 
 
+def test_bounded_novelty_records_actual_search_scope_without_claiming_global_absence(video_store, video_cfg, ready, at):
+    doc = ready()
+    video_store.save_candidate("clip1", doc, at().timestamp(), state="held",
+                               fingerprint={"sha256": doc["original_sha256"], "visual": []})
+    class Search:
+        scope = "fixture bounded results; global absence is not established"
+        calls = 0
+        def search(self, query, cursor):
+            self.calls += 1
+            return {"data": [], "meta": {"next_token": str(self.calls)}}
+    client = Search()
+    assert reconcile.novelty(video_store, video_store.candidate("clip1"), client, video_cfg,
+                             at().timestamp()) == "checked_no_match"
+    result = video_store.candidate("clip1")["document"]["novelty"]
+    assert client.calls == 6 and result["truncated"] is True
+    assert "global absence is not established" in result["scope"]
+
+
 def post(ident):
     return {"id": ident, "text": "fixture", "created_at": "2026-11-01T12:00:00Z", "urls": [],
             "url": f"https://x.com/example/status/{ident}", "video": False}

@@ -122,7 +122,11 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
         truncated |= bool(cursor and not found)
         if found:
             break
-    state = "found_existing" if found else "unchecked" if truncated else "checked_no_match"
+    # The checked scope is the bounded set actually searched and inspected.
+    # A popular-character search can have endless results; reaching its page
+    # budget does not mean no search occurred, nor establish global absence.
+    # Unreadable pages/media still raise before any checked verdict is saved.
+    state = "found_existing" if found else "checked_no_match"
     doc["novelty"] = {"state": state, "checked_at": now, "evidence": checked,
                       "scope": getattr(client, "scope", "recent X API search; no match does not establish global absence"),
                       "source_identifiers_only": operator_direct, "truncated": truncated}
