@@ -132,7 +132,7 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     settings_override(VIP_SCAN_HANDLES="TheBTCTherapist")
     url = _url_with_age(30).replace("/someone/", "/TheBTCTherapist/")
     monkeypatch.setattr(scraper, "scrape_x_search",
-                        lambda q, max_tweets=20, tab="latest":
+                        lambda q, max_tweets=20, tab="latest", text_limit=200:
                         [{"url": url, "text": "working the weekend because bitcoin", "author": "TheBTCTherapist"}])
 
     llm.answers["working the weekend"] = "the AI side sends love — and a fruit basket"
@@ -191,7 +191,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (own.template, own.surface, own.label) == (relations.get("Graphseo").prompt,
                                                       Surface.RELATION_REPLY, "GRAPHSEO_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
-        False, 300, 220, False, 0)
+        False, 1200, 220, False, 0)
     assert (own.provider, own.profile) == ("codex", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("Graphseo").provider is None
@@ -202,7 +202,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (buddy.template, buddy.label) == (relations.default, "VIP_REPLY/vision_ia")
     for call in (bestie, buddy):
         assert (call.surface, call.dossier, call.text_limit, call.strip_preamble, call.skip_window,
-                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 300,
+                call.max_chars, call.provider, call.profile) == (Surface.PRIORITY_REPLY_ON_AI_CLI, False, 1200,
                                                                  True, 20, None, None, TEXT_PROFILE)
 
 

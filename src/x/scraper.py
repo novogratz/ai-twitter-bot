@@ -344,7 +344,7 @@ def _profile_visit_allowed(username: str) -> bool:
     return base in {h.strip().lstrip("@").lower() for h in allow.split(",") if h.strip()}
 
 
-def scrape_profile_tweets(username: str, max_tweets: int = 5):
+def scrape_profile_tweets(username: str, max_tweets: int = 5, *, text_limit: int = 200):
     """Visit a profile and scrape their recent tweet URLs and text.
 
     Gated by `_profile_visit_allowed`: non-allowlisted profiles return []
@@ -359,7 +359,7 @@ def scrape_profile_tweets(username: str, max_tweets: int = 5):
         time.sleep(8)
         safari._scroll_page()
 
-        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets)
+        tweets = _scrape_tweets_from_page(f"@{username}", max_tweets, text_limit)
         safari.close_front_tab()
         return tweets
 
@@ -400,7 +400,7 @@ def _feed_tab(labels: tuple[str, ...], *, click: bool) -> str:
     return safari._run_js(script, 8, log_prefix="[SCRAPE]")
 
 
-def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int) -> list:
+def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int, text_limit: int) -> list:
     """Read each viewport before virtualized posts disappear, deduplicating IDs."""
     from .x_urls import status_id
     if max_tweets <= 0:
@@ -424,7 +424,7 @@ def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int) -> list:
             passes = settings.get("FEED_SCROLL_PASSES")
             for step in range(passes + 1):
                 before = len(tweets)
-                for tweet in _scrape_tweets_from_page(label, max_tweets):
+                for tweet in _scrape_tweets_from_page(label, max_tweets, text_limit):
                     identity = status_id(tweet.get("url", ""))
                     if not identity or identity in seen:
                         continue
@@ -441,14 +441,14 @@ def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int) -> list:
             safari.close_front_tab()
 
 
-def scrape_home_feed(max_tweets: int = 15):
+def scrape_home_feed(max_tweets: int = 15, *, text_limit: int = 200):
     """Select For You explicitly and collect posts throughout a bounded deep scroll."""
-    return _scrape_feed("home feed", ("for you", "pour vous"), max_tweets)
+    return _scrape_feed("home feed", ("for you", "pour vous"), max_tweets, text_limit)
 
 
-def scrape_following_feed(max_tweets: int = 15):
+def scrape_following_feed(max_tweets: int = 15, *, text_limit: int = 200):
     """Select Following explicitly; never return the other feed as Following."""
-    return _scrape_feed("following feed", ("following", "abonnements", "suivi(e)s"), max_tweets)
+    return _scrape_feed("following feed", ("following", "abonnements", "suivi(e)s"), max_tweets, text_limit)
 
 
 def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_limit: int = 200,

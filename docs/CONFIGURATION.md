@@ -100,8 +100,20 @@ The Account's optional `editorial.use_reply_route` selects REPLY rather than
 ORIGINAL for both Original draft and review (default false). The live Account
 sets it true. Optional `searches.latest` adds first-hour Latest discoveries to
 the existing rotating search budget. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
-report values only; the live Account sets 700/1400. They change neither admission,
+report values only; the live Account sets 1200/1400. They change neither admission,
 spacing, generation budgets nor the uncapped daily Reply policy.
+
+The November 1 volume request separately selects
+`MIN_SECONDS_BETWEEN_REPLIES=8` and `REPLY_JITTER_SECONDS=4` in the Account and
+local `.env`, replacing the local 20/10 override. The engine floor stays eight.
+Local `DIRECT_REPLY_MAX_PER_CYCLE=24` and `FEED_SWEEP_MAX_REPLIES_PER_CYCLE=24`
+replace 12/12; discovery budgets and admission checks still apply. Browser and
+model work add time beyond the required gap, so settings cannot promise volume.
+Repeated watched-parent Reply attempts double `PRIORITY_WATCH_REPLY_RETRY_SECONDS`
+up to `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` (default and ceiling 900 seconds,
+floor 20), or the configured initial delay if longer. Rediscovery does
+not reset this process-local backoff; pruning the parent removes it. New watched
+parents and independent like/repost retries are unaffected.
 
 ## Policy ceilings
 
@@ -267,7 +279,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PRIORITY_WATCH_DISPATCH_SECONDS` | int | `2` | floor `2` | Check discovered watched posts for independent action and Reply work. |
 | `PRIORITY_WATCH_QUEUE_LIMIT` | int | `80` | floor `1`, ceiling `200` | Maximum discovered watched originals retained in process memory, newest first. |
 | `PRIORITY_WATCH_ACTIONS_PER_CYCLE` | int | `4` | floor `1`, ceiling `8` | Maximum independent like/repost attempts per watch action dispatch. |
-| `PRIORITY_WATCH_REPLY_RETRY_SECONDS` | int | `60` | floor `20` | Back off a tried watched Reply before another attempt; permanent claims still govern admission. |
+| `PRIORITY_WATCH_REPLY_RETRY_SECONDS` | int | `60` | floor `20` | Initial watched Reply retry delay; repeated attempts double to the configured maximum or this value if longer. Permanent claims still govern admission. |
+| `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` | int | `900` | floor `20`, ceiling `900` | Maximum repeated watched Reply cooldown; never shortens the initial retry delay. |
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
 | `PRIORITY_WATCH_MAX_REPLIES` | int | `1` | floor `1`, ceiling `2` | Maximum Reply generations per dispatch; one selects the newest parent again after each generation. |

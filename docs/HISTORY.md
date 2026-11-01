@@ -1,4 +1,82 @@
-# History — mandates and incidents, June to October 2026
+# History — mandates and incidents, June to November 2026
+
+## 2026-11-01 — Pursue 1,200+ Replies and stop wasting watched retries
+
+The Operator explicitly asks for 1,200+ responses per day. The confirmed CSV
+recorded 723 Replies on October 31, and November 1's morning log showed repeated
+parent-verification failures for the same two watched statuses. The watcher
+retried them after every one-minute cooldown, paying for new drafts and browser
+visits while useful Replies waited.
+
+Repeated attempts now double their temporary cooldown up to 15 minutes, leaving
+new watched discoveries immediately eligible. The initial configured delay is
+preserved, even if longer than the default ceiling. Rediscovery cannot reset
+the delay; pruning bounds the memory. This creates no permanent claim and never
+weakens parent verification. Regression tests cover continued retryability,
+new-parent priority, independent actions and bounded cleanup.
+
+The advisory Account target rises from 700–1,400 to 1,200–1,400, with daily Replies
+still uncapped. The Account and local `.env` select the existing eight-second
+spacing floor plus zero to four seconds of jitter instead of the local 20/10.
+Local direct-cycle and per-feed generation budgets rise from 12 to 24. Sol/xhigh,
+quality, language, parent-like and permanent standalone-dedup checks remain.
+No sleep/break change, new job, live lifecycle action or production-state edit.
+These changes pursue the target; observed confirmed throughput must establish
+whether it is reached.
+
+## 2026-11-01 — Keep technical expertise inside the playful voice
+
+The Operator clarifies that Replies should stay sharp on SI and technology
+while being cute, funny and enjoyable enough to attract repeat readers.
+Both Voice files now explicitly pair precise technical answers with playful
+curiosity and warm adult charm. Fictional batching and retrieval examples show
+humor carrying an accurate point. Precision takes priority over a punchline,
+and short reactions remain welcome. No engagement promises, requests for
+likes/follows, fabricated experience or false human identity are added.
+This is a Voice refinement only, with no code, state or lifecycle change.
+
+## 2026-11-01 — Source text was cut before Reply generation
+
+The Operator asks for further Reply improvements. Following the source text
+through the live jobs found a gap in the October 26 context update: ordinary
+search requested 1,200 characters, but Home/Following and profile reads still
+used the scraper's 200-character default. VIP search also requested only 200,
+then its ReplyCall capped the already-short text at 300. A late qualification,
+question or joke setup could never reach the model.
+
+Reply jobs now request up to 1,200 visible source characters through the same
+scrapes, and VIP prompts use that bound too. VIP, early-bird and mega-watch
+routes preserve labeled quoted context while keeping the outer original as
+the target. Tests pass a qualification beyond character 300 through the job
+and prompt, check the quote target and verify reader limits without additional
+page reads. Other scraper callers retain their old defaults. Profile access,
+scan/generation budgets and all write checks remain; no restart or state edit.
+
+## 2026-11-01 — Reply warmth, variation and smileys
+
+The Operator reports weaker views and likes and asks for more natural, funny
+Replies with smileys. A read-only review found no emoji in the last 300 logged
+Replies, while the shared delivery prompt prohibited them for five out of six
+parents and weakly permitted one for the remainder. Cleanup does not remove
+smileys. Recent writing repeatedly used polished metaphors and decorative
+adjectives despite the Voice already asking for warmth.
+
+The saved report at 05:01 Toronto contained 263 sampled 24h observations.
+Those counters were actually read at ages 24.02–28.98 hours. The median was
+43 views; total likes were 292, with 174 on one Reply. This is descriptive
+evidence from a recent sample, not a verified historical decline or proof
+that one style causes engagement. The August growth files are stale and do
+not provide a comparable Reply outcome baseline.
+
+Both Voice files gain examples of direct warmth, brief jokes and helpful
+answers. Shared delivery now suggests a 30/60/10 length mix and invites a
+single smiley for about one in three parents when the subject fits. It never
+appends one or forces humor onto serious posts. Recent text memory includes
+sentence-structure repetition and now also reaches structured search drafting.
+The optional search prompt had retained hundreds of lines of obsolete
+sarcasm, forced punchlines and French-reference instructions; it now follows
+the current Account Voice without enabling that surface. Existing reports and
+publication checks stay in place. No live lifecycle action or state edit.
 
 ## 2026-10-31 — Provider refusal published as a Reply
 

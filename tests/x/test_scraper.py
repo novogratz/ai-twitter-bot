@@ -44,6 +44,30 @@ def test_feed_stops_at_candidate_budget_without_extra_scrolls(feed_browser):
     assert len(feed_browser.scrolls) == 1
 
 
+@pytest.mark.parametrize("name", ["scrape_home_feed", "scrape_following_feed", "scrape_profile_tweets"])
+@pytest.mark.parametrize("limit", [None, 1200])
+def test_readers_honor_requested_context_without_extra_page_reads(feed_browser, monkeypatch, settings_override, name, limit):
+    from src.x import scraper
+    settings_override(PROFILE_VISIT_ALLOWLIST="builder")
+    parent = "The model works locally. " * 20 + "Qualification: results are from a simulation."
+    reads = []
+
+    def page(label, max_tweets=10, text_limit=200):
+        reads.append((max_tweets, text_limit))
+        return [{**_post(1), "text": parent[:text_limit]}]
+
+    monkeypatch.setattr(scraper, "_scrape_tweets_from_page", page)
+    args = ("builder",) if name == "scrape_profile_tweets" else ()
+    options = {} if limit is None else {"text_limit": limit}
+    result = getattr(scraper, name)(*args, max_tweets=1, **options)
+
+    expected_limit = 200 if limit is None else limit
+    assert result[0]["text"] == parent[:expected_limit]
+    assert reads == [(1, expected_limit)]
+    assert len(feed_browser.opened) == len(feed_browser.closed) == 1
+    assert len(feed_browser.scrolls) == (1 if name == "scrape_profile_tweets" else 0)
+
+
 def test_feed_stops_after_three_duplicate_or_empty_viewports(feed_browser):
     from src.x import scraper
     feed_browser.pages = [[_post(1)], [_post(1, "twitter.com")], [], [_post(1)], [_post(2)]]

@@ -1,4 +1,4 @@
-"""Reply bot: finds AI tweets and posts troll replies."""
+"""Optional search-based Replies, admitted and sent through the shared pipeline."""
 from datetime import timedelta
 from ..x import x_urls
 from ..core import config, settings

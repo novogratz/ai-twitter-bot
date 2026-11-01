@@ -1,4 +1,108 @@
-# Editorial policy — October 31, 2026
+# Editorial policy — November 1, 2026
+
+## Pursue 1,200+ daily Replies
+
+The Operator's later November 1 request explicitly asks for 1,200+ responses
+per day. The Account's advisory range becomes 1,200–1,400 Replies/day, replacing
+the earlier 700–1,400 range. Daily Replies remain uncapped; 1,400 is only the
+upper reporting target. No target authorizes filler, a bypass of validation or
+a catch-up burst after downtime. Existing reports continue counting confirmed
+Replies and deriving the needed hourly rate from the actual waking/break plan.
+
+Account settings and the local `.env` use the existing eight-second minimum
+Reply gap plus zero to four seconds of jitter, replacing the local 20-second
+minimum plus zero to ten. This stays within the September 25 engine floor;
+the send queue and final chokepoint still enforce the ledger gap. Generation
+and browser transactions add their own time. Local `DIRECT_REPLY_MAX_PER_CYCLE`
+and `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` rise from 12 to 24. The former bounds
+confirmed Replies per direct cycle, with a generation budget per search;
+the latter bounds generations per feed. Search count, full feed scan bounds,
+niche/freshness checks and both-feeds-before-drafting behavior stay unchanged.
+
+The morning log showed repeated parent-verification failures consuming new
+model calls and browser visits for the same watched posts. Their temporary
+Reply cooldown now doubles after each attempted generation: 60, 120, 240, 480,
+then 900 seconds by default, capped there. `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS`
+sets the maximum between 20 and 900 seconds. The configured initial retry remains
+authoritative, including a value longer than 900 seconds. Rediscovery does not
+reset this cooldown. It is bounded process-local memory, pruned with the existing
+candidate queue, and never claims or permanently skips a Reply. New discoveries
+keep immediate priority. Likes and reposts retain their independent retries.
+
+Sol/xhigh, no fallback, English-only, SI wording, provider-refusal rejection,
+verified parent likes, standalone admission, own-account exclusion and permanent
+dedup remain. No sleep/break change, new job, state migration, manual social
+action or start/restart is part of this update. Local settings and code take
+effect on the next explicitly requested restart. Only subsequent confirmed
+volume can show whether the target is reached.
+
+## Technical sharpness with cute, funny delivery
+
+The Operator's later November 1 clarification keeps SI and technology expertise
+central while asking for cute, funny and likable Replies. Both Voice files
+combine playful curiosity, shared geek enthusiasm and warm adult charm with
+accurate, direct answers to technical questions. Preserve the relevant mechanism,
+distinction or practical consequence; a joke should help the point land and
+never displace technical accuracy. Simple reactions remain appropriate where
+the parent calls for them. No compulsory lesson or punchline is added.
+
+Earn repeat readers through useful thinking and enjoyable company. Keep the
+existing ban on engagement requests, invented experience and false human
+identity. The established length/smiley directions and all publication checks
+remain. This refinement changes Voice text, read for each generation; no model,
+setting, state or bot lifecycle change accompanies it.
+
+## Warmer, more varied Replies
+
+The November 1 Operator request asks for more traction through natural, human
+sounding conversation, humor and smileys. Both Account Voice files now include
+short fictional examples for wins, light mishaps, useful features and direct
+questions. The parent determines the mood. Plain sincere reactions can stand
+alone; neither a technical lesson nor a joke is mandatory. Humor includes the
+author, with no put-downs, forced intimacy, invented experiences, unseen visual
+details, fake human identity or requests for engagement.
+
+Shared text drafting suggests roughly 30% brief reactions (3–8 words), 60% one
+sentence (9–18 words) and 10% up to two short sentences (20–30 words). About
+one in three prompts invites trying one smiley if a lighthearted subject fits;
+most still request none. Serious or sensitive topics omit it. Meaning, evidence
+and mood take precedence over the length suggestion. This supersedes the
+October 26 delivery mix; these are prompt directions, not publication quotas,
+and there is no automatic emoji insertion or mechanical word-count trimming.
+
+The last 20 confirmed Replies now inform structured search drafting as well as
+text drafting. Memory discourages repeated sentence structures and metaphor
+patterns, including the same joke with different nouns. The optional search
+prompt loses obsolete mandatory sarcasm, French references and stock jokes;
+it follows the current Voice, language policy, Account research queries and
+three-candidate output bound. Its disabled-by-default switch stays unchanged.
+
+Use the existing sampled 1–3h and 24–36h report to assess results, checking
+coverage, source, freshness, topic and observation age. A single popular Reply
+can dominate pooled likes; neither smileys nor brevity are proven winners.
+All content checks, refusal handling, English-only and SI wording, permanent
+standalone dedup, parent likes, sleep, pacing and publication caps remain.
+No live start/restart, manual social action, environment edit or production-state
+migration is part of this update. Voice text is read for each generation;
+code changes require an explicitly requested restart.
+
+## Preserve the parent's context across Reply routes
+
+The November 1 follow-up asks what else can improve Replies. Inspection found
+that several scrapers still cut text to 200 characters, despite the generator's
+1,200-character source allowance. Reply reads of Home, Following, allowlisted
+profiles and VIP searches now explicitly request up to 1,200 visible characters.
+VIP prompt limits rise from 300 to the same existing 1,200-character bound.
+Other scraper callers retain their existing default. This reads text already
+present in the page; it does not expand hidden text or inspect images/video.
+
+VIP, early-bird and mega-watch candidates now use the shared labeled quote
+context already used by ordinary search and feed Replies. The outer original
+remains the target, and the combined draft context remains bounded by the
+ReplyCall limit. Existing root/author/age/niche checks, profile access, feed
+scan budgets, generation budgets and publication rules remain. No additional
+page reads, model calls, jobs, settings or state files are introduced. No
+restart or manual social action accompanies this fix.
 
 ## Provider refusals are not publication drafts
 

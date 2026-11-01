@@ -20,6 +20,7 @@ from ..x.scraper import scrape_profile_tweets
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
 from .reply_generator import LanguageRule
+from .reply_source import source_text
 
 # The author Reply admission read from the status URL names the parent in
 # the prompt, not the scanned handle. No FR-forced override on this job
@@ -78,7 +79,7 @@ def run_early_bird_cycle():
         log.info(f"[EARLYBIRD] Scanning @{username} for fresh tweets...")
         # Only the top 3 tweets — anything older isn't fresh anyway.
         tweets = reply_pipeline.scrape("EARLYBIRD", f"@{username}", scrape_profile_tweets, username,
-                                       max_tweets=3)
+                                       max_tweets=3, text_limit=1200)
         # One reply per scanned account, then move on.
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle, max_shipped=1)
 
@@ -116,5 +117,5 @@ def _fresh_candidates(username: str, tweets: list) -> list:
             continue
 
         log.info(f"[EARLYBIRD] FRESH ({int(age.total_seconds() // 60)}min) @{username}: {text[:80]}...")
-        candidates.append(reply_pipeline.Candidate(url, text, f"EARLYBIRD/{username}"))
+        candidates.append(reply_pipeline.Candidate(url, source_text(tweet), f"EARLYBIRD/{username}"))
     return candidates
