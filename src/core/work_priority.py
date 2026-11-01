@@ -81,6 +81,11 @@ class PriorityLock:
         with self._condition:
             return self._owner == threading.get_ident()
 
+    def pending(self):
+        """Read-only queue depth for contention telemetry."""
+        with self._condition:
+            return len(self._waiters) + int(self._owner is not None)
+
     def __enter__(self):
         self.acquire()
         return self

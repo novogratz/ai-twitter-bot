@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install minimal deps
-        run: pip install pytest apscheduler==3.10.4
+      - name: Install test and video dependencies
+        run: pip install -r requirements-video.txt
       - name: Run guard tests
         run: python -m pytest tests/ -q

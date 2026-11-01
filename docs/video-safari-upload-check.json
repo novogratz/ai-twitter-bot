@@ -1,0 +1,13 @@
+{
+  "ready": true,
+  "sha256": "bb89be78066cbbc918771d69146e3cf21a5de517a861d32fdd9a0249c423f052",
+  "filename": "diagnostic-branded.mp4",
+  "bytes": 2728292,
+  "checked_at": 1793534553.562617,
+  "nonce": "1738b131e01b4e5ba15a28df6bd1adcf",
+  "account": "thesimaximalist",
+  "transport": "safari",
+  "published": false,
+  "diagnostic_only": true,
+  "draft_discarded": true
+}

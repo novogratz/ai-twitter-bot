@@ -1,0 +1,35 @@
+{
+  "workload": "real Reply _send/send lock + simulated 15ms model/15ms X; real single-thread 640x360 FFmpeg; fixture-feed SQLite discovery",
+  "live_platform_checks": false,
+  "production_slo_verified": false,
+  "baseline": {
+    "start": 1793531894.593337,
+    "end": 1793531908.844216,
+    "replies": 600,
+    "seconds": 14.250879049301147,
+    "p95_seconds": 0.07829283317551017,
+    "throughput_per_second": 42.10266594252118,
+    "samples": 600
+  },
+  "concurrent": {
+    "start": 1793531909.057396,
+    "end": 1793531922.991319,
+    "replies": 600,
+    "seconds": 13.93392300605774,
+    "p95_seconds": 0.07615016680210829,
+    "throughput_per_second": 43.06037859827067,
+    "samples": 600
+  },
+  "p95_ratio": 0.9726326627036394,
+  "within_initial_10_percent_target": true,
+  "overlapping_jobs": {
+    "discovery": 426,
+    "render": 13
+  },
+  "automatic_throttle_reason": "CPU pressure",
+  "automatic_resume": true,
+  "crashed_job_reclaimed_with_new_fence": true,
+  "terminated_media_worker_exitcode": -15,
+  "recovery_lease_clock_fast_forwarded": true,
+  "limitation": "Real X latency, model quotas, sustained memory/network pressure and real provider access require a deployment observation period."
+}

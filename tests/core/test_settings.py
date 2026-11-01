@@ -100,6 +100,18 @@ def test_defaults_hold_without_env_file(fresh):
     assert settings.get("NEWS_MODEL") is None
 
 
+@pytest.mark.parametrize("env_text", ["", (ROOT / ".env.example").read_text()], ids=["defaults", "example"])
+def test_default_and_example_routes_use_only_codex(fresh, env_text):
+    from src.core import llm_client as llm
+
+    fresh(env_text)
+    assert llm._provider() == "codex"
+    assert settings.get("LLM_DISABLE_FALLBACK") is True
+    assert llm._fallback("codex")[0] is None
+    for surface in llm.Surface:
+        assert (llm.resolve(surface).provider or llm._provider()) == "codex"
+
+
 def test_env_file_values_are_typed(fresh):
     fresh('MAX_FOLLOWS_PER_DAY=12\nFOLLOW_GROWTH_MODE=1\nFOLLOW_RATIO_CEILING=0.5\nBOT_HANDLE="Other"\n')
     assert settings.get("MAX_FOLLOWS_PER_DAY") == 12

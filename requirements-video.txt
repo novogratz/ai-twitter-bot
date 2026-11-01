@@ -1,0 +1,4 @@
+-r requirements.txt
+# Loaded only by isolated media/resource workers.
+numpy>=2.2,<3
+psutil>=6,<8

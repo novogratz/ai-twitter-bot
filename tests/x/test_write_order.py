@@ -181,6 +181,17 @@ def test_reply_ships_then_records_then_closes(trace):
                             "record:reply", "record:debate_turn", "js:reply_metrics", "close", "unlock"]
 
 
+def test_video_first_hold_armed_during_composition_stops_submit(trace, monkeypatch):
+    from src.video import startup
+    monkeypatch.setattr(startup, "waiting_reason", lambda: "startup video pending" if "paste" in trace.events else "")
+    refusals = []
+    assert tc.reply_to_tweet(POST_URL, REPLY, on_refused=refusals.append) is W.REFUSED
+    assert "paste" in trace.events and "submit" not in trace.events
+    assert "release" in trace.events and not trace.claimed
+    assert not any(event.startswith("record:") for event in trace.events)
+    assert refusals == [ra.Refusal.STARTUP_VIDEO]
+
+
 def test_reply_refused_never_claims_nor_opens(trace):
     trace.refuse.add("judge")
     assert tc.reply_to_tweet(POST_URL, REPLY) is W.REFUSED

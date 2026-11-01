@@ -9,7 +9,7 @@ from ..core import config, settings
 from ..core.logger import log
 
 
-WAKE = time(3, 30)
+WAKE = time(4, 0)
 BEDTIME = time(0, 0)
 _BREAK_INTERVAL_HOURS = 3
 _FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.

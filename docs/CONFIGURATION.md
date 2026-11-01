@@ -153,29 +153,29 @@ value under `bounded_settings`, and the warnings under `settings_warnings`.
 
 ## Models and providers
 
-The live operator configuration and `.env.example` (2026-10-23) set `AI_CLI=codex`,
-`REPLY_LLM_PROVIDER=codex`, `REPLY_MODEL=gpt-6.1-sol`,
+The live operator configuration and `.env.example` (2026-11-01) set `AI_CLI=codex`,
+`PROFILE_LLM_PROVIDER=codex`, `REPLY_LLM_PROVIDER=codex`, `REPLY_MODEL=gpt-6.1-sol`,
 `PRIORITY_REPLY_MODEL=gpt-6.1-sol`, and `CODEX_REASONING_EFFORT=xhigh`.
-Originals retain `PROFILE_LLM_PROVIDER=ollama`. `LLM_DISABLE_FALLBACK=1`
-keeps Replies on Codex even during cached usage lockouts: those calls return
-a rate-limit outcome without calling a different model. The engine defaults
+`LLM_DISABLE_FALLBACK=1` keeps every route on Codex even during cached usage
+lockouts: those calls return a rate-limit outcome without calling a different model. The engine defaults
 below still apply to settings that the operator has not set.
 
-- `AI_CLI` picks the primary provider, `ollama` by default;
+- `AI_CLI` picks the primary provider, `codex` by default (also when blank);
   `PROFILE_LLM_PROVIDER` and `REPLY_LLM_PROVIDER` route the profile surfaces
-  and the Replies, `ollama` both. An unknown provider name fails every call
-  it routes without running anything; the start logs it and `--dry-run`
+  and the Replies, `codex` both; blank inherits `AI_CLI`. An unknown provider
+  name fails every call it routes without running anything; the start logs it and `--dry-run`
   lists it under `unknown_llm_providers`.
-- `LLM_FALLBACK_CLI` unset means no fallback: a failed call fails, Originals
-  and Replies alike. `codex` (or `gemini`, `ollama`) opts into one. Ignored,
+- `LLM_DISABLE_FALLBACK` defaults to `1`. Enabling a fallback requires both
+  `LLM_DISABLE_FALLBACK=0` and an explicit `LLM_FALLBACK_CLI` (`codex`, `gemini`
+  or `ollama`). Unset means a failed call fails, Originals and Replies alike. Ignored,
   logged at start and listed by `--dry-run` under `ignored_llm_fallbacks`:
   `claude`, a CLI not installed, Ollama behind Ollama, or the primary itself
   without `LLM_FALLBACK_MODEL`. A fallback runs `LLM_FALLBACK_MODEL`, else
   `CODEX_FALLBACK_MODEL` or `GEMINI_FALLBACK_MODEL`.
 - A Relation may override the provider with its installed CLI; the live
   Account has no Relation-specific providers. A codex primary
-  under a cached usage lockout (`codex_lockout.json`) goes to local Ollama
-  only when `LLM_DISABLE_FALLBACK` is false.
+  under a cached usage lockout (`codex_lockout.json`) obeys the same explicit
+  fallback settings as a newly failed call; it never selects Ollama implicitly.
 - `CODEX_REASONING_EFFORT` sets `model_reasoning_effort` on every Codex
   invocation; blank keeps the CLI's own configured default. It does not
   change another provider or the operator's global Codex configuration.
@@ -189,7 +189,8 @@ below still apply to settings that the operator has not set.
   CLI (codex, claude, gemini). Unset or blank, the call takes the default of
   the CLI it runs, from `MODEL_DEFAULTS` below. Ollama never reads them: it
   runs `EDITORIAL_OLLAMA_MODEL` for Originals and `OLLAMA_MODEL` for the
-  rest, the model `bin/run.sh` pre-warms. Nor does OpenCode, nor a fallback.
+  rest, only when explicitly selected. `bin/run.sh` performs no model warm-up.
+  Nor does OpenCode read these CLI model settings, nor a fallback.
 
 ## Retired keys
 
@@ -212,13 +213,17 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BOT_ACCOUNT` | str | `theaishrink` |  | Account the bot runs: the folder accounts/<name>/ holding its account.toml. |
 | `BOT_HANDLE` | str | blank |  | X handle the bot runs, without @; the Account's handle unless set. |
 | `MAX_REPLIES_PER_CYCLE` | int | `5` |  | Replies one reply cycle may ship. |
-| `AI_CLI` | str | `ollama` |  | Primary LLM provider: ollama, codex, gemini, opencode or claude. |
+| `AI_CLI` | str | `codex` |  | Primary LLM provider: codex by default; other providers require explicit configuration. |
 | `NEWS_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Originals; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
 | `PRIORITY_REPLY_MODEL` | str | unset: `MODEL_DEFAULTS` |  | CLI model for priority Replies; unset or blank, the default of the CLI called (MODEL_DEFAULTS). |
-| `PROFILE_LLM_PROVIDER` | str | `ollama` |  | Provider for profile surfaces; blank means none. |
-| `REPLY_LLM_PROVIDER` | str | `ollama` |  | Provider for Replies; blank means none. |
+| `PROFILE_LLM_PROVIDER` | str | `codex` |  | Provider for profile surfaces; blank inherits AI_CLI. |
+| `REPLY_LLM_PROVIDER` | str | `codex` |  | Provider for Replies; blank inherits AI_CLI. |
 | `DRY_RUN` | 0 or 1 | `0` |  | 1 logs every write instead of doing it; config.dry_run() reads it at call time. |
+| `VIDEO_ENABLED` | 0 or 1 | `0` |  | Opt into isolated licensed-video workers and replace the main editorial schedule; defaults off. |
+| `VIDEO_LIVE` | 0 or 1 | `0` |  | Permit video API uploads/posts after explicit activation; DRY_RUN still overrides. Defaults off. |
+| `VIDEO_CONFIG_FILE` | str | blank |  | Operator video TOML path; blank uses accounts/<BOT_ACCOUNT>/video.toml. |
+| `VIDEO_CREDENTIALS_FILE` | str | blank |  | Private (mode 600) JSON credentials path for official X API user access; never a token value. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
@@ -257,13 +262,13 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `BLANK_GRACE_AFTER_RESTART_SECONDS` | int | `120` |  | Seconds after a Safari restart when blank pages do not count. |
 | `PROFILE_VISIT_ALLOWLIST` | str | blank |  | Comma-separated profiles the scraper may visit, besides our own; the Account's network.profile_visits unless set. |
 | `NOTIFY_LIKE_REPLIES_COUNT` | int | `3` |  | Replies under our latest post the notify job likes. |
-| `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Ollama model of a call profile that names none; bin/run.sh pre-warms it. |
-| `OLLAMA_BASE_URL` | str | `http://localhost:11434` |  | Ollama HTTP endpoint; bin/run.sh pre-warms there. |
+| `OLLAMA_MODEL` | str | `qwen3.6:35b-a3b` |  | Model used only when Ollama is explicitly selected and a call profile names none. |
+| `OLLAMA_BASE_URL` | str | `http://localhost:11434` |  | HTTP endpoint used only when Ollama is explicitly selected. |
 | `OLLAMA_NUM_CTX` | int | `32768` |  | Ollama context window, in tokens. |
 | `OLLAMA_NUM_PREDICT` | int | `1800` |  | Tokens Ollama may generate per call. |
 | `LLM_TIMEOUT_SECONDS` | int | `180` |  | Default model-call timeout, and Ollama's floor. |
 | `LLM_FALLBACK_CLI` | str | blank |  | Fallback provider: codex, gemini or ollama; blank means none. |
-| `LLM_DISABLE_FALLBACK` | 0 or 1 | `0` |  | 1 turns the fallback off whatever LLM_FALLBACK_CLI says. |
+| `LLM_DISABLE_FALLBACK` | 0 or 1 | `1` |  | 1 turns the fallback off whatever LLM_FALLBACK_CLI says; disabled by default. |
 | `CODEX_REASONING_EFFORT` | str | blank |  | Codex reasoning effort (for example xhigh); blank keeps the CLI's configured default. |
 | `CODEX_MIN_TIMEOUT_SECONDS` | int | `300` | floor `0`, ceiling `360` | Minimum primary Codex call budget, still cut short by sleep or breaks; 0 keeps the caller's timeout. |
 | `LLM_FALLBACK_MODEL` | str | blank |  | Model of every fallback call; blank, the fallback CLI's own below. |

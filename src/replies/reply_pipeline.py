@@ -23,7 +23,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import account, engagement_log, reply_wording, work_priority
+from ..core import account, engagement_log, reply_wording, work_priority, video_pressure
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -69,6 +69,7 @@ class Candidate:
     provider: str = ""  # the provider and model that wrote `reply`
     model: str = ""
     is_reply: bool = False
+    queued_at: float = field(default_factory=time.monotonic, compare=False, repr=False)
 
 
 @dataclass
@@ -199,8 +200,9 @@ def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
     log.info(f"[{job.label}] Generating reply for @{author}...")
-    return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
-                                    context=candidate.context)
+    with video_pressure.measure("generation"):
+        return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
+                                        context=candidate.context)
 
 
 def _stop_for_rate_limit(job: Job, cycle: Cycle) -> None:
@@ -226,7 +228,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     try:
         priority = (work_priority.WATCH if x_urls.author(url) in account.current().auto_engage_handles
                     else work_priority.REPLY)
-        with work_priority.scope(priority), _send_turn():
+        with video_pressure.measure("send"), work_priority.scope(priority), _send_turn():
             # Another worker may have shipped while this draft generated or
             # queued. A duplicate must not spend a spacing gap ahead of a
             # useful new Reply. This is still the shared admission rule.
@@ -255,6 +257,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
             _set_aside(job).add(url)
         return 0
     _set_aside(job).add(url)
+    video_pressure.observe("confirmed", time.monotonic() - candidate.queued_at, _SEND_LOCK.pending())
     try:
         engagement_log.log_reply(url, reply, "reply", source=candidate.source,
                                  pattern_id=pattern_id or candidate.pattern,

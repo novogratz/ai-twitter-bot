@@ -66,14 +66,42 @@ def _run_applescript(script: str, retries: int = 1,
 
 
 def _run_js(js: str, timeout_s: int = 15, *, log_prefix: str = "",
-            activate: bool = False, raise_timeout: bool = False) -> str:
+            activate: bool = False, raise_timeout: bool = False,
+            target_url: str | None = None) -> str:
     """Run `js` in Safari's front tab and return its result, "" when the
     osascript call fails. The script goes through a temp file, so `js` needs
     no AppleScript escaping. `log_prefix` tags the failure line with the
     caller's prefix, `activate` brings Safari to the front first, and
     `raise_timeout` lets `subprocess.TimeoutExpired` reach a caller that
-    retries."""
+    retries. `target_url` confines execution to an already-open source page,
+    even when the operator selects another tab; a missing page fails closed."""
     require_active()
+    target = "do JavaScript jsCode in current tab of front window"
+    if target_url is not None:
+        from urllib.parse import urlsplit
+        parsed = urlsplit(target_url)
+        if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
+                or parsed.query or parsed.fragment or any(ord(c) < 33 for c in target_url)):
+            raise ValueError("target tab requires a plain HTTPS page URL")
+        expected = _escape_for_applescript(target_url.rstrip("/"))
+        # Downloads must keep reading their source tab while the operator uses
+        # another tab. Missing targets fail; never fall back to the front tab.
+        target = f'''if (count of windows) > 0 then
+            set activeSource to current tab of front window
+            set activeURL to URL of activeSource
+            if activeURL is "{expected}" or activeURL is "{expected}/" or activeURL starts with "{expected}?" or activeURL starts with "{expected}/?" then
+                return do JavaScript jsCode in activeSource
+            end if
+        end if
+        repeat with sourceWindow in windows
+            repeat with sourceTab in tabs of sourceWindow
+                set sourceURL to URL of sourceTab
+                if sourceURL is "{expected}" or sourceURL is "{expected}/" or sourceURL starts with "{expected}?" or sourceURL starts with "{expected}/?" then
+                    return do JavaScript jsCode in sourceTab
+                end if
+            end repeat
+        end repeat
+        error "Requested source tab is not open"'''
     prefix = f"{log_prefix} " if log_prefix else ""
     activate_line = 'tell application "Safari" to activate' if activate else ""
     path = None
@@ -86,7 +114,7 @@ def _run_js(js: str, timeout_s: int = 15, *, log_prefix: str = "",
         {activate_line}
         set jsCode to (read POSIX file "{path}" as «class utf8»)
         tell application "Safari"
-            do JavaScript jsCode in current tab of front window
+            {target}
         end tell
         '''], capture_output=True, text=True, timeout=timeout_s)
         if res.returncode != 0:

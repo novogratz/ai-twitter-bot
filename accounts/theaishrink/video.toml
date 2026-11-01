@@ -1,0 +1,122 @@
+# Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
+# This replaces main-post editorial/repost scheduling only while enabled.
+publishing_transport = "safari"
+browser_upload_seconds = 45
+windows = ["07:00", "09:00", "12:00", "17:00", "21:00"]
+paired_windows = ["07:00", "21:00"]
+pair_minutes = 15
+protect_primary_windows = true # spend extra-slot clips only above the next five windows' needs
+allow_source_overlays = true # operator accepts retained source subtitles/credits, 2026-11-01
+caption_disclosure = false # operator requests only the playful caption, 2026-11-01
+grace_seconds = 600
+min_spacing_seconds = 900
+startup_seconds = 3600
+day_poll_seconds = 1200
+night_poll_seconds = 600
+buffer_target = 16
+queue_limit = 500
+score_threshold = 80.0
+confidence_min = 0.9
+preferred_age_hours = 72
+max_age_hours = 168
+lease_seconds = 900
+media_job_seconds = 600
+max_media_memory_mb = 2048
+asset_retention_days = 14
+task_timeout_seconds = 120
+render_timeout_seconds = 120
+max_attempts = 4
+request_budget = 500
+publishing_request_reserve = 40
+download_budget_bytes = 2000000000
+storage_budget_bytes = 5000000000
+max_download_bytes = 150000000
+inference_budget_usd = 0.0
+inspection_cost_ceiling_usd = 0.0
+max_duration_seconds = 140
+render_threads = 1
+max_load_per_cpu = 0.75
+min_free_memory_mb = 1024
+max_reply_backlog = 12
+reply_latency_ratio = 1.10
+min_latency_samples = 30
+inspection_command = []
+inspection_provider = "codex"
+codex_model = "" # reuse the existing Codex Reply model in a new session
+codex_timeout_seconds = 180
+codex_daily_calls = 96
+codex_daily_input_tokens = 2000000
+codex_inspection_reserve = 48
+codex_max_reply_calls = 2
+inspection_fps = 2
+font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"
+watermark = "@Thesimaximalist"
+media_hosts = []
+local_import_roots = []
+x_reads_enabled = false
+
+[targets]
+elon = ["Elon Musk", "马斯克"]
+trump = ["Donald Trump", "特朗普"]
+dario = ["Dario Amodei", "达里奥", "阿莫迪"]
+sam = ["Sam Altman", "山姆·奥特曼"]
+jensen = ["Jensen Huang", "黄仁勋"]
+
+[platforms.instagram]
+enabled = true
+public_search = true
+public_search_seconds = 7200
+creators = ["ai_xiaomu"]
+permission_reference = ""
+# feed = "/absolute/path/to/authorized-instagram-feed.json"
+# Alternatively: provider_command = ["/absolute/path/to/licensed-provider-adapter"]
+
+[platforms.tiktok]
+enabled = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+[platforms.bilibili]
+enabled = true
+safari_player = true
+public_search = true
+public_search_seconds = 7200
+# Public research leads only; monitoring never grants reuse permission.
+creators = ["Claude最严厉的父亲", "AI大法师"]
+permission_reference = ""
+
+[platforms.rednote]
+enabled = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+# Permissions are operator records, never trusted claims from downloaded metadata.
+[permissions.operator_confirmed_all_sources]
+enabled = true
+operator_attested = true
+all_creators = true
+platforms = ["instagram", "tiktok", "rednote", "bilibili"]
+valid_until_revoked = true
+video = true
+audio = true
+editing = true
+x_publication = true
+overlay_removal = true
+credit_source = false
+evidence = "Operator confirmed on 2026-11-01: YES I HAVE Permission; i always have permission; for future videos as well i have permission for all videos on instagram tiktok rednote blibli etc. Confirmation answered the question covering editing/reposting the video and its music. This is an operator attestation, not an independently verified creator contract."
+
+# [permissions.creator_contract_id]
+# platform = "instagram"
+# creator = "licensed_creator"
+# video = true
+# audio = true
+# editing = true
+# x_publication = true
+# overlay_removal = true
+# evidence = "/private/contracts/permission-and-music-license.pdf"
+# expires_at = 1798761600  # UTC Unix seconds; replace with actual permission expiry.
+# attribution = "Credit: @licensed_creator"

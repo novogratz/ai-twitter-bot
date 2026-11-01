@@ -40,6 +40,7 @@ class Refusal(Enum):
     CONVERSATION = "conversation follow-up or nested reply"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
+    STARTUP_VIDEO = "startup video must be confirmed before Replies"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
@@ -68,6 +69,13 @@ class Verdict:
         return self.refusal is None
 
 
+def judge_startup() -> Verdict:
+    """Also rechecked immediately before a prepared Reply is submitted."""
+    from ..video.startup import waiting_reason
+    reason = waiting_reason()
+    return Verdict(Refusal.STARTUP_VIDEO, reason) if reason else Verdict(None)
+
+
 def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False) -> Verdict:
     """May the account answer this post at all? Definitive rules first, so a
     Blocked account is dropped for good even when judged Overnight."""
@@ -84,6 +92,9 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
     if not active_hours.may_act():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
+    startup = judge_startup()
+    if not startup:
+        return Verdict(startup.refusal, startup.reason, author)
     if debate_turn:
         ok, why = action_guard.can_debate_turn(author)
         if not ok:

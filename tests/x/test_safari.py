@@ -96,6 +96,41 @@ def test_run_applescript_counts_a_timeout_as_a_failed_attempt(monkeypatch, unwal
     assert seen == [20]
 
 
+def test_run_js_confines_source_reads_to_the_requested_tab(monkeypatch, unwalled):
+    scripts = []
+
+    def run(argv, **kwargs):
+        scripts.append(argv[-1])
+        return SimpleNamespace(returncode=0, stdout="source result\n", stderr="")
+
+    _fake_osascript(monkeypatch, run)
+    assert unwalled["_run_js"]("document.title", target_url="https://source.test/video/123/") == "source result"
+    [script] = scripts
+    assert 'sourceURL is "https://source.test/video/123/"' in script
+    assert 'sourceURL starts with "https://source.test/video/123/?"' in script
+    assert 'sourceURL starts with "https://source.test/video/123/"' not in script
+    assert "do JavaScript jsCode in sourceTab" in script
+    assert 'activeURL is "https://source.test/video/123/"' in script
+    assert script.index("set activeURL to URL of activeSource") < script.index("do JavaScript jsCode in activeSource")
+    assert script.index("do JavaScript jsCode in activeSource") < script.index("repeat with sourceWindow")
+    assert "do JavaScript jsCode in current tab of front window" not in script
+    assert 'error "Requested source tab is not open"' in script
+
+
+@pytest.mark.parametrize("target", [
+    "http://source.test/video/123", "https://user:secret@source.test/video/123",
+    "https://source.test/video/123?token=private", "https://source.test/video/123#fragment",
+    "https://source.test/video/123\n", "file:///tmp/video",
+])
+def test_run_js_refuses_unsafe_target_before_running_applescript(monkeypatch, unwalled, target):
+    def unexpected(*args, **kwargs):
+        pytest.fail("Unsafe target reached AppleScript")
+
+    _fake_osascript(monkeypatch, unexpected)
+    with pytest.raises(ValueError, match="plain HTTPS"):
+        unwalled["_run_js"]("document.title", target_url=target)
+
+
 def test_open_url_targets_safari_not_the_default_browser(monkeypatch, unwalled):
     """`webbrowser.open` followed the default browser: with Firefox as the
     default, pages opened in Firefox while `_run_js` read Safari's front tab.

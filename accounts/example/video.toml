@@ -1,0 +1,21 @@
+# Copy and customize the documented video configuration before enabling.
+publishing_transport = "safari"
+browser_upload_seconds = 45
+protect_primary_windows = true
+inspection_provider = "codex"
+codex_model = ""
+codex_timeout_seconds = 180
+codex_daily_calls = 96
+codex_daily_input_tokens = 2000000
+codex_inspection_reserve = 48
+codex_max_reply_calls = 2
+inspection_fps = 2
+watermark = "@ExampleAccount"
+[platforms.instagram]
+enabled = false
+[platforms.tiktok]
+enabled = false
+[platforms.bilibili]
+enabled = false
+[platforms.rednote]
+enabled = false

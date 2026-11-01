@@ -1,5 +1,110 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-01 — Separate explicit clip choices from automatic ranking
+
+The Operator repeatedly selected an older downloaded clip, but automatic expiry
+kept rejecting it. A durable, hash-bound `select` command now records that one
+choice for 24 hours and queues inspection in the existing media worker. It
+overrides age/score preference only. It does not manufacture permission, metrics,
+inspection approval, novelty or an extra startup request. The publisher waits for
+that exact candidate; confirmation clears the preference with the post receipt.
+Selection cannot replace an in-flight/ambiguous publication. Source metadata
+cannot grant this choice. A longer bounded source-inspection call completed in a
+real fresh Codex session; its uncertain cast verdict and cleanup rejection were
+retained. Safari history now attempts muted metadata loading and records bounded
+diagnostics when the expected public post cannot be found, without reading text
+from another page or claiming that unavailable video was fingerprinted.
+
+## 2026-11-01 — Preserve selected originals across queue expiry
+
+Resuming discovery expired an older clip that the Operator had explicitly chosen
+and removed its working directory during a manual preview render. The original
+was being retained only inside disposable queue storage. Cleanup now preserves
+files associated with explicit operator edit requests, live media jobs and
+unresolved publications; freshness still prevents automatic eligibility. Saved
+operator originals also have a separate `video_saved_assets` state directory,
+count toward the storage budget and can be reused only with matching hashes and
+the existing permission checks. Queue expiry must never masquerade as an operator
+instruction to discard a saved clip. Regression tests cover this distinction.
+
+## 2026-11-01 — Reject truncated video downloads
+
+An authenticated source player's primary CDN advertised a full video but closed
+the response early. HTTP reads with an explicit chunk size silently accepted that
+short body; only full media decoding caught the bad file. The bounded downloader
+now checks the received byte count against Content-Length before accepting a
+response. The player's actual backup delivered the complete selected clip, which
+was muxed, decoded and fingerprinted locally. Safari source reads can stay on a
+specified open source tab while the operator uses another tab, with no fallback
+when that source is missing. Regression tests cover truncation with and without
+a file sink, HEAD responses and tab confinement. The bot stayed stopped and no
+publication or creator permission was inferred from a successful download.
+
+## 2026-11-01 — Preserve video research leads and posted identities
+
+The operator challenged an empty discovery queue and requested fresh Codex
+research plus permanent video deduplication. Early date filtering and cached
+empty searches hid plausible leads. Discovery now broadens when needed, retains
+unknown dates/creators without granting eligibility, and keeps cached URLs across
+an ingestion crash. Explicit fresh checks still enforce shared budgets. Two
+completed operator research sessions found four concrete links and recorded
+access limits; none became a ready or published video. Confirmed history saves
+both media versions' hashes/fingerprints plus source identity, caption and receipt
+atomically. Final selection also checks history independently of the queue, and
+cleanup/restart tests preserve it. See `docs/VIDEO_VALIDATION.md` for actual results.
+
+## 2026-11-01 — A blocked startup video must not fall through to Replies
+
+The Operator requested a video first, then normal Replies. Startup preflight
+found no eligible video or permission records, but the normal scheduler was
+started anyway and replied. The correction persists a video-first activation
+intent before preflight, gates ordinary jobs and rechecks Reply admission just
+before submission. Discovery/media/history may continue; only the confirmed
+startup receipt releases the hold automatically. Failure, expiry and restarts
+leave it held. A separate explicit override remains available.
+
+Stopping exposed a second defect: `stop_bot.sh` matched `python main.py` but
+missed the launcher's `python -u main.py`. The affected process was stopped by
+verified PID. The script now handles interpreter flags and absolute script
+paths while checking the interpreter and repository working directory. Tests
+start disposable processes in two repositories and verify only the requested
+one is terminated.
+
+## 2026-11-01 — Protect the five main video windows and resume history safely
+
+The Operator reiterates at least one video around 07:00, 09:00, noon, 17:00 and
+21:00. Previously an extra paired post could consume the last ready asset before
+the next main window. The publisher now checks surplus in its reservation
+transaction, retaining distinct eligible inventory for the next five main
+windows, including tomorrow. A paired slot can still supply a missed first
+post, and replenishment within grace can release an extra. Known expiry and
+freshness-score decay reduce coverage. Status and the daily report expose the
+shortfall; they do not promise supply that has not been discovered or verified.
+
+A live read-only history scan also showed changing viewports when a deferred
+video fingerprint reopened the profile. History now persists an observed page
+until all entries are processed. Replay captures every observed viewport;
+unchanged posts away from the page bottom cannot finish the scan. Tests cover
+restart/deferred recovery, late page loading, shortages, distinct assets and DST.
+These changes do not submit a test post or waive source/permission requirements.
+
+## 2026-11-01 — Codex-only startup without Ollama warm-up
+
+The Operator reports `bin/run.sh` still warming an old Ollama model and
+returning after its startup banner. The launcher warmed Ollama unconditionally;
+the profile provider in `.env` and all three engine provider defaults also
+still named Ollama. The video-off path expanded an empty array under macOS
+Bash 3.2 with `set -u`, which aborts before Python starts. Piping through `tee`
+also disabled the logger's terminal handler. The live Python dry-run succeeds.
+
+The launcher now reads the configured handle and video flag, propagates
+configuration errors, selects a scalar requirements path and execs Python
+with its terminal attached. Ollama warm-up is removed. The live profile route
+and provider defaults select Codex with fallbacks disabled. Cached Codex usage
+lockouts use the configured fallback ladder instead of implicit local Ollama.
+Isolated launcher and routing regressions cover these paths; no live bot start
+or publication is part of the fix.
+
 ## 2026-11-01 — Retire Bitcoin/finance targets and require AI/SI evidence
 
 The Operator asks to remove Graphseo, TheBTCTherapist and similar finance or

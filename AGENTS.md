@@ -1,10 +1,115 @@
 # AGENTS.md
 
 @thesimaximalist (The SI Maximalist) is a live X account driven by Safari + AppleScript from the
-operator's Mac: no X API. Every change here can publish, like or follow on a
+operator's Mac for Replies and video posts. Every change here can publish, like or follow on a
 real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
+
+2026-11-01, caption correction and seven daily videos — The Operator removes the
+public source-link and synthetic-disclosure lines, requests a blank line between
+two playful sentences with emojis, and changes the schedule to 07:00, 07:15,
+09:00, 12:00, 17:00, 21:00 and 21:15 Toronto. Source/permission/parody evidence
+remains internal. Required attribution in any separate specific grant still applies.
+The Operator reports manually deleting the first video and explicitly requests
+its immediate replacement. A one-off replacement keeps both receipts/history,
+transfers the same slot/startup-day claim and excludes only that reported-deleted
+receipt from the spacing check. Repeated commands cannot create another send.
+This never grants automatic workers permission to repeat posted content.
+The Operator explicitly requests PR creation, merge, push, release and restart.
+
+2026-11-01, immediate direct publication — After repeatedly requesting immediate
+publication of the reviewed chosen clip, the Operator directs a one-off send
+while the old-account archive scan is still running. A direct operator call may
+reserve only the current hash-bound selected clip against imported history and
+actual source-identifier novelty checks. It leaves historical coverage incomplete
+and never grants the exception to ordinary scheduled workers. Rights, QC, active
+hours, spacing, startup/day caps, durable claims and uncertain-send holds remain.
+
+2026-11-01, standing video permission and retained source overlays — The Operator
+confirms permission to edit and repost current and future Instagram, TikTok,
+RedNote and Bilibili videos, including music. The Account records this as a
+revocable operator attestation, not an independently verified creator contract.
+No per-clip permission question is required. Source subtitles, logos and credits
+may remain when clean removal is impractical. Output review must still verify
+the exact Account watermark, unchanged source overlays, preserved action/audio
+and no unapproved new overlays. Retained overlays are never labeled removed.
+All inspection, deduplication, pacing and publication receipt requirements remain.
+
+2026-11-01, explicit selected-video request — The Operator repeatedly asks to
+publish the specific downloaded clip. `video.py select` records a one-video,
+hash-bound choice for up to 24 hours. It overrides automatic freshness and score
+selection only; it never supplies rights, changes inspection/QC/novelty checks,
+loosens spacing/caps or creates an extra startup request. The next publication
+waits for that chosen clip, and confirmation clears the preference atomically.
+Repeated commands do not extend the choice. Source metadata cannot set it.
+The existing independent media worker can inspect the saved original before a
+license is recorded, with a bounded Codex call of at most 300 seconds. This
+local inspection cannot publish or turn browser access into creator permission.
+Safari history reading requests muted metadata loading when native playback is
+idle; missing media remains unresolved rather than being marked checked.
+
+2026-11-01, research leads and permanent video memory — The Operator requests
+fresh Codex research and never repeating a posted video. Public discovery now
+broadens beyond recent-date filters when needed and retains supported individual
+video links even with unknown dates or creators. Cached leads survive a crash
+before ingestion; explicit `check-discovery --fresh` skips only the cache, not
+shared budgets or access restrictions. Leads remain held until all publication
+gates pass. Confirmed history additionally saves both original and edited hashes
+and fingerprints, source identifiers, creator, caption and X receipt atomically.
+Media, final selection and inventory coverage check that permanent history;
+file cleanup never deletes it. No bot restart or public post accompanies this fix.
+
+2026-11-01, startup video before Replies — The Operator corrects a live start
+that began replying while video activation was blocked. Explicit activation
+with `--before-replies` now persists the requested order before preflight.
+All ordinary scheduler jobs wait; video discovery, media and history continue.
+Reply admission and the last pre-submit check also enforce the hold. Only a
+confirmed startup-video receipt releases it automatically, including a scheduled
+slot that fulfills startup. Failed preflight, empty supply, expiry, unknown sends,
+restarts and disabling the video flag never silently resume Replies. A separate
+explicit `resume-replies` command can release the hold if the Operator changes
+the order. Ordinary boots create neither a hold nor a startup request. Rights,
+quality, cooldown, spacing and permanent dedup still apply. The stop script also
+matches the launcher's `python -u main.py`, retaining repository-only scope.
+
+2026-11-01, prioritize one video per main window — The Operator reiterates the
+07:00, 09:00, 12:00 noon, 17:00 and 21:00 Toronto minimum. The video publisher
+now protects distinct eligible inventory for the next five main windows,
+including tomorrow morning, before spending a clip on an extra paired post.
+A paired slot may supply a window whose first slot was missed. Known permission,
+freshness and freshness-score expiry cannot inflate projected coverage. Status
+and the daily report expose uncovered windows. Explicit startup requests retain
+their existing one-post priority and collision rules. This allocation is
+configurable with `protect_primary_windows`; it never waives source rights,
+inspection, novelty, dedup, spacing or publish-unknown holds. Empty supply still
+skips at grace expiry. The new tests use isolated state and submit no live posts.
+Due video writes share ready-Reply FIFO browser priority, below watched work,
+so later ordinary Replies cannot starve a reserved slot. Existing transactions
+finish normally; discovery/history reads keep routine priority.
+
+2026-11-01, Codex-only operation — The Operator requires Codex for every model
+route. The local environment and default primary, profile and Reply providers
+now select Codex; fallbacks default off. Sol/xhigh remains the Reply route,
+also used for this Account's editorial drafting/review and video inspection.
+Cached Codex quota lockouts obey the configured fallback policy and never
+implicitly select Ollama. The launcher removes local-model warm-up, resolves
+the current Account handle and video dependencies, and keeps terminal logging
+attached. Configuration errors fail visibly; video-off startup works on macOS
+Bash 3.2. This fix does not start the bot or change publication gates or state.
+
+2026-11-01, Codex video inspection — The Operator requests fresh Codex sessions
+for video/audio inspection and completion of autonomous posting. The media
+worker supplies timestamped frames, local Apple Vision OCR and local SoundAnalysis
+audio classifications to a separate ephemeral Codex call using the existing
+login and Reply model. It cannot publish, run shell tools or inherit plugins,
+hooks or project instructions. Actual audio evidence is required; Codex's image
+input is not represented as direct hearing. Uncertain or incomplete inspections
+hold the clip. The configured account also enables bounded Codex public-web
+discovery, whose results remain unverified candidates until an authorized original,
+publication timestamp, permission records and actual inspection are present.
+The existing video schedule, Safari write path and Reply behavior remain in force.
+The bot stays paused during development; diagnostics do not submit posts.
 
 2026-11-01, AI/SI-only engagement — The Operator removes Bitcoin and finance
 accounts, including Graphseo and TheBTCTherapist, and retires all finance/crypto
@@ -26,6 +131,18 @@ The explicitly requested target cleanup prunes finance/crypto entries from
 saved candidate pools and promotions, with backups, while the bot is paused.
 It does not unfollow anyone on X or restart the bot. The 1,200+ advisory Reply
 target never overrides the narrower topic policy.
+
+2026-11-01, Safari video publishing — The Operator explicitly replaces the
+earlier API-only video requirement with the existing Safari/AppleScript posting
+workflow and asks to try it. `publishing_transport = "safari"` uses the existing
+`twitter_client` write wrapper and Safari lock. The dedicated publishing job runs
+inside `main.py`, alongside Reply jobs; discovery and heavy media processing
+remain separate processes. A second publisher process must not drive Safari
+beside the bot. Video attachment readiness and an exact own-post receipt are
+required; uncertain clicks keep their durable claims. No X API credential is
+required in Safari mode. The eight slots, explicit startup, cooldown, permissions,
+inspection and dedup gates remain. An explicit upload probe discards its draft
+without clicking Post. See `docs/VIDEO_PIPELINE.md` for current operation.
 
 2026-11-01, brief appreciation for artists' videos — The Operator asks for
 short, varied praise with hearts when an artist shares a generated video,
@@ -63,6 +180,22 @@ wording, parent likes, standalone admission and permanent dedup remain. No sleep
 or break change, bot lifecycle action, manual social action or production-state
 edit accompanies this update. Code and settings require the next explicitly
 requested restart.
+
+2026-11-01, opt-in licensed existing-video pipeline — The Operator authorizes
+eight Toronto video slots (07:00, 07:15, 09:00, 09:15, 12:00, 17:00, 21:00,
+21:15) plus at most one explicit persistent startup request per calendar day.
+`VIDEO_ENABLED` replaces the editorial schedule and blocks browser main-profile
+Originals/reposts; `VIDEO_LIVE` still defaults off. Official X API publication,
+fifteen-minute actual-success spacing and a ninth startup post are narrow
+exceptions for this feature. The requested interaction cooldown is now
+00:00–04:00; separate discovery/media workers continue overnight. Quality,
+permissions for video/audio/editing, temporal inspection, novelty and permanent
+dedup gates can skip a slot. Never promise a post when no eligible clip exists.
+Captions require BANGER, a smiley and a synthetic-SI-parody label. The account's
+video TOML owns cast, creators and watermark; Reply Voice/prompts remain intact.
+See docs/VIDEO_PIPELINE.md and the latest EDITORIAL_POLICY.md amendment.
+This implementation does not activate, publish, restart, edit .env or migrate
+existing live state.
 
 2026-11-01, technical sharpness with cute, funny delivery — The Operator
 clarifies that SI and technology expertise must remain central. Both Voice
@@ -351,7 +484,7 @@ environment edit or production-state migration accompanies this update.
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (including the October 23–November 1 amendments) and supersedes older mandates. It encodes:
 
-- Active 03:30–00:00 America/Toronto only; nothing external happens overnight.
+- Interactions active 04:00–00:00 America/Toronto; isolated video discovery/media may continue overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
