@@ -97,7 +97,8 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
     assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
-    assert (loaded.relevance.off_topic.pattern, loaded.relevance.off_topic.flags) == OLD["OFF_TOPIC"]
+    assert loaded.relevance.off_topic.search("AI crypto trading")
+    assert loaded.engagement_niche_only
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
                              "HOURLY_BREAK_MINUTES": 10, "MIN_SECONDS_BETWEEN_REPLIES": 8,
@@ -124,6 +125,17 @@ def test_watch_handles_are_case_insensitive_and_unique(accounts, fresh):
     assert account.load("theaishrink").auto_engage_handles == ("builder", "other")
 
 
+def test_strict_topic_is_optional_for_other_accounts(accounts, fresh):
+    accounts("other", THEAISHRINK.replace("engagement_niche_only = true\n", ""))
+    assert not account.load("other").engagement_niche_only
+
+
+def test_strict_topic_requires_a_boolean(accounts, fresh):
+    accounts("other", THEAISHRINK.replace("engagement_niche_only = true", 'engagement_niche_only = "true"'))
+    with pytest.raises(settings.SettingsError, match="engagement_niche_only"):
+        account.load("other")
+
+
 def test_the_editorial_reads_the_loaded_account():
     assert settings.get("BOT_ACCOUNT") == "theaishrink"
     assert [tuple(slot) for slot in editorial.slots()] == OLD["SLOTS"]
@@ -146,6 +158,9 @@ def accounts(monkeypatch, tmp_path):
     def write(name, text=THEAISHRINK):
         shutil.copytree(ROOT / "accounts" / "theaishrink", folder / name, dirs_exist_ok=True)
         (folder / name / "account.toml").write_text(text)
+        from tests.relation_fixtures import PROMPTS
+        for kind, prompt in PROMPTS.items():
+            (folder / name / "relations" / f"{kind}.md").write_text(prompt)
     return write
 
 
@@ -225,8 +240,9 @@ def test_main_stops_on_an_unknown_bot_account():
     ('[limits]', '[limits]\nMIN_SECONDS_BETWEEN_FOLLOWS = 900', "limits.MIN_SECONDS_BETWEEN_FOLLOWS"),
 ])
 def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    source = re.sub(r"blocked_accounts = \[[\s\S]*?\]", "blocked_accounts = []", THEAISHRINK, count=1)
+    assert source.count(old) == 1
+    accounts("theaishrink", source.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
@@ -249,8 +265,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
     ('handle = "thesimaximalist"', 'handle = "thesimaximalist', "not valid TOML"),
 ])
 def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    source = re.sub(r"blocked_accounts = \[[\s\S]*?\]", "blocked_accounts = []", THEAISHRINK, count=1)
+    assert source.count(old) == 1
+    accounts("theaishrink", source.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
@@ -262,8 +279,9 @@ def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
 ])
 def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, problem):
     old = '{ clock = "10:00", trend = true }'
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    source = re.sub(r"blocked_accounts = \[[\s\S]*?\]", "blocked_accounts = []", THEAISHRINK, count=1)
+    assert source.count(old) == 1
+    accounts("theaishrink", source.replace(old, new))
     with pytest.raises(settings.SettingsError) as raised:
         fresh()
     assert str(raised.value).endswith(problem)
@@ -331,12 +349,12 @@ def test_a_stricter_account_value_holds_for_the_operator_bounds(accounts, fresh)
 # only, like the policy) removed REMOVED_205 from them and narrowed
 # NARROWED_205. A pattern is (source, flags).
 NETWORK = {
-    "PROFILE_VISIT_ALLOWLIST": "TheBTCTherapist,Graphseo",
-    "VIP_SCAN_HANDLES": "Graphseo,TheBTCTherapist",
-    "PINNED_TRACKED_HANDLES": "TheBTCTherapist,Graphseo,Mindset4Money_X",
+    "PROFILE_VISIT_ALLOWLIST": "",
+    "VIP_SCAN_HANDLES": "",
+    "PINNED_TRACKED_HANDLES": "",
     "VIP_REPLY_ACCOUNTS": [
-        "elonmusk", "xai", "grok", "X", "SpaceX",
-        "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
+        "elonmusk", "xai", "grok",
+        "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
         "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama",
     ],
     "BIG_AI_HYPE_ACCOUNTS": [
@@ -357,16 +375,16 @@ NETWORK = {
         "karinanguyen_", "charliebholtz", "amanrsanger", "mathemagic1an",
     ],
     "HIGH_TRACTION_REPLY_ACCOUNTS": [
-        "Dark_Emi_", "ABaradez", "Phil_RX", "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
+        "Dark_Emi_", "arthurmensch", "GuillaumeLample", "GaelVaroquaux",
         "fchollet", "MistralAI",
     ],
     "BIG_FR_ACCOUNTS": [
         "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
         "frandroid", "journaldugeek", "FlavienChervet", "MistralAI", "arthurmensch",
-        "GuillaumeLample", "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
+        "GuillaumeLample",
     ],
     "ALWAYS_REPLY_ACCOUNTS": [
-        "TheBTCTherapist", "Graphseo", "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
+        "vision_ia", "jbelizaireCEO", "ylecun", "arthurmensch",
         "GuillaumeLample", "fchollet", "karpathy", "demishassabis", "sama", "elonmusk",
         "DarioAmodei", "satyanadella", "sundarpichai", "JensenHuang", "gdb", "miramurati",
         "AravSrinivas", "AndrewYNg", "drfeifei", "lexfridman", "ID_AA_Carmack", "EMostaque",
@@ -379,23 +397,21 @@ NETWORK = {
         "mckaywrigley", "rasbt", "Teknium1", "abacaj", "corbtt", "Yuchenj_UW", "nutlope", "skirano",
         "steph_palazzolo", "saranormous", "packyM", "nearcyan", "giffmana", "vikhyatk",
         "mattshumer_", "alexalbert__", "goodside", "simonw", "karinanguyen_", "charliebholtz",
-        "amanrsanger", "mathemagic1an", "Dark_Emi_", "ABaradez", "Phil_RX", "GaelVaroquaux",
+        "amanrsanger", "mathemagic1an", "Dark_Emi_", "GaelVaroquaux",
         "Korben", "micode", "Underscore_", "presse_citron", "numerama", "siecledigital", "BFMTech",
-        "frandroid", "journaldugeek", "FlavienChervet", "Heu7reka", "Yoann_Lopez_", "SnowballEcho",
+        "frandroid", "journaldugeek", "FlavienChervet",
     ],
     "ENGAGE_VIP_ACCOUNTS": [
-        "Graphseo",
     ],
     "ENGAGE_TARGET_ACCOUNTS": [
-        "Graphseo", "XFenaux",
     ],
     "REPLY_TARGET_ACCOUNTS": [
-        "Graphseo", "vision_ia", "jbelizaireCEO", "McnallieM", "sama", "OpenAI", "AnthropicAI",
+        "vision_ia", "jbelizaireCEO", "sama", "OpenAI", "AnthropicAI",
         "GoogleDeepMind", "elonmusk", "xAI", "karpathy", "ylecun", "fchollet", "demishassabis",
         "MistralAI", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "nvidia", "AMD", "intel",
         "CoreWeave", "IREN_Ltd", "LambdaAPI", "applied_dc", "BostonDynamics", "Figure_robot",
-        "ID_AA_Carmack", "drfeifei", "ABaradez", "Yoann_Lopez_", "SnowballEcho", "DereeperVivre",
-        "Phil_RX", "Korben", "underscore_", "MichaelBenabou", "presse_citron", "siecledigital",
+        "ID_AA_Carmack", "drfeifei",
+        "Korben", "underscore_", "MichaelBenabou", "presse_citron", "siecledigital",
         "usine_digitale", "numerama", "01net", "frandroid", "LesNumeriques", "FrenchWeb",
         "MaddyNess", "arthurmensch", "GuillaumeLample", "GaelVaroquaux", "vision_ia", "Palantir",
     ],
@@ -529,7 +545,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
-    expected = ["elonmusk", "xai", "grok", "X", "SpaceX"]
+    expected = ["elonmusk", "xai", "grok"]
     expected += [h for h in NETWORK["ALWAYS_REPLY_ACCOUNTS"] if h.lower() not in {x.lower() for x in expected}]
     assert list(net.always_reply) == expected
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
@@ -538,7 +554,7 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert sorted(net.follow_engagers_skip) == NETWORK["SKIP_HANDLES"]
     assert len(set(net.follow_engagers_skip)) == len(net.follow_engagers_skip)
     assert niche.ticker is None
-    assert net.blocked_accounts == ()
+    assert {"graphseo", "thebtctherapist"} <= {h.lower() for h in net.blocked_accounts}
 
 
 def test_the_removed_accounts_and_queries_are_gone():
@@ -561,6 +577,11 @@ def test_the_removed_accounts_and_queries_are_gone():
 
 @pytest.mark.parametrize("text", [
     "Bitcoin just broke 120k and altcoin season is here",
+    "SpaceX is preparing a Starship launch",
+    "Starlink connectivity changes the options here",
+    "Elon Musk on building tools",
+    "X Premium and Twitter creators",
+    "Bitcoin miners are turning their sites into AI datacenters",
     "Ethereum staking yields are up and the Solana ETF got approved",
     "The Fed held rates and stocks rallied into the close",
     "$TSLA and $AAPL gapped up at the open, the Nasdaq is ripping",
@@ -589,16 +610,11 @@ def test_crypto_markets_and_general_space_stay_off_the_niche(text):
 
 @pytest.mark.parametrize("text", [
     "OpenAI shipped a new reasoning model today",
-    "SpaceX is preparing a Starship launch",
-    "Starlink connectivity changes the options here",
-    "Elon Musk on building tools",
     "Grok Imagine makes this fun",
-    "X Premium and Twitter creators",
     "Claude Code wrote the whole migration in an afternoon",
     "Nvidia cannot build GPUs fast enough for the datacenter buildout",
     "Artificial intelligence is changing radiology faster than expected",
     "L'IA générative change le travail des traducteurs",
-    "Bitcoin miners are turning their sites into AI datacenters",
     "L’IA va remplacer les traducteurs",
     "AI-powered search is here",
     "ai agents are overhyped",
@@ -629,7 +645,7 @@ def test_an_ai_post_is_on_the_niche(text):
     ("Space nerd, rocket launches and Mars", False),
     ("Investisseur en bourse, dividendes et PEA", False),
     ("AI researcher, ex-DeepMind", True),
-    ("SpaceX / Starlink engineer", True),
+    ("SpaceX / Starlink engineer", False),
     ("Grok Imagine enthusiast", True),
     ("Building LLM tools for lawyers", True),
     ("Machine learning engineer at a robotics startup", True),
@@ -678,8 +694,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     from src.account import engage_bot
     from src.guards import follow_policy
     from src.replies import direct_reply, notify_bot, reply_source
-    other = (THEAISHRINK
-             .replace('engage_vip = ["Graphseo"]', 'engage_vip = ["OtherVip"]')
+    other = (THEAISHRINK.replace("engagement_niche_only = true", "engagement_niche_only = false")
+             .replace('engage_vip = []', 'engage_vip = ["OtherVip"]')
              .replace('vip_reply = [', 'vip_reply = ["OtherVip", ')
              .replace('engage_targets = [', 'engage_targets = ["OtherTarget", ')
              .replace("post = '", "post = '\\bzebra\\b|")
@@ -698,8 +714,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('vip_scan = ["Graphseo", "TheBTCTherapist"]', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
-    ('engage_vip = ["Graphseo"]', 'engage_vip = "Graphseo"', "network.engage_vip"),
+    ('vip_scan = []', 'vip_scan = ["@Graphseo"]', "network.vip_scan[0]"),
+    ('engage_vip = []', 'engage_vip = "Graphseo"', "network.engage_vip"),
     ("blocked_accounts = []", 'blocked_accounts = [" _ "]', "network.blocked_accounts[0]"),
     ("blocked_accounts = []", "blocked_accounts = [3]", "network.blocked_accounts[0]"),
     ('fr_forced_reply = []', 'fr_forced_reply = ["@Graphseo"]', "network.fr_forced_reply[0]"),
@@ -710,42 +726,25 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
     ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
-    ('vip_scan = ["Graphseo", "TheBTCTherapist"]\n', "", "network.vip_scan"),
+    ('vip_scan = []\n', "", "network.vip_scan"),
     # No key removes a Blocked account of the engine's BLOCKLIST.
     ("blocked_accounts = []", 'blocked_accounts = []\nunblocked_accounts = ["pgm_pm"]',
      "network.unblocked_accounts"),
 ])
 def test_a_bad_network_niche_or_search_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    source = re.sub(r"blocked_accounts = \[[\s\S]*?\]", "blocked_accounts = []", THEAISHRINK, count=1)
+    assert source.count(old) == 1
+    accounts("theaishrink", source.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
 
 # --- Relations: the per-handle Reply instructions (#203) -------------------------
 
-# Operator-approved Relation prompts, updated for the October 23 SI Voice.
-RELATION_PROMPTS = {
-    "graphseo": (1598, "cfa6f0e75be102d03e578069100a68654b380585a014ddaaf8f241213d23b432"),
-    "bestie": (1228, "5f1e09d5ee1f84dd71fbd1173c34962a1c30e1e27e0098f2dfe01654601bb79a"),
-    "buddy": (1157, "1576628dde4c3a827044d898e220763e1a162262715c15170baa3b89f0f783ff"),
-}
-# personality_store.get_account("mcnalliem") before #203, a dossier in the code.
-OLD_MCNALLIEM = {
-    "first_seen": "2026-05-02",
-    "last_interaction": "2026-05-02",
-    "interaction_count": 0,
-    "category": "builder",
-    "stance": "fond",
-    "notes": [
-        "User loves this account: McNallie Money shows results on AI, crypto, data centers, and companies.",
-        "Priority VIP: reply often, make him laugh, and avoid anything that could feel like a dunk on him.",
-    ],
-    "predictions": [],
-    "feelings": "Warm respect. Treat him as a useful operator sharing real results.",
-    "do": "Be playful, impressed, specific, and funny about the AI/data-center/crypto market absurdity.",
-    "dont": "Do not mock him, his work, his results, or his credibility. Never make him upset.",
-}
+from tests.relation_fixtures import DOSSIER as FIXED_DOSSIER, PROMPTS, RELATIONS_TOML
+
+RELATION_ACCOUNT = THEAISHRINK.replace("[limits]", RELATIONS_TOML + "\n[limits]").replace(
+    'vip_scan = []', 'vip_scan = ["SpecialVip", "FriendlyVip"]')
 
 
 def _digest(text):
@@ -753,25 +752,28 @@ def _digest(text):
     return len(text), hashlib.sha256(text.encode()).hexdigest()
 
 
-def test_theaishrink_relations_hold_the_approved_prompts():
-    relations = account.load("theaishrink").relations
-    graphseo, bestie = relations.get("Graphseo"), relations.get("TheBTCTherapist")
-    assert {"graphseo": _digest(graphseo.prompt), "bestie": _digest(bestie.prompt),
-            "buddy": _digest(relations.default)} == RELATION_PROMPTS
-    assert (graphseo.handle, graphseo.provider, graphseo.dossier) == ("Graphseo", "codex", None)
-    assert (bestie.handle, bestie.provider, bestie.dossier) == ("TheBTCTherapist", None, None)
-    assert relations.get("@GRAPHSEO") is graphseo, "handles ignore case and a leading @"
-    mcnallie = relations.get("mcnalliem")
+def test_synthetic_relations_preserve_prompts_and_case_insensitive_lookup(accounts, fresh):
+    accounts("theaishrink", RELATION_ACCOUNT)
+    fresh()
+    relations = account.current().relations
+    specialvip, bestie = relations.get("SpecialVip"), relations.get("FriendlyVip")
+    assert {"specialvip": _digest(specialvip.prompt), "bestie": _digest(bestie.prompt),
+            "buddy": _digest(relations.default)} == {"specialvip": _digest(PROMPTS["special"]), "bestie": _digest(PROMPTS["friendly"]),
+                                               "buddy": _digest((ROOT / "accounts/theaishrink/relations/buddy.md").read_text().strip())}
+    assert (specialvip.handle, specialvip.provider, specialvip.dossier) == ("SpecialVip", "codex", None)
+    assert (bestie.handle, bestie.provider, bestie.dossier) == ("FriendlyVip", None, None)
+    assert relations.get("@SPECIALVIP") is specialvip, "handles ignore case and a leading @"
+    mcnallie = relations.get("fixeddossier")
     assert (mcnallie.prompt, mcnallie.provider) == (None, None)
-    assert sorted(relations.handles) == ["graphseo", "mcnalliem", "thebtctherapist"]
-    assert relations.vip_prompt("thebtctherapist") == bestie.prompt
-    assert relations.vip_prompt("McnallieM") == relations.vip_prompt("vision_ia") == relations.default
+    assert sorted(relations.handles) == ["fixeddossier", "friendlyvip", "specialvip"]
+    assert relations.vip_prompt("friendlyvip") == bestie.prompt
+    assert relations.vip_prompt("FixedDossier") == relations.vip_prompt("vision_ia") == relations.default
 
 
-def test_a_fixed_dossier_reads_as_the_old_one():
+def test_a_fixed_dossier_reads_as_the_old_one(relation_account):
     from src.core import personality_store
-    assert personality_store.get_account("McnallieM") == OLD_MCNALLIEM
-    assert personality_store.get_account("@mcnalliem") == OLD_MCNALLIEM
+    assert personality_store.get_account("FixedDossier") == FIXED_DOSSIER
+    assert personality_store.get_account("@fixeddossier") == FIXED_DOSSIER
 
 
 def test_the_relation_providers_are_llm_client_clis():
@@ -780,68 +782,68 @@ def test_the_relation_providers_are_llm_client_clis():
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('provider = "codex"', 'provider = "codex"\nlabel = "X"', "relations.handles.Graphseo.label"),
-    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.McnallieM.dossier.mood"),
+    ('provider = "codex"', 'provider = "codex"\nlabel = "X"', "relations.handles.SpecialVip.label"),
+    ('stance = "fond"', 'stance = "fond"\nmood = "x"', "relations.handles.FixedDossier.dossier.mood"),
     ('default = "relations/buddy.md"', 'default = "relations/buddy.md"\nbuddy = "x.md"', "relations.buddy"),
-    ("[relations.handles.Graphseo]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
-    ("[relations.handles.Graphseo]", "[relations.handles.ThisHandleIsTooLong]",
+    ("[relations.handles.SpecialVip]", '[relations.handles."Graph-seo"]', "relations.handles.Graph-seo"),
+    ("[relations.handles.SpecialVip]", "[relations.handles.ThisHandleIsTooLong]",
      "relations.handles.ThisHandleIsTooLong"),
-    ("[relations.handles.McnallieM.dossier]", "[relations.handles.graphseo.dossier]",
-     "relations.handles.graphseo repeats Graphseo"),
+    ("[relations.handles.FixedDossier.dossier]", "[relations.handles.specialvip.dossier]",
+     "relations.handles.specialvip repeats SpecialVip"),
 ])
 def test_an_unknown_relation_key_or_handle_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    assert RELATION_ACCOUNT.count(old) == 1
+    accounts("theaishrink", RELATION_ACCOUNT.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
 
 @pytest.mark.parametrize("old, new, named", [
-    ('provider = "codex"', 'provider = "codx"', "relations.handles.Graphseo.provider takes one of"),
-    ('prompt = "relations/graphseo.md"\n', "", "relations.handles.Graphseo.provider needs a prompt"),
-    ('stance = "fond"', "stance = 3", "relations.handles.McnallieM.dossier.stance"),
-    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.McnallieM.dossier.notes[0]"),
-    ('prompt = "relations/graphseo.md"', 'prompt = "relations/nope.md"', "relations.handles.Graphseo.prompt"),
-    ('prompt = "relations/bestie.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
+    ('provider = "codex"', 'provider = "codx"', "relations.handles.SpecialVip.provider takes one of"),
+    ('prompt = "relations/special.md"\n', "", "relations.handles.SpecialVip.provider needs a prompt"),
+    ('stance = "fond"', "stance = 3", "relations.handles.FixedDossier.dossier.stance"),
+    ('notes = [\n', 'notes = [\n    7,\n', "relations.handles.FixedDossier.dossier.notes[0]"),
+    ('prompt = "relations/special.md"', 'prompt = "relations/nope.md"', "relations.handles.SpecialVip.prompt"),
+    ('prompt = "relations/friendly.md"', 'prompt = "../voice_en.md"', "outside the Account's folder"),
 ])
 def test_a_bad_relation_value_stops_the_start(accounts, fresh, old, new, named):
-    assert THEAISHRINK.count(old) == 1
-    accounts("theaishrink", THEAISHRINK.replace(old, new))
+    assert RELATION_ACCOUNT.count(old) == 1
+    accounts("theaishrink", RELATION_ACCOUNT.replace(old, new))
     with pytest.raises(settings.SettingsError, match=re.escape(named)):
         fresh()
 
 
 def test_an_empty_fixed_dossier_stops_the_start(accounts, fresh):
-    start = THEAISHRINK.index("[relations.handles.McnallieM.dossier]")
-    end = THEAISHRINK.index("\n\n", THEAISHRINK.index("dont = ", start))
-    accounts("theaishrink", THEAISHRINK[:start] + "[relations.handles.McnallieM.dossier]" + THEAISHRINK[end:])
-    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.McnallieM.dossier is empty")):
+    start = RELATION_ACCOUNT.index("[relations.handles.FixedDossier.dossier]")
+    end = RELATION_ACCOUNT.index("\n\n", RELATION_ACCOUNT.index("dont = ", start))
+    accounts("theaishrink", RELATION_ACCOUNT[:start] + "[relations.handles.FixedDossier.dossier]" + RELATION_ACCOUNT[end:])
+    with pytest.raises(settings.SettingsError, match=re.escape("relations.handles.FixedDossier.dossier is empty")):
         fresh()
 
 
 def test_the_default_prompt_is_needed_only_for_a_scanned_handle_without_its_own(accounts, fresh):
-    # Graphseo and TheBTCTherapist, the vip_scan handles, each have their own prompt.
-    accounts("theaishrink", THEAISHRINK.replace('default = "relations/buddy.md"\n', ""))
+    # SpecialVip and FriendlyVip, the vip_scan handles, each have their own prompt.
+    accounts("theaishrink", RELATION_ACCOUNT.replace('default = "relations/buddy.md"\n', ""))
     fresh()
     assert account.current().relations.default is None
     assert account.current().relations.vip_prompt("vision_ia") is None
-    scan = 'vip_scan = ["Graphseo", "TheBTCTherapist"]'
-    accounts("other", THEAISHRINK.replace('default = "relations/buddy.md"\n', "")
-             .replace(scan, 'vip_scan = ["Graphseo", "TheBTCTherapist", "McnallieM"]'))
+    scan = 'vip_scan = ["SpecialVip", "FriendlyVip"]'
+    accounts("other", RELATION_ACCOUNT.replace('default = "relations/buddy.md"\n', "")
+             .replace(scan, 'vip_scan = ["SpecialVip", "FriendlyVip", "FixedDossier"]'))
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists McnallieM, which has no Relation "
+            "relations.default is missing: network.vip_scan lists FixedDossier, which has no Relation "
             "with its own prompt")):
         account.load("other")
 
 
 def test_an_account_without_relations_starts_when_it_scans_no_vip(accounts, fresh):
-    start = THEAISHRINK.index("[relations]")
-    bare = THEAISHRINK[:start] + THEAISHRINK[THEAISHRINK.index("[limits]"):]
+    start = RELATION_ACCOUNT.index("[relations]")
+    bare = RELATION_ACCOUNT[:start] + RELATION_ACCOUNT[RELATION_ACCOUNT.index("[limits]"):]
     accounts("theaishrink", bare)
     with pytest.raises(settings.SettingsError, match=re.escape(
-            "relations.default is missing: network.vip_scan lists Graphseo")):
+            "relations.default is missing: network.vip_scan lists SpecialVip")):
         fresh()
-    old = 'vip_scan = ["Graphseo", "TheBTCTherapist"]'
+    old = 'vip_scan = ["SpecialVip", "FriendlyVip"]'
     assert bare.count(old) == 1
     accounts("other", bare.replace(old, "vip_scan = []"))
     fresh("BOT_ACCOUNT=other\n")
@@ -890,7 +892,7 @@ def test_a_link_inside_the_folder_is_followed(accounts, fresh, tmp_path):
     (folder / "relations" / "buddy.md").rename(folder / "buddy_real.md")
     (folder / "relations" / "buddy.md").symlink_to(folder / "buddy_real.md")
     fresh()
-    assert _digest(account.current().relations.default) == RELATION_PROMPTS["buddy"]
+    assert _digest(account.current().relations.default) == _digest((ROOT / "accounts/theaishrink/relations/buddy.md").read_text().strip())
 
 
 @pytest.mark.parametrize("name", account.VOICE_FILES)

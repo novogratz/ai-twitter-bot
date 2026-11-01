@@ -220,13 +220,13 @@ def test_reply_prompt_jobs_follow_the_parent_language(jobs, job, text, lang):
                                        ("early_bird", "en"), ("mega_watch", "en")])
 def test_fr_forced_handles_override_only_the_search_and_feed_pipeline(jobs, job, lang):
     """The early_bird and mega_watch scans never applied the override: an
-    English-looking post from @Graphseo gets English reply text, which the
+    English-looking post from @SpecialVip gets English reply text, which the
     chokepoint then refuses for an FR-forced parent."""
-    assert language(jobs(job, "Graphseo", EN)) == (lang, lang)
+    assert language(jobs(job, "SpecialVip", EN)) == (lang, lang)
 
 
-@pytest.mark.parametrize("handle, text, lang", [("TheBTCTherapist", EN, "en"), ("vision_ia", FR, "fr"),
-                                               ("Graphseo", EN, "en")])
+@pytest.mark.parametrize("handle, text, lang", [("FriendlyVip", EN, "en"), ("vision_ia", FR, "fr"),
+                                               ("SpecialVip", EN, "en")])
 def test_vip_prompts_leave_the_language_line_to_their_template(jobs, handle, text, lang):
     """They carry the Voice of the parent's language, and no override line."""
     assert language(jobs("vip", handle, text)) == (lang, None)
@@ -248,8 +248,8 @@ def test_replyback_picks_the_voice_file_by_its_word_test(jobs, text, lang):
 
 @pytest.mark.parametrize("job, author", [
     ("search", "builder"), ("feed", "builder"), ("early_bird", "builder"),
-    ("mega_watch", "builder"), ("vip", "Graphseo"),
-    ("vip", "TheBTCTherapist"), ("vip", "vision_ia"),
+    ("mega_watch", "builder"), ("vip", "SpecialVip"),
+    ("vip", "FriendlyVip"), ("vip", "vision_ia"),
 ])
 def test_reply_routes_preserve_late_parent_qualification_through_scraping_and_prompt(jobs, job, author):
     parent = "The local model results are encouraging. " * 12 + "Important: this is a simulation, not a live deployment."
@@ -267,8 +267,8 @@ def test_fr_forced_handles_are_read_at_call_time(jobs, settings_override):
 
 
 @pytest.mark.parametrize("env, author, forced", [
-    (None, "Graphseo", True), (None, "@graphseo", True), (None, "someone", False),
-    (" @SomeOne , other", "someone", True), ("", "graphseo", False), ("someone", "", False),
+    (None, "SpecialVip", True), (None, "@specialvip", True), (None, "someone", False),
+    (" @SomeOne , other", "someone", True), ("", "specialvip", False), ("someone", "", False),
 ])
 def test_one_reader_decides_fr_forced_parents(settings_override, env, author, forced, bilingual_account):
     """The generator and Reply admission share this reader: one value, the
@@ -291,8 +291,8 @@ def test_early_bird_names_the_author_from_the_status_url(jobs):
 # --- Hard rules and dossier ----------------------------------------------------
 
 EVERY_PATH = [("search", "someone", EN), ("feed", "someone", FR), ("early_bird", "someone", EN),
-              ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-              ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
+              ("mega_watch", "someone", EN), ("vip", "FriendlyVip", EN), ("vip", "vision_ia", FR),
+              ("vip", "SpecialVip", FR), ("debate", "someone", EN), ("replyback", "someone", EN),
               ("reply_search", "", "")]
 
 
@@ -332,7 +332,7 @@ def test_json_search_output_is_not_rewritten_as_reply_prose(llm):
 
 @pytest.mark.parametrize("job, author, text", EVERY_PATH)
 def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monkeypatch):
-    """Issue #155: debate and the VIP and Graphseo paths used to build their
+    """Issue #155: debate and the VIP and SpecialVip paths used to build their
     prompts without the hard rules or the respect list. They close every
     prompt, the reply search's included."""
     from src.core import personality_store
@@ -344,8 +344,8 @@ def test_every_reply_prompt_carries_the_hard_rules(jobs, job, author, text, monk
     assert jobs(job, author, text).endswith("\n\n" + rules)
 
 
-@pytest.mark.parametrize("job, author, text", [("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-                                               ("vip", "Graphseo", FR), ("debate", "someone", EN)])
+@pytest.mark.parametrize("job, author, text", [("vip", "FriendlyVip", EN), ("vip", "vision_ia", FR),
+                                               ("vip", "SpecialVip", FR), ("debate", "someone", EN)])
 def test_reply_calls_without_dossier_end_on_the_template_then_the_hard_rules(jobs, job, author, text, llm):
     """Adding the dossier to these prompts is the Operator's call: they end
     on the template, then the hard rules."""
@@ -521,11 +521,11 @@ LEGIT = "You can skip the hype, the moat is data."
 HEDGE = "I'd skip this one honestly."
 SKIPS = ["SKIP", '"SKIP"', "SKIP: reason"]
 PATHS = [("search", "someone", EN), ("feed", "someone", EN), ("early_bird", "someone", EN),
-         ("mega_watch", "someone", EN), ("vip", "TheBTCTherapist", EN), ("vip", "vision_ia", FR),
-         ("vip", "Graphseo", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
+         ("mega_watch", "someone", EN), ("vip", "FriendlyVip", EN), ("vip", "vision_ia", FR),
+         ("vip", "SpecialVip", FR), ("debate", "someone", EN), ("replyback", "someone", EN)]
 # Only the bestie and buddy ReplyCalls declined "skip" in the first 20
 # characters before issue #155; every other path read SKIP as a prefix.
-VIP_WINDOW = {"TheBTCTherapist", "vision_ia"}
+VIP_WINDOW = {"FriendlyVip", "vision_ia"}
 
 
 @pytest.fixture
@@ -560,7 +560,7 @@ def decision(jobs, llm, chokepoint, monkeypatch):
 def test_each_job_decides_on_a_skip_as_before_the_generator(decision, job, author, text, answer):
     """Issue #155 adds the hard rules and changes nothing else that ships.
     Two deliberate exceptions, logged in docs/HISTORY.md 2026-09-23: a quoted
-    "SKIP" on debate and Graphseo used to reach the chokepoint, and is now a
+    "SKIP" on debate and SpecialVip used to reach the chokepoint, and is now a
     definitive decline."""
     declines = answer in SKIPS or author in VIP_WINDOW
     assert decision(job, author, text, answer) == ("DECLINED" if declines else "sent")
@@ -639,7 +639,7 @@ class OllamaServer:
         return io.BytesIO(json.dumps({"response": self.answer}).encode())
 
 
-REPLY_CALLS = ("search", "search VIP", "Graphseo", "bestie", "buddy", "debate", "replyback")
+REPLY_CALLS = ("search", "search VIP", "SpecialVip", "bestie", "buddy", "debate", "replyback")
 
 
 def job_reply_call(name):
@@ -649,8 +649,8 @@ def job_reply_call(name):
     return {
         "search": lambda: dr.reply_call("someone"),
         "search VIP": lambda: dr.reply_call(sorted(account.current().network.vip_reply)[0]),
-        "Graphseo": lambda: dr._vip_call("Graphseo"),
-        "bestie": lambda: dr._vip_call("TheBTCTherapist"),
+        "SpecialVip": lambda: dr._vip_call("SpecialVip"),
+        "bestie": lambda: dr._vip_call("FriendlyVip"),
         "buddy": lambda: dr._vip_call("vision_ia"),
         "debate": debate_bot.reply_call,
         "replyback": replyback_agent.reply_call,
@@ -828,3 +828,6 @@ def test_unreadable_optional_reply_memory_cannot_stop_generation(monkeypatch):
         raise csv.Error("bad optional CSV row")
     monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", unreadable)
     assert reply_generator._recent_memory() == ""
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

@@ -63,9 +63,6 @@ def test_persona_is_woman_mom_in_the_one_voice():
     assert "never announce that you know everything" in spine
     assert "answer identity questions honestly as a bot" in spine
 
-    from src.core import account
-    bestie_prompt = account.current().relations.get("TheBTCTherapist").prompt.lower()
-    assert "big sister" in bestie_prompt and "big brother" not in bestie_prompt
 
 
 def test_relation_prompts_script_no_medical_metaphor():
@@ -75,8 +72,7 @@ def test_relation_prompts_script_no_medical_metaphor():
     from src.replies import debate_bot, replyback_agent
 
     relations = account.current().relations
-    prompts = (relations.get("TheBTCTherapist").prompt, relations.default, relations.get("Graphseo").prompt,
-               debate_bot.DEBATE_PROMPT, replyback_agent.REPLYBACK_PROMPT)
+    prompts = (relations.default, debate_bot.DEBATE_PROMPT, replyback_agent.REPLYBACK_PROMPT)
     for prompt in prompts:
         low = prompt.lower()
         assert [w for w in ("clinical", "couch", "patient", "therapy", "session") if w in low] == []

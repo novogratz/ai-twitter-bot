@@ -1,9 +1,7 @@
 """Self-curated account tracking (operator mandate 2026-06-07 PM).
 
-Operator, 2026-06-07 PM: "Stop going to the static accounts we discussed
-in the past and develop yourself the list of accounts you want to follow
-and track their posts so you use it as content. The only ones you should
-continue: TheBTCTherapist and Graphseo."
+Operator, 2026-11-01: finance/crypto exceptions are retired. Pinned handles
+and saved tracking rows are filtered through the current engagement blocklist.
 
 Replaces the hand-curated EARLY_BIRD/MEGA lists with a list the bot earns
 from its OWN evidence, recomputed every 4h into `tracked_accounts.json`:
@@ -47,7 +45,8 @@ _AUTHOR_RE = re.compile(r"x\.com/([A-Za-z0-9_]{1,15})/status/")
 
 
 def pinned_handles() -> tuple:
-    return tuple(h.strip() for h in settings.get("PINNED_TRACKED_HANDLES").split(",") if h.strip())
+    return tuple(h.strip() for h in settings.get("PINNED_TRACKED_HANDLES").split(",")
+                 if h.strip() and not is_blocked_account(h))
 
 
 def _author_engagements(window_days: int | None = None) -> dict:
@@ -110,7 +109,7 @@ def tracked_handles(limit: int = 30) -> list:
     seen = {h.lower() for h in out}
     for r in rows:
         h = r.get("handle", "")
-        if h and h.lower() not in seen:
+        if h and h.lower() not in seen and not is_blocked_account(h):
             out.append(h)
             seen.add(h.lower())
         if len(out) >= limit:
@@ -124,6 +123,8 @@ def _promotable(cand: dict) -> bool:
     classic burner/airdrop fingerprint) and require deeper engagement
     evidence than the tracking floor."""
     h = cand.get("handle", "")
+    if is_blocked_account(h):
+        return False
     if re.search(r"\d{4,}", h):
         return False
     return int(cand.get("engagements", 0)) >= settings.get("CURATOR_PROMOTE_MIN_ENGAGEMENTS")

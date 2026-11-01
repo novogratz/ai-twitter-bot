@@ -35,10 +35,11 @@ def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) ->
     known = {h.lower() for h in (known or set())}
     added = 0
     from ..guards.active_hours import today_iso
+    from ..guards.reply_admission import is_blocked_account
     today = today_iso()
     for h in (fr or []):
         h = h.strip().lstrip("@")
-        if not _is_valid_handle(h):
+        if not _is_valid_handle(h) or is_blocked_account(h):
             continue
         if h.lower() not in known and h not in data["fr"]:
             data["fr"].append(h)
@@ -46,7 +47,7 @@ def add_dynamic_accounts(fr: list = None, en: list = None, known: set = None) ->
             added += 1
     for h in (en or []):
         h = h.strip().lstrip("@")
-        if not _is_valid_handle(h):
+        if not _is_valid_handle(h) or is_blocked_account(h):
             continue
         if h.lower() not in known and h not in data["en"]:
             data["en"].append(h)

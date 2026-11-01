@@ -148,10 +148,10 @@ def test_a_reply_naming_a_respected_account_is_set_aside(llm, chokepoint, monkey
 
     monkeypatch.setattr(tc, "reply_to_tweet", REAL_REPLY_TO_TWEET)
     monkeypatch.setenv("DRY_RUN", "1")
-    named, addressed = fresh("graphseo", n=1), fresh("graphseo", n=2)
+    named, addressed = fresh("specialvip", n=1), fresh("specialvip", n=2)
     llm.answers.update({
         "post named": "Le support tient tant que les volumes suivent, @micode l'a montré.",
-        "post addressed": "@graphseo le support tient tant que les volumes suivent.",
+        "post addressed": "@specialvip le support tient tant que les volumes suivent.",
     })
     candidates = [candidate(named, "post named"), candidate(addressed, "post addressed")]
 
@@ -704,3 +704,6 @@ def test_stop_during_an_urgent_handoff_releases_the_send_queue(monkeypatch):
     stop.clear()
     with lock:
         assert lock.owned()
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

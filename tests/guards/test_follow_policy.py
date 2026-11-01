@@ -31,10 +31,10 @@ def _no_following_count_override(settings_override):
 def follow_env(settings_override, memory_ledger, operator_folder):
     """Isolated ledger + whitelist + counts for the follow policy tests."""
     (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {
-        "tier1": ["TheBTCTherapist"],
-        "tier2": ["morganhousel"],
+        "tier1": ["SeedOne"],
+        "tier2": ["SeedPeer"],
         "tier3": ["karpathy"],
-        "tier4": ["saylor", "balajis"],
+        "tier4": ["SeedFour", "SeedFive"],
     }}))
     # Spec pacing defaults, but zeroed spacing unless a test re-enables it.
     settings_override(FOLLOW_WHITELIST_ONLY=True, MAX_FOLLOWS_PER_DAY=20, MIN_SECONDS_BETWEEN_FOLLOWS=0,
@@ -55,9 +55,9 @@ def _counts(monkeypatch, tmp_path, followers, following):
 
 def test_whitelist_loads_tier4(follow_env):
     wl = fp.load_whitelist()
-    assert "saylor" in wl["tier4"]
-    assert "saylor" in wl["all"]
-    assert fp.is_whitelisted("balajis")
+    assert "seedfour" in wl["tier4"]
+    assert "seedfour" in wl["all"]
+    assert fp.is_whitelisted("SeedFive")
 
 
 @pytest.mark.parametrize("handle", ["", "aisha mansion", "caborashedzaborashedles", "josé",
@@ -98,20 +98,20 @@ def test_follow_allowed_under_low_phase_ceiling(follow_env, monkeypatch, tmp_pat
 def test_follow_never_exceeds_hard_300_cap(follow_env, monkeypatch, tmp_path):
     """Even with a big follower count, total following is hard-capped at 300."""
     _counts(monkeypatch, tmp_path, 10000, 300)
-    verdict = fp.judge("saylor")
+    verdict = fp.judge("SeedFour")
     assert verdict.refusal is Refusal.CAP_REACHED and "ceiling" in verdict.reason
     _counts(monkeypatch, tmp_path, 10000, 299)
-    assert fp.judge("saylor") == ADMITTED
+    assert fp.judge("SeedFour") == ADMITTED
 
 
 def test_follow_keeps_following_below_followers_mid_phase(follow_env, monkeypatch, tmp_path):
     """Once followers exceed 300, following must stay <= followers."""
     _counts(monkeypatch, tmp_path, 220, 200)
     # followers=220 is still < FOLLOW_LOW_PHASE_FOLLOWERS → 150 ceiling rules
-    verdict = fp.judge("morganhousel")
+    verdict = fp.judge("SeedPeer")
     assert verdict.refusal is Refusal.CAP_REACHED and "ceiling" in verdict.reason
     _counts(monkeypatch, tmp_path, 320, 280)
-    assert fp.judge("morganhousel") == ADMITTED  # 280+1 <= min(300, 320)
+    assert fp.judge("SeedPeer") == ADMITTED  # 280+1 <= min(300, 320)
 
 
 @pytest.mark.parametrize("name", ["followed_accounts.json", "following_count.json"])
@@ -258,8 +258,8 @@ def test_follow_spacing_blocks_burst(follow_env, monkeypatch, settings_override,
     """Never burst-follow: a follow within the 10-min gap is refused."""
     settings_override(MIN_SECONDS_BETWEEN_FOLLOWS=600)
     _counts(monkeypatch, tmp_path, 100, 10)
-    ag.record(ag.FOLLOW, target="TheBTCTherapist")
-    verdict = fp.judge("morganhousel")
+    ag.record(ag.FOLLOW, target="SeedOne")
+    verdict = fp.judge("SeedPeer")
     assert verdict.refusal is Refusal.TOO_SOON and "too soon" in verdict.reason
 
 
@@ -281,14 +281,14 @@ def test_anti_churn_counts_any_follow_or_unfollow_within_the_cooldown(follow_env
     _counts(monkeypatch, tmp_path, 100, 10)
     cooldown = timedelta(days=config.CHURN_COOLDOWN_DAYS)
     memory_ledger.append(ag.FOLLOW, "karpathy", True, now - cooldown + timedelta(minutes=1))
-    memory_ledger.append(ag.UNFOLLOW, "morganhousel", False, now - cooldown)
-    memory_ledger.append(ag.LIKE, "saylor", False, now)
+    memory_ledger.append(ag.UNFOLLOW, "SeedPeer", False, now - cooldown)
+    memory_ledger.append(ag.LIKE, "SeedFour", False, now)
 
     verdict = fp.judge("KarPathy")
     assert verdict.refusal is Refusal.POLICY and "anti-churn" in verdict.reason, \
         "a dry-run follow still touches"
-    assert fp.judge("morganhousel") == ADMITTED, "the cooldown ends on its last second"
-    assert fp.judge("saylor") == ADMITTED, "a like is no touch"
+    assert fp.judge("SeedPeer") == ADMITTED, "the cooldown ends on its last second"
+    assert fp.judge("SeedFour") == ADMITTED, "a like is no touch"
 
 
 def test_follow_cap_counts_todays_shipped_rows(follow_env, monkeypatch, settings_override,
@@ -596,3 +596,6 @@ def test_an_unreadable_record_of_the_followed_accounts_is_never_overwritten(tmp_
     assert path.read_text() == '["half'
     with pytest.raises(StateUnreadable):
         fp.followed()
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

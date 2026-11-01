@@ -62,13 +62,48 @@ _UNWALLED = {}
 
 
 @_pytest.fixture
+def open_topic_account(monkeypatch):
+    """Generic engine tests opt out of the live Account's stricter topic rule.
+
+    The live policy and its write-path checks are exercised explicitly in
+    test_engagement_niche.py; these tests cover independent engine contracts.
+    """
+    from dataclasses import replace
+    from src.core import account
+    profile = replace(account.current(), engagement_niche_only=False)
+    monkeypatch.setattr(account, "current", lambda: profile)
+    return profile
+
+
+@_pytest.fixture
+def relation_account(monkeypatch, settings_override, open_topic_account):
+    """Optional Relations and pinned lists belong to a fictitious test Account."""
+    from dataclasses import replace
+    from src.core import account
+    from tests.relation_fixtures import DOSSIER, PROMPTS
+    profile = open_topic_account
+    relations = account.Relations(profile.relations.default, {
+        "specialvip": account.Relation("SpecialVip", PROMPTS["special"], "codex", None),
+        "friendlyvip": account.Relation("FriendlyVip", PROMPTS["friendly"], None, None),
+        "fixeddossier": account.Relation("FixedDossier", None, None, DOSSIER),
+    })
+    profile = replace(profile, relations=relations,
+                      network=replace(profile.network, engage_vip=("SpecialVip",)))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    settings_override(PROFILE_VISIT_ALLOWLIST="FriendlyVip,SpecialVip",
+                      VIP_SCAN_HANDLES="SpecialVip,FriendlyVip",
+                      PINNED_TRACKED_HANDLES="FriendlyVip,SpecialVip,PinnedBuilder")
+    return profile
+
+
+@_pytest.fixture
 def bilingual_account(monkeypatch, settings_override):
     """Exercise the engine's optional parent-language policy on another Account."""
     from dataclasses import replace
     from src.core import account
     profile = replace(account.current(), english_only=False)
     monkeypatch.setattr(account, "current", lambda: profile)
-    settings_override(FR_FORCED_REPLY_HANDLES="Graphseo")
+    settings_override(FR_FORCED_REPLY_HANDLES="SpecialVip")
     return profile
 
 

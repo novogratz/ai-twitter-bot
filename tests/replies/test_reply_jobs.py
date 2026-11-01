@@ -123,7 +123,7 @@ def direct(monkeypatch, llm, chokepoint, settings_override):
     from src.x import scraper
 
     lanes = {"vip": [], "search": [], "queries": []}
-    settings_override(VIP_SCAN_HANDLES="Graphseo")
+    settings_override(VIP_SCAN_HANDLES="SpecialVip")
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
@@ -141,7 +141,7 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     """Defect 3: the VIP lane and the search lane both marked candidates that
     never shipped. A post one lane tried is not tried again by the other."""
     dr, lanes, llm, chokepoint = direct
-    vip, searched = fresh("graphseo", n=1), fresh("someone", n=2)
+    vip, searched = fresh("specialvip", n=1), fresh("someone", n=2)
     lanes["vip"] = [{"url": vip, "text": "vip post"}]
     lanes["search"] = [{"url": searched, "text": "search post"}, {"url": vip, "text": "vip post"}]
     llm.answers["vip post"] = "réponse précise sur le trafic organique"
@@ -150,13 +150,13 @@ def test_direct_reply_lanes_share_the_cycle(direct):
     dr.run_direct_reply_cycle()
 
     assert chokepoint.sent == [vip, searched], "each candidate tried once per cycle"
-    assert [c.label for c in llm.calls] == ["GRAPHSEO_VIP", "DIRECT_REPLY"]
+    assert [c.label for c in llm.calls] == ["SPECIALVIP_VIP", "DIRECT_REPLY"]
     assert replied_store.load_replied() == set()
 
 
 def test_vip_keeps_quote_as_context_and_replies_to_the_outer_original(direct):
     dr, lanes, llm, chokepoint = direct
-    parent = fresh("graphseo")
+    parent = fresh("specialvip")
     lanes["vip"] = [{"url": parent, "text": "Worth a look.",
                      "quoted_text": "The retrieval model was tested only on synthetic documents."}]
 
@@ -199,7 +199,7 @@ def test_direct_reply_search_skips_nested_replies(direct):
 def test_direct_reply_vip_scan_skips_comments_before_generation(direct):
     """VIP priority cannot bypass the live standalone-only policy."""
     dr, lanes, llm, chokepoint = direct
-    marked, mention = fresh("graphseo", n=1), fresh("graphseo", n=2)
+    marked, mention = fresh("specialvip", n=1), fresh("specialvip", n=2)
     lanes["vip"] = [{"url": marked, "text": "vip nested reply", "is_reply": True},
                     {"url": mention, "text": "@someone vip mention"}]
     llm.default = "réponse précise sur le trafic organique"
@@ -212,20 +212,20 @@ def test_direct_reply_vip_scan_skips_comments_before_generation(direct):
 
 def test_direct_reply_vip_lane_keeps_posts_under_48_hours(direct):
     dr, lanes, llm, chokepoint = direct
-    recent, old = fresh("graphseo", minutes=47 * 60, n=1), fresh("graphseo", minutes=49 * 60, n=2)
+    recent, old = fresh("specialvip", minutes=47 * 60, n=1), fresh("specialvip", minutes=49 * 60, n=2)
     lanes["vip"] = [{"url": old, "text": "vip old"}, {"url": recent, "text": "vip recent"}]
     llm.default = "réponse précise sur le trafic organique"
 
     dr._run_vip_scan(reply_pipeline.Cycle())
 
     assert chokepoint.sent == [recent]
-    assert [r.source for r in logged()] == ["VIP/Graphseo"]
+    assert [r.source for r in logged()] == ["VIP/SpecialVip"]
 
 
 def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
     """A rate limit in the VIP lane ends the whole cycle, the search lane included."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("graphseo", n=i), "text": f"vip post {i}"} for i in (1, 2)]
+    lanes["vip"] = [{"url": fresh("specialvip", n=i), "text": f"vip post {i}"} for i in (1, 2)]
     llm.default = EXHAUSTED
 
     dr.run_direct_reply_cycle()
@@ -238,7 +238,7 @@ def test_direct_reply_cycle_stops_at_the_rate_limit(direct):
 def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     """Both lanes ran inside `except Exception`, which swallowed bedtime."""
     dr, lanes, llm, chokepoint = direct
-    lanes["vip"] = [{"url": fresh("graphseo"), "text": "vip post"}]
+    lanes["vip"] = [{"url": fresh("specialvip"), "text": "vip post"}]
     chokepoint.answer = error
     with pytest.raises(type(error)):
         dr.run_direct_reply_cycle()
@@ -489,18 +489,18 @@ def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
 def test_early_reply_targets_are_curator_driven():
     """2026-06-07 PM operator mandate: NO static target lists — the scan
     pools come from account_curator.tracked_handles(), pinned with the only
-    two operator-mandated keepers (TheBTCTherapist, Graphseo)."""
+    two operator-mandated keepers (FriendlyVip, SpecialVip)."""
     from src.replies.early_bird_bot import EARLY_BIRD_ACCOUNTS
     from src.replies.mega_watch_bot import MEGA_ACCOUNTS
     assert EARLY_BIRD_ACCOUNTS == [] and MEGA_ACCOUNTS == [], (
         "static early-reply lists must stay empty — pools come from the curator"
     )
     from src.account.account_curator import pinned_handles, tracked_handles
-    # Mindset4Money_X pinned 2026-06-10: measured 100-like / 13.3K-view
+    # PinnedBuilder pinned 2026-06-10: measured 100-like / 13.3K-view
     # reply conversion on his question post (operator: "more things like this").
-    assert pinned_handles() == ("TheBTCTherapist", "Graphseo", "Mindset4Money_X")
+    assert pinned_handles() == ("FriendlyVip", "SpecialVip", "PinnedBuilder")
     handles = tracked_handles(limit=5)
-    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo"
+    assert handles[0] == "FriendlyVip" and handles[1] == "SpecialVip"
 
 
 @pytest.fixture(params=["early_bird", "mega_watch"])
@@ -725,3 +725,6 @@ def test_engager_likes_count_only_likes_that_shipped(monkeypatch):
     assert "[RECIPROCATE] Nothing liked on @stale." in lines
     assert "[RECIPROCATE] Nothing liked on @broken." in lines
     assert "[RECIPROCATE] Nothing liked on @unsure." in lines
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

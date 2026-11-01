@@ -54,7 +54,7 @@ def test_curator_lane_gate_and_pins(monkeypatch, tmp_path, operator_folder):
 
     ac.run_curator_cycle()
     handles = ac.tracked_handles(limit=10)
-    assert handles[0] == "TheBTCTherapist" and handles[1] == "Graphseo", "pins lead"
+    assert handles[0] == "FriendlyVip" and handles[1] == "SpecialVip", "pins lead"
     assert "goodfinance" in handles, "on-lane author must be tracked"
     assert "legacyfr" not in handles, "FR-era 'other' engagements must not count"
 
@@ -107,7 +107,7 @@ def test_curator_promotion_quality_bar():
     """Following is a higher bar than tracking: spam-pattern handles (long
     digit runs) and thin evidence never reach the whitelist."""
     from src.account.account_curator import _promotable
-    assert _promotable({"handle": "unusual_whales", "engagements": 9})
+    assert _promotable({"handle": "builder", "engagements": 9})
     assert not _promotable({"handle": "bisdianora24202", "engagements": 9}), "digit-run spam"
     assert not _promotable({"handle": "goodname", "engagements": 4}), "below promote floor"
 
@@ -1133,15 +1133,15 @@ def test_engage_follows_a_seed_account_from_its_pool(engage, monkeypatch, memory
     from src.x.twitter_client import FollowOutcome
 
     eb, state = engage
-    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["Graphseo"]}}))
-    monkeypatch.setattr(eb, "_build_pool", lambda: ["Graphseo", "feedaccount"])
+    (operator_folder / "whitelist.json").write_text(json.dumps({"tiers": {"tier1": ["SpecialVip"]}}))
+    monkeypatch.setattr(eb, "_build_pool", lambda: ["SpecialVip", "feedaccount"])
     outcomes = _follow_outcomes(monkeypatch, eb)
 
     eb.run_engage_cycle()
 
-    assert outcomes == [("Graphseo", FollowOutcome.FOLLOWED)]
-    assert state["visits"] == ["https://x.com/Graphseo"]
-    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "graphseo")]
+    assert outcomes == [("SpecialVip", FollowOutcome.FOLLOWED)]
+    assert state["visits"] == ["https://x.com/SpecialVip"]
+    assert [(r["action"], r["target"]) for r in memory_ledger.rows] == [("follow", "specialvip")]
 
 
 # The followers page script, run by node against a page whose sidebar holds
@@ -1249,3 +1249,6 @@ def test_the_followers_scrape_accepts_a_trailing_slash_and_any_case(monkeypatch,
     _run_followers_script(monkeypatch, _followers_page(path="/THESIMAXIMALIST/followers/"))
 
     assert fb._scrape_followers_list(50) == ["fan_one", "fan_two"]
+
+
+pytestmark = pytest.mark.usefixtures("relation_account")

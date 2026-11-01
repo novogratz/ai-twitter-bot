@@ -18,7 +18,7 @@ folder, `state/<BOT_ACCOUNT>/` (`state/theaishrink/`):
    outside the whitelist only a follower or an Engager, and only while
    `FOLLOWBACK_BYPASS_WHITELIST` is on.
 3. Profile visits: `PROFILE_VISIT_ALLOWLIST` in `.env`, else the Account's
-   `network.profile_visits` (`TheBTCTherapist,Graphseo`), gates the profile
+   `network.profile_visits` (currently empty), gates the profile
    likes.
 4. Read `followed_accounts.json` - show which are already followed.
 5. Ask if the operator wants to add or remove accounts; edit
@@ -30,3 +30,7 @@ To block an account everywhere, the base `BLOCKLIST` in `src/core/config.py`,
 the Account's `network.blocked_accounts` (it adds to the base, never removes
 from it) and `accounts/theaishrink/respect_list.json` are operator-managed:
 change them only on an explicit operator request.
+
+The live Account requires AI/SI topic evidence even for VIPs, watched authors,
+follow seeds and Engagers. Finance/crypto exceptions are retired (2026-11-01).
+Removing targets does not itself authorize an X unfollow or a bot restart.

@@ -100,11 +100,11 @@ def test_unreadable_store_raises_instead_of_admitting():
 
 
 def test_english_only_rejects_french_and_accepts_english_for_a_former_french_vip(monkeypatch, settings_override):
-    settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
+    settings_override(FR_FORCED_REPLY_HANDLES="specialvip")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    french = judge_reply(url("Graphseo"), "Le modèle est plus rapide mais les données restent le vrai problème.")
+    french = judge_reply(url("SpecialVip"), "Le modèle est plus rapide mais les données restent le vrai problème.")
     assert french.refusal is Refusal.TEXT and "English-only" in french.reason
-    english = judge_reply(url("Graphseo"), "The model is faster, but the evidence still needs a stronger baseline.")
+    english = judge_reply(url("SpecialVip"), "The model is faster, but the evidence still needs a stronger baseline.")
     assert english
     assert not replied_store.load_replied(), "admission alone cannot claim a submission"
 
@@ -178,12 +178,12 @@ def test_over_length_draft_is_trimmed_on_a_sentence(monkeypatch):
 
 @pytest.mark.usefixtures("bilingual_account")
 def test_refused_text_leaves_the_post_replayable(monkeypatch, settings_override):
-    settings_override(FR_FORCED_REPLY_HANDLES="graphseo")
+    settings_override(FR_FORCED_REPLY_HANDLES="specialvip")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    english = judge_reply(url("Graphseo"), "The market just told you what your conviction is worth this week.")
+    english = judge_reply(url("SpecialVip"), "The market just told you what your conviction is worth this week.")
     assert english.refusal is Refusal.TEXT and not english.refusal.definitive
-    assert judge_parent(url("Graphseo")), "nothing was written: the post stays fresh"
-    assert judge_reply(url("Graphseo"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
+    assert judge_parent(url("SpecialVip")), "nothing was written: the post stays fresh"
+    assert judge_reply(url("SpecialVip"), "Le marché vient de te dire ce que vaut ta conviction cette semaine.")
 
 
 @pytest.mark.usefixtures("bilingual_account")
@@ -191,15 +191,15 @@ def test_a_reply_may_address_the_respected_account_it_answers(monkeypatch):
     """The respect list allows answering a Respected account on its content:
     its own @handle in the Reply is the addressee, not a mention."""
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    draft = "@graphseo le support tient tant que les volumes suivent, pas plus."
-    verdict = judge_reply(url("GraphSEO"), draft)
+    draft = "@specialvip le support tient tant que les volumes suivent, pas plus."
+    verdict = judge_reply(url("SPECIALVIP"), draft)
     assert verdict and verdict.text == draft
 
 
 @pytest.mark.parametrize("draft,named", [
-    ("@graphseo ton analyse du support est ridicule cette semaine.", "graphseo"),
-    ("@graphseo le support tient, @01net l'a bien montré hier.", "01net"),
-    ("@graphseo le support tient, @kindperson l'a bien montré hier.", "kindperson"),
+    ("@specialvip ton analyse du support est ridicule cette semaine.", "specialvip"),
+    ("@specialvip le support tient, @01net l'a bien montré hier.", "01net"),
+    ("@specialvip le support tient, @kindperson l'a bien montré hier.", "kindperson"),
     ("Kindperson qui parle de support ici, c'est du bullshit.", "kindperson"),
 ])
 @pytest.mark.usefixtures("bilingual_account")
@@ -207,15 +207,15 @@ def test_a_reply_mocking_or_naming_a_respected_account_is_refused(monkeypatch, d
                                                                   respected):
     """Mockery of the addressee by name, or any other Respected account
     named: refused for good, the post is dropped as after a model SKIP."""
-    respected("kindperson")
+    respected("kindperson", "specialvip")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
-    verdict = judge_reply(url("graphseo"), draft)
+    verdict = judge_reply(url("specialvip"), draft)
     assert verdict.refusal is Refusal.RESPECTED_ACCOUNT and verdict.refusal.definitive
     assert named in verdict.reason
 
 
 def test_a_neutral_reply_to_a_respected_account_passes_unchanged(monkeypatch, respected):
-    respected("kindperson")
+    respected("kindperson", "specialvip")
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     verdict = judge_reply(url("kindperson"), TEXT)
     assert verdict and verdict.text == TEXT
@@ -226,3 +226,6 @@ def test_judges_write_nothing(monkeypatch, memory_ledger):
     assert judge_reply(url("someone"), TEXT)
     assert url("someone") not in replied_store.load_replied()
     assert memory_ledger.rows == []
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")

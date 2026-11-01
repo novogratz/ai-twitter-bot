@@ -1,5 +1,24 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-01 — Retire Bitcoin/finance targets and require AI/SI evidence
+
+The Operator asks to remove Graphseo, TheBTCTherapist and similar finance or
+crypto accounts. Old exceptions remained in the network, special Relations,
+follow whitelist and three live environment overrides. Saved dynamic handles
+and promoted follow candidates could preserve the old focus after list edits.
+
+The Account retires those exceptions and adds the named finance/crypto targets
+to its engagement blocklist. Saved candidates are pruned with backups; followed
+accounts, respect protections, permanent Reply/repost claims and ledgers remain.
+No X unfollow or bot restart is performed. The bot was already paused.
+
+The shared strict topic option closes the former VIP/watch, search-like and
+seed/Engager follow exemptions. A verified post needs AI/SI topic evidence;
+finance/crypto matches refuse even with an AI keyword. A followed profile needs
+an on-topic name/bio too. Research drops the unrelated space/social-platform
+expansion. Existing generic engine tests use explicit fictitious Accounts;
+new regressions cover the live rules before generation and at write admission.
+
 ## 2026-11-01 — Artists' videos need appreciation, not a technical commentary
 
 The Operator asks for short, varied praise with heart emojis on artists'

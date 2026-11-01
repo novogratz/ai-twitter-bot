@@ -43,6 +43,7 @@ class Refusal(Enum):
     DEBATE_TURN_CAP = "Debate turn cap reached"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
+    TOPIC = "source outside engagement niche"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
     @property

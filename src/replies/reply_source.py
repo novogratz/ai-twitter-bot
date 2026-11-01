@@ -37,8 +37,7 @@ class Declaration:
 
 
 def is_on_niche(text: str) -> bool:
-    niche = account.current().niche
-    return bool(niche.post.search(text) or (niche.ticker and niche.ticker.search(text)))
+    return account.matches_niche(text)
 
 
 def source_text(tweet: dict) -> str:
@@ -83,7 +82,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
             continue
         if author and x_urls.author(url) not in ("", author):
             continue
-        if declaration.niche and not is_on_niche(text.strip()):
+        if (declaration.niche or account.current().engagement_niche_only) and not is_on_niche(text.strip()):
             continue
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:

@@ -392,14 +392,16 @@ _POSTS_JS = r"""
     }
     var url = art ? statusLink(art) : '';
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
+    var text = Array.from(art.querySelectorAll('[data-testid="tweetText"]'))
+        .map(function(el) { return el.innerText || ''; }).join('\n');
     if (own(art, '[data-testid="unlike"]').length === 1) {
-        return JSON.stringify({url: url, result: 'already_liked'});
+        return JSON.stringify({url: url, text: text, result: 'already_liked'});
     }
     var buttons = own(art, '[data-testid="like"]');
     if (buttons.length !== 1 || buttons[0].disabled || buttons[0].getAttribute('aria-disabled') === 'true')
         return JSON.stringify({url: url, result: 'failed'});
     var button = buttons[0];
-    if (mode !== 'press') return JSON.stringify({url: url, result: 'not_liked'});
+    if (mode !== 'press') return JSON.stringify({url: url, text: text, result: 'not_liked'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
 })("__MODE__", "__TARGET_ID__")
@@ -469,6 +471,14 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
     def steps():
         nonlocal liked_url
+        from ..core import account
+        if account.current().engagement_niche_only:
+            page = _page_posts("read", target)
+            if (x_urls.canonical_status_url(page.get("url") or "") !=
+                    x_urls.canonical_status_url(tweet_url)
+                    or not account.engagement_allowed(page.get("text") or "")):
+                log.info("[LIKE] Source outside the Account's engagement niche; nothing clicked.")
+                return LikeOutcome.REFUSED
         pressed = _page_posts("press", target)
         url = pressed.get("url") or ""
         if pressed.get("result") == "already_liked":
@@ -496,8 +506,12 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
 
 
 def _priority_source_ok(page: dict) -> bool:
+    from ..core import account
     from ..guards import content_guard, respect_list
     text = page.get("text") or ""
+    if not account.engagement_allowed(text):
+        log.info("[PRIORITY] Source outside the Account's engagement niche: %s", page.get("url", ""))
+        return False
     ok, why = content_guard.validate(text, kind="source", source_language=page.get("language") or "")
     if ok:
         _, why = respect_list.scrub_text_or_skip(text)
@@ -615,6 +629,11 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
     self_handles = account.own_handles()
     if not sid or not expected or expected in self_handles or reply_admission.is_blocked_account(expected):
         return False
+    # Read the verified article before opening composition. Recheck the returned
+    # text after the click too, so a changed page can never reach submission.
+    if click and account.current().engagement_niche_only and not _reply_target(
+            url, on_answered=on_answered):
+        return False
     js = r"""(() => {
       const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__;
       const standalone = __STANDALONE__;
@@ -641,7 +660,9 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
       const buttons = own(article, '[data-testid="reply"]');
       if (buttons.length !== 1) return 'refused';
       if (click) buttons[0].click();
-      return JSON.stringify({url: link.href, clicked: click});
+      const source = [...article.querySelectorAll('[data-testid="tweetText"]')]
+        .map(el => el.innerText || '').join('\n');
+      return JSON.stringify({url: link.href, text: source, clicked: click});
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", json.dumps(click)).replace("__SELF__", json.dumps(sorted(self_handles)))
     js = js.replace("__STANDALONE__", json.dumps(account.current().standalone_replies_only))
@@ -657,7 +678,7 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
         if on_answered is not None:
             on_answered()
         return False
-    return opened.get("clicked") is click
+    return opened.get("clicked") is click and account.engagement_allowed(opened.get("text") or "")
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,

@@ -193,3 +193,6 @@ def test_existing_repost_is_remembered_before_its_source_language_is_checked(bro
     assert tc.repost_tweet(URL) is W.REFUSED
     assert repost_store.contains(URL)
     assert browser["modes"] == ["read"]
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")
