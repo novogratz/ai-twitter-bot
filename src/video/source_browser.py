@@ -91,6 +91,8 @@ def capture_next(store, cfg, now):
           const stream=s=>({url:s.baseUrl||s.base_url,backups:s.backupUrl||s.backup_url||[],
             height:s.height,bandwidth:s.bandwidth,codecs:s.codecs,drm:!!(s.drm||s.drm_info)});
           return {id:d.bvid,title:d.title,creator:d.owner?.name,published:d.pubdate,
+            related:[...document.querySelectorAll('a[href*="/video/BV"]')].filter(a=>a.getClientRects().length)
+              .slice(0,80).map(a=>({url:a.href,title:a.getAttribute('title')||a.innerText||a.querySelector('img')?.alt||''})),
             metrics:{views:d.stat?.view,likes:d.stat?.like,shares:d.stat?.share},
             encrypted:!!(p.is_drm||p.drm_tech_type),user_agent:navigator.userAgent,
             video:(p.dash?.video||[]).map(stream),audio:(p.dash?.audio||[]).map(stream)};})())'''
@@ -108,11 +110,19 @@ def capture_next(store, cfg, now):
                     time.sleep(.5)
             finally:
                 safari.close_front_tab()
-        doc["source_download"] = plan(payload, source_id, now)
+        from .connectors import ingest
+        leads = related_candidates(payload.get("related", []), cfg, row["id"], now)
+        if leads:
+            ingest(store, "bilibili", leads, now, cfg)
+        downloaded = bool(doc.get("original_sha256"))
+        if not downloaded:
+            doc["source_download"] = plan(payload, source_id, now)
+        elif (payload.get("id") != source_id or type(payload.get("published")) not in (int, float)
+              or not 0 < payload["published"] <= now):
+            raise AccessError("source metadata identity/timestamp unverified")
         doc.update(published_at=payload["published"], creator=str(payload.get("creator") or doc["creator"]),
                    title=str(payload.get("title", ""))[:2000], access_status="normal Safari player media available",
                    publication_evidence="Timestamp from the authenticated normal video page; not discovery time")
-        downloaded = bool(doc.get("original_sha256"))
         store.save_candidate(row["id"], doc, time.time(), state=row["state"] if downloaded else "discovered",
                              reason=row["reason"] if downloaded else "source media captured; verification queued",
                              score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
@@ -127,12 +137,51 @@ def capture_next(store, cfg, now):
                        "scope": "normal Safari player on this observed page; other clips can be restricted"})
         return "source media captured"
     except Exception as exc:
+        from ..guards.active_hours import OutsideActiveHours
+        from .security import Deferred
+        if isinstance(exc, (OutsideActiveHours, Deferred)):
+            raise
         store.save_candidate(row["id"], doc, time.time(), state=row["state"],
                              reason="source player unavailable: " + type(exc).__name__, score=row["score"],
                              fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
         store.set_meta("source_player:bilibili", {"status": "limited", "checked_at": now,
                        "reason": type(exc).__name__ + ": normal player media unavailable; no login/CAPTCHA bypass"})
         return "source player unavailable"
+
+
+def related_candidates(links, cfg, source_candidate, now):
+    """Visible recommendations supply leads only, never rights or inspection."""
+    from .connectors import canonical
+    result, seen = [], set()
+    if not isinstance(links, list):
+        return result
+    for link in links[:80]:
+        if not isinstance(link, dict):
+            continue
+        title = str(link.get("title", ""))[:500]
+        if not any(alias.casefold() in title.casefold() for aliases in cfg.targets.values() for alias in aliases):
+            continue
+        if not re.search(r"dance|sing|music|parody|boy.?band|trouble.?maker|跳舞|唱歌|鬼畜|舞蹈|男团|演唱", title, re.I):
+            continue
+        try:
+            raw = urlsplit(str(link.get("url", "")))
+            path = raw.path.removeprefix("/en")
+            url = canonical("bilibili", raw._replace(path=path, query="", fragment="").geturl())
+        except ValueError:
+            continue
+        if url in seen:
+            continue
+        if not re.fullmatch(r"BV[A-Za-z0-9]{10}", url.rsplit("/", 1)[-1]):
+            continue
+        seen.add(url)
+        result.append({"source_id": url.rsplit("/", 1)[-1], "canonical_url": url,
+                       "creator": "", "title": title, "published_at": None,
+                       "access_status": "visible normal-page recommendation",
+                       "discovery_evidence": {"url": url, "observed_at": now, "source_candidate": source_candidate,
+                                              "method": "visible Safari recommendation link"}})
+        if len(result) >= 10:
+            break
+    return result
 
 
 def download_player(doc, destination, cfg, store, now):

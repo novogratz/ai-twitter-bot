@@ -132,6 +132,32 @@ def test_failed_quality_and_unverified_audio_are_ineligible(ready, video_cfg, at
     assert "quality" in ranking.gate(doc, video_cfg, at().timestamp(), final=True)
 
 
+@pytest.mark.parametrize("failure", ["path", "hash"])
+def test_saved_output_review_refuses_changed_or_unmanaged_media(video_store, video_cfg, ready, at, tmp_path, monkeypatch, failure):
+    doc = ready()
+    assets = tmp_path / "managed"
+    folder = assets / "clip1"
+    folder.mkdir(parents=True)
+    source = folder / "original.mp4"
+    source.write_bytes(Path(doc["original_path"]).read_bytes())
+    output = folder / "branded.mp4"
+    output.write_bytes(source.read_bytes())
+    doc.update(original_path=str(source), output_path=str(output))
+    if failure == "path":
+        doc["output_path"] = str(tmp_path / "clip1.mp4")
+    else:
+        output.write_bytes(b"changed after review")
+    monkeypatch.setattr(media, "ASSETS", assets)
+    monkeypatch.setattr(media, "SAVED_ASSETS", tmp_path / "saved")
+    monkeypatch.setattr(media, "technical_qc", lambda *a: pytest.fail("untrusted saved path reached decoder"))
+    video_store.save_candidate("clip1", doc, at().timestamp(), state="held")
+    video_store.enqueue("inspect_output", "clip1", at().timestamp())
+    job = video_store.claim("inspect_output", "test", at().timestamp(), video_cfg)
+    with pytest.raises(ValueError, match="path/hash changed"):
+        media.review_output(video_store, job, at().timestamp(), video_cfg)
+    assert media._job_deadline is None
+
+
 @pytest.mark.skipif(not shutil.which("ffmpeg"), reason="optional ffmpeg media integration")
 def test_real_ffmpeg_clean_brand_decode_sync_and_original_unchanged(video_cfg, tmp_path):
     pytest.importorskip("numpy")

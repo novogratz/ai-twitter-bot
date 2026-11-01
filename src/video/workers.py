@@ -12,6 +12,7 @@ import uuid
 
 from ..core import settings, state_store, video_pressure
 from ..core.logger import log
+from ..guards.active_hours import OutsideActiveHours
 from . import config, connectors, media, operations, publisher, ranking, reconcile, schedule
 from .store import Store
 from .security import Deferred
@@ -59,9 +60,18 @@ def run_once(role, store, cfg, owner, *, now=None):
     if role == "publisher":
         # Publishing keeps its reserved request budget under discovery/media load.
         from .startup import tick
+        from .preparation import prepare_upcoming
+        prepare_upcoming(store, cfg, now)
         tick(store, cfg, now)
         result = publisher.publish_tick(store, cfg)
         if cfg.publishing_transport == "safari" and result != "attempted":
+            upcoming = schedule.next_slot(schedule.utc_now(), cfg)
+            if (upcoming and 0 <= upcoming[1].timestamp() - now <= 180
+                    and store.rows("SELECT 1 FROM candidates WHERE state='ready' LIMIT 1")
+                    and not store.rows("SELECT 1 FROM reservations WHERE state='publish_unknown'")):
+                # Leave this scheduler free to reserve/upload when the clock
+                # turns. A routine archive read must not straddle a ready slot.
+                return result
             from ..guards.active_hours import may_act
             if may_act() and store.meta("next_browser_read", 0) <= now:
                 from .startup import waiting_reason
@@ -98,6 +108,19 @@ def run_once(role, store, cfg, owner, *, now=None):
             return "source failed"
     # Alternate media preparation and API checks. A growing download queue must
     # not starve history import, positive reconciliation, novelty or due outcomes.
+    output_job = store.claim("inspect_output", owner, now, cfg)
+    if output_job:
+        store.heartbeat(role, owner, now, "reviewing_output:" + output_job["item"])
+        try:
+            media.review_output(store, output_job, now, cfg)
+            store.finish(output_job, time.time())
+            return "saved output reviewed"
+        except Deferred as exc:
+            store.finish(output_job, time.time(), repeat=exc.retry_after)
+            return "saved output review deferred"
+        except Exception as exc:
+            store.finish(output_job, time.time(), error=type(exc).__name__)
+            return "saved output review failed"
     inspection_job = store.claim("inspect_source", owner, now, cfg)
     if inspection_job:
         from dataclasses import replace
@@ -119,7 +142,7 @@ def run_once(role, store, cfg, owner, *, now=None):
             # default. Keep the existing maximum and shared quota/resource gates.
             inspect_cfg = replace(cfg, codex_timeout_seconds=max(cfg.codex_timeout_seconds, 300))
             media._job_deadline = time.monotonic() + cfg.media_job_seconds
-            evidence = media.inspect(original, "source", inspect_cfg, store, now)
+            evidence = media.inspect(original, "source", inspect_cfg, store, now, source_document=doc)
             if evidence.get("sha256") != doc["original_sha256"] or sha256(original) != doc["original_sha256"]:
                 raise ValueError("inspection does not match selected original")
             latest = store.candidate(row["id"])
@@ -128,7 +151,7 @@ def run_once(role, store, cfg, owner, *, now=None):
                 return "closed source inspection"
             doc = latest["document"] | {"inspection": evidence}
             reason = ranking.gate(doc, cfg, time.time())
-            if not evidence.get("overlays_removable_by_crop"):
+            if not evidence.get("overlays_removable_by_crop") and not cfg.allow_source_overlays:
                 reason = reason or "source overlays need an available clean original or cleanup method"
             store.save_candidate(row["id"], doc, time.time(), state="held",
                                  reason=reason or "source verified; output preparation pending", job=inspection_job)
@@ -216,6 +239,10 @@ def _api_work(store, cfg, owner, now):
 
 
 def _x_work(store, cfg, owner, now):
+    from ..core import work_priority
+    upcoming = schedule.next_slot(schedule.utc_now(), cfg)
+    imminent = bool(upcoming and 0 <= upcoming[1].timestamp() - now <= cfg.preparation_lead_seconds)
+    priority = work_priority.REPLY if imminent else work_priority.BACKGROUND
     if cfg.publishing_transport == "safari":
         from ..x.safari_video import SafariVideoClient
         client = SafariVideoClient(store, cfg)
@@ -230,37 +257,58 @@ def _x_work(store, cfg, owner, now):
         return None
     try:
         if cfg.publishing_transport == "safari":
-            client.preflight(force=False)
+            with work_priority.scope(priority):
+                client.preflight(force=False)
             store.set_meta("account_verified", True)
-            from .source_browser import capture_next
-            if capture_next(store, cfg, now):
-                return "source player checked"
-        if not store.meta("history_import_complete", False):
-            reconcile.import_history(store, client, cfg, now)
-            return "history page imported"
+        client.critical_reads = True
         if store.meta("next_reconciliation", 0) <= now:
-            reconcile.reconcile_unknown(store, client, now)
+            with work_priority.scope(work_priority.REPLY):
+                reconcile.reconcile_unknown(store, client, now)
             store.set_meta("next_reconciliation", now + 300)
-        if store.meta("next_outcomes", 0) <= now:
-            reconcile.collect_outcomes(store, client, now)
-            store.set_meta("next_outcomes", now + 1200)
         job = store.claim("novelty", owner, now, cfg)
         if job:
             try:
                 candidate = store.candidate(job["item"])
+                if store.rows("SELECT 1 FROM jobs WHERE item=? AND kind IN ('media','inspect_source','inspect_output') "
+                              "AND state='running'", (job["item"],)):
+                    store.finish(job, time.time(), repeat=15)
+                    return "media preparation pending"
                 if candidate["state"] in ("posted", "reserved", "rejected", "expired", "duplicate"):
                     store.finish(job, now)
                     return "closed novelty job"
-                reconcile.novelty(store, candidate, client, cfg, now)
+                with work_priority.scope(priority):
+                    reconcile.novelty(store, candidate, client, cfg, now)
                 store.finish(job, time.time(), repeat=12 * 3600)
             except Deferred as exc:
                 store.finish(job, time.time(), repeat=exc.retry_after)
+            except OutsideActiveHours:
+                store.finish(job, time.time(), repeat=30)
+                return "interaction cooldown"
             except Exception as exc:
-                store.finish(job, time.time(), error=type(exc).__name__)
+                detail = type(exc).__name__
+                from .security import AccessError
+                if isinstance(exc, AccessError):
+                    detail += ": " + config.safe_label(str(exc))
+                store.finish(job, time.time(), error=detail)
             return "novelty checked"
+        client.critical_reads = False
+        if cfg.publishing_transport == "safari":
+            from .source_browser import capture_next
+            if capture_next(store, cfg, now):
+                return "source player checked"
+        if not store.meta("history_import_complete", False):
+            if not reconcile.history_ready(store, cfg) or store.meta("next_history_backfill", 0) <= now:
+                store.set_meta("next_history_backfill", now + 300)
+                reconcile.import_history(store, client, cfg, now)
+                return "history page imported"
+        if store.meta("next_outcomes", 0) <= now:
+            reconcile.collect_outcomes(store, client, now)
+            store.set_meta("next_outcomes", now + 1200)
     except Deferred as exc:
         store.event(now, "x_read_pending", "publisher", str(exc))
         return "browser history/novelty pending"
+    except OutsideActiveHours:
+        return "interaction cooldown"
     except Exception as exc:
         store.event(now, "x_read_failed", "media", type(exc).__name__)
         store.circuit(circuit, now, failed=True, retry_after=getattr(exc, "retry_after", 0))

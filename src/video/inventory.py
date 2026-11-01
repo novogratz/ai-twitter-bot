@@ -33,7 +33,8 @@ def usable_until(doc, cfg):
     score = doc.get("ranking", {})
     freshness = score.get("components", {}).get("freshness")
     if freshness is not None:
-        required = cfg.score_threshold - (score["total"] - freshness)
+        threshold = cfg.score_threshold * .75 if ranking.unknown_momentum_eligible(doc, cfg) else cfg.score_threshold
+        required = threshold - (score["total"] - freshness)
         if required > 0:
             expiry = min(expiry, doc["published_at"] + cfg.max_age_hours * 3600 * (1 - required / 10))
     return expiry
@@ -57,7 +58,7 @@ def coverage(candidates, now, cfg):
 
 
 def surplus(candidates, now, cfg):
-    """Allow spending only a clip whose removal keeps all five windows supplied."""
+    """Allow spending only a clip whose removal keeps all main windows supplied."""
     if len(candidates) <= len(cfg.windows):
         return []
     return [pair for pair in candidates

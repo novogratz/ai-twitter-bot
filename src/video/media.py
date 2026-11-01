@@ -296,11 +296,12 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("operator watermark missing")
     scale = min(1, 1080 / min(w, h), 1920 / max(w, h))
     ow, oh = int(w * scale) // 2 * 2, int(h * scale) // 2 * 2
-    font = ImageFont.truetype(cfg.font_file, max(14, int(ow * .035)))
+    font_size = max(14, int(ow * .025))
+    font = ImageFont.truetype(cfg.font_file, font_size)
     box = font.getbbox(cfg.watermark)
     stamp = Image.new("RGBA", (box[2] - box[0] + 16, box[3] - box[1] + 12))
     ImageDraw.Draw(stamp).text((8 - box[0], 6 - box[1]), cfg.watermark, font=font,
-                               fill=(255, 255, 255, 225), stroke_width=1, stroke_fill=(0, 0, 0, 190))
+                               fill=(255, 255, 255, 240), stroke_width=max(2, font_size // 14), stroke_fill=(0, 0, 0, 235))
     watermark_path = output.with_suffix(".watermark.png")
     stamp.save(watermark_path)
     position = evidence.get("watermark_position", "bottom")
@@ -308,12 +309,20 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("watermark safe placement unverified")
     ypos = "H-h-0.06*H" if position == "bottom" else "0.06*H"
     filters = f"[0:v]crop={w}:{h}:{x}:{y},scale={ow}:{oh},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+    # Reserve container/audio headroom before encoding. Unbounded CRF can make a
+    # good source too large for the configured composer/inspection byte limit.
+    maxrate = int(cfg.max_download_bytes * .90 * 8 / info["duration"] - 192_000)
+    if maxrate < 100_000:
+        raise ValueError("configured output byte budget is too small")
     try:
         ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(original), "-i", str(watermark_path),
                 "-filter_complex", filters, "-map", "[out]", "-map", "0:a:0", "-sn", "-dn", "-map_metadata", "-1",
                 "-c:v", "libx264", "-threads", "1", "-preset", "veryfast", "-crf", "16", "-profile:v", "high",
+                "-maxrate", str(maxrate), "-bufsize", str(maxrate * 2),
                 "-pix_fmt", "yuv420p", "-x264-params", "open-gop=0", "-fps_mode", "passthrough",
                 "-c:a", "aac", "-profile:a", "aac_low", "-ac", "2", "-b:a", "192k", "-movflags", "+faststart", str(output)], cfg)
+        if output.stat().st_size > cfg.max_download_bytes:
+            raise ValueError("rendered output exceeds configured byte budget")
     finally:
         watermark_path.unlink(missing_ok=True)
 
@@ -364,6 +373,37 @@ def process(store, job, now, cfg):
         _job_deadline = None
 
 
+def review_output(store, job, now, cfg):
+    """Resume QC on immutable saved bytes, without downloading or rendering again."""
+    global _job_deadline
+    _job_deadline = time.monotonic() + cfg.media_job_seconds
+    try:
+        row = store.candidate(job["item"])
+        if row["state"] in ("posted", "reserved", "duplicate", "rejected", "expired"):
+            return
+        doc = row["document"]
+        roots = [(Path(str(root)) / row["id"]).resolve() for root in (ASSETS, SAVED_ASSETS)]
+        original, output = Path(doc["original_path"]).resolve(), Path(doc["output_path"]).resolve()
+        for path, digest in ((original, doc["original_sha256"]), (output, doc["output_sha256"])):
+            if not any(path.is_relative_to(root) for root in roots) or not path.is_file() or sha256(path) != digest:
+                raise ValueError("saved media path/hash changed; review refused")
+        why = ranking.gate(doc, cfg, now)
+        if why:
+            raise ValueError(why)
+        technical = technical_qc(original, output, doc["probe"], cfg)
+        final = inspect(output, "output", cfg, store, now, original_path=str(original),
+                        source_inspection=doc["inspection"], duration=doc["probe"]["duration"])
+        doc["qc"] = {**final, **technical}
+        doc["caption"] = ranking.caption(doc, cfg, time.time())
+        doc = ranking.refresh(store, row | {"document": doc}, time.time(), cfg)
+        why = ranking.gate(doc, cfg, time.time(), final=True)
+        store.save_candidate(row["id"], doc, time.time(), state="held" if why else "ready", reason=why,
+                             score=doc["ranking"]["total"], fingerprint=json.loads(row["fingerprint"]), job=job)
+        store.enqueue("novelty", row["id"], time.time())
+    finally:
+        _job_deadline = None
+
+
 def _process(store, job, now, cfg):
     row = store.candidate(job["item"])
     if row["state"] in ("rejected", "posted", "reserved", "duplicate", "expired"):
@@ -404,7 +444,7 @@ def _process(store, job, now, cfg):
             if matches_history(doc, json.loads(old["payload"])):
                 store.save_candidate(row["id"], doc, time.time(), state="duplicate", reason="already in own history", fingerprint=original_fp, job=job)
                 return
-        doc["inspection"] = inspect(original, "source", cfg, store, now, duration=info["duration"])
+        doc["inspection"] = inspect(original, "source", cfg, store, now, duration=info["duration"], source_document=doc)
         reason = ranking.gate(doc, cfg, now)
         if reason:
             raise ValueError(reason)

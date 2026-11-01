@@ -6,6 +6,24 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, 19:00 recovery and preparation — After the missed 17:00 post, the
+Operator explicitly requires a video at 19:00 and preparation from 18:30.
+Add 19:00 as a sixth main window, retaining the existing seven slots (eight
+scheduled total). Start durable preparation thirty minutes before every slot,
+with visible empty-buffer warnings. Replies retain their existing behavior.
+The Account opts into an initial six-page fingerprinted history import while
+older archive backfill continues; incomplete coverage is never called complete.
+Candidate-specific X novelty and permanent posting memory remain mandatory.
+New publication checks and ambiguous-send reconciliation take precedence over
+archive backfill and may use the reserved publishing read budget.
+Unknown engagement momentum may use an explicitly recorded editorial fallback:
+at least 18/20 fit, 16/20 entertainment, 10/15 quality and 80 percent of the 75
+observable points; the original 100-point score and missing metrics stay intact.
+This never waives rights, actual temporal/audio review, QC, freshness or dedup.
+Inspection separates the creator's textual fictional-cast attribution from
+observed performance. It must not identify real people from faces or represent
+creator attribution as biometric verification. No title alone approves a clip.
+
 2026-11-01, caption correction and seven daily videos — The Operator removes the
 public source-link and synthetic-disclosure lines, requests a blank line between
 two playful sentences with emojis, and changes the schedule to 07:00, 07:15,

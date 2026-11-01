@@ -353,14 +353,14 @@ create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature is implemented behind `VIDEO_ENABLED=0` and
 `VIDEO_LIVE=0`. When enabled it replaces the main-post schedule with 07:00,
-07:15, 09:00, 12:00, 17:00, 21:00 and 21:15 Toronto slots. A separately
+07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15 Toronto slots. A separately
 requested persistent live activation can add one startup video per day. Replies
 keep their engine and prompts; interactions now pause from midnight to 04:00,
 while independent video discovery/media workers can continue overnight.
 
-The five main windows **07:00, 09:00, 12:00, 17:00 and 21:00** have inventory
+The six main windows **07:00, 09:00, 12:00, 17:00, 19:00 and 21:00** have inventory
 priority. Before a second post in a pair, the publisher protects one distinct
-eligible clip for each of the next five windows, including tomorrow morning.
+eligible clip for each of the upcoming main windows, including tomorrow morning.
 `video.py status` reports coverage and shortages. The sixteen-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.
 

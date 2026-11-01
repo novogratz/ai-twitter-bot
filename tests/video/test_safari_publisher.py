@@ -13,6 +13,19 @@ from src.x.confirmed_write import WriteOutcome
 from tests.helpers import clock
 
 
+def test_busy_video_read_defers_without_holding_due_publisher(monkeypatch):
+    from contextlib import nullcontext
+    from src.video.security import Deferred
+    monkeypatch.setattr(browser, "publisher_session", lambda: nullcontext())
+    monkeypatch.setattr(browser, "require_active", lambda: None)
+    waits = []
+    monkeypatch.setattr(safari._safari_lock._lock, "acquire", lambda timeout: waits.append(timeout) or False)
+    monkeypatch.setattr(safari._safari_lock._lock, "release", lambda: pytest.fail("unowned lock released"))
+    with pytest.raises(Deferred, match="Safari busy"), browser.browser_session():
+        pytest.fail("read began without the browser")
+    assert waits == [5]
+
+
 def test_receipt_reads_own_profile_when_success_toast_has_no_link(monkeypatch):
     from datetime import datetime, timezone
     from types import SimpleNamespace

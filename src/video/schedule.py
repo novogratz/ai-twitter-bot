@@ -21,8 +21,8 @@ def eligible(now):
 
 def clocks(cfg):
     minutes = []
-    if len(set(cfg.windows)) != 5 or not set(cfg.paired_windows) <= set(cfg.windows):
-        raise ValueError("five unique video windows with paired windows drawn from them are required")
+    if not 5 <= len(cfg.windows) <= 8 or len(set(cfg.windows)) != len(cfg.windows) or not set(cfg.paired_windows) <= set(cfg.windows):
+        raise ValueError("five to eight unique video windows with paired windows drawn from them are required")
     for value in cfg.windows:
         parsed = time.fromisoformat(value)
         if parsed.second or parsed.microsecond or parsed.tzinfo or parsed.hour < 4:

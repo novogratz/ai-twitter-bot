@@ -43,8 +43,17 @@ def publisher_session():
 @contextmanager
 def browser_session():
     require_active()
-    with publisher_session(), safari._safari_lock:
-        yield
+    with publisher_session():
+        # Reads share the scheduler with due publication. A queued routine read
+        # must yield promptly instead of keeping that worker behind Replies.
+        lock = safari._safari_lock._lock
+        if not lock.acquire(timeout=5):
+            raise Deferred("Safari busy; video read deferred without occupying the publisher", retry_after=10)
+        try:
+            require_active()
+            yield
+        finally:
+            lock.release()
 
 
 def _json(js, timeout=8):
@@ -385,11 +394,14 @@ class SafariVideoClient:
 
     def _scan(self, url, cursor=None):
         cursor = cursor or {"offset": 0, "last": []}
-        if not isinstance(cursor, dict) or not 0 <= cursor.get("offset", -1) <= 60:
-            raise AccessError("browser scan limit reached; history remains incomplete")
-        if not self.store.budget("x_browser", "reads", 1, self.cfg.request_budget - self.cfg.publishing_request_reserve, time.time()):
-            raise AccessError("browser read budget exhausted")
+        if not isinstance(cursor, dict) or type(cursor.get("offset")) is not int or cursor["offset"] < 0:
+            raise AccessError("invalid browser history cursor")
+        if cursor["offset"] > 60:
+            raise Deferred("bounded visible history window reached; older archive remains incomplete", retry_after=86400)
+        limit = self.cfg.request_budget - (0 if getattr(self, "critical_reads", False) else self.cfg.publishing_request_reserve)
         with browser_session():
+            if not self.store.budget("x_browser", "reads", 1, limit, time.time()):
+                raise AccessError("browser read budget exhausted")
             if not safari.open_url(url):
                 raise AccessError("Safari page failed to open")
             try:
@@ -464,7 +476,8 @@ class SafariVideoClient:
         cached = self.store.meta("browser_fingerprint:" + post_id)
         if cached:
             return cached
-        if not self.store.budget("x_browser", "reads", 1, self.cfg.request_budget - self.cfg.publishing_request_reserve, time.time()):
+        limit = self.cfg.request_budget - (0 if getattr(self, "critical_reads", False) else self.cfg.publishing_request_reserve)
+        if not self.store.budget("x_browser", "reads", 1, limit, time.time()):
             raise AccessError("browser fingerprint read budget exhausted")
         with browser_session():
             if not safari.open_url(url):

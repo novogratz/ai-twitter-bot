@@ -83,7 +83,7 @@ def gate(doc, cfg, now, *, final=False):
         return "inspection not bound to original bytes"
     confidence = inspect.get("confidence", 0)
     if type(confidence) not in (int, float) or not math.isfinite(confidence) or confidence < cfg.confidence_min:
-        return "uncertain identity/performance"
+        return "uncertain performance review"
     if (inspect.get("performance") not in ("dance", "singing", "music_parody")
             or not set(inspect.get("cast", [])) & set(cfg.targets)
             or not inspect.get("audio_inspected") or not inspect.get("synthetic_parody")
@@ -117,11 +117,24 @@ def gate(doc, cfg, now, *, final=False):
         if qc.get("sha256") != doc.get("output_sha256") or not doc.get("output_sha256"):
             return "QC not bound to output bytes"
         ranking = doc.get("ranking", {})
-        if not selected(doc, now) and ranking.get("total", 0) < cfg.score_threshold:
+        if not selected(doc, now) and ranking.get("total", 0) < cfg.score_threshold and not unknown_momentum_eligible(doc, cfg):
             return "below score threshold"
         if now - ranking.get("scored_at", 0) > 1200:
             return "score needs refresh"
     return ""
+
+
+def unknown_momentum_eligible(doc, cfg):
+    """Explicit editorial fallback; never fill missing popularity with fake points."""
+    parts = doc.get("ranking", {}).get("components", {})
+    if not cfg.allow_unknown_momentum or parts.get("momentum") is not None:
+        return False
+    weights = {"fit": 20, "entertainment": 20, "quality": 15, "freshness": 10, "novelty": 10}
+    if any(type(parts.get(k)) not in (int, float) or not math.isfinite(parts[k]) or not 0 <= parts[k] <= w
+           for k, w in weights.items()):
+        return False
+    return (parts["fit"] >= 18 and parts["entertainment"] >= 16 and parts["quality"] >= 10
+            and sum(parts[k] for k in weights) / 75 * 100 >= cfg.score_threshold)
 
 
 def caption(doc, cfg, now):
@@ -188,4 +201,7 @@ def refresh(store, row, now, cfg):
             doc["ranking"]["components"]["momentum"] = combined
             doc["ranking"]["total"] = round(sum(v for v in doc["ranking"]["components"].values() if v is not None), 2)
     doc["ranking"]["creator_baseline"] = baseline
+    fallback = unknown_momentum_eligible(doc, cfg)
+    doc["ranking"]["selection_rule"] = "editorial_unknown_momentum" if fallback else "standard_100_point_score"
+    doc["ranking"]["observed_points_percent"] = round(doc["ranking"]["total"] / 75 * 100, 2) if fallback else None
     return doc

@@ -16,6 +16,14 @@ def test_current_seven_slot_schedule_has_only_two_pairs(video_cfg):
     assert schedule.clocks(cfg) == ("07:00", "07:15", "09:00", "12:00", "17:00", "21:00", "21:15")
 
 
+def test_added_evening_window_retains_existing_windows_and_eight_post_cap(video_cfg):
+    cfg = replace(video_cfg, windows=("07:00", "09:00", "12:00", "17:00", "19:00", "21:00"),
+                  paired_windows=("07:00", "21:00"))
+    assert schedule.clocks(cfg) == ("07:00", "07:15", "09:00", "12:00", "17:00", "19:00", "21:00", "21:15")
+    with pytest.raises(ValueError):
+        replace(cfg, paired_windows=("07:00", "09:00", "21:00"))
+
+
 @pytest.mark.parametrize("day,offset", [(date(2026, 3, 7), -5), (date(2026, 3, 8), -4),
                                       (date(2026, 10, 31), -4), (date(2026, 11, 1), -5)])
 def test_dst_offsets(day, offset, video_cfg):

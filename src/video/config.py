@@ -20,6 +20,9 @@ class VideoConfig:
     paired_windows: tuple = ("07:00", "21:00")
     pair_minutes: int = 15
     protect_primary_windows: bool = True
+    preparation_lead_seconds: int = 1800
+    initial_history_pages: int = 0
+    allow_unknown_momentum: bool = False
     allow_source_overlays: bool = False
     caption_disclosure: bool = True
     grace_seconds: int = 600
@@ -93,6 +96,12 @@ class VideoConfig:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.protect_primary_windows) is not bool:
             raise ValueError("protect_primary_windows must be a boolean")
+        if type(self.allow_unknown_momentum) is not bool:
+            raise ValueError("allow_unknown_momentum must be a boolean")
+        if type(self.preparation_lead_seconds) is not int or not 300 <= self.preparation_lead_seconds <= 3600:
+            raise ValueError("preparation lead must be 300..3600 seconds")
+        if type(self.initial_history_pages) is not int or not 0 <= self.initial_history_pages <= 60:
+            raise ValueError("initial history pages must be 0 (complete archive) or 1..60")
         if type(self.allow_source_overlays) is not bool:
             raise ValueError("allow_source_overlays must be a boolean")
         if type(self.caption_disclosure) is not bool:

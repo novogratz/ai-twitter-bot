@@ -137,7 +137,7 @@ def test_media_worker_inspects_selected_local_bytes_without_publishing_or_granti
     observed = []
     monkeypatch.setattr(workers.video_pressure, "pressure", lambda *a: "")
     monkeypatch.setattr(workers.time, "time", lambda: at().timestamp())
-    def inspect(path, stage, cfg, store, now):
+    def inspect(path, stage, cfg, store, now, **extra):
         observed.append((str(path), stage, cfg.codex_timeout_seconds))
         return doc["inspection"] | {"overlays_removable_by_crop": False}
     monkeypatch.setattr(workers.media, "inspect", inspect)

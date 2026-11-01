@@ -1,5 +1,51 @@
 # Video validation — November 1, 2026
 
+## 19:00 readiness repair
+
+The missed 17:00 slot had no ready asset. An unfinished account archive scan
+also blocked ordinary scheduled selection, while the public-discovery model
+budget was exhausted. The repair adds the requested 19:00 window, starts durable
+preparation thirty minutes before every slot, prioritizes novelty/reconciliation
+over archive backfill and bounds Safari read-lock waits to five seconds. Due
+video writes retain the same queue priority as ready Replies, below watched work.
+
+The real Bilibili candidate `BV1VSxr63ENv` (the creator-attributed Elon/Jensen
+“Trouble Maker” duet) reached `ready` at 18:51 Toronto. Publication timestamp,
+creator and engagement observations came from the normal signed-in player.
+The immutable original is 131.243 seconds, 1920×1080, 30 fps, SHA-256
+`803500ba85c3aa2cf045db317629165798fd1278a2d8b42d4eba0047c27d6f73`.
+The 130,410,172-byte branded MP4 has SHA-256
+`a6d5c996e8efa417fed9d257bdca34c850d46a6571e990e8eb5be6cff600b979`.
+
+Fresh Codex source/output reviews returned confidence 0.96/0.95. They use creator
+attribution for the fictional cast, actual temporal performance samples and local
+audio/OCR evidence. Source subtitles/credits remain under the existing operator
+instruction. Complete decode, preserved duration/frame rate, audio correlation
+0.9993, synchronized audio and no introduced black/frozen frames passed.
+OCR corroborated the watermark on 93.9% of the final one-second samples.
+Different source/output sampling phases are matched within half a sample period
+and the same screen region; moved or newly added text still fails. The original
+model verdict is retained independently of deterministic OCR corrections.
+
+A real native X source-identifier search and two Codex public-index searches
+returned no match. The native cast/song query was unavailable or rate limited.
+The saved verdict explicitly describes this limited scope; no global absence or
+completed older-account archive is claimed. All imported posting fingerprints
+and permanent content claims remain checked before selection.
+
+The score was 65.4/100 with momentum unknown, despite a measured growth observation;
+one comparable clip cannot establish a platform percentile. The configured
+editorial fallback uses 87.2% of the 75 observable points (fit 19, entertainment 17,
+quality 12, freshness 7.4, novelty 10), without inventing momentum points.
+This is an actual authorized source-to-ready run, separate from fixture tests.
+
+After the readiness/read-lock fixes, the full suite passed **2,406 tests, with
+two optional skips, in 47.38 seconds**. The subsequently added two saved-output
+path/hash rejection cases also passed in the 25-test media security run.
+The earlier concurrent-load measurements below are unchanged; this repair does
+not claim a new production latency benchmark. Local runtime evidence shows the
+publisher's bounded read deferring while Reply work continues.
+
 ## Actual publication
 
 The operator-selected Bilibili clip `BV13bnE6ZEg2` was downloaded from media URLs
@@ -57,7 +103,7 @@ now falls back to the own profile when the composer provides no receipt link.
 
 ## Tests and concurrent load
 
-The final full suite passed **2,393 tests in 49.64 seconds**. Focused
+The initial release's full suite passed **2,393 tests in 49.64 seconds**. Focused
 retained-overlay, source-player and Safari checks passed **58 tests**. Scheduler
 dry-run confirmed seven slots, an eight-publication ceiling including explicit
 startup, and the released startup interaction hold. `git diff --check` passed.
@@ -93,7 +139,7 @@ quota behavior, Internet throughput or a sustained production p95 target.
 
 Earlier JSON diagnostics are dated snapshots and may report the former disabled,
 API-oriented or unlicensed state. They are not current capability claims.
-The seven scheduled posts are configured targets. There is no guarantee of a
+The eight scheduled posts are configured targets. There is no guarantee of a
 post when the eligible buffer is empty, a connector is unavailable or a quality
 check fails. No missing metrics, ready candidates or completed history coverage
 are fabricated to fill a slot. Source search and model calls share bounded

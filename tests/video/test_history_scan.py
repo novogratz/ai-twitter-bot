@@ -27,6 +27,31 @@ def test_bounded_novelty_records_actual_search_scope_without_claiming_global_abs
     assert "global absence is not established" in result["scope"]
 
 
+def test_novelty_does_not_repeat_search_or_lose_page_when_fingerprint_is_pending(video_store, video_cfg, ready, at, monkeypatch):
+    doc = ready()
+    video_store.save_candidate("clip1", doc, at().timestamp(), state="held",
+                               fingerprint={"sha256": doc["original_sha256"], "visual": []})
+    class Search:
+        calls = 0
+        def search(self, query, cursor):
+            self.calls += 1
+            return {"data": [], "includes": {"media": [{"type": "video", "media_key": "v"}]}, "meta": {}}
+    client = Search()
+    def pending(*a, **k):
+        raise Deferred("saved frames pending")
+    monkeypatch.setattr(reconcile, "media_fingerprint", pending)
+    with pytest.raises(Deferred):
+        reconcile.novelty(video_store, video_store.candidate("clip1"), client, video_cfg, at().timestamp())
+    assert client.calls == 1
+    monkeypatch.setattr(reconcile, "media_fingerprint", lambda *a, **k: {"sha256": "unrelated", "visual": []})
+    with pytest.raises(Deferred):
+        reconcile.novelty(Store(video_store.path), video_store.candidate("clip1"), client, video_cfg, at().timestamp())
+    assert client.calls == 2  # only the second query is new
+    assert reconcile.novelty(Store(video_store.path), video_store.candidate("clip1"), client, video_cfg,
+                             at().timestamp()) == "checked_no_match"
+    assert client.calls == 2
+
+
 def post(ident):
     return {"id": ident, "text": "fixture", "created_at": "2026-11-01T12:00:00Z", "urls": [],
             "url": f"https://x.com/example/status/{ident}", "video": False}
