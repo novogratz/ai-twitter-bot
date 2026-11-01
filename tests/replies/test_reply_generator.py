@@ -40,6 +40,54 @@ def test_reply_prompt_keeps_context_beyond_the_old_200_character_cutoff(llm):
     assert parent in llm.prompts[-1]
 
 
+@pytest.mark.parametrize("structured", [False, True])
+def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatch, llm, structured):
+    from src.replies import direct_reply, reply_agent, reply_generator
+
+    recent = ["Love this ❤️"]
+    monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", lambda limit: recent)
+    parent = fresh("dvorahfr")
+    if structured:
+        monkeypatch.setattr(reply_agent, "_load_discovered_handles", lambda limit: [])
+        llm.default = json.dumps([dict(tweet_url=parent, reply="This is beautiful 💖",
+                                      type="reply", pattern="OTHER")])
+        result = reply_agent.generate_replies()
+        assert result[0]["tweet_url"] == parent
+        assert result[0]["reply"] == "This is beautiful 💖"
+    else:
+        llm.default = "This is beautiful 💖"
+        result = reply_generator.generate(direct_reply.reply_call("dvorahfr"), author="dvorahfr",
+                                          text="Mon nouveau court métrage réalisé avec Grok Imagine.")
+        assert result.text == llm.default and result.language == "en"
+    prompt = llm.prompts[-1]
+    assert "Artist showcases (Replies):" in prompt
+    assert "Déborah (@dvorahfr)" in prompt and "usually 2–6 words and one heart" in prompt
+    assert "Follow the Voice's post-specific style first" in prompt
+    assert "Where the Voice permits brief appreciation, that is enough" in prompt
+    assert json.dumps(recent, ensure_ascii=False) in prompt
+    assert "HARD RULES" in prompt and "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt
+    assert "never generic applause" not in prompt
+
+
+@pytest.mark.parametrize("text", [
+    "Love this ❤️", "Love it ❤️", "This is beautiful 💖",
+    "So lovely ❤️", "I love this one 💕", "This is amazing ❤️",
+])
+def test_short_artist_reactions_pass_generation_and_existing_final_admission(monkeypatch, llm, text):
+    from src.core import humanizer
+    from src.guards.reply_admission import judge_reply
+    from src.replies import direct_reply, reply_generator
+
+    llm.default = text
+    result = reply_generator.generate(direct_reply.reply_call("artist"), author="artist",
+                                      text="Sharing my new SI-generated short film.")
+    assert result.text == text
+    monkeypatch.setattr(humanizer, "casualize", lambda draft: draft)
+    verdict = judge_reply(fresh("artist"), humanizer.humanize(result.text))
+    assert verdict, verdict.reason
+    assert verdict.text == text
+
+
 @pytest.mark.parametrize("rule", ["PARENT", "PARENT_OR_FR_FORCED", "ENGAGER_WORDS", "ENGLISH"])
 def test_english_only_overrides_each_reply_language_rule(llm, settings_override, rule):
     from src.core import personality_store, reply_language

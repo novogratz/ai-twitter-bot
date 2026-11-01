@@ -6,6 +6,22 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, brief appreciation for artists' videos — The Operator asks for
+short, varied praise with hearts when an artist shares a generated video,
+naming Déborah (@dvorahfr) as an example. Both Voice files now prefer 2–6 clear
+English words and usually one heart for simple creative showcases. This
+post-specific style takes precedence over default length, emoji frequency
+and demands for a concrete technical observation. Recent Reply memory varies
+the wording without making it longer or inventing a detail.
+
+Technical questions, critique requests, product announcements, benchmarks,
+news and sensitive posts keep their appropriate normal response. The author
+alone never determines the style. No invented viewing, replaying, visual or
+audio details; no automatic phrase rotation or appended emoji. Existing
+language, content, parent-like, pacing and permanent standalone dedup checks
+remain unchanged. The examples pass final validation as it stands. No new
+targeting/follow rule, setting, state edit, live Reply or restart is included.
+
 2026-11-01, pursue 1,200+ daily Replies — The Operator explicitly asks to
 push volume above 1,200 Replies/day. The Account's advisory reporting range is
 now 1,200–1,400; the upper number is not a cap, and targets never force weak

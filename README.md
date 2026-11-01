@@ -16,6 +16,15 @@ aim, with no requests for likes/follows or promises of growth.
 
 ## Current publishing policy
 
+For artists sharing their generated videos or artwork, Replies now favor
+**2–6 words of warm appreciation and usually one heart**: “Love this ❤️” or
+“This is beautiful 💖”, with varied wording. Déborah (@dvorahfr) is the
+Operator's example; the same guidance applies to other creative showcases.
+It overrides default length/emoji advice without adding technical commentary
+or invented viewing details. Technical questions and serious posts still get
+the response they call for. Voice is read for each draft; shared prompt
+changes take effect at the next explicitly requested restart.
+
 The latest November 1 volume request raises the advisory target to **1,200+
 Replies/day** (reported against a 1,200–1,400 range, with no daily cap). The
 Account and local `.env` select an eight-second minimum Reply gap plus zero to

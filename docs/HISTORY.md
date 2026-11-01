@@ -1,5 +1,24 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-01 — Artists' videos need appreciation, not a technical commentary
+
+The Operator asks for short, varied praise with heart emojis on artists'
+generated videos, citing Déborah (@dvorahfr). The general delivery prompt
+prohibited emoji for most parents and demanded a specific observation, while
+recent-reply memory required a concrete detail. Those directions could turn
+a simple creative share into an unnecessary explanation or forced metaphor.
+
+Both Voice files now define a brief artist-showcase response. Shared delivery
+and memory explicitly defer to post-specific Voice guidance, as does optional
+structured search drafting. The examples are tone references, not a phrase
+rotation. Technical questions and serious posts retain their normal treatment;
+no unseen visual or audio details or claims of watching a video are invented.
+
+Tests carry this guidance through text and structured search prompts, retain
+recent-reply memory and hard rules, and pass short English heart reactions
+through generation and unchanged final admission. No content-guard relaxation,
+new target/follow rule, volume change, live action, state edit or restart.
+
 ## 2026-11-01 — Pursue 1,200+ Replies and stop wasting watched retries
 
 The Operator explicitly asks for 1,200+ responses per day. The confirmed CSV
