@@ -2,11 +2,28 @@
 
 ## Latest caption and schedule instruction
 
-The Account now posts at 07:00, 07:15, 09:00, 12:00, 17:00, 21:00 and 21:15
+The Account now posts at 07:00, 07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15
 America/Toronto. Captions contain BANGER, emojis and two short sentences separated
 by a blank line. The Operator removes public source-link and synthetic-disclosure
 lines; internal provenance, parody review and permission records remain intact.
 Specific licensed attribution remains binding when configured separately.
+
+The later 19:00 request adds that window without deleting 17:00 or 21:00.
+Preparation starts thirty minutes before each slot and persists across restarts;
+an empty buffer raises local warnings at 30, 15 and 5 minutes before posting.
+The Account permits a bounded initial six-page imported/fingerprinted history,
+followed by continuing archive backfill. Report incomplete older coverage openly.
+Per-candidate source/title/cast X searches and comparison against every saved own
+posting fingerprint remain mandatory. Archive work cannot starve those checks.
+
+To avoid treating unknown engagement as failure, the Account opts into an
+editorial fallback when momentum is unknown: at least 18/20 performance fit,
+16/20 entertainment, 10/15 quality and 80 percent of the remaining 75 points.
+Keep the original score and unknown metrics unchanged. This is a selection
+heuristic, not measured popularity, and does not bypass any eligibility or QC gate.
+Cast is attributed to the creator's source text, never identified from faces.
+Actual changing performance, apparent synthetic parody, audio, source/output
+integrity and complete temporal sample review still require independent inspection.
 
 The Operator reports deleting the first post and explicitly requests an immediate
 corrected repost. One direct replacement may reuse its content and slot/startup-day
@@ -19,7 +36,7 @@ allowance is created. The deletion report is not independent browser evidence.
 The Operator's repeated immediate-publication request authorizes one direct send
 of the hash-bound reviewed selection while older-account archive backfill remains
 unfinished. Only an explicit direct call can use this route; ordinary scheduled
-workers still require completed history import. Compare all imported history and
+workers require the configured initial history import. Compare all imported history and
 run an actual source-identifier X search before sending. Keep incomplete archive
 coverage visible, preserve the startup request/day cap and every other write gate.
 

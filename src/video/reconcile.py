@@ -1,14 +1,25 @@
 """Read-only X history, novelty and ambiguous-publication reconciliation."""
 from datetime import datetime
 import json
+import re
 from pathlib import Path
 import tempfile
 
 from . import ranking
 from .media import duplicate, fingerprint, probe
 from .publisher import confirm
-from .security import AccessError, request
+from .security import AccessError, Deferred, request
 from .store import ASSETS, dumps
+
+
+def history_ready(store, cfg):
+    """A bounded initial import is distinct from a completed historical archive."""
+    if store.meta("history_import_complete", False):
+        return True
+    cursor = store.meta("history_cursor", {}) or {}
+    return bool(cfg.initial_history_pages and isinstance(cursor, dict)
+                and type(cursor.get("offset")) is int and cursor["offset"] >= cfg.initial_history_pages
+                and store.rows("SELECT 1 FROM history LIMIT 1"))
 
 
 def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
@@ -25,7 +36,7 @@ def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
             return cached
         store.set_meta("x_media:" + key, media)
         store.enqueue("x_media", key, now)
-        raise AccessError("video fingerprint queued for the independent media worker")
+        raise Deferred("video fingerprint queued for the independent media worker")
     source = min(variants, key=lambda v: abs(v.get("bit_rate", 0) - 1_000_000))
     if not store.budget("x_media", "download_bytes", cfg.max_download_bytes, cfg.download_budget_bytes, now):
         raise AccessError("history/novelty media download budget exhausted")
@@ -101,27 +112,59 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
     query = "(" + " OR ".join(identifiers) + ") -is:retweet"
     queries = [query]
     if cast and not operator_direct:
-        queries.append('"' + cast[0].replace('"', '') + '" (dance OR singing OR parody) has:videos -is:retweet')
-    checked, found, truncated = [], False, False
-    for query in queries:
-        cursor = None
-        for _ in range(3):
-            page = client.search(query, cursor)
-            checked.append({"query": query, "at": now, "results": len(page.get("data", []))})
+        # An entire celebrity's dance history is not a clip-specific novelty
+        # query. Prefer the source's quoted song/title plus the attributed cast.
+        phrases = re.findall(r'"([^"\n]{2,80})"', str(doc.get("title", "")))
+        subject = " ".join('"' + name.replace('"', '') + '"' for name in cast[:2])
+        detail = '"' + phrases[0] + '"' if phrases else "(dance OR singing OR parody)"
+        queries.append(subject + " " + detail + " has:videos -is:retweet")
+    progress_key = "novelty_progress:" + row["id"]
+    progress = store.meta(progress_key, {}) or {}
+    if progress.get("sha256") != doc.get("original_sha256") or progress.get("queries") != queries:
+        progress = {"sha256": doc.get("original_sha256"), "queries": queries, "query_index": 0,
+                    "page_index": 0, "cursor": None, "pending_page": None, "media_index": 0,
+                    "checked": [], "truncated": False}
+    checked, found, inspected = progress["checked"], False, 0
+    while progress["query_index"] < len(queries):
+        query = queries[progress["query_index"]]
+        cursor = progress["cursor"]
+        while progress["page_index"] < 3:
+            page = progress["pending_page"]
+            if page is None:
+                page = client.search(query, progress["cursor"])
+                progress["pending_page"] = page
+                progress["observed_at"] = now
+                store.set_meta(progress_key, progress)
             for post in page.get("data", []):
                 urls = [u.get("expanded_url", "") for u in post.get("entities", {}).get("urls", [])]
-                if doc["canonical_url"] in urls:
+                from .connectors import canonical
+                for url in urls:
+                    try:
+                        if canonical(doc["platform"], url) == doc["canonical_url"]:
+                            found = True
+                    except ValueError:
+                        continue
+            videos = [m for m in page.get("includes", {}).get("media", []) if m.get("type") == "video"]
+            while not found and progress["media_index"] < len(videos):
+                if inspected:
+                    raise Deferred("novelty video inspection continues from its saved page", retry_after=10)
+                media = videos[progress["media_index"]]
+                if duplicate(source_fp, media_fingerprint(media, store, cfg, now, client=client)):
                     found = True
-            for media in page.get("includes", {}).get("media", []):
-                if media.get("type") == "video":
-                    if duplicate(source_fp, media_fingerprint(media, store, cfg, now, client=client)):
-                        found = True
+                progress["media_index"] += 1
+                inspected += 1
+                store.set_meta(progress_key, progress)
+            checked.append({"query": query, "at": progress["observed_at"], "results": len(page.get("data", []))})
             cursor = page.get("meta", {}).get("next_token")
+            progress.update(cursor=cursor, pending_page=None, media_index=0, page_index=progress["page_index"] + 1)
+            store.set_meta(progress_key, progress)
             if found or not cursor:
                 break
-        truncated |= bool(cursor and not found)
+        progress["truncated"] |= bool(cursor and not found)
         if found:
             break
+        progress.update(query_index=progress["query_index"] + 1, page_index=0, cursor=None)
+        store.set_meta(progress_key, progress)
     # The checked scope is the bounded set actually searched and inspected.
     # A popular-character search can have endless results; reaching its page
     # budget does not mean no search occurred, nor establish global absence.
@@ -129,11 +172,12 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
     state = "found_existing" if found else "checked_no_match"
     doc["novelty"] = {"state": state, "checked_at": now, "evidence": checked,
                       "scope": getattr(client, "scope", "recent X API search; no match does not establish global absence"),
-                      "source_identifiers_only": operator_direct, "truncated": truncated}
+                      "source_identifiers_only": operator_direct, "truncated": progress["truncated"]}
     doc = ranking.refresh(store, row | {"document": doc}, now, cfg)
     reason = ranking.gate(doc, cfg, now, final=True)
     store.save_candidate(row["id"], doc, now, state="held" if reason else "ready", reason=reason,
                          score=doc["ranking"]["total"], fingerprint=source_fp)
+    store.set_meta(progress_key, None)
     return state
 
 

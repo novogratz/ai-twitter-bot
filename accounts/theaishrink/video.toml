@@ -2,10 +2,13 @@
 # This replaces main-post editorial/repost scheduling only while enabled.
 publishing_transport = "safari"
 browser_upload_seconds = 45
-windows = ["07:00", "09:00", "12:00", "17:00", "21:00"]
+windows = ["07:00", "09:00", "12:00", "17:00", "19:00", "21:00"]
 paired_windows = ["07:00", "21:00"]
 pair_minutes = 15
-protect_primary_windows = true # spend extra-slot clips only above the next five windows' needs
+protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
+preparation_lead_seconds = 1800
+initial_history_pages = 6
+allow_unknown_momentum = true
 allow_source_overlays = true # operator accepts retained source subtitles/credits, 2026-11-01
 caption_disclosure = false # operator requests only the playful caption, 2026-11-01
 grace_seconds = 600
@@ -48,7 +51,7 @@ codex_daily_calls = 96
 codex_daily_input_tokens = 2000000
 codex_inspection_reserve = 48
 codex_max_reply_calls = 2
-inspection_fps = 2
+inspection_fps = 1 # temporal inspection across the full clip; reserve capacity for the ready buffer
 font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"
 watermark = "@Thesimaximalist"
 media_hosts = []

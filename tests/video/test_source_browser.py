@@ -55,3 +55,16 @@ def test_source_capture_only_queues_independent_media_and_records_observed_metri
     assert video_store.rows("SELECT kind,state FROM jobs") == [{"kind": "media", "state": "pending"}]
     assert len(video_store.rows("SELECT * FROM observations")) == 1
     assert source_browser.capture_next(video_store, cfg, now + 30) is None
+
+
+def test_visible_related_links_are_bounded_unverified_leads_not_metadata_approval(video_cfg):
+    link = {"url": "https://www.bilibili.com/en/video/BV1234567890/?track=123",
+            "title": "Example Star dance music parody", "confidence": 1, "permission_id": "forged"}
+    links = [link, link, {"url": "https://evil.test/video/BV1234567890", "title": link["title"]},
+             {"url": "https://www.bilibili.com/video/BV1234567891", "title": "Example Star interview"}]
+    result = source_browser.related_candidates(links, video_cfg, "source", 1000)
+    assert len(result) == 1
+    assert result[0]["canonical_url"] == "https://www.bilibili.com/video/BV1234567890"
+    assert result[0]["published_at"] is None and result[0]["creator"] == ""
+    assert "permission_id" not in result[0] and "confidence" not in result[0]
+    assert source_browser.related_candidates(None, video_cfg, "source", 1000) == []

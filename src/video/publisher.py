@@ -113,7 +113,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
         return None
     if store.meta("paused", True) or store.meta("shutdown", False):
         return None
-    if not store.meta("history_import_complete", False) and not operator_direct:
+    from .reconcile import history_ready
+    if not history_ready(store, cfg) and not operator_direct:
         return None
     if not store.meta("account_verified", False):
         return None
@@ -191,6 +192,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
             else:
                 valid.append((candidate, doc))
         if not valid:
+            if slot:
+                db.execute("UPDATE slots SET reason='no eligible ready video' WHERE id=?", (slot["id"],))
             return None  # keep the slot open until grace; report final skip
         valid = inventory.distinct(valid)
         if cfg.protect_primary_windows and slot and not startup:
@@ -199,7 +202,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
             if primary != slot["id"] and covered:
                 valid = inventory.surplus(valid, now, cfg)
                 if not valid:
-                    db.execute("UPDATE slots SET reason='inventory held for next five primary windows' WHERE id=?", (slot["id"],))
+                    db.execute("UPDATE slots SET reason='inventory held for upcoming primary windows' WHERE id=?", (slot["id"],))
                     return None  # a replenished buffer can still use this slot within grace
         fresh = [(r, d) for r, d in valid if stamp - d["published_at"] <= cfg.preferred_age_hours * 3600]
         if fresh:

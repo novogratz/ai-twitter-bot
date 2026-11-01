@@ -44,7 +44,7 @@ def main(argv=None):
     worker = sub.add_parser("worker")
     worker.add_argument("role", choices=workers.ROLES)
     worker.add_argument("--once", action="store_true")
-    for name in ("preview", "reject", "retry"):
+    for name in ("preview", "reject", "retry", "review-output"):
         command = sub.add_parser(name)
         command.add_argument("candidate")
     skip = sub.add_parser("skip")
@@ -196,6 +196,20 @@ def _execute(args):
                 db.execute("INSERT INTO jobs(kind,item,due) VALUES('discovery',?,?) ON CONFLICT(kind,item) DO UPDATE SET "
                            "due=excluded.due,state=CASE WHEN jobs.state='running' THEN jobs.state ELSE 'pending' END,attempts=0", (platform, time.time()))
         result = {"discovery": "queued immediately; independent worker consumes it"}
+    elif args.command == "review-output":
+        row = store.candidate(args.candidate)
+        if row["state"] in ("reserved", "posted", "duplicate", "rejected"):
+            raise SystemExit("Cannot review output of a closed/reserved candidate")
+        if not all(row["document"].get(k) for k in ("original_path", "original_sha256", "output_path", "output_sha256")):
+            raise SystemExit("Saved original and output are required")
+        if settings.get("DRY_RUN"):
+            result = {"candidate": args.candidate, "dry_run": True, "public_writes": False}
+        else:
+            with store.transaction() as db:
+                db.execute("INSERT INTO jobs(kind,item,due) VALUES('inspect_output',?,?) ON CONFLICT(kind,item) "
+                           "DO UPDATE SET due=excluded.due,state=CASE WHEN jobs.state='running' THEN jobs.state ELSE 'pending' END,attempts=0",
+                           (args.candidate, time.time()))
+            result = {"candidate": args.candidate, "output_review": "queued; no approval or publication"}
     elif args.command in ("reject", "retry"):
         row = store.candidate(args.candidate)
         if row["state"] in ("reserved", "posted"):

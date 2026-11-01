@@ -15,6 +15,7 @@ REPORT = state_store.StateFile("video_daily_report.json", {}, state_store.DISPOS
 
 
 def status(store, cfg, now=None):
+    from .reconcile import history_ready
     from .startup import KEY, waiting_reason
     from .selection import KEY as SELECTION_KEY
     now = now or schedule.utc_now()
@@ -38,7 +39,10 @@ def status(store, cfg, now=None):
             "throttle": {role: store.meta("throttle:" + role) for role in ("discovery", "media")},
             "source_health": {p: store.meta("source:" + p, cls(cfg).capability()) for p, cls in ADAPTERS.items()},
             "publish_unknown": store.rows("SELECT id,slot,candidate,reason FROM reservations WHERE state='publish_unknown'"),
-            "history_coverage": store.meta("history_coverage"), "costs": store.rows("SELECT * FROM costs ORDER BY day DESC LIMIT 20")}
+            "history_coverage": store.meta("history_coverage"),
+            "history_initial_ready": history_ready(store, cfg),
+            "history_archive_complete": store.meta("history_import_complete", False),
+            "costs": store.rows("SELECT * FROM costs ORDER BY day DESC LIMIT 20")}
 
 
 def preflight(store, cfg, *, network=False):
@@ -97,8 +101,9 @@ def preflight(store, cfg, *, network=False):
                 store.set_meta("account_verified", True)
             except Exception as exc:
                 blockers.append("X permission/account check failed: " + type(exc).__name__)
-    if not store.meta("history_import_complete", False):
-        blockers.append("accessible account history not fully imported/fingerprinted")
+    from .reconcile import history_ready
+    if not history_ready(store, cfg):
+        blockers.append("required initial account history not imported/fingerprinted")
     now = time.time()
     from ..core import settings
     if state_store.bot_holds_lock(str(Path(settings.PROJECT_ROOT).resolve())):

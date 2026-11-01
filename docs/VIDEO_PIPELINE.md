@@ -1,12 +1,37 @@
 # Existing-video pipeline
 
-Current Account policy (latest operator instruction, 2026-11-01): **seven daily
-posts**, at 07:00, 07:15, 09:00, 12:00, 17:00, 21:00 and 21:15 Toronto. Captions
+Current Account policy (latest operator instruction, 2026-11-01): **eight daily
+posts**, at 07:00, 07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15 Toronto. Captions
 use BANGER and emojis, with a blank line between two short sentences. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
 four platforms until revoked. Source subtitles, logos and credits may remain;
 source/output review must confirm that no unapproved overlays were introduced.
+
+`preparation_lead_seconds = 1800` queues work before each slot, with durable
+empty-buffer warnings at 30/15/5 minutes. An empty or unverified queue is still
+reported honestly; no placeholder or repeat is posted. `initial_history_pages = 6`
+allows selection after six fully imported profile pages while older history is
+backfilled. Set it to `0` to require complete archive import again. Status exposes
+initial readiness and archive completeness separately; never reset posting history.
+`allow_unknown_momentum = true` enables the documented quality fallback for missing
+engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
+Cast labels are creator attribution, not facial identification of real people.
+
+To recheck an immutable saved export after repairing the inspector, without
+downloading or rendering it again:
+
+```bash
+uv run --with-requirements requirements-video.txt python bin/video.py review-output CANDIDATE_ID
+```
+
+This queues the independent media worker; it grants no approval and cannot
+publish. File hashes, source review, technical QC, visual/audio inspection and
+novelty still gate readiness. The Account uses one temporal sample per second
+across the full clip plus full audio classification; this is not every-frame
+or direct-hearing verification. Small OCR errors in our known watermark's band
+are corroborated by the exact renderer text and visual review. Retained source
+text still needs a matching original timestamp and position.
 
 The actual corrected video was posted and verified at
 https://x.com/thesimaximalist/status/2116954024935362893 . The first receipt remains
@@ -60,6 +85,7 @@ and media are independent of the scheduler's overnight pause.
 | Morning | 09:00 |
 | Noon | 12:00 |
 | Afternoon | 17:00 |
+| Early evening | 19:00 |
 | Evening | 21:00, 21:15 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
