@@ -53,6 +53,14 @@ def test_unused_download_reservations_are_refunded(video_store):
     assert sum(r["amount"] for r in video_store.rows("SELECT amount FROM costs")) == 110
 
 
+def test_partial_byte_reservations_share_the_ceiling_atomically(video_store):
+    assert video_store.budget("source", "download_bytes", 80, 150, 100)
+    with ThreadPoolExecutor(4) as pool:
+        amounts = list(pool.map(lambda n: video_store.reserve_up_to(str(n), "download_bytes", 50, 150, 100), range(4)))
+    assert sorted(amounts) == [0, 0, 20, 50]
+    assert sum(r["amount"] for r in video_store.rows("SELECT amount FROM costs")) == 150
+
+
 def test_normal_replies_do_not_pause_and_measured_pressure_resumes(video_store, video_cfg):
     cfg = replace(video_cfg, min_latency_samples=3)
     resources = {"load": .1, "free_mb": 10000}

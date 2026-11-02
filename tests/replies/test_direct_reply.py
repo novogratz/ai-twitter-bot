@@ -194,7 +194,7 @@ def test_the_vip_calls_keep_their_shape_with_the_accounts_prompts(monkeypatch):
     assert (own.template, own.surface, own.label) == (relations.get("SpecialVip").prompt,
                                                       Surface.RELATION_REPLY, "SPECIALVIP_VIP")
     assert (own.dossier, own.text_limit, own.max_chars, own.strip_preamble, own.skip_window) == (
-        False, 1200, 220, False, 0)
+        False, 1200, 278, False, 0)
     assert (own.provider, own.profile) == ("codex", TEXT_PROFILE)
     monkeypatch.setattr(shutil, "which", lambda name: None)
     assert dr._vip_call("SpecialVip").provider is None

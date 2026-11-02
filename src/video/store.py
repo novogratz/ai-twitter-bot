@@ -202,6 +202,18 @@ class Store:
             db.execute("UPDATE costs SET amount=MAX(0,amount-?) WHERE day=? AND provider=? AND kind=?",
                        (amount, day, provider, kind))
 
+    def reserve_up_to(self, provider, kind, amount, limit, now):
+        """Atomically reserve available capacity, without requiring the maximum file size."""
+        from .schedule import local
+        day = local(datetime.fromtimestamp(now, timezone.utc)).date().isoformat()
+        with self.transaction() as db:
+            spent = db.execute("SELECT COALESCE(SUM(amount),0) FROM costs WHERE day=? AND kind=?", (day, kind)).fetchone()[0]
+            reserved = max(0, min(amount, limit - spent))
+            if reserved:
+                db.execute("INSERT INTO costs VALUES(?,?,?,?) ON CONFLICT(day,provider,kind) DO UPDATE "
+                           "SET amount=amount+excluded.amount", (day, provider, kind, reserved))
+            return reserved
+
     def circuit_ready(self, provider, now):
         rows = self.rows("SELECT until FROM circuits WHERE provider=?", (provider,))
         return not rows or rows[0]["until"] <= now

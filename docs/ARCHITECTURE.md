@@ -324,8 +324,10 @@ with the lines of the prompt dropped since `codex exec` echoes it
 one, and the codex lockout reads the same signal. A limit at one rank only, or any other failure,
 leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
-The October 26 Reply generator assigns stable length and occasional-smiley
-directions per parent, with no automatic emoji insertion or word-count trimming.
+The Reply generator assigns stable casual length suggestions per parent;
+serious technical questions can use two or three sentences within the existing
+278-character Reply ceiling. As of November 2 it defers smileys and hearts to
+the Account Voice, with no automatic emoji insertion or word-count trimming.
 Direct Reply routes supply up to 1,200 source characters. The content guard
 accepts specific short English Replies down to 8 characters, while generic
 applause, emoji-only and unclear-language text remain refused.
@@ -664,6 +666,28 @@ finished; only remaining generations stop. `StateUnreadable` and
 `OutsideActiveHours` end the cycle from any step, a job's scrape included;
 any other error in a scrape, a generation or a write is logged and the
 cycle moves on.
+
+The November 2 source buffers keep up to 400 unused posts per search/feed
+lane for at most 30 minutes, shortened by the source's freshness horizon. Both
+feeds are buffered before generation, so a quota stop on the first does not
+lose the second discovery. Resolved attempts leave the buffer; unused lookahead,
+interrupted work and quota stops remain replayable. No buffer entry is a claim.
+The pipeline checks expiry and parent admission before generation, before spacing
+and after spacing; the write chokepoint remains authoritative. Source counters
+carry a stable preference for at least two observed likes before lesser/unknown
+counts. Within each group, existing source order remains; freshness still gates
+eligibility. Rediscovery refreshes observed likes without extending expiry.
+Early-bird/mega-watch now use bounded Latest author searches and verify exact
+URL authors, retaining their existing age windows and budgets.
+
+`reply_diagnostics` retains sixty minute buckets in process memory. Discovery,
+admission, model outcomes/timeouts, send-queue and spacing waits, and typed send
+results join the existing `reply_feedback` report. Only `SHIPPED` increments
+confirmed throughput. Empty reads cannot distinguish no results from unavailable
+pages, worker times overlap, and the telemetry window resets on restart. Optional
+measurement failure never hides a confirmed write. Prompt memory reads up to
+100 confirmed Replies from the cached history tail, showing the latest 20 and
+a compact older repetition summary rather than every historical text.
 
 The `direct_reply` search lane and `feed_sweep` run pipelined: the pipeline
 generates reply N+1 while reply N is posted, so its text is ready as soon

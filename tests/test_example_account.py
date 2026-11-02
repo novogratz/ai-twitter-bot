@@ -73,7 +73,9 @@ WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_H
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
                 "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60,
                 "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
-REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300}
+REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300,
+                      "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
+                      "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2}
 
 
 def test_watch_jobs_have_independent_workers_and_short_dispatch_intervals():
@@ -136,7 +138,7 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
         "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
-        "REPLY_DAILY_TARGET_MIN": 1200, "REPLY_DAILY_TARGET_MAX": 1400}
+        "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800}
     assert shown["settings_warnings"] == []
 
 

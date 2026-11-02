@@ -54,10 +54,11 @@ Drafting:
 - Use the actual parent and stable knowledge. Attribute reported claims and
   qualify inferences. Never invent numbers, capabilities, firsthand experience,
   visual details from unseen media or private relationships.
-- Usually a few words or one conversational sentence, at most 200 characters.
-  A single smiley may fit a lighthearted reply; most need none. Omit it for
-  serious or sensitive subjects. Avoid repeating a joke or structure within
-  this batch or from recent confirmed replies.
+- Usually a few words or one conversational sentence. Serious technical questions
+  or debates may need two or three complete sentences: an answer, its reason and
+  its practical implication. At most {reply_max_chars} characters including emoji.
+  Follow the Voice's smiley and heart instructions for every reply. Avoid repeating
+  a joke, sign-off or structure within this batch or from recent confirmed replies.
 - No hashtags, markdown, promotional plugs, links or requests for engagement.
   Follow the Account's language and publication-wording rules.
 {language_override}

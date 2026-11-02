@@ -68,3 +68,25 @@ def test_visible_related_links_are_bounded_unverified_leads_not_metadata_approva
     assert result[0]["published_at"] is None and result[0]["creator"] == ""
     assert "permission_id" not in result[0] and "confidence" not in result[0]
     assert source_browser.related_candidates(None, video_cfg, "source", 1000) == []
+
+
+def test_small_source_can_use_remaining_bytes_and_refunds_partial_failures(video_store, video_cfg, tmp_path, monkeypatch):
+    from src.video import media
+    from pathlib import Path
+    cfg = replace(video_cfg, max_download_bytes=150, download_budget_bytes=2000)
+    now = 10000
+    assert video_store.budget("prior", "download_bytes", 1900, 2000, now)
+    p = player(now)
+    doc = dict(platform="bilibili", source_id=p["id"], source_download=source_browser.plan(p, p["id"], now))
+    calls = []
+    def fetch(url, *, sink, max_bytes, **kw):
+        calls.append(max_bytes)
+        if len(calls) == 1:
+            sink.write(b"x" * 10)
+            raise AccessError("incomplete response body")
+        sink.write(b"x" * (40 if url.endswith("/video.m4s") else 5))
+    monkeypatch.setattr(source_browser, "request", fetch)
+    monkeypatch.setattr(media, "ffmpeg", lambda args, cfg: Path(args[-1]).write_bytes(b"original"))
+    source_browser.download_player(doc, tmp_path / "original.mp4", cfg, video_store, now)
+    assert calls == [100, 90, 50]
+    assert sum(r["amount"] for r in video_store.rows("SELECT amount FROM costs WHERE kind='download_bytes'")) == 1955

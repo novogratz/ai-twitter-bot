@@ -159,7 +159,8 @@ def test_saved_output_review_refuses_changed_or_unmanaged_media(video_store, vid
 
 
 @pytest.mark.skipif(not shutil.which("ffmpeg"), reason="optional ffmpeg media integration")
-def test_real_ffmpeg_clean_brand_decode_sync_and_original_unchanged(video_cfg, tmp_path):
+@pytest.mark.parametrize("sar, expected_width", [("1/1", 320), ("30787/30796", 318), ("6/5", 384)])
+def test_real_ffmpeg_clean_brand_decode_sync_and_original_unchanged(video_cfg, tmp_path, sar, expected_width):
     pytest.importorskip("numpy")
     font = Path(video_cfg.font_file)
     if not font.exists():
@@ -168,7 +169,7 @@ def test_real_ffmpeg_clean_brand_decode_sync_and_original_unchanged(video_cfg, t
     # Owned engineering test pattern, not a claimed celebrity or licensed creator sample.
     media.ffmpeg(["-f", "lavfi", "-i", "testsrc2=size=320x240:rate=24:duration=4",
                   "-f", "lavfi", "-i", "sine=frequency=440:duration=4", "-c:v", "libx264", "-threads", "1",
-                  "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(original)], video_cfg)
+                  "-vf", "setsar=" + sar + ":max=1000000", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(original)], video_cfg)
     before = sha256(original)
     info = media.probe(original, video_cfg)
     evidence = {"safe_crop": [0, 0, 320, 240], "crop_preserves_action": True, "overlays_removable_by_crop": True,
@@ -178,5 +179,27 @@ def test_real_ffmpeg_clean_brand_decode_sync_and_original_unchanged(video_cfg, t
     assert sha256(original) == before
     assert result["decoded"] and result["audio_sync"]
     assert result["probe"]["fps"] == 24
-    assert result["probe"]["width"] == 320 and result["probe"]["height"] == 240
+    assert result["probe"]["width"] == expected_width and result["probe"]["height"] == 240
+    assert result["probe"]["sample_aspect_ratio"] == 1
     assert media.duplicate(media.fingerprint(original, info, video_cfg), media.fingerprint(output, result["probe"], video_cfg))
+
+
+@pytest.mark.parametrize("sar", ["0:1", "-1:1", "16:1", "1:16", "invalid"])
+def test_probe_refuses_invalid_or_unsupported_display_aspect(monkeypatch, video_cfg, sar):
+    import json
+    data = {"format": {"duration": "4"}, "streams": [
+        {"codec_type": "video", "width": 320, "height": 240, "avg_frame_rate": "24/1",
+         "sample_aspect_ratio": sar, "codec_name": "h264"},
+        {"codec_type": "audio", "codec_name": "aac"}]}
+    monkeypatch.setattr(media, "bounded_command", lambda *a, **k: json.dumps(data))
+    with pytest.raises(ValueError):
+        media.probe("unused", video_cfg)
+
+
+def test_qc_refuses_stretched_display_proportions(monkeypatch, video_cfg):
+    original = dict(duration=4, fps=24, width=320, height=240, sample_aspect_ratio=1.2)
+    result = dict(original, sample_aspect_ratio=1, video_codec="h264", audio_codec="aac")
+    monkeypatch.setattr(media, "probe", lambda *a: result)
+    monkeypatch.setattr(media, "ffmpeg", lambda *a, **k: b"")
+    with pytest.raises(ValueError, match="display proportions changed"):
+        media.technical_qc("source", "output", original, video_cfg)

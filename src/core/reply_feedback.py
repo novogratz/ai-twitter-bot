@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from . import config, settings
+from . import config, settings, reply_diagnostics
 from .logger import log
 from .state_store import DISPOSABLE, StateFile, StatePath
 from ..guards import active_hours
@@ -209,6 +209,7 @@ def summarize(rows, history, followers, now=None):
     delta = follower_samples[-1][1] - follower_samples[0][1] if len(follower_samples) >= 2 else None
     counts = Counter(r["at"].astimezone(now.tzinfo).date().isoformat() for r in history)
     return dict(as_of=now.isoformat(), replies_today=len(today), daily_targets=[low, high],
+                pipeline=reply_diagnostics.snapshot(),
                 target_is_advisory=True, active_hours=round(total / 3600, 2),
                 required_replies_per_active_hour=[round(n / (total / 3600), 1) for n in (low, high)],
                 projected_daily_replies=round(len(today) * total / elapsed) if elapsed >= 3600 else None,
@@ -246,6 +247,8 @@ def run_reply_report():
         f"Updated: {report['as_of']}\n\n"
         f"Confirmed replies today: {report['replies_today']}. Advisory target: {report['daily_targets']}.\n\n"
         f"Projected full-day replies: {report['projected_daily_replies']}. {report['projection_basis']}.\n\n"
+        f"Required confirmed Replies per waking hour: {report['required_replies_per_active_hour']}.\n\n"
+        + _pipeline_text(report["pipeline"]) +
         f"Own URL coverage over seven days: {report['receipts_7d']}/{report['replies_7d']}. "
         f"One-in-{SAMPLE_EVERY} outcome sample: {report['samples']} replies; "
         f"1h observations {report['observed']['1h']}/{report['eligible']['1h']}, "
@@ -260,3 +263,26 @@ def run_reply_report():
              report["replies_today"], report["daily_targets"], report["observed"],
              report["follower_change_between_today_samples"])
     return report
+
+
+def _pipeline_text(pipeline):
+    if pipeline.get("unavailable"):
+        return "Pipeline diagnostics unavailable; confirmed history remains authoritative.\n\n"
+    stages = pipeline["stages"]
+    def count(stage, outcome):
+        return stages.get(stage, {}).get(outcome, {}).get("count", 0)
+    reads = count("discovery", "results") + count("discovery", "empty") + count("discovery", "failed")
+    return (
+        f"Observed pipeline sends/hour: {pipeline['confirmed_per_hour']}. "
+        f"Observation time: {pipeline['observed_seconds']} seconds.\n\n"
+        f"Discovery: {reads} reads, {count('discovery', 'empty')} empty/unavailable, "
+        f"{count('discovery', 'failed')} exceptions. "
+        f"Generation: {count('generation', 'written')} generated outputs, "
+        f"{count('generation', 'declined')} declines, {count('generation', 'timeout')} timeouts, "
+        f"{count('generation', 'failed')} other failures, {count('generation', 'rate_limited')} quota stops. "
+        f"Send attempts: {count('send', 'shipped')} confirmed, {count('send', 'refused')} refused, "
+        f"{count('send', 'failed')} failed, {count('send', 'unconfirmed')} uncertain, "
+        f"{count('send', 'dry_run')} dry-run.\n\n"
+        + pipeline["scope"] + " Generation responses can contain SKIPs or multiple drafts on the structured search route; they are not publication counts. Send timing includes browser-lock waits and page checks.\n\n"
+        + "```json\n" + json.dumps(stages, indent=2) + "\n```\n\n"
+    )

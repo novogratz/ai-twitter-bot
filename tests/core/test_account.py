@@ -102,8 +102,8 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
-                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1200,
-                             "REPLY_DAILY_TARGET_MAX": 1400}
+                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1500,
+                             "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 2}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
     assert loaded.publication_si_wording is True

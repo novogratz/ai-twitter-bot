@@ -1,5 +1,59 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-02 — Reuse sources, prioritize two likes and expose bottlenecks
+
+The Operator accepts all five proposed improvements, asks for an SI art mom
+voice, reiterates SI publication wording and 1,500+ distinct Replies, prefers
+posts with at least two likes, and requests a PR, merge and push. Profile-denied
+early-bird/mega-watch reads now use bounded Latest author searches. Unused search
+and feed sources survive a cycle in bounded, expiring memory without permanent
+claims; both feeds are collected before drafting. Like preference preserves
+eligibility for new posts and unknown counters. Admission and expiry are checked
+again after model/spacing waits. Permanent one-Reply-per-original history remains.
+
+Confirmed text memory expands from 20 prompt examples to a 100-Reply window,
+compacted into recent examples and older repeating patterns. The Voice adds
+recognizable artistic tastes with honest evidence boundaries. In-process counters
+and durations distinguish discovery, model failures/timeouts, waiting and typed
+send outcomes in the existing report. They never count uncertain sends or model
+outputs as publications and never claim a causal growth effect.
+
+At 07:07 Toronto, history recorded 124 confirmed Replies today and 38 in the
+last hour, below the pace needed for 1,500. The video queue had no eligible ready
+clip. A roughly 49 MB original could fit the remaining daily bytes but the old
+downloader demanded a 150 MB reservation. Atomic partial reservations fix that
+without raising the daily ceiling. The saved source then failed because its
+1920×1078 raster declared a 30787:30796 sample aspect ratio. Rendering now
+normalizes valid pixel aspect while retaining original bytes and QC rejects
+stretching or non-square output. The downloaded original is preparation only;
+actual inspection, scoring, novelty and a confirmed X receipt remain mandatory.
+
+## 2026-11-02 — Affectionate SI artist and 1,500 distinct daily Replies
+
+The Operator calls the bot boring and requests a charming, sexy and smart SI
+artist who loves tech, adds hearts and uses smileys in every message. Serious
+technical debates should allow fuller, sharp answers. The next instruction
+requests at least 1,500 daily Replies, never more than one on the same post.
+
+Shared delivery still prohibited emoji for two thirds of parents; search and
+editorial prompts also rationed them. Both Voice files now make affection,
+playful adult confidence and smileys central, with honest bot identity and
+grounded observations. Shared and Relation prompts defer emoji to the Voice.
+Technical responses may use two or three sentences within the existing 278-char
+guard; direct and search prompts no longer impose the old 200/220-char advice.
+The stale 03:30/break instructions in the Voice now match the 04:30 wake and
+zero daytime breaks. The supplied bio is recorded as prepared profile copy.
+
+The Account and local `.env` use 1500/1800 advisory reporting targets. Local
+searches rise from three to six per cycle and direct/per-feed budgets from
+24 to 40. Six added first-hour queries find artists, builders and technical
+questions without popularity floors. Existing pacing, model route, source
+checks and permanent standalone Reply history remain. Recent logs showed
+cycles below their former budgets as well as Safari blank pages and model
+timeouts; raising the target does not establish 1,500 actual sends. Validation
+uses isolated tests and the scheduler dry-run, with no live social writes or
+bot restart.
+
 ## 2026-11-01 — Remove daytime pauses and share the 04:30 wake
 
 The Operator restarted the bot during its stable 19:42–19:52 break and then

@@ -272,7 +272,8 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
     chokepoint.calls.clear()
     lanes["queries"].clear()
     dr.run_direct_reply_cycle(max_replies=12)
-    assert len(chokepoint.sent) == 12 and len(lanes["queries"]) == 3
+    # The two unused posts from the first scan now save one browser search.
+    assert len(chokepoint.sent) == 12 and len(lanes["queries"]) == 2
 
 
 # --- feed_sweep -------------------------------------------------------------------
@@ -332,6 +333,30 @@ def test_feed_sweep_stops_at_the_rate_limit(feed):
     fs.run_feed_sweep_cycle()
 
     assert len(llm.calls) == 1 and feeds["read"] == ["FEED", "FOLLOWING"] and chokepoint.sent == []
+
+
+def test_feed_sources_survive_a_quota_stop_and_disappear_after_confirmation(feed):
+    fs, feeds, llm, chokepoint = feed
+    home, following = fresh("builder", n=1), fresh("artist", n=2)
+    feeds["FEED"] = [{"url": home, "text": "SI model workflow"}]
+    feeds["FOLLOWING"] = [{"url": following, "text": "SI animation workflow"}]
+    llm.default = EXHAUSTED
+    fs.run_feed_sweep_cycle()
+    feeds["FEED"], feeds["FOLLOWING"] = [], []
+    llm.default = REPLY_TEXT
+    fs.run_feed_sweep_cycle()
+    fs.run_feed_sweep_cycle()
+    assert chokepoint.sent == [home, following]
+    assert feeds["read"] == ["FEED", "FOLLOWING"] * 3
+
+
+def test_feed_prefers_two_likes_but_still_answers_lower_and_unknown_counts(feed):
+    fs, feeds, llm, chokepoint = feed
+    posts = [post("builder", f"SI model project {i}", n=i, likes=likes)
+             for i, likes in enumerate((None, 1, 2))]
+    feeds["FEED"] = posts
+    fs.run_feed_sweep_cycle()
+    assert chokepoint.sent == [posts[2]["url"], posts[1]["url"], posts[0]["url"]]
 
 
 def test_both_feed_scans_finish_before_any_generation(feed, monkeypatch, settings_override):
@@ -483,7 +508,7 @@ def test_reply_search_stops_on_unreadable_store_before_the_model(reply_search):
     assert searched == [] and chokepoint.sent == []
 
 
-# --- early_bird and mega_watch (profile scans) ------------------------------
+# --- early_bird and mega_watch (Latest author searches) ---------------------
 
 
 def test_early_reply_targets_are_curator_driven():
@@ -516,7 +541,12 @@ def profile_job(request, monkeypatch, llm, chokepoint):
     monkeypatch.setattr(mw, "_watch_pool", lambda: list(profiles))
     monkeypatch.setattr(dr, "always_reply_accounts", lambda: ())
     monkeypatch.setattr(evolution_store, "filter_and_weight", lambda handles: list(handles))
-    monkeypatch.setattr(module, "scrape_profile_tweets", lambda handle, **k: list(profiles[handle]))
+    def search(query, **kw):
+        assert kw == dict(tab="latest", max_tweets=3 if module is eb else 4, text_limit=1200)
+        assert query.endswith(" -filter:replies -filter:retweets")
+        handle = query.split()[0].removeprefix("from:")
+        return list(profiles[handle])
+    monkeypatch.setattr(module, "scrape_x_search", search)
     monkeypatch.setattr(module, "is_on_niche", lambda text: "off-niche" not in text)
     return request.param, run, profiles, llm, chokepoint
 
@@ -544,6 +574,24 @@ def test_profile_jobs_answer_fresh_on_niche_posts_only(profile_job):
     tag = {"early_bird": "EARLYBIRD", "mega_watch": "MEGA"}[name]
     assert [r.source for r in logged()] == [f"{tag}/someone"]
     assert set_aside(name) == {ok["url"]}
+
+
+def test_author_search_never_trusts_search_query_as_author_verification(profile_job):
+    _, run, profiles, llm, chokepoint = profile_job
+    profiles["someone"] = [post("stranger", "SI model from the wrong author"),
+                            post("someone", "SI model from the future", minutes=-5),
+                            {"url": fresh("someone").replace("https://x.com", "https://evil.test/x.com"),
+                             "text": "SI model on a spoofed host"}]
+    run()
+    assert llm.calls == [] and chokepoint.sent == []
+
+
+def test_author_search_prefers_two_likes_before_spending_its_budget(profile_job):
+    _, run, profiles, llm, chokepoint = profile_job
+    low, preferred = post("builder", "SI model one", n=1, likes=1), post("builder", "SI model two", n=2, likes=2)
+    profiles["builder"] = [low, preferred]
+    run()
+    assert chokepoint.sent[0] == preferred["url"]
 
 
 def test_profile_jobs_keep_quote_as_context_without_changing_the_target(profile_job):

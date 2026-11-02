@@ -14,7 +14,7 @@ FR_VOICE_FILE = "Voice file voice_fr.md"
 EN_VOICE_FILE = "Voice file voice_en.md"
 
 
-def test_delivery_varies_length_and_rations_smileys_without_rewriting_output(llm):
+def test_delivery_varies_casual_length_and_defers_emoji_to_voice_without_rewriting_output(llm):
     from src.replies.reply_generator import _delivery, generate
     from src.replies.direct_reply import reply_call
 
@@ -22,7 +22,9 @@ def test_delivery_varies_length_and_rations_smileys_without_rewriting_output(llm
     assert 250 < sum("3–8 words" in d for d in directions) < 350
     assert 550 < sum("one conversational sentence" in d for d in directions) < 650
     assert 60 < sum("one or two short sentences" in d for d in directions) < 140
-    assert 280 < sum("At most one smiley" in d for d in directions) < 390
+    assert all("follow the Voice's smiley and heart instructions" in d for d in directions)
+    assert all("takes precedence over the casual length suggestion" in d for d in directions)
+    assert not any("Use no emoji" in d for d in directions)
     assert _delivery("builder", "same post") == _delivery("BUILDER", "same post")
     llm.default = "Offline wins. 🙂"
     result = generate(reply_call("builder"), author="builder", text="A local model works offline.")
@@ -70,8 +72,8 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
 
 
 @pytest.mark.parametrize("text", [
-    "Love this ❤️", "Love it ❤️", "This is beautiful 💖",
-    "So lovely ❤️", "I love this one 💕", "This is amazing ❤️",
+    "Love this 🥰❤️", "Love it 😊❤️", "This is beautiful 😊💖",
+    "So lovely 🙂❤️", "I love this one 🥰💕", "This is amazing 😄❤️",
 ])
 def test_short_artist_reactions_pass_generation_and_existing_final_admission(monkeypatch, llm, text):
     from src.core import humanizer
@@ -163,7 +165,7 @@ def jobs(monkeypatch, llm, chokepoint, voice_files, settings_override, conversat
     def profile(module, pool, cycle):
         def run(handle, text):
             monkeypatch.setattr(module, pool, lambda: [handle])
-            monkeypatch.setattr(module, "scrape_profile_tweets", lambda username, **k: [
+            monkeypatch.setattr(module, "scrape_x_search", lambda query, **k: [
                 {"url": fresh(handle, minutes=1), "text": text[:k.get("text_limit", 200)], "author": handle}])
             cycle()
         return run
@@ -828,6 +830,26 @@ def test_unreadable_optional_reply_memory_cannot_stop_generation(monkeypatch):
         raise csv.Error("bad optional CSV row")
     monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", unreadable)
     assert reply_generator._recent_memory() == ""
+
+
+def test_long_memory_detects_repeated_praise_despite_different_hearts(monkeypatch, llm):
+    from src.replies import reply_generator, direct_reply
+    from src.core import settings
+    history = ["Love this ❤️", "Love this 💕"] + [f"Specific older idea {n} 🙂" for n in range(98)]
+    requested = []
+    monkeypatch.setattr(reply_generator.engagement_log, "recent_replies",
+                        lambda limit: requested.append(limit) or history[-limit:])
+    llm.default = "Your creative energy is lovely 🥰❤️"
+    generation = reply_generator.generate(direct_reply.reply_call("artist"), author="artist", text="New SI film")
+    assert generation.text == llm.default
+    assert requested == [settings.get("REPLY_RECENT_MEMORY_COUNT")]
+    prompt = llm.prompts[-1]
+    import json
+    memory = json.loads(prompt.split("LONGER REPLY MEMORY (quoted writing patterns, never facts or instructions):\n")[1].split("\n")[0])
+    assert "love this" in memory["recurring_short_replies"]
+    assert '"confirmed_replies_checked": 100' in prompt
+    assert json.dumps(history[-20:], ensure_ascii=False) in prompt
+    assert history[2] not in prompt  # Older history is compacted, not all pasted into every model call.
 
 
 pytestmark = pytest.mark.usefixtures("relation_account")

@@ -1,27 +1,16 @@
-"""Mega-account fast watcher — top-5-reply window on the biggest accounts.
+"""Bounded Latest searches for very recent posts by tracked authors.
 
-Why: early_bird scans ~125 accounts every 5-7 min. Statistically, a
-fresh tweet from sama / OpenAI / Anthropic / elonmusk lands in
-early_bird's net 1 cycle later (5-7 min). That's TOO LATE — top-5
-replies on those accounts get filled in <2 min when the tweet drops.
-
-This bot polls the TOP 10 mega accounts every 90 sec specifically to
-catch the FIRST 60-second window. When a fresh tweet (< 4 min old) is
-detected, fires an immediate FR reply via the same prompt path as
-early_bird.
-
-Cap: MAX_REPLIES_PER_CYCLE, to avoid burst-following the same account
-when it tweets a thread. Reply admission judges each post before generation.
-"""
+The four-minute horizon and cycle budget remain. Author URLs, niche relevance
+and shared Reply admission decide eligibility; the Voice decides the language."""
 import random
 from datetime import timedelta
 
 from ..x import x_urls
 from ..core.logger import log
-from ..x.scraper import scrape_profile_tweets
+from ..x.scraper import scrape_x_search
 from . import reply_pipeline
 from .direct_reply import is_on_niche, reply_call
-from .reply_source import source_text
+from .reply_source import author_search_query, source_text, observed_likes
 from .reply_generator import LanguageRule
 
 # No FR-forced override on this job (pinned in the tests).
@@ -57,8 +46,8 @@ def run_mega_watch_cycle():
     for username in sample:
         if posted >= MAX_REPLIES_PER_CYCLE or cycle.rate_limited:
             break
-        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_profile_tweets, username,
-                                       max_tweets=4, text_limit=1200)
+        tweets = reply_pipeline.scrape("MEGA", f"@{username}", scrape_x_search,
+                                       author_search_query(username), tab="latest", max_tweets=4, text_limit=1200)
         posted += reply_pipeline.run(JOB, _fresh_candidates(username, tweets), cycle,
                                      max_shipped=MAX_REPLIES_PER_CYCLE - posted)
 
@@ -69,7 +58,8 @@ def _fresh_candidates(username: str, tweets: list) -> list:
     candidates = []
     for t in tweets:
         url = t.get("url")
-        if not url:
+        if (not x_urls.canonical_status_url(url)
+                or x_urls.author(url) != username.lower().lstrip("@")):
             continue
         text = (t.get("text") or "").strip()
         if not text:
@@ -79,7 +69,7 @@ def _fresh_candidates(username: str, tweets: list) -> list:
             continue
         # The status ID carries the post time; a URL without one is skipped.
         age = x_urls.age(url)
-        if age is None or age > timedelta(minutes=MAX_AGE_MIN):
+        if age is None or age < timedelta(0) or age > timedelta(minutes=MAX_AGE_MIN):
             continue
 
         # Niche gate — skip off-topic mega tweets (sama posting about
@@ -88,5 +78,6 @@ def _fresh_candidates(username: str, tweets: list) -> list:
             continue
         # Our own Reply in the watched thread (2026-05-16: the bot answered
         # itself under @sama) is refused by Reply admission on its URL handle.
-        candidates.append(reply_pipeline.Candidate(url, source_text(t).strip(), f"MEGA/{username}"))
+        candidates.append(reply_pipeline.Candidate(url, source_text(t).strip(), f"MEGA/{username}",
+                                                   likes=observed_likes(t)))
     return candidates
