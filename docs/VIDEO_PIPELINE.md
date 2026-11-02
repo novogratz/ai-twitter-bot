@@ -18,6 +18,13 @@ initial readiness and archive completeness separately; never reset posting histo
 engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
 Cast labels are creator attribution, not facial identification of real people.
 
+The Account allows `browser_upload_seconds = 180` for transfer **and X processing**;
+the default remains 45 seconds. The 19:00 live run reached processing after transfer
+but exceeded both 45 and 60 seconds before submission. Each wait remains bounded
+by the reservation grace/lease. Safari stays serialized during this transaction,
+so Reply drafting continues but browser actions may wait. Readiness diagnostics
+log only booleans, never page content, credentials or signed media URLs.
+
 To recheck an immutable saved export after repairing the inspector, without
 downloading or rendering it again:
 

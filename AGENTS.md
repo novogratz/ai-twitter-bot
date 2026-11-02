@@ -6,6 +6,12 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, video upload processing — The requested 19:00 post reached X's
+processing stage but exceeded the former 45/60-second attachment deadline.
+Permit a bounded 180-second Safari upload/processing transaction within the
+unchanged slot grace and lease. Keep verified readiness, permanent dedup and
+publish-unknown handling; Reply generation continues while browser actions wait.
+
 2026-11-01, 19:00 recovery and preparation — After the missed 17:00 post, the
 Operator explicitly requires a video at 19:00 and preparation from 18:30.
 Add 19:00 as a sixth main window, retaining the existing seven slots (eight

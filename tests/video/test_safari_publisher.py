@@ -13,6 +13,14 @@ from src.x.confirmed_write import WriteOutcome
 from tests.helpers import clock
 
 
+def test_upload_processing_allowance_is_bounded_and_does_not_expand_slot_grace(video_cfg):
+    longer = replace(video_cfg, browser_upload_seconds=180)
+    assert longer.grace_seconds == video_cfg.grace_seconds
+    assert longer.lease_seconds == video_cfg.lease_seconds
+    with pytest.raises(ValueError, match="10..180"):
+        replace(video_cfg, browser_upload_seconds=181)
+
+
 def test_busy_video_read_defers_without_holding_due_publisher(monkeypatch):
     from contextlib import nullcontext
     from src.video.security import Deferred

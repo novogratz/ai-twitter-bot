@@ -90,8 +90,8 @@ class VideoConfig:
             raise ValueError("Codex timeout must be 30..300 seconds and inside the job lease")
         if self.codex_inspection_reserve >= self.codex_daily_calls or self.inspection_fps not in (1, 2):
             raise ValueError("invalid Codex reserve or inspection frame sampling")
-        if type(self.browser_upload_seconds) is not int or not 10 <= self.browser_upload_seconds <= 60:
-            raise ValueError("browser_upload_seconds must be 10..60 to bound a Safari transaction")
+        if type(self.browser_upload_seconds) is not int or not 10 <= self.browser_upload_seconds <= 180:
+            raise ValueError("browser_upload_seconds must be 10..180 to bound upload plus X processing")
         if type(self.x_reads_enabled) is not bool:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.protect_primary_windows) is not bool:
