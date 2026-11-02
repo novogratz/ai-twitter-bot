@@ -253,7 +253,7 @@ def _delivery(author: str, text: str) -> str:
             "answer directly, explain the mechanism or tradeoff, and give its consequence. "
             "That takes precedence over the casual length suggestion.\n"
             f"FOR CASUAL REACTIONS: {length}\n"
-            "For every reply, follow the Voice's smiley and heart instructions. "
+            "For every reply, follow the Voice's emoji guidance. "
             "Compose them with the words, vary the expression, and match the parent's mood.\n"
             "Let the parent's mood and meaning lead; these length suggestions are not quotas. "
             "A relevant reaction can be enough; do not bolt on a lesson, caveat or question. "

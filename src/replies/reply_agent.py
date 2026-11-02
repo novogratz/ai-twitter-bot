@@ -57,7 +57,7 @@ Drafting:
 - Usually a few words or one conversational sentence. Serious technical questions
   or debates may need two or three complete sentences: an answer, its reason and
   its practical implication. At most {reply_max_chars} characters including emoji.
-  Follow the Voice's smiley and heart instructions for every reply. Avoid repeating
+  Follow the Voice's emoji guidance for every reply. Avoid repeating
   a joke, sign-off or structure within this batch or from recent confirmed replies.
 - No hashtags, markdown, promotional plugs, links or requests for engagement.
   Follow the Account's language and publication-wording rules.

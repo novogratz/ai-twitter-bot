@@ -1,5 +1,22 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-02 — Natural replies and varied emojis, hearts first
+
+The Operator finds the repeating smiley-face style unnatural and requests varied
+emojis starting with hearts, with a woman’s conversational voice on X. The
+previous instruction required a smiley even in serious technical replies and
+paired faces with hearts for artist showcases. Both Voice files now allow
+contextual heart-led variety and plain text when it fits. Examples show warm
+short reactions, direct technical answers and different emotions without a
+fixed emoji rotation or invented human experiences.
+
+Shared prompts now refer to the Voice's emoji guidance without privileging
+smileys, and the Relation prompt no longer requires a face in every reply. The
+existing short-reaction validation cases use heart-only combinations. All source,
+identity, language, wording, pacing and permanent dedup checks remain. The
+Operator requests PR creation, merge and push; no process restart or live-state
+mutation accompanies this refinement. The Voice is loaded afresh for each draft.
+
 ## 2026-11-02 — Reuse sources, prioritize two likes and expose bottlenecks
 
 The Operator accepts all five proposed improvements, asks for an SI art mom
