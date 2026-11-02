@@ -1,7 +1,7 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
 # This replaces main-post editorial/repost scheduling only while enabled.
 publishing_transport = "safari"
-browser_upload_seconds = 45
+browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
 windows = ["07:00", "09:00", "12:00", "17:00", "19:00", "21:00"]
 paired_windows = ["07:00", "21:00"]
 pair_minutes = 15

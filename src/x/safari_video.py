@@ -13,6 +13,7 @@ from urllib.parse import urlencode
 import uuid
 
 from ..core import account, config as core_config, settings, state_store
+from ..core.logger import log
 from ..guards.active_hours import require_active
 from ..video import config
 from ..video.security import AccessError, Deferred, sha256
@@ -181,6 +182,7 @@ class Composer:
         self.opened = False
         self.picker_started = False
         self.prepare_deadline = None
+        self.last_readiness = None
         self.size = self.path.stat().st_size
         if self.path.suffix.lower() != ".mp4" or not 0 < self.size <= cfg.max_download_bytes:
             raise AccessError("video must be a bounded local MP4")
@@ -206,6 +208,11 @@ class Composer:
         files = state.get("files", [])
         if state.get("error"):
             raise AccessError("X composer reported an attachment error")
+        readiness = (state.get("media_ready") is True, state.get("post_enabled") is True,
+                     state.get("progress") is True, len(files) == 1)
+        if readiness != getattr(self, "last_readiness", None):
+            log.info("[VIDEO] Attachment readiness: decoded=%s post_enabled=%s processing=%s one_file=%s", *readiness)
+            self.last_readiness = readiness
         return bool(state.get("nonce") == self.nonce and state.get("composer")
             and state.get("caption") == _normal(self.caption) and len(files) == 1
             and files[0].get("name") == self.path.name and files[0].get("size") == self.size

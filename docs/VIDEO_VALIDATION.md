@@ -46,6 +46,24 @@ The earlier concurrent-load measurements below are unchanged; this repair does
 not claim a new production latency benchmark. Local runtime evidence shows the
 publisher's bounded read deferring while Reply work continues.
 
+**Confirmed 19:00-slot publication:**
+[Elon/Jensen duet on X](https://x.com/thesimaximalist/status/2117045635673157743).
+The scheduler reserved the clip at 19:00:00.65 Toronto. The 45-second and then
+60-second attachment limits expired before submission; a later preparation
+attempt also failed before submission. No failed attempt had a send permit.
+After allowing up to 180 seconds for transfer and X processing, attachment
+readiness passed at 19:06:26 and the exact own-video receipt was confirmed at
+19:06:29, inside the existing ten-minute grace period. The slot is `posted`,
+the candidate is `posted`, and its content claim, source/output fingerprints,
+caption and confirmed X ID are retained in permanent posting history.
+Reply drafting continued during the upload and browser Reply work resumed
+immediately after confirmation. No test post or duplicate retry was sent.
+
+The upload-processing follow-up passed **2,409 tests, two optional skips,
+in 50.96 seconds**. It changes the bounded attachment allowance and adds boolean
+readiness diagnostics; it does not change the slot grace, reply policy, quality
+requirements or ambiguous-publication rules.
+
 ## Actual publication
 
 The operator-selected Bilibili clip `BV13bnE6ZEg2` was downloaded from media URLs

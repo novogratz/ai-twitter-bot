@@ -9,6 +9,11 @@ lines; internal provenance, parody review and permission records remain intact.
 Specific licensed attribution remains binding when configured separately.
 
 The later 19:00 request adds that window without deleting 17:00 or 21:00.
+The live attempt demonstrated that X can finish transfer but still be processing
+after sixty seconds. The Account permits up to 180 seconds for the serialized
+Safari upload/processing transaction, within the existing slot grace and lease.
+Other Reply preparation continues; browser writes wait for the current transaction.
+No submission occurs before attachment readiness, and ambiguous writes never retry.
 Preparation starts thirty minutes before each slot and persists across restarts;
 an empty buffer raises local warnings at 30, 15 and 5 minutes before posting.
 The Account permits a bounded initial six-page imported/fingerprinted history,
