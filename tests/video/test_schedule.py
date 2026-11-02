@@ -1,5 +1,5 @@
 from dataclasses import replace
-from datetime import date, datetime
+from datetime import date, datetime, time
 
 import pytest
 
@@ -34,16 +34,38 @@ def test_dst_offsets(day, offset, video_cfg):
 
 @pytest.mark.parametrize("when,allowed", [("2026-11-01T00:00:00-04:00", False),
     ("2026-11-01T01:30:00-04:00", False), ("2026-11-01T01:30:00-05:00", False),
-    ("2026-11-01T03:59:59-05:00", False), ("2026-11-01T04:00:00-05:00", True),
+    ("2026-11-01T03:59:59-05:00", False), ("2026-11-01T04:00:00-05:00", False),
+    ("2026-11-01T04:29:59-05:00", False), ("2026-11-01T04:30:00-05:00", True),
     ("2026-11-01T23:59:59-05:00", True)])
 def test_cooldown_including_fold(when, allowed):
     assert schedule.eligible(datetime.fromisoformat(when)) is allowed
 
 
-@pytest.mark.parametrize("before,after", [("2026-10-31T23:30:00-04:00", "2026-11-01T04:30:00-05:00"),
-                                       ("2026-03-07T23:30:00-05:00", "2026-03-08T04:30:00-04:00")])
+@pytest.mark.parametrize("before,after", [("2026-10-31T23:30:00-04:00", "2026-11-01T05:00:00-05:00"),
+                                       ("2026-03-07T23:30:00-05:00", "2026-03-08T05:00:00-04:00")])
 def test_startup_eligible_hour_excludes_dst_night(before, after):
     assert schedule.eligible_seconds(datetime.fromisoformat(before), datetime.fromisoformat(after)) == 3600
+
+
+def test_video_eligibility_slots_and_startup_clock_share_the_interaction_wake(video_cfg, monkeypatch):
+    from src.guards import active_hours
+    monkeypatch.setattr(active_hours, "WAKE", time(5, 15))
+    before = datetime(2026, 11, 2, 5, 14, 59, tzinfo=schedule.ZONE)
+    wake = before.replace(minute=15, second=0)
+    assert not schedule.eligible(before) and schedule.eligible(wake)
+    assert schedule.eligible_seconds(before, wake.replace(hour=6)) == 3600
+    with pytest.raises(ValueError, match="05:15"):
+        replace(video_cfg, windows=("05:00", "09:00", "12:00", "17:00", "21:00"), paired_windows=())
+
+
+def test_added_half_hour_is_excluded_from_startup_time_and_slot_configuration(video_cfg):
+    start = datetime(2026, 11, 2, 4, tzinfo=schedule.ZONE)
+    assert schedule.eligible_seconds(start, start.replace(minute=30)) == 0
+    assert schedule.eligible_seconds(start, start.replace(minute=45)) == 900
+    with pytest.raises(ValueError, match="04:30"):
+        replace(video_cfg, windows=("04:15", "09:00", "12:00", "17:00", "21:00"), paired_windows=())
+    cfg = replace(video_cfg, windows=("04:30", "09:00", "12:00", "17:00", "21:00"), paired_windows=())
+    assert schedule.clocks(cfg)[0] == "04:30"
 
 
 def test_configurable_pair_and_no_overnight_slots(video_cfg):

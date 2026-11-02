@@ -2,6 +2,8 @@
 from datetime import datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
 
+from ..guards import active_hours
+
 ZONE = ZoneInfo("America/Toronto")  # Montreal uses the same calendar/offset rules.
 
 
@@ -16,7 +18,7 @@ def local(now):
 
 
 def eligible(now):
-    return local(now).hour >= 4
+    return active_hours.is_active(local(now))
 
 
 def clocks(cfg):
@@ -25,8 +27,8 @@ def clocks(cfg):
         raise ValueError("five to eight unique video windows with paired windows drawn from them are required")
     for value in cfg.windows:
         parsed = time.fromisoformat(value)
-        if parsed.second or parsed.microsecond or parsed.tzinfo or parsed.hour < 4:
-            raise ValueError("video slots must be minute precision during 04:00–00:00")
+        if parsed.second or parsed.microsecond or parsed.tzinfo or parsed < active_hours.WAKE:
+            raise ValueError("video slots must be minute precision during " + active_hours.window_label())
         minute = parsed.hour * 60 + parsed.minute
         minutes.append(minute)
         if value in cfg.paired_windows:
@@ -74,13 +76,13 @@ def eligible_seconds(start, end):
     day, last = local(start).date(), local(end).date()
     total = 0.0
     while day <= last:
-        left = datetime.combine(day, time(4), ZONE).timestamp()
-        right = datetime.combine(day + timedelta(days=1), time(0), ZONE).timestamp()
+        wake = datetime.combine(day, active_hours.WAKE, ZONE)
+        left = wake.timestamp()
+        right = active_hours.bedtime(wake).timestamp()
         begin, finish = max(start.timestamp(), left), min(end.timestamp(), right)
         total += max(0, finish - begin)
-        from ..guards.active_hours import break_window
         for hour in range(24):
-            window = break_window(datetime.combine(day, time(hour), ZONE))
+            window = active_hours.break_window(datetime.combine(day, time(hour), ZONE))
             if window:
                 total -= max(0, min(finish, window[1].timestamp()) - max(begin, window[0].timestamp()))
         day += timedelta(days=1)

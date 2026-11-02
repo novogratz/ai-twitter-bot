@@ -9,7 +9,9 @@ from tests.helpers import TORONTO, stop_requested, clock
 
 @pytest.mark.parametrize("when,awake", [
     ("2026-09-20T03:59:59-04:00", False),
-    ("2026-09-20T04:00:00-04:00", True),
+    ("2026-09-20T04:00:00-04:00", False),
+    ("2026-09-20T04:29:59-04:00", False),
+    ("2026-09-20T04:30:00-04:00", True),
     ("2026-09-20T22:00:00-04:00", True),
     ("2026-09-20T23:29:59-04:00", True),
     ("2026-09-20T23:30:00-04:00", True),
@@ -19,14 +21,18 @@ from tests.helpers import TORONTO, stop_requested, clock
     ("2026-11-01T03:59:59+00:00", True),
     ("2026-11-01T04:00:00+00:00", False),
     ("2026-11-01T08:59:59+00:00", False),
-    ("2026-11-01T09:00:00+00:00", True),
+    ("2026-11-01T09:00:00+00:00", False),
+    ("2026-11-01T09:29:59+00:00", False),
+    ("2026-11-01T09:30:00+00:00", True),
     ("2026-11-02T04:59:59+00:00", True),
     ("2026-11-02T05:00:00+00:00", False),
     # Midnight EST, then wake after the spring clock change in EDT.
     ("2026-03-08T04:59:59+00:00", True),
     ("2026-03-08T05:00:00+00:00", False),
     ("2026-03-08T07:59:59+00:00", False),
-    ("2026-03-08T08:00:00+00:00", True),
+    ("2026-03-08T08:00:00+00:00", False),
+    ("2026-03-08T08:29:59+00:00", False),
+    ("2026-03-08T08:30:00+00:00", True),
     ("2026-03-09T03:59:59+00:00", True),
     ("2026-03-09T04:00:00+00:00", False),
 ])
@@ -35,7 +41,7 @@ def test_exact_waking_boundaries_and_dst(when, awake):
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "04:00–00:00 America/Toronto"
+    assert hours.window_label() == "04:30–00:00 America/Toronto"
 
 
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
@@ -57,9 +63,10 @@ def test_bedtime_is_the_next_midnight_after_wake(day):
 
 
 @pytest.mark.parametrize("now,wake", [
-    ("2026-09-20T23:45:00-04:00", "2026-09-21T04:00:00-04:00"),
-    ("2026-09-21T03:00:00-04:00", "2026-09-21T04:00:00-04:00"),
-    ("2026-10-31T23:45:00-04:00", "2026-11-01T04:00:00-05:00"),
+    ("2026-09-20T23:45:00-04:00", "2026-09-21T04:30:00-04:00"),
+    ("2026-09-21T04:15:00-04:00", "2026-09-21T04:30:00-04:00"),
+    ("2026-10-31T23:45:00-04:00", "2026-11-01T04:30:00-05:00"),
+    ("2026-03-07T23:45:00-05:00", "2026-03-08T04:30:00-04:00"),
 ])
 def test_next_wake_after_bedtime(now, wake):
     local = datetime.fromisoformat(now).astimezone(TORONTO)
@@ -229,3 +236,35 @@ def test_zero_break_minutes_keeps_bedtime_budget(monkeypatch, settings_override)
     assert hours.break_window() is None
     assert hours.break_until() is None
     assert hours.seconds_until_pause() == hours.seconds_until_bedtime() == 12 * 3600
+
+
+def test_no_daytime_breaks_keeps_jobs_and_model_budget_active_until_midnight(monkeypatch, settings_override):
+    settings_override(HOURLY_BREAK_MINUTES=0)
+    day = datetime(2026, 11, 2, tzinfo=TORONTO)
+    called = []
+    job = hours.awake_job(lambda: called.append(hours.now_local()))
+    for hour in range(24):
+        for minute in (0, 29, 30, 35, 42, 50, 59):
+            now = day.replace(hour=hour, minute=minute)
+            clock(monkeypatch, now)
+            assert hours.break_window() is None and hours.break_until() is None
+            awake = (hour, minute) >= (4, 30)
+            assert hours.may_act() is awake
+            before = len(called)
+            job()
+            assert len(called) == before + int(awake)
+            expected = (day + timedelta(days=1) - now).total_seconds() if awake else 0
+            assert hours.seconds_until_pause() == expected
+
+
+def test_added_half_hour_blocks_browser_then_opens_at_0430(monkeypatch, settings_override, unwalled):
+    from src.x import safari
+    settings_override(HOURLY_BREAK_MINUTES=0)
+    clock(monkeypatch, datetime(2026, 11, 2, 4, 29, 59, tzinfo=TORONTO))
+    with pytest.raises(hours.OutsideActiveHours):
+        unwalled["_run_js"]("document.title")
+    with pytest.raises(hours.OutsideActiveHours), safari._safari_lock:
+        pytest.fail("Safari admitted work before 04:30")
+    clock(monkeypatch, datetime(2026, 11, 2, 4, 30, tzinfo=TORONTO))
+    with safari._safari_lock:
+        hours.require_active()

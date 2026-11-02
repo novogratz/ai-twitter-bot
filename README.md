@@ -83,8 +83,8 @@ For You, Following or any search join the same bounded queue. A running browser
 transaction or model call finishes first, so these are scheduling intervals,
 not an instant-publication guarantee. Reposts keep the existing profile limits.
 
-Wake-up is now **04:00 Toronto** under the latest video amendment; midnight bedtime and daytime
-breaks stay unchanged. Reply-spacing waits keep finished drafts when another
+Wake-up is now **04:30 Toronto**, with midnight bedtime and **no daytime breaks**
+under the latest operator instruction. Reply-spacing waits keep finished drafts when another
 sender uses the gap, and yield to ready watched Replies. Code takes effect on
 an explicitly requested restart.
 
@@ -124,23 +124,22 @@ start; Voice files are read for each generation.
   are drafting directions, not output quotas. Specific English replies can be as short as 8 characters;
   generic applause and emoji-only responses still fail validation. Main reply
   prompts receive up to 1,200 source characters instead of 200.
-- **Sleep from midnight to 04:00 Toronto time.** The scheduler, browser writes,
+- **Sleep from midnight to 04:30 Toronto time.** The scheduler, browser writes,
   model timeouts and Startup windows all use this boundary.
-- **Ten-minute breaks about every three hours.** Six daily breaks start during
-  hours 07, 10, 13, 16, 19 and 22 Toronto time. A shared, repeatable daily plan
-  varies the start within minutes 35–50.
-  Jobs, model requests and browser activity stop during a break.
+- **No daytime breaks.** The Account and local `.env` set
+  `HOURLY_BREAK_MINUTES=0`; activity remains eligible until midnight. Reply
+  spacing, source/content checks and permanent deduplication still apply.
 - **Read both For You and Following deeply.** Verify the selected tab, collect
   each screen before scrolling, and deduplicate posts. The Account allows
   up to 20 scrolls and 160 collected posts per feed, stopping if no new posts
   appear. Both reads finish before ordinary feed Reply generation starts, so an exhausted
   model quota cannot skip Following. Generation budgets and publication limits
-  still apply; sleep and breaks can interrupt discovery.
+  still apply; overnight sleep can interrupt feed discovery.
 - **Prioritize new Elon Musk originals.** A dedicated Latest search polls every
   20 seconds; separate action and Reply workers check discoveries every two seconds.
   Feed discoveries join the same queue. First enable starts with
   new posts; later passes inspect up to 20 posts from the past 24 hours.
-  Existing content checks, Reply dedup, sleep and breaks apply. Reposts consume
+  Existing content checks, Reply dedup and overnight sleep apply. Reposts consume
   the same daily publication budget and spacing as Originals; uncertain
   repost submissions remain reserved across restarts. Browser contention can
   delay a poll, and policy limits may defer or skip an action.
@@ -168,7 +167,7 @@ start; Voice files are read for each generation.
   Artificial Intelligence and also recognize SI, Super Intelligence,
   superintelligence and ASI. Source evidence keeps its original wording;
   the preferred terms are not claims of an achieved capability.
-- **Active daily: 04:00–00:00 America/Toronto**, with daylight saving handled automatically.
+- **Active daily: 04:30–00:00 America/Toronto**, with daylight saving handled automatically.
 - **At least three original posts targeted; six planned; eight is the hard daily ceiling.** Weak drafts are skipped.
 - **Unlimited replies during waking hours**, with spacing and duplicate protection.
   Every reply passes Reply admission before generation (before sending for
@@ -355,7 +354,7 @@ The existing-video feature is implemented behind `VIDEO_ENABLED=0` and
 `VIDEO_LIVE=0`. When enabled it replaces the main-post schedule with 07:00,
 07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15 Toronto slots. A separately
 requested persistent live activation can add one startup video per day. Replies
-keep their engine and prompts; interactions now pause from midnight to 04:00,
+keep their engine and prompts; interactions now pause from midnight to 04:30,
 while independent video discovery/media workers can continue overnight.
 
 The six main windows **07:00, 09:00, 12:00, 17:00, 19:00 and 21:00** have inventory

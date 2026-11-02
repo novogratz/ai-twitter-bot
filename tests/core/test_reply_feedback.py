@@ -1,6 +1,8 @@
 import csv
 from datetime import datetime, timedelta
 
+import pytest
+
 from src.core import account, config, engagement_log, reply_feedback as feedback
 from src.guards import active_hours
 from src.x import x_urls
@@ -59,8 +61,9 @@ def test_unknown_counters_are_not_zero_or_another_posts_metrics():
     assert observation["likes_per_1000_views"] is None
 
 
-def test_report_uses_weighted_rates_and_never_attributes_followers(settings_override):
-    settings_override(REPLY_DAILY_TARGET_MIN=700, REPLY_DAILY_TARGET_MAX=1400, HOURLY_BREAK_MINUTES=10)
+@pytest.mark.parametrize("break_minutes,hours,rates", [(0, 19.5, [35.9, 71.8]), (10, 18.5, [37.8, 75.7])])
+def test_report_uses_weighted_rates_and_never_attributes_followers(settings_override, break_minutes, hours, rates):
+    settings_override(REPLY_DAILY_TARGET_MIN=700, REPLY_DAILY_TARGET_MAX=1400, HOURLY_BREAK_MINUTES=break_minutes)
     base = dict(sent_at=(NOW - timedelta(hours=2)).isoformat(), parent_age_minutes=20,
                 source="SEARCH-FRESH/video", topic="video", hour=10, length="brief", url=url())
     rows = {"a": dict(base, observations={"1h": {"likes": 2, "views": 100}}),
@@ -69,8 +72,8 @@ def test_report_uses_weighted_rates_and_never_attributes_followers(settings_over
     report = feedback.summarize(rows, [{"at": NOW, "source": "search", "url": ""}],
                                 [{"ts": (NOW - timedelta(hours=1)).isoformat(), "count": 100},
                                  {"ts": NOW.isoformat(), "count": 103}], NOW)
-    assert report["active_hours"] == 19.0
-    assert report["required_replies_per_active_hour"] == [36.8, 73.7]
+    assert report["active_hours"] == hours
+    assert report["required_replies_per_active_hour"] == rates
     assert report["cohorts"][0]["likes_per_1000_views"] == 5
     assert report["cohorts"][0]["enough_to_compare"] is False
     assert report["observed"] == {"1h": 2, "24h": 0}

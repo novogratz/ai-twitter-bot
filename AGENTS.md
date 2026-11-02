@@ -6,6 +6,18 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-01, no daytime breaks and four-and-a-half-hour nights — The Operator
+explicitly removes daytime pauses and requests sleep only from midnight to
+04:30 America/Toronto. The Account and local environment set
+`HOURLY_BREAK_MINUTES=0`; optional break support remains for other configurations.
+The shared `WAKE` clock is 04:30. Video eligibility, custom slot validation and
+startup eligible-time expiry use that same boundary; an overnight startup can
+publish no earlier than 04:30. Independent video discovery/media still run
+overnight. The eight video slots, Reply spacing, content rules and permanent
+one-Reply-per-original history remain. This supersedes earlier daytime-break
+and 04:00/03:30 wake amendments. PR, merge, push and release are requested;
+the Operator retains manual control of bot restarts.
+
 2026-11-01, video upload processing — The requested 19:00 post reached X's
 processing stage but exceeded the former 45/60-second attachment deadline.
 Permit a bounded 180-second Safari upload/processing transaction within the
@@ -508,7 +520,7 @@ environment edit or production-state migration accompanies this update.
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (including the October 23–November 1 amendments) and supersedes older mandates. It encodes:
 
-- Interactions active 04:00–00:00 America/Toronto; isolated video discovery/media may continue overnight.
+- Interactions active 04:30–00:00 America/Toronto, with no daytime breaks for this Account; isolated video discovery/media may continue overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start
