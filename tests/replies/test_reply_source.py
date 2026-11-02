@@ -109,4 +109,20 @@ def test_select_leaves_the_scraped_posts_as_they_were():
     assert tweets == before
 
 
+def test_two_likes_is_a_preference_not_an_eligibility_floor(settings_override):
+    settings_override(REPLY_PREFERRED_MIN_LIKES=2)
+    posts = [dict(url=fresh("builder", minutes=age, n=i), text="SI model", likes=likes)
+             for i, (age, likes) in enumerate(((1, None), (2, 1), (20, 2), (21, 3)))]
+    selected = reply_source.select(posts, Declaration(max_age=HOUR, order=Order.FRESH_AND_RISING), "TEST")
+    assert [c.likes for c in selected] == [3, 2, 1, None]
+    settings_override(REPLY_PREFERRED_MIN_LIKES=0)
+    # The preference can be disabled without filtering out any new posts.
+    assert reply_pipeline.prioritize(selected[::-1]) == selected[::-1]
+
+
+@pytest.mark.parametrize("likes", [None, -1, True, "2", "unknown", 2.5])
+def test_unreadable_or_invalid_like_count_is_unknown(likes):
+    assert reply_source.observed_likes({"likes": likes}) is None
+
+
 pytestmark = pytest.mark.usefixtures("open_topic_account")

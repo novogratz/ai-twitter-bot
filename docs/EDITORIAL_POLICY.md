@@ -1,4 +1,79 @@
-# Editorial policy — November 1, 2026
+# Editorial policy — November 2, 2026
+
+## Affectionate SI artist and 1,500+ distinct Replies
+
+The November 2 instruction gives The SI Maximalist an affectionate, charming
+SI artist voice: SI brain rot, Super Intelligence, SI news, celebrity parodies
+and SI tech chaos. The fictional adult character is an SI art mom; public prose
+uses SI / Super Intelligence while literal product names remain intact. Both Voice files ask for a smiley in every public Original
+and Reply, with hearts for creative appreciation and encouragement. Sexy and
+smart means confident, playful, non-explicit adult charm and supported technical
+judgment. Identity stays honest; the character invents no biography, intimate
+relationship, firsthand tests or observations of unseen media.
+
+Simple artist showcases keep 2–6 words, now with a smiley and a heart. Serious
+technical questions or debates may use two or three complete sentences within
+the existing 278-character Reply ceiling: an answer, its mechanism or tradeoff,
+and a useful implication. This supersedes older occasional-smiley/no-emoji
+directions and overrides casual length suggestions. Emoji are composed with the
+draft, never mechanically appended. Every Reply still needs understandable
+English text and all existing final checks. A reply to a technical debate is
+one response to its standalone original; follow-up exchanges remain disabled.
+
+The Operator requests at least **1,500 Replies to distinct posts per day**.
+Reporting uses an advisory **1,500–1,800** range, with no daily cap. The Account
+and local `.env` set those values. The local rotating search budget rises from
+three to six queries per cycle; direct-cycle and per-feed generation budgets
+rise from 24 to 40. Six new first-hour Latest searches expand artists, builders,
+questions, evaluation, inference and robotics coverage without popularity floors.
+Both AI and SI remain discovery aliases. Shared search rotation, freshness,
+AI/SI relevance, source checks and permanent admission decide which posts qualify.
+
+The 19.5-hour waking window requires about 77 confirmed Replies per active hour
+to reach 1,500. This is a target, not observed throughput or a permission to fill
+weak Replies. Browser availability, model latency and failures, suitable supply
+and successful parent verification still determine actual volume. The eight-second
+spacing floor plus 0–4 seconds jitter, parent likes and permanent one-Reply-per-post
+claims remain authoritative, including unknown sends and restarts. No historical
+claim is cleared, and the target never stops the bot at 1,800.
+
+Voice files are read for each draft; shared code, Account searches and `.env`
+settings apply at the Operator's next explicit restart. This update does not
+restart the running bot, publish a manual Reply or edit the live profile.
+
+## Discovery, two-like preference and measured throughput
+
+The November 2 follow-up accepts the discovery, source-buffer, artistic taste,
+longer memory and measurement improvements. Early-bird and mega-watch use
+bounded Latest author searches, retaining exact author, standalone-root, age
+and niche checks. The profile allowlist stays intact. Search and each feed can
+retain 400 unused sources for at most 30 minutes, bounded by source freshness;
+this disposable memory supplies no durable posting claim. Both feed reads finish
+before generation, and parent admission/expiry run before generation and again
+after the spacing wait. Permanent history remains the publication authority.
+
+Posts with at least **two observed likes** are preferred among discovered
+candidates. Lower-liked and unknown-count posts remain eligible. The setting is
+`REPLY_PREFERRED_MIN_LIKES`; zero disables preference. This does not add browser
+reads, bypass freshness or override watched send priority. Known counters may
+refresh on rediscovery without extending the buffered source's expiry.
+
+Memory uses 100 confirmed Replies by default, with compact older patterns and
+examples plus the latest 20 verbatim. Swapping hearts alone is still repetition.
+The Voice expresses artistic taste through supported details, never invented
+viewing. Bounded process telemetry in the existing Reply report separates
+observed discovery, model outcomes/timeouts, queue/spacing waits and send outcomes.
+Only confirmed sends count; model outputs, uncertain clicks and dry-runs do not.
+Measurements reset on restart and overlapping worker durations are not wall time.
+
+The video repair reserves no more than the remaining daily download allowance,
+charges partial failed transfers and refunds unused reservations. A valid
+non-square source may be normalized to square pixels during rendering while
+preserving display proportions; original bytes remain unchanged and output QC
+checks aspect, timing, audio and overlays. Rights, actual inspection, freshness,
+novelty, permanent dedup, slots and uncertain-send holds are unchanged. Preparing
+a file is never evidence that a slot has published. The Operator requests PR,
+merge and push; lifecycle remains under explicit operator restart control.
 
 ## Latest waking-hours instruction
 

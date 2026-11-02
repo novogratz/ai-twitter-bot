@@ -96,6 +96,22 @@ def test_legacy_csv_and_multiline_replies_feed_memory_and_history():
     assert len(engagement_log.recent_replies()) == 2
 
 
+def test_longer_confirmed_memory_is_cached_beyond_the_old_forty_reply_limit(monkeypatch, settings_override):
+    settings_override(REPLY_RECENT_MEMORY_COUNT=100)
+    with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as handle:
+        writer = csv.writer(handle)
+        for n in range(120):
+            writer.writerow([NOW.isoformat(), "reply", f"Confirmed SI observation {n} 🙂", url(extra=n)])
+        writer.writerow([NOW.isoformat(), "like", "Not a confirmed reply", url()])
+    recent = engagement_log.recent_replies(100)
+    assert len(recent) == 100 and recent[0] == "Confirmed SI observation 20 🙂"
+    def no_reread(*args, **kw):
+        raise AssertionError("unchanged reply history must use the cache")
+    monkeypatch.setattr(engagement_log, "open", no_reread, raising=False)
+    assert engagement_log.recent_replies(100) == recent
+    assert engagement_log.recent_replies(20) == recent[-20:]
+
+
 def test_report_stays_bounded_and_runs_no_browser_overnight(monkeypatch):
     from src.x import reply_metrics
     clock(monkeypatch, NOW)

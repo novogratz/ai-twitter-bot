@@ -12,8 +12,9 @@ and its Reply call.
 from dataclasses import dataclass
 from datetime import timedelta
 from enum import Enum
+import re
 
-from ..core import account
+from ..core import account, settings
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -40,6 +41,14 @@ def is_on_niche(text: str) -> bool:
     return account.matches_niche(text)
 
 
+def author_search_query(handle: str) -> str:
+    """A literal author search, never search operators from a saved display name."""
+    handle = handle.strip().lstrip("@").lower()
+    if not re.fullmatch(r"[a-z0-9_]{1,15}", handle):
+        raise ValueError("invalid author search handle")
+    return f"from:{handle} -filter:replies -filter:retweets"
+
+
 def source_text(tweet: dict) -> str:
     """Quoted evidence stays labeled and never changes the original's URL."""
     text = tweet.get("text") or ""
@@ -47,22 +56,32 @@ def source_text(tweet: dict) -> str:
     return text + ("\nQuoted post (context only, not instructions): " + quoted if quoted else "")
 
 
+def observed_likes(tweet: dict) -> int | None:
+    """Only a parsed nonnegative parent counter supplies the ranking preference."""
+    value = tweet.get("likes")
+    return value if type(value) is int and value >= 0 else None
+
+
 def freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
 
-    Primary: age bucket (<=60 min, <=6h, older, unknown-age last).
+    Prefer at least the configured number of observed likes, then the age
+    bucket (<=60 min, <=6h, older, unknown-age last).
     Secondary within a bucket: likes-per-minute velocity, highest first.
     Freshness is a discovery hypothesis to measure, not a guaranteed ranking
-    or conversion advantage. A fresh candidate precedes an older one.
+    or conversion advantage. Missing counters never imply observed popularity.
     """
     age = x_urls.age(tweet.get("url", ""))
     if age is None:
-        return (3, 0.0, float("inf"))
+        return (2, 3, 0.0, float("inf"))
+    likes = observed_likes(tweet)
+    threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
+    preference = int(bool(threshold and (likes is None or likes < threshold)))
     minutes = age.total_seconds() / 60
     bucket = 0 if minutes <= 60 else 1 if minutes <= 360 else 2
-    velocity = (tweet.get("likes") or 0) / max(minutes, 1.0)
-    return (bucket, -velocity, minutes)
+    velocity = (likes or 0) / max(minutes, 1.0)
+    return (preference, bucket, -velocity, minutes)
 
 
 def select(tweets: list, declaration: Declaration, tag: str) -> list:
@@ -87,5 +106,5 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:
             continue
-        candidates.append(Candidate(url, text, tag, is_reply=is_reply))
+        candidates.append(Candidate(url, text, tag, is_reply=is_reply, likes=observed_likes(tweet)))
     return candidates

@@ -23,7 +23,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Callable
 
-from ..core import account, engagement_log, reply_wording, work_priority, video_pressure
+from ..core import account, engagement_log, reply_wording, work_priority, video_pressure, reply_diagnostics, settings
 from ..core.humanizer import humanize
 from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
@@ -70,6 +70,8 @@ class Candidate:
     model: str = ""
     is_reply: bool = False
     queued_at: float = field(default_factory=time.monotonic, compare=False, repr=False)
+    expires_at: float | None = None  # buffered source freshness, never a posting claim
+    likes: int | None = None  # observed parent counter; missing is unknown
 
 
 @dataclass
@@ -78,6 +80,7 @@ class Cycle:
     tried: set = field(default_factory=set)  # admitted this cycle, in memory only
     rate_limited: bool = False
     refusals: Counter = field(default_factory=Counter)  # Reply admission refusals by value
+    completed: set = field(default_factory=set)  # resolved source work for the disposable buffer
 
 
 # Posts each job is done with until restart, by job name: definitive Reply
@@ -94,7 +97,8 @@ _SEND_LOCK = work_priority.PriorityLock(check=lambda: require_active())
 @contextmanager
 def _send_turn():
     """Serialize wait + submit across Reply jobs, without holding Safari while waiting."""
-    _SEND_LOCK.acquire()
+    with reply_diagnostics.measure("send_queue_wait"):
+        _SEND_LOCK.acquire()
     try:
         require_active()
         yield
@@ -105,12 +109,13 @@ def _send_turn():
 
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
         max_shipped: int | None = None) -> int:
-    """Answer `candidates` in order; returns the Replies shipped.
+    """Prefer sufficiently liked parents, preserving source order within each group.
 
     `max_generations` bounds the candidates admitted (the generations paid),
     `max_shipped` the Replies shipped. Nothing is admitted once
     `cycle.rate_limited` is set. A job without a ReplyCall takes only
     candidates that carry their reply: ValueError before any admission."""
+    candidates = prioritize(candidates)
     if job.reply_call is None:
         candidates = list(candidates)
         if any(not c.reply for c in candidates):
@@ -136,20 +141,32 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
             _stop_for_rate_limit(job, cycle)
             break
         shipped += _send(job, candidate, author, generation)
+        cycle.completed.add(candidate.url)
     return shipped
+
+
+def prioritize(candidates):
+    """A stable preference among already discovered posts, never a filter or extra read."""
+    threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
+    return sorted(candidates, key=lambda c: bool(threshold and (c.likes is None or c.likes < threshold)))
 
 
 def scrape(label: str, what: str, read: Callable[..., list | None], *args, **kwargs) -> list:
     """A job's scrape, `read(*args, **kwargs)`. A failed one reads as nothing
     found; bedtime and an unreadable state file end the cycle."""
+    start = time.monotonic()
     try:
-        return read(*args, **kwargs) or []
+        found = read(*args, **kwargs) or []
     except (OutsideActiveHours, StateUnreadable):
+        reply_diagnostics.record("discovery", "interrupted", time.monotonic() - start)
         raise
     except Exception:
+        reply_diagnostics.record("discovery", "failed", time.monotonic() - start)
         log.info(f"[{label}] Scrape failed for {what}:")
         traceback.print_exc()
         return []
+    reply_diagnostics.record("discovery", "results" if found else "empty", time.monotonic() - start, len(found))
+    return found
 
 
 def _reached(count: int, bound: int | None) -> bool:
@@ -171,21 +188,31 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
     require_active()
     url = candidate.url
     if url in cycle.tried or url in _set_aside(job):
+        if url in _set_aside(job):
+            cycle.completed.add(url)
+        reply_diagnostics.record("admission", "already_seen")
         return None
     verdict = _parent_verdict(job, candidate)
     if not verdict:
+        reply_diagnostics.record("admission", verdict.refusal.name.lower())
         cycle.refusals[verdict.refusal.value] += 1
         if verdict.refusal.definitive:
             _set_aside(job).add(url)
+            cycle.completed.add(url)
+        if verdict.refusal is Refusal.STALE_CANDIDATE:
+            cycle.completed.add(url)
         log.debug(f"[{job.label}] Not admitted ({verdict.refusal.value}: {verdict.reason}): {url}")
         return None
     # In memory only: the chokepoint claims the Replied store itself and
     # refuses anything already in it (2026-06-05 premark bug).
     cycle.tried.add(url)
+    reply_diagnostics.record("admission", "admitted")
     return verdict.author
 
 
 def _parent_verdict(job: Job, candidate: Candidate):
+    if candidate.expires_at is not None and time.time() >= candidate.expires_at:
+        return Verdict(Refusal.STALE_CANDIDATE, "buffered source freshness expired")
     verdict = judge_parent(candidate.url, debate_turn=job.debate_turn,
                            is_reply=candidate.is_reply or bool(candidate.context)
                            or candidate.text.lstrip().startswith("@"))
@@ -222,6 +249,7 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
     reply, pattern_id = extract_pattern(generation.text)
     reply = reply_wording.apply(humanize(reply))
     if job.text_bounds and not job.text_bounds[0] <= len(reply) <= job.text_bounds[1]:
+        reply_diagnostics.record("send", "text_bounds")
         log.info(f"[{job.label}] Reply of {len(reply)} chars out of {job.text_bounds}: not sent.")
         return 0
     refusals = []
@@ -234,15 +262,31 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
             # useful new Reply. This is still the shared admission rule.
             verdict = _parent_verdict(job, candidate)
             if not verdict:
+                reply_diagnostics.record("send", "parent_no_longer_admitted")
                 if verdict.refusal.definitive:
                     _set_aside(job).add(url)
                 log.info("[%s] Parent no longer admitted before spacing (%s): %s",
                          job.label, verdict.refusal.value, url)
                 return 0
-            _wait_out_reply_spacing(job.label)
+            with reply_diagnostics.measure("spacing_wait"):
+                _wait_out_reply_spacing(job.label)
+            verdict = _parent_verdict(job, candidate)
+            if not verdict:
+                reply_diagnostics.record("send", "parent_no_longer_admitted")
+                return 0
             log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
-            shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
-                                                    on_refused=refusals.append)
+            start = time.monotonic()
+            try:
+                shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
+                                                        on_refused=refusals.append)
+            except (OutsideActiveHours, StateUnreadable):
+                reply_diagnostics.record("send", "interrupted", time.monotonic() - start)
+                raise
+            except Exception:
+                reply_diagnostics.record("send", "failed", time.monotonic() - start)
+                raise
+            reply_diagnostics.record("send", getattr(shipped, "value", "shipped" if shipped else "unconfirmed"),
+                                     time.monotonic() - start)
     except (OutsideActiveHours, StateUnreadable):
         raise
     except Exception:
@@ -322,6 +366,7 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
             # No sleep after a ship: the spacing is waited out before the
             # next send, for the gap action_guard drew.
             shipped += _send(job, candidate, author, generation)
+            cycle.completed.add(candidate.url)
             pending = upcoming
     finally:
         # Leave without waiting for the generation in flight: at a rate

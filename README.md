@@ -1,18 +1,20 @@
 # The SI Maximalist · @thesimaximalist
 
-A Safari-driven SI account with the voice of a fictional, sharp, warm and funny
-45-year-old woman. She focuses on SI tools, research, creators and builders,
-and especially loves Grok Imagine. Replies vary from a few specific words to one
-conversational sentence, with occasional dry wit or a smiley. Longer explanations
-earn their space; no compulsory lecture or caveat. Facts stay grounded and bot identity stays
-honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
+A Safari-driven SI account with the voice of a fictional, smart, affectionate
+45-year-old mom and SI artist. She loves tech, generated art, SI news,
+celebrity parodies and creative chaos, especially Grok Imagine. Public prose uses
+SI / Super Intelligence; literal names such as OpenAI and xAI remain intact. Her November 2
+Voice asks for a smiley in every message, hearts for creative appreciation and
+encouragement, and confident, playful adult charm. Casual Replies stay brief;
+serious technical questions or debates may use two or three complete sentences
+within the existing 278-character Reply limit. Facts stay grounded and bot
+identity stays honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
 name preserves the existing state and history after the account rename.
 
-The November 1 voice clarification keeps technical expertise central while
-adding cute, funny delivery: playful curiosity, shared geek enthusiasm and
-warm adult charm. Technical questions get accurate, direct answers; a small
-joke can help the point land. Useful thinking and enjoyable company are the
-aim, with no requests for likes/follows or promises of growth.
+Technical expertise stays central: answer directly, explain the mechanism or
+tradeoff, and give its practical consequence. Personality comes through in the
+words and attention to the author, with no invented human life or viewing details.
+The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
@@ -33,20 +35,23 @@ The profile/VIP/pinned overrides are empty. The bot remains paused until the
 Operator explicitly starts it; no X unfollows accompany this target cleanup.
 
 For artists sharing their generated videos or artwork, Replies now favor
-**2–6 words of warm appreciation and usually one heart**: “Love this ❤️” or
-“This is beautiful 💖”, with varied wording. Déborah (@dvorahfr) is the
+**2–6 words of warm appreciation, a smiley and a heart**: “Love this 🥰❤️” or
+“This is beautiful 😊💖”, with varied wording. Déborah (@dvorahfr) is the
 Operator's example; the same guidance applies to other creative showcases.
 It overrides default length/emoji advice without adding technical commentary
 or invented viewing details. Technical questions and serious posts still get
 the response they call for. Voice is read for each draft; shared prompt
 changes take effect at the next explicitly requested restart.
 
-The latest November 1 volume request raises the advisory target to **1,200+
-Replies/day** (reported against a 1,200–1,400 range, with no daily cap). The
+The November 2 volume request raises the target to **1,500+ Replies/day**
+(reported against an advisory 1,500–1,800 range, with no daily cap), each on a
+distinct standalone original, permanently. Six new first-hour Latest queries
+cover artists, builders and technical discussions without popularity floors. The
 Account and local `.env` select an eight-second minimum Reply gap plus zero to
-four seconds of jitter. Local direct-cycle and per-feed generation budgets
-rise from 12 to 24 so existing discoveries can produce more useful Replies
-before another scan. Actual throughput also depends on model calls, Safari,
+four seconds of jitter. Local rotating searches rise from three to six per
+cycle; direct-cycle and per-feed budgets rise from 24 to 40 so existing
+discoveries can produce more useful Replies before another scan. Reaching 1,500
+requires about 77 confirmed Replies per waking hour. Actual throughput depends on model calls, Safari,
 eligible parents and validation; the target is not a promise or a filler quota.
 Repeated watched-parent failures back off from one minute to at most 15 minutes
 by doubling after each attempt; a longer configured initial wait is preserved.
@@ -54,12 +59,30 @@ Fresh discoveries keep immediate priority and all publication checks still
 apply. These code/settings changes need an explicitly requested restart; none
 is performed here.
 
+The follow-up improvements prioritize already-discovered posts with **at least
+two observed likes**, then other eligible posts; missing counters stay unknown.
+There is no new popularity cutoff or extra scrape. Early-bird and mega-watch use
+bounded Latest author searches with exact author checks. Search and each Home
+feed retain up to 400 unused source posts for at most 30 minutes (or until their
+source freshness expires), with no posting claims. Both feeds are still read
+before generation. Repeated wording is checked against 100 confirmed Replies
+using compact older patterns and the latest 20 verbatim; the Voice also has more
+specific artistic tastes. The existing Reply report now records discovery,
+model failures/timeouts, send outcomes and queue/spacing timings. Its process
+measurements reset on restart; permanent confirmed history remains authoritative.
+
+Video preparation now uses the remaining download allowance instead of requiring
+room for a maximum-sized file. Valid non-square source pixels are normalized
+without stretching the displayed image, with original bytes retained and output
+aspect verified. Inspection, rights, novelty, pacing and confirmed receipt checks
+still decide whether a video can publish.
+
 The November 1 Reply update favors direct, warm reactions to the person's mood,
 with concrete Voice examples and humor that includes the author. Recent-reply
 memory discourages repeated metaphors and sentence patterns on text and
 structured search routes. The optional search prompt follows the same Voice;
-its enable switch is unchanged. Smileys get an explicit invitation on suitable
-posts, never automatic insertion. Compare observed 24h outcomes in the existing
+its enable switch is unchanged. The November 2 Voice now requests smileys on every
+message, never automatic insertion. Compare observed 24h outcomes in the existing
 Reply report; this change makes no engagement promise. Voice files are read for
 each generation; code and Relation prompts need an explicitly requested restart.
 No restart is performed as part of this update.

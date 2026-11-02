@@ -45,6 +45,7 @@ class Refusal(Enum):
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     TOPIC = "source outside engagement niche"
+    STALE_CANDIDATE = "buffered source expired"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
     @property

@@ -65,6 +65,31 @@ def test_prepared_search_reply_uses_si_before_length_checks_and_logging(chokepoi
     assert item.text == "AI source text"
 
 
+@pytest.mark.parametrize("outcome", list(WriteOutcome))
+def test_pipeline_diagnostics_distinguish_confirmed_uncertain_and_dry_runs(llm, chokepoint, outcome):
+    from src.core import reply_diagnostics
+    chokepoint.answer = outcome
+    assert run(job(), [candidate(fresh("builder"), "SI model needs evaluation")]) == int(bool(outcome))
+    shown = reply_diagnostics.snapshot()["stages"]
+    assert shown["send"][outcome.value]["count"] == 1
+    assert shown["generation"]["written"]["count"] == 1
+    assert len(logged()) == int(bool(outcome))
+
+
+def test_timeout_is_measured_without_a_send_and_telemetry_failure_cannot_hide_success(monkeypatch, llm, chokepoint):
+    from src.core import reply_diagnostics
+    llm.default = LLMResult(124, "", "timeout")
+    run(job(), [candidate(fresh("builder", n=1), "SI model needs evaluation")])
+    assert reply_diagnostics.snapshot()["stages"]["generation"]["timeout"]["count"] == 1
+    assert chokepoint.sent == []
+    def fail(*args, **kw):
+        raise OSError("optional measurement failed")
+    monkeypatch.setattr(reply_diagnostics.TRACKER, "record", fail)
+    llm.default = "Inference batching can improve throughput 🙂"
+    assert run(job(), [candidate(fresh("builder", n=2), "SI model needs evaluation")]) == 1
+    assert len(logged()) == 1
+
+
 # --- Reply admission comes first ----------------------------------------------
 
 

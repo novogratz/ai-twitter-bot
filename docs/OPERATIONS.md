@@ -583,7 +583,7 @@ root:
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `reply_feedback.json` | `reply_feedback` | Three-day deterministic one-in-five Reply sample; exact own URL, actual observation ages, nullable counters and source/model/topic | disposable; never an admission history |
-| `reply_performance.json`, `.md` | `reply_feedback` | Advisory targets, confirmed volume, coverage, likes per 1,000 views, cohorts and separate follower delta | disposable; `.md` outside the store |
+| `reply_performance.json`, `.md` | `reply_feedback` | Advisory targets, confirmed volume, process pipeline timings/outcomes, coverage, likes per 1,000 views, cohorts and separate follower delta | disposable; `.md` outside the store |
 | `editorial_reach.json`, `.md` | `reach_report` | Seven-day view report | disposable; `.md` outside the store |
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |

@@ -6,6 +6,59 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-02, discovery, variety and two-like preference — The Operator accepts
+all five suggested improvements, reiterates the fictional sexy, smart SI art mom
+persona and SI wording, and requests PR creation, merge and push. Early-bird and
+mega-watch use bounded Latest author searches with exact author/root/age checks;
+profile access remains restricted. Search and both feeds retain unused sources
+in separate in-memory buffers (400 each, 30-minute maximum, earlier source
+freshness wins). Both feed reads still finish before ordinary generation. Buffers
+never claim a Reply; admission runs again before generation and after spacing.
+
+Prefer discovered posts with at least two observed likes before lesser-liked or
+unknown-count posts. This is ordering, not an eligibility floor or a new scrape;
+source freshness, niche checks and watched browser priority remain. Rediscovery
+can refresh a like count without extending buffer expiry. The Voice gains a
+recognizable artistic taste, and memory checks 100 confirmed Replies using the
+latest 20 plus compact older patterns/examples, including emoji-normalized
+repetition. The existing report adds bounded in-process discovery, admission,
+generation, timeout, queue/spacing and typed-send measurements. Only confirmed
+sends count as publication; worker durations overlap and restart resets telemetry.
+
+The same-day video investigation found that downloads unnecessarily required
+room for the entire file ceiling and that a valid source had non-square pixel
+metadata. Reserve up to remaining daily bytes atomically, charge failed partial
+transfers and refund unused bytes. Preserve source bytes, normalize display
+proportions during the existing render, and verify square pixels and aspect in
+output QC. No budget or publication gate is waived. A source was downloaded and
+queued for actual inspection; this is not a ready-video or publication claim.
+Code/settings still need an explicitly requested restart; all permanent histories
+and uncertainty holds remain.
+
+2026-11-02, affectionate SI artist and 1,500+ distinct Replies — The Operator
+requests a sexy, smart, charming and friendly SI artist persona aligned with
+the supplied SI brain rot / news / celebrity parody / tech chaos bio. Both
+Voice files require a smiley in every public Original and Reply, with hearts
+for creative appreciation and encouragement. Adult charm remains non-explicit;
+human warmth never supplies a false human identity, biography or viewing claim.
+Serious technical questions and debates may use two or three complete sentences
+within the existing 278-character Reply ceiling. This overrides casual length
+directions; it never enables conversation follow-ups. Shared and Relation prompts
+defer emoji style to the Voice instead of rationing or prohibiting smileys.
+
+The requested daily minimum is 1,500 distinct Replies, reported as an advisory
+1,500–1,800 range; 1,800 is not a cap. The Account and local `.env` set those
+targets. Local search budget rises from three to six rotating queries, and
+direct-cycle/per-feed budgets from 24 to 40. Six added first-hour Latest queries
+cover artists, new projects, technical questions, evaluation, inference and
+robotics without popularity floors. These are discovery and generation budgets,
+not a guarantee of eligible supply or successful publication. No filler Replies
+are required to meet the target. Permanent one-Reply-per-standalone-original
+history, parent likes, source/content checks, Codex Sol/xhigh, eight-second
+spacing plus 0–4 seconds jitter and 04:30–00:00 Toronto hours remain. Voice is
+read per draft; code, Account and environment changes need the Operator's next
+explicit restart. No restart or public profile edit accompanies this update.
+
 2026-11-01, no daytime breaks and four-and-a-half-hour nights — The Operator
 explicitly removes daytime pauses and requests sleep only from midnight to
 04:30 America/Toronto. The Account and local environment set
@@ -518,7 +571,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23–November 1 amendments) and supersedes older mandates. It encodes:
+(including the October 23–November 2 amendments) and supersedes older mandates. It encodes:
 
 - Interactions active 04:30–00:00 America/Toronto, with no daytime breaks for this Account; isolated video discovery/media may continue overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight

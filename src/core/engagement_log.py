@@ -4,13 +4,13 @@ import re
 import threading
 from collections import deque
 from datetime import datetime
-from . import config
+from . import config, settings
 from .pattern_tags import normalize as _normalize_pattern
 from .pillar_tags import classify as _classify_pillar
 
 _MEMORY_LOCK = threading.RLock()
 _memory_key = None
-_memory = deque(maxlen=40)
+_memory = deque()
 
 
 def _log_key():
@@ -28,8 +28,12 @@ def recent_replies(limit: int = 20) -> list[str]:
     Reload once on startup or an external append; our own appends update the
     small cache directly. A large history is not rescanned for every draft.
     """
-    global _memory_key
+    global _memory_key, _memory
     with _MEMORY_LOCK:
+        capacity = settings.get("REPLY_RECENT_MEMORY_COUNT")
+        if _memory.maxlen != capacity:
+            _memory = deque(maxlen=capacity)
+            _memory_key = None
         key = _log_key()
         if key != _memory_key:
             _memory.clear()

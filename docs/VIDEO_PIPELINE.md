@@ -678,6 +678,21 @@ the legacy ceiling/spacing, even though the video journal is separate from the
 historical JSON ledger. The 04:30 interaction wake and disabled daytime breaks
 remain when the video feature is disabled.
 
+## Download allowance and source pixel aspect
+
+November 2: byte reservations now take up to the remaining global daily download
+allowance, atomically across workers. A source smaller than the file ceiling can
+still fit near the daily limit. Every attempt, including partial failures, charges
+actual bytes and refunds unused allowance; zero allowance defers. Source URLs,
+access policy, file and storage ceilings remain unchanged.
+
+Original bytes remain immutable. Probe accepts valid non-square pixel metadata
+within the existing display-aspect bounds. Rendering crops in source raster
+coordinates, then scales for the source pixel aspect and writes square pixels.
+Output QC checks displayed proportions as well as duration, frame rate, audio,
+black/frozen frames and the existing inspected watermark/overlay conditions.
+This repair does not approve the clip's content or make a held source publishable.
+
 ## Reporting, tests and unfinished live verification
 
 Recorded test counts, the concurrent-load result, crash recovery and the exact

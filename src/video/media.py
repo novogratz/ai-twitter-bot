@@ -107,12 +107,14 @@ def probe(path, cfg):
     duration = float(data["format"]["duration"])
     fps = float(Fraction(video["avg_frame_rate"]))
     width, height = int(video["width"]), int(video["height"])
+    raw_sar = video.get("sample_aspect_ratio", "1:1")
+    sar = float(Fraction(raw_sar.replace(":", "/"))) if raw_sar != "N/A" else 1.0
     if (not audio or not .5 <= duration <= cfg.max_duration_seconds or not 1 <= fps <= 60
             or not 32 <= width <= 4096 or not 32 <= height <= 4096 or not 1 / 3 <= width / height <= 3
-            or video.get("sample_aspect_ratio", "1:1") not in ("1:1", "N/A")
+            or not math.isfinite(sar) or not 1 / 16 <= sar <= 16 or not 1 / 3 <= width * sar / height <= 3
             or any(s.get("side_data_type") == "Display Matrix" and s.get("rotation", 0) != 0 for s in video.get("side_data_list", []))):
         raise ValueError("unsupported duration, audio, rotation, aspect, dimensions or genuine frame rate")
-    return {"duration": duration, "width": width, "height": height, "fps": fps,
+    return {"duration": duration, "width": width, "height": height, "fps": fps, "sample_aspect_ratio": sar,
             "audio_start": float(audio.get("start_time", 0)), "video_start": float(video.get("start_time", 0)),
             "video_codec": video["codec_name"], "audio_codec": audio["codec_name"]}
 
@@ -230,21 +232,23 @@ def download(doc, destination, cfg, store, now):
         finally:
             temp.unlink(missing_ok=True)
         return
-    if not store.budget(doc["platform"], "download_bytes", cfg.max_download_bytes, cfg.download_budget_bytes, now):
-        raise AccessError("daily download budget exhausted")
+    allowance = int(store.reserve_up_to(doc["platform"], "download_bytes", cfg.max_download_bytes,
+                                        cfg.download_budget_bytes, now))
+    if not allowance:
+        raise Deferred("daily download budget exhausted")
     temp = destination.with_suffix(".partial")
     consumed = 0
     try:
         with temp.open("xb") as out:
             if doc.get("local_file"):
                 source = imported_file(doc["local_file"], cfg.local_import_roots)
-                if source.stat().st_size > cfg.max_download_bytes:
+                if source.stat().st_size > allowance:
                     raise AccessError("source exceeds download size cap")
                 with source.open("rb") as stream:
                     shutil.copyfileobj(stream, out, 65536)
             else:
                 request(doc["media_url"], hosts=cfg.media_hosts, sink=out,
-                        max_bytes=cfg.max_download_bytes, timeout=cfg.task_timeout_seconds,
+                        max_bytes=allowance, timeout=cfg.task_timeout_seconds,
                         mime={"video/mp4", "video/quicktime", "video/webm"})
             out.flush()
             os.fsync(out.fileno())
@@ -254,7 +258,7 @@ def download(doc, destination, cfg, store, now):
     finally:
         if temp.exists():
             consumed = max(consumed, temp.stat().st_size)
-        store.refund_budget(doc["platform"], "download_bytes", max(0, cfg.max_download_bytes - consumed), now)
+        store.refund_budget(doc["platform"], "download_bytes", max(0, allowance - consumed), now)
         temp.unlink(missing_ok=True)
 
 
@@ -294,8 +298,11 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("overlay requires unavailable cleanup; no inpainting is pretended")
     if not cfg.watermark or not cfg.watermark.startswith("@"):
         raise ValueError("operator watermark missing")
-    scale = min(1, 1080 / min(w, h), 1920 / max(w, h))
-    ow, oh = int(w * scale) // 2 * 2, int(h * scale) // 2 * 2
+    # Preserve display proportions when converting non-square source pixels.
+    # Crop/OCR coordinates remain in the original raster; normalize afterwards.
+    display_w = w * info.get("sample_aspect_ratio", 1.0)
+    scale = min(1, 1080 / min(display_w, h), 1920 / max(display_w, h))
+    ow, oh = int(display_w * scale) // 2 * 2, int(h * scale) // 2 * 2
     font_size = max(14, int(ow * .025))
     font = ImageFont.truetype(cfg.font_file, font_size)
     box = font.getbbox(cfg.watermark)
@@ -328,13 +335,20 @@ def render(original, output, info, evidence, cfg):
 
 
 def technical_qc(original, output, original_info, cfg):
-    import numpy as np
     result = probe(output, cfg)
     ffmpeg(["-xerror", "-protocol_whitelist", "file,pipe", "-i", str(output), "-f", "null", "-"], cfg)
     if abs(result["duration"] - original_info["duration"]) > .15 or abs(result["fps"] - original_info["fps"]) > .1:
         raise ValueError("duration or genuine frame rate changed")
     if result["video_codec"] != "h264" or result["audio_codec"] != "aac":
         raise ValueError("output codec mismatch")
+    if result.get("sample_aspect_ratio", 1.0) != 1.0:
+        raise ValueError("output pixels are not square")
+    original_ratio = original_info["width"] * original_info.get("sample_aspect_ratio", 1.0) / original_info["height"]
+    # Existing safe crops allow a small aspect change; include even-pixel rounding.
+    tolerance = .015 * original_info.get("sample_aspect_ratio", 1.0) + 2 / result["height"] + 2 * original_ratio / result["height"]
+    if abs(result["width"] / result["height"] - original_ratio) > tolerance:
+        raise ValueError("display proportions changed")
+    import numpy as np
     a, b = audio_samples(original, cfg), audio_samples(output, cfg)
     n = min(len(a), len(b))
     correlation = float(np.corrcoef(a[:n], b[:n])[0, 1])

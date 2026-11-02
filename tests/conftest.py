@@ -279,6 +279,11 @@ def _fresh_job_memory(monkeypatch):
     monkeypatch.setattr(_pipeline, "_skipped", {})
     from src.replies import direct_reply as _dr
     monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSET", [0])
+    from src.replies import candidate_buffer as _buffer
+    monkeypatch.setattr(_buffer, "SEARCH", _buffer.Buffer())
+    monkeypatch.setattr(_buffer, "FEEDS", {name: _buffer.Buffer() for name in ("FEED", "FOLLOWING")})
+    from src.core import reply_diagnostics as _diagnostics
+    monkeypatch.setattr(_diagnostics, "TRACKER", _diagnostics.Tracker())
     from src.guards import content_guard as _cg
     monkeypatch.setattr(_cg, "_RECENT_NORM", [])
     yield

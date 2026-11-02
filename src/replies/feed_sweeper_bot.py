@@ -18,7 +18,7 @@ from ..x import x_urls
 from ..core import config, settings
 from ..core.logger import log
 from ..guards.reply_admission import is_blocked_account
-from . import reply_pipeline, reply_source
+from . import reply_pipeline, reply_source, candidate_buffer
 from .direct_reply import reply_call
 
 
@@ -71,14 +71,17 @@ def run_feed_sweep_cycle():
                                         max_tweets=settings.get("FEED_SWEEP_SCAN_LIMIT"), text_limit=1200)
         feeds.append((source, tweets))
         log.info("[SWEEP] %s scan complete: %s posts.", source, len(tweets))
-    cycle = reply_pipeline.Cycle()
+    # Retain both discoveries even if drafting the first feed hits a quota.
     for source, tweets in feeds:
-        _sweep_one_feed(source, tweets, cycle)
+        _buffer_one_feed(source, tweets)
+    cycle = reply_pipeline.Cycle()
+    for source, _ in feeds:
+        _sweep_one_feed(source, cycle)
         if cycle.rate_limited:
             break
 
 
-def _sweep_one_feed(source, tweets, cycle):
+def _buffer_one_feed(source, tweets):
     if not tweets:
         log.info(f"[SWEEP] No tweets scraped from {source}.")
         return
@@ -94,7 +97,11 @@ def _sweep_one_feed(source, tweets, cycle):
         root_only=True, niche=True, order=reply_source.Order.FRESH_AND_RISING)
     reply_candidates = reply_source.select(tweets, declaration, label)
 
-    job = reply_pipeline.Job("feed_sweep", label, reply_call=reply_call, pipelined=True)
-    replies_done = reply_pipeline.run(job, reply_candidates, cycle,
-                                      max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
+    candidate_buffer.FEEDS[source].offer(reply_candidates, max_age=declaration.max_age)
+
+
+def _sweep_one_feed(source, cycle):
+    job = reply_pipeline.Job("feed_sweep", f"FEED-SWEEP-{source}", reply_call=reply_call, pipelined=True)
+    replies_done = candidate_buffer.FEEDS[source].run(
+        job, cycle, max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")

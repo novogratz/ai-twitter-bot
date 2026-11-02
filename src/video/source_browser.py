@@ -8,7 +8,7 @@ import time
 from urllib.parse import parse_qs, urlsplit
 
 from . import ranking
-from .security import AccessError, request
+from .security import AccessError, Deferred, request
 
 
 def media_host(url):
@@ -198,8 +198,11 @@ def download_player(doc, destination, cfg, store, now):
             path = Path(folder) / (kind + ".m4s")
             succeeded = False
             for url in source[kind]:
-                if not store.budget("bilibili", "download_bytes", cfg.max_download_bytes, cfg.download_budget_bytes, now):
-                    raise AccessError("daily download budget exhausted")
+                allowance = int(store.reserve_up_to("bilibili", "download_bytes", cfg.max_download_bytes - total,
+                                                    cfg.download_budget_bytes, now))
+                if not allowance:
+                    raise Deferred("daily download budget exhausted")
+                started = False
                 try:
                     timeout = cfg.task_timeout_seconds
                     if media._job_deadline is not None:
@@ -207,16 +210,17 @@ def download_player(doc, destination, cfg, store, now):
                     if timeout <= 0:
                         raise TimeoutError("complete source-download job deadline")
                     with path.open("wb") as stream:
+                        started = True
                         request(url, hosts={media_host(url)}, headers={"User-Agent": source["user_agent"],
                             "Referer": "https://www.bilibili.com/"}, sink=stream,
-                            max_bytes=cfg.max_download_bytes - total, timeout=timeout,
+                            max_bytes=allowance, timeout=timeout,
                             mime={"video/mp4", "audio/mp4", "application/octet-stream"})
                     succeeded = True
                 except (AccessError, TimeoutError, OSError):
                     pass
                 finally:
-                    used = path.stat().st_size if path.exists() else 0
-                    store.refund_budget("bilibili", "download_bytes", max(0, cfg.max_download_bytes - used), now)
+                    used = path.stat().st_size if started and path.exists() else 0
+                    store.refund_budget("bilibili", "download_bytes", max(0, allowance - used), now)
                 if succeeded:
                     break
             if not succeeded:
