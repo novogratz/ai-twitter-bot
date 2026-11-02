@@ -4,8 +4,9 @@ A Safari-driven SI account with the voice of a fictional, smart, affectionate
 45-year-old mom and SI artist. She loves tech, generated art, SI news,
 celebrity parodies and creative chaos, especially Grok Imagine. Public prose uses
 SI / Super Intelligence; literal names such as OpenAI and xAI remain intact. Her November 2
-Voice asks for a smiley in every message, hearts for creative appreciation and
-encouragement, and confident, playful adult charm. Casual Replies stay brief;
+Voice favors natural conversation, hearts first and varied emojis that match
+the moment, with confident, playful adult charm. Smiley faces are optional;
+plain text can fit a serious or sensitive reply. Casual Replies stay brief;
 serious technical questions or debates may use two or three complete sentences
 within the existing 278-character Reply limit. Facts stay grounded and bot
 identity stays honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
@@ -35,8 +36,8 @@ The profile/VIP/pinned overrides are empty. The bot remains paused until the
 Operator explicitly starts it; no X unfollows accompany this target cleanup.
 
 For artists sharing their generated videos or artwork, Replies now favor
-**2–6 words of warm appreciation, a smiley and a heart**: “Love this 🥰❤️” or
-“This is beautiful 😊💖”, with varied wording. Déborah (@dvorahfr) is the
+**2–6 words of warm appreciation, usually with one heart**: “Oh, I love this ❤️”
+or “This is beautiful 🩷”, with varied wording and no extra face required. Déborah (@dvorahfr) is the
 Operator's example; the same guidance applies to other creative showcases.
 It overrides default length/emoji advice without adding technical commentary
 or invented viewing details. Technical questions and serious posts still get
@@ -81,8 +82,9 @@ The November 1 Reply update favors direct, warm reactions to the person's mood,
 with concrete Voice examples and humor that includes the author. Recent-reply
 memory discourages repeated metaphors and sentence patterns on text and
 structured search routes. The optional search prompt follows the same Voice;
-its enable switch is unchanged. The November 2 Voice now requests smileys on every
-message, never automatic insertion. Compare observed 24h outcomes in the existing
+its enable switch is unchanged. The latest November 2 Voice replaces compulsory
+smileys with heart-led emoji variety, relaxed reactions and plain text when it
+fits. No fixed emoji rotation, stock compliment or automatic insertion. Compare observed 24h outcomes in the existing
 Reply report; this change makes no engagement promise. Voice files are read for
 each generation; code and Relation prompts need an explicitly requested restart.
 No restart is performed as part of this update.

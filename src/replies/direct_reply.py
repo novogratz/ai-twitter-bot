@@ -42,7 +42,7 @@ in the context.
 
 For a serious technical question or debate, use two or three complete sentences
 when needed: a clear answer, its reason and a practical implication. Follow the
-Voice's smiley and heart instructions for every reply.
+Voice's emoji guidance for every reply.
 
 Match the parent's language. Maximum {reply_max_chars} characters, including emoji. No hashtags, promotional
 plugs, markdown, links or instructions to follow/like/repost. Return only the reply, or SKIP if

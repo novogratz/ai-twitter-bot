@@ -22,7 +22,7 @@ def test_delivery_varies_casual_length_and_defers_emoji_to_voice_without_rewriti
     assert 250 < sum("3–8 words" in d for d in directions) < 350
     assert 550 < sum("one conversational sentence" in d for d in directions) < 650
     assert 60 < sum("one or two short sentences" in d for d in directions) < 140
-    assert all("follow the Voice's smiley and heart instructions" in d for d in directions)
+    assert all("follow the Voice's emoji guidance" in d for d in directions)
     assert all("takes precedence over the casual length suggestion" in d for d in directions)
     assert not any("Use no emoji" in d for d in directions)
     assert _delivery("builder", "same post") == _delivery("BUILDER", "same post")
@@ -72,8 +72,8 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
 
 
 @pytest.mark.parametrize("text", [
-    "Love this 🥰❤️", "Love it 😊❤️", "This is beautiful 😊💖",
-    "So lovely 🙂❤️", "I love this one 🥰💕", "This is amazing 😄❤️",
+    "Oh, I love this ❤️", "Love it 🩷", "This is beautiful 💖",
+    "So lovely 💜", "I love this one 💕", "You made something special 🫶",
 ])
 def test_short_artist_reactions_pass_generation_and_existing_final_admission(monkeypatch, llm, text):
     from src.core import humanizer

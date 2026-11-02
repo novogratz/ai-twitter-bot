@@ -326,7 +326,7 @@ leaves it `FAILED`; an answer is `ANSWERED`. Every result names the provider
 and model that answered, or failed last: the fallback's when it answered.
 The Reply generator assigns stable casual length suggestions per parent;
 serious technical questions can use two or three sentences within the existing
-278-character Reply ceiling. As of November 2 it defers smileys and hearts to
+278-character Reply ceiling. As of November 2 it defers emoji choices and frequency to
 the Account Voice, with no automatic emoji insertion or word-count trimming.
 Direct Reply routes supply up to 1,200 source characters. The content guard
 accepts specific short English Replies down to 8 characters, while generic
