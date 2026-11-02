@@ -1,5 +1,21 @@
 # Editorial policy — November 1, 2026
 
+## Latest waking-hours instruction
+
+The Operator removes all daytime breaks and requests overnight sleep only from
+**00:00 to 04:30 America/Toronto**. The Account and local `.env` set
+`HOURLY_BREAK_MINUTES=0`. Interactions are eligible continuously from 04:30 until
+midnight, subject to the existing spacing, source/content checks and permanent
+standalone Reply deduplication. These are local clock boundaries, including DST.
+
+Video publication and startup expiry use the shared interaction clock: the
+extra half-hour before 04:30 neither permits posting nor consumes startup
+eligible time. The eight scheduled video slots are unchanged. Separate video
+discovery/media processes continue overnight. Optional break support remains
+available to other configurations. This instruction supersedes the earlier
+six-break plan and 04:00/03:30 wake times. Deployment settings take effect on
+the Operator's next manual restart; no posting history is reset.
+
 ## Latest caption and schedule instruction
 
 The Account now posts at 07:00, 07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15
@@ -980,8 +996,8 @@ after sixty posting-eligible minutes; no missed-slot catch-up or burst is allowe
 An uncertain create-post request holds its slot and content until positive
 reconciliation; an empty search is not evidence of non-publication.
 
-The requested overnight interval is **00:00–04:00 America/Toronto**, superseding
-the October 31 03:30 wake. Existing six daytime interaction breaks remain.
+The latest requested overnight interval is **00:00–04:30 America/Toronto**,
+superseding the initial video amendment's 04:00 wake. Daytime breaks are disabled.
 Separate discovery and media processes continue overnight; they do not use
 Safari or the Reply model route. Publication observes the interaction cooldown.
 

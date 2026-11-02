@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # printed. Since then the dry run adds the keys of NEW_KEYS.
 PRE_187 = {
     "timezone": "America/Toronto",
-    "active": "04:00–00:00",
+    "active": "04:30–00:00",
     "min_target_posts": 3,
     "target_posts": 6,
     "max_profile_posts": 8,
@@ -135,7 +135,7 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 10, "REPLY_JITTER_SECONDS": 4,
+        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
         "REPLY_DAILY_TARGET_MIN": 1200, "REPLY_DAILY_TARGET_MAX": 1400}
     assert shown["settings_warnings"] == []
 

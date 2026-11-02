@@ -1,5 +1,20 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-01 — Remove daytime pauses and share the 04:30 wake
+
+The Operator restarted the bot during its stable 19:42–19:52 break and then
+requested no daytime pauses and four-and-a-half-hour nights. The Account and
+local environment now set `HOURLY_BREAK_MINUTES=0`; sleep is midnight–04:30
+Toronto. Reply spacing and permanent standalone deduplication are unchanged.
+
+The video clock previously duplicated a hardcoded 04:00 wake. It now reads the
+shared interaction boundary for posting eligibility, slot validation and startup
+eligible-time expiry, so an overnight startup cannot publish or age out early
+between 04:00 and 04:30. Tests cover both DST transitions, the exact wake edge,
+uninterrupted daytime admission and overnight startup deferral. Independent
+discovery/media work remains available overnight. The Operator requested a PR,
+merge, push and release while retaining manual control of the running bot.
+
 ## 2026-11-01 — Separate explicit clip choices from automatic ranking
 
 The Operator repeatedly selected an older downloaded clip, but automatic expiry

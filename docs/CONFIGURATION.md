@@ -12,13 +12,13 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 The Account keeps `BOT_ACCOUNT=theaishrink` for its state namespace while its
 handle is `thesimaximalist`; `previous_handles` includes `TheAIShrink`.
 Its `[limits]` selects `FEED_SCROLL_PASSES=20`, `FEED_SWEEP_SCAN_LIMIT=160` and
-`HOURLY_BREAK_MINUTES=10`. Other Accounts default to eight scrolls and no
-breaks. Feed reads collect every viewport and stop after three with no new
-posts. Breaks occupy ten minutes every three waking hours: six windows in
-hours 07, 10, 13, 16, 19 and 22 Toronto time, starting between minute 35 and 50.
-The legacy `HOURLY_BREAK_MINUTES` name controls duration; frequency is fixed
-at every three waking hours. The account, date and hour determine a repeatable
-plan shared by all workers and restarts.
+`HOURLY_BREAK_MINUTES=0`: no daytime breaks, with sleep from midnight to 04:30
+Toronto. The local `.env` also sets zero so its override cannot restore the old
+ten-minute pauses. Other Accounts default to eight scrolls and no breaks.
+Feed reads collect every viewport and stop after three with no new posts.
+If explicitly enabled in another configuration, the legacy break setting controls
+duration in six windows (hours 07, 10, 13, 16, 19 and 22); a repeatable account/day
+plan starts each between minutes 35 and 50. Zero disables this entire plan.
 
 The optional Account boolean `engagement_niche_only` defaults to false. The
 live Account enables it: `niche.post` supplies AI/SI evidence and
@@ -132,7 +132,7 @@ hold whatever `.env` says:
 
 | Rule | Where |
 |---|---|
-| Working hours 03:30–00:00 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
+| Working hours 04:30–00:00 America/Toronto, DST aware | `active_hours.WAKE`, `BEDTIME`; `BOT_TIMEZONE` in `src/core/config.py` |
 | `MIN_TARGET_POSTS_PER_DAY` 3, `TARGET_POSTS_PER_DAY` 6 | Constants in `src/core/config.py`; `config.post_targets()` caps both at the day's ceiling |
 | `MAX_PROFILE_POSTS_PER_DAY` 8, combined ceiling of profile publications | Constant in `src/core/config.py`; the day's ceiling, `config.posts_ceiling()`, is the lower of it and `MAX_ORIGINALS_PER_DAY` |
 | `MAX_ORIGINALS_PER_DAY` | Ceiling 8: the Account's `[limits]` or `.env` may lower it only |

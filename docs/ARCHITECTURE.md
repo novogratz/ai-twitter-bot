@@ -38,21 +38,26 @@ before touching the browser or a model).
 
 ## Waking hours
 
-`break_window()` derives a shared account/day/hour plan with no state file.
-With `HOURLY_BREAK_MINUTES=10`, a ten-minute pause starts between minutes 35 and
+The current Account sets `HOURLY_BREAK_MINUTES=0`, disabling daytime pauses.
+For configurations that enable breaks, `break_window()` derives a shared
+account/day/hour plan with no state file. With a value of 10, a pause starts between minutes 35 and
 50 every three waking hours: 07, 10, 13, 16, 19 and 22 Toronto time. This is
 six pauses per day, with the first after three waking hours. `break_until()`
 reports an active pause. `may_act()` and `require_active()` gate it everywhere;
 `ScheduledBreak` is an `OutsideActiveHours` subclass and never a health failure.
 `seconds_until_pause()` bounds model requests at the next break or midnight.
 
-`src/guards/active_hours.py` owns the clock: from 03:30 until the next midnight, DST
+`src/guards/active_hours.py` owns the clock: from 04:30 until the next midnight, DST
 handled by `zoneinfo`. The bounds are the `WAKE` and `BEDTIME` constants;
 `window_label()` renders them for messages. `require_active()` raises `OutsideActiveHours` outside
 that window or once a stop was requested; `awake_job()` turns a job into a
 no-op in the same cases (`may_act()`), and a job already running halts at its
 next `require_active()`. `is_active()` reads the clock only: the scheduler's
 pause/resume loop must not treat a stop as a wake-up boundary.
+
+Video eligibility and startup eligible-time accounting use the same `WAKE` and
+`bedtime()` boundaries. Separate discovery/media workers can continue overnight;
+Safari interactions and video publication wait until 04:30.
 
 Pausing the scheduler is not enough, because a job queued at 23:59 would still
 run. The check is repeated at each point where work leaves the process:

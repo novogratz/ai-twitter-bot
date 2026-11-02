@@ -92,13 +92,22 @@ def test_launch_idempotency_and_one_startup_per_calendar_day(video_store, video_
 
 def test_startup_cooldown_deferral_and_expiry(video_store, video_cfg, at):
     p.request_startup(video_store, "night", at(1), video_cfg, explicit_live=True)
-    p.tick_calendar(video_store, at(3, 59), video_cfg)
+    p.tick_calendar(video_store, at(4, 29), video_cfg)
     assert video_store.rows("SELECT state FROM startup")[0]["state"] == "pending"
-    assert p.reserve(video_store, at(3, 59), video_cfg) is None
-    p.tick_calendar(video_store, at(4, 59, 59), video_cfg)
+    assert p.reserve(video_store, at(4, 29), video_cfg) is None
+    p.tick_calendar(video_store, at(5, 29, 59), video_cfg)
     assert video_store.rows("SELECT state FROM startup")[0]["state"] == "pending"
-    p.tick_calendar(video_store, at(5), video_cfg)
+    p.tick_calendar(video_store, at(5, 30), video_cfg)
     assert video_store.rows("SELECT state FROM startup")[0]["state"] == "skipped"
+
+
+def test_ready_startup_video_defers_until_0430(video_store, video_cfg, ready, at):
+    p.request_startup(video_store, "night", at(1), video_cfg, explicit_live=True)
+    ready(when=at(4, 29))
+    assert p.reserve(video_store, at(4, 29, 59), video_cfg) is None
+    assert not video_store.rows("SELECT * FROM reservations")
+    row = p.reserve(video_store, at(4, 30), video_cfg)
+    assert row["startup"] == "night" and row["slot"] is None
 
 
 def test_startup_slot_collision_atomic_single_post(video_store, video_cfg, ready, at):

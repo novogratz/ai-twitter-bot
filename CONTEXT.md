@@ -270,18 +270,20 @@ _Avoid_: protected account, influencer
 ### Time and people
 
 **Waking hours**:
-The only period when the account acts externally, 03:30 to 00:00 Toronto
+The period when the account interacts on X, 04:30 to 00:00 Toronto
 time, ending at the next midnight. `active_hours.WAKE` and
 `active_hours.BEDTIME` hold the two bounds.
 _Avoid_: active hours, working day, awake
 
 **Scheduled break**:
 An optional pause during Waking hours, shared by all jobs and browser activity.
-The Account selects ten-minute breaks in most hours. The clock derives the same
-plan after a restart; it does not spend an action quota or create state.
+The Account disables these pauses with `HOURLY_BREAK_MINUTES=0`. If enabled for
+another configuration, the clock derives the same plan after a restart; it does
+not spend an action quota or create state.
 
 **Overnight**:
-00:00 through 04:29:59 Toronto time, when nothing external happens.
+00:00 through 04:29:59 Toronto time, when X interactions and publication pause.
+Independent video discovery/media work can continue.
 _Avoid_: bedtime, asleep, off hours
 
 **Operator**:

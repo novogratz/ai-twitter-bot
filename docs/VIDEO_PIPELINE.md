@@ -80,9 +80,10 @@ The current Account selects `publishing_transport = "safari"`, following the
 Operator's later request. Video posts reuse that same composer, write wrapper
 and Safari lock; X API credentials are unnecessary. The optional API adapter is
 retained for compatibility and refuses calls while Safari is selected.
-The explicitly requested interaction cooldown is midnight–04:00 Toronto; this
-is thirty minutes longer than the previously implemented 03:30 wake. Discovery
-and media are independent of the scheduler's overnight pause.
+The latest interaction cooldown is midnight–04:30 Toronto, with no daytime
+breaks for this Account. Video publishing and startup eligible-time accounting
+read the same interaction clock. Discovery and media are independent of the
+scheduler's overnight pause.
 
 ## Schedule and delivery semantics
 
@@ -126,8 +127,9 @@ on the next worker restart; all other gates remain.
 
 Explicit live activation creates a persistent request, unique by request ID and
 local request day. Ordinary worker/process starts create none. The startup
-request receives sixty minutes of eligible time, excluding midnight–04:00 and
-interaction breaks, including both DST transitions correctly. A request within fifteen minutes of
+request receives sixty minutes of eligible time, excluding midnight–04:30 and
+any explicitly configured interaction breaks (disabled for this Account),
+including both DST transitions correctly. A request within fifteen minutes of
 the next slot waits for that slot; a single confirmed post atomically fulfills
 both records. A unique fulfillment-day record prevents two startup posts on one
 Montreal calendar day, including requests deferred across midnight.
@@ -673,8 +675,8 @@ restore an older video database. Check unresolved submissions and today's
 profile activity before returning to the older editorial policy. Its shared
 guard includes today's confirmed video count and latest success when applying
 the legacy ceiling/spacing, even though the video journal is separate from the
-historical JSON ledger. The interaction wake
-change to 04:00 remains unless the Operator requests a separate policy change.
+historical JSON ledger. The 04:30 interaction wake and disabled daytime breaks
+remain when the video feature is disabled.
 
 ## Reporting, tests and unfinished live verification
 

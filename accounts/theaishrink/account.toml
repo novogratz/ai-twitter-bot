@@ -155,10 +155,11 @@ default = "relations/buddy.md"
 # set stricter for this Account: a value past the engine's bound is brought
 # back to it, with a [SETTINGS] warning at start. .env still wins over it.
 [limits]
-# Operator, 2026-10-23: deeper discovery and occasional ten-minute pauses.
+# Operator, 2026-10-23: deeper discovery.
 FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
-HOURLY_BREAK_MINUTES = 10
+# Operator, 2026-11-01: no daytime breaks; sleep midnight–04:30 Toronto.
+HOURLY_BREAK_MINUTES = 0
 # Operator, 2026-11-01: pursue 1,200+ Replies at the existing spacing floor.
 MIN_SECONDS_BETWEEN_REPLIES = 8
 REPLY_JITTER_SECONDS = 4
