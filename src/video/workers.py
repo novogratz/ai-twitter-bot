@@ -1,6 +1,9 @@
 """Independent processes; overnight discovery/media never enter Safari or Reply queues."""
 from contextlib import contextmanager
+from dataclasses import asdict
 import fcntl
+import hashlib
+import json
 import os
 from pathlib import Path
 import signal
@@ -19,6 +22,64 @@ from .security import Deferred
 
 ROLES = ("discovery", "media", "publisher")
 _ROLE_HOLDERS = {}
+
+
+def runtime_generation(cfg):
+    """Fingerprint the loaded configuration and startup code, never record secrets."""
+    root = Path(settings.PROJECT_ROOT).resolve()
+    account = settings.get("BOT_ACCOUNT")
+    config_path = Path(settings.get("VIDEO_CONFIG_FILE") or root / "accounts" / account / "video.toml").resolve()
+    paths = sorted(set((root / "src").rglob("*.py")) | {
+        root / "bin" / "video.py", root / "bin" / "video_av_probe.swift",
+        root / "requirements.txt", root / "requirements-video.txt", root / "accounts" / account / "account.toml", config_path})
+    effective = {key: settings.get(key) for key in settings.DECLARED}
+    digest = hashlib.sha256(json.dumps({"config": asdict(cfg), "settings": effective,
+        "python": sys.version, "executable": sys.executable}, sort_keys=True, ensure_ascii=False).encode())
+    latest = settings.source_modified_at()
+    for path in paths:
+        if path.is_file():
+            digest.update(str(path).encode())
+            digest.update(path.read_bytes())
+            latest = max(latest, path.stat().st_mtime)
+    return {"fingerprint": digest.hexdigest(), "files_modified_at": latest,
+            "project_root": str(root), "state_root": str(Path(state_store.root()).resolve())}
+
+
+def record_worker_runtime(store, role, owner, cfg):
+    import psutil
+    runtime = runtime_generation(cfg) | {"owner": owner, "pid": os.getpid(),
+        "process_started_at": psutil.Process(os.getpid()).create_time()}
+    with store.transaction() as db:
+        store.put_meta(db, "worker_runtime:" + role, runtime)
+        db.execute("INSERT INTO workers VALUES(?,?,?,'starting') ON CONFLICT(role) DO UPDATE SET "
+                   "owner=excluded.owner,heartbeat=excluded.heartbeat,detail=excluded.detail",
+                   (role, owner, time.time()))
+
+
+def verified_role_process(role, lock_path):
+    """A PID in a file is insufficient: verify process identity and the open lock."""
+    import psutil
+    if role not in ("discovery", "media"):
+        return None
+    try:
+        raw = lock_path.read_text().strip()
+        if not raw.isdigit() or int(raw) == os.getpid():
+            return None
+        process = psutil.Process(int(raw))
+        args = process.cmdline()
+        script = (Path(settings.PROJECT_ROOT).resolve() / "bin" / "video.py").resolve()
+        cwd = Path(process.cwd())
+        scripts = [Path(arg) if Path(arg).is_absolute() else cwd / arg for arg in args if arg.endswith("video.py")]
+        if args[-2:] != ["worker", role] or not any(path.resolve() == script for path in scripts):
+            return None
+        if not any(Path(item.path).resolve() == lock_path.resolve() for item in process.open_files()):
+            return None
+        # Recheck after process inspection in case ownership changed meanwhile.
+        if lock_path.read_text().strip() != raw:
+            return None
+        return process
+    except (OSError, ValueError, psutil.NoSuchProcess, psutil.AccessDenied):
+        return None
 
 
 def owns_role(role):
@@ -238,6 +299,34 @@ def _api_work(store, cfg, owner, now):
     return _x_work(store, cfg, owner, now)
 
 
+def _read_failure(store, stage, exc, now):
+    """Local failure reasons only; never echo provider text, page data or URLs."""
+    from .security import AccessError
+    reasons = (
+        "Safari could not open X", "Safari login/account could not be verified",
+        "Safari did not return readable page evidence", "browser read budget exhausted",
+        "browser fingerprint read budget exhausted", "Safari page failed to open",
+        "X page unavailable or rate limited", "unreadable X page is not an empty search",
+        "native video bytes are not accessible through the selected X transport",
+        "history/novelty media download budget exhausted",
+        "history contains inaccessible media; export or restore access before live selection",
+        "native video duration unavailable", "X video frames are not readable under browser origin policy",
+        "blank/static video frames cannot establish a sequence fingerprint", "exact status metrics unavailable",
+    )
+    reason = str(exc) if isinstance(exc, AccessError) and str(exc) in reasons else type(exc).__name__
+    store.event(now, "x_read_failed", stage, reason)
+    log.warning("[VIDEO] Browser %s failed: %s", stage, reason)
+    return reason
+
+
+def _shared_read_failure(exc):
+    """Account-wide denial and provider retry instructions still stop every lane."""
+    from .security import AccessError
+    return isinstance(exc, AccessError) and (
+        exc.status in (401, 403, 429) or exc.retry_after > 0
+        or str(exc) in ("Safari login/account could not be verified", "X page unavailable or rate limited"))
+
+
 def _x_work(store, cfg, owner, now):
     from ..core import work_priority
     upcoming = schedule.next_slot(schedule.utc_now(), cfg)
@@ -257,16 +346,21 @@ def _x_work(store, cfg, owner, now):
         circuit = "x"
     if not store.circuit_ready(circuit, now):
         return None
+    stage = "preflight"
     try:
         if cfg.publishing_transport == "safari":
             with work_priority.scope(priority):
                 client.preflight(force=False)
             store.set_meta("account_verified", True)
+            store.circuit(circuit, now, failed=False)
         client.critical_reads = True
-        if store.meta("next_reconciliation", 0) <= now:
+        stage = "reconciliation"
+        if store.meta("next_reconciliation", 0) <= now and store.circuit_ready(circuit + ":" + stage, now):
             with work_priority.scope(work_priority.REPLY):
                 reconcile.reconcile_unknown(store, client, now)
+            store.circuit(circuit + ":" + stage, now, failed=False)
             store.set_meta("next_reconciliation", now + 300)
+        stage = "novelty"
         job = store.claim("novelty", owner, now, cfg)
         if job:
             try:
@@ -280,6 +374,7 @@ def _x_work(store, cfg, owner, now):
                     return "closed novelty job"
                 with work_priority.scope(priority):
                     reconcile.novelty(store, candidate, client, cfg, now)
+                store.circuit(circuit + ":" + stage, now, failed=False)
                 store.finish(job, time.time(), repeat=12 * 3600)
             except Deferred as exc:
                 store.finish(job, time.time(), repeat=exc.retry_after)
@@ -287,27 +382,32 @@ def _x_work(store, cfg, owner, now):
                 store.finish(job, time.time(), repeat=30)
                 return "interaction cooldown"
             except Exception as exc:
-                detail = type(exc).__name__
-                from .security import AccessError
-                if isinstance(exc, AccessError):
-                    detail += ": " + config.safe_label(str(exc))
+                detail = _read_failure(store, stage, exc, now)
+                if _shared_read_failure(exc):
+                    store.circuit(circuit, now, failed=True, retry_after=exc.retry_after)
                 store.finish(job, time.time(), error=detail)
             return "novelty checked"
         client.critical_reads = False
-        if cfg.publishing_transport == "safari":
+        stage = "source"
+        if cfg.publishing_transport == "safari" and store.circuit_ready(circuit + ":" + stage, now):
             from .source_browser import capture_next
             with work_priority.scope(priority):
                 captured = capture_next(store, cfg, now)
             if captured:
+                store.circuit(circuit + ":" + stage, now, failed=False)
                 return "source player checked"
-        if not store.meta("history_import_complete", False):
+        stage = "history"
+        if not store.meta("history_import_complete", False) and store.circuit_ready(circuit + ":" + stage, now):
             if not reconcile.history_ready(store, cfg) or store.meta("next_history_backfill", 0) <= now:
                 store.set_meta("next_history_backfill", now + 300)
                 with work_priority.scope(priority if initial_history else work_priority.BACKGROUND):
                     reconcile.import_history(store, client, cfg, now)
+                store.circuit(circuit + ":" + stage, now, failed=False)
                 return "history page imported"
-        if store.meta("next_outcomes", 0) <= now:
+        stage = "outcomes"
+        if store.meta("next_outcomes", 0) <= now and store.circuit_ready(circuit + ":" + stage, now):
             reconcile.collect_outcomes(store, client, now)
+            store.circuit(circuit + ":" + stage, now, failed=False)
             store.set_meta("next_outcomes", now + 1200)
     except Deferred as exc:
         store.event(now, "x_read_pending", "publisher", str(exc))
@@ -315,8 +415,11 @@ def _x_work(store, cfg, owner, now):
     except OutsideActiveHours:
         return "interaction cooldown"
     except Exception as exc:
-        store.event(now, "x_read_failed", "media", type(exc).__name__)
-        store.circuit(circuit, now, failed=True, retry_after=getattr(exc, "retry_after", 0))
+        _read_failure(store, stage, exc, now)
+        # Login/read admission failures apply globally. An inaccessible archive
+        # clip or optional metrics page must never disable novelty/reconciliation.
+        failed_circuit = circuit if stage == "preflight" or _shared_read_failure(exc) else circuit + ":" + stage
+        store.circuit(failed_circuit, now, failed=True, retry_after=getattr(exc, "retry_after", 0))
     return None
 
 
@@ -337,6 +440,7 @@ def run(role, *, once=False):
     for sig in (signal.SIGTERM, signal.SIGINT):
         signal.signal(sig, shutdown)
     with role_lock(role):
+        record_worker_runtime(store, role, owner, cfg)
         seed_jobs(store, cfg, time.time())
         while not stop.is_set():
             try:
@@ -361,6 +465,8 @@ class Supervisor:
     def __init__(self):
         self.children = {}
         self.next_start = {}
+        self.retiring = {}
+        self.runtime = runtime_generation(config.load())
         self.browser_role = None
         self._claim_browser_role()
 
@@ -368,6 +474,42 @@ class Supervisor:
         if config.load().publishing_transport == "safari" and self.browser_role is None:
             self.browser_role = role_lock("publisher")
             self.browser_role.__enter__()
+
+    def _handover_stale_worker(self, store, role, lock_path):
+        """Retire only a verified old media/discovery process; leave its leases fenced."""
+        import psutil
+        process = verified_role_process(role, lock_path)
+        if process is None:
+            return
+        try:
+            started = process.create_time()
+            previous = store.meta("worker_runtime:" + role, {})
+            matching = (previous.get("pid") == process.pid
+                        and previous.get("process_started_at") == started
+                        and previous.get("project_root") == self.runtime["project_root"]
+                        and previous.get("state_root") == self.runtime["state_root"])
+            if matching:
+                obsolete = previous.get("fingerprint") != self.runtime["fingerprint"]
+            elif previous:
+                return  # mismatched/reused PID metadata is not proven ownership
+            else:
+                # Upgrade legacy workers only on positive evidence of a code/
+                # config update since their start. Unknown new processes stay.
+                obsolete = started < self.runtime["files_modified_at"]
+            if not obsolete:
+                return
+            identity = (process.pid, started)
+            if self.retiring.get(role) == identity:
+                return  # one graceful signal; wait for the actual role lock release
+            checked = verified_role_process(role, lock_path)
+            if checked is None or checked.pid != process.pid or checked.create_time() != started:
+                return
+            process.terminate()
+            self.retiring[role] = identity
+            log.info("[VIDEO] Retiring stale %s worker PID %s; replacement waits for its role lock.", role, process.pid)
+            store.event(time.time(), "worker_handover", role, "Verified earlier code/config generation sent SIGTERM; leases and publication claims retained")
+        except (psutil.NoSuchProcess, psutil.AccessDenied, OSError):
+            return
 
     def tick(self):
         if not config.enabled():
@@ -391,9 +533,11 @@ class Supervisor:
                     try:
                         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
                     except BlockingIOError:
+                        self._handover_stale_worker(store, role, Path(str(lock_path)))
                         continue  # independently supervised worker already owns this role
             script = Path(settings.PROJECT_ROOT).resolve() / "bin" / "video.py"
             self.children[role] = subprocess.Popen([sys.executable, str(script), "worker", role], start_new_session=True)
+            self.retiring.pop(role, None)
             self.next_start[role] = time.monotonic() + 30
 
     def stop(self):

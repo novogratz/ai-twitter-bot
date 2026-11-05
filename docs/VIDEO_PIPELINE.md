@@ -36,6 +36,35 @@ its existing normal-player capture. Login walls, absent publication metadata,
 missing media, unsupported streams and CDN restrictions remain visible holds.
 Finding a web link alone does not make a ready video.
 
+Each discovery/media process records its startup code/config fingerprint in the
+existing journal. A new main supervisor gracefully replaces an older generation
+only after verifying the exact repository command, process creation time and
+open account role-lock file. Legacy workers require evidence that source/config
+files changed after they started. Replacement waits for lock release and leaves
+leases and all publication claims intact; matching and unknown workers stay.
+
+Browser diagnostics identify preflight, reconciliation, novelty, source,
+history or outcome failures. Optional source/archive cooldowns cannot block
+critical novelty reads. Successful reads clear only their corresponding failure
+counter; account preflight remains a shared admission check. Novelty searches
+recognize ASCII, curly and CJK quoted song titles while retaining source-ID checks.
+For X sources, only the verified source status itself is excluded from other-copy
+matching; other statuses sharing its media remain candidates for duplicate checks.
+The exclusion requires current source-bound views within the 50,000 ceiling and
+is recorded in search evidence. Permanent own-post history is never excluded.
+
+Public-discovery cache hits consume no network-request units. A Codex admission
+deferral before launch refunds its newly reserved request, while failed started
+calls remain charged. These changes preserve the daily ceiling and publishing
+reserve and do not recalculate historical costs. Explicit account/rate-limit
+failures and provider Retry-After instructions still apply across browser reads.
+Native X fingerprints wait for decoded frames, using ordinary muted playback
+when the player exposes metadata only. A stalled seek can load once and then
+pause/reseek to the exact sample. `browser_video_access:<post_id>` records the
+loading/seek phase and readiness fields, including a first-frame stall. The
+25-second browser transaction, canvas restrictions and full-sequence requirement
+remain; a pending frame is never accepted as evidence.
+
 The Account allows `browser_upload_seconds = 180` for transfer **and X processing**;
 the default remains 45 seconds. The 19:00 live run reached processing after transfer
 but exceeded both 45 and 60 seconds before submission. Each wait remains bounded
@@ -57,6 +86,14 @@ across the full clip plus full audio classification; this is not every-frame
 or direct-hearing verification. Small OCR errors in our known watermark's band
 are corroborated by the exact renderer text and visual review. Retained source
 text still needs a matching original timestamp and position.
+When OCR misses retained source text, bounded local pixel comparison can
+corroborate the exact original/output region at the same sample. A native-frame
+fallback permits at most 100 milliseconds of encoder timing difference and
+requires both whole-frame agreement outside our watermark and a near-identical
+text region. It retains both hashes, timing and measured similarity in QC.
+It never overrides a model rejection or exempts a logo word. The saved-output
+review command reruns this check without another model call when the original
+review cache is valid.
 
 The actual corrected video was posted and verified at
 https://x.com/thesimaximalist/status/2116954024935362893 . The first receipt remains

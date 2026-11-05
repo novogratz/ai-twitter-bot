@@ -6,6 +6,34 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-04, recover stale video workers after the operator's start — The live
+start reused discovery/media processes from an earlier code generation. On a
+new main-process start, the supervisor compares code/config fingerprints and
+gracefully replaces an obsolete worker only after verifying its repository
+command, process identity and open account role-lock file. Replacement waits
+for lock release; publication claims, histories and job leases remain intact.
+Matching or unverified workers are left alone. This does not restart the main
+bot or create another Safari publisher.
+
+Browser read failures now identify the stage and a bounded local reason.
+Optional archive/source failures have separate cooldowns from critical novelty
+and reconciliation checks; preflight identity failures still stop browser work.
+Clip-specific novelty searches recognize curly and CJK title quotes as well as
+ASCII quotes. Actual source-identifier and video checks remain mandatory.
+For an authorized X source with current verified views, the exact source status
+is excluded from other-copy detection; other statuses, shared media and permanent
+own-history checks remain. Cached discovery and Codex admission waits consume
+no source request; failed started calls remain charged and historical costs stay.
+Retained-overlay OCR misses may be corroborated against hash-bound original
+pixels at the same sampled time. A native-frame fallback additionally requires
+whole-frame agreement outside our watermark within 100 milliseconds, then a
+near-identical text region. Model refusals, new/moved text and uncertain matches
+still hold the clip; no logo vocabulary is exempted.
+Native X fingerprint reads request ordinary muted playback when metadata exists
+but decoded frames are absent, then pause/reseek to the requested sample. The
+25-second transaction bound, canvas access restrictions and complete-sequence
+requirement remain. Stalled reads record the actual loading/seek phase.
+
 2026-11-04, sustained Replies and videos every two hours — The Operator requests
 more daytime Replies and prioritization of posts with strictly more than two
 likes. The Account and local environment retain twelve rotating searches,

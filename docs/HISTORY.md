@@ -1,5 +1,47 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-04 — Startup retained obsolete video processes
+
+The operator's 22:51 Toronto start loaded the ten-slot schedule and independent
+startup request, but discovery/media processes from the earlier run still held
+their role locks. The supervisor adopted them without comparing code versions.
+They retained old source-age and media behavior, including failed verification
+of the saved `BV1ykx46UEWz` source. Replacing only those two verified background
+processes let the existing supervisor launch current workers while confirmed
+Replies continued. The saved clip subsequently passed source inspection and
+rendered; those intermediate steps alone are not a publication receipt.
+
+A shared video browser circuit had also accumulated 43 failures and deferred
+all video reads until 23:51 despite successful live Reply writes. One audited
+recovery allowed fresh checks; no publication claim, history or budget changed.
+The code repair separates optional archive/source cooldowns from critical reads,
+adds bounded failure diagnostics, and makes future worker handover depend on
+verified process ownership and code/config fingerprints. CJK quoted song titles
+now yield clip-specific novelty queries rather than generic celebrity searches.
+
+Follow-up inspection found that public-discovery cache hits and model admission
+waits consumed source-request units despite making no network request. Future
+accounting charges actual research and keeps failed started calls charged; the
+existing day's costs are retained. X originals also needed an explicit exclusion
+of their own verified source status from other-copy detection. Other statuses,
+shared/unassociated media and permanent own-post history still participate.
+
+The saved dance's output review found four apparent added text samples, all
+retained source broadcast logos. Three matched the exact original sample pixels;
+one needed native-frame alignment because the render repeated a nearby frame.
+A read-only hash-bound reevaluation corroborated all four with the new bounded
+pixel comparison. The model's original review and the unchanged source/output
+bytes remain authoritative; no general logo exception was added.
+
+The 23:00 slot expired while those checks were running; the ordinary startup
+request remained pending. The media worker then recorded passing output QC with
+four pixel proofs, preserved audio and the account watermark. X novelty remained
+incomplete because an external result repeatedly exposed metadata without a
+decoded first frame. Fingerprinting now starts normal muted loading for that
+state, retains exact sample seeking and reports its phase. This main-process
+repair requires the operator's explicit restart; source/output QC alone is not
+a confirmed publication.
+
 ## 2026-11-04 — Empty video queue, sustained Replies and two-hour slots
 
 The Operator reports no videos over the last three days and requests a video

@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 
 from . import codex_session
 from .inspection import object_schema
-from .security import AccessError
+from .security import AccessError, Deferred
 
 
 def access_status(note, items):
@@ -81,7 +81,15 @@ Search request:
 """ + json.dumps({"platform": platform, "domains": sorted(HOSTS[platform]),
         "queries": selected, "creators": options.get("creators", []),
         "targets": cfg.targets, "now_utc": datetime.fromtimestamp(now, timezone.utc).isoformat()}, ensure_ascii=False)
-    answer, receipt = codex_session.call(store, cfg, prompt, output_schema, purpose="discovery")
+    if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
+        raise Deferred("source request budget exhausted")
+    try:
+        answer, receipt = codex_session.call(store, cfg, prompt, output_schema, purpose="discovery")
+    except Deferred:
+        # codex_session.call defers only during admission, before launching the
+        # provider. Failed/uncertain started calls remain charged.
+        store.refund_budget(platform, "requests", 1, now)
+        raise
     if "web_search" not in receipt["tools"]:
         raise AccessError("public discovery produced no actual search tool evidence")
     items = []

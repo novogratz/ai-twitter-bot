@@ -9,6 +9,67 @@ from src.video.store import Store
 from src.x import safari_video as browser
 
 
+@pytest.mark.parametrize("title", ['Example Star "Trouble Maker"', 'Example Star “Trouble Maker”',
+    'Example Star 《Trouble Maker》', 'Example Star 「Trouble Maker」', 'Example Star 『Trouble Maker』'])
+def test_source_quote_styles_keep_novelty_search_clip_specific(video_store, video_cfg, ready, at, title):
+    doc = ready()
+    doc["title"] = title
+    video_store.save_candidate("clip1", doc, at().timestamp(), state="held",
+                               fingerprint={"sha256": doc["original_sha256"], "visual": []})
+    calls = []
+    class Search:
+        def search(self, query, cursor):
+            calls.append(query)
+            return {"data": [], "meta": {}}
+    assert reconcile.novelty(video_store, video_store.candidate("clip1"), Search(), video_cfg, at().timestamp()) == "checked_no_match"
+    assert doc["canonical_url"] in calls[0] and '"clip1"' in calls[0]
+    assert calls[1] == '"Example Star" "Trouble Maker" has:videos -is:retweet'
+    assert not video_store.rows("SELECT * FROM reservations")
+
+
+@pytest.mark.parametrize("case,expected", [
+    ("original_only", "checked_no_match"), ("another_copy", "found_existing"),
+    ("shared_media", "found_existing"), ("unassociated_media", "found_existing"),
+    ("stale_views", "found_existing"), ("wrong_source_id", "found_existing"),
+])
+def test_known_x_source_does_not_reject_itself_but_other_copies_still_do(
+        video_store, video_cfg, ready, at, monkeypatch, case, expected):
+    doc = ready()
+    url = "https://x.com/creator/status/12345"
+    doc.update(platform="x", source_id="12345", canonical_url=url,
+               source_metrics={"views": 123, "observed_at": at().timestamp(), "source_url": url})
+    if case == "stale_views":
+        doc["source_metrics"]["observed_at"] -= 3601
+    if case == "wrong_source_id":
+        doc["source_id"] = "98765"
+    video_store.save_candidate("clip1", doc, at().timestamp(), state="held",
+                               fingerprint={"sha256": doc["original_sha256"], "visual": []})
+    original = {"id": "12345", "entities": {"urls": [{"expanded_url": url}]},
+                "attachments": {"media_keys": ["original"]}}
+    posts = [original]
+    videos = [{"media_key": "original", "type": "video"}]
+    if case in ("another_copy", "shared_media"):
+        key = "original" if case == "shared_media" else "copy"
+        posts.append({"id": "54321", "attachments": {"media_keys": [key]}})
+        if key == "copy":
+            videos.append({"media_key": key, "type": "video"})
+    if case == "unassociated_media":
+        videos.append({"media_key": "unassociated", "type": "video"})
+    class Search:
+        def search(self, query, cursor):
+            return {"data": posts, "includes": {"media": videos}, "meta": {}}
+    checked = []
+    def fingerprint(media, *args, **kwargs):
+        checked.append(media["media_key"])
+        return {"sha256": doc["original_sha256"], "visual": []}
+    monkeypatch.setattr(reconcile, "media_fingerprint", fingerprint)
+    assert reconcile.novelty(video_store, video_store.candidate("clip1"), Search(), video_cfg, at().timestamp()) == expected
+    if case == "original_only":
+        assert checked == []
+        assert all(item["known_source_posts"] == 1 for item in video_store.candidate("clip1")["document"]["novelty"]["evidence"])
+    assert not video_store.rows("SELECT * FROM reservations")
+
+
 def test_bounded_novelty_records_actual_search_scope_without_claiming_global_absence(video_store, video_cfg, ready, at):
     doc = ready()
     video_store.save_candidate("clip1", doc, at().timestamp(), state="held",

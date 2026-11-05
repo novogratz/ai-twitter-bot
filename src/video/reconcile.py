@@ -98,6 +98,19 @@ def import_history(store, client, cfg, now):
             store.put_meta(db, "history_coverage", {"checked_at": now, "scope": getattr(client, "scope", "all API-accessible timeline pages; older inaccessible posts are not proven absent")})
 
 
+def _known_x_source(doc, now):
+    """The verified original may appear in searches without being another copy."""
+    from .connectors import canonical
+    if doc.get("platform") == "x" and not ranking.source_gate(doc, now):
+        try:
+            source_url = canonical("x", doc["canonical_url"])
+            if source_url.rsplit("/", 1)[-1] == str(doc["source_id"]):
+                return str(doc["source_id"])
+        except ValueError:
+            pass
+    return None
+
+
 def novelty(store, row, client, cfg, now, *, operator_direct=False):
     doc = row["document"]
     if operator_direct and not ranking.selected(doc, now):
@@ -114,14 +127,19 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
     if cast and not operator_direct:
         # An entire celebrity's dance history is not a clip-specific novelty
         # query. Prefer the source's quoted song/title plus the attributed cast.
-        phrases = re.findall(r'"([^"\n]{2,80})"', str(doc.get("title", "")))
+        quoted = re.search(r'"([^"\n]{2,80})"|“([^”\n]{2,80})”|《([^》\n]{2,80})》|「([^」\n]{2,80})」|『([^』\n]{2,80})』',
+                           str(doc.get("title", "")))
+        phrase = " ".join(next((part for part in quoted.groups() if part), "").replace('"', ' ').split()) if quoted else ""
         subject = " ".join('"' + name.replace('"', '') + '"' for name in cast[:2])
-        detail = '"' + phrases[0] + '"' if phrases else "(dance OR singing OR parody)"
+        detail = '"' + phrase + '"' if phrase else "(dance OR singing OR parody)"
         queries.append(subject + " " + detail + " has:videos -is:retweet")
     progress_key = "novelty_progress:" + row["id"]
     progress = store.meta(progress_key, {}) or {}
-    if progress.get("sha256") != doc.get("original_sha256") or progress.get("queries") != queries:
-        progress = {"sha256": doc.get("original_sha256"), "queries": queries, "query_index": 0,
+    source_id = _known_x_source(doc, now)
+    if (progress.get("sha256") != doc.get("original_sha256") or progress.get("queries") != queries
+            or progress.get("revision") != 2 or progress.get("known_source_id") != source_id):
+        progress = {"revision": 2, "known_source_id": source_id,
+                    "sha256": doc.get("original_sha256"), "queries": queries, "query_index": 0,
                     "page_index": 0, "cursor": None, "pending_page": None, "media_index": 0,
                     "checked": [], "truncated": False}
     checked, found, inspected = progress["checked"], False, 0
@@ -135,16 +153,25 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
                 progress["pending_page"] = page
                 progress["observed_at"] = now
                 store.set_meta(progress_key, progress)
-            for post in page.get("data", []):
+            posts = page.get("data", [])
+            # An authorized X original is necessarily already on X. Exclude
+            # only its exact, source-bound status; other copies still count.
+            from .connectors import canonical
+            source_posts = [post for post in posts if str(post.get("id")) == source_id]
+            other_posts = [post for post in posts if str(post.get("id")) != source_id]
+            source_keys = {key for post in source_posts for key in post.get("attachments", {}).get("media_keys", [])}
+            other_keys = {key for post in other_posts for key in post.get("attachments", {}).get("media_keys", [])}
+            excluded_keys = source_keys - other_keys
+            for post in other_posts:
                 urls = [u.get("expanded_url", "") for u in post.get("entities", {}).get("urls", [])]
-                from .connectors import canonical
                 for url in urls:
                     try:
                         if canonical(doc["platform"], url) == doc["canonical_url"]:
                             found = True
                     except ValueError:
                         continue
-            videos = [m for m in page.get("includes", {}).get("media", []) if m.get("type") == "video"]
+            videos = [m for m in page.get("includes", {}).get("media", [])
+                      if m.get("type") == "video" and m.get("media_key") not in excluded_keys]
             while not found and progress["media_index"] < len(videos):
                 if inspected:
                     raise Deferred("novelty video inspection continues from its saved page", retry_after=10)
@@ -154,7 +181,8 @@ def novelty(store, row, client, cfg, now, *, operator_direct=False):
                 progress["media_index"] += 1
                 inspected += 1
                 store.set_meta(progress_key, progress)
-            checked.append({"query": query, "at": progress["observed_at"], "results": len(page.get("data", []))})
+            checked.append({"query": query, "at": progress["observed_at"], "results": len(posts),
+                            "known_source_posts": len(source_posts)})
             cursor = page.get("meta", {}).get("next_token")
             progress.update(cursor=cursor, pending_page=None, media_index=0, page_index=progress["page_index"] + 1)
             store.set_meta(progress_key, progress)

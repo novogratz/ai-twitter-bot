@@ -211,7 +211,11 @@ def discover(store, platform, now, cfg, *, fresh=False):
     if adapter.capability()["status"] == "blocked":
         store.set_meta("source:" + platform, adapter.capability())
         return "blocked"
-    if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
+    public_search = adapter.options.get("public_search") and not (
+        adapter.options.get("feed") or adapter.options.get("provider_command"))
+    # Public-search cache hits and model-admission waits make no source request.
+    # That adapter reserves its request immediately before starting research.
+    if not public_search and not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
         return "request budget exhausted"
     try:
         result = adapter.discover(store.meta("cursor:" + platform), cfg, store, fresh=fresh)

@@ -1,5 +1,45 @@
 # Editorial policy — November 4, 2026
 
+## Video recovery after the operator's start
+
+The operator started the updated bot and reiterated tonight's video request.
+The supervisor now replaces stale discovery/media workers on a later main
+startup only when their code/config generation differs and their repository
+command, process identity and open account role file are verified. New workers
+wait for the existing role lock to release. No main-process restart, additional
+publisher, job-lease reset or publication-claim release follows from this repair.
+
+Browser preflight, reconciliation, source capture, archive and outcome failures
+have distinct cooldowns. An optional read failure cannot disable candidate
+novelty checks; account verification, actual read budgets and all publication
+gates still apply. Diagnostics contain known local reasons, not arbitrary page
+content. Curly and CJK quoted song titles produce the same clip-specific novelty
+query as ASCII quotes, alongside the unchanged source-identifier query.
+
+The exact source status of a verified, under-limit X original is excluded from
+other-copy detection. Media shared by another result and unassociated media are
+still checked, and permanent own-post history remains authoritative. Search
+evidence records the known source exclusion. Cached discovery consumes no source
+request; a pre-launch Codex admission deferral refunds only its just-reserved
+request. Failed started research remains charged. Historical costs are untouched.
+Provider account denials, explicit rate limits and Retry-After instructions retain
+a shared browser cooldown regardless of the read that encountered them.
+
+Retained-source overlay checks may corroborate an OCR miss with the unchanged
+original's pixels at the same temporal sample. If encoder frame timing differs,
+the fallback requires whole-frame agreement outside the account watermark
+within 100 milliseconds and then near-identical pixels in the detected text
+rectangle. Both files' hashes bind the saved evidence. No particular logo word
+is exempt, and model rejection, moved/new text or uncertain comparison still
+refuses output approval.
+
+X novelty fingerprinting uses ordinary muted playback to load decoded frames
+when only metadata is present. After buffering it pauses/reseeks to the exact
+sample before reading canvas pixels. Transactions remain bounded to 25 seconds,
+canvas access refusals remain final for that attempt, and partial sequences
+never satisfy duplicate verification. Diagnostic phase and readiness fields
+expose stalls instead of treating metadata as inspected video.
+
 ## Sustained Reply capacity and two-hour video schedule
 
 The latest November 4 instruction supersedes the earlier date-only volume boost,

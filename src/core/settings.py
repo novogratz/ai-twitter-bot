@@ -399,6 +399,14 @@ def startup_warnings() -> list[str]:
     return list(_warnings)
 
 
+def source_modified_at() -> float:
+    """Configuration-file timestamp for conservative legacy-worker handover."""
+    try:
+        return os.path.getmtime(ENV_FILE)
+    except OSError:
+        return 0.0
+
+
 def bounded() -> dict:
     """Each setting with a floor or a ceiling: its effective value and its
     bounds, for `main.py --dry-run`."""

@@ -92,7 +92,7 @@ def test_blob_video_fingerprints_visible_frames_without_api(video_store, browser
     def page(js, *a):
         if "png:c.toDataURL" in js:
             return {"png": images.pop(0)}
-        return {"duration": 4}
+        return {"duration": 4, "ready_state": 2}
     monkeypatch.setattr(browser, "_json", page)
     client = browser.SafariVideoClient(video_store, browser_cfg)
     item = {"post_url": "https://x.com/example/status/123"}
@@ -126,6 +126,74 @@ def test_unloaded_history_media_requests_metadata_but_stays_unchecked_on_failure
     assert not video_store.meta("browser_fingerprint:123")
 
 
+def test_metadata_only_video_requests_muted_decoding_and_saves_why_it_waits(video_store, browser_cfg, monkeypatch):
+    from contextlib import nullcontext
+    from src.video.security import Deferred
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    clock = [0]
+    monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
+    scripts = []
+    def page(js):
+        scripts.append(js)
+        return {"duration": 4, "ready_state": 1, "paused": True, "network_state": 2, "playback_error": "NotAllowedError"}
+    monkeypatch.setattr(browser, "_json", page)
+    client = browser.SafariVideoClient(video_store, browser_cfg)
+    with pytest.raises(Deferred, match="decoded frames"):
+        client.fingerprint({"post_url": "https://x.com/example/status/123"})
+    assert "v.readyState<2" in scripts[0] and "v.muted=true;v.play()" in scripts[0]
+    status = video_store.meta("browser_video_access:123")
+    assert status["phase"] == "frame_loading" and status["ready_state"] == 1
+    assert status["playback_error"] == "NotAllowedError"
+    assert not video_store.meta("browser_fingerprint:123")
+    # Execute the browser program: HAVE_METADATA must actually start muted
+    # decoding, rather than merely containing a play() branch for readyState=0.
+    import shutil
+    import subprocess
+    if shutil.which("node"):
+        setup = """
+const video={error:null,readyState:1,duration:4,currentTime:0,dataset:{},muted:false,paused:true,plays:0,
+  play(){this.plays++;this.readyState=2;this.paused=false;return Promise.resolve();}};
+const link={getAttribute:()=>'/example/status/123'};
+const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
+const location={hostname:'x.com',pathname:'/example/status/123'};
+const document={querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],querySelector:()=>null};
+"""
+        program = setup + "const info=JSON.parse(" + scripts[0] + ");console.log(JSON.stringify({info,muted:video.muted,plays:video.plays}));"
+        observed = json.loads(subprocess.run(["node", "-e", program], check=True, capture_output=True, text=True, timeout=10).stdout)
+        assert observed["plays"] == 1 and observed["muted"] is True and observed["info"]["ready_state"] == 2
+
+
+def test_first_seek_timeout_saves_empty_progress_and_bounded_player_diagnostics(video_store, browser_cfg, monkeypatch):
+    from contextlib import nullcontext
+    from src.video.security import Deferred
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    clock = [0]
+    monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
+    scripts = []
+    def page(js):
+        scripts.append(js)
+        if "png:c.toDataURL" in js:
+            return {"ready_state": 1, "seeking": True, "current_time": .5, "network_state": 2}
+        return {"duration": 4, "ready_state": 2}
+    monkeypatch.setattr(browser, "_json", page)
+    client = browser.SafariVideoClient(video_store, browser_cfg)
+    with pytest.raises(Deferred, match="fingerprint is pending"):
+        client.fingerprint({"post_url": "https://x.com/example/status/123"})
+    assert video_store.meta("browser_fingerprint_pending:123")["visual"] == []
+    status = video_store.meta("browser_video_access:123")
+    assert status["phase"] == "seek" and status["sample_index"] == 0 and status["samples_saved"] == 0
+    assert status["ready_state"] == 1 and status["requested_at"] == .5
+    assert "v.dataset.botSeekLoad='loading'" in scripts[-1]
+    assert not video_store.meta("browser_fingerprint:123")
+
+
 def test_cors_protected_native_video_remains_unchecked(video_store, browser_cfg, monkeypatch):
     from contextlib import nullcontext
     from src.video import reconcile
@@ -133,7 +201,7 @@ def test_cors_protected_native_video_remains_unchecked(video_store, browser_cfg,
     monkeypatch.setattr(safari, "open_url", lambda *a: True)
     closed = []
     monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
-    monkeypatch.setattr(browser, "_json", lambda js, *a: {"error": "frame access denied"} if "png:c.toDataURL" in js else {"duration": 4})
+    monkeypatch.setattr(browser, "_json", lambda js, *a: {"error": "frame access denied"} if "png:c.toDataURL" in js else {"duration": 4, "ready_state": 2})
     client = browser.SafariVideoClient(video_store, browser_cfg)
     with pytest.raises(AccessError, match="origin policy"):
         reconcile.media_fingerprint({"type": "video", "post_url": "https://x.com/example/status/123"},
@@ -153,7 +221,7 @@ def test_long_browser_fingerprint_resumes_without_claiming_partial_success(video
     captured = []
     def page(js, *a):
         if "png:c.toDataURL" not in js:
-            return {"duration": 12}
+            return {"duration": 12, "ready_state": 2}
         x = len(captured) * 4
         image = Image.new("RGB", (64, 64), "black")
         ImageDraw.Draw(image).rectangle((x, 10, x + 12, 54), fill="white")
