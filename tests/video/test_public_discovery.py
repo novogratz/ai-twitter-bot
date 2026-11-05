@@ -30,6 +30,7 @@ def test_public_search_finds_candidates_without_inventing_rights_or_upload_time(
     assert video_store.meta("related:instagram") == ["related"]
     assert video_store.meta("source:instagram")["cached"] is True
     assert video_store.meta("source:instagram")["searched_at"] == video_store.meta("public_discovery:instagram")["checked_at"]
+    assert video_store.rows("SELECT amount FROM costs WHERE kind='requests'") == [{"amount": 1.0}]
     # An operator's authorized creator feed later supplies the missing original.
     connectors.ingest(video_store, "instagram", [{**item, "source_id": "public123", "creator": "creator",
         "permission_id": "grant", "local_file": "/fixture/original.mp4", "published_at": time.time() - 100,
@@ -82,6 +83,31 @@ def test_fresh_search_still_obeys_shared_budget(video_store, video_cfg, monkeypa
     monkeypatch.setattr(public_discovery.codex_session, "call", exhausted)
     with pytest.raises(Deferred, match="budget exhausted"):
         public_discovery.search(video_store, video_cfg, "instagram", {}, None, fresh=True)
+    assert video_store.rows("SELECT amount FROM costs WHERE kind='requests'") == [{"amount": 0.0}]
+
+
+def test_cached_leads_recover_even_when_request_budget_is_spent(video_store, video_cfg, monkeypatch):
+    cfg = replace(video_cfg, platforms={"instagram": {"public_search": True}})
+    now = time.time()
+    cap = cfg.request_budget - cfg.publishing_request_reserve
+    assert video_store.budget("instagram", "requests", cap, cap, now)
+    video_store.set_meta("public_discovery:instagram", {"next": now + 7200, "candidates": [{
+        "canonical_url": "https://www.instagram.com/reel/cached/", "source_id": "cached",
+        "creator": "creator", "title": "Dance parody"}]})
+    monkeypatch.setattr("shutil.which", lambda name: "/usr/bin/codex")
+    monkeypatch.setattr(public_discovery.codex_session, "call", lambda *a, **kw: pytest.fail("unexpected provider call"))
+    assert connectors.discover(video_store, "instagram", now, cfg) == "ok"
+    assert len(video_store.rows("SELECT id FROM candidates")) == 1
+    assert video_store.rows("SELECT amount FROM costs WHERE kind='requests'") == [{"amount": float(cap)}]
+
+
+def test_failed_started_research_remains_charged(video_store, video_cfg, monkeypatch):
+    def failure(*args, **kwargs):
+        raise AccessError("Codex session failed; no inspection accepted")
+    monkeypatch.setattr(public_discovery.codex_session, "call", failure)
+    with pytest.raises(AccessError):
+        public_discovery.search(video_store, video_cfg, "instagram", {}, None)
+    assert video_store.rows("SELECT amount FROM costs WHERE kind='requests'") == [{"amount": 1.0}]
 
 
 def test_restart_after_search_before_ingest_recovers_cached_leads(video_store, video_cfg, monkeypatch):

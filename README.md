@@ -39,6 +39,18 @@ X clips require a known view count of at most 50,000. Captions use a grounded
 posting memory and confirmed receipts remain required. An empty or inaccessible
 queue is reported as a missed slot, never a successful post.
 
+On startup, the supervisor also replaces verified discovery/media workers left
+running older code or configuration, waiting for their role locks to release.
+The main bot and its single Safari publisher remain in control. Browser errors
+identify the failing stage; an inaccessible archive clip cannot put the current
+clip's novelty checks into the same cooldown. Claims and posting history persist.
+Cached discovery does not consume network-request allowance. An authorized X
+original no longer counts as its own duplicate; other copies still do.
+Retained source logos missed by OCR need matching original pixels; an uncertain
+match or a model rejection still holds the clip.
+X duplicate checks load decoded frames through ordinary muted playback before
+seeking; a metadata-only player remains unresolved until real frames are read.
+
 Both Voice files now emphasize friendly interest and gentle disagreement.
 English contractions such as “you’re” and “I’m” and clear short reactions no
 longer fail solely for lacking the old function-word markers. French and mixed

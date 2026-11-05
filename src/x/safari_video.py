@@ -502,40 +502,57 @@ class SafariVideoClient:
                 info = {}
                 while time.monotonic() < deadline:
                     info = _json("(()=>{" + select +
-                        "if(v && !v.error && v.readyState<1 && !v.dataset.botMetadataLoad){"
-                        "v.dataset.botMetadataLoad='1';v.preload='auto';v.muted=true;v.play().catch(()=>{});}"
+                        "if(v && !v.error && v.readyState<2 && !v.dataset.botMetadataLoad){"
+                        "v.dataset.botMetadataLoad='1';v.preload='auto';v.muted=true;v.play().catch(e=>{v.dataset.botPlaybackError=e.name;});}"
                         "const expected=['x.com','www.x.com'].includes(location.hostname) && location.pathname.endsWith('/status/" + post_id + "');"
                         "return JSON.stringify({duration:Number.isFinite(v?.duration)?v.duration:null,"
                         "article:!!a,video:!!v,ready_state:v?.readyState,error:v?.error?.code || null,"
+                        "network_state:v?.networkState,paused:v?.paused,seeking:v?.seeking,"
+                        "current_time:v?.currentTime,playback_error:v?.dataset.botPlaybackError || null,"
                         "expected_page:expected,host:location.hostname,"
                         "visible_status_links:expected?[...document.querySelectorAll('article time')].map(t=>t.closest('a')?.getAttribute('href')).slice(0,8):[],"
                         "message:expected?(document.querySelector('main')?.innerText || '').slice(0,400):''});})()")
-                    if info.get("duration"):
+                    if info.get("duration") and (info.get("ready_state") or 0) >= 2:
                         break
                     time.sleep(.25)
                 duration = info.get("duration")
                 if not duration or not .5 <= duration <= 86400:
-                    self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), **info})
+                    self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), "phase": "metadata", **info})
                     raise AccessError("native video duration unavailable")
+                self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), "phase": "frame_loading", **info})
+                if (info.get("ready_state") or 0) < 2:
+                    raise Deferred("native video metadata loaded but decoded frames remain pending", retry_after=30)
                 count = min(30, max(4, math.ceil(duration)))
                 progress_key = "browser_fingerprint_pending:" + post_id
                 progress = self.store.meta(progress_key, {})
                 if progress.get("duration") != duration or progress.get("count") != count:
                     progress = {"duration": duration, "count": count, "visual": [], "frame_hashes": [], "variation": []}
                 sequence, variation = progress["visual"], progress["variation"]
+                self.store.set_meta(progress_key, progress)  # record even a first-frame stall
                 # Short resumable batches keep an old long video from monopolizing
                 # the Reply browser. Partial fingerprints never satisfy dedup.
                 from ..video.startup import waiting_reason
                 batch = count if waiting_reason(self.store) else 8
                 for index in range(len(sequence), min(count, len(sequence) + batch)):
                     at = min(duration - .05, (index + .5) * duration / count)
-                    _json("(()=>{" + select + "if(!v)return '{}';v.pause();v.muted=true;v.currentTime=" + str(at) + ";return '{}';})()")
+                    _json("(()=>{" + select + "if(!v)return '{}';v.pause();v.muted=true;v.dataset.botSeekLoad='';v.currentTime=" + str(at) + ";return '{}';})()")
                     frame = None
+                    observed = {}
                     while time.monotonic() < deadline:
-                        observed = _json("(()=>{" + select + "if(!v || v.seeking || v.readyState<2 || Math.abs(v.currentTime-" + str(at) + ")>.08)return '{}';"
+                        observed = _json("(()=>{" + select + "const status=()=>JSON.stringify({ready_state:v?.readyState,seeking:v?.seeking,"
+                            "current_time:v?.currentTime,paused:v?.paused,network_state:v?.networkState,media_error:v?.error?.code||null,"
+                            "playback_error:v?.dataset.botPlaybackError||null});if(!v)return status();"
+                            "if(v.readyState<2 && !v.error && !v.dataset.botSeekLoad){v.dataset.botSeekLoad='loading';"
+                            "v.preload='auto';v.muted=true;v.play().catch(e=>{v.dataset.botPlaybackError=e.name;});}"
+                            "if(v.seeking || v.readyState<2)return status();"
+                            "if(v.dataset.botSeekLoad==='loading'){v.pause();v.dataset.botSeekLoad='ready';"
+                            "if(Math.abs(v.currentTime-" + str(at) + ")>.08){v.currentTime=" + str(at) + ";return status();}}"
+                            "if(Math.abs(v.currentTime-" + str(at) + ")>.08)return status();v.pause();"
                             "try{const c=document.createElement('canvas');c.width=64;c.height=64;c.getContext('2d').drawImage(v,0,0,64,64);"
                             "return JSON.stringify({at:v.currentTime,png:c.toDataURL('image/png')});}catch(e){return JSON.stringify({error:'frame access denied'});}})()")
                         if observed.get("error"):
+                            self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(),
+                                "phase": "canvas", "requested_at": at, "sample_index": index, **observed})
                             raise AccessError("X video frames are not readable under browser origin policy")
                         if observed.get("png"):
                             encoded = observed["png"]
@@ -548,6 +565,8 @@ class SafariVideoClient:
                             break
                         time.sleep(.08)
                     if frame is None:
+                        self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(),
+                            "phase": "seek", "requested_at": at, "sample_index": index, "samples_saved": len(sequence), **observed})
                         raise Deferred("visible video fingerprint is pending; continue its saved samples", retry_after=30)
                     progress["frame_hashes"].append(hashlib.sha256(frame.tobytes()).hexdigest())
                     variation.append(ImageStat.Stat(frame).stddev[0])

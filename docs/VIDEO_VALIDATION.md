@@ -1,5 +1,31 @@
 # Video validation — November 4, 2026
 
+## Late-start recovery
+
+After the operator's 22:51 Toronto start, verified stale discovery/media workers
+were replaced while the existing main process continued confirmed Replies.
+The saved `BV1ykx46UEWz` original passed fresh source inspection and rendered.
+The 131.093-second output has SHA-256
+`c1fff396463685d6d2c280f575a97cb311ead9d09fd0d6e9c2667bc25ff09ace`;
+its immutable original has SHA-256
+`814333e0a8e81bfe40c1c55c85db5beb4882b5941062e4a059f3ba7f4b31b9b4`.
+
+Both reviews returned confidence 0.94. Source/output decode, square pixels,
+duration, audio synchronization and audio correlation 0.99965 passed. The
+watermark was recognized in 98.47 percent of temporal samples. Four retained
+source logos initially failed OCR matching: three were corroborated at the exact
+sample, and the fourth matched source frame 127.416688 within the 100 ms bound
+with whole-frame/text-region similarity 0.9993/0.9984. The independent media
+worker saved QC revision 3 with no unexpected output text and all four proofs.
+
+The 23:00 slot expired before completion. The startup request remained pending,
+and an external X search-result video stalled duplicate verification before its
+first decoded frame. No publication is claimed by these inspection results.
+The playback fix and future supervisor repairs need a newly loaded main process.
+The full suite passed **2,624 tests in 60.81 seconds**; the final focused video
+suite passed **360 tests**, including an executable JavaScript playback
+regression. Configuration-reference and whitespace checks also passed.
+
 ## Two-hour schedule and source recovery
 
 The November 4 read-only production audit found no ready videos, 32 held

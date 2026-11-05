@@ -202,7 +202,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
     cached = store.meta("inspection:" + cache_key)
     if cached:
         if stage == "output" and cached.get("model_verdict"):
-            cached = output_ocr(dict(cached), source_review, cfg, retained)
+            cached = output_ocr(dict(cached), source_review, cfg, retained, source_path=source_path, output_path=path)
             store.set_meta("inspection:" + cache_key, cached)
         return cached
     if not store.budget("inspection", "inference_usd", cfg.inspection_cost_ceiling_usd, cfg.inference_budget_usd, now):
@@ -301,12 +301,114 @@ Do not claim literal continuous playback or direct hearing. Your hash must match
                             "sample_count": len(frames), "first": times[0], "last": times[-1],
                             "duration": info["duration"], "every_original_frame": False}, inspected_at=time.time())
     if stage == "output":
-        result = output_ocr(result, source_review, cfg, retained)
+        result = output_ocr(result, source_review, cfg, retained, source_path=source_path, output_path=path)
     store.set_meta("inspection:" + cache_key, result)
     return result
 
 
-def output_ocr(result, source_review, cfg, retained):
+def pixel_similarity(left, right):
+    """Conservative local luminance structure plus RGB error; no OCR vocabulary."""
+    import numpy as np
+    a, b = np.asarray(left.convert("L"), dtype=float), np.asarray(right.convert("L"), dtype=float)
+    if a.shape != b.shape or a.size < 24:
+        return {"ssim": 0, "mean_error": 255, "contrast": 0}
+    ma, mb, va, vb = a.mean(), b.mean(), a.var(), b.var()
+    covariance = ((a - ma) * (b - mb)).mean()
+    score = ((2 * ma * mb + 2.55 ** 2) * (2 * covariance + 7.65 ** 2)
+             / ((ma ** 2 + mb ** 2 + 2.55 ** 2) * (va + vb + 7.65 ** 2)))
+    rgb_error = abs(np.asarray(left.convert("RGB"), dtype=float) - np.asarray(right.convert("RGB"), dtype=float)).mean()
+    return {"ssim": float(score), "mean_error": float(rgb_error), "contrast": float(min(a.std(), b.std()))}
+
+
+def retained_pixel_matches(source_frames, output, box, watermark_position, *, aligned_source=None):
+    """Match the actual nearby native frame first, then its exact text rectangle."""
+    if (len(box) != 4 or any(type(v) not in (int, float) or not math.isfinite(v) for v in box)
+            or box[0] < 0 or box[1] < 0 or box[2] <= 0 or box[3] <= 0
+            or box[0] + box[2] > 1 or box[1] + box[3] > 1 or box[2] * box[3] > .04):
+        return None
+    width, height = output.size
+    x, y, w, h = box
+    rect = (round(x * width), round(y * height), round((x + w) * width), round((y + h) * height))
+    if aligned_source is not None and aligned_source[1].size == output.size:
+        measured = pixel_similarity(aligned_source[1].crop(rect), output.crop(rect))
+        if measured["ssim"] >= .985 and measured["mean_error"] <= 6 and measured["contrast"] >= 8:
+            return {"method": "same_sample_pixels", "source_sample_at": aligned_source[0], "text_region": measured}
+    area = (0, round(height * .18), width, height) if watermark_position == "top" else (0, 0, width, round(height * .82))
+    body = output.crop(area).resize((480, 240))
+    best = None
+    for at, original in source_frames:
+        if original.size != output.size:
+            continue
+        measured = pixel_similarity(original.crop(area).resize((480, 240)), body)
+        if best is None or measured["ssim"] > best[0]["ssim"]:
+            best = measured, at, original
+    if not best or best[0]["ssim"] < .985 or best[0]["mean_error"] > 6:
+        return None
+    measured = pixel_similarity(best[2].crop(rect), output.crop(rect))
+    if measured["ssim"] < .985 or measured["mean_error"] > 6 or measured["contrast"] < 8:
+        return None
+    return {"method": "native_frame_pixels", "source_at": best[1], "frame": best[0], "text_region": measured}
+
+
+def corroborate_retained_pixels(result, source_review, cfg, unexpected, source_path, output_path):
+    """Resolve OCR misses from unchanged bytes, without changing the model verdict."""
+    if (not source_path or not output_path or source_review.get("sha256") != sha256(source_path)
+            or result.get("sha256") != sha256(output_path)):
+        return []
+    times = sorted({item["at"] for item in unexpected})
+    rate = result.get("coverage", {}).get("fps", cfg.inspection_fps)
+    if not 0 < rate <= 2 or len(times) > 8 or any(type(at) not in (int, float) or at < 0 for at in times):
+        return []
+    # fps sampling chooses frame centres. Encoder time-base rounding can pick
+    # a different native frame within this 100ms bound. Match the full frame
+    # outside our watermark first; a similar logo alone is insufficient.
+    radius = .1
+    with tempfile.TemporaryDirectory(prefix="overlay-proof-") as directory:
+        folder = Path(directory)
+        original_dir, output_dir, aligned_dir = folder / "source", folder / "output", folder / "aligned"
+        original_dir.mkdir()
+        output_dir.mkdir()
+        aligned_dir.mkdir()
+        selection = "+".join(f"between(t,{max(0, at + .5 / rate - radius):.6f},{at + .5 / rate + radius:.6f})" for at in times)
+        common = ["-an", "-fps_mode", "passthrough", "-enc_time_base", "1:1000000", "-frame_pts", "1"]
+        media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(source_path), "-vf",
+            f"select='{selection}',scale='min(960,iw)':-2", *common, str(original_dir / "%016d.png")], cfg)
+        selection = "+".join(f"eq(n,{round(at * rate)})" for at in times)
+        media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(source_path), "-vf",
+            f"fps={rate},scale='min(960,iw)':-2,select='{selection}'", *common, str(aligned_dir / "%016d.png")], cfg)
+        media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(output_path), "-vf",
+            f"fps={rate},scale='min(960,iw)':-2,select='{selection}'", *common, str(output_dir / "%016d.png")], cfg)
+        originals = sorted(original_dir.glob("*.png"))
+        if len(originals) > 120:
+            return []
+        accepted = []
+        for at in times:
+            output_file = output_dir / f"{round(at * 1_000_000):016d}.png"
+            if not output_file.is_file():
+                continue
+            nearby = [path for path in originals if abs(int(path.stem) / 1_000_000 - (at + .5 / rate)) <= radius + .000001]
+            with Image.open(output_file) as output:
+                frames = []
+                aligned = None
+                try:
+                    frames = [(int(path.stem) / 1_000_000, Image.open(path)) for path in nearby]
+                    aligned_file = aligned_dir / output_file.name
+                    if aligned_file.is_file():
+                        aligned = at, Image.open(aligned_file)
+                    for item in (item for item in unexpected if item["at"] == at):
+                        proof = retained_pixel_matches(frames, output, item["box"], source_review.get("watermark_position", "bottom"), aligned_source=aligned)
+                        if proof:
+                            accepted.append(item | proof | {"source_sha256": source_review["sha256"],
+                                "output_sha256": result["sha256"], "native_frame_radius_seconds": radius})
+                finally:
+                    for _, frame in frames:
+                        frame.close()
+                    if aligned:
+                        aligned[1].close()
+        return accepted
+
+
+def output_ocr(result, source_review, cfg, retained, *, source_path=None, output_path=None):
     """Re-evaluate deterministic OCR checks while preserving the raw model verdict."""
     for key, value in result.get("model_verdict", {}).items():
         if value is not None:
@@ -341,10 +443,21 @@ def output_ocr(result, source_review, cfg, retained):
                         and box[1] + box[3] <= other[1] + other[3] + .015):
                     return True
             return False
-        unexpected.extend({"at": frame["at"], "text": t["text"]} for t in texts
+        unexpected.extend({"at": frame["at"], "text": t["text"], "box": t.get("box", [])} for t in texts
                           if not is_mark(t) and not original_overlay(t))
+    proofs = []
+    if (retained and unexpected and result.get("no_unapproved_new_overlays") is True
+            and result.get("no_destructive_edit") is True and result.get("audio_inspected") is True
+            and result["confidence"] >= cfg.confidence_min):
+        try:
+            proofs = corroborate_retained_pixels(result, source_review, cfg, unexpected, source_path, output_path)
+        except (OSError, ValueError, TimeoutError):
+            proofs = []  # missing/uncertain local evidence remains a refusal
+        unexpected = [item for item in unexpected if not any(
+            all(proof.get(key) == item[key] for key in ("at", "text", "box")) for proof in proofs)]
+    result["retained_overlay_pixel_evidence"] = proofs
     result["ocr_watermark_fraction"] = marked / len(frames)
-    result["unexpected_output_text"] = unexpected[:80]
+    result["unexpected_output_text"] = [{"at": item["at"], "text": item["text"]} for item in unexpected[:80]]
     result["watermark_present"] = result.get("watermark_present") is True and marked >= len(frames) * .8
     safe = (result.get("no_destructive_edit") is True and result["confidence"] >= cfg.confidence_min
             and not unexpected and result.get("audio_inspected") is True)
@@ -354,6 +467,6 @@ def output_ocr(result, source_review, cfg, retained):
         result.update(source_sha256=source_review["sha256"], overlays_clean=False,
                       source_overlays_retained=result.get("source_overlays_retained") is True,
                       no_unapproved_new_overlays=result.get("no_unapproved_new_overlays") is True and safe)
-    result["ocr_validation_revision"] = 2
+    result["ocr_validation_revision"] = 3
     result["source_ocr_time_tolerance_seconds"] = tolerance
     return result

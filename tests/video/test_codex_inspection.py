@@ -227,6 +227,78 @@ def test_cached_output_ocr_uses_bounded_sample_phase_and_preserves_model_rejecti
     assert not inspection.output_ocr(rejected, source, cfg, True)["no_unapproved_new_overlays"]
 
 
+def overlay_image(text="LIVE", at=(420, 35), *, background=30):
+    from PIL import Image, ImageDraw
+    image = Image.new("RGB", (640, 360), (background, background, background))
+    draw = ImageDraw.Draw(image)
+    # A changing stage pattern supplies frame identity independent of the logo.
+    for x in range(0, 640, 40):
+        draw.rectangle((x, 100, x + 15, 280), fill=(x % 255, 100, 180))
+    if text:
+        draw.text(at, text, fill="white")
+    return image
+
+
+def test_retained_overlay_pixels_corroborate_ocr_miss_without_word_exemption():
+    pytest.importorskip("numpy")
+    from PIL import ImageDraw
+    original = overlay_image("XYZA")
+    output = original.copy()
+    ImageDraw.Draw(output).text((260, 320), "@ExampleAccount", fill="white")
+    box = [420 / 640, 35 / 360, 32 / 640, 14 / 360]
+    proof = inspection.retained_pixel_matches([(114.483, original)], output, box, "bottom")
+    assert proof and proof["text_region"]["ssim"] == 1
+    assert proof["source_at"] == 114.483
+    aligned = inspection.retained_pixel_matches([], output, box, "bottom", aligned_source=(114, original))
+    assert aligned["method"] == "same_sample_pixels"
+
+
+@pytest.mark.parametrize("change", ["new_text", "moved_text", "different_frame", "blank", "oversized"])
+def test_pixel_corroboration_refuses_new_moved_or_uncertain_overlays(change):
+    pytest.importorskip("numpy")
+    from PIL import ImageDraw
+    original = overlay_image()
+    output = original.copy()
+    box = [420 / 640, 35 / 360, 32 / 640, 14 / 360]
+    if change == "new_text":
+        original = overlay_image("")
+    elif change == "moved_text":
+        output = overlay_image("LIVE", (250, 35))
+        box[0] = 250 / 640
+    elif change == "different_frame":
+        original = overlay_image(background=200)
+    elif change == "blank":
+        original = output = overlay_image("")
+    else:
+        box = [0, 0, .5, .5]
+    assert inspection.retained_pixel_matches([(127.416, original)], output, box, "bottom") is None
+    if change != "different_frame":
+        assert inspection.retained_pixel_matches([], output, box, "bottom", aligned_source=(127, original)) is None
+
+
+def test_local_overlay_proof_is_bound_to_original_and_output_hashes(video_cfg, tmp_path, monkeypatch):
+    original, output = tmp_path / "original.mp4", tmp_path / "output.mp4"
+    original.write_bytes(b"original")
+    output.write_bytes(b"output")
+    monkeypatch.setattr(inspection.media, "ffmpeg", lambda *a, **k: pytest.fail("changed bytes must not be compared"))
+    assert inspection.corroborate_retained_pixels({"sha256": "wrong"}, {"sha256": "wrong"}, video_cfg,
+        [{"at": 1, "text": "LIVE", "box": [.1, .1, .1, .1]}], original, output) == []
+
+
+def test_pixel_fallback_cannot_override_a_model_rejection(video_cfg, monkeypatch):
+    import copy
+    cfg = replace(video_cfg, inspection_fps=1)
+    mark = {"text": cfg.watermark, "confidence": .99, "box": [.3, .88, .4, .05]}
+    source = {"sha256": "a" * 64, "coverage": {"fps": 1}, "watermark_position": "bottom", "ocr_evidence": []}
+    verdict = {"confidence": .96, "watermark_present": True, "overlays_clean": False,
+               "no_destructive_edit": True, "source_overlays_retained": True, "no_unapproved_new_overlays": False}
+    result = {**verdict, "model_verdict": verdict, "coverage": {"fps": 1}, "audio_inspected": True,
+              "ocr_evidence": [{"at": 2, "texts": [mark, {"text": "LIVE", "confidence": 1, "box": [.8, .1, .1, .04]}]}]}
+    monkeypatch.setattr(inspection, "corroborate_retained_pixels", lambda *a, **k: pytest.fail("model rejection is authoritative"))
+    checked = inspection.output_ocr(copy.deepcopy(result), source, cfg, True)
+    assert not checked["no_unapproved_new_overlays"] and checked["unexpected_output_text"]
+
+
 def test_final_ocr_cannot_be_overridden_by_model_approval(video_store, measured_inspection):
     cfg, path, local, answer, _ = measured_inspection
     answer.update(overlays_clean=True, watermark_present=True, no_destructive_edit=True)
