@@ -6,6 +6,20 @@ from . import schedule
 from .store import dumps
 
 
+def recover_supply(db, cfg, now):
+    """New preparation/startup can retry held work, preserving all posting claims."""
+    # A widened fallback window can recover formerly age-expired leads. Derived
+    # files may be gone: the normal media path must download and inspect again.
+    db.execute("UPDATE candidates SET state='held',reason='age policy changed; reinspection required' "
+               "WHERE state='expired' AND reason='freshness expired' AND published>=? AND published<=? "
+               "AND id NOT IN (SELECT candidate FROM content_claims)",
+               (now - cfg.max_age_hours * 3600, now))
+    db.execute("UPDATE jobs SET state='pending',due=?,attempts=0 "
+               "WHERE kind IN ('media','novelty','inspect_source','inspect_output') AND state='dead' "
+               "AND item IN (SELECT id FROM candidates WHERE state='held') "
+               "AND item NOT IN (SELECT candidate FROM content_claims)", (now,))
+
+
 def prepare_upcoming(store, cfg, now):
     stamp = datetime.fromtimestamp(now, timezone.utc)
     for day in (schedule.local(stamp).date(), schedule.local(stamp).date() + timedelta(days=1)):
@@ -24,8 +38,7 @@ def prepare_upcoming(store, cfg, now):
                                    (platform, now))
                     # Only a fresh preparation window retries bounded failed media work.
                     # The inspector/rights/novelty checks still decide eligibility.
-                    db.execute("UPDATE jobs SET state='pending',due=?,attempts=0 WHERE kind IN ('media','novelty') "
-                               "AND state='dead' AND item IN (SELECT id FROM candidates WHERE state='held')", (now,))
+                    recover_supply(db, cfg, now)
                     db.execute("INSERT INTO events(at,kind,item,detail) VALUES(?,?,?,?)",
                                (now, "preparation_started", ident, "Discovery/media queued before the due window"))
             checkpoint = "30m" if remaining > 900 else "15m" if remaining > 300 else "5m"

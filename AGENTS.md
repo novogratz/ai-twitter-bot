@@ -6,6 +6,55 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-04, sustained Replies and videos every two hours — The Operator requests
+more daytime Replies and prioritization of posts with strictly more than two
+likes. The Account and local environment retain twelve rotating searches,
+eighty direct-cycle Replies and eighty generations per feed every day; the local
+date boost is cleared to prevent doubling those values again. Three observed
+likes earn preference, never eligibility. All Reply admission, pacing, model,
+parent-like and permanent standalone-history rules remain.
+
+The video Account schedules ten Toronto slots: 05:00, 07:00, 09:00, 11:00,
+13:00, 15:00, 17:00, 19:00, 21:00 and 23:00. Recent sources rank first, with
+fallback up to 730 days old from Instagram, TikTok, RedNote, Bilibili and X.
+X sources require an observed view count at most 50,000; unknown is not zero.
+The approved cast is Elon Musk, Sam Altman, Dario Amodei, Donald Trump and
+Mark Zuckerberg in synthetic dances, songs and parodies. Captions use a grounded
+POV scene with configured cast handles and emojis, a blank line, then
+`ANOTHER ABSOLUTE SI BANGER! 🔥`. Source and output inspection, audio evidence,
+watermark, permissions, permanent dedup and uncertain-send holds still apply.
+The existing revocable operator permission attestation now includes X sources.
+
+This Account opts into a durable startup request on ordinary bot starts, without
+holding Replies. At most one extra startup video per Toronto day, actual-success
+spacing and nearby-slot collision protection remain. A ready eligible clip is
+attempted promptly; empty supply, platform failures and unknown sends cannot be
+reported as publication. Independent discovery/media and Reply workers continue
+in parallel; browser transactions share the existing Safari lock. Required video
+reads retain a bounded queue turn rather than continually losing it to activity.
+The Operator requests two agents, PR creation, merge and push. This change does
+not itself start/restart the bot or reset production state. Reply waking hours
+remain 04:30–00:00 with no daytime breaks.
+
+2026-11-04, more Replies today and a friendlier voice — The Operator asks for
+substantially more responses today and warmer conversation. The local
+`REPLY_VOLUME_BOOST_DATE=2026-11-04` doubles the existing discovery/generation
+budgets on that Toronto date: twelve rotating queries, eighty per direct cycle
+and eighty generations per feed. Baseline values remain six/forty/forty and
+return automatically at midnight, including in a running process. This is
+capacity, not a promise of doubled publication or a filler quota. Both feeds
+still finish discovery before drafting; scheduling concurrency, Sol/xhigh,
+eight-second spacing plus 0–4 seconds jitter, parent likes, AI/SI scope and
+permanent one-Reply-per-original admission remain.
+
+Both Voice files prefer friendly interest and gentle corrections over a
+reviewer's verdict. The language guard recognizes English contractions with
+straight or curly apostrophes and clear short reactions that live logs rejected.
+Shared English words cannot cancel otherwise clear English evidence; explicit
+French/mixed prose and unidentified or generic replies still refuse. Voice
+changes apply per draft; code and the date setting need the next explicitly
+requested restart. This update does not itself restart the bot.
+
 2026-11-02, natural conversation and heart-led emoji variety — The Operator
 replaces the compulsory smiley-face style with varied emojis, starting with
 hearts, and asks for replies that sound like a woman naturally joining a
@@ -592,7 +641,7 @@ and publication surfaces stay at the restored baseline. No start, restart,
 environment edit or production-state migration accompanies this update.
 
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
-(including the October 23–November 2 amendments) and supersedes older mandates. It encodes:
+(including the October 23–November 4 amendments) and supersedes older mandates. It encodes:
 
 - Interactions active 04:30–00:00 America/Toronto, with no daytime breaks for this Account; isolated video discovery/media may continue overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight

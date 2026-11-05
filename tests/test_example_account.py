@@ -75,7 +75,9 @@ WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_H
                 "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
 REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300,
                       "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
-                      "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2}
+                      "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2,
+                      "DIRECT_REPLY_QUERIES_PER_CYCLE": 8, "DIRECT_REPLY_MAX_PER_CYCLE": 3,
+                      "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 8}
 
 
 def test_watch_jobs_have_independent_workers_and_short_dispatch_intervals():
@@ -125,7 +127,14 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
 def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     shown = dry_run({})
     assert shown["startup_interactions_held"] is False
-    assert set(shown) == set(PRE_187) | NEW_KEYS
+    assert set(shown) == set(PRE_187) | NEW_KEYS | {
+        "reply_volume_boost_date", "reply_discovery_generation_budgets"}
+    assert shown["reply_volume_boost_date"] == ""
+    assert shown["reply_discovery_generation_budgets"] == {
+        "DIRECT_REPLY_QUERIES_PER_CYCLE": 12,
+        "DIRECT_REPLY_MAX_PER_CYCLE": 80,
+        "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
+    }
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
     expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
@@ -138,7 +147,9 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
         "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
-        "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800}
+        "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800,
+        "REPLY_PREFERRED_MIN_LIKES": 3, "DIRECT_REPLY_QUERIES_PER_CYCLE": 12,
+        "DIRECT_REPLY_MAX_PER_CYCLE": 80, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
     assert shown["settings_warnings"] == []
 
 

@@ -219,6 +219,8 @@ def matches_history(doc, posted):
 def download(doc, destination, cfg, store, now):
     if not ranking.permission(doc, cfg, now):
         raise AccessError("licensed video and audio permission required before downloading")
+    if reason := ranking.source_gate(doc, now):
+        raise AccessError(reason)
     used = sum(p.stat().st_size for root in (ASSETS, SAVED_ASSETS)
                for p in Path(str(root)).rglob("*") if p.is_file())
     if used + 3 * cfg.max_download_bytes > cfg.storage_budget_bytes:

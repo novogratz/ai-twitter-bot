@@ -1,4 +1,81 @@
-# Editorial policy — November 2, 2026
+# Editorial policy — November 4, 2026
+
+## Sustained Reply capacity and two-hour video schedule
+
+The latest November 4 instruction supersedes the earlier date-only volume boost,
+two-like preference, eight-video ceiling, seven-day maximum source age and
+explicit-activation-only startup behavior for this Account. The Operator requests
+two agents working in parallel, a PR, merge and push; no immediate restart is
+requested.
+
+Account and local settings retain 12 rotating searches, 80 direct-cycle Replies
+and 80 generations per feed. The local boost date is blank to avoid doubling
+again. `REPLY_PREFERRED_MIN_LIKES=3` means strictly more than two observed likes;
+lower and unknown counts remain eligible. Both Home reads finish before ordinary
+drafting. Sol/xhigh, eight-second spacing plus 0–4 seconds jitter, 04:30–00:00
+interaction hours, parent likes, AI/SI scope and permanent standalone admission
+remain. No volume target authorizes filler or duplicate Replies.
+
+The video schedule is 05:00, 07:00, 09:00, 11:00, 13:00, 15:00, 17:00,
+19:00, 21:00 and 23:00 Toronto, with ten scheduled publications allowed per day.
+This does not raise the legacy text/repost ceiling. Preparation runs separately
+from Replies. The requested minimum is one video per slot, with recent inspected
+sources first and older eligible fallback up to 730 days. X joins Instagram,
+TikTok, RedNote and Bilibili; X sources must have verified observed views no higher
+than 50,000. Missing or invalid metrics cannot satisfy that ceiling. The existing
+operator attestation for video, audio, editing and publication extends to X,
+remains revocable, and is not an independently verified creator contract.
+
+Only synthetic dances, songs and parodies featuring the configured cast qualify:
+Elon Musk, Sam Altman, Dario Amodei, Donald Trump and Mark Zuckerberg. Creator
+attribution remains separate from observed actions and is never facial identity
+verification. The caption begins `POV:` with a scene supported by inspection,
+configured handles for the attributed cast and emojis, followed by a blank line
+and `ANOTHER ABSOLUTE SI BANGER! 🔥`. Required grant-specific attribution remains.
+No source link or synthetic-disclosure footer is added for this Account.
+
+`startup_on_boot=true` records a durable startup request on an ordinary live
+start and attempts an eligible ready clip promptly in the dedicated publisher.
+It creates no Reply hold and does not clear any explicit existing hold, pause,
+shutdown, uncertain reservation or posting history. One extra startup video per
+Toronto day, nearby-slot coalescing and fifteen-minute actual-success spacing
+remain. Disabled/dry-run/reply-only starts do not request a video. Overnight
+requests wait for active hours. Source/output inspection, audio evidence, QC,
+watermark and permanent content dedup remain mandatory. No unchecked, repeated
+or invented video fills an empty queue, and only an exact confirmed receipt
+counts as publication; failures and shortages remain visible.
+
+Required video reads share ready-Reply FIFO priority, below watched work, with
+a bounded wait that survives ordinary browser transactions. They do not run a
+second Safari controller. Model drafting and heavy media preparation continue
+independently; browser actions still serialize. Code/config changes take effect
+on the next explicitly requested restart.
+
+## More responses today, with friendly conversation
+
+The earlier November 4 instruction requests substantially more Replies today and a
+friendlier voice. The local `REPLY_VOLUME_BOOST_DATE=2026-11-04` doubles only
+three discovery/generation budgets for that Toronto calendar date: rotating
+searches 6→12, direct-cycle budget 40→80 and generations per feed 40→80.
+The clock is checked at each cycle; baseline values return at midnight without
+another restart. A blank date disables the boost. Explicit manual cycle budgets
+retain their exact requested value. The eight-second gap plus 0–4 seconds
+jitter, 04:30–00:00 hours, single-instance jobs, watched priority, confirmed
+parent likes, English/SI wording and permanent standalone dedup remain.
+Both Home reads still finish before ordinary feed generation. Model, browser
+and source constraints can keep actual sends below these budgets; no target
+requires filler or creates a publication guarantee.
+
+Both Voice files encourage friendly attention, shared excitement and gentle
+corrections without fabricated agreement or familiarity. A language-guard fix
+recognizes straight/curly English contractions and clear brief reactions seen
+in refused live drafts. Shared English words cannot cancel positive English
+evidence. Explicit French cues still refuse, including alongside an English
+contraction; unidentified and generic prose keep their existing checks.
+
+Voice changes reach the next draft. Code and the dated configuration apply at
+the next explicitly requested restart; this change does not itself restart the
+bot, alter permanent history or submit a manual social action.
 
 ## Natural conversation and heart-led emoji variety
 

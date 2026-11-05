@@ -80,6 +80,8 @@ def request_startup(store, request_id, now, cfg, *, explicit_live=False):
         if old:
             return dict(old)
         db.execute("INSERT INTO startup(id,requested_day,requested) VALUES(?,?,?)", (request_id, day, now.timestamp()))
+        from .preparation import recover_supply
+        recover_supply(db, cfg, now.timestamp())
         for platform in config.PLATFORMS:
             db.execute("INSERT INTO jobs(kind,item,due) VALUES('discovery',?,?) ON CONFLICT(kind,item) "
                        "DO UPDATE SET due=excluded.due,state=CASE WHEN jobs.state='running' THEN jobs.state ELSE 'pending' END,attempts=0",
@@ -128,8 +130,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
                           (stamp, cfg.grace_seconds, stamp)).fetchone()
         # Changing the slot configuration midday cannot create a second daily grid.
         consumed = db.execute("SELECT COUNT(*) FROM slots WHERE id LIKE ? AND state IN ('posted','reserved')", (day + "/%",)).fetchone()[0]
-        if slot and consumed >= 8:
-            db.execute("UPDATE slots SET state='skipped',reason='eight scheduled posts already committed' WHERE id=?", (slot["id"],))
+        if slot and consumed >= cfg.scheduled_daily_cap:
+            db.execute("UPDATE slots SET state='skipped',reason='scheduled daily cap already committed' WHERE id=?", (slot["id"],))
             slot = None
         startup = db.execute("SELECT * FROM startup WHERE state='pending' ORDER BY requested LIMIT 1").fetchone()
         if slot and slot["attempts"] >= cfg.max_attempts:
@@ -207,6 +209,14 @@ def reserve(store, now, cfg, *, operator_direct=False):
         fresh = [(r, d) for r, d in valid if stamp - d["published_at"] <= cfg.preferred_age_hours * 3600]
         if fresh:
             valid = fresh
+        elif not choice:
+            # 2026-11-04: progressively older fallback, never choose a two-year
+            # archive clip ahead of an eligible recent-week/month candidate.
+            for days in (7, 30, 90, 365, 730):
+                newer = [(r, d) for r, d in valid if stamp - d["published_at"] <= days * 86400]
+                if newer:
+                    valid = newer
+                    break
         recent = [json.loads(r[0]) for r in db.execute("SELECT c.document FROM candidates c JOIN reservations r "
                   "ON r.candidate=c.id WHERE r.state='confirmed' ORDER BY r.confirmed DESC LIMIT 4")]
         top_score = valid[0][0]["score"] or 0

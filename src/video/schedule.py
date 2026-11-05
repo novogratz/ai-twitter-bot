@@ -23,8 +23,8 @@ def eligible(now):
 
 def clocks(cfg):
     minutes = []
-    if not 5 <= len(cfg.windows) <= 8 or len(set(cfg.windows)) != len(cfg.windows) or not set(cfg.paired_windows) <= set(cfg.windows):
-        raise ValueError("five to eight unique video windows with paired windows drawn from them are required")
+    if not 5 <= len(cfg.windows) <= cfg.scheduled_daily_cap or len(set(cfg.windows)) != len(cfg.windows) or not set(cfg.paired_windows) <= set(cfg.windows):
+        raise ValueError("five to the configured daily cap of unique video windows with paired windows drawn from them are required")
     for value in cfg.windows:
         parsed = time.fromisoformat(value)
         if parsed.second or parsed.microsecond or parsed.tzinfo or parsed < active_hours.WAKE:
@@ -34,8 +34,8 @@ def clocks(cfg):
         if value in cfg.paired_windows:
             minutes.append(minute + cfg.pair_minutes)
     minutes.sort()
-    if not 5 <= len(minutes) <= 8 or len(set(minutes)) != len(minutes) or minutes[-1] >= 1440:
-        raise ValueError("five to eight distinct video slots are required")
+    if not 5 <= len(minutes) <= cfg.scheduled_daily_cap or len(set(minutes)) != len(minutes) or minutes[-1] >= 1440:
+        raise ValueError("five to the configured daily cap of distinct video slots are required")
     if any(b - a < 15 for a, b in zip(minutes, minutes[1:])):
         raise ValueError("video slot clocks must be at least 15 minutes apart")
     return tuple(f"{n // 60:02}:{n % 60:02}" for n in minutes)

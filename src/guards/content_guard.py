@@ -293,6 +293,11 @@ _EN_MARKERS = (
     " has ", " have ", " does ", " did ", " how ", " why ", " what ", " which ",
     " without ", " through ", " into ", " across ", " between ", " before ", " after ",
     " when ", " where ", " while ", " then ",
+    " i'm ", " you're ", " we're ", " they're ", " i've ", " you've ", " we've ", " they've ",
+    " i'd ", " you'd ", " we'd ", " they'd ", " i'll ", " you'll ", " we'll ", " they'll ",
+    " isn't ", " aren't ", " wasn't ", " weren't ", " don't ", " doesn't ", " didn't ",
+    " can't ", " couldn't ", " won't ", " wouldn't ", " shouldn't ",
+    " hasn't ", " haven't ", " hadn't ", " that's ", " there's ", " let's ",
 )
 _FR_ACCENTS_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]")
 
@@ -304,10 +309,15 @@ _SHORT_ENGLISH_CUES = re.compile(
     r"tiny|cheap|cheaper|expensive|faster|slower|wins|hurts|hurt|works|working|"
     r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
     r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
-    r"required|without|better|worse|good|neat|pay|rent|checking|shipped)\b", re.IGNORECASE)
+    r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds)\b", re.IGNORECASE)
 _FRENCH_REPLY_CUES = re.compile(
     r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
     r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
+# Strong French cues still refuse mixed prose even when an English contraction
+# is recognized. Shared English words (pour, bravo, non- prefixes) are not proof.
+_UNAMBIGUOUS_FRENCH_CUES = re.compile(
+    r"\b(?:bonjour|merci|oui|mais|avec|très|tres|c['’]est|j['’]aime|"
+    r"vraiment|beaucoup|toujours|jamais|magnifiques?|heureux|heureuses?)\b", re.IGNORECASE)
 _SHORT_ENGLISH_WORDS = set("""
 a an the and or but of to for with this that these those their you your yours
 they we i it is are was were be been my mine our ours its that's it's i'm i'd
@@ -329,6 +339,10 @@ if when where what which why how who whom whose being having has have had
 get gets got getting make makes made making do does did doing need needs
 want wants try trying tried keep keeps kept let lets left right going gone
 way thing things part job work doing enough almost finally actually both
+such fun matchup tender idea image images generation inside vs clear pricing
+easier designer eye prompt preset spell seventeen sounds like safe request
+charmed brain excellent listening little vampire drama handing github tasks
+very tempting order tracking me
 """.split())
 
 
@@ -352,10 +366,14 @@ def detect_language(text: str) -> Tuple[str, float]:
     """
     # Sentence-final words still count: "...building launchpads for." is
     # English even though the old literal " for " marker missed the period.
-    prose = re.sub(r"[.,!?;:()\[\]{}\"“”]", " ", (text or '').lower())
+    prose = (text or '').lower().replace("’", "'").replace("‘", "'")
+    prose = re.sub(r"[.,!?;:()\[\]{}\"“”]|(?<!\w)'|'(?!\w)", " ", prose)
     t = f" {prose} "
-    fr = sum(t.count(m) for m in _FR_MARKERS) + 2 * len(_FR_ACCENTS_RE.findall(t))
     en = sum(t.count(m) for m in _EN_MARKERS)
+    # Shared English words cannot cancel clear English evidence. Keep them
+    # as French signals when there is no English evidence to resolve them.
+    fr = sum(t.count(m) for m in _FR_MARKERS if not (en and m in {" on ", " son "}))
+    fr += 2 * len(_FR_ACCENTS_RE.findall(t))
     total = fr + en
     if total == 0:
         return ("unknown", 0.0)
@@ -605,7 +623,8 @@ def validate(text: str, kind: str = "original", *, source_language: str = "") ->
         source_english = (kind == "source" and lang == "unknown"
                           and (source_language.lower() == "en" or _short_english_source(prose)))
         if ((lang != "en" and not short_english and not source_english)
-                or reply_language.looks_french(prose) or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):
+                or reply_language.looks_french(prose) or _UNAMBIGUOUS_FRENCH_CUES.search(prose)
+                or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):
             return (False, f"English-only account: detected {lang} @ {conf:.0%}")
     return (True, "")
 

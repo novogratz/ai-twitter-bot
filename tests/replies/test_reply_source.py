@@ -67,7 +67,7 @@ def test_the_niche_keeps_posts_on_the_accounts_niche():
 
 def test_the_order_is_the_scrape_order_or_fresh_and_rising_first():
     old = {"url": fresh("a", minutes=300, n=1), "text": "old", "likes": 90_000}
-    cold = {"url": fresh("b", minutes=25, n=2), "text": "cold", "likes": 2}
+    cold = {"url": fresh("b", minutes=25, n=2), "text": "cold", "likes": 3}
     hot = {"url": fresh("c", minutes=20, n=3), "text": "hot", "likes": 400}
     tweets = [old, cold, hot]
     week = timedelta(days=7)
@@ -82,7 +82,7 @@ def test_reply_candidates_sorted_fresh_and_rising_first():
     must beat a 60-hour-old tweet; unknown-age URLs go last; within the
     same freshness bucket, higher likes-per-hour wins."""
     fresh_hot = {"url": fresh("someone", minutes=20, n=1), "likes": 400}
-    fresh_cold = {"url": fresh("someone", minutes=25, n=2), "likes": 2}
+    fresh_cold = {"url": fresh("someone", minutes=25, n=2), "likes": 3}
     old = {"url": fresh("someone", minutes=60 * 60, n=3), "likes": 90000}
     unknown = {"url": "https://x.com/someone", "likes": 50}
     ordered = sorted([unknown, old, fresh_cold, fresh_hot], key=reply_source.freshness_sort_key)
@@ -109,12 +109,17 @@ def test_select_leaves_the_scraped_posts_as_they_were():
     assert tweets == before
 
 
-def test_two_likes_is_a_preference_not_an_eligibility_floor(settings_override):
-    settings_override(REPLY_PREFERRED_MIN_LIKES=2)
+@pytest.mark.parametrize("threshold", [2, 3])
+def test_observed_likes_is_a_preference_not_an_eligibility_floor(settings_override, threshold):
+    settings_override(REPLY_PREFERRED_MIN_LIKES=threshold)
     posts = [dict(url=fresh("builder", minutes=age, n=i), text="SI model", likes=likes)
-             for i, (age, likes) in enumerate(((1, None), (2, 1), (20, 2), (21, 3)))]
+             for i, (age, likes) in enumerate(((1, None), (2, threshold - 1), (20, threshold), (21, threshold + 1)))]
     selected = reply_source.select(posts, Declaration(max_age=HOUR, order=Order.FRESH_AND_RISING), "TEST")
-    assert [c.likes for c in selected] == [3, 2, 1, None]
+    assert [c.likes for c in selected] == [threshold + 1, threshold, threshold - 1, None]
+    # The shared generation pipeline also promotes the threshold over its
+    # immediate lower neighbor, without dropping less-liked or unknown posts.
+    assert [c.likes for c in reply_pipeline.prioritize(selected[::-1])] == [
+        threshold, threshold + 1, None, threshold - 1]
     settings_override(REPLY_PREFERRED_MIN_LIKES=0)
     # The preference can be disabled without filtering out any new posts.
     assert reply_pipeline.prioritize(selected[::-1]) == selected[::-1]

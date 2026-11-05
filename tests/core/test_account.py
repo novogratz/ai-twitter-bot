@@ -103,7 +103,9 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
                              "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1500,
-                             "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 2}
+                             "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 3,
+                             "DIRECT_REPLY_QUERIES_PER_CYCLE": 12, "DIRECT_REPLY_MAX_PER_CYCLE": 80,
+                             "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
     assert loaded.publication_si_wording is True

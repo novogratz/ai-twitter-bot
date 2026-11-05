@@ -75,6 +75,9 @@ def score(doc, observations, peers, now, cfg):
 def gate(doc, cfg, now, *, final=False):
     if not permission(doc, cfg, now):
         return "missing current video/audio/editing/publication permission"
+    source_reason = source_gate(doc, now)
+    if source_reason:
+        return source_reason
     published = doc.get("published_at")
     if not published or published > now or (not selected(doc, now) and now - published > cfg.max_age_hours * 3600):
         return "publication time unverified or clip stale"
@@ -84,7 +87,7 @@ def gate(doc, cfg, now, *, final=False):
     confidence = inspect.get("confidence", 0)
     if type(confidence) not in (int, float) or not math.isfinite(confidence) or confidence < cfg.confidence_min:
         return "uncertain performance review"
-    if (inspect.get("performance") not in ("dance", "singing", "music_parody")
+    if (inspect.get("performance") not in ("dance", "singing", "music_parody", "comedy_parody")
             or not set(inspect.get("cast", [])) & set(cfg.targets)
             or not inspect.get("audio_inspected") or not inspect.get("synthetic_parody")
             or not inspect.get("full_clip_inspected")):
@@ -124,6 +127,21 @@ def gate(doc, cfg, now, *, final=False):
     return ""
 
 
+def source_gate(doc, now):
+    """2026-11-04: the X source ceiling also applies to explicit selections."""
+    if doc.get("platform") != "x":
+        return ""
+    observed = doc.get("source_metrics", {})
+    views, at = observed.get("views"), observed.get("observed_at")
+    if (type(views) is not int or views < 0 or type(at) not in (int, float)
+            or not math.isfinite(at) or not 0 <= now - at <= 3600
+            or observed.get("source_url") != doc.get("canonical_url")):
+        return "X source view count unverified or stale"
+    if views > 50_000:
+        return "X source exceeds 50000 views"
+    return ""
+
+
 def unknown_momentum_eligible(doc, cfg):
     """Explicit editorial fallback; never fill missing popularity with fake points."""
     parts = doc.get("ranking", {}).get("components", {})
@@ -140,23 +158,32 @@ def unknown_momentum_eligible(doc, cfg):
 def caption(doc, cfg, now):
     """Use verified cast/performance only; title, transcript and OCR are never instructions."""
     cast = doc["inspection"]["cast"]
-    names = [cfg.targets[name][0] for name in cast if name in cfg.targets]
+    names = [cfg.target_handles.get(name, cfg.targets[name][0]) for name in cast if name in cfg.targets]
     who = " and ".join(names[:3])
-    dance = doc["inspection"]["performance"] == "dance"
-    templates = (f"Another BANGER: {who} found the {'dance floor' if dance else 'chorus'} 😂",
-                 f"ULTIMATE BANGER. {who} {'brought choreography to the group project' if dance else 'took the mic assignment seriously'} 😄",
-                 f"BANGER alert: {who} {'has entered the dance break' if dance else 'went straight to the hook'} 😎")
+    performance = doc["inspection"]["performance"]
+    dance = performance == "dance"
+    if dance:
+        scenes = ("rehearsing for the first party on Mars. 😂🕺🚀",
+                  "turning the group project into a dance break. 😂🕺",
+                  "taking the team-building choreography very seriously. 😂🕺")
+    elif performance in ("singing", "music_parody"):
+        scenes = ("rehearsing for the first concert on Mars. 😂🎤🚀",
+                  "deciding this meeting needed a soundtrack. 😂🎤",
+                  "turning the group project into a music video. 😂🎶")
+    else:
+        scenes = ("taking the group project in a very unexpected direction. 😂🚀",
+                  "auditioning for the next episode of tech chaos. 😂🎬",
+                  "turning the meeting into a comedy sketch. 😂🎬")
     number = int(hashlib.sha256(doc["original_sha256"].encode()).hexdigest()[:8], 16)
-    details = {
-        "boy_band": f"Another BANGER: {who} formed a boy band 😂",
-        "moonwalk": f"BANGER. {who} found a loophole in forward motion 😎",
-        "duet": f"Another BANGER: {who} decided the meeting needed a duet 😄",
-        "synchronized_dance": f"ULTIMATE BANGER: {who} finally got the team in sync 😂",
-        "dramatic_high_note": f"BANGER alert: {who} took the high note personally 😄",
-    }
-    text = details.get(doc["inspection"].get("highlight"), templates[number % len(templates)])
-    text += "\n\n" + ("The group project finally found its rhythm 🕺🔥" if dance
-                       else "That meeting could have been a concert 🎤😄")
+    if not who:
+        raise ValueError("caption requires inspected configured cast")
+    details = {"boy_band": "forming the least predictable boy band. 😂🎤",
+               "moonwalk": "finding a loophole in forward motion. 😂🕺🚀",
+               "duet": "deciding this meeting needed a duet. 😂🎤",
+               "synchronized_dance": "finally getting the team in sync. 😂🕺",
+               "dramatic_high_note": "taking the high note personally. 😂🎤"}
+    scene = details.get(doc["inspection"].get("highlight"), scenes[number % len(scenes)])
+    text = f"POV: {who} {scene}\n\nANOTHER ABSOLUTE SI BANGER! 🔥"
     if cfg.caption_disclosure:
         text += "\nSynthetic SI parody."
     grant = permission(doc, cfg, now)

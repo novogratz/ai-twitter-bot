@@ -54,14 +54,14 @@ def plan(payload, source_id, now):
             "captured_at": now, "expires_at": expires, "user_agent": ua, **selected}
 
 
-def capture_next(store, cfg, now):
+def _capture_bilibili(store, cfg, now):
     """One short Safari transaction, owned by the publisher; never renders/posts."""
     options = cfg.platforms.get("bilibili", {})
     if (not options.get("enabled", True) or not options.get("safari_player")
             or store.meta("platform_disabled:bilibili", False)
-            or store.meta("next_source_capture", 0) > now):
+            or store.meta("next_source_capture:bilibili", 0) > now):
         return None
-    store.set_meta("next_source_capture", now + 60)
+    store.set_meta("next_source_capture:bilibili", now + 60)
     candidates = store.rows("SELECT id FROM candidates WHERE platform='bilibili' "
                             "AND state IN ('discovered','held','ready') ORDER BY published DESC,discovered DESC LIMIT 40")
     chosen = None
@@ -114,7 +114,7 @@ def capture_next(store, cfg, now):
         leads = related_candidates(payload.get("related", []), cfg, row["id"], now)
         if leads:
             ingest(store, "bilibili", leads, now, cfg)
-        downloaded = bool(doc.get("original_sha256"))
+        downloaded = bool(doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file())
         if not downloaded:
             doc["source_download"] = plan(payload, source_id, now)
         elif (payload.get("id") != source_id or type(payload.get("published")) not in (int, float)
@@ -141,12 +141,89 @@ def capture_next(store, cfg, now):
         from .security import Deferred
         if isinstance(exc, (OutsideActiveHours, Deferred)):
             raise
+        from .config import safe_label
+        detail = safe_label(str(exc)) if isinstance(exc, AccessError) else type(exc).__name__
         store.save_candidate(row["id"], doc, time.time(), state=row["state"],
-                             reason="source player unavailable: " + type(exc).__name__, score=row["score"],
+                             reason="source player unavailable: " + detail, score=row["score"],
                              fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
         store.set_meta("source_player:bilibili", {"status": "limited", "checked_at": now,
                        "reason": type(exc).__name__ + ": normal player media unavailable; no login/CAPTCHA bypass"})
         return "source player unavailable"
+
+
+def capture_next(store, cfg, now):
+    """Rotate bounded normal-page reads across enabled sources; no media work here."""
+    if store.meta("next_source_capture", 0) > now:
+        return None
+    from . import native_source
+    platforms = [key for key, options in cfg.platforms.items()
+                 if options.get("enabled", True) and options.get("safari_player")
+                 and not store.meta("platform_disabled:" + key, False)]
+    if not platforms:
+        return None
+    offset = store.meta("source_capture_offset", 0) % len(platforms)
+    for platform in platforms[offset:] + platforms[:offset]:
+        if platform == "bilibili":
+            result = _capture_bilibili(store, cfg, now)
+            if result:
+                store.set_meta("next_source_capture", now + 60)
+                store.set_meta("source_capture_offset", platforms.index(platform) + 1)
+                return result
+            continue
+        if platform not in native_source.CDNS:
+            continue
+        chosen = None
+        for item in store.rows("SELECT id FROM candidates WHERE platform=? AND state IN ('discovered','held','ready') "
+                               "ORDER BY CASE WHEN state='ready' THEN 0 ELSE 1 END,published DESC,discovered DESC LIMIT 80", (platform,)):
+            row = store.candidate(item["id"])
+            doc = row["document"]
+            refresh_x = platform == "x" and now - doc.get("source_metrics", {}).get("observed_at", 0) >= 1800
+            have_original = doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file()
+            needs_source = not (have_original or doc.get("media_url") or doc.get("local_file"))
+            if (ranking.permission(doc, cfg, now) and (refresh_x or needs_source)
+                    and now - doc.get("source_capture_attempt", 0) >= 1200
+                    and not store.rows("SELECT 1 FROM jobs WHERE item=? AND state='running'", (row["id"],))):
+                chosen = row
+                break
+        if not chosen:
+            continue
+        row, doc = chosen, chosen["document"]
+        store.set_meta("next_source_capture", now + 60)
+        store.set_meta("source_capture_offset", platforms.index(platform) + 1)
+        doc["source_capture_attempt"] = now
+        downloaded = bool(doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file())
+        try:
+            if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
+                raise Deferred("source request budget exhausted")
+            native_source.capture(row, cfg, now)
+            reason = ranking.source_gate(doc, now)
+            if reason:
+                raise AccessError(reason)
+            store.save_candidate(row["id"], doc, time.time(), state=row["state"] if downloaded else "discovered",
+                                 reason=row["reason"] if downloaded else "source media captured; verification queued",
+                                 score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
+            with store.transaction() as db:
+                db.execute("UPDATE candidates SET published=?,creator=? WHERE id=?", (doc["published_at"], doc["creator"], row["id"]))
+                observed = doc.get("source_metrics", {})
+                if type(observed.get("views")) is int:
+                    db.execute("INSERT OR IGNORE INTO observations VALUES(?,?,?)", (row["id"], now, json.dumps({"views": observed["views"]})))
+                if not downloaded:
+                    db.execute("INSERT INTO jobs(kind,item,due) VALUES('media',?,?) ON CONFLICT(kind,item) DO UPDATE SET "
+                               "state='pending',due=excluded.due,attempts=0", (row["id"], now))
+            store.set_meta("source_player:" + platform, {"status": "operational", "checked_at": now,
+                           "candidate": row["id"], "scope": "observed normal page only"})
+            return "source media captured"
+        except Exception as exc:
+            from ..guards.active_hours import OutsideActiveHours
+            from .config import safe_label
+            if isinstance(exc, (OutsideActiveHours, Deferred)):
+                raise
+            reason = safe_label(str(exc)) if isinstance(exc, AccessError) else type(exc).__name__
+            store.save_candidate(row["id"], doc, time.time(), state="held", reason="source player unavailable: " + reason,
+                                 score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
+            store.set_meta("source_player:" + platform, {"status": "limited", "checked_at": now, "reason": reason})
+            return "source player unavailable"
+    return None
 
 
 def related_candidates(links, cfg, source_candidate, now):
@@ -186,6 +263,9 @@ def related_candidates(links, cfg, source_candidate, now):
 
 def download_player(doc, destination, cfg, store, now):
     """Download original DASH tracks outside Safari, then remux without altering them."""
+    if doc.get("platform") != "bilibili":
+        from .native_source import download
+        return download(doc, destination, cfg, store, now)
     from . import media
     source = doc["source_download"]
     if (source.get("platform") != "bilibili" or source.get("source_id") != doc["source_id"]
