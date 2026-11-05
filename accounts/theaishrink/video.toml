@@ -2,8 +2,10 @@
 # This replaces main-post editorial/repost scheduling only while enabled.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["07:00", "09:00", "12:00", "17:00", "19:00", "21:00"]
-paired_windows = ["07:00", "21:00"]
+windows = ["05:00", "07:00", "09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00"]
+paired_windows = []
+scheduled_daily_cap = 10
+startup_on_boot = true
 pair_minutes = 15
 protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
 preparation_lead_seconds = 1800
@@ -21,7 +23,7 @@ queue_limit = 500
 score_threshold = 80.0
 confidence_min = 0.9
 preferred_age_hours = 72
-max_age_hours = 168
+max_age_hours = 17520 # recent first; progressively older fallback up to 730 days
 lease_seconds = 1200
 media_job_seconds = 840
 max_media_memory_mb = 2048
@@ -63,10 +65,17 @@ elon = ["Elon Musk", "马斯克"]
 trump = ["Donald Trump", "特朗普"]
 dario = ["Dario Amodei", "达里奥", "阿莫迪"]
 sam = ["Sam Altman", "山姆·奥特曼"]
-jensen = ["Jensen Huang", "黄仁勋"]
+zuckerberg = ["Mark Zuckerberg", "Zuckerberg", "扎克伯格"]
+
+[target_handles]
+elon = "@elonmusk"
+trump = "@realDonaldTrump"
+sam = "@sama"
+# No guessed X handles for cast members without a configured verified handle.
 
 [platforms.instagram]
 enabled = true
+safari_player = true
 public_search = true
 public_search_seconds = 7200
 creators = ["ai_xiaomu"]
@@ -76,6 +85,7 @@ permission_reference = ""
 
 [platforms.tiktok]
 enabled = true
+safari_player = true
 public_search = true
 public_search_seconds = 7200
 creators = []
@@ -92,6 +102,15 @@ permission_reference = ""
 
 [platforms.rednote]
 enabled = true
+safari_player = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+[platforms.x]
+enabled = true
+safari_player = true
 public_search = true
 public_search_seconds = 7200
 creators = []
@@ -102,7 +121,7 @@ permission_reference = ""
 enabled = true
 operator_attested = true
 all_creators = true
-platforms = ["instagram", "tiktok", "rednote", "bilibili"]
+platforms = ["instagram", "tiktok", "rednote", "bilibili", "x"]
 valid_until_revoked = true
 video = true
 audio = true
@@ -110,7 +129,7 @@ editing = true
 x_publication = true
 overlay_removal = true
 credit_source = false
-evidence = "Operator confirmed on 2026-11-01: YES I HAVE Permission; i always have permission; for future videos as well i have permission for all videos on instagram tiktok rednote blibli etc. Confirmation answered the question covering editing/reposting the video and its music. This is an operator attestation, not an independently verified creator contract."
+evidence = "Operator confirmed on 2026-11-01 permission for current/future Instagram, TikTok, RedNote and Bilibili video/audio editing and X republication. On 2026-11-04 explicitly extended the instruction to X videos with no more than 50000 observed views and older fallback up to two years. This is an operator attestation, not an independently verified creator contract."
 
 # [permissions.creator_contract_id]
 # platform = "instagram"

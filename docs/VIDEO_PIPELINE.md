@@ -1,11 +1,13 @@
 # Existing-video pipeline
 
-Current Account policy (latest operator instruction, 2026-11-01): **eight daily
-posts**, at 07:00, 07:15, 09:00, 12:00, 17:00, 19:00, 21:00 and 21:15 Toronto. Captions
-use BANGER and emojis, with a blank line between two short sentences. Optional
+Current Account policy (latest operator instruction, 2026-11-04): **ten daily
+slots**, every two hours from 05:00 through 23:00 Toronto. Captions begin with
+`POV:` and a playful scene based on inspected performance/attributed cast, using
+configured cast handles and emojis, followed by a blank line and
+`ANOTHER ABSOLUTE SI BANGER! 🔥`. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
-four platforms until revoked. Source subtitles, logos and credits may remain;
+five platforms, including X, until revoked. Source subtitles, logos and credits may remain;
 source/output review must confirm that no unapproved overlays were introduced.
 
 `preparation_lead_seconds = 1800` queues work before each slot, with durable
@@ -17,6 +19,22 @@ initial readiness and archive completeness separately; never reset posting histo
 `allow_unknown_momentum = true` enables the documented quality fallback for missing
 engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
 Cast labels are creator attribution, not facial identification of real people.
+
+Sources favor the last 72 hours, then progressively older week/month/year bands,
+up to 730 days. The approved fictional cast is Elon Musk, Sam Altman, Dario
+Amodei, Donald Trump and Mark Zuckerberg, in synthetic dance, singing, music
+or comedy parody. X sources additionally require source-bound observed views
+at most 50,000, refreshed within an hour. Rounded counters use a conservative
+upper bound: a bare `50K` is not proof of no more than 50,000. Unknown, invalid,
+stale and over-limit counters hold the source, including operator selections.
+
+Normal-page source capture now rotates across all enabled platforms. It uses
+the exact source page's publication metadata and observed media references;
+the separate media process downloads approved CDN MP4s or bounded, unencrypted
+VOD HLS and then performs the normal inspection/render/QC flow. Bilibili retains
+its existing normal-player capture. Login walls, absent publication metadata,
+missing media, unsupported streams and CDN restrictions remain visible holds.
+Finding a web link alone does not make a ready video.
 
 The Account allows `browser_upload_seconds = 180` for transfer **and X processing**;
 the default remains 45 seconds. The 19:00 live run reached processing after transfer
@@ -51,7 +69,8 @@ uv run --with-requirements requirements-video.txt python bin/video.py replace-de
 
 This retains both receipts and transfers the same slot/startup-day claim. It is
 not an automatic retry or general duplicate exception. Ambiguous sends stay held.
-Ordinary restarts never create a startup request. See [current validation and
+The live Account now opts into startup requests on ordinary starts, described
+below. See [current validation and
 remaining limitations](VIDEO_VALIDATION.md) before interpreting older diagnostic
 snapshots.
 
@@ -89,15 +108,13 @@ scheduler's overnight pause.
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 07:00, 07:15 |
-| Morning | 09:00 |
-| Noon | 12:00 |
-| Afternoon | 17:00 |
-| Early evening | 19:00 |
-| Evening | 21:00, 21:15 |
+| Morning | 05:00, 07:00, 09:00, 11:00 |
+| Afternoon | 13:00, 15:00, 17:00 |
+| Evening | 19:00, 21:00, 23:00 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. Five to eight distinct slots are configurable; this Account uses seven.
+rules. Five to ten distinct slots are configurable; this Account uses ten and
+`scheduled_daily_cap=10`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -105,8 +122,9 @@ permits a second video at 07:23; a 07:10:01 success pushes it past the 07:25
 deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
-`protect_primary_windows = true` prioritizes one video at **07:00, 09:00,
-12:00, 17:00 and 21:00**. If a window already received its first video, its
+`protect_primary_windows = true` prioritizes one video at each configured main
+window. This Account has ten main windows and no paired slots. If a different
+configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
 for the next five main windows, including tomorrow morning. Coverage accounts
 for source/permission expiry and known freshness-score decay through each slot's
@@ -126,7 +144,13 @@ priority, including its normal fifteen-minute slot collision rule. Setting
 on the next worker restart; all other gates remain.
 
 Explicit live activation creates a persistent request, unique by request ID and
-local request day. Ordinary worker/process starts create none. The startup
+local request day. The live Account's `startup_on_boot=true` also records a
+request on ordinary `main.py` starts, after singleton ownership and before
+resuming jobs. It queues discovery immediately and lets the dedicated publisher
+attempt a ready eligible clip. It creates no Reply hold and never overrides
+video pause/shutdown or ambiguous publication. Reply-only, disabled and dry-run
+starts create none. Repeated starts reuse the day's request; an expired pending
+request from an earlier day is closed before creating today's request. The startup
 request receives sixty minutes of eligible time, excluding midnight–04:30 and
 any explicitly configured interaction breaks (disabled for this Account),
 including both DST transitions correctly. A request within fifteen minutes of
@@ -151,8 +175,14 @@ do not establish exactly-once delivery at X.
 A due video joins the ready-Reply FIFO browser priority, below watched work and
 above routine reads. Later ordinary Replies cannot continually overtake its
 reservation. An active transaction is never interrupted; final deadline/spacing
-checks still run after the browser lock is granted. History/discovery reads keep
-routine priority. This bounds starvation by ordinary Replies, not X upload time.
+checks still run after the browser lock is granted. Routine archive reads keep
+background priority. This bounds starvation by ordinary Replies, not X upload time.
+
+Preflight, source capture and novelty needed for startup/preparation/initial
+history use ready-Reply priority and wait at most sixty seconds for their
+existing browser queue turn. Routine archive reads retain a five-second wait.
+This avoids repeatedly losing the queue position while preserving the single
+Safari owner and active-hours recheck after acquisition.
 
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
@@ -538,7 +568,14 @@ unchecked. No-match has only the recorded search scope.
 
 ## Startup runbook and commands
 
-**Video first, then interactions:** while the bot is stopped, use the following
+**Normal parallel startup:** the current Account sets `startup_on_boot=true`.
+An explicitly requested `./bin/run.sh` starts Reply work and queues one durable
+video request independently. It does not hold Replies while the clip is prepared.
+Preparation cannot guarantee an immediate send without an already eligible ready
+clip. Repeated starts keep the same daily allowance and unknown sends stay held.
+
+**Optional video first, then interactions:** only when the Operator explicitly
+requests that different order, while the bot is stopped, use the following
 explicit activation before starting `bin/run.sh`:
 
 ```bash
@@ -561,7 +598,8 @@ If the Operator explicitly changes the desired order,
 `bin/video.py resume-replies` (with the same `uv run` prefix) releases just this
 interaction hold. It creates no startup request and does not activate paused
 video publishing. Dry-run cannot arm or release the hold. An ordinary worker
-start continues to create no startup request.
+start continues to create no startup request; the main bot creates one only when
+the Account enables `startup_on_boot`.
 
 Live publication requires the prerequisites above. The explicit video-first
 flow can run preparation with interactions held while checks are blocked.
@@ -587,14 +625,14 @@ publication.
    `publishing_transport = "safari"`; no X credentials file is needed. Keep
    `x_reads_enabled=false` (that switch controls the optional API only). Set
    `VIDEO_ENABLED=1` and keep `VIDEO_LIVE=0` during a dry-run deployment.
-5. Start/resume workers **without a startup request**, in separate supervised
+5. Start/resume preparation workers **without a startup request**, in separate supervised
    terminals/services (or start `main.py` with optional dependencies to supervise
    them alongside replies):
 
    ```bash
    uv run --with-requirements requirements-video.txt python bin/video.py worker discovery
    uv run --with-requirements requirements-video.txt python bin/video.py worker media
-   # Safari publisher shares the Reply browser inside main.py:
+   # Main owns Safari and may request startup when startup_on_boot=true:
    uv run --with-requirements requirements-video.txt python main.py
    ```
 

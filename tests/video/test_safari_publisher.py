@@ -21,17 +21,37 @@ def test_upload_processing_allowance_is_bounded_and_does_not_expand_slot_grace(v
         replace(video_cfg, browser_upload_seconds=181)
 
 
-def test_busy_video_read_defers_without_holding_due_publisher(monkeypatch):
+@pytest.mark.parametrize("priority, expected_wait", [(2, 5), (1, 60), (0, 60)])
+def test_busy_video_read_waits_for_its_priority_then_defers(monkeypatch, priority, expected_wait):
     from contextlib import nullcontext
+    from src.core import work_priority
     from src.video.security import Deferred
     monkeypatch.setattr(browser, "publisher_session", lambda: nullcontext())
     monkeypatch.setattr(browser, "require_active", lambda: None)
     waits = []
     monkeypatch.setattr(safari._safari_lock._lock, "acquire", lambda timeout: waits.append(timeout) or False)
     monkeypatch.setattr(safari._safari_lock._lock, "release", lambda: pytest.fail("unowned lock released"))
-    with pytest.raises(Deferred, match="Safari busy"), browser.browser_session():
+    with work_priority.scope(priority), pytest.raises(Deferred, match="Safari busy"), browser.browser_session():
         pytest.fail("read began without the browser")
-    assert waits == [5]
+    assert waits == [expected_wait]
+
+
+def test_required_video_read_rechecks_active_hours_after_queue_and_releases(monkeypatch):
+    from contextlib import nullcontext
+    from src.core import work_priority
+    from src.guards.active_hours import OutsideActiveHours
+    monkeypatch.setattr(browser, "publisher_session", lambda: nullcontext())
+    checks, released = [], []
+    def active():
+        checks.append(True)
+        if len(checks) == 2:
+            raise OutsideActiveHours("bedtime during wait")
+    monkeypatch.setattr(browser, "require_active", active)
+    monkeypatch.setattr(safari._safari_lock._lock, "acquire", lambda timeout: True)
+    monkeypatch.setattr(safari._safari_lock._lock, "release", lambda: released.append(True))
+    with work_priority.scope(work_priority.REPLY), pytest.raises(OutsideActiveHours), browser.browser_session():
+        pytest.fail("read began after bedtime")
+    assert released == [True]
 
 
 def test_receipt_reads_own_profile_when_success_toast_has_no_link(monkeypatch):

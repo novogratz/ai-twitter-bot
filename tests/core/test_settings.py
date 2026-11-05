@@ -59,6 +59,50 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
         fresh("", {"MAX_FOLLOWS_PER_DAY": "lots"})
 
 
+@pytest.mark.parametrize("value", ["today", "2026-11-31", "20261104", "2026-W45-3"])
+def test_reply_boost_requires_an_exact_calendar_date(fresh, value):
+    with pytest.raises(settings.SettingsError, match="REPLY_VOLUME_BOOST_DATE"):
+        fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
+
+
+@pytest.mark.parametrize("value", ["", "2026-11-04"])
+def test_reply_boost_accepts_blank_or_a_calendar_date(fresh, value):
+    fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
+    assert settings.get("REPLY_VOLUME_BOOST_DATE") == value
+
+
+def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_override, monkeypatch):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from src.guards import active_hours
+
+    settings_override(REPLY_VOLUME_BOOST_DATE="2026-11-04", DIRECT_REPLY_QUERIES_PER_CYCLE=6,
+                      DIRECT_REPLY_MAX_PER_CYCLE=40, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=40)
+    for stamp, expected in (("2026-11-04T04:59:59+00:00", [6, 40, 40]),
+                            ("2026-11-05T04:59:59+00:00", [12, 80, 80]),
+                            ("2026-11-05T05:00:00+00:00", [6, 40, 40])):
+        local = datetime.fromisoformat(stamp).astimezone(ZoneInfo("America/Toronto"))
+        monkeypatch.setattr(active_hours, "now_local", lambda: local)
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == expected
+        assert [settings.get(name) for name in settings.REPLY_BUDGET_NAMES] == [6, 40, 40]
+    with pytest.raises(KeyError):
+        settings.reply_budget("MIN_SECONDS_BETWEEN_REPLIES")
+
+
+def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from src.guards import active_hours
+
+    fresh("")
+    assert settings.get("REPLY_VOLUME_BOOST_DATE") == ""
+    for day in (4, 5, 6):
+        local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
+        monkeypatch.setattr(active_hours, "now_local", lambda: local)
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [12, 80, 80]
+        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 3
+
+
 FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)
 
 

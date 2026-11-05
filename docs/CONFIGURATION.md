@@ -113,11 +113,14 @@ the existing rotating search budget. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
 report values only; the live Account and local `.env` set 1500/1800. They change neither admission,
 spacing, generation budgets nor the uncapped daily Reply policy.
 
-The November 2 volume request retains
+The November 4 volume request retains
 `MIN_SECONDS_BETWEEN_REPLIES=8` and `REPLY_JITTER_SECONDS=4` in the Account and
 local `.env`, replacing the local 20/10 override. The engine floor stays eight.
-Local `DIRECT_REPLY_MAX_PER_CYCLE=40` and `FEED_SWEEP_MAX_REPLIES_PER_CYCLE=40`
-replace 24/24, and `DIRECT_REPLY_QUERIES_PER_CYCLE=6` replaces three. Six new
+Account and local `DIRECT_REPLY_MAX_PER_CYCLE=80` and
+`FEED_SWEEP_MAX_REPLIES_PER_CYCLE=80` replace 40/40, and
+`DIRECT_REPLY_QUERIES_PER_CYCLE=12` replaces six. These values persist every day.
+`REPLY_PREFERRED_MIN_LIKES=3` prefers strictly more than two observed likes,
+without excluding otherwise eligible lower-liked or unknown-count sources. Six
 first-hour Latest queries expand creative and technical discovery without
 popularity floors. Discovery budgets and admission checks still apply. Browser and
 model work add time beyond the required gap, so settings cannot promise volume.
@@ -126,6 +129,26 @@ up to `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` (default and ceiling 900 seconds,
 floor 20), or the configured initial delay if longer. Rediscovery does
 not reset this process-local backoff; pruning the parent removes it. New watched
 parents and independent like/repost retries are unaffected.
+
+`REPLY_VOLUME_BOOST_DATE` optionally doubles those three discovery/generation
+budgets on one Toronto date, written as `YYYY-MM-DD`; blank disables it and an
+invalid date refuses startup. The local setting is blank now that 12/80/80 is
+the persistent Account baseline, avoiding a second doubling on November 4.
+An explicitly configured date still expires at midnight without reloading
+settings or changing the file.
+Explicit manual `max_replies` arguments remain exact. This changes neither
+spacing, admission, scheduler concurrency nor the advisory daily targets.
+`main.py --dry-run` and the startup log expose the effective budgets. Loading
+a newly selected date still requires the Operator's next explicit restart.
+
+Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
+Account uses ten two-hour slots from 05:00 through 23:00 Toronto,
+`scheduled_daily_cap=10`, `startup_on_boot=true`, `preferred_age_hours=72` and
+`max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
+TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
+The startup request creates no Reply hold; publication still uses durable claims,
+inspection, dedup and existing spacing. The [README](../README.md) links the
+video pipeline guide and operating commands.
 
 ## Policy ceilings
 
@@ -281,8 +304,9 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `EDITORIAL_LLM_TIMEOUT_SECONDS` | int | `300` |  | Minimum timeout of an editorial model call. |
 | `DIRECT_REPLY_MAX_AGE_MINUTES` | int | `7200` |  | Oldest post the search and feed-sweep Replies answer. |
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
-| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` |  | Replies one direct_reply cycle may ship. |
-| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` |  | Search queries one direct_reply cycle scrapes; below 1 reads as 1. |
+| `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` | floor `0` | Replies one direct_reply cycle may ship; zero disables its scheduled generation. |
+| `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` | floor `1` | Search queries one direct_reply cycle scrapes. |
+| `REPLY_VOLUME_BOOST_DATE` | YYYY-MM-DD date or blank | blank |  | Toronto date (YYYY-MM-DD) on which search, direct-cycle and per-feed Reply budgets double; blank disables it. Automatically expires at midnight; never changes pacing or admission. |
 | `REPLY_DAILY_TARGET_MIN` | int | `0` | floor `0` | Advisory daily Reply target; never changes admission or pacing. |
 | `REPLY_DAILY_TARGET_MAX` | int | `0` | floor `0` | Upper advisory daily Reply target; neither a cap nor a quota to fill. |
 | `REPLY_CANDIDATE_BUFFER_LIMIT` | int | `400` | floor `1`, ceiling `1000` | Unprocessed source posts retained per search/feed lane in memory; no posting claims. |
@@ -305,7 +329,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
 | `PRIORITY_WATCH_MAX_REPLIES` | int | `1` | floor `1`, ceiling `2` | Maximum Reply generations per dispatch; one selects the newest parent again after each generation. |
-| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` |  | Reply generations one feed sweep may run per feed. |
+| `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` | floor `0` | Reply generations one feed sweep may run per feed; zero disables generation. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
 | `CURATOR_WINDOW_DAYS` | int | `14` |  | Days of engagement log the curator scores. |

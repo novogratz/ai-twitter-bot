@@ -152,7 +152,8 @@ def test_vip_scan_uses_bestie_prompt_for_btctherapist(monkeypatch, llm, chokepoi
     assert "—" not in chokepoint.calls[0].text, "humanize must strip em dashes from VIP replies"
 
 
-def test_direct_reply_scans_rotating_query_subset(settings_override):
+@pytest.mark.parametrize("boosted", [False, True])
+def test_direct_reply_scans_rotating_query_subset(settings_override, boosted):
     """2026-07-10 reply throughput ("you used to be around 900/day now only
     600"): direct_reply scanned ALL ~26 search queries EVERY 1-2 min cycle —
     the same query scraped 4x/hour mostly yields dedup-skips, and search
@@ -161,10 +162,13 @@ def test_direct_reply_scans_rotating_query_subset(settings_override):
     rotate (no slice starvation), full coverage lands within ceil(N/K)
     cycles, and K is read at call time."""
     from src.replies import direct_reply as dr
-    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=8)
+    from src.guards import active_hours
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=8,
+                      REPLY_VOLUME_BOOST_DATE=active_hours.today_iso() if boosted else "")
     qs = [f"q{i}" for i in range(26)]
     slices = [dr._queries_for_cycle(qs) for _ in range(4)]
-    assert all(len(s) == 8 for s in slices), "cycle must pay for K scrapes only"
+    expected = 16 if boosted else 8
+    assert all(len(s) == expected for s in slices), "cycle must pay for K scrapes only"
     assert slices[0] != slices[1], "consecutive cycles must rotate"
     assert set().union(*(set(s) for s in slices)) == set(qs), \
         "rotation must cover every query within ceil(N/K) cycles"

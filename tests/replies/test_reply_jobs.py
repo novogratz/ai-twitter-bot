@@ -250,11 +250,13 @@ def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
     assert len(lanes["queries"]) == 1, "the cycle stops at the first query instead of scraping the rest"
 
 
-def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
+@pytest.mark.parametrize("boosted", [False, True])
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted):
     """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
     outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
     The cycle stops at its budget and yields Safari."""
     import itertools
+    from src.guards import active_hours
 
     dr, lanes, llm, chokepoint = direct
     numbers = itertools.count()
@@ -264,15 +266,17 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override):
         return [{"url": fresh("someone", n=n), "text": f"post {n}"} for n in itertools.islice(numbers, 5)]
 
     monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
-    settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3)
+    settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3,
+                      REPLY_VOLUME_BOOST_DATE=active_hours.today_iso() if boosted else "")
 
     dr.run_direct_reply_cycle()
-    assert len(chokepoint.sent) == 3 and len(lanes["queries"]) == 1
+    assert len(chokepoint.sent) == (6 if boosted else 3)
+    assert len(lanes["queries"]) == (2 if boosted else 1)
 
     chokepoint.calls.clear()
     lanes["queries"].clear()
     dr.run_direct_reply_cycle(max_replies=12)
-    # The two unused posts from the first scan now save one browser search.
+    # Buffered posts save browser work; an explicit manual budget stays exact.
     assert len(chokepoint.sent) == 12 and len(lanes["queries"]) == 2
 
 
@@ -350,20 +354,23 @@ def test_feed_sources_survive_a_quota_stop_and_disappear_after_confirmation(feed
     assert feeds["read"] == ["FEED", "FOLLOWING"] * 3
 
 
-def test_feed_prefers_two_likes_but_still_answers_lower_and_unknown_counts(feed):
+def test_feed_prefers_more_than_two_likes_but_still_answers_lower_and_unknown_counts(feed):
     fs, feeds, llm, chokepoint = feed
-    posts = [post("builder", f"SI model project {i}", n=i, likes=likes)
-             for i, likes in enumerate((None, 1, 2))]
+    posts = [post("builder", f"SI model project {i}", minutes=minutes, n=i, likes=likes)
+             for i, (minutes, likes) in enumerate(((1, None), (2, 2), (90, 3)))]
     feeds["FEED"] = posts
     fs.run_feed_sweep_cycle()
     assert chokepoint.sent == [posts[2]["url"], posts[1]["url"], posts[0]["url"]]
 
 
-def test_both_feed_scans_finish_before_any_generation(feed, monkeypatch, settings_override):
+@pytest.mark.parametrize("boosted", [False, True])
+def test_both_feed_scans_finish_before_any_generation(feed, monkeypatch, settings_override, boosted):
     fs, feeds, llm, chokepoint = feed
     from src.x import scraper
     from src.replies import reply_pipeline
-    settings_override(FEED_SWEEP_SCAN_LIMIT=160, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=3)
+    from src.guards import active_hours
+    settings_override(FEED_SWEEP_SCAN_LIMIT=160, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=3,
+                      REPLY_VOLUME_BOOST_DATE=active_hours.today_iso() if boosted else "")
     events = []
     monkeypatch.setattr(scraper, "scrape_home_feed",
                         lambda **kw: events.append(("for_you", kw["max_tweets"])) or [
@@ -374,8 +381,9 @@ def test_both_feed_scans_finish_before_any_generation(feed, monkeypatch, setting
     monkeypatch.setattr(reply_pipeline, "run",
                         lambda job, candidates, cycle, **kw: events.append((job.label, kw["max_generations"])) or 0)
     fs.run_feed_sweep_cycle()
+    budget = 6 if boosted else 3
     assert events == [("for_you", 160), ("following", 160),
-                      ("FEED-SWEEP-FEED", 3), ("FEED-SWEEP-FOLLOWING", 3)]
+                      ("FEED-SWEEP-FEED", budget), ("FEED-SWEEP-FOLLOWING", budget)]
 
 
 def test_failed_for_you_scan_still_reads_and_answers_following(feed, monkeypatch):
@@ -586,9 +594,9 @@ def test_author_search_never_trusts_search_query_as_author_verification(profile_
     assert llm.calls == [] and chokepoint.sent == []
 
 
-def test_author_search_prefers_two_likes_before_spending_its_budget(profile_job):
+def test_author_search_prefers_more_than_two_likes_before_spending_its_budget(profile_job):
     _, run, profiles, llm, chokepoint = profile_job
-    low, preferred = post("builder", "SI model one", n=1, likes=1), post("builder", "SI model two", n=2, likes=2)
+    low, preferred = post("builder", "SI model one", n=1, likes=2), post("builder", "SI model two", n=2, likes=3)
     profiles["builder"] = [low, preferred]
     run()
     assert chokepoint.sent[0] == preferred["url"]

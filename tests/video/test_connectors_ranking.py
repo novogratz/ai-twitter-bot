@@ -6,8 +6,8 @@ import pytest
 from src.video import connectors, ranking
 
 
-def test_four_adapters_honestly_blocked_without_access(video_cfg):
-    assert set(connectors.ADAPTERS) == {"instagram", "tiktok", "bilibili", "rednote"}
+def test_five_adapters_honestly_blocked_without_access(video_cfg):
+    assert set(connectors.ADAPTERS) == {"instagram", "tiktok", "bilibili", "rednote", "x"}
     for cls in connectors.ADAPTERS.values():
         assert cls(video_cfg).capability()["status"] == "blocked"
 
@@ -112,7 +112,8 @@ def test_operator_caption_has_blank_line_emojis_and_no_optional_footer(ready, vi
     cfg = replace(video_cfg, caption_disclosure=False)
     text = ranking.caption(doc, cfg, at().timestamp())
     assert len(text.split("\n\n")) == 2
-    assert "BANGER" in text and "🕺🔥" in text
+    assert text.startswith("POV: ") and "🕺" in text
+    assert text.endswith("\n\nANOTHER ABSOLUTE SI BANGER! 🔥")
     assert "Synthetic" not in text and "Original:" not in text and "http" not in text
 
 

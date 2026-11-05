@@ -103,5 +103,5 @@ def _buffer_one_feed(source, tweets):
 def _sweep_one_feed(source, cycle):
     job = reply_pipeline.Job("feed_sweep", f"FEED-SWEEP-{source}", reply_call=reply_call, pipelined=True)
     replies_done = candidate_buffer.FEEDS[source].run(
-        job, cycle, max_generations=settings.get("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
+        job, cycle, max_generations=settings.reply_budget("FEED_SWEEP_MAX_REPLIES_PER_CYCLE"))
     log.info(f"[SWEEP] {source} done: {replies_done} replies.")

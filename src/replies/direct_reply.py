@@ -169,7 +169,7 @@ def _queries_for_cycle(all_queries: list) -> list:
     DIRECT_REPLY_QUERIES_PER_CYCLE (default 8, read at call time) bounds
     how many Safari search scrapes one cycle pays for. K >= N degrades to
     the old scan-everything behavior."""
-    k = max(1, settings.get("DIRECT_REPLY_QUERIES_PER_CYCLE"))
+    k = max(1, settings.reply_budget("DIRECT_REPLY_QUERIES_PER_CYCLE"))
     n = len(all_queries)
     if n == 0 or k >= n:
         return list(all_queries)
@@ -191,7 +191,7 @@ def run_direct_reply_cycle(max_replies=None):
     runs.
     """
     if max_replies is None:
-        max_replies = settings.get("DIRECT_REPLY_MAX_PER_CYCLE")
+        max_replies = settings.reply_budget("DIRECT_REPLY_MAX_PER_CYCLE")
     elif max_replies <= 0:
         max_replies = None
     cycle = reply_pipeline.Cycle()  # a post tried by one lane is not retried by the other

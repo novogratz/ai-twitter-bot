@@ -163,12 +163,16 @@ def main():
         from src.video.startup import waiting_reason
         from src.video.config import load as video_config
         from src.video.schedule import clocks as video_clocks
-        video_slots = len(video_clocks(video_config())) if settings.get("VIDEO_ENABLED") else 0
+        video_cfg = video_config() if settings.get("VIDEO_ENABLED") else None
+        video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else min_target,
                           "target_posts": video_slots if settings.get("VIDEO_ENABLED") else target,
                           "max_profile_posts": video_slots + 1 if settings.get("VIDEO_ENABLED") else config.posts_ceiling(),
                           "replies": "unlimited",
+                          "reply_volume_boost_date": settings.get("REPLY_VOLUME_BOOST_DATE"),
+                          "reply_discovery_generation_budgets": {
+                              name: settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES},
                           "advisory_reply_targets": [settings.get("REPLY_DAILY_TARGET_MIN"),
                                                      settings.get("REPLY_DAILY_TARGET_MAX")],
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
@@ -177,7 +181,9 @@ def main():
                           "auto_engage_handles": list(account.current().auto_engage_handles),
                           "slots": _main_slots(),
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") else sorted(trend_slots()),
-                          "startup_post": "explicit persistent video activation only" if settings.get("VIDEO_ENABLED") else "every start in waking hours, restarts included",
+                          "startup_post": (("automatic video request on start; at most one extra per Toronto day"
+                                            if video_cfg.startup_on_boot else "explicit persistent video activation only")
+                                           if video_cfg else "every start in waking hours, restarts included"),
                           "startup_interactions_held": bool(waiting_reason()),
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
@@ -194,6 +200,8 @@ def main():
     stop = threading.Event()
     from src.video.workers import Supervisor
     video_supervisor = Supervisor() if settings.get("VIDEO_ENABLED") and not args.reply_only else None
+    if video_supervisor:
+        _request_startup_video()
 
     def shutdown(signum, frame):
         from src.guards.active_hours import request_stop
@@ -209,11 +217,14 @@ def main():
     if settings.get("VIDEO_ENABLED"):
         from src.video.config import load as video_config
         from src.video.schedule import clocks as video_clocks
-        log.info("Bot started: %s video slots plus explicit startup; transport=%s; replies unlimited; active %s.",
+        log.info("Bot started: %s video slots plus at most one startup video; transport=%s; replies unlimited; active %s.",
                  len(video_clocks(video_config())), video_config().publishing_transport, window_label())
     else:
         log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
                  f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
+    log.info("[REPLY] Discovery/generation budgets: %s; boost date: %s (Toronto).",
+             {name: settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES},
+             settings.get("REPLY_VOLUME_BOOST_DATE") or "disabled")
     try:
         while not stop.is_set():
             from src.video.startup import waiting_reason
@@ -257,6 +268,33 @@ def main():
             video_supervisor.stop()
         scheduler.shutdown(wait=False)
         log.info("Bot stopped.")
+
+
+def _request_startup_video():
+    """Record the configured boot request; the separate publisher performs it."""
+    from src.video import config as video_config, publisher, schedule
+    from src.video.store import Store
+    try:
+        cfg = video_config.load()
+        if not cfg.startup_on_boot or not video_config.live():
+            return None
+        store = Store()
+        if store.meta("paused", True) or store.meta("shutdown", False):
+            log.warning("[VIDEO] Startup publication paused by video controls.")
+            return None
+        now = schedule.utc_now()
+        # Expire an old unfinished request before asking for today's one;
+        # reserved/uncertain sends remain claimed by their original request.
+        publisher.tick_calendar(store, now, cfg)
+        request_id = "boot:" + schedule.local(now).date().isoformat()
+        request = publisher.request_startup(store, request_id, now, cfg, explicit_live=True)
+        if request:
+            log.info("[VIDEO] Startup request %s: %s; Reply workers continue independently.",
+                     request["id"], request["state"])
+        return request
+    except Exception as exc:
+        log.warning("[VIDEO] Startup request failed (%s); Reply workers continue.", type(exc).__name__)
+        return None
 
 
 def _main_slots():

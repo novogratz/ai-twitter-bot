@@ -12,12 +12,14 @@ from .store import dumps
 HOSTS = {"instagram": {"www.instagram.com", "instagram.com"},
          "tiktok": {"www.tiktok.com", "tiktok.com"},
          "bilibili": {"www.bilibili.com", "bilibili.com"},
-         "rednote": {"www.xiaohongshu.com", "xiaohongshu.com"}}
+         "rednote": {"www.xiaohongshu.com", "xiaohongshu.com"},
+         "x": {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}}
 REASONS = {
     "instagram": "Needs a permitted creator feed/provider and licensed original; no Meta access configured.",
     "tiktok": "Needs opted-in creator feed/provider and licensed original; Research Tools are ineligible for commercial use.",
     "bilibili": "Needs authorized creator feed/provider; official Open Platform requires application and user authorization.",
     "rednote": "Needs permitted creator feed/provider; reviewed commerce docs do not establish a public video-search API.",
+    "x": "Needs public discovery or an authorized feed; source views and original media must be verified.",
 }
 
 
@@ -28,10 +30,12 @@ def canonical(platform, url):
     patterns = {"instagram": r"/(?:reel|reels|p)/[A-Za-z0-9_-]+/?",
                 "tiktok": r"/@[\w.-]+/video/\d+/?",
                 "bilibili": r"/video/(?:BV[\w]+|av\d+)/?",
-                "rednote": r"/(?:explore|discovery/item)/[A-Za-z0-9]+/?"}
+                "rednote": r"/(?:explore|discovery/item)/[A-Za-z0-9]+/?",
+                "x": r"/[A-Za-z0-9_]{1,15}/status/[0-9]+/?"}
     if not re.fullmatch(patterns[platform], part.path):
         raise ValueError("source URL must identify a video, not a search/profile")
-    return urlunsplit(("https", "www." + part.hostname.removeprefix("www."), part.path.rstrip("/"), "", ""))
+    host = "x.com" if platform == "x" else "www." + part.hostname.removeprefix("www.")
+    return urlunsplit(("https", host, part.path.rstrip("/"), "", ""))
 
 
 def timestamp(value):
@@ -128,7 +132,11 @@ class RedNote(CreatorFeed):
     platform = "rednote"
 
 
-ADAPTERS = {c.platform: c for c in (Instagram, TikTok, Bilibili, RedNote)}
+class X(CreatorFeed):
+    platform = "x"
+
+
+ADAPTERS = {c.platform: c for c in (Instagram, TikTok, Bilibili, RedNote, X)}
 
 
 def ingest(store, platform, items, now, cfg):
@@ -184,6 +192,10 @@ def ingest(store, platform, items, now, cfg):
                     clean = {k: metrics.get(k) if type(metrics.get(k)) is int and metrics[k] >= 0 else None
                              for k in ("views", "likes", "shares", "comments")}
                     db.execute("INSERT OR IGNORE INTO observations VALUES(?,?,?)", (ident, observed, dumps(clean)))
+                    if platform == "x" and item.get("metrics_evidence") == url and observed <= now:
+                        current = json.loads(db.execute("SELECT document FROM candidates WHERE id=?", (ident,)).fetchone()[0])
+                        current["source_metrics"] = {"views": clean["views"], "observed_at": observed, "source_url": url}
+                        db.execute("UPDATE candidates SET document=? WHERE id=?", (dumps(current), ident))
         except (KeyError, ValueError, TypeError, OverflowError):
             store.event(now, "source_rejected", platform, "invalid metadata record")
     return accepted

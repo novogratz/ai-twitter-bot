@@ -1,5 +1,55 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-04 — Empty video queue, sustained Replies and two-hour slots
+
+The Operator reports no videos over the last three days and requests a video
+every two hours from 05:00, automatic startup publication, fresh-first discovery
+with up to two-year fallback, X sources at no more than 50,000 views, and parallel
+Reply/video work. The read-only audit found zero ready candidates, 32 held
+candidates (13 discovery leads without an original, 18 unavailable source players
+and one incomplete media verification), nine expired candidates and four exhausted
+media jobs. November 3–4 slots had no eligible ready video. Repeated browser-read
+deferrals also showed the five-second queue wait losing its position under load.
+
+The new policy permits ten scheduled videos, extends source age/platforms and
+uses the requested POV scene plus SI BANGER footer. Startup requests are durable
+and do not hold Replies; existing daily-startup, spacing, inspection and permanent
+dedup rules remain. Required browser reads keep their FIFO place for up to sixty
+seconds while ordinary archive reads retain their short wait. Source access and
+platform availability still determine whether media can be inspected and posted.
+No queue entry or unconfirmed attempt is represented as a shipped video.
+
+Reply capacity is retained at 12 searches, 80 direct-cycle Replies and 80
+generations per feed beyond November 4, with the local date boost cleared.
+Preference changes from at least two likes to strictly more than two (three).
+The earlier uncommitted voice/language improvements are preserved. Changes are
+developed and verified without restarting the live bot or resetting its state.
+
+## 2026-11-04 — Stale quota block, friendly Replies and today's capacity
+
+After the Operator purchased a larger Codex plan, Reply jobs still reported
+provider exhaustion. A disposable quota cache created November 3 at 10:36
+blocked new calls until November 4 at 10:36; an unparsed provider reset message
+had selected the existing 24-hour fallback. A direct account-limit check showed
+available allowance, and a fresh Sol/xhigh request completed. The verified stale
+cache was backed up and removed. No permanent history was reset.
+
+The Operator then requested more responses today and a friendlier voice. Live
+validation refused “Order tracking too? Now you’re tempting me 🩷” as unknown
+English, along with other clear short reactions. The detector now handles
+straight/curly contractions and quotes, does not let shared words cancel clear
+English evidence, and recognizes the bounded vocabulary of those reactions.
+Explicit French cues still refuse across English-only surfaces, including
+mixed text beginning with an English contraction. Both Voice files soften
+corrections and encourage friendly attention without fake agreement.
+
+A dated configuration doubles rotating-search, direct-cycle and per-feed
+budgets for November 4 only, from 6/40/40 to 12/80/80, with automatic midnight
+expiry. Existing source, quality, pacing and permanent admission rules remain.
+The larger budgets are capacity rather than an observed publication increase.
+Voice updates are read per draft; code and the date setting need the next
+explicitly requested restart.
+
 ## 2026-11-02 — Natural replies and varied emojis, hearts first
 
 The Operator finds the repeating smiley-face style unnatural and requests varied

@@ -19,6 +19,32 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+The latest November 4 request makes the increased Reply capacity permanent:
+**12 rotating searches, 80 direct-cycle Replies and 80 generations per feed**.
+The Account and local environment agree, and the earlier date boost is cleared
+so these budgets are not doubled again. Prefer discovered posts with **three or
+more observed likes**, while other eligible posts remain available. These are
+attempt budgets; actual sends still require source checks, parent likes, spacing
+and permanent deduplication. The dry-run and startup log show effective budgets.
+
+Videos now have **ten daily Toronto slots, every two hours from 05:00 through
+23:00**. The Account requests a video automatically on startup, without holding
+Replies, using the existing once-per-day extra-startup allowance. Independent
+discovery/media workers prioritize recent synthetic dance, song and parody clips
+featuring Elon Musk, Sam Altman, Dario Amodei, Trump or Zuckerberg, with fallback
+up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
+X clips require a known view count of at most 50,000. Captions use a grounded
+`POV:` scene and emojis, then a blank line and
+`ANOTHER ABSOLUTE SI BANGER! 🔥`. Actual inspection and audio evidence, permanent
+posting memory and confirmed receipts remain required. An empty or inaccessible
+queue is reported as a missed slot, never a successful post.
+
+Both Voice files now emphasize friendly interest and gentle disagreement.
+English contractions such as “you’re” and “I’m” and clear short reactions no
+longer fail solely for lacking the old function-word markers. French and mixed
+prose still refuse. Voice changes reach new drafts immediately; the language
+fix and configuration require the next explicitly requested restart.
+
 The November 1 launcher fix makes the local configuration and provider defaults
 Codex-only, with fallbacks disabled. Replies keep Sol/xhigh; this Account's
 editorial drafts/reviews and video inspection already use that Reply model.
@@ -61,7 +87,7 @@ apply. These code/settings changes need an explicitly requested restart; none
 is performed here.
 
 The follow-up improvements prioritize already-discovered posts with **at least
-two observed likes**, then other eligible posts; missing counters stay unknown.
+three observed likes**, then other eligible posts; missing counters stay unknown.
 There is no new popularity cutoff or extra scrape. Early-bird and mega-watch use
 bounded Latest author searches with exact author checks. Search and each Home
 feed retain up to 400 unused source posts for at most 30 minutes (or until their

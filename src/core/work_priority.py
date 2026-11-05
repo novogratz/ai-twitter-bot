@@ -11,6 +11,11 @@ BACKGROUND = 2
 _priority = ContextVar("work_priority", default=BACKGROUND)
 
 
+def current_priority():
+    """Priority of this transaction, including any more urgent outer scope."""
+    return _priority.get()
+
+
 @contextmanager
 def scope(priority):
     token = _priority.set(min(priority, _priority.get()))

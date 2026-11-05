@@ -1,4 +1,34 @@
-# Video validation — November 1, 2026
+# Video validation — November 4, 2026
+
+## Two-hour schedule and source recovery
+
+The November 4 read-only production audit found no ready videos, 32 held
+candidates, nine expired candidates and four exhausted media jobs. Missed slots
+recorded no eligible ready video. Most held sources were public-search leads
+without usable original media or source-player access failures. Repeated
+five-second Safari queue deferrals also prevented progress under continuous
+Reply activity. These are observed blockers, not evidence that every platform
+will become accessible after the code change.
+
+The new dry-run reports ten Toronto slots, 05:00 through 23:00 every two hours,
+an automatic startup request with no active Reply hold, and persistent Reply
+budgets of 12 searches / 80 direct-cycle / 80 per feed. Tests cover ordinary
+startup, stale prior-day requests, pauses, disabled/dry-run/reply-only modes,
+browser queue priority, source identity and view limits, recent-first older
+fallback, ten daily slots and native media retrieval. The full suite with video
+dependencies passed **2,584 tests in 57.79 seconds**. The generated configuration
+reference and whitespace checks passed as well.
+
+X/Instagram/TikTok/RedNote normal-page media capture and bounded MP4/HLS retrieval
+are implemented and tested with isolated fixtures. No new live publication or
+live end-to-end source-to-inspection run is claimed by this change. Bilibili's
+actual earlier publication evidence remains below. All new platform retrieval
+still depends on the page exposing a verified timestamp and accessible approved
+media; missing or restricted evidence holds the candidate. Existing workers need
+the next explicitly requested restart to load the coordinated code/configuration.
+
+The following November 1 results are historical evidence with their original
+schedule, cast and captions; they are not a validation of the new schedule.
 
 ## 19:00 readiness repair
 
@@ -143,7 +173,7 @@ job was reclaimed under a new lease token; the recovery clock was accelerated
 in the harness. These results do not certify production X latency, real model
 quota behavior, Internet throughput or a sustained production p95 target.
 
-## Current source capability
+## November 1 source capability snapshot
 
 | Source | Actual capability and remaining requirement |
 |---|---|
@@ -157,7 +187,7 @@ quota behavior, Internet throughput or a sustained production p95 target.
 
 Earlier JSON diagnostics are dated snapshots and may report the former disabled,
 API-oriented or unlicensed state. They are not current capability claims.
-The eight scheduled posts are configured targets. There is no guarantee of a
+The scheduled posts are configured targets. There is no guarantee of a
 post when the eligible buffer is empty, a connector is unavailable or a quality
 check fails. No missing metrics, ready candidates or completed history coverage
 are fabricated to fill a slot. Source search and model calls share bounded

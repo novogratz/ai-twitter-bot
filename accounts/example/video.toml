@@ -1,6 +1,8 @@
 # Copy and customize the documented video configuration before enabling.
 publishing_transport = "safari"
 browser_upload_seconds = 45
+scheduled_daily_cap = 8 # up to ten with a matching operator-authorized schedule
+startup_on_boot = false
 protect_primary_windows = true
 inspection_provider = "codex"
 codex_model = ""
@@ -18,4 +20,6 @@ enabled = false
 [platforms.bilibili]
 enabled = false
 [platforms.rednote]
+enabled = false
+[platforms.x]
 enabled = false

@@ -242,7 +242,9 @@ def _x_work(store, cfg, owner, now):
     from ..core import work_priority
     upcoming = schedule.next_slot(schedule.utc_now(), cfg)
     imminent = bool(upcoming and 0 <= upcoming[1].timestamp() - now <= cfg.preparation_lead_seconds)
-    priority = work_priority.REPLY if imminent else work_priority.BACKGROUND
+    startup_due = bool(store.rows("SELECT 1 FROM startup WHERE state='pending' LIMIT 1"))
+    initial_history = not reconcile.history_ready(store, cfg)
+    priority = work_priority.REPLY if imminent or startup_due or initial_history else work_priority.BACKGROUND
     if cfg.publishing_transport == "safari":
         from ..x.safari_video import SafariVideoClient
         client = SafariVideoClient(store, cfg)
@@ -294,12 +296,15 @@ def _x_work(store, cfg, owner, now):
         client.critical_reads = False
         if cfg.publishing_transport == "safari":
             from .source_browser import capture_next
-            if capture_next(store, cfg, now):
+            with work_priority.scope(priority):
+                captured = capture_next(store, cfg, now)
+            if captured:
                 return "source player checked"
         if not store.meta("history_import_complete", False):
             if not reconcile.history_ready(store, cfg) or store.meta("next_history_backfill", 0) <= now:
                 store.set_meta("next_history_backfill", now + 300)
-                reconcile.import_history(store, client, cfg, now)
+                with work_priority.scope(priority if initial_history else work_priority.BACKGROUND):
+                    reconcile.import_history(store, client, cfg, now)
                 return "history page imported"
         if store.meta("next_outcomes", 0) <= now:
             reconcile.collect_outcomes(store, client, now)

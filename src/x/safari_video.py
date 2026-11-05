@@ -12,7 +12,7 @@ import time
 from urllib.parse import urlencode
 import uuid
 
-from ..core import account, config as core_config, settings, state_store
+from ..core import account, config as core_config, settings, state_store, work_priority
 from ..core.logger import log
 from ..guards.active_hours import require_active
 from ..video import config
@@ -45,10 +45,13 @@ def publisher_session():
 def browser_session():
     require_active()
     with publisher_session():
-        # Reads share the scheduler with due publication. A queued routine read
-        # must yield promptly instead of keeping that worker behind Replies.
+        # Preparation/novelty reads need to survive a normal browser transaction
+        # to retain their FIFO position among ready Replies. Retrying every five
+        # seconds discarded that place indefinitely under continuous activity.
+        # Routine archive work still yields promptly to the due publisher.
         lock = safari._safari_lock._lock
-        if not lock.acquire(timeout=5):
+        wait = 60 if work_priority.current_priority() <= work_priority.REPLY else 5
+        if not lock.acquire(timeout=wait):
             raise Deferred("Safari busy; video read deferred without occupying the publisher", retry_after=10)
         try:
             require_active()

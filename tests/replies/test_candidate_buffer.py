@@ -114,7 +114,7 @@ def test_uncertain_send_keeps_the_durable_claim_after_buffer_removal(llm, chokep
 def test_new_like_observation_changes_priority_without_extending_source_ttl(llm, chokepoint):
     from dataclasses import replace
     buffer = buffers.Buffer()
-    low, popular, unknown = candidate(1, likes=1), candidate(2, likes=2), candidate(3)
+    low, popular, unknown = candidate(1, likes=2), candidate(2, likes=3), candidate(3)
     buffer.offer([low, popular, unknown], max_age=timedelta(hours=1))
     assert [c.url for c in buffer.pending()] == [popular.url, low.url, unknown.url]
     expiry = next(c.expires_at for c in buffer.pending() if c.url == low.url)

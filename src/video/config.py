@@ -9,7 +9,7 @@ import tomllib
 
 from ..core import account, config as core_config, settings
 
-PLATFORMS = ("instagram", "tiktok", "bilibili", "rednote")
+PLATFORMS = ("instagram", "tiktok", "bilibili", "rednote", "x")
 
 
 @dataclass(frozen=True)
@@ -18,6 +18,8 @@ class VideoConfig:
     browser_upload_seconds: int = 45
     windows: tuple = ("07:00", "09:00", "12:00", "17:00", "21:00")
     paired_windows: tuple = ("07:00", "21:00")
+    scheduled_daily_cap: int = 8
+    startup_on_boot: bool = False
     pair_minutes: int = 15
     protect_primary_windows: bool = True
     preparation_lead_seconds: int = 1800
@@ -69,6 +71,7 @@ class VideoConfig:
     font_file: str = "/System/Library/Fonts/Supplemental/Arial.ttf"
     watermark: str = ""
     targets: dict = field(default_factory=dict)
+    target_handles: dict = field(default_factory=dict)
     platforms: dict = field(default_factory=dict)
     permissions: dict = field(default_factory=dict)
     media_hosts: tuple = ()
@@ -94,6 +97,14 @@ class VideoConfig:
             raise ValueError("browser_upload_seconds must be 10..180 to bound upload plus X processing")
         if type(self.x_reads_enabled) is not bool:
             raise ValueError("x_reads_enabled must be a boolean")
+        if type(self.startup_on_boot) is not bool:
+            raise ValueError("startup_on_boot must be a boolean")
+        if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 10:
+            raise ValueError("scheduled_daily_cap must be 5..10")
+        if not set(self.target_handles) <= set(self.targets) or any(
+                not isinstance(handle, str) or not re.fullmatch(r"@[A-Za-z0-9_]{1,15}", handle)
+                for handle in self.target_handles.values()):
+            raise ValueError("target_handles must map configured cast keys to X handles")
         if type(self.protect_primary_windows) is not bool:
             raise ValueError("protect_primary_windows must be a boolean")
         if type(self.allow_unknown_momentum) is not bool:
@@ -136,8 +147,8 @@ class VideoConfig:
             raise ValueError("video grace must be <=600 seconds; score must be 0..100")
         if not 0.9 <= self.confidence_min <= 1 or self.render_threads != 1:
             raise ValueError("video confidence must be >=0.9; reserve resources with one render thread")
-        if self.max_age_hours > 168 or self.max_duration_seconds > 140:
-            raise ValueError("video fallback is at most seven days; conservative duration cap is 140 seconds")
+        if self.max_age_hours > 730 * 24 or self.max_duration_seconds > 140:
+            raise ValueError("video fallback is at most two years; conservative duration cap is 140 seconds")
         if self.lease_seconds <= max(self.task_timeout_seconds, self.render_timeout_seconds):
             raise ValueError("video lease must exceed every bounded subprocess deadline")
         if self.lease_seconds <= self.media_job_seconds + self.task_timeout_seconds:

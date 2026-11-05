@@ -43,6 +43,7 @@ import os
 import re
 from contextlib import contextmanager
 from dataclasses import dataclass
+from datetime import date
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
 ENV_FILE = os.path.join(PROJECT_ROOT, ".env")
@@ -76,6 +77,8 @@ _overrides: dict = {}
 
 
 def _kind(setting: Setting) -> str:
+    if setting.name == "REPLY_VOLUME_BOOST_DATE":
+        return "YYYY-MM-DD date or blank"
     if setting.type is bool:
         return "0 or 1"
     return "finite float" if setting.type is float else setting.type.__name__
@@ -242,8 +245,9 @@ _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an edito
 _declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
 _declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
-_declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship.")
-_declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes; below 1 reads as 1.")
+_declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship; zero disables its scheduled generation.", floor=0)
+_declare("DIRECT_REPLY_QUERIES_PER_CYCLE", int, 8, "Search queries one direct_reply cycle scrapes.", floor=1)
+_declare("REPLY_VOLUME_BOOST_DATE", str, "", "Toronto date (YYYY-MM-DD) on which search, direct-cycle and per-feed Reply budgets double; blank disables it. Automatically expires at midnight; never changes pacing or admission.")
 _declare("REPLY_DAILY_TARGET_MIN", int, 0, "Advisory daily Reply target; never changes admission or pacing.", floor=0)
 _declare("REPLY_DAILY_TARGET_MAX", int, 0, "Upper advisory daily Reply target; neither a cap nor a quota to fill.", floor=0)
 _declare("REPLY_CANDIDATE_BUFFER_LIMIT", int, 400, "Unprocessed source posts retained per search/feed lane in memory; no posting claims.", floor=1, ceiling=1000)
@@ -271,7 +275,7 @@ _declare("PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS", int, 900, "Maximum repeated w
 _declare("PRIORITY_WATCH_MAX_AGE_HOURS", int, 24, "Maximum age of new watched originals; never before the watch was first enabled.", floor=1, ceiling=24)
 _declare("PRIORITY_WATCH_SCAN_LIMIT", int, 20, "Recent standalone originals collected per watched handle.", floor=1, ceiling=40)
 _declare("PRIORITY_WATCH_MAX_REPLIES", int, 1, "Maximum Reply generations per dispatch; one selects the newest parent again after each generation.", floor=1, ceiling=2)
-_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed.")
+_declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed; zero disables generation.", floor=0)
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
 # ── #199 · src/account ──────────────────────────────────────────────────────
@@ -359,6 +363,29 @@ def get(name: str):
     if _values is None:
         load()
     return _values[setting.name]
+
+
+REPLY_BUDGET_NAMES = (
+    "DIRECT_REPLY_QUERIES_PER_CYCLE", "DIRECT_REPLY_MAX_PER_CYCLE",
+    "FEED_SWEEP_MAX_REPLIES_PER_CYCLE",
+)
+
+
+def reply_budget(name: str) -> int:
+    """A discovery/generation budget, doubled only on the selected Toronto day.
+
+    Check the clock at each cycle so a running process returns to its baseline
+    without a restart. This helper cannot change a publication guard or target.
+    """
+    if name not in REPLY_BUDGET_NAMES:
+        raise KeyError(f"{name} is not a Reply discovery/generation budget")
+    value = get(name)
+    boost_date = get("REPLY_VOLUME_BOOST_DATE")
+    if boost_date:
+        from ..guards.active_hours import now_local
+        if now_local().date().isoformat() == boost_date:
+            return value * 2
+    return value
 
 
 def is_overridden(name: str) -> bool:
@@ -463,6 +490,9 @@ def _parse(setting: Setting, raw: str):
             raise ValueError(raw)
         return raw == "1"
     value = setting.type(raw)
+    if setting.name == "REPLY_VOLUME_BOOST_DATE" and value:
+        if date.fromisoformat(value).isoformat() != value:
+            raise ValueError(raw)
     if setting.type is float and not math.isfinite(value):
         raise ValueError(raw)
     return value

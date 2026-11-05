@@ -14,6 +14,48 @@ def test_short_specific_english_replies_are_allowed(text):
     assert cg.validate(text, kind="reply") == (True, "")
 
 
+@pytest.mark.parametrize("apostrophe", ["'", "’"])
+@pytest.mark.parametrize("text", [
+    "Order tracking too? Now you're tempting me 🩷",
+    "I'm charmed 💖",
+    "Tiny brain, excellent latency. I'm listening.",
+    "A designer's eye isn't a prompt preset.",
+    "Clear pricing makes ‘let's try it’ easier 🩷",
+    "You've handled non-standard inputs gracefully.",
+    "Bravo, you've shipped something useful!",
+    "That's magnificent; you've made something lovely 💖",
+])
+def test_conversational_english_contractions_pass(text, apostrophe):
+    assert cg.validate(text.replace("'", apostrophe), kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("text", [
+    "Such a fun matchup 💕", "Such a tender idea 🤍",
+    "“Spell seventeen” sounds like such a safe request 😂",
+    "Image generation inside VS Code. Yes, please 🩷",
+    "Love a little vampire drama 💖",
+    "Handing off GitHub tasks sounds very tempting 🩷",
+    "Grok on a schedule that respects yours 🩷",
+])
+def test_observed_clear_english_reactions_pass(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("kind", ["original", "reply", "source"])
+@pytest.mark.parametrize("text", [
+    "You're tempting me, merci beaucoup 🩷",
+    "I'm charmed, vraiment magnifique 💖",
+    "We're ready, mais ce modèle est faux.",
+    "You've made it. C'est beau.",
+    "That's magnifique 💖",
+    "I'm charmed, magnifique 💖",
+    "We're heureux 💖",
+    "We're heureuses 💖",
+])
+def test_english_contractions_do_not_admit_mixed_french(kind, text):
+    assert not cg.validate(text, kind=kind)[0]
+
+
 @pytest.mark.parametrize("text", [
     "great post 🙂", "Exactly!", "lol 😂", "🙂🙂🙂🙂🙂🙂🙂🙂",
     "Merci beaucoup 🙂", "Love merci", "Tiny model mais pas utile", "J'adore, lovely",
