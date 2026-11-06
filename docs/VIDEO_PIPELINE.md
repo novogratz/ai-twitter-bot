@@ -1,5 +1,11 @@
 # Existing-video pipeline
 
+Actual source scores are checked for absolute feasibility before rendering.
+Only when even maximum remaining points cannot meet the standard or editorial
+fallback rule does preparation stop with a completed source-score hold. Saved
+originals and reviews remain; hypothetical bounds never become ranking evidence.
+The existing valid explicit selection keeps its score exception.
+
 When a native X canvas seek stalls, the exact player's poster media ID can bind
 already loaded public MP4/HLS resources to that post. Safari records this
 observation; the independent media worker uses the existing bounded source
@@ -11,6 +17,9 @@ agree and every expected temporal sample must decode. The accepted result keeps
 the actual file SHA and normal-page provenance. Partial canvas progress remains
 intact; expired resources require a fresh page read, and transient failures retain
 their bounded retry history. This path does not use private endpoints or cookies.
+Audio-only resources do not end metadata loading before video is ready. The
+bounded read waits for decoded frames or a validated complete-video plan, with
+exact-player path diagnostics available for unsupported resource formats.
 
 Before spending browser capacity on novelty, completed output QC and score
 feasibility are checked. An ineligible clip waits without losing saved

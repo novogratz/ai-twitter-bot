@@ -504,6 +504,12 @@ def _process(store, job, now, cfg):
             store.save_candidate(row["id"], doc, time.time(), state="held", reason=reason,
                                  fingerprint=original_fp, job=job)
             return  # completed review, not a transient processing failure
+        if reason := ranking.source_score_gate(doc, cfg, time.time()):
+            doc["preparation_hold"] = {"stage": "source_score", "reason": reason,
+                                       "sha256": doc["original_sha256"], "at": time.time()}
+            store.save_candidate(row["id"], doc, time.time(), state="held", reason=reason,
+                                 fingerprint=original_fp, job=job)
+            return
         doc.pop("preparation_hold", None)
         render(original, output, info, doc["inspection"], cfg)
         doc.update(output_path=str(output), output_sha256=sha256(output), brand=cfg.watermark)

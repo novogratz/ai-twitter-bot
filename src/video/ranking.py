@@ -7,6 +7,16 @@ import re
 from .selection import selected
 
 
+_SCORE_LIMITS = {"momentum": 25, "fit": 20, "entertainment": 20, "quality": 15, "freshness": 10, "novelty": 10}
+
+
+def _validate_score_components(components):
+    for key, value in components.items():
+        if value is not None and (type(value) not in (int, float) or not math.isfinite(value)
+                                  or not 0 <= value <= _SCORE_LIMITS[key]):
+            raise ValueError(f"invalid score component: {key}")
+
+
 def permission(doc, cfg, now):
     grant = cfg.permissions.get(doc.get("permission_id"), {})
     if not grant:
@@ -62,14 +72,29 @@ def score(doc, observations, peers, now, cfg):
     components = {"momentum": momentum, "fit": evidence.get("fit_score"),
                   "entertainment": evidence.get("entertainment_score"), "quality": evidence.get("quality_score"),
                   "freshness": freshness, "novelty": 10 if doc.get("novelty", {}).get("state") == "checked_no_match" else None}
-    limits = {"momentum": 25, "fit": 20, "entertainment": 20, "quality": 15, "freshness": 10, "novelty": 10}
-    for key, value in components.items():
-        if value is not None and (type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= limits[key]):
-            raise ValueError(f"invalid score component: {key}")
+    _validate_score_components(components)
     return {"total": round(sum(v for v in components.values() if v is not None), 2),
             "components": components, "measured_views_per_hour": measured,
             "momentum_cohort_size": len(comparable), "confidence": evidence.get("confidence"),
             "unknown_components": [k for k, v in components.items() if v is None], "scored_at": now}
+
+
+def source_score_gate(doc, cfg, now):
+    """Refuse render cost only when the actual source scores cannot qualify."""
+    evidence = doc.get("inspection", {})
+    observed = {key: evidence.get(key + "_score") for key in ("fit", "entertainment", "quality")}
+    _validate_score_components(observed)
+    if selected(doc, now):
+        return ""
+    # These generous maxima are a local feasibility bound, never observed or
+    # stored ranking points. Unknown source scores and momentum remain unknown.
+    possible = _SCORE_LIMITS | {key: value for key, value in observed.items() if value is not None}
+    if round(sum(possible.values()), 2) >= cfg.score_threshold:
+        return ""
+    possible["momentum"] = None
+    if unknown_momentum_eligible({"ranking": {"components": possible}}, cfg):
+        return ""
+    return "source review scores cannot reach publication threshold"
 
 
 def publication_gate(doc, cfg, now):

@@ -1,5 +1,22 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-06 — Preparation follow-up after PR #394
+
+PR #394 merged as `69ffbfe9`, and the running bot automatically completed two
+additional thirty-sample external fingerprints after the first live diagnostic
+recovery. The final comparison initially exposed only an audio playlist while
+the player was still loading. Any nonempty resource list ended the wait too
+early; the page could close before video arrived. Readiness now requires decoded
+frames or an actually usable video plan within the existing time bound.
+
+Newly captured source `BV1REPLzFEh8` received fit 15, entertainment 10 and quality
+9. Even perfect remaining momentum, freshness and novelty yield only 79 against
+the standard 80 threshold, and its fit prevents the editorial fallback. It still
+rendered and spent another 54,301 input tokens on output review. A source-score
+cost check now stops this provably ineligible work before rendering. It preserves
+the source evidence and never saves its hypothetical maximum as an actual score.
+Neither improvement bypasses failed reviews or supplies a publication receipt.
+
 ## 2026-11-06 — Morning misses and growth audit
 
 The 00:25 operator start loaded the latest code, but the 05:00 and 07:00 slots

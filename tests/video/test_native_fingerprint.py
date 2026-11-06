@@ -81,7 +81,95 @@ const video={poster:'https://pbs.twimg.com/ext_tw_video_thumb/456/pu/img/frame.j
 """
     result = json.loads(subprocess.run([node, "-e", setup + native_source.X_PLAYER_MEDIA +
         "console.log(JSON.stringify(playerMedia(video)));"], capture_output=True, text=True, check=True, timeout=10).stdout)
-    assert result == {"media_id": "456", "media": [RESOURCE], "user_agent": "fixture Safari"}
+    assert result == {"media_id": "456", "media": [RESOURCE], "user_agent": "fixture Safari",
+                      "observed_paths": ["/ext_tw_video/456/pu/pl/video.m3u8"]}
+
+
+@pytest.mark.parametrize("later_video", [True, False])
+def test_audio_only_metadata_waits_for_video_within_one_bounded_browser_transaction(
+        video_store, video_cfg, at, monkeypatch, later_video):
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    audio = "https://video.twimg.com/ext_tw_video/456/pu/pl/mp4a/64000/audio.m3u8"
+    video = "https://video.twimg.com/ext_tw_video/456/pu/pl/avc1/640x360/video.m3u8"
+    setup = r"""
+let now=0;const resources=AUDIO;
+const navigator={userAgent:'fixture Safari'};
+const performance={now:()=>now,getEntriesByType:()=>resources.map(name=>({name}))};
+const video={poster:'https://pbs.twimg.com/ext_tw_video_thumb/456/pu/img/a.jpg',
+  currentSrc:'blob:https://x.com/player',querySelectorAll:()=>[],
+  error:null,readyState:0,duration:59,currentTime:0,dataset:{},muted:false,paused:true,plays:0,
+  scrollIntoView(){},play(){if(!this.muted)throw Error('unmuted playback');
+    this.plays++;this.paused=false;return Promise.resolve();}};
+const link={getAttribute:()=>'/example/status/123'};
+const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
+const location={origin:'https://x.com',hostname:'x.com',pathname:'/example/status/123'};
+const document={visibilityState:'visible',querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],
+  querySelector:()=>null};
+""".replace("AUDIO", json.dumps([audio]))
+    program = setup + "const run=()=>JSON.parse(" + safari_video._video_metadata_script("123") + ");const states=[];"
+    program += "for(let i=0;i<100;i++){now=i*250;"
+    if later_video:
+        program += "if(i===4)resources.push(" + json.dumps(video) + ");"
+    program += "states.push(run());}console.log(JSON.stringify({states,plays:video.plays,muted:video.muted}));"
+    result = json.loads(subprocess.run([node, "-e", program], check=True, capture_output=True, text=True, timeout=10).stdout)
+    assert result["plays"] == 1 and result["muted"] is True
+    assert result["states"][0]["native_media"]["media"] == [audio]
+
+    elapsed, visits, timeouts = [0.0], [], []
+    monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari_video.time, "time", lambda: at().timestamp() + elapsed[0])
+    monkeypatch.setattr(safari_video.time, "monotonic", lambda: elapsed[0])
+    monkeypatch.setattr(safari_video.time, "sleep", lambda seconds: elapsed.__setitem__(0, elapsed[0] + seconds))
+    monkeypatch.setattr(safari, "open_url", lambda url: visits.append(url) or True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: visits.append("closed"))
+    monkeypatch.setattr(native_source, "download", lambda *a, **k: pytest.fail("metadata observation decoded audio-only media"))
+    saved = {"revision": 2, "visual": [["existing"]] * 8, "samples": [{"actual_at": i} for i in range(8)]}
+    video_store.set_meta("browser_fingerprint_pending:123", saved)
+    def page(script, timeout):
+        assert script == safari_video._video_metadata_script("123"), "metadata did not remain in bounded loading"
+        assert 0 < timeout <= min(8, 25 - elapsed[0])
+        timeouts.append(timeout)
+        return result["states"][int(elapsed[0] * 4)]
+    monkeypatch.setattr(safari_video, "_json", page)
+    client = safari_video.SafariVideoClient(video_store, replace(video_cfg, publishing_transport="safari"))
+    with pytest.raises(Deferred, match="independent media worker" if later_video else "decoded frames remain pending"):
+        client.fingerprint({"post_url": POST})
+    assert visits == [POST, "closed"]
+    assert video_store.meta("browser_fingerprint_pending:123") == saved
+    assert not video_store.meta("browser_fingerprint:123")
+    assert not video_store.rows("SELECT * FROM reservations")
+    if later_video:
+        assert elapsed[0] == 1 and len(timeouts) == 5
+        job = video_store.rows("SELECT * FROM jobs WHERE kind='x_media'")[0]
+        plan = video_store.meta("x_media:" + job["item"])["native_source"]["source_download"]
+        assert plan["media"] == [video] and plan["audio_media"] == audio
+        assert job["state"] == "pending" and job["attempts"] == 0
+    else:
+        assert elapsed[0] == 25 and len(timeouts) == 100 and timeouts[-1] == .25
+        assert not video_store.rows("SELECT * FROM jobs")
+        assert video_store.meta("browser_video_access:123")["native_media"]["observed_paths"] == [
+            "/ext_tw_video/456/pu/pl/mp4a/64000/audio.m3u8"]
+
+
+def test_unknown_player_resource_paths_are_bounded_diagnostics_never_download_admission(at):
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    resources = ["https://video.twimg.com/ext_tw_video/999/pu/unknown.m4s?secret=elsewhere",
+                 "https://other.example/ext_tw_video/456/pu/unknown.m4s?secret=elsewhere"]
+    resources += [f"https://video.twimg.com/ext_tw_video/456/pu/old-format/{i}.m4s?secret=fixture" for i in range(20)]
+    setup = ("const navigator={userAgent:'fixture Safari'};const resources=" + json.dumps(resources) + ";"
+        "const performance={getEntriesByType:()=>resources.map(name=>({name}))};"
+        "const v={poster:'https://pbs.twimg.com/ext_tw_video_thumb/456/img/a.jpg',currentSrc:'blob:x',querySelectorAll:()=>[]};")
+    result = json.loads(subprocess.run([node, "-e", setup + native_source.X_PLAYER_MEDIA +
+        "console.log(JSON.stringify(playerMedia(v)));"], capture_output=True, text=True, check=True, timeout=10).stdout)
+    assert result["media"] == []
+    assert result["observed_paths"] == [f"/ext_tw_video/456/pu/old-format/{i}.m4s" for i in range(12)]
+    assert "secret" not in json.dumps(result)
+    assert native_source.x_media_plan(result | {"post_id": "123", "post_url": POST}, POST, at().timestamp()) is None
 
 
 def test_pending_native_decode_avoids_new_browser_reads_and_refreshes_only_observed_expired_plan(

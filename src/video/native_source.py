@@ -28,12 +28,15 @@ const playerMedia = video => {
     /\/vid\/(?:avc1\/)?\d+x\d+\/(?!init[.-]|segment[.-]|chunk[.-]|frag[.-])[^/]+\.mp4$/.test(path)?1:
     /\/pl\/(?:avc1|hvc1|hev1|vp09|av01)\/\d+x\d+\/[^/]+\.m3u8$/.test(path)?2:
     /\/pl\/(?:mp4a|opus)\/(?:\d+\/)?[^/]+\.m3u8$/.test(path)?3:99;
-  const media=[...new Set(observed.filter(raw=>{try{const url=new URL(raw);
-    return url.protocol==='https:' && url.hostname==='video.twimg.com' && !url.username && !url.password
-      && (!url.port || url.port==='443') && new RegExp('/(?:ext_tw_video|amplify_video)/'+key+'/').test(url.pathname)
-      && kind(url.pathname)<99;}catch(e){return false;}}))]
+  const bound=[...new Set(observed.filter(raw=>{try{const url=new URL(raw);
+    return typeof raw==='string' && raw.length<=4096 && url.protocol==='https:'
+      && url.hostname==='video.twimg.com' && !url.username && !url.password
+      && (!url.port || url.port==='443') && new RegExp('/(?:ext_tw_video|amplify_video)/'+key+'/').test(url.pathname);
+    }catch(e){return false;}}))];
+  const media=bound.filter(raw=>kind(new URL(raw).pathname)<99)
     .sort((a,b)=>kind(new URL(a).pathname)-kind(new URL(b).pathname)).slice(0,12);
-  return {media_id:key,media,user_agent:navigator.userAgent};
+  return {media_id:key,media,user_agent:navigator.userAgent,
+    observed_paths:[...new Set(bound.map(raw=>new URL(raw).pathname))].slice(0,12)};
 };
 """
 

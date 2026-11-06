@@ -19,6 +19,12 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+Preparation stops before rendering a source whose reviewed scores cannot qualify
+even with the maximum remaining points. The original and its review stay saved;
+no guessed scores are recorded. Native X metadata loading also waits for actual
+video readiness or a usable video plan when an audio track appears first. This
+loading correction needs the next manual main-bot restart.
+
 The November 6 morning repair gives stalled X video checks a second actual-media
 path: resources already loaded for the exact native player can be downloaded by
 the media worker and fully fingerprinted locally. Missing frames are never

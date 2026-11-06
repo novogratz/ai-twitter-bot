@@ -1,5 +1,31 @@
 # Video validation — November 6, 2026
 
+## Audio-first loading and source-score cost admission
+
+The final external comparison initially showed only an observed audio HLS track,
+`readyState=0` and eight saved canvas samples. That audio URL ended the former
+metadata wait even though no usable video plan existed. Executed page-JavaScript
+and Python regressions now verify that an audio-only observation keeps ordinary
+muted loading active until a real video playlist appears in the same transaction.
+Repeated audio-only observations stop at 25 seconds with no decode job or accepted
+fingerprint, preserving all eight saved samples. Unknown exact-player resource
+paths remain bounded diagnostics, with URL queries stripped and no admission.
+
+The source-score regression reproduces actual 15/10/9 review scores and proves
+that even the generous 79-point maximum cannot meet the configured 80 threshold
+or editorial fallback. It retains the original bytes, hash, fingerprint and
+actual review, finishes the job, and calls neither rendering, technical QC nor
+output inspection. Additional cases preserve the exact standard-score boundary,
+possible future momentum, unknown values, editorial fallback and current
+hash-bound selection. Projected points never enter saved ranking evidence.
+
+All **536 video tests passed**, followed by **2,807 complete-suite tests in
+67.40 seconds**. Generated configuration and whitespace checks passed. These
+changes require the next manual main/worker load. Meanwhile, the existing run
+eventually buffered the last comparison and completed all thirty canvas samples
+at 08:45, advancing to the remaining search page. This is preparation evidence;
+no new publication is claimed at this checkpoint.
+
 ## Full native-media fingerprint and warmer Reply validation
 
 The 05:00 and 07:00 slots expired with no ready inventory. External X post
