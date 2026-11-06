@@ -151,7 +151,9 @@ def unknown_momentum_eligible(doc, cfg):
     if any(type(parts.get(k)) not in (int, float) or not math.isfinite(parts[k]) or not 0 <= parts[k] <= w
            for k, w in weights.items()):
         return False
-    return (parts["fit"] >= 18 and parts["entertainment"] >= 16 and parts["quality"] >= 10
+    # 2026-11-05: keep strong observed overall quality available as fallback;
+    # missing popularity must not discard an otherwise reviewed reserve clip.
+    return (parts["fit"] >= 18 and parts["entertainment"] >= 14 and parts["quality"] >= 10
             and sum(parts[k] for k in weights) / 75 * 100 >= cfg.score_threshold)
 
 

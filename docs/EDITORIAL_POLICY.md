@@ -1,4 +1,44 @@
-# Editorial policy — November 4, 2026
+# Editorial policy — November 5, 2026
+
+## Reserve preparation after repeated missed videos
+
+The Operator requires reliable publication at the existing two-hour slots and
+delegates selection of the approved synthetic cast/performance. Low reserve
+preparation shares ready-Reply FIFO browser priority below watched work. After
+two novelty batches, source capture receives one bounded turn; unknown-send
+reconciliation remains first. New and least-recently attempted sources precede
+repeated reads. Complete Bilibili originals are reused, and over-duration
+metadata must match the exact source ID before preventing a download.
+
+Complete bytes remain recorded when probing fails. Completed source-review and
+unsupported-format holds finish their media job rather than consuming retries
+again at every window. Network/tool failures retain bounded retries. Deferred
+history fingerprint work does not exhaust its error attempts; byte reservations
+use remaining daily allowance, refund unused bytes and retain failed partial
+transfer charges. Historical costs and permanent publication claims stay intact.
+The Account daily download allowance increases from 2 GB to 4 GB for ten slots
+and their bounded retries. The per-file ceiling stays 150 MB, and prior charges
+remain counted. Insufficient remaining daily bytes defer work without consuming
+error attempts; an actual per-file ceiling failure remains a failure.
+
+The missing-momentum fallback changes entertainment from 16/20 to 14/20 while
+retaining at least 18/20 fit, 10/15 quality and 80 percent of the 75 observable
+points. It records the original raw score and unknown metrics. Actual temporal
+and audio review, confidence, technical QC, watermark, permission, source age,
+X view ceiling and permanent novelty checks remain required. This supports
+reviewed reserve clips without inventing engagement evidence.
+
+X fingerprinting retries ordinary muted playback up to six times per stalled
+sample, at least one second apart within the unchanged 25-second transaction.
+It reseeks after overshoot and requires all exact-time frames. A pending seek,
+canvas refusal or partial sequence cannot establish a completed check.
+When buffered ranges demonstrate a gap at a midpoint, the reader may instead
+seek an already buffered point inside the same temporal cell. It must decode an
+actual frame there and retain requested/actual times and the gap evidence. Every
+cell is still required; this cannot skip a cell or turn metadata into a frame.
+Replies continue independently except for serialized browser transactions. Only exact
+confirmed receipts count; the November 5 startup receipt is not proof of all
+future slots. Main-process updates retain the explicit-restart requirement.
 
 ## Video recovery after the operator's start
 

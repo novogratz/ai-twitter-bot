@@ -63,12 +63,17 @@ def _capture_bilibili(store, cfg, now):
         return None
     store.set_meta("next_source_capture:bilibili", now + 60)
     candidates = store.rows("SELECT id FROM candidates WHERE platform='bilibili' "
-                            "AND state IN ('discovered','held','ready') ORDER BY published DESC,discovered DESC LIMIT 40")
+                            "AND state IN ('discovered','held','ready') "
+                            "ORDER BY COALESCE(json_extract(document,'$.source_capture_attempt'),0),published DESC,discovered DESC LIMIT 80")
     chosen = None
     for item in candidates:
         row = store.candidate(item["id"])
         doc = row["document"]
-        if (ranking.permission(doc, cfg, now) and not doc.get("local_file") and not doc.get("media_url")
+        if (doc.get("source_duration_evidence", {}).get("source_id") == doc.get("source_id")
+                and doc.get("source_duration", 0) > cfg.max_duration_seconds):
+            continue
+        downloaded = bool(doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file())
+        if (not downloaded and ranking.permission(doc, cfg, now) and not doc.get("local_file") and not doc.get("media_url")
                 and now - doc.get("source_capture_attempt", 0) >= 1200
                 and not store.rows("SELECT 1 FROM jobs WHERE item=? AND state='running'", (row["id"],))):
             chosen = row
@@ -90,7 +95,7 @@ def _capture_bilibili(store, cfg, now):
           const p=window.__playinfo__?.data;if(!d||!p)return {};
           const stream=s=>({url:s.baseUrl||s.base_url,backups:s.backupUrl||s.backup_url||[],
             height:s.height,bandwidth:s.bandwidth,codecs:s.codecs,drm:!!(s.drm||s.drm_info)});
-          return {id:d.bvid,title:d.title,creator:d.owner?.name,published:d.pubdate,
+          return {id:d.bvid,title:d.title,creator:d.owner?.name,published:d.pubdate,duration:d.duration,
             related:[...document.querySelectorAll('a[href*="/video/BV"]')].filter(a=>a.getClientRects().length)
               .slice(0,80).map(a=>({url:a.href,title:a.getAttribute('title')||a.innerText||a.querySelector('img')?.alt||''})),
             metrics:{views:d.stat?.view,likes:d.stat?.like,shares:d.stat?.share},
@@ -114,6 +119,14 @@ def _capture_bilibili(store, cfg, now):
         leads = related_candidates(payload.get("related", []), cfg, row["id"], now)
         if leads:
             ingest(store, "bilibili", leads, now, cfg)
+        duration = payload.get("duration")
+        if (payload.get("id") == source_id and type(duration) in (int, float)
+                and math.isfinite(duration) and duration > cfg.max_duration_seconds):
+            doc["source_duration"] = duration
+            doc["source_duration_evidence"] = {"source_id": source_id, "observed_at": now}
+            doc["preparation_hold"] = {"stage": "source_duration", "reason": "source exceeds configured duration", "at": now}
+            store.save_candidate(row["id"], doc, time.time(), state="held", reason="source exceeds configured duration")
+            return "source duration held"
         downloaded = bool(doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file())
         if not downloaded:
             doc["source_download"] = plan(payload, source_id, now)
@@ -174,7 +187,8 @@ def capture_next(store, cfg, now):
             continue
         chosen = None
         for item in store.rows("SELECT id FROM candidates WHERE platform=? AND state IN ('discovered','held','ready') "
-                               "ORDER BY CASE WHEN state='ready' THEN 0 ELSE 1 END,published DESC,discovered DESC LIMIT 80", (platform,)):
+                               "ORDER BY CASE WHEN state='ready' THEN 0 ELSE 1 END,"
+                               "COALESCE(json_extract(document,'$.source_capture_attempt'),0),published DESC,discovered DESC LIMIT 80", (platform,)):
             row = store.candidate(item["id"])
             doc = row["document"]
             refresh_x = platform == "x" and now - doc.get("source_metrics", {}).get("observed_at", 0) >= 1800
@@ -278,6 +292,8 @@ def download_player(doc, destination, cfg, store, now):
             path = Path(folder) / (kind + ".m4s")
             succeeded = False
             for url in source[kind]:
+                if total >= cfg.max_download_bytes:
+                    raise AccessError("source exceeds aggregate per-file download cap")
                 allowance = int(store.reserve_up_to("bilibili", "download_bytes", cfg.max_download_bytes - total,
                                                     cfg.download_budget_bytes, now))
                 if not allowance:
@@ -296,7 +312,10 @@ def download_player(doc, destination, cfg, store, now):
                             max_bytes=allowance, timeout=timeout,
                             mime={"video/mp4", "audio/mp4", "application/octet-stream"})
                     succeeded = True
-                except (AccessError, TimeoutError, OSError):
+                except AccessError as exc:
+                    if allowance < cfg.max_download_bytes - total and str(exc) == "response exceeds byte budget":
+                        raise Deferred("daily download budget insufficient") from exc
+                except (TimeoutError, OSError):
                     pass
                 finally:
                     used = path.stat().st_size if started and path.exists() else 0

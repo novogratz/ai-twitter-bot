@@ -51,6 +51,21 @@ match or a model rejection still holds the clip.
 X duplicate checks load decoded frames through ordinary muted playback before
 seeking; a metadata-only player remains unresolved until real frames are read.
 
+The November 5 supply repair gives new sources a browser turn after two novelty
+batches and gives low-reserve preparation bounded priority alongside ready
+Replies. It stops repeatedly downloading unsupported clips or re-running completed
+negative reviews, keeps complete source bytes, and retries ordinary muted playback
+when X pauses a fingerprint read. Older reviewed clips remain available through
+the existing two-year fallback. For unknown engagement momentum, the editorial
+fallback requires 18/20 fit, 14/20 entertainment, 10/15 quality and 80 percent of
+observable points; actual inspection, QC and permanent dedup still apply.
+Daily download capacity is 4 GB, with prior usage retained and a 150 MB per-file
+limit. Capacity waits keep their retry allowance across all download routes.
+If X has a buffered gap at a sampling midpoint, fingerprinting can decode a
+frame elsewhere inside that same small interval, retaining actual timestamps.
+Every interval still requires decoded evidence before the check completes.
+See [live evidence and regression checks](docs/VIDEO_VALIDATION.md).
+
 Both Voice files now emphasize friendly interest and gentle disagreement.
 English contractions such as “you’re” and “I’m” and clear short reactions no
 longer fail solely for lacking the old function-word markers. French and mixed

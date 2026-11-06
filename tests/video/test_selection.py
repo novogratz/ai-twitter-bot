@@ -1,5 +1,6 @@
 from copy import deepcopy
 from dataclasses import replace
+import json
 from pathlib import Path
 
 import pytest
@@ -134,6 +135,9 @@ def test_direct_send_cannot_select_arbitrary_ready_clip(video_store, video_cfg, 
 
 def test_media_worker_inspects_selected_local_bytes_without_publishing_or_granting_rights(choose, video_store, video_cfg, at, monkeypatch):
     doc, _ = choose()
+    row = video_store.candidate("chosen")
+    fingerprint = {"sha256": doc["original_sha256"], "visual": [["0123456789abcdef"]]}
+    video_store.save_candidate("chosen", row["document"], at().timestamp(), state=row["state"], fingerprint=fingerprint)
     observed = []
     monkeypatch.setattr(workers.video_pressure, "pressure", lambda *a: "")
     monkeypatch.setattr(workers.time, "time", lambda: at().timestamp())
@@ -146,6 +150,7 @@ def test_media_worker_inspects_selected_local_bytes_without_publishing_or_granti
     result = video_store.candidate("chosen")
     assert observed == [(doc["original_path"], "source", 300)]
     assert result["state"] == "held" and "permission" in result["reason"]
+    assert json.loads(result["fingerprint"]) == fingerprint
     assert not video_store.rows("SELECT * FROM reservations")
     assert not video_store.rows("SELECT * FROM jobs WHERE kind='media'")
     assert workers.media._job_deadline is None

@@ -1,5 +1,42 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-05 — Stalled novelty, repeated preparation and confirmed startup
+
+The restarted bot still had no ready reserve. An external X result repeatedly
+paused after metadata loading, preventing a complete duplicate fingerprint.
+Its deferred novelty job repeatedly preceded source capture. Source capture
+also revisited saved or recently attempted Bilibili clips ahead of unseen leads.
+Completed negative reviews were retried at later preparation windows, while
+unsupported media could be downloaded again because its saved path/hash was
+recorded only after a successful probe. Most of the day's 2 GB download allowance
+had been charged; existing usage was not reset.
+
+The repair adds bounded muted-play retries, fair turns for new source preparation,
+retention of complete source bytes, identity-bound duration screening and durable
+completed holds. Deferred history media work preserves its retry allowance;
+fingerprint downloads use the remaining byte allowance instead of requiring room
+for an entire maximum-size file. Missing-momentum fallback entertainment changes
+from 16/20 to 14/20, retaining fit, technical quality, observable overall score
+and all actual inspection, novelty and publication requirements.
+Daily download capacity is increased to 4 GB while retaining all prior charges
+and the 150 MB per-file ceiling. All media download routes preserve retry
+allowance when the remaining daily capacity is insufficient, and stale X views
+can refresh without stranding an otherwise inspected source.
+
+Muted retries alone exposed a real buffered gap around the first requested X
+sample. The follow-up fallback can decode an already buffered frame within that
+same temporal cell, recording actual/requested times and the gap evidence.
+Every cell, complete sequence, canvas access and frame-variation checks remain;
+fixture validation is separate from live recovery of the affected result.
+
+Under the Operator's delegated selection and immediate publication instruction,
+the existing one-video command selected reviewed Bilibili source `BV1Japu6QEXC`.
+The running media worker and main publisher confirmed startup publication:
+https://x.com/i/status/2118489361788408282 . Its permanent receipt and content
+history remain, and the selection cleared automatically. This is a real startup
+post, not evidence of a scheduled 19:00 publication or a fully replenished reserve.
+Replies continued with confirmed sends while this repair was developed.
+
 ## 2026-11-04 — Startup retained obsolete video processes
 
 The operator's 22:51 Toronto start loaded the ten-slot schedule and independent

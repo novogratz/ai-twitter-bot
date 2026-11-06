@@ -9,6 +9,41 @@ from src.video.store import Store
 from src.x import safari_video as browser
 
 
+@pytest.mark.parametrize("failed", [False, True])
+def test_history_download_uses_remaining_bytes_and_keeps_partial_transfer_cost(
+        video_store, video_cfg, at, monkeypatch, failed):
+    now = at().timestamp()
+    spent = video_cfg.download_budget_bytes - 9
+    assert video_store.budget("source", "download_bytes", spent, video_cfg.download_budget_bytes, now)
+    media = {"variants": [{"content_type": "video/mp4", "url": "https://video.twimg.com/fixture.mp4"}]}
+    def download(url, **kwargs):
+        assert kwargs["max_bytes"] == 9 and kwargs["hosts"] == {"video.twimg.com"}
+        kwargs["sink"].write(b"fixture")
+        if failed:
+            raise TimeoutError("fixture interrupted download")
+    monkeypatch.setattr(reconcile, "request", download)
+    monkeypatch.setattr(reconcile, "probe", lambda *a: {"fixture": "probe"})
+    def fingerprint(path, *args):
+        assert path.read_bytes() == b"fixture"
+        return {"fixture": "actual bytes inspected"}
+    monkeypatch.setattr(reconcile, "fingerprint", fingerprint)
+    if failed:
+        with pytest.raises(TimeoutError):
+            reconcile.media_fingerprint(media, video_store, video_cfg, now, offload=False)
+    else:
+        assert reconcile.media_fingerprint(media, video_store, video_cfg, now, offload=False) == {"fixture": "actual bytes inspected"}
+    assert sum(row["amount"] for row in video_store.rows("SELECT amount FROM costs WHERE kind='download_bytes'")) == spent + 7
+
+
+def test_exhausted_history_download_budget_defers_without_fetching(video_store, video_cfg, at, monkeypatch):
+    now = at().timestamp()
+    assert video_store.budget("source", "download_bytes", video_cfg.download_budget_bytes, video_cfg.download_budget_bytes, now)
+    monkeypatch.setattr(reconcile, "request", lambda *a, **k: pytest.fail("exhausted download started"))
+    media = {"variants": [{"content_type": "video/mp4", "url": "https://video.twimg.com/fixture.mp4"}]}
+    with pytest.raises(Deferred, match="budget exhausted"):
+        reconcile.media_fingerprint(media, video_store, video_cfg, now, offload=False)
+
+
 @pytest.mark.parametrize("title", ['Example Star "Trouble Maker"', 'Example Star “Trouble Maker”',
     'Example Star 《Trouble Maker》', 'Example Star 「Trouble Maker」', 'Example Star 『Trouble Maker』'])
 def test_source_quote_styles_keep_novelty_search_clip_specific(video_store, video_cfg, ready, at, title):

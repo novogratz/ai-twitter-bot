@@ -1,4 +1,47 @@
-# Video validation — November 4, 2026
+# Video validation — November 5, 2026
+
+## Confirmed startup and supply recovery
+
+On November 5 the running publisher confirmed
+[a new video](https://x.com/i/status/2118489361788408282), from Bilibili source
+`BV1Japu6QEXC`. The existing delegated one-video selection queued the reviewed
+clip; the independent media worker and main publisher completed the send. The
+candidate and reservation are confirmed/posted, permanent content history was
+saved and the selection cleared. This was a startup post, not the 19:00 slot.
+Actual source/output review and candidate-specific novelty had completed; the
+former unknown-momentum entertainment floor had held the clip at 15/20 despite
+84.85 percent of the observable points. No inspection or receipt was invented.
+
+Regression fixtures cover X autoplay pausing/retries/overshoot, exact sample
+capture, partial-download accounting, deferred fingerprint jobs, completed
+negative reviews across later windows, preserved downloaded bytes, fair source
+capture, source-ID-bound duration screening and editorial fallback boundaries.
+The runtime browser changes require a newly loaded main process. A confirmed
+startup post alone does not validate the future two-hour schedule or show that
+the sixteen-clip reserve has been replenished.
+
+The final full suite passed **2,674 tests in 61.52 seconds**, including capacity
+waits across download routes, stale X view refresh, negative-review completion,
+source fairness and exact playback regressions. The selected-source inspection
+run also passed **12 tests**, with an added assertion preserving its existing
+fingerprint. The no-browser startup
+dry-run reports ten slots from 05:00 through 23:00, automatic daily startup,
+no Reply hold and discovery/generation budgets 12/80/80. Configuration-reference
+and whitespace checks passed.
+
+The main process restarted externally during development and loaded the muted
+playback retry. Live evidence still shows a first-sample stall for external X
+result `1824474462604947809`: seven play attempts, no captured frames, a requested
+sample at 1.0417 seconds, and buffered ranges with a gap before 3.0017 seconds.
+This remains unresolved; passing fixture tests do not establish live recovery.
+The follow-up gap fallback now requires a real decoded sample inside the same
+temporal cell and retains actual/requested timestamps and buffered-gap evidence.
+Executed JavaScript regressions exercise the observed 1.0417-second hole and
+the 0.242-second buffered alternative, rejecting other cells, metadata-only
+samples, invalid evidence and canvas denials. A durable test completes all thirty
+cells across four bounded batches. The final video suite passed **422 tests in
+12.95 seconds**. Live recovery of that exact external result still needs the
+updated main process and is not claimed by these fixtures.
 
 ## Late-start recovery
 
