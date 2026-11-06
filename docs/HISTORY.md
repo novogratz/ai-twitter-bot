@@ -1,5 +1,26 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-06 — Confirmed 09:00 scheduled video
+
+The operator restarted the main bot at 08:45:41 Toronto after the final production
+edits were present; both verified stale workers were replaced at 08:45:56. The
+publisher completed the remaining source-specific novelty page and marked
+`4121a5edb100a518b98c9e1a1c39143a` ready at about 08:50. Its actual 65.93-point
+score qualified under the documented unknown-momentum rule (87.91 percent of
+observable points), without an operator score selection or invented popularity.
+
+The ordinary scheduler reserved the 09:00 slot at 09:00:01. Safari verified the
+attachment and X confirmed [the new video](https://x.com/i/status/2118705222918787147)
+at 09:01:04. Reservation `7cd0e89c01694996bd8415d6303faedd`, candidate and slot
+are confirmed/posted, with permanent source/output history retained. This was
+an automatic scheduled post, not an extra startup or a manual send. Replies
+continued before and after the upload. The code changes merged as PRs #394
+(`69ffbfe9`) and #395 (`8093af15`).
+
+The 05:00 and 07:00 misses remain recorded. Ready stock returned to zero after
+publication; this receipt proves recovery of one scheduled slot, not coverage
+of the remaining day. The same-day startup request remains expired.
+
 ## 2026-11-06 — Preparation follow-up after PR #394
 
 PR #394 merged as `69ffbfe9`, and the running bot automatically completed two

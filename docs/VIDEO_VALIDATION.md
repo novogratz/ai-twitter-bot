@@ -1,5 +1,26 @@
 # Video validation — November 6, 2026
 
+## Confirmed automatic 09:00 slot
+
+The 08:45:41 operator restart occurred after the final production edits. New
+discovery/media workers started at 08:45:56. At about 08:50, actual novelty work
+finished and source `BV1ykx46UEWz` became ready without an explicit score choice.
+The existing unknown-momentum rule recorded 65.93 raw points and 87.91 percent
+of the observable points; missing momentum remained unknown.
+
+The scheduler reserved `2026-11-06/09:00` at 09:00:01. Attachment logs progressed
+from processing to decoded media and an enabled Post control. Submission began
+at 09:01:03 and X returned the confirmed own-post receipt at 09:01:04:
+[status 2118705222918787147](https://x.com/i/status/2118705222918787147).
+Reservation `7cd0e89c01694996bd8415d6303faedd` is confirmed; the slot and candidate
+are posted, and source/output hashes and fingerprints remain in permanent history.
+There is no unresolved-send claim. Replies continued around the upload.
+
+This is live evidence of one autonomous scheduled publication after the repairs.
+The earlier 05:00/07:00 misses remain, and ready stock is zero after this send.
+Further two-hour coverage still requires eligible supply; it is not established
+by this receipt or by the passing 2,807-test suite.
+
 ## Audio-first loading and source-score cost admission
 
 The final external comparison initially showed only an observed audio HLS track,
