@@ -1,5 +1,22 @@
 # Editorial policy — November 5, 2026
 
+## Recovery after deploying the video fix
+
+A new Safari publisher holding its exclusive account role lock may recover
+novelty read jobs left by an absent scheduler PID. The owner must have the exact
+local scheduler format; live, reused, uninspectable and malformed owners remain
+untouched. The conditional database update checks the observed owner and token,
+refunds only the abandoned attempt and records the recovery. Other jobs,
+publication reservations, content claims, history and ambiguous sends are not
+released. This exception concerns dead readers only, not failed publications.
+
+Unsupported Bilibili IDs are excluded before the bounded source query; document
+IDs are checked again while selecting. Legacy `av…` leads may remain held, but
+cannot prevent supported `BV…` clips from reaching ordinary source validation.
+No title, link, test or worker heartbeat is evidence of a completed inspection
+or a confirmed post. The existing schedule, active hours, startup allowance,
+source/QC/dedup gates and independent Reply behavior remain.
+
 ## Reserve preparation after repeated missed videos
 
 The Operator requires reliable publication at the existing two-hour slots and

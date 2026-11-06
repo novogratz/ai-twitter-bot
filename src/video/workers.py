@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import subprocess
 import sys
@@ -106,6 +107,48 @@ def role_lock(role):
             yield
         finally:
             _ROLE_HOLDERS.pop(role, None)
+
+
+def _scheduler_owner_absent(owner):
+    """Signal zero checks existence only; any extant/reused/unknown PID stays."""
+    if not isinstance(owner, str):
+        return False
+    match = re.fullmatch(r"([1-9][0-9]{0,9}):scheduler", owner)
+    if not match or int(match[1]) == os.getpid():
+        return False
+    try:
+        os.kill(int(match[1]), 0)
+    except ProcessLookupError:
+        return True
+    except (OSError, OverflowError):
+        return False
+    return False
+
+
+def recover_orphaned_novelty_reads(store, now):
+    """Recover only read jobs after the new sole Safari publisher owns its role."""
+    if not owns_role("publisher"):
+        return 0
+    recovered = 0
+    for job in store.rows("SELECT id,item,owner,token,attempts FROM jobs WHERE kind='novelty' AND state='running'"):
+        if not job["token"] or not _scheduler_owner_absent(job["owner"]):
+            continue
+        with store.transaction() as db:
+            # Recheck process existence under the DB write lock, then fence the
+            # exact abandoned claim. A successor token or live PID is untouched.
+            if not owns_role("publisher") or not _scheduler_owner_absent(job["owner"]):
+                continue
+            changed = db.execute("UPDATE jobs SET state='pending',due=?,owner=NULL,lease=NULL,token=NULL,"
+                "attempts=MAX(0,attempts-1) WHERE id=? AND kind='novelty' AND state='running' "
+                "AND owner=? AND token=? AND attempts=?",
+                (now, job["id"], job["owner"], job["token"], job["attempts"])).rowcount
+            if changed:
+                detail = json.dumps({"previous_owner": job["owner"], "job_id": job["id"],
+                                     "refunded_attempt": min(1, job["attempts"])})
+                db.execute("INSERT INTO events(at,kind,item,detail) VALUES(?,?,?,?)",
+                           (now, "novelty_read_recovered", job["item"], detail))
+                recovered += 1
+    return recovered
 
 
 def seed_jobs(store, cfg, now):
@@ -495,6 +538,12 @@ class Supervisor:
         if config.load().publishing_transport == "safari" and self.browser_role is None:
             self.browser_role = role_lock("publisher")
             self.browser_role.__enter__()
+            try:
+                recover_orphaned_novelty_reads(Store(), time.time())
+            except Exception as exc:
+                # Read recovery cannot prevent Reply startup. Failed checks
+                # leave the fenced lease to its ordinary expiration path.
+                log.warning("[VIDEO] Orphaned novelty read recovery deferred (%s).", type(exc).__name__)
 
     def _handover_stale_worker(self, store, role, lock_path):
         """Retire only a verified old media/discovery process; leave its leases fenced."""

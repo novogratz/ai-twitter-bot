@@ -1,5 +1,22 @@
 # Video validation — November 5, 2026
 
+## Deployment and source-selection follow-up
+
+The 23:38 audit confirmed that the old 18:51 runtime had never loaded PR #391's
+gap fallback or 4 GB media allowance. Main PID 39566 was no longer running and
+its two background workers remained. The ordinary restart created main 78698
+at 23:40:54 and replaced both stale workers at 23:41:09. Confirmed Replies
+resumed. No additional video receipt is inferred from this restart.
+
+An old scheduler novelty job remained leased until 23:57 despite the dead owner.
+The new recovery tests verify exclusive publisher ownership, absent PID checks,
+owner/token fencing, preservation of prior errors and publication claims, and
+refunding only the abandoned read attempt. Source-selection regressions recreate
+the legacy `av64049836` blocker and a queue with 81 unsupported leads before a
+valid `BV…` clip. The full video suite passed **461 tests in 15.70 seconds**.
+The complete suite passed **2,725 tests in 63.99 seconds**; generated
+configuration and whitespace checks also passed.
+
 ## Confirmed startup and supply recovery
 
 On November 5 the running publisher confirmed
