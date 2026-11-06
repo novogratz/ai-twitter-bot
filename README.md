@@ -61,6 +61,9 @@ fallback requires 18/20 fit, 14/20 entertainment, 10/15 quality and 80 percent o
 observable points; actual inspection, QC and permanent dedup still apply.
 Daily download capacity is 4 GB, with prior usage retained and a 150 MB per-file
 limit. Capacity waits keep their retry allowance across all download routes.
+If X has a buffered gap at a sampling midpoint, fingerprinting can decode a
+frame elsewhere inside that same small interval, retaining actual timestamps.
+Every interval still requires decoded evidence before the check completes.
 See [live evidence and regression checks](docs/VIDEO_VALIDATION.md).
 
 Both Voice files now emphasize friendly interest and gentle disagreement.
