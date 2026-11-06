@@ -1,4 +1,25 @@
-# Editorial policy — November 5, 2026
+# Editorial policy — November 6, 2026
+
+## Preparation checks before expensive work
+
+The media worker checks verified publication time and the existing age ceiling
+before creating an attempt directory, downloading, probing or requesting model
+review. Known stale sources expire; missing, invalid or future dates remain
+held. Their jobs finish as completed policy decisions, preserving saved evidence
+without retrying an unchanged refusal. An active hash-bound one-video selection
+retains its existing known-age exemption only. Final selection runs the same
+publication-time rule again. Ten daytime slots, all source/output requirements,
+permanent history, active hours and independent Replies remain unchanged.
+
+Native X sampling uses complete buffered ranges up to 128 entries, with missing,
+invalid or excessive observations held. Diagnostics may show a compact subset
+but never supply a truncated decision input. After a stalled exact seek, one
+bounded playback may start from an observed buffered point at most three seconds
+before the target. It captures no frames, lasts at most eight seconds and must
+pause/re-seek before sampling. Exact seeks, gap recovery and preparatory playback
+share six muted-play attempts per sample within the existing 25-second browser
+transaction. All temporal cells, decoded-frame checks and origin restrictions
+remain required; existing valid revision-2 progress remains reusable.
 
 ## Recovery after deploying the video fix
 

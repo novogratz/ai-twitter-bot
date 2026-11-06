@@ -1,5 +1,30 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-06 — Preparation after source capture resumed
+
+PR #392 deployed at 23:52:46 Toronto on November 5 as main PID 80667, with new
+discovery/media workers. The publisher recovered the absent scheduler's novelty
+lease. Actual revision-2 fingerprint evidence progressed from zero to sixteen
+of thirty samples; the first buffered-gap sample decoded at 0.2417 seconds for
+a requested 1.0417 seconds within the same first temporal cell. A later seek at
+34.375 seconds still stalled. The bot entered its normal midnight sleep without
+another video receipt; partial fingerprints are not ready inventory.
+
+Bilibili capture resumed, resolving one source beyond the age ceiling and
+holding another beyond the duration ceiling. The age rule previously ran only
+after download and source review. Moving it before expensive media preparation
+keeps those already ineligible clips from consuming reserve capacity. The rule
+is shared with final selection, and existing bytes, histories and claims remain.
+
+The remaining X seek investigation found that gap logic reused a diagnostic
+helper returning only the first four buffered ranges. Fragmented loading can
+therefore hide later relevant ranges. The fix reads a bounded complete list,
+reports truncation explicitly and can try one short playback from nearby
+observed buffered footage before exact re-seeking. Preparatory playback cannot
+draw or count a sample; all thirty decoded temporal cells remain mandatory.
+The observed live diagnostic alone did not prove a fifth range existed, and
+fixture recovery does not establish completion of the real remaining check.
+
 ## 2026-11-05 — Undeployed runtime and a legacy link blocking source capture
 
 At 23:38 Toronto the recurring-post audit found no startup after 18:51, although

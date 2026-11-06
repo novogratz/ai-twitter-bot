@@ -49,6 +49,12 @@ its existing normal-player capture. Login walls, absent publication metadata,
 missing media, unsupported streams and CDN restrictions remain visible holds.
 Finding a web link alone does not make a ready video.
 
+Media preparation applies the same publication-time/age rule as final selection
+before creating files, downloading, probing or inspecting. A known stale source
+expires immediately; missing, invalid or future dates remain held. The job ends
+as a completed policy decision, retaining saved bytes and fingerprints. Only a
+current hash-bound operator selection can use the existing known-age exemption.
+
 While fewer than the target sixteen clips are ready, preparation receives a
 bounded ready-Reply FIFO turn. After two novelty batches, source capture gets
 one turn even when a duplicate check keeps deferring. Reconciliation precedes
@@ -87,6 +93,14 @@ failures and provider Retry-After instructions still apply across browser reads.
 Native X fingerprints wait for decoded frames, using ordinary muted playback
 when the player exposes metadata only. A stalled sample can retry normal playback
 up to six times, at least one second apart, then pause/reseek to the exact sample.
+Gap decisions use all valid buffered ranges up to a 128-range bound, never the
+first-four diagnostic summary. Incomplete observations remain unresolved. After
+three seconds of stalled seeking, one preparatory playback can start from a nearby
+observed buffered point within three seconds before the target. It captures no
+frames, lasts at most eight seconds and shares the sample's six-play budget with
+exact seeking and same-cell gap recovery. Sampling resumes only after pausing and
+re-seeking the required target. The overall browser transaction remains 25 seconds,
+and already validated revision-2 samples survive retries.
 `browser_video_access:<post_id>` records loading/seek phase, readiness,
 buffered/seekable ranges and attempt counts, including a first-frame stall. The
 25-second browser transaction, canvas restrictions and full-sequence requirement

@@ -191,6 +191,82 @@ def test_x_source_over_view_limit_is_terminal_before_costly_processing(video_sto
     assert video_store.rows("SELECT state,error FROM jobs WHERE kind='media'") == [{"state": "done", "error": ""}]
 
 
+@pytest.mark.parametrize("publication", ["stale", "missing", "future", "text", "boolean", "zero"])
+def test_publication_policy_finishes_before_any_media_cost(
+        video_store, video_cfg, ready, at, tmp_path, monkeypatch, publication):
+    now = at().timestamp()
+    cfg = replace(video_cfg, publishing_transport="safari")
+    doc = ready()
+    if publication == "missing":
+        doc.pop("published_at")
+    else:
+        doc["published_at"] = {"future": now + 1, "stale": now - cfg.max_age_hours * 3600 - 1,
+                               "text": "unverified", "boolean": True, "zero": 0}[publication]
+    fingerprint = {"sha256": doc["original_sha256"], "visual": [["fixture"]]}
+    video_store.save_candidate("clip1", doc, now, state="held", fingerprint=fingerprint)
+    video_store.enqueue("media", "clip1", now)
+    # A completed policy decision also closes a formerly retrying job.
+    with video_store.transaction() as db:
+        db.execute("UPDATE jobs SET attempts=2,error='prior transient failure' WHERE kind='media'")
+    monkeypatch.setattr(media.time, "time", lambda: now)
+    assets = tmp_path / "no-preparation-directory"
+    monkeypatch.setattr(media, "ASSETS", assets)
+    monkeypatch.setattr(workers.video_pressure, "pressure", lambda *a: "")
+    monkeypatch.setattr(workers, "_api_work", lambda *a: None)
+    for name in ("download", "probe", "fingerprint", "inspect", "render", "technical_qc"):
+        monkeypatch.setattr(media, name, lambda *a, **k: pytest.fail("publication hold reached expensive media work"))
+    assert workers.run_once("media", video_store, cfg, "fixture", now=now) == "processed"
+    row = video_store.candidate("clip1")
+    assert row["state"] == ("expired" if publication == "stale" else "held")
+    assert row["reason"] == ("freshness expired" if publication == "stale" else "publication time unverified")
+    assert row["document"] == doc
+    assert json.loads(row["fingerprint"]) == fingerprint
+    assert not assets.exists()
+    assert video_store.rows("SELECT state,attempts,error FROM jobs WHERE kind='media'") == [
+        {"state": "done", "attempts": 0, "error": ""}]
+    assert not video_store.rows("SELECT * FROM costs")
+    assert not video_store.rows("SELECT * FROM reservations")
+    assert not video_store.rows("SELECT * FROM jobs WHERE kind='novelty'")
+
+
+@pytest.mark.parametrize("publication", ["old", "unknown", "future"])
+def test_explicit_selection_exempts_only_known_old_publication_time(
+        video_store, saved_x_media, publication):
+    cfg, clock, ident, calls, original = saved_x_media
+    doc = video_store.candidate(ident)["document"]
+    doc["published_at"] = {"old": clock[0] - cfg.max_age_hours * 3600 - 1,
+                           "unknown": None, "future": clock[0] + 1}[publication]
+    doc["operator_selection"] = {"scope": "one_video", "request_id": "explicit-saved-clip",
+        "sha256": doc["original_sha256"], "source_id": doc["source_id"], "canonical_url": doc["canonical_url"],
+        "selected_at": clock[0], "expires_at": clock[0] + 86400}
+    video_store.save_candidate(ident, doc, clock[0], state="held", fingerprint=doc["original_fingerprint"])
+    assert workers.run_once("media", video_store, cfg, "fixture", now=clock[0]) == "processed"
+    row = video_store.candidate(ident)
+    if publication == "old":
+        assert calls == ["probe", "source", "render", "output"]
+        assert row["document"]["qc"]["sha256"] == row["document"]["output_sha256"]
+        assert Path(row["document"]["original_path"]).read_bytes() == original.read_bytes()
+        assert row["reason"] == "X novelty unchecked or existing copy found"
+        assert video_store.rows("SELECT state FROM jobs WHERE kind='novelty'") == [{"state": "pending"}]
+    else:
+        assert calls == []
+        assert row["state"] == "held" and row["reason"] == "publication time unverified"
+        assert not video_store.rows("SELECT * FROM jobs WHERE kind='novelty'")
+    assert video_store.rows("SELECT state,attempts,error FROM jobs WHERE kind='media'") == [
+        {"state": "done", "attempts": 0, "error": ""}]
+    assert not video_store.rows("SELECT * FROM reservations")
+
+
+def test_publication_gate_shares_final_selection_boundary(video_cfg, ready, at):
+    now = at().timestamp()
+    doc = ready()
+    doc["published_at"] = now - video_cfg.max_age_hours * 3600
+    assert ranking.publication_gate(doc, video_cfg, now) == ""
+    assert ranking.gate(doc, video_cfg, now, final=True) == ""
+    assert ranking.publication_gate(doc, video_cfg, now + .01) == "freshness expired"
+    assert ranking.gate(doc, video_cfg, now + .01, final=True) == "publication time unverified or clip stale"
+
+
 @pytest.mark.parametrize("source", ["local", "remote"])
 def test_small_remaining_daily_capacity_defers_and_keeps_partial_bytes_charged(
         video_store, video_cfg, ready, at, tmp_path, monkeypatch, source):

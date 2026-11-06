@@ -6,6 +6,26 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-06, reject stale sources before preparation — Source publication time
+and the existing 730-day ceiling are checked before downloading, probing or
+model review, using the same rule as final selection. Known stale clips expire;
+missing, invalid and future dates remain held. These completed policy decisions
+finish their media job without consuming transient-error retries. A current
+hash-bound operator selection retains only its existing known-age exemption;
+it cannot verify a missing date. Saved bytes, fingerprints and posting history
+remain intact. This avoids spending the reserve's capacity on already ineligible
+sources and does not relax any publication requirement.
+
+Native X sampling examines all observed buffered ranges within a 128-range
+bound; compact diagnostics never truncate the ranges used for gap decisions.
+Incomplete or excessive ranges remain unresolved. One short playback from an
+observed buffered point up to three seconds before a stalled target may load
+the required footage before exact re-seeking. This preparation captures no
+frames and lasts at most eight seconds, within the existing 25-second read.
+Exact seeking, gap fallback and preparatory playback share six muted-play
+attempts per sample. Every temporal cell still needs actual decoded evidence;
+already valid revision-2 samples remain reusable across bounded transactions.
+
 2026-11-05, deploy video recovery and unblock source reads — The follow-up live
 audit found the pre-merge 18:51 main/workers still in use and every scheduled
 slot empty. The merged code is applied through the normal restart, with worker

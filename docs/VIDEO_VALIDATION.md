@@ -1,4 +1,31 @@
-# Video validation — November 5, 2026
+# Video validation — November 6, 2026
+
+## Early age screening and remaining fingerprint stall
+
+The PR #392 restart at 23:52:46 loaded main 80667 and discovery/media workers
+80671/80672. The journal records recovery of the abandoned novelty read from
+39566. Real fingerprint progress reached sixteen of thirty decoded samples;
+Bilibili capture resumed with actual date/duration decisions. Confirmed Replies
+continued through 23:59:33. No additional video receipt was recorded, and the
+bot entered its normal midnight sleep. A later seek at 34.375 seconds remains
+unresolved in this live evidence.
+
+Early-screening regressions verify that stale, missing and future publication
+dates consume no download, probe, inspection, render or reservation work. They
+retain saved evidence and finish a formerly retrying job. Explicit selection
+exempts a known old date only; missing/future dates stay held. The exact age
+boundary agrees with final selection.
+
+Executable JavaScript regressions cover fifth-range exact targets and gap
+brackets, the observed nearby 33.14-second buffered point followed by exact
+34.375-second sampling, undecoded/CORS failures, incomplete range observations,
+eight-second preparatory playback, the shared six-play budget and preservation
+of all sixteen saved revision-2 samples under the 25-second transaction bound.
+The video suite passed **483 tests in 14.04 seconds**; the complete suite passed
+**2,747 tests in 63.16 seconds**. Generated configuration and whitespace checks
+passed. The startup dry-run retained ten 05:00–23:00 slots, automatic daily
+startup without a Reply hold, and Reply discovery/generation budgets 12/80/80.
+Fixture recovery is separate from completion of the real remaining X check.
 
 ## Deployment and source-selection follow-up
 

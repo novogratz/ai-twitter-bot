@@ -441,6 +441,174 @@ def test_sample_time_evidence_cannot_fake_a_midpoint_or_leave_its_cell(observed)
         browser._sample_evidence(observed, 1, 0, 2)
 
 
+def _native_loading_case(intervals, mode, steps):
+    import shutil
+    import subprocess
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    setup = "let intervals=" + json.dumps(intervals) + ";const mode=" + json.dumps(mode) + ";" + r"""
+let now=0, drawn=[], seeks=[];const performance={now:()=>now};
+const requestedTime=34.375;
+const video={readyState:1,seeking:true,paused:true,error:null,dataset:{},_at:requestedTime,plays:0,
+  buffered:{get length(){return intervals.length;},start:i=>intervals[i][0],end:i=>intervals[i][1]},
+  scrollIntoView(){if(!this.muted)throw Error('unmuted scroll');},pause(){this.paused=true;},
+  play(){if(!this.muted)throw Error('unmuted play');this.plays++;this.paused=false;return Promise.resolve();},
+  get currentTime(){return this._at;},set currentTime(value){this._at=value;seeks.push(value);
+    const available=intervals.some(r=>r[0]<=value && value<r[1]);
+    const decoded=available && !['stuck','gap_stuck'].includes(mode) && value!==requestedTime;
+    this.readyState=decoded?2:1;this.seeking=!decoded;}};
+const document={visibilityState:'visible',createElement:()=>({getContext:()=>({drawImage:v=>{
+  if(v.readyState<2 || v.seeking)throw Error('undecoded frame');drawn.push(v.currentTime);
+}}),toDataURL:()=>{if(mode==='cors')throw Error('SecurityError');return 'fixture';}})};
+"""
+    script = browser._sample_frame_script("const v=video;", 34.375, 16 * 62.5 / 30, 17 * 62.5 / 30)
+    run = "const run=()=>JSON.parse(" + script + ");"
+    return json.loads(subprocess.run([node, "-e", setup + run + steps +
+        "console.log(JSON.stringify({states,drawn,seeks,plays:video.plays}));"],
+        capture_output=True, text=True, check=True, timeout=10).stdout)
+
+
+def test_gap_recovery_uses_later_buffered_ranges_beyond_compact_diagnostics():
+    intervals = [[0, .016667], [.233333, .25], [3.001667, 8.988333],
+                 [33.136667, 33.153333], [34.7, 37]]
+    result = _native_loading_case(intervals, "gap", """
+const states=[run()];now=2000;states.push(run());now=2001;states.push(run());
+""")
+    status, frame = result["states"][1:]
+    assert status["buffered"] == intervals[:4]
+    assert status["buffered_count"] == 5 and status["buffered_truncated"] is True
+    assert status["buffered_complete"] is True
+    assert intervals[4] in status["buffered_near_sample"]
+    assert frame["gap"]["next_start"] == 34.7
+    assert result["drawn"] == [pytest.approx(34.72)]
+    assert frame["png"] == "fixture"
+    evidence = browser._sample_evidence(frame, 34.375, 16 * 62.5 / 30, 17 * 62.5 / 30)
+    assert evidence["gap"]["buffered_interval"] == intervals[4]
+
+
+def test_buffered_target_after_first_four_intervals_keeps_the_exact_sample():
+    intervals = [[0, .016667], [.233333, .25], [3.001667, 8.988333],
+                 [33.136667, 33.153333], [34, 35]]
+    result = _native_loading_case(intervals, "gap", """
+const states=[run()];now=2000;states.push(run());
+video.readyState=2;video.seeking=false;now=2001;states.push(run());
+""")
+    assert result["seeks"] == [] and result["drawn"] == [34.375]
+    assert result["states"][1]["buffered_count"] == 5
+    assert intervals[4] in result["states"][1]["buffered_near_sample"]
+    assert result["states"][-1]["gap"] is None
+    assert result["states"][-1]["at"] == result["states"][-1]["sample_target"] == 34.375
+
+
+@pytest.mark.parametrize("invalid", ["too_many", "overlap", "read_error"])
+def test_incomplete_native_range_snapshot_never_captures_or_recovers(invalid):
+    intervals = [[i * 2, i * 2 + 1] for i in range(129)] if invalid == "too_many" else [[0, 40], [39, 45]]
+    setup = "video.readyState=2;video.seeking=false;"
+    if invalid == "read_error":
+        setup += "video.buffered.start=()=>{throw Error('changed TimeRanges');};"
+    result = _native_loading_case(intervals, "gap", setup + """
+const states=[run()];now=9000;states.push(run());
+""")
+    assert all(state["buffered_complete"] is False for state in result["states"])
+    assert all(not state.get("png") and state["preroll"] is None for state in result["states"])
+    assert result["drawn"] == result["seeks"] == []
+    assert result["plays"] == 0
+
+
+@pytest.mark.parametrize("outcome", ["decoded", "undecoded", "cors"])
+def test_observed_preroll_loads_then_reseeks_without_counting_preroll_frames(outcome):
+    intervals = [[0, .016667], [.233333, .25], [3.001667, 8.988333], [33.136667, 33.153333]]
+    steps = """
+const states=[run()];now=3000;states.push(run());now=3100;states.push(run());
+// Normal playback has decoded nearby footage and buffered the required target.
+now=3600;video._at=33.4;intervals[3]=[33.136667,36];states.push(run());
+now=3700;states.push(run());
+"""
+    if outcome != "undecoded":
+        steps += "video.readyState=2;video.seeking=false;video._at=requestedTime;"
+    result = _native_loading_case(intervals, outcome, steps + "now=4200;states.push(run());")
+    preroll = result["states"][1]["preroll"]
+    assert preroll["buffered_interval"] == intervals[3]
+    assert 31.375 <= preroll["target"] < 16 * 62.5 / 30  # loading may start before the cell
+    assert result["seeks"] == [preroll["target"], 34.375]
+    assert result["states"][3]["preroll"]["phase"] == "reseeking"
+    assert result["states"][3]["ready_state"] == 1 and result["states"][3]["seeking"] is True
+    assert not any(state.get("png") for state in result["states"][:-1])
+    if outcome == "decoded":
+        frame = result["states"][-1]
+        assert result["drawn"] == [34.375]
+        assert browser._sample_evidence(frame, 34.375, 16 * 62.5 / 30, 17 * 62.5 / 30) == {
+            "requested_at": 34.375, "actual_at": 34.375,
+            "cell": [16 * 62.5 / 30, 17 * 62.5 / 30], "gap": None}
+    elif outcome == "cors":
+        assert result["states"][-1] == {"error": "frame access denied"}
+    else:
+        assert not result["states"][-1].get("png") and result["drawn"] == []
+
+
+@pytest.mark.parametrize("mode", ["stuck", "gap_stuck"])
+def test_one_six_play_allowance_covers_seek_gap_and_single_preroll(mode):
+    intervals = [[0, .016667], [.233333, .25], [3.001667, 8.988333], [33.136667, 33.153333]]
+    if mode == "gap_stuck":
+        intervals.append([34.7, 37])
+    result = _native_loading_case(intervals, mode, """
+const states=[];
+for(now=0;now<=25000;now+=1000){video.paused=true;states.push(run());}
+""")
+    assert result["plays"] == 6
+    assert max(state["sample_play_attempts"] for state in result["states"]) == 6
+    assert result["drawn"] == [] and not any(state.get("png") for state in result["states"])
+    assert len(result["seeks"]) == 1
+    if mode == "stuck":
+        assert result["states"][-1]["preroll"]["phase"] == "exhausted"
+        assert result["states"][-1]["preroll"]["started"] == 3000
+        assert result["states"][11]["preroll"]["phase"] == "exhausted"
+    else:
+        assert all(state["preroll"] is None for state in result["states"])
+        assert result["states"][-1]["gap"]["target"] == pytest.approx(34.72)
+
+
+def test_preroll_requires_an_observed_buffered_point_within_three_seconds():
+    result = _native_loading_case([[0, 8], [30, 31.374]], "stuck", """
+const states=[];
+for(now=0;now<=25000;now+=1000){video.paused=true;states.push(run());}
+""")
+    assert result["plays"] == 6 and result["seeks"] == result["drawn"] == []
+    assert all(state["preroll"] is None and not state.get("png") for state in result["states"])
+
+
+def test_preroll_wait_keeps_revision_two_partial_samples_and_transaction_bound(
+        video_store, browser_cfg, monkeypatch):
+    from contextlib import nullcontext
+    from src.video.security import Deferred
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    elapsed = [0]
+    monkeypatch.setattr(browser.time, "monotonic", lambda: elapsed[0])
+    monkeypatch.setattr(browser.time, "sleep", lambda seconds: elapsed.__setitem__(0, elapsed[0] + seconds))
+    saved = {"revision": 2, "duration": 62.5, "count": 30, "visual": [["fixture"]] * 16,
+             "frame_hashes": ["fixture"] * 16, "variation": [10] * 16,
+             "samples": [{"requested_at": (i + .5) * 62.5 / 30, "actual_at": (i + .5) * 62.5 / 30,
+                          "cell": [i * 62.5 / 30, (i + 1) * 62.5 / 30], "gap": None} for i in range(16)]}
+    video_store.set_meta("browser_fingerprint_pending:123", saved)
+    def page(js, *args):
+        if "png:c.toDataURL" in js:
+            return {"ready_state": 1, "seeking": True, "requested_at": 34.375,
+                    "preroll": {"phase": "exhausted", "target": 33.145}}
+        return {"duration": 62.5, "ready_state": 2}
+    monkeypatch.setattr(browser, "_json", page)
+    with pytest.raises(Deferred, match="fingerprint is pending"):
+        browser.SafariVideoClient(video_store, browser_cfg).fingerprint({"post_url": "https://x.com/example/status/123"})
+    assert 25 <= elapsed[0] < 25.1
+    assert video_store.meta("browser_fingerprint_pending:123") == saved
+    status = video_store.meta("browser_video_access:123")
+    assert status["sample_index"] == status["samples_saved"] == 16
+    assert status["preroll"]["phase"] == "exhausted"
+    assert not video_store.meta("browser_fingerprint:123")
+
+
 @pytest.fixture
 def browser_cfg(video_cfg):
     return replace(video_cfg, publishing_transport="safari")
