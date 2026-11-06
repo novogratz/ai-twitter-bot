@@ -91,7 +91,7 @@ def test_blob_video_fingerprints_visible_frames_without_api(video_store, browser
     monkeypatch.setattr(safari, "close_front_tab", lambda: closed.append(True))
     def page(js, *a):
         if "png:c.toDataURL" in js:
-            return {"png": images.pop(0)}
+            return {"at": 4 - len(images) + .5, "png": images.pop(0)}
         return {"duration": 4, "ready_state": 2}
     monkeypatch.setattr(browser, "_json", page)
     client = browser.SafariVideoClient(video_store, browser_cfg)
@@ -313,7 +313,7 @@ def test_long_browser_fingerprint_resumes_without_claiming_partial_success(video
         ImageDraw.Draw(image).rectangle((x, 10, x + 12, 54), fill="white")
         data = io.BytesIO(); image.save(data, format="PNG")
         captured.append(x)
-        return {"png": "data:image/png;base64," + base64.b64encode(data.getvalue()).decode()}
+        return {"at": len(captured) - .5, "png": "data:image/png;base64," + base64.b64encode(data.getvalue()).decode()}
     monkeypatch.setattr(browser, "_json", page)
     client = browser.SafariVideoClient(video_store, browser_cfg)
     item = {"post_url": "https://x.com/example/status/123"}
@@ -323,6 +323,122 @@ def test_long_browser_fingerprint_resumes_without_claiming_partial_success(video
     assert len(video_store.meta("browser_fingerprint_pending:123")["visual"]) == 8
     assert len(client.fingerprint(item)["visual"]) == 12
     assert len(captured) == 12
+
+
+@pytest.mark.parametrize("case", ["gap", "no_left", "no_right", "already_buffered", "outside_cell", "undecoded", "cors"])
+def test_native_gap_fallback_requires_buffered_same_cell_and_actual_decoded_canvas(case):
+    import shutil
+    import subprocess
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    requested, start, end = 62.5 / 60, 0, 62.5 / 30
+    buffered = [[0, 1 / 60], [.233333, .25], [3.001667, 14.975]]
+    if case == "no_left":
+        buffered = [[3, 10]]
+    elif case == "no_right":
+        buffered = [[0, .25]]
+    elif case == "already_buffered":
+        buffered = [[0, 10]]
+    elif case == "outside_cell":
+        requested, start, end, buffered = 2, 1, 3, [[0, .3], [3, 10]]
+    setup = "const intervals=" + json.dumps(buffered) + ";const mode=" + json.dumps(case) + ";const requestedTime=" + str(requested) + ";" + r"""
+let now=0, drawn=[], seeks=[];const performance={now:()=>now};
+const video={readyState:1,seeking:true,paused:true,error:null,dataset:{},_at:requestedTime,
+  buffered:{length:intervals.length,start:i=>intervals[i][0],end:i=>intervals[i][1]},
+  scrollIntoView(){},pause(){this.paused=true;},play(){return Promise.resolve();},
+  get currentTime(){return this._at;},set currentTime(value){this._at=value;seeks.push(value);
+    const available=intervals.some(r=>r[0]<=value && value<r[1]);
+    this.readyState=available && mode!=='undecoded'?2:1;this.seeking=this.readyState<2;}};
+const document={visibilityState:'visible',createElement:()=>({getContext:()=>({drawImage:v=>{
+  if(v.readyState<2 || v.seeking)throw Error('undecoded frame');drawn.push(v.currentTime);
+}}),toDataURL:()=>{if(mode==='cors')throw Error('SecurityError');return 'fixture';}})};
+"""
+    script = browser._sample_frame_script("const v=video;", requested, start, end)
+    run = "const run=()=>JSON.parse(" + script + ");"
+    steps = "const states=[run()];now=1999;states.push(run());now=2000;states.push(run());now=2001;states.push(run());"
+    result = json.loads(subprocess.run([node, "-e", setup + run + steps +
+        "console.log(JSON.stringify({states,drawn,seeks}));"], capture_output=True, text=True, check=True, timeout=10).stdout)
+    assert not any(state.get("png") for state in result["states"][:3])
+    if case in ("gap", "undecoded", "cors"):
+        assert result["seeks"] == [pytest.approx((.233333 + .25) / 2)]
+        assert result["states"][2]["gap"]["previous_end"] == .25
+        assert result["states"][2]["gap"]["next_start"] == 3.001667
+        assert result["states"][2]["sample_target"] != requested
+        if case == "gap":
+            frame = result["states"][3]
+            assert frame["png"] == "fixture" and result["drawn"] == [frame["at"]]
+            evidence = browser._sample_evidence(frame, requested, start, end)
+            assert evidence["actual_at"] != evidence["requested_at"]
+            assert start <= evidence["actual_at"] < end
+        elif case == "cors":
+            assert result["states"][3] == {"error": "frame access denied"}
+        else:
+            assert not result["drawn"] and not result["states"][3].get("png")
+    else:
+        assert result["seeks"] == [] and result["drawn"] == []
+        assert all(state["gap"] is None for state in result["states"])
+
+
+def test_gap_sampling_persists_real_times_and_requires_all_thirty_cells(video_store, browser_cfg, monkeypatch):
+    import base64
+    from contextlib import nullcontext
+    import io
+    from PIL import Image, ImageDraw
+    from src.video.security import Deferred
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    sample = []
+    original_script = browser._sample_frame_script
+    def script(select, requested, start, end):
+        sample[:] = [requested, start, end]
+        return original_script(select, requested, start, end)
+    monkeypatch.setattr(browser, "_sample_frame_script", script)
+    captured = []
+    def page(js, *args):
+        if "png:c.toDataURL" not in js:
+            return {"duration": 62.5, "ready_state": 2}
+        requested, start, end = sample
+        image = Image.new("RGB", (64, 64), "black")
+        x = len(captured) * 7 % 50
+        ImageDraw.Draw(image).rectangle((x, 10, x + 10, 54), fill="white")
+        stream = io.BytesIO()
+        image.save(stream, format="PNG")
+        frame = {"at": requested, "sample_target": requested,
+                 "png": "data:image/png;base64," + base64.b64encode(stream.getvalue()).decode()}
+        if not captured:
+            frame.update(at=.2416665, sample_target=.2416665,
+                gap={"requested_at": requested, "target": .2416665, "previous_end": .25,
+                     "next_start": 3.001667, "buffered_interval": [.233333, .25]})
+        captured.append((start, end))
+        return frame
+    monkeypatch.setattr(browser, "_json", page)
+    client = browser.SafariVideoClient(video_store, browser_cfg)
+    item = {"post_url": "https://x.com/example/status/123"}
+    for batch in range(3):
+        with pytest.raises(Deferred):
+            client.fingerprint(item)
+        assert video_store.meta("browser_fingerprint:123") is None
+        saved = video_store.meta("browser_fingerprint_pending:123")
+        assert len(saved["visual"]) == len(saved["samples"]) == (batch + 1) * 8
+        assert saved["samples"][0]["actual_at"] == .2416665
+        assert saved["samples"][0]["requested_at"] == 62.5 / 60
+    result = client.fingerprint(item)
+    assert len(result["samples"]) == len(result["visual"]) == len(set(captured)) == 30
+    assert all(s["cell"][0] <= s["actual_at"] < s["cell"][1] for s in result["samples"])
+    assert result["samples"][0]["gap"]["buffered_interval"] == [.233333, .25]
+    assert video_store.meta("browser_fingerprint_pending:123") == {}
+
+
+@pytest.mark.parametrize("observed", [
+    {"at": None}, {"at": 2.1}, {"at": .25, "sample_target": .25},
+    {"at": .25, "sample_target": .25, "gap": {"previous_end": 2, "next_start": 3,
+        "buffered_interval": [0, .5], "requested_at": 1, "target": .25}},
+])
+def test_sample_time_evidence_cannot_fake_a_midpoint_or_leave_its_cell(observed):
+    with pytest.raises(AccessError):
+        browser._sample_evidence(observed, 1, 0, 2)
 
 
 @pytest.fixture

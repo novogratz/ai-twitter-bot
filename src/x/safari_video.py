@@ -170,6 +170,88 @@ const playerState = () => ({ready_state:v?.readyState,seeking:v?.seeking,
 """
 
 
+_FRAME_SAMPLE = r"""
+if(!v)return JSON.stringify(playerState());
+let sample=v._botFrameSample;
+if(!sample || sample.requested!==requested){
+  sample=v._botFrameSample={requested,target:requested,started:performance.now(),gap:null};
+}
+const status=()=>JSON.stringify({...playerState(),requested_at:requested,
+  sample_target:sample.target,cell:[cellStart,cellEnd],gap:sample.gap});
+// A seek into a demonstrated buffered hole cannot be decoded at its midpoint.
+// After ordinary loading has had a turn, allow an actual frame elsewhere in
+// this same temporal cell. Every cell still needs its own decoded canvas sample.
+if(!sample.gap && v.seeking && v.readyState<2 && !v.error && performance.now()-sample.started>=2000){
+  const buffered=ranges(v.buffered).filter(r=>r.length===2 && Number.isFinite(r[0]) && Number.isFinite(r[1]) && r[0]>=0 && r[0]<r[1]);
+  const before=buffered.filter(r=>r[1]<requested), after=buffered.filter(r=>r[0]>requested);
+  if(!buffered.some(r=>r[0]<=requested && requested<r[1]) && before.length && after.length){
+    const choices=buffered.flatMap(range=>{
+      const lo=Math.max(range[0],cellStart),hi=Math.min(range[1],cellEnd);
+      if(!(lo<hi))return [];
+      const inset=Math.min(.02,(hi-lo)/2);
+      const target=Math.max(lo+inset,Math.min(hi-inset,requested));
+      return [{target,buffered_interval:range}];
+    }).sort((a,b)=>Math.abs(a.target-requested)-Math.abs(b.target-requested));
+    if(choices.length){
+      const choice=choices[0];
+      sample.target=choice.target;
+      sample.gap={requested_at:requested,target:choice.target,
+        previous_end:Math.max(...before.map(r=>r[1])),next_start:Math.min(...after.map(r=>r[0])),
+        buffered_interval:choice.buffered_interval};
+      v.pause();v.muted=true;v.dataset.botSeekLoad='';v.currentTime=sample.target;
+      return status();
+    }
+  }
+}
+if((v.seeking || v.readyState<2) && !v.error){v.dataset.botSeekLoad='loading';loading('seek:'+sample.target);}
+if(v.seeking || v.readyState<2)return status();
+if(v.dataset.botSeekLoad==='loading'){
+  v.pause();v.dataset.botSeekLoad='ready';
+  if(Math.abs(v.currentTime-sample.target)>.08){v.currentTime=sample.target;return status();}
+}
+const insideCell=v.currentTime>=cellStart && v.currentTime<cellEnd;
+const insideRange=!sample.gap || (v.currentTime>=sample.gap.buffered_interval[0] && v.currentTime<sample.gap.buffered_interval[1]);
+if(Math.abs(v.currentTime-sample.target)>.08 || !insideCell || !insideRange){
+  v.pause();v.currentTime=sample.target;return status();
+}
+v.pause();
+try{const c=document.createElement('canvas');c.width=64;c.height=64;c.getContext('2d').drawImage(v,0,0,64,64);
+  return JSON.stringify({at:v.currentTime,requested_at:requested,sample_target:sample.target,
+    cell:[cellStart,cellEnd],gap:sample.gap,png:c.toDataURL('image/png')});}
+catch(e){return JSON.stringify({error:'frame access denied'});}
+"""
+
+
+def _sample_frame_script(select, at, cell_start, cell_end):
+    return ("(()=>{" + select + _FRAME_LOADING +
+            f"const requested={at},cellStart={cell_start},cellEnd={cell_end};" + _FRAME_SAMPLE + "})()")
+
+
+def _sample_evidence(observed, requested, cell_start, cell_end):
+    """Keep real sample times; buffered metadata alone can never supply a frame."""
+    import math
+    actual, target = observed.get("at"), observed.get("sample_target", requested)
+    if (any(type(value) not in (int, float) or not math.isfinite(value) for value in (actual, target))
+            or not cell_start <= actual < cell_end or not cell_start <= target < cell_end
+            or abs(actual - target) > .08):
+        raise AccessError("rendered video sample time is unverified")
+    gap = observed.get("gap")
+    if gap:
+        if not isinstance(gap, dict):
+            raise AccessError("rendered video gap evidence is unverified")
+        before, after = gap.get("previous_end"), gap.get("next_start")
+        interval = gap.get("buffered_interval")
+        if (not isinstance(interval, list) or len(interval) != 2
+                or any(type(value) not in (int, float) or not math.isfinite(value) for value in (before, after, *interval))
+                or not before < requested < after or not interval[0] <= target < interval[1]
+                or not interval[0] <= actual < interval[1] or interval[0] <= requested < interval[1]
+                or gap.get("requested_at") != requested or gap.get("target") != target):
+            raise AccessError("rendered video gap evidence is unverified")
+    elif target != requested:
+        raise AccessError("rendered video sample moved without buffered gap evidence")
+    return {"requested_at": requested, "actual_at": actual, "cell": [cell_start, cell_end], "gap": gap}
+
+
 def _normal(text):
     return " ".join(str(text).split())
 
@@ -555,9 +637,12 @@ class SafariVideoClient:
                 count = min(30, max(4, math.ceil(duration)))
                 progress_key = "browser_fingerprint_pending:" + post_id
                 progress = self.store.meta(progress_key, {})
-                if progress.get("duration") != duration or progress.get("count") != count:
-                    progress = {"duration": duration, "count": count, "visual": [], "frame_hashes": [], "variation": []}
+                if progress.get("duration") != duration or progress.get("count") != count or progress.get("revision") != 2:
+                    progress = {"revision": 2, "duration": duration, "count": count,
+                                "visual": [], "frame_hashes": [], "variation": [], "samples": []}
                 sequence, variation = progress["visual"], progress["variation"]
+                if len(progress["samples"]) != len(sequence):
+                    raise AccessError("saved visible video sample timing is incomplete")
                 self.store.set_meta(progress_key, progress)  # record even a first-frame stall
                 # Short resumable batches keep an old long video from monopolizing
                 # the Reply browser. Partial fingerprints never satisfy dedup.
@@ -565,23 +650,19 @@ class SafariVideoClient:
                 batch = count if waiting_reason(self.store) else 8
                 for index in range(len(sequence), min(count, len(sequence) + batch)):
                     at = min(duration - .05, (index + .5) * duration / count)
-                    _json("(()=>{" + select + "if(!v)return '{}';v.pause();v.muted=true;v.dataset.botSeekLoad='';v.currentTime=" + str(at) + ";return '{}';})()")
+                    cell_start, cell_end = index * duration / count, (index + 1) * duration / count
+                    _json("(()=>{" + select + "if(!v)return '{}';v.pause();v.muted=true;v.dataset.botSeekLoad='';v._botFrameSample=null;v.currentTime=" + str(at) + ";return '{}';})()")
                     frame = None
+                    evidence = None
                     observed = {}
                     while time.monotonic() < deadline:
-                        observed = _json("(()=>{" + select + _FRAME_LOADING + "const status=()=>JSON.stringify(playerState());if(!v)return status();"
-                            "if((v.seeking || v.readyState<2) && !v.error){v.dataset.botSeekLoad='loading';loading('seek:" + str(at) + "');}"
-                            "if(v.seeking || v.readyState<2)return status();"
-                            "if(v.dataset.botSeekLoad==='loading'){v.pause();v.dataset.botSeekLoad='ready';"
-                            "if(Math.abs(v.currentTime-" + str(at) + ")>.08){v.currentTime=" + str(at) + ";return status();}}"
-                            "if(Math.abs(v.currentTime-" + str(at) + ")>.08)return status();v.pause();"
-                            "try{const c=document.createElement('canvas');c.width=64;c.height=64;c.getContext('2d').drawImage(v,0,0,64,64);"
-                            "return JSON.stringify({at:v.currentTime,png:c.toDataURL('image/png')});}catch(e){return JSON.stringify({error:'frame access denied'});}})()")
+                        observed = _json(_sample_frame_script(select, at, cell_start, cell_end))
                         if observed.get("error"):
                             self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(),
                                 "phase": "canvas", "requested_at": at, "sample_index": index, **observed})
                             raise AccessError("X video frames are not readable under browser origin policy")
                         if observed.get("png"):
+                            evidence = _sample_evidence(observed, at, cell_start, cell_end)
                             encoded = observed["png"]
                             if not encoded.startswith("data:image/png;base64,") or len(encoded) > 100000:
                                 raise AccessError("invalid rendered video frame")
@@ -598,6 +679,7 @@ class SafariVideoClient:
                     progress["frame_hashes"].append(hashlib.sha256(frame.tobytes()).hexdigest())
                     variation.append(ImageStat.Stat(frame).stddev[0])
                     sequence.append(visual_hash(frame))
+                    progress["samples"].append(evidence)
                     self.store.set_meta(progress_key, progress)
                 if len(sequence) < count:
                     raise Deferred("visible video fingerprint is pending; continue its saved samples", retry_after=30)
@@ -605,6 +687,7 @@ class SafariVideoClient:
                     raise AccessError("blank/static video frames cannot establish a sequence fingerprint")
                 result = {"sha256": hashlib.sha256("".join(progress["frame_hashes"]).encode()).hexdigest(),
                           "visual": sequence, "audio": [], "duration": duration,
+                          "samples": progress["samples"],
                           "method": "visible browser canvas sequence; audio unavailable", "post_url": url}
                 self.store.set_meta("browser_fingerprint:" + post_id, result)
                 self.store.set_meta(progress_key, {})

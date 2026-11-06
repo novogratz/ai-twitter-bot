@@ -31,8 +31,12 @@ reviewed reserve clips without inventing engagement evidence.
 X fingerprinting retries ordinary muted playback up to six times per stalled
 sample, at least one second apart within the unchanged 25-second transaction.
 It reseeks after overshoot and requires all exact-time frames. A pending seek,
-canvas refusal or partial sequence cannot establish a completed check. Replies
-continue independently except for serialized browser transactions. Only exact
+canvas refusal or partial sequence cannot establish a completed check.
+When buffered ranges demonstrate a gap at a midpoint, the reader may instead
+seek an already buffered point inside the same temporal cell. It must decode an
+actual frame there and retain requested/actual times and the gap evidence. Every
+cell is still required; this cannot skip a cell or turn metadata into a frame.
+Replies continue independently except for serialized browser transactions. Only exact
 confirmed receipts count; the November 5 startup receipt is not proof of all
 future slots. Main-process updates retain the explicit-restart requirement.
 

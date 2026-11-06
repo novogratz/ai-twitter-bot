@@ -80,6 +80,10 @@ up to six times, at least one second apart, then pause/reseek to the exact sampl
 buffered/seekable ranges and attempt counts, including a first-frame stall. The
 25-second browser transaction, canvas restrictions and full-sequence requirement
 remain; a pending frame is never accepted as evidence.
+If observed buffered ranges bracket a gap at a midpoint, the bounded fallback
+seeks an already buffered time inside that same temporal cell. All cells must
+still yield decoded frames. Saved evidence contains requested and actual times
+and the observed gap; a point outside the cell or an unreadable frame is refused.
 
 The Account allows `browser_upload_seconds = 180` for transfer **and X processing**;
 the default remains 45 seconds. The 19:00 live run reached processing after transfer

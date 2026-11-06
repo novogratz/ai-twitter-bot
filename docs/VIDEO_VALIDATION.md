@@ -34,6 +34,14 @@ playback retry. Live evidence still shows a first-sample stall for external X
 result `1824474462604947809`: seven play attempts, no captured frames, a requested
 sample at 1.0417 seconds, and buffered ranges with a gap before 3.0017 seconds.
 This remains unresolved; passing fixture tests do not establish live recovery.
+The follow-up gap fallback now requires a real decoded sample inside the same
+temporal cell and retains actual/requested timestamps and buffered-gap evidence.
+Executed JavaScript regressions exercise the observed 1.0417-second hole and
+the 0.242-second buffered alternative, rejecting other cells, metadata-only
+samples, invalid evidence and canvas denials. A durable test completes all thirty
+cells across four bounded batches. The final video suite passed **422 tests in
+12.95 seconds**. Live recovery of that exact external result still needs the
+updated main process and is not claimed by these fixtures.
 
 ## Late-start recovery
 

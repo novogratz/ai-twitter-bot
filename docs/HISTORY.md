@@ -23,6 +23,12 @@ and the 150 MB per-file ceiling. All media download routes preserve retry
 allowance when the remaining daily capacity is insufficient, and stale X views
 can refresh without stranding an otherwise inspected source.
 
+Muted retries alone exposed a real buffered gap around the first requested X
+sample. The follow-up fallback can decode an already buffered frame within that
+same temporal cell, recording actual/requested times and the gap evidence.
+Every cell, complete sequence, canvas access and frame-variation checks remain;
+fixture validation is separate from live recovery of the affected result.
+
 Under the Operator's delegated selection and immediate publication instruction,
 the existing one-video command selected reviewed Bilibili source `BV1Japu6QEXC`.
 The running media worker and main publisher confirmed startup publication:

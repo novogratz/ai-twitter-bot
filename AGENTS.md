@@ -26,6 +26,11 @@ fingerprinting can retry ordinary muted playback up to six times per stalled
 sample, at least a second apart within the existing 25-second read bound. Exact
 sample times and complete frame sequences remain required. Deferred fingerprint
 work retains its retry allowance, and downloads reserve only remaining bytes.
+When observed buffered ranges bracket a gap at a fingerprint midpoint, a bounded
+fallback may seek an already buffered point within that same temporal cell.
+Every cell still needs an actual decoded frame; requested/actual timestamps and
+gap evidence are retained. A missing frame, another cell or metadata alone never
+satisfies the check.
 
 The existing delegated one-video selection produced a confirmed startup receipt
 on November 5; it does not prove future slot coverage. Reply behavior and the
