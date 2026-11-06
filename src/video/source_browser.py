@@ -64,11 +64,15 @@ def _capture_bilibili(store, cfg, now):
     store.set_meta("next_source_capture:bilibili", now + 60)
     candidates = store.rows("SELECT id FROM candidates WHERE platform='bilibili' "
                             "AND state IN ('discovered','held','ready') "
+                            "AND length(source_id)=12 AND source_id GLOB 'BV*' "
+                            "AND source_id NOT GLOB '*[^A-Za-z0-9]*' "
                             "ORDER BY COALESCE(json_extract(document,'$.source_capture_attempt'),0),published DESC,discovered DESC LIMIT 80")
     chosen = None
     for item in candidates:
         row = store.candidate(item["id"])
         doc = row["document"]
+        if not isinstance(doc.get("source_id"), str) or not re.fullmatch(r"BV[A-Za-z0-9]{10}", doc["source_id"]):
+            continue
         if (doc.get("source_duration_evidence", {}).get("source_id") == doc.get("source_id")
                 and doc.get("source_duration", 0) > cfg.max_duration_seconds):
             continue
@@ -82,8 +86,6 @@ def _capture_bilibili(store, cfg, now):
         return None
     row, doc = chosen, chosen["document"]
     source_id = doc["source_id"]
-    if not re.fullmatch(r"BV[A-Za-z0-9]{10}", source_id):
-        return None
     doc["source_capture_attempt"] = now
     try:
         if not store.budget("bilibili", "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):

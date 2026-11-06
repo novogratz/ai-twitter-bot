@@ -19,6 +19,13 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+The November 5 deployment follow-up recovers abandoned novelty reads when a new
+Safari publisher owns the exclusive role lock and the former scheduler PID is
+provably absent. Publication claims are preserved. Bilibili capture also skips
+unsupported legacy IDs before its bounded query, so one old link cannot stop
+preparation of valid videos. Verify both current workers and ready inventory
+after a restart; a merged PR alone does not update an already running process.
+
 The latest November 4 request makes the increased Reply capacity permanent:
 **12 rotating searches, 80 direct-cycle Replies and 80 generations per feed**.
 The Account and local environment agree, and the earlier date boost is cleared

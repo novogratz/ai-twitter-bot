@@ -90,3 +90,29 @@ def test_small_source_can_use_remaining_bytes_and_refunds_partial_failures(video
     source_browser.download_player(doc, tmp_path / "original.mp4", cfg, video_store, now)
     assert calls == [100, 90, 50]
     assert sum(r["amount"] for r in video_store.rows("SELECT amount FROM costs WHERE kind='download_bytes'")) == 1955
+
+
+@pytest.mark.parametrize("unsupported_count", [1, 81])
+def test_unsupported_leads_cannot_hide_valid_bilibili_sources_behind_scan_limit(
+        video_store, video_cfg, at, monkeypatch, unsupported_count):
+    from src.x import safari, safari_video
+    now = at().timestamp()
+    cfg = replace(video_cfg, platforms={"bilibili": {"safari_player": True}},
+                  permissions={"grant": video_cfg.permissions["grant"] | {"platform": "bilibili"}})
+    leads = [{"source_id": f"av{64049836 + i}",
+              "canonical_url": f"https://www.bilibili.com/video/av{64049836 + i}",
+              "creator": "creator", "permission_id": "grant", "published_at": now - i - 1,
+              "publication_evidence": "fixture source date"} for i in range(unsupported_count)]
+    leads.append({"source_id": "BV1234567890", "canonical_url": "https://www.bilibili.com/video/BV1234567890",
+                  "creator": "creator", "permission_id": "grant", "published_at": now - 3600,
+                  "publication_evidence": "fixture source date"})
+    assert connectors.ingest(video_store, "bilibili", leads, now, cfg) == unsupported_count + 1
+    calls = []
+    monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda url: calls.append(url) or True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps(player(now)))
+    assert source_browser.capture_next(video_store, cfg, now) == "source media captured"
+    assert calls == ["https://www.bilibili.com/en/video/BV1234567890/"]
+    assert video_store.rows("SELECT source_id FROM candidates WHERE json_extract(document,'$.source_capture_attempt') IS NOT NULL") == [{"source_id": "BV1234567890"}]
+    assert not video_store.rows("SELECT * FROM reservations")

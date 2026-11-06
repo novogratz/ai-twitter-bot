@@ -1,5 +1,26 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-05 — Undeployed runtime and a legacy link blocking source capture
+
+At 23:38 Toronto the recurring-post audit found no startup after 18:51, although
+PR #391 had merged at 19:09. The old workers retained the 2 GB download ceiling
+and the publisher never created revision-2 gap-sampling evidence. The 19:00,
+21:00 and 23:00 slots all expired with no ready video. Main PID 39566 had stopped
+by the audit; its discovery/media children remained alive.
+
+The normal restart loaded the merged main at 23:40:54 and replaced both verified
+stale background workers. An unfinished novelty job still belonged to the absent
+old main and could not be claimed until 23:57. The recovery fix allows the new
+exclusive Safari publisher to reclaim only such proven-dead scheduler reads,
+using the observed token/owner and preserving all publication history/claims.
+
+Source selection also repeatedly chose legacy Bilibili ID `av64049836`, then
+returned before recording an attempt because the importer accepts `BV…` IDs.
+This blocked every later valid source; the last Bilibili capture was around
+18:52. Supported-ID filtering now precedes the bounded query, with a second
+document check during selection. Tests include more unsupported leads than the
+scan limit, ensuring a valid source still receives a turn.
+
 ## 2026-11-05 — Stalled novelty, repeated preparation and confirmed startup
 
 The restarted bot still had no ready reserve. An external X result repeatedly

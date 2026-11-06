@@ -1,5 +1,16 @@
 # Existing-video pipeline
 
+Deployment verification includes the main PID/start time, matching current
+discovery/media generations and actual movement toward ready inventory. When a
+new Safari publisher acquires its exclusive role lock, it may requeue novelty
+read jobs whose former scheduler PID is provably absent. It leaves live/unknown
+owners, non-read work and every publication claim intact. Recovery is conditional
+on the recorded token/owner and preserves earlier errors.
+
+Bilibili selection filters supported `BV…` IDs before its bounded query. An
+unsupported legacy `av…` lead must never cause an early return that blocks later
+valid candidates. Unsupported links remain leads, not verified media.
+
 Current Account policy (latest operator instruction, 2026-11-05): **ten daily
 slots**, every two hours from 05:00 through 23:00 Toronto. Captions begin with
 `POV:` and a playful scene based on inspected performance/attributed cast, using

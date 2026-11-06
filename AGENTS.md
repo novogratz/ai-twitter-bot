@@ -6,6 +6,24 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-05, deploy video recovery and unblock source reads — The follow-up live
+audit found the pre-merge 18:51 main/workers still in use and every scheduled
+slot empty. The merged code is applied through the normal restart, with worker
+generation and actual preparation checked afterward. A new Safari publisher,
+while holding its exclusive role lock, may requeue only novelty read jobs owned
+by a provably absent former scheduler PID. Live, reused or uninspectable PIDs,
+malformed owners and all other job kinds remain untouched. Recovery is fenced
+by the observed owner/token and refunds only the abandoned read attempt; prior
+errors and all publication reservations, histories and uncertain-send claims
+remain intact. This supersedes waiting for that dead reader's lease to expire.
+
+Bilibili source capture excludes unsupported IDs before its bounded selection
+query and skips malformed document IDs. An old `av…` lead cannot block valid
+`BV…` sources behind it. Unsupported links remain unverified leads; no source
+identity, review or publication check is waived. Ten slots, active hours, Reply
+behavior and the once-daily startup allowance remain. Passed tests and a running
+process are separate from confirmed future scheduled publications.
+
 2026-11-05, keep the video reserve moving — After further missed slots, the
 Operator requires dependable two-hour publication and delegates clip selection.
 Low reserve preparation now shares bounded ready-Reply browser priority. After
