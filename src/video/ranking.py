@@ -72,14 +72,24 @@ def score(doc, observations, peers, now, cfg):
             "unknown_components": [k for k, v in components.items() if v is None], "scored_at": now}
 
 
+def publication_gate(doc, cfg, now):
+    """Share the verified-date/age rule before preparation and final selection."""
+    published = doc.get("published_at")
+    if (type(published) not in (int, float) or not 0 < published <= now
+            or not math.isfinite(published)):
+        return "publication time unverified"
+    if not selected(doc, now) and now - published > cfg.max_age_hours * 3600:
+        return "freshness expired"
+    return ""
+
+
 def gate(doc, cfg, now, *, final=False):
     if not permission(doc, cfg, now):
         return "missing current video/audio/editing/publication permission"
     source_reason = source_gate(doc, now)
     if source_reason:
         return source_reason
-    published = doc.get("published_at")
-    if not published or published > now or (not selected(doc, now) and now - published > cfg.max_age_hours * 3600):
+    if publication_gate(doc, cfg, now):
         return "publication time unverified or clip stale"
     inspect = doc.get("inspection", {})
     if inspect.get("sha256") != doc.get("original_sha256") or not doc.get("original_sha256"):

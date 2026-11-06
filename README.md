@@ -19,6 +19,13 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+Source dates and the two-year age ceiling are now checked before expensive media
+preparation. A clip already known to be too old cannot consume download or model
+capacity ahead of the next slot. Unknown dates stay held for actual source evidence.
+X video checks use complete bounded buffered-range observations and can briefly
+play from nearby buffered footage before re-seeking a stalled sample. This
+loading step supplies no fingerprint frame; all temporal samples remain required.
+
 The November 5 deployment follow-up recovers abandoned novelty reads when a new
 Safari publisher owns the exclusive role lock and the former scheduler PID is
 provably absent. Publication claims are preserved. Bilibili capture also skips

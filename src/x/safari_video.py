@@ -142,31 +142,49 @@ _POSTS = r"""(() => {
 # playback, at most six times per pending sample and once a second overall. This
 # never changes origin restrictions or treats metadata as a decoded frame.
 _FRAME_LOADING = r"""
-const ranges = value => {
-  const result=[];
-  try { for(let i=0;i<Math.min(value?.length || 0,4);i++) result.push([value.start(i),value.end(i)]); } catch(e) {}
-  return result;
+const rangeState = value => {
+  const count=value?.length ?? 0, intervals=[];
+  if(!Number.isInteger(count) || count<0)return {count,intervals,complete:false};
+  let complete=count<=128;
+  try {
+    for(let i=0;i<Math.min(count,128);i++){
+      const start=value.start(i),end=value.end(i);
+      if(!Number.isFinite(start) || !Number.isFinite(end) || start<0 || start>=end
+        || (i && start<intervals[i-1][1])){complete=false;break;}
+      intervals.push([start,end]);
+    }
+  } catch(e) {complete=false;}
+  return {count,intervals,complete};
 };
-const loading = phase => {
+const loading = (phase,sample=null) => {
   if(!v || v.error || !v.paused)return;
   const state=v._botFrameLoading || (v._botFrameLoading={attempts:0,last:0,positioned:false});
   if(state.phase!==phase){state.phase=phase;state.phaseAttempts=0;}
   const now=performance.now();
-  if(state.phaseAttempts>=6 || (state.attempts && now-state.last<1000))return;
+  if(state.phaseAttempts>=6 || (sample && sample.playAttempts>=6) || (state.attempts && now-state.last<1000))return;
   v.preload='auto';v.muted=true;
   if(!state.positioned){
     v.scrollIntoView({block:'center',inline:'nearest',behavior:'auto'});
     state.positioned=true;
   }
   state.attempts++;state.phaseAttempts++;state.last=now;
+  if(sample)sample.playAttempts++;
   try { v.play().catch(e=>{v.dataset.botPlaybackError=e.name;}); }
   catch(e){v.dataset.botPlaybackError=e.name;}
 };
-const playerState = () => ({ready_state:v?.readyState,seeking:v?.seeking,
-  current_time:v?.currentTime,paused:v?.paused,network_state:v?.networkState,
-  media_error:v?.error?.code || null,playback_error:v?.dataset.botPlaybackError || null,
-  play_attempts:v?._botFrameLoading?.attempts || 0,
-  buffered:ranges(v?.buffered),seekable:ranges(v?.seekable),visibility:document.visibilityState});
+const playerState = () => {
+  const buffered=rangeState(v?.buffered),seekable=rangeState(v?.seekable),target=v?._botFrameSample?.target;
+  const distance=r=>target<r[0]?r[0]-target:target>=r[1]?target-r[1]:0;
+  return {ready_state:v?.readyState,seeking:v?.seeking,
+    current_time:v?.currentTime,paused:v?.paused,network_state:v?.networkState,
+    media_error:v?.error?.code || null,playback_error:v?.dataset.botPlaybackError || null,
+    play_attempts:v?._botFrameLoading?.attempts || 0,sample_play_attempts:v?._botFrameSample?.playAttempts || 0,
+    buffered:buffered.intervals.slice(0,4),buffered_count:buffered.count,buffered_complete:buffered.complete,
+    buffered_truncated:buffered.count>4,
+    buffered_near_sample:Number.isFinite(target)?[...buffered.intervals].sort((a,b)=>distance(a)-distance(b)).slice(0,4):[],
+    seekable:seekable.intervals.slice(0,4),seekable_count:seekable.count,seekable_complete:seekable.complete,
+    visibility:document.visibilityState};
+};
 """
 
 
@@ -174,15 +192,39 @@ _FRAME_SAMPLE = r"""
 if(!v)return JSON.stringify(playerState());
 let sample=v._botFrameSample;
 if(!sample || sample.requested!==requested){
-  sample=v._botFrameSample={requested,target:requested,started:performance.now(),gap:null};
+  sample=v._botFrameSample={requested,target:requested,started:performance.now(),gap:null,playAttempts:0,preroll:null};
 }
 const status=()=>JSON.stringify({...playerState(),requested_at:requested,
-  sample_target:sample.target,cell:[cellStart,cellEnd],gap:sample.gap});
+  sample_target:sample.target,cell:[cellStart,cellEnd],gap:sample.gap,preroll:sample.preroll});
+const observedRanges=rangeState(v.buffered);
+// Diagnostics are compact; recovery needs the complete bounded native ranges.
+// An incomplete snapshot cannot establish either a gap or a pre-roll anchor.
+if(!observedRanges.complete)return status();
+const buffered=observedRanges.intervals;
+if(sample.preroll && sample.preroll.phase!=='reseeking'){
+  const preroll=sample.preroll;
+  if(preroll.phase==='exhausted')return status();
+  if(v.error || performance.now()-preroll.started>=8000){
+    v.pause();preroll.phase='exhausted';return status();
+  }
+  loading('preroll:'+requested,sample);
+  if(!v.paused && !v.seeking && v.readyState>=2){
+    if(preroll.playing_at===undefined)preroll.playing_at=performance.now();
+    preroll.phase='playing';
+    if(performance.now()>preroll.playing_at
+      && (buffered.some(r=>r[0]<=sample.target && sample.target<r[1]) || v.currentTime>=sample.target)){
+      // Warm the native decoder only. Re-seek and validate the real sample on
+      // a later poll; no pre-roll frame, including one outside the cell, counts.
+      v.pause();v.dataset.botSeekLoad='';v.currentTime=sample.target;
+      preroll.phase='reseeking';
+    }
+  }
+  return status();
+}
 // A seek into a demonstrated buffered hole cannot be decoded at its midpoint.
 // After ordinary loading has had a turn, allow an actual frame elsewhere in
 // this same temporal cell. Every cell still needs its own decoded canvas sample.
 if(!sample.gap && v.seeking && v.readyState<2 && !v.error && performance.now()-sample.started>=2000){
-  const buffered=ranges(v.buffered).filter(r=>r.length===2 && Number.isFinite(r[0]) && Number.isFinite(r[1]) && r[0]>=0 && r[0]<r[1]);
   const before=buffered.filter(r=>r[1]<requested), after=buffered.filter(r=>r[0]>requested);
   if(!buffered.some(r=>r[0]<=requested && requested<r[1]) && before.length && after.length){
     const choices=buffered.flatMap(range=>{
@@ -203,7 +245,24 @@ if(!sample.gap && v.seeking && v.readyState<2 && !v.error && performance.now()-s
     }
   }
 }
-if((v.seeking || v.readyState<2) && !v.error){v.dataset.botSeekLoad='loading';loading('seek:'+sample.target);}
+// Some native seeks expose a buffered keyframe just before the desired cell
+// but never finish loading its midpoint. Try that observed point once, using
+// the same six-play allowance, then re-seek the unchanged requested sample.
+if(!sample.gap && !sample.preroll && (v.seeking || v.readyState<2) && !v.error
+  && sample.playAttempts<6 && performance.now()-sample.started>=3000){
+  const choices=buffered.flatMap(range=>{
+    const lo=Math.max(0,requested-3,range[0]),hi=Math.min(requested-.08,range[1]);
+    if(!(lo<hi))return [];
+    const inset=Math.min(.02,(hi-lo)/2);
+    return [{target:Math.max(lo+inset,Math.min(hi-inset,requested-1)),buffered_interval:range}];
+  }).sort((a,b)=>Math.abs(a.target-requested)-Math.abs(b.target-requested));
+  if(choices.length){
+    sample.preroll={...choices[0],started:performance.now(),phase:'seeking'};
+    v.pause();v.muted=true;v.dataset.botSeekLoad='';v.currentTime=sample.preroll.target;
+    return status();
+  }
+}
+if((v.seeking || v.readyState<2) && !v.error){v.dataset.botSeekLoad='loading';loading('seek:'+sample.target,sample);}
 if(v.seeking || v.readyState<2)return status();
 if(v.dataset.botSeekLoad==='loading'){
   v.pause();v.dataset.botSeekLoad='ready';

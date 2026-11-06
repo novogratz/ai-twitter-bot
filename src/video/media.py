@@ -436,6 +436,14 @@ def _process(store, job, now, cfg):
     if row["state"] in ("rejected", "posted", "reserved", "duplicate", "expired"):
         return
     doc = row["document"]
+    checked_at = time.time()
+    if reason := ranking.publication_gate(doc, cfg, checked_at):
+        # A source read can resolve an old or missing date after discovery has
+        # queued this job. Finish the policy hold before consuming media capacity.
+        store.save_candidate(row["id"], doc, checked_at,
+                             state="expired" if reason == "freshness expired" else "held", reason=reason,
+                             fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None, job=job)
+        return
     # Separate work directories prevent a stale worker overwriting its successor.
     folder = Path(str(ASSETS)) / row["id"] / job["token"]
     folder.mkdir(parents=True, exist_ok=True)
