@@ -311,6 +311,27 @@ def _sample_evidence(observed, requested, cell_start, cell_end):
     return {"requested_at": requested, "actual_at": actual, "cell": [cell_start, cell_end], "gap": gap}
 
 
+def _video_selector(post_id):
+    return ("const a=[...document.querySelectorAll('article[data-testid=\"tweet\"]')].find(a=>"
+        "[...a.querySelectorAll('a[href*=\"/status/\"] time')].some(t=>t.closest('article')===a"
+        " && !t.closest('[data-testid=\"quoteTweet\"], div[role=\"link\"]')"
+        " && t.closest('a')?.getAttribute('href')?.split('?')[0]?.endsWith('/status/" + post_id + "')));"
+        "const v=a?.querySelector('video');")
+
+
+def _video_metadata_script(post_id):
+    from ..video.native_source import X_PLAYER_MEDIA
+    return ("(()=>{" + _video_selector(post_id) + _FRAME_LOADING + X_PLAYER_MEDIA +
+        "if(v && v.readyState<2)loading('metadata');"
+        "const expected=['x.com','www.x.com'].includes(location.hostname) && location.pathname.endsWith('/status/" + post_id + "');"
+        "return JSON.stringify({duration:Number.isFinite(v?.duration)?v.duration:null,"
+        "article:!!a,video:!!v,...playerState(),error:v?.error?.code || null,"
+        "expected_page:expected,host:location.hostname,"
+        "native_media:expected && a && v ? {...playerMedia(v),post_id:'" + post_id + "',post_url:location.origin+location.pathname}:null,"
+        "visible_status_links:expected?[...document.querySelectorAll('article time')].map(t=>t.closest('a')?.getAttribute('href')).slice(0,8):[],"
+        "message:expected?(document.querySelector('main')?.innerText || '').slice(0,400):''});})()")
+
+
 def _normal(text):
     return " ".join(str(text).split())
 
@@ -644,6 +665,33 @@ class SafariVideoClient:
     def timeline(self, cursor=None):
         return self._scan("https://x.com/" + account.current().handle, cursor)
 
+    def observe_native_media(self, item):
+        """Bounded normal-page observation only; no job, decode or publication."""
+        from ..video.native_source import x_media_plan
+        match = re.fullmatch(r"https://x\.com/[A-Za-z0-9_]{1,15}/status/(\d+)", item.get("post_url", ""))
+        if not match:
+            raise AccessError("exact video post URL is required for visible-frame matching")
+        post_id = match[1]
+        limit = self.cfg.request_budget - (0 if getattr(self, "critical_reads", False) else self.cfg.publishing_request_reserve)
+        with browser_session():
+            if not self.store.budget("x_browser", "reads", 1, limit, time.time()):
+                raise AccessError("browser fingerprint read budget exhausted")
+            if not safari.open_url(item["post_url"]):
+                raise AccessError("video post could not be opened")
+            deadline = time.monotonic() + 25
+            try:
+                while time.monotonic() < deadline:
+                    info = _json(_video_metadata_script(post_id), min(8, deadline - time.monotonic()))
+                    duration = info.get("duration")
+                    doc = x_media_plan(info.get("native_media"), item["post_url"], time.time())
+                    if (doc and type(duration) in (int, float) and .5 <= duration <= self.cfg.max_duration_seconds):
+                        return {"media_key": item.get("media_key", "browser:" + post_id), "post_url": item["post_url"],
+                                "duration": duration, "native_source": doc}
+                    time.sleep(.25)
+            finally:
+                safari.close_front_tab()
+        raise AccessError("normal player exposes no verified bounded native media")
+
     def fingerprint(self, item):
         """Read rendered frames when X exposes only a blob URL. Never bypass CORS."""
         import base64
@@ -652,6 +700,7 @@ class SafariVideoClient:
         import math
         from PIL import Image, ImageStat
         from ..video.media import visual_hash
+        from ..video import reconcile
         url = item.get("post_url", "")
         match = re.fullmatch(r"https://x\.com/[A-Za-z0-9_]{1,15}/status/(\d+)", url)
         if not match:
@@ -660,6 +709,9 @@ class SafariVideoClient:
         cached = self.store.meta("browser_fingerprint:" + post_id)
         if cached:
             return cached
+        native = reconcile.native_fingerprint_result(self.store, post_id, time.time())
+        if native:
+            return native
         limit = self.cfg.request_budget - (0 if getattr(self, "critical_reads", False) else self.cfg.publishing_request_reserve)
         if not self.store.budget("x_browser", "reads", 1, limit, time.time()):
             raise AccessError("browser fingerprint read budget exhausted")
@@ -668,22 +720,12 @@ class SafariVideoClient:
                 raise AccessError("video post could not be opened")
             deadline = time.monotonic() + 25
             try:
-                select = ("const a=[...document.querySelectorAll('article[data-testid=\"tweet\"]')].find(a=>"
-                    "[...a.querySelectorAll('a[href*=\"/status/\"] time')].some(t=>t.closest('article')===a"
-                    " && !t.closest('[data-testid=\"quoteTweet\"], div[role=\"link\"]')"
-                    " && t.closest('a')?.getAttribute('href')?.split('?')[0]?.endsWith('/status/" + post_id + "')));"
-                    "const v=a?.querySelector('video');")
+                select = _video_selector(post_id)
                 info = {}
                 while time.monotonic() < deadline:
-                    info = _json("(()=>{" + select + _FRAME_LOADING +
-                        "if(v && v.readyState<2)loading('metadata');"
-                        "const expected=['x.com','www.x.com'].includes(location.hostname) && location.pathname.endsWith('/status/" + post_id + "');"
-                        "return JSON.stringify({duration:Number.isFinite(v?.duration)?v.duration:null,"
-                        "article:!!a,video:!!v,...playerState(),error:v?.error?.code || null,"
-                        "expected_page:expected,host:location.hostname,"
-                        "visible_status_links:expected?[...document.querySelectorAll('article time')].map(t=>t.closest('a')?.getAttribute('href')).slice(0,8):[],"
-                        "message:expected?(document.querySelector('main')?.innerText || '').slice(0,400):''});})()")
-                    if info.get("duration") and (info.get("ready_state") or 0) >= 2:
+                    info = _json(_video_metadata_script(post_id))
+                    if info.get("duration") and ((info.get("ready_state") or 0) >= 2
+                            or (info.get("native_media") or {}).get("media")):
                         break
                     time.sleep(.25)
                 duration = info.get("duration")
@@ -691,6 +733,10 @@ class SafariVideoClient:
                     self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), "phase": "metadata", **info})
                     raise AccessError("native video duration unavailable")
                 self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), "phase": "frame_loading", **info})
+                native = reconcile.queue_native_fingerprint(self.store, item, info.get("native_media"),
+                                                              duration, self.cfg, time.time())
+                if native:
+                    return native
                 if (info.get("ready_state") or 0) < 2:
                     raise Deferred("native video metadata loaded but decoded frames remain pending", retry_after=30)
                 count = min(30, max(4, math.ceil(duration)))

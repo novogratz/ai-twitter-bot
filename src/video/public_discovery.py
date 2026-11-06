@@ -13,6 +13,21 @@ def access_status(note, items):
     return "blocked" if not items and re.search(r"robots\.txt|CAPTCHA", note, re.I) else "limited"
 
 
+def queries(targets, offset):
+    """Keep synthetic performance explicit even when archive searches broaden."""
+    english = ("AI dance parody", "AI singing cover", "AI comedy parody", "AI music video", "AI boy band")
+    chinese = ("AI 舞蹈", "AI 翻唱", "AI 鬼畜", "AI 音乐视频", "AI 男团")
+    aliases_by_cast = list(targets.values())
+    result = []
+    for index in range(offset, offset + 3):
+        cycle = index // len(aliases_by_cast)
+        aliases = aliases_by_cast[index % len(aliases_by_cast)]
+        name = aliases[cycle % len(aliases)]
+        terms = chinese if any("\u4e00" <= char <= "\u9fff" for char in name) else english
+        result.append(f"{name} {terms[(index + cycle) % len(terms)]}")
+    return result
+
+
 def search(store, cfg, platform, options, cursor, *, fresh=False):
     from .connectors import HOSTS, canonical
     now = time.time()
@@ -28,13 +43,7 @@ def search(store, cfg, platform, options, cursor, *, fresh=False):
                 "access_note": cache.get("access_note", ""),
                 "platform_status": cache.get("platform_status", access_status(cache.get("access_note", ""), cache.get("items", 0)))}
     offset = int(cursor.get("query_offset", 0)) if isinstance(cursor, dict) else 0
-    targets = list(cfg.targets.values())
-    terms = ("dance", "唱歌", "parody", "舞蹈", "music", "跳舞", "singing", "鬼畜")
-    selected = []
-    for i in range(3):
-        aliases = targets[(offset + i) % len(targets)]
-        name = aliases[((offset + i) // len(targets)) % len(aliases)]
-        selected.append(f"{name} {terms[(offset + i) % len(terms)]}")
+    selected = queries(cfg.targets, offset)
     source_schema = object_schema({
         "canonical_url": {"type": "string", "maxLength": 1000},
         "creator": {"type": ["string", "null"], "maxLength": 128},
@@ -61,9 +70,19 @@ Do NOT infer a publication timestamp from discovery or a search crawl date.
 This step identifies candidates only; actual video/audio inspection and the
 operator's video/music permission records are separate and mandatory.
 Use the selected English/Chinese queries and check configured creator profiles.
+Keep an explicit AI/synthetic-generation term in every performance search, even
+when removing date filters. Plain celebrity-plus-dance searches mostly retrieve
+real rallies, interviews and old event footage. Prefer original creative uploads
+whose indexed description supports generated performance; news about a parody,
+reaction videos and genuine celebrity dancing are not the requested clips.
+An indexed AI label is only a discovery hint, never proof of synthetic content.
 Keep this incremental pass bounded: at most three web-search requests. Return
 the supported links found within that work; do not exhaustively chase every
 target, creator or related link in one session. Later passes rotate the queries.
+Request compact/short search responses where the tool supports them. Indexed
+individual-video links and descriptions are sufficient leads at this stage;
+do not open long news articles or repeatedly open blocked source/profile pages.
+The source worker verifies identity and publication time later.
 Try simple single-person searches, AI celebrity dance/boy-band compilations,
 and creator plus performance terms. ONE target performing is sufficient; do not
 require all target names in one result. Do not stop just because a profile or

@@ -83,6 +83,23 @@ def publication_gate(doc, cfg, now):
     return ""
 
 
+def output_gate(doc, cfg):
+    """Shared completed-output checks for preparation and final publication."""
+    if doc.get("brand") != cfg.watermark:
+        return "rendered branding does not match current operator configuration"
+    qc = doc.get("qc", {})
+    if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze", "watermark_present")):
+        return "output quality uncertain"
+    if qc.get("overlays_clean") is not True and not (
+            cfg.allow_source_overlays and qc.get("source_overlays_retained") is True
+            and qc.get("no_unapproved_new_overlays") is True
+            and qc.get("source_sha256") == doc.get("original_sha256")):
+        return "output overlay quality uncertain"
+    if qc.get("sha256") != doc.get("output_sha256") or not doc.get("output_sha256"):
+        return "QC not bound to output bytes"
+    return ""
+
+
 def gate(doc, cfg, now, *, final=False):
     if not permission(doc, cfg, now):
         return "missing current video/audio/editing/publication permission"
@@ -113,22 +130,12 @@ def gate(doc, cfg, now, *, final=False):
     if inspect.get("unsafe") is not False:
         return "content suitability unverified"
     if final:
-        if doc.get("brand") != cfg.watermark:
-            return "rendered branding does not match current operator configuration"
+        if reason := output_gate(doc, cfg):
+            return reason
         if doc.get("novelty", {}).get("state") != "checked_no_match":
             return "X novelty unchecked or existing copy found"
         if now - doc.get("novelty", {}).get("checked_at", 0) > 86400:
             return "X novelty check stale"
-        qc = doc.get("qc", {})
-        if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze", "watermark_present")):
-            return "output quality uncertain"
-        if qc.get("overlays_clean") is not True and not (
-                cfg.allow_source_overlays and qc.get("source_overlays_retained") is True
-                and qc.get("no_unapproved_new_overlays") is True
-                and qc.get("source_sha256") == doc.get("original_sha256")):
-            return "output overlay quality uncertain"
-        if qc.get("sha256") != doc.get("output_sha256") or not doc.get("output_sha256"):
-            return "QC not bound to output bytes"
         ranking = doc.get("ranking", {})
         if not selected(doc, now) and ranking.get("total", 0) < cfg.score_threshold and not unknown_momentum_eligible(doc, cfg):
             return "below score threshold"

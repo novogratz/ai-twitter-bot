@@ -145,10 +145,27 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
     return shipped
 
 
-def prioritize(candidates):
-    """A stable preference among already discovered posts, never a filter or extra read."""
+def prioritize(candidates, *, diversify_authors=False):
+    """Prefer observed likes; ordinary buffers may spread each tier across authors.
+
+    One author's first candidate precedes their second within its like tier.
+    Source order breaks ties, and every candidate remains available. The
+    default preserves watched/author-specific job ordering exactly.
+    """
     threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
-    return sorted(candidates, key=lambda c: bool(threshold and (c.likes is None or c.likes < threshold)))
+    seen = Counter()
+
+    def key(candidate):
+        preference = bool(threshold and (candidate.likes is None or candidate.likes < threshold))
+        if not diversify_authors:
+            return (preference, 0)
+        author = x_urls.author(candidate.url) or candidate.url
+        group = (preference, author)
+        occurrence = seen[group]
+        seen[group] += 1
+        return (preference, occurrence)
+
+    return sorted(candidates, key=key)
 
 
 def scrape(label: str, what: str, read: Callable[..., list | None], *args, **kwargs) -> list:

@@ -123,3 +123,33 @@ def test_new_like_observation_changes_priority_without_extending_source_ttl(llm,
     assert buffer.pending()[0].expires_at == expiry
     assert buffer.run(job(), pipeline.Cycle(), max_generations=3) == 3
     assert chokepoint.sent == [low.url, popular.url, unknown.url]
+
+
+@pytest.mark.parametrize("pipelined", [False, True])
+def test_buffer_reaches_different_authors_before_second_posts_within_each_like_tier(llm, chokepoint, pipelined):
+    from dataclasses import replace
+
+    items = [replace(candidate(n, likes=likes), url=fresh(author, n=n))
+             for n, (author, likes) in enumerate([
+                 ("first", 3), ("FIRST", 20), ("second", 3),
+                 ("second", 2), ("second", None), ("third", None)])]
+    buffer = buffers.Buffer()
+    buffer.offer(items, max_age=timedelta(hours=1))
+    assert [c.url for c in buffer.pending()] == [items[n].url.lower() for n in (0, 2, 1, 3, 5, 4)]
+
+    # A limited cycle spends its first two drafts on two authors. Lower-like
+    # and unknown-count posts stay available after every preferred candidate.
+    assert buffer.run(job(pipelined), pipeline.Cycle(), max_generations=2) == 2
+    assert chokepoint.sent == [items[0].url, items[2].url]
+    assert buffer.run(job(pipelined), pipeline.Cycle(), max_generations=4) == 4
+    assert chokepoint.sent == [items[n].url.lower() for n in (0, 2, 1, 3, 5, 4)]
+    assert buffer.pending() == []
+
+
+def test_author_diversity_is_opt_in_so_watched_job_order_is_unchanged():
+    from dataclasses import replace
+
+    items = [candidate(1, likes=3), candidate(2, likes=9),
+             replace(candidate(3, likes=3), url=fresh("another", n=3))]
+    assert pipeline.prioritize(items) == items
+    assert pipeline.prioritize(items, diversify_authors=True) == [items[0], items[2], items[1]]

@@ -272,9 +272,12 @@ def related_candidates(links, cfg, source_candidate, now):
                        "access_status": "visible normal-page recommendation",
                        "discovery_evidence": {"url": url, "observed_at": now, "source_candidate": source_candidate,
                                               "method": "visible Safari recommendation link"}})
-        if len(result) >= 10:
-            break
-    return result
+    # A recommendation shelf can put ten real rally/event dances before the
+    # first generated parody. Rank all bounded leads before limiting ingestion;
+    # this hint never supplies inspection, cast attribution or permission.
+    synthetic = r"(?<![a-z0-9])(?:ai|aigc)(?![a-z0-9])|\b(?:deepfake|synthetic)\b|生成|换脸|合成"
+    result.sort(key=lambda item: not bool(re.search(synthetic, item["title"], re.I)))
+    return result[:10]
 
 
 def download_player(doc, destination, cfg, store, now):

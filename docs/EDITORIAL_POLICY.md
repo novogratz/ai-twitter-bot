@@ -1,5 +1,39 @@
 # Editorial policy — November 6, 2026
 
+## Morning supply recovery and Reply quality
+
+An exact X post/player can provide public media resources already loaded by its
+normal page. Its poster media ID must match the MP4/HLS resource path. Audio-only
+MP4s and initialization/segment URLs are excluded as complete-video resources.
+Separate observed video/audio playlists must share that same player media ID.
+Downloads
+remain in the independent media worker, using existing source validation, expiry,
+unencrypted-stream and byte limits. Duration and the complete decoded sequence
+must agree before a fingerprint is accepted; the real file hash and page/player
+provenance stay with the result. Canvas samples, account history, source identity
+and unknown-send claims are preserved. No private endpoint, cookie extraction
+or incomplete-sequence approval is introduced.
+
+An actual output-QC or observed-score hold delays novelty reads
+without discarding their progress. Repair or new verified observations can make
+the clip eligible later. Public searches retain AI-generation terms when dates
+broaden, and visible recommendation ranking favors plausible generated clips
+before its existing ten-item limit. Text is only a discovery hint; actual review
+still decides whether the media meets the Account's criteria.
+
+Ordinary buffered Replies rotate authors within each existing like tier. Three
+observed likes retain preference over lower/unknown counts; unused candidates
+remain available. Watched ordering and all admission, model, spacing and permanent
+one-Reply-per-original rules remain. Voice favors a concrete contribution over
+interest-only phrasing, without requiring questions or expanding artist praise.
+The follow-up request for more love adds specific affection and encouragement
+for art, wins and progress. Hearts are welcome when fitting, never compulsory;
+technical help, serious tone and truthful identity/viewing evidence remain.
+Recent memory recognizes repeated wording throughout Replies, with bounded
+advisory examples. The eight-Latest/four-Top seven-day discovery experiment and
+repair of the learned watchlist remain proposals, not newly enabled jobs or
+follow permissions. The Operator retains manual restart control.
+
 ## Preparation checks before expensive work
 
 The media worker checks verified publication time and the existing age ceiling

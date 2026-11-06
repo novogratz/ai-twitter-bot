@@ -1,5 +1,24 @@
 # Existing-video pipeline
 
+When a native X canvas seek stalls, the exact player's poster media ID can bind
+already loaded public MP4/HLS resources to that post. Safari records this
+observation; the independent media worker uses the existing bounded source
+downloader and computes a full local fingerprint. Audio-only MP4s and media
+segments cannot be selected as complete videos. An observed video child playlist
+may be paired with an observed audio child playlist from the same player media
+ID; neither URL is invented. Player/file duration must
+agree and every expected temporal sample must decode. The accepted result keeps
+the actual file SHA and normal-page provenance. Partial canvas progress remains
+intact; expired resources require a fresh page read, and transient failures retain
+their bounded retry history. This path does not use private endpoints or cookies.
+
+Before spending browser capacity on novelty, completed output QC and score
+feasibility are checked. An ineligible clip waits without losing saved
+novelty progress. Only an actual repair or updated observations can clear its
+underlying hold. Public discovery keeps explicit AI-generation performance terms
+through older-source fallback; visible recommendations favor plausible generated
+clips before the ten-item bound. The existing source inspection still decides.
+
 Deployment verification includes the main PID/start time, matching current
 discovery/media generations and actual movement toward ready inventory. When a
 new Safari publisher acquires its exclusive role lock, it may requeue novelty

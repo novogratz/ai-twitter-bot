@@ -7,6 +7,23 @@ from src.video import connectors, public_discovery
 from src.video.security import AccessError
 
 
+def test_rotating_searches_keep_ai_performance_terms_in_both_languages():
+    targets = {"elon": ["Elon Musk", "马斯克"], "trump": ["Donald Trump", "特朗普"],
+               "dario": ["Dario Amodei", "阿莫迪"], "sam": ["Sam Altman", "山姆·奥特曼"],
+               "zuckerberg": ["Mark Zuckerberg", "扎克伯格"]}
+    batches = [public_discovery.queries(targets, offset) for offset in range(0, 30, 3)]
+    assert all(len(batch) == 3 for batch in batches)
+    all_queries = [query for batch in batches for query in batch]
+    assert all(" AI " in query for query in all_queries)
+    for aliases in targets.values():
+        assert all(any(query.startswith(alias + " AI ") for query in all_queries) for alias in aliases)
+        performances = {query.removeprefix(aliases[0] + " AI ") for query in all_queries
+                        if query.startswith(aliases[0] + " AI ")}
+        assert len(performances) > 1
+    assert any("AI 舞蹈" in query for query in all_queries)
+    assert any("AI singing cover" in query for query in all_queries)
+
+
 def test_public_search_finds_candidates_without_inventing_rights_or_upload_time(video_store, video_cfg, monkeypatch):
     cfg = replace(video_cfg, platforms={"instagram": {"public_search": True, "creators": ["creator"]}})
     item = {"canonical_url": "https://www.instagram.com/reel/public123/", "creator": "@creator",
