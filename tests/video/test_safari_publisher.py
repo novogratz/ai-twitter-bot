@@ -112,7 +112,7 @@ def test_unloaded_history_media_requests_metadata_but_stays_unchecked_on_failure
     monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
     scripts = []
     info = {"duration": None, "article": True, "video": False, "ready_state": None, "error": None}
-    def page(js):
+    def page(js, *args):
         scripts.append(js)
         return info
     monkeypatch.setattr(browser, "_json", page)
@@ -136,7 +136,7 @@ def test_metadata_only_video_requests_muted_decoding_and_saves_why_it_waits(vide
     monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
     monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
     scripts = []
-    def page(js):
+    def page(js, *args):
         scripts.append(js)
         return {"duration": 4, "ready_state": 1, "paused": True, "network_state": 2, "playback_error": "NotAllowedError"}
     monkeypatch.setattr(browser, "_json", page)
@@ -178,7 +178,7 @@ def test_first_seek_timeout_saves_empty_progress_and_bounded_player_diagnostics(
     monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
     monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
     scripts = []
-    def page(js):
+    def page(js, *args):
         scripts.append(js)
         if "png:c.toDataURL" in js:
             return {"ready_state": 1, "seeking": True, "current_time": .5, "network_state": 2}
@@ -213,7 +213,7 @@ def test_native_player_recovers_after_x_pauses_the_first_play_request(
     monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
     monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
     scripts = []
-    def page(js):
+    def page(js, *args):
         scripts.append(js)
         return {"ready_state": 1, "seeking": True} if "png:c.toDataURL" in js else {"duration": 4, "ready_state": 2}
     monkeypatch.setattr(browser, "_json", page)

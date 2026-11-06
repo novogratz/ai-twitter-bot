@@ -6,6 +6,22 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-06, preserve preparation capacity and wait for actual video — A completed
+source review can stop before render/output inspection only when its actual
+fit, entertainment and quality scores cannot reach either publication rule even
+with maximum remaining points. These generous bounds are local cost calculations;
+no projected points or popularity are saved. Unknown values remain unknown, and
+a valid explicit selection retains its score exception. The held candidate keeps
+its original bytes, hash, fingerprint and review; this completed decision finishes
+the job without automatic retries.
+
+An audio-only resource cannot end X's metadata-loading wait. The read waits for
+decoded video or a validated complete-video download plan within the same
+25-second transaction. A bounded list of resource paths from the exact player
+helps diagnose unsupported formats, without exposing URL queries or admitting
+unclassified resources. All sequence, identity, quality and publication checks
+remain. The main browser change loads on the Operator's next manual restart.
+
 2026-11-06, recover video supply and improve ordinary Replies — The morning
 05:00 and 07:00 slots still lacked ready inventory. Native X fingerprint reads
 may use the exact visible player's poster media ID to bind already observed

@@ -1,5 +1,20 @@
 # Editorial policy — November 6, 2026
 
+## Preserve preparation capacity
+
+After actual source inspection, a local upper bound tests whether its reviewed
+fit, entertainment and quality could meet either publication rule with maximum
+remaining momentum, freshness and novelty. Only absolute infeasibility stops
+rendering and output review. Unknown components are not counted as zero or saved
+as projected scores; valid explicit selection retains the existing exception.
+Original bytes, hashes, fingerprint and source evidence remain on the held
+candidate. The completed source-score hold finishes its job without a retry loop.
+
+An audio-only X resource cannot establish video readiness or end the bounded
+metadata-loading wait. Decoded video or a validated complete-video plan is
+required. Exact-player resource-path diagnostics are bounded and cannot supply
+approval. The 25-second browser limit and all publication gates remain.
+
 ## Morning supply recovery and Reply quality
 
 An exact X post/player can provide public media resources already loaded by its

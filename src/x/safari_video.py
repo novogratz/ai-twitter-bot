@@ -700,6 +700,7 @@ class SafariVideoClient:
         import math
         from PIL import Image, ImageStat
         from ..video.media import visual_hash
+        from ..video.native_source import x_media_plan
         from ..video import reconcile
         url = item.get("post_url", "")
         match = re.fullmatch(r"https://x\.com/[A-Za-z0-9_]{1,15}/status/(\d+)", url)
@@ -723,11 +724,18 @@ class SafariVideoClient:
                 select = _video_selector(post_id)
                 info = {}
                 while time.monotonic() < deadline:
-                    info = _json(_video_metadata_script(post_id))
-                    if info.get("duration") and ((info.get("ready_state") or 0) >= 2
-                            or (info.get("native_media") or {}).get("media")):
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
                         break
-                    time.sleep(.25)
+                    info = _json(_video_metadata_script(post_id), min(8, remaining))
+                    duration = info.get("duration")
+                    usable_native = (type(duration) in (int, float) and .5 <= duration <= self.cfg.max_duration_seconds
+                                     and x_media_plan(info.get("native_media"), url, time.time()) is not None)
+                    # An audio playlist can arrive before the native video. Keep
+                    # ordinary playback loading until video bytes or frames exist.
+                    if duration and ((info.get("ready_state") or 0) >= 2 or usable_native):
+                        break
+                    time.sleep(min(.25, max(0, deadline - time.monotonic())))
                 duration = info.get("duration")
                 if not duration or not .5 <= duration <= 86400:
                     self.store.set_meta("browser_video_access:" + post_id, {"checked_at": time.time(), "phase": "metadata", **info})
