@@ -38,18 +38,24 @@ def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
         store.enqueue("x_media", key, now)
         raise Deferred("video fingerprint queued for the independent media worker")
     source = min(variants, key=lambda v: abs(v.get("bit_rate", 0) - 1_000_000))
-    if not store.budget("x_media", "download_bytes", cfg.max_download_bytes, cfg.download_budget_bytes, now):
-        raise AccessError("history/novelty media download budget exhausted")
     Path(str(ASSETS)).mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="x-check-", dir=str(ASSETS)) as folder:
+        allowance = int(store.reserve_up_to("x_media", "download_bytes", cfg.max_download_bytes,
+                                           cfg.download_budget_bytes, now))
+        if not allowance:
+            raise Deferred("history/novelty media download budget exhausted")
         path = Path(folder) / "source.mp4"
         try:
             with path.open("wb") as stream:
                 request(source["url"], hosts={"video.twimg.com"}, sink=stream,
-                        mime={"video/mp4"}, max_bytes=cfg.max_download_bytes, timeout=cfg.task_timeout_seconds)
+                        mime={"video/mp4"}, max_bytes=allowance, timeout=cfg.task_timeout_seconds)
+        except AccessError as exc:
+            if allowance < cfg.max_download_bytes and str(exc) == "response exceeds byte budget":
+                raise Deferred("history/novelty media download budget insufficient") from exc
+            raise
         finally:
             consumed = path.stat().st_size if path.exists() else 0
-            store.refund_budget("x_media", "download_bytes", max(0, cfg.max_download_bytes - consumed), now)
+            store.refund_budget("x_media", "download_bytes", max(0, allowance - consumed), now)
         return fingerprint(path, probe(path, cfg), cfg)
 
 

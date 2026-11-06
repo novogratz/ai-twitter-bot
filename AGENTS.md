@@ -6,6 +6,34 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-05, keep the video reserve moving — After further missed slots, the
+Operator requires dependable two-hour publication and delegates clip selection.
+Low reserve preparation now shares bounded ready-Reply browser priority. After
+two novelty batches, source capture gets a bounded turn; reconciliation remains
+first and no second Safari publisher runs. Source capture tries unseen and least
+recently attempted leads before repeating old reads. Saved Bilibili originals
+are reused, and source-ID-bound over-duration metadata holds a clip before
+download. Complete downloaded bytes survive failed probing. Completed format
+or source-review refusals finish their job as a held candidate rather than
+repeating every preparation window; transient failures remain retryable.
+
+The unknown-momentum editorial fallback now allows entertainment at least 14/20,
+retaining fit 18/20, technical quality 10/15 and 80 percent of the 75 observable
+points. This supersedes its earlier 16/20 entertainment floor. Raw scores and
+unknown popularity stay intact; actual source/output review, audio, watermark,
+source-age/view ceilings, permissions and permanent novelty still apply. X
+fingerprinting can retry ordinary muted playback up to six times per stalled
+sample, at least a second apart within the existing 25-second read bound. Exact
+sample times and complete frame sequences remain required. Deferred fingerprint
+work retains its retry allowance, and downloads reserve only remaining bytes.
+
+The existing delegated one-video selection produced a confirmed startup receipt
+on November 5; it does not prove future slot coverage. Reply behavior and the
+ten-slot schedule remain. The Account's daily download allowance rises from
+2 GB to 4 GB for ten slots and bounded retries; the per-file 150 MB ceiling
+remains. Existing charged usage, permanent history and uncertain-send claims
+stay intact. Main-process code still needs an explicitly requested restart.
+
 2026-11-04, recover stale video workers after the operator's start — The live
 start reused discovery/media processes from an earlier code generation. On a
 new main-process start, the supervisor compares code/config fingerprints and

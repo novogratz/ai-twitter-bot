@@ -189,8 +189,10 @@ def download(doc, destination, cfg, store, now):
         host = media_host(platform, url)
         if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
             raise Deferred("source request budget exhausted")
-        allowance = int(store.reserve_up_to(platform, "download_bytes",
-            min(1_000_000 if playlist else cfg.max_download_bytes, cfg.max_download_bytes - total), cfg.download_budget_bytes, now))
+        ceiling = min(1_000_000 if playlist else cfg.max_download_bytes, cfg.max_download_bytes - total)
+        if ceiling <= 0:
+            raise AccessError("source exceeds aggregate per-file download cap")
+        allowance = int(store.reserve_up_to(platform, "download_bytes", ceiling, cfg.download_budget_bytes, now))
         if allowance <= 0:
             raise Deferred("source download budget exhausted")
         before = sink.tell()
@@ -203,6 +205,10 @@ def download(doc, destination, cfg, store, now):
             request(url, hosts={host}, headers=headers, sink=sink, max_bytes=allowance, timeout=timeout,
                 mime=({"application/vnd.apple.mpegurl", "application/x-mpegurl", "audio/mpegurl", "text/plain"}
                       if playlist else {"video/mp4", "video/webm", "video/mp2t", "audio/mp4", "audio/aac", "audio/mpeg", "application/octet-stream"}))
+        except AccessError as exc:
+            if allowance < ceiling and str(exc) == "response exceeds byte budget":
+                raise Deferred("source download budget insufficient") from exc
+            raise
         finally:
             used = sink.tell() - before
             total += used
@@ -281,6 +287,9 @@ def download(doc, destination, cfg, store, now):
                 raise AccessError("source output exceeds file cap")
             destination.chmod(0o444)
             return
+        except Deferred:
+            destination.unlink(missing_ok=True)
+            raise
         except (AccessError, OSError, ValueError):
             destination.unlink(missing_ok=True)
     raise AccessError("normal-page source media unavailable; refresh source page")

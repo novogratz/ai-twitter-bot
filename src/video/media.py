@@ -18,6 +18,11 @@ from .store import ASSETS, SAVED_ASSETS
 
 _active_process = None
 _job_deadline = None
+_STALE_X_METRICS = "X source view count unverified or stale"
+
+
+class UnsupportedMedia(ValueError):
+    """The complete source bytes cannot satisfy the configured media format."""
 
 
 class CommandFailure(ValueError):
@@ -113,7 +118,7 @@ def probe(path, cfg):
             or not 32 <= width <= 4096 or not 32 <= height <= 4096 or not 1 / 3 <= width / height <= 3
             or not math.isfinite(sar) or not 1 / 16 <= sar <= 16 or not 1 / 3 <= width * sar / height <= 3
             or any(s.get("side_data_type") == "Display Matrix" and s.get("rotation", 0) != 0 for s in video.get("side_data_list", []))):
-        raise ValueError("unsupported duration, audio, rotation, aspect, dimensions or genuine frame rate")
+        raise UnsupportedMedia("unsupported duration, audio, rotation, aspect, dimensions or genuine frame rate")
     return {"duration": duration, "width": width, "height": height, "fps": fps, "sample_aspect_ratio": sar,
             "audio_start": float(audio.get("start_time", 0)), "video_start": float(video.get("start_time", 0)),
             "video_codec": video["codec_name"], "audio_codec": audio["codec_name"]}
@@ -245,6 +250,8 @@ def download(doc, destination, cfg, store, now):
             if doc.get("local_file"):
                 source = imported_file(doc["local_file"], cfg.local_import_roots)
                 if source.stat().st_size > allowance:
+                    if source.stat().st_size <= cfg.max_download_bytes:
+                        raise Deferred("daily download allowance cannot fit source")
                     raise AccessError("source exceeds download size cap")
                 with source.open("rb") as stream:
                     shutil.copyfileobj(stream, out, 65536)
@@ -257,6 +264,10 @@ def download(doc, destination, cfg, store, now):
             consumed = out.tell()
         temp.replace(destination)
         destination.chmod(0o444)
+    except AccessError as exc:
+        if allowance < cfg.max_download_bytes and str(exc) == "response exceeds byte budget":
+            raise Deferred("daily download allowance cannot fit source") from None
+        raise
     finally:
         if temp.exists():
             consumed = max(consumed, temp.stat().st_size)
@@ -430,6 +441,18 @@ def _process(store, job, now, cfg):
     folder.mkdir(parents=True, exist_ok=True)
     original, output = folder / "original.mp4", folder / "branded.mp4"
     try:
+        source_reason = ranking.source_gate(doc, time.time())
+        if source_reason == _STALE_X_METRICS:
+            raise Deferred(source_reason, retry_after=60)
+        if source_reason:
+            doc["preparation_hold"] = {"stage": "source_policy", "reason": source_reason,
+                                       "sha256": doc.get("original_sha256"), "at": time.time()}
+            store.save_candidate(row["id"], doc, time.time(), state="held", reason=source_reason,
+                                 fingerprint=doc.get("original_fingerprint"), job=job)
+            return
+        if (doc.get("source_duration_evidence", {}).get("source_id") == doc.get("source_id")
+                and doc.get("source_duration", 0) > cfg.max_duration_seconds):
+            raise UnsupportedMedia("source duration exceeds configured maximum")
         grant = ranking.permission(doc, cfg, now)
         if grant:
             doc["permission_record"] = {**grant, "checked_at": now}
@@ -448,8 +471,11 @@ def _process(store, job, now, cfg):
             os.link(previous, original)
         else:
             download(doc, original, cfg, store, now)
+        # Keep complete downloaded bytes even when probing rejects their format.
+        # Otherwise every bounded retry downloads that same unusable source again.
+        doc.update(original_path=str(original), original_sha256=sha256(original))
         info = probe(original, cfg)
-        doc.update(original_path=str(original), original_sha256=sha256(original), probe=info)
+        doc["probe"] = info
         original_fp = fingerprint(original, info, cfg)
         doc["original_fingerprint"] = original_fp
         for old in store.rows("SELECT id,fingerprint FROM candidates WHERE fingerprint IS NOT NULL AND id<>?", (row["id"],)):
@@ -461,9 +487,16 @@ def _process(store, job, now, cfg):
                 store.save_candidate(row["id"], doc, time.time(), state="duplicate", reason="already in own history", fingerprint=original_fp, job=job)
                 return
         doc["inspection"] = inspect(original, "source", cfg, store, now, duration=info["duration"], source_document=doc)
-        reason = ranking.gate(doc, cfg, now)
+        reason = ranking.gate(doc, cfg, time.time())
+        if reason == _STALE_X_METRICS:
+            raise Deferred(reason, retry_after=60)
         if reason:
-            raise ValueError(reason)
+            doc["preparation_hold"] = {"stage": "source_review", "reason": reason,
+                                       "sha256": doc["original_sha256"], "at": time.time()}
+            store.save_candidate(row["id"], doc, time.time(), state="held", reason=reason,
+                                 fingerprint=original_fp, job=job)
+            return  # completed review, not a transient processing failure
+        doc.pop("preparation_hold", None)
         render(original, output, info, doc["inspection"], cfg)
         doc.update(output_path=str(output), output_sha256=sha256(output), brand=cfg.watermark)
         technical = technical_qc(original, output, info, cfg)
@@ -477,6 +510,12 @@ def _process(store, job, now, cfg):
         store.save_candidate(row["id"], doc, time.time(), state="held" if reason else "ready", reason=reason,
                              score=doc["ranking"]["total"], fingerprint=original_fp, job=job)
         store.enqueue("novelty", row["id"], now)
+    except UnsupportedMedia as exc:
+        doc["preparation_hold"] = {"stage": "probe", "reason": str(exc),
+                                   "sha256": doc.get("original_sha256"), "at": time.time()}
+        store.save_candidate(row["id"], doc, time.time(), state="held", reason=str(exc),
+                             fingerprint=doc.get("original_fingerprint"), job=job)
+        return
     except Exception as exc:
         reason = str(exc) if isinstance(exc, Deferred) else f"{type(exc).__name__}: media verification incomplete"
         store.save_candidate(row["id"], doc, time.time(), state="held", reason=reason,

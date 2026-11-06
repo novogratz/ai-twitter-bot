@@ -215,7 +215,9 @@ def run_once(role, store, cfg, owner, *, now=None):
             if not evidence.get("overlays_removable_by_crop") and not cfg.allow_source_overlays:
                 reason = reason or "source overlays need an available clean original or cleanup method"
             store.save_candidate(row["id"], doc, time.time(), state="held",
-                                 reason=reason or "source verified; output preparation pending", job=inspection_job)
+                                 reason=reason or "source verified; output preparation pending",
+                                 fingerprint=json.loads(latest["fingerprint"]) if latest["fingerprint"] else None,
+                                 job=inspection_job)
             if evidence.get("confidence", 0) >= cfg.confidence_min and evidence.get("audio_inspected"):
                 store.enqueue("novelty", row["id"], time.time())
             if not reason:
@@ -267,7 +269,6 @@ def run_once(role, store, cfg, owner, *, now=None):
         if row["document"].get("qc"):
             doc = ranking.refresh(store, row, now, cfg)
             why = ranking.gate(doc, cfg, now, final=True)
-            import json
             store.save_candidate(row["id"], doc, now, state="held" if why else "ready", reason=why,
                                  score=doc["ranking"]["total"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
     return "idle"
@@ -286,6 +287,8 @@ def _x_media_work(store, cfg, owner, now):
                 raise ValueError("history fingerprint job lost its lease")
             store.put_meta(db, "x_fingerprint:" + job["item"], result)
         store.finish(job, time.time())
+    except Deferred as exc:
+        store.finish(job, time.time(), repeat=exc.retry_after)
     except Exception as exc:
         store.finish(job, time.time(), error=type(exc).__name__)
     return True
@@ -333,7 +336,8 @@ def _x_work(store, cfg, owner, now):
     imminent = bool(upcoming and 0 <= upcoming[1].timestamp() - now <= cfg.preparation_lead_seconds)
     startup_due = bool(store.rows("SELECT 1 FROM startup WHERE state='pending' LIMIT 1"))
     initial_history = not reconcile.history_ready(store, cfg)
-    priority = work_priority.REPLY if imminent or startup_due or initial_history else work_priority.BACKGROUND
+    reserve_low = store.rows("SELECT COUNT(*) AS n FROM candidates WHERE state='ready'")[0]["n"] < cfg.buffer_target
+    priority = work_priority.REPLY if imminent or startup_due or initial_history or reserve_low else work_priority.BACKGROUND
     if cfg.publishing_transport == "safari":
         from ..x.safari_video import SafariVideoClient
         client = SafariVideoClient(store, cfg)
@@ -360,6 +364,20 @@ def _x_work(store, cfg, owner, now):
                 reconcile.reconcile_unknown(store, client, now)
             store.circuit(circuit + ":" + stage, now, failed=False)
             store.set_meta("next_reconciliation", now + 300)
+        # A stalled duplicate check must not consume every preparation turn.
+        # Publishing/reconciliation have already had first access; after two
+        # novelty batches give the independent source queue one bounded read.
+        if (cfg.publishing_transport == "safari" and reserve_low
+                and store.meta("novelty_reads_since_source", 0) >= 2
+                and store.circuit_ready(circuit + ":source", now)):
+            stage = "source"
+            store.set_meta("novelty_reads_since_source", 0)
+            from .source_browser import capture_next
+            with work_priority.scope(priority):
+                captured = capture_next(store, cfg, now)
+            if captured:
+                store.circuit(circuit + ":source", now, failed=False)
+                return "source player checked"
         stage = "novelty"
         job = store.claim("novelty", owner, now, cfg)
         if job:
@@ -386,10 +404,13 @@ def _x_work(store, cfg, owner, now):
                 if _shared_read_failure(exc):
                     store.circuit(circuit, now, failed=True, retry_after=exc.retry_after)
                 store.finish(job, time.time(), error=detail)
+            finally:
+                store.set_meta("novelty_reads_since_source", store.meta("novelty_reads_since_source", 0) + 1)
             return "novelty checked"
         client.critical_reads = False
         stage = "source"
         if cfg.publishing_transport == "safari" and store.circuit_ready(circuit + ":" + stage, now):
+            store.set_meta("novelty_reads_since_source", 0)
             from .source_browser import capture_next
             with work_priority.scope(priority):
                 captured = capture_next(store, cfg, now)

@@ -1,6 +1,6 @@
 # Existing-video pipeline
 
-Current Account policy (latest operator instruction, 2026-11-04): **ten daily
+Current Account policy (latest operator instruction, 2026-11-05): **ten daily
 slots**, every two hours from 05:00 through 23:00 Toronto. Captions begin with
 `POV:` and a playful scene based on inspected performance/attributed cast, using
 configured cast handles and emojis, followed by a blank line and
@@ -18,6 +18,8 @@ backfilled. Set it to `0` to require complete archive import again. Status expos
 initial readiness and archive completeness separately; never reset posting history.
 `allow_unknown_momentum = true` enables the documented quality fallback for missing
 engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
+Its November 5 floors are 18/20 fit, 14/20 entertainment, 10/15 quality and
+80 percent of the 75 observable points; missing momentum remains unknown.
 Cast labels are creator attribution, not facial identification of real people.
 
 Sources favor the last 72 hours, then progressively older week/month/year bands,
@@ -35,6 +37,19 @@ VOD HLS and then performs the normal inspection/render/QC flow. Bilibili retains
 its existing normal-player capture. Login walls, absent publication metadata,
 missing media, unsupported streams and CDN restrictions remain visible holds.
 Finding a web link alone does not make a ready video.
+
+While fewer than the target sixteen clips are ready, preparation receives a
+bounded ready-Reply FIFO turn. After two novelty batches, source capture gets
+one turn even when a duplicate check keeps deferring. Reconciliation precedes
+both. Capture favors unseen and least-recently attempted leads and reuses saved
+Bilibili originals. Source-ID-bound over-duration metadata prevents unnecessary
+downloads. Completed source-review or unsupported-format holds leave their jobs
+done; transient processing failures keep bounded retries. Complete downloaded
+bytes are saved before probing so retries never needlessly fetch the same file.
+The Account allows 4 GB of downloads daily, retaining the 150 MB per-file limit.
+Existing charges remain counted. All download routes distinguish insufficient
+daily allowance from a genuine per-file limit failure and preserve retry capacity
+while waiting; stale X view observations likewise defer until source refresh.
 
 Each discovery/media process records its startup code/config fingerprint in the
 existing journal. A new main supervisor gracefully replaces an older generation
@@ -59,9 +74,10 @@ calls remain charged. These changes preserve the daily ceiling and publishing
 reserve and do not recalculate historical costs. Explicit account/rate-limit
 failures and provider Retry-After instructions still apply across browser reads.
 Native X fingerprints wait for decoded frames, using ordinary muted playback
-when the player exposes metadata only. A stalled seek can load once and then
-pause/reseek to the exact sample. `browser_video_access:<post_id>` records the
-loading/seek phase and readiness fields, including a first-frame stall. The
+when the player exposes metadata only. A stalled sample can retry normal playback
+up to six times, at least one second apart, then pause/reseek to the exact sample.
+`browser_video_access:<post_id>` records loading/seek phase, readiness,
+buffered/seekable ranges and attempt counts, including a first-frame stall. The
 25-second browser transaction, canvas restrictions and full-sequence requirement
 remain; a pending frame is never accepted as evidence.
 

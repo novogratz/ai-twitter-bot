@@ -137,6 +137,39 @@ _POSTS = r"""(() => {
 })()"""
 
 
+# X can pause its native player again while an unbuffered seek is loading. A
+# one-shot play marker then strands that seek forever. Retry only normal muted
+# playback, at most six times per pending sample and once a second overall. This
+# never changes origin restrictions or treats metadata as a decoded frame.
+_FRAME_LOADING = r"""
+const ranges = value => {
+  const result=[];
+  try { for(let i=0;i<Math.min(value?.length || 0,4);i++) result.push([value.start(i),value.end(i)]); } catch(e) {}
+  return result;
+};
+const loading = phase => {
+  if(!v || v.error || !v.paused)return;
+  const state=v._botFrameLoading || (v._botFrameLoading={attempts:0,last:0,positioned:false});
+  if(state.phase!==phase){state.phase=phase;state.phaseAttempts=0;}
+  const now=performance.now();
+  if(state.phaseAttempts>=6 || (state.attempts && now-state.last<1000))return;
+  v.preload='auto';v.muted=true;
+  if(!state.positioned){
+    v.scrollIntoView({block:'center',inline:'nearest',behavior:'auto'});
+    state.positioned=true;
+  }
+  state.attempts++;state.phaseAttempts++;state.last=now;
+  try { v.play().catch(e=>{v.dataset.botPlaybackError=e.name;}); }
+  catch(e){v.dataset.botPlaybackError=e.name;}
+};
+const playerState = () => ({ready_state:v?.readyState,seeking:v?.seeking,
+  current_time:v?.currentTime,paused:v?.paused,network_state:v?.networkState,
+  media_error:v?.error?.code || null,playback_error:v?.dataset.botPlaybackError || null,
+  play_attempts:v?._botFrameLoading?.attempts || 0,
+  buffered:ranges(v?.buffered),seekable:ranges(v?.seekable),visibility:document.visibilityState});
+"""
+
+
 def _normal(text):
     return " ".join(str(text).split())
 
@@ -501,14 +534,11 @@ class SafariVideoClient:
                     "const v=a?.querySelector('video');")
                 info = {}
                 while time.monotonic() < deadline:
-                    info = _json("(()=>{" + select +
-                        "if(v && !v.error && v.readyState<2 && !v.dataset.botMetadataLoad){"
-                        "v.dataset.botMetadataLoad='1';v.preload='auto';v.muted=true;v.play().catch(e=>{v.dataset.botPlaybackError=e.name;});}"
+                    info = _json("(()=>{" + select + _FRAME_LOADING +
+                        "if(v && v.readyState<2)loading('metadata');"
                         "const expected=['x.com','www.x.com'].includes(location.hostname) && location.pathname.endsWith('/status/" + post_id + "');"
                         "return JSON.stringify({duration:Number.isFinite(v?.duration)?v.duration:null,"
-                        "article:!!a,video:!!v,ready_state:v?.readyState,error:v?.error?.code || null,"
-                        "network_state:v?.networkState,paused:v?.paused,seeking:v?.seeking,"
-                        "current_time:v?.currentTime,playback_error:v?.dataset.botPlaybackError || null,"
+                        "article:!!a,video:!!v,...playerState(),error:v?.error?.code || null,"
                         "expected_page:expected,host:location.hostname,"
                         "visible_status_links:expected?[...document.querySelectorAll('article time')].map(t=>t.closest('a')?.getAttribute('href')).slice(0,8):[],"
                         "message:expected?(document.querySelector('main')?.innerText || '').slice(0,400):''});})()")
@@ -539,11 +569,8 @@ class SafariVideoClient:
                     frame = None
                     observed = {}
                     while time.monotonic() < deadline:
-                        observed = _json("(()=>{" + select + "const status=()=>JSON.stringify({ready_state:v?.readyState,seeking:v?.seeking,"
-                            "current_time:v?.currentTime,paused:v?.paused,network_state:v?.networkState,media_error:v?.error?.code||null,"
-                            "playback_error:v?.dataset.botPlaybackError||null});if(!v)return status();"
-                            "if(v.readyState<2 && !v.error && !v.dataset.botSeekLoad){v.dataset.botSeekLoad='loading';"
-                            "v.preload='auto';v.muted=true;v.play().catch(e=>{v.dataset.botPlaybackError=e.name;});}"
+                        observed = _json("(()=>{" + select + _FRAME_LOADING + "const status=()=>JSON.stringify(playerState());if(!v)return status();"
+                            "if((v.seeking || v.readyState<2) && !v.error){v.dataset.botSeekLoad='loading';loading('seek:" + str(at) + "');}"
                             "if(v.seeking || v.readyState<2)return status();"
                             "if(v.dataset.botSeekLoad==='loading'){v.pause();v.dataset.botSeekLoad='ready';"
                             "if(Math.abs(v.currentTime-" + str(at) + ")>.08){v.currentTime=" + str(at) + ";return status();}}"

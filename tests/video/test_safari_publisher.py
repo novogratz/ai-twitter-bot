@@ -120,7 +120,7 @@ def test_unloaded_history_media_requests_metadata_but_stays_unchecked_on_failure
     with pytest.raises(AccessError, match="duration unavailable"):
         client.fingerprint({"post_url": "https://x.com/example/status/123"})
     assert len(scripts) == 1
-    assert "v.preload='auto';v.muted=true;v.play().catch" in scripts[0]
+    assert "v.preload='auto';v.muted=true;" in scripts[0] and "v.play().catch" in scripts[0]
     assert "click(" not in scripts[0]
     assert video_store.meta("browser_video_access:123")["article"] is True
     assert not video_store.meta("browser_fingerprint:123")
@@ -143,7 +143,7 @@ def test_metadata_only_video_requests_muted_decoding_and_saves_why_it_waits(vide
     client = browser.SafariVideoClient(video_store, browser_cfg)
     with pytest.raises(Deferred, match="decoded frames"):
         client.fingerprint({"post_url": "https://x.com/example/status/123"})
-    assert "v.readyState<2" in scripts[0] and "v.muted=true;v.play()" in scripts[0]
+    assert "v.readyState<2" in scripts[0] and "loading('metadata')" in scripts[0]
     status = video_store.meta("browser_video_access:123")
     assert status["phase"] == "frame_loading" and status["ready_state"] == 1
     assert status["playback_error"] == "NotAllowedError"
@@ -155,6 +155,7 @@ def test_metadata_only_video_requests_muted_decoding_and_saves_why_it_waits(vide
     if shutil.which("node"):
         setup = """
 const video={error:null,readyState:1,duration:4,currentTime:0,dataset:{},muted:false,paused:true,plays:0,
+  scrollIntoView(){},
   play(){this.plays++;this.readyState=2;this.paused=false;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
 const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
@@ -192,6 +193,91 @@ def test_first_seek_timeout_saves_empty_progress_and_bounded_player_diagnostics(
     assert status["ready_state"] == 1 and status["requested_at"] == .5
     assert "v.dataset.botSeekLoad='loading'" in scripts[-1]
     assert not video_store.meta("browser_fingerprint:123")
+
+
+@pytest.mark.parametrize("phase", ["metadata", "seek"])
+def test_native_player_recovers_after_x_pauses_the_first_play_request(
+        video_store, browser_cfg, monkeypatch, phase):
+    """Execute the actual page programs, including an overshoot and exact reseek."""
+    from contextlib import nullcontext
+    import shutil
+    import subprocess
+    from src.video.security import Deferred
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    clock = [0]
+    monkeypatch.setattr(browser.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(browser.time, "sleep", lambda *_: clock.__setitem__(0, 30))
+    scripts = []
+    def page(js):
+        scripts.append(js)
+        return {"ready_state": 1, "seeking": True} if "png:c.toDataURL" in js else {"duration": 4, "ready_state": 2}
+    monkeypatch.setattr(browser, "_json", page)
+    with pytest.raises(Deferred):
+        browser.SafariVideoClient(video_store, browser_cfg).fingerprint({"post_url": "https://x.com/example/status/123"})
+    program = scripts[0] if phase == "metadata" else scripts[-1]
+    setup = r"""
+let now=0, drawn=[], scrolls=0;
+const performance={now:()=>now};
+const video={error:null,readyState:1,duration:4,_at:.5,dataset:{},muted:false,paused:true,seeking:true,plays:0,
+  buffered:{length:1,start:()=>0,end:()=>4},seekable:{length:1,start:()=>0,end:()=>4},
+  scrollIntoView(){if(!this.muted)throw Error('unmuted scroll');scrolls++;},
+  get currentTime(){return this._at;},
+  set currentTime(at){this._at=at;this.seeking=this.readyState<2;},
+  pause(){this.paused=true;},
+  play(){if(!this.muted)throw Error('unmuted play');this.plays++;
+    if(this.plays===1){this.paused=true;return Promise.resolve();}
+    this.paused=false;this.readyState=4;this.seeking=false;this._at=.75;return Promise.resolve();}};
+const link={getAttribute:()=>'/example/status/123'};
+const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
+const location={hostname:'x.com',pathname:'/example/status/123'};
+const document={visibilityState:'visible',querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],
+  querySelector:()=>null,createElement:()=>({getContext:()=>({drawImage:v=>drawn.push(v.currentTime)}),toDataURL:()=> 'fixture'})};
+"""
+    run = "const run=()=>JSON.parse(" + program + ");"
+    steps = "const states=[run()];now=500;states.push(run());now=1000;states.push(run());now=1001;states.push(run());"
+    output = subprocess.run([node, "-e", setup + run + steps +
+        "console.log(JSON.stringify({states,plays:video.plays,drawn,scrolls}));"],
+        check=True, capture_output=True, text=True, timeout=10)
+    result = json.loads(output.stdout)
+    assert result["plays"] == 2 and result["scrolls"] == 1
+    assert result["states"][0]["ready_state"] == 1 and result["states"][1]["play_attempts"] == 1
+    assert result["states"][0]["buffered"] == [[0, 4]]
+    if phase == "seek":
+        assert not any(row.get("png") for row in result["states"][:3])
+        assert result["states"][3]["at"] == .5 and result["drawn"] == [.5]
+    else:
+        assert result["states"][2]["ready_state"] == 4 and result["drawn"] == []
+
+
+def test_stalled_native_playback_retries_are_bounded_and_never_fake_frames():
+    import shutil
+    import subprocess
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("Node is needed for page JavaScript")
+    setup = r"""
+let now=0;const performance={now:()=>now};const document={visibilityState:'visible'};
+const v={error:null,paused:true,readyState:1,dataset:{},plays:0,scrollIntoView(){},
+  play(){this.plays++;return Promise.resolve();}};
+"""
+    steps = r"""
+for(now=0;now<25000;now+=80)loading('seek:1');
+const first=playerState();
+now=25000;loading('seek:2');const second=playerState();
+v.error={code:4};now=27000;loading('seek:3');
+console.log(JSON.stringify({first,second,plays:v.plays,final:playerState()}));
+"""
+    result = json.loads(subprocess.run([node, "-e", setup + browser._FRAME_LOADING + steps],
+        check=True, capture_output=True, text=True, timeout=10).stdout)
+    assert result["first"]["play_attempts"] == 6 and result["first"]["ready_state"] == 1
+    assert result["second"]["play_attempts"] == result["plays"] == 7
+    assert result["final"]["media_error"] == 4
 
 
 def test_cors_protected_native_video_remains_unchecked(video_store, browser_cfg, monkeypatch):
