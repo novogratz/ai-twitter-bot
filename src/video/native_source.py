@@ -18,6 +18,78 @@ CDNS = {
 }
 
 
+X_PLAYER_MEDIA = r"""
+const playerMedia = video => {
+  const key=(video?.poster||'').match(/\/(?:ext_tw_video_thumb|amplify_video_thumb)\/(\d+)\//)?.[1];
+  if(!key)return null;
+  const observed=[video.currentSrc,...[...video.querySelectorAll('source[src]')].map(s=>s.src),
+    ...performance.getEntriesByType('resource').map(r=>r.name)];
+  const kind=path=>/\/pl\/[^/]+\.m3u8$/.test(path)?0:
+    /\/vid\/(?:avc1\/)?\d+x\d+\/(?!init[.-]|segment[.-]|chunk[.-]|frag[.-])[^/]+\.mp4$/.test(path)?1:
+    /\/pl\/(?:avc1|hvc1|hev1|vp09|av01)\/\d+x\d+\/[^/]+\.m3u8$/.test(path)?2:
+    /\/pl\/(?:mp4a|opus)\/(?:\d+\/)?[^/]+\.m3u8$/.test(path)?3:99;
+  const media=[...new Set(observed.filter(raw=>{try{const url=new URL(raw);
+    return url.protocol==='https:' && url.hostname==='video.twimg.com' && !url.username && !url.password
+      && (!url.port || url.port==='443') && new RegExp('/(?:ext_tw_video|amplify_video)/'+key+'/').test(url.pathname)
+      && kind(url.pathname)<99;}catch(e){return false;}}))]
+    .sort((a,b)=>kind(new URL(a).pathname)-kind(new URL(b).pathname)).slice(0,12);
+  return {media_id:key,media,user_agent:navigator.userAgent};
+};
+"""
+
+
+def x_resource_kind(url):
+    path = urlsplit(url).path
+    patterns = (r"/pl/[^/]+\.m3u8$", r"/vid/(?:avc1/)?\d+x\d+/(?!init[.-]|segment[.-]|chunk[.-]|frag[.-])[^/]+\.mp4$",
+                r"/pl/(?:avc1|hvc1|hev1|vp09|av01)/\d+x\d+/[^/]+\.m3u8$",
+                r"/pl/(?:mp4a|opus)/(?:\d+/)?[^/]+\.m3u8$")
+    return next((index for index, pattern in enumerate(patterns) if re.search(pattern, path)), None)
+
+
+def x_media_plan(observed, post_url, now):
+    """Validate resources already observed for this exact normal-page player."""
+    from .connectors import canonical
+    if (not isinstance(observed, dict) or not isinstance(observed.get("media"), list)
+            or type(now) not in (int, float) or not math.isfinite(now)):
+        return None
+    try:
+        source = canonical("x", post_url)
+        actual_source = canonical("x", observed.get("post_url", ""))
+    except (TypeError, ValueError):
+        return None
+    source_id = source.rsplit("/", 1)[-1]
+    key = observed.get("media_id")
+    ua = observed.get("user_agent")
+    if (observed.get("post_id") != source_id or actual_source.casefold() != source.casefold()
+            or not isinstance(key, str) or not re.fullmatch(r"[0-9]{1,30}", key)
+            or not isinstance(ua, str) or not 0 < len(ua) <= 1000 or any(c in ua for c in "\r\n")):
+        return None
+    urls = []
+    for url in observed["media"][:12]:
+        try:
+            parsed = urlsplit(url)
+            if (media_host("x", url) == "video.twimg.com" and len(url) <= 4096
+                    and re.search(r"/(?:ext_tw_video|amplify_video)/" + re.escape(key) + r"/", parsed.path)
+                    and x_resource_kind(url) is not None and url not in urls):
+                urls.append(url)
+        except (AccessError, TypeError, ValueError):
+            continue
+    urls.sort(key=x_resource_kind)
+    videos = [url for url in urls if x_resource_kind(url) != 3]
+    audio = next((url for url in urls if x_resource_kind(url) == 3), None)
+    if not videos:
+        return None
+    result = {"platform": "x", "source_id": source_id, "canonical_url": source,
+        "source_download": {"version": 1, "platform": "x", "source_id": source_id,
+            "media_id": key, "captured_at": now, "expires_at": now + 3600,
+            "user_agent": ua, "media": videos[:3]},
+        "source_evidence": {"kind": "normal_page_player", "post_url": source, "post_id": source_id,
+            "media_id": key, "observed_at": now, "media_urls": urls}}
+    if audio:
+        result["source_download"]["audio_media"] = audio
+    return result
+
+
 def media_host(platform, url):
     p = urlsplit(url)
     host = p.hostname or ""
@@ -52,6 +124,7 @@ def script(platform, source_id):
     # These are page-owned data and visible nodes in the already opened normal
     # page. No fetch/XHR, cookie access, hidden API or play/click action occurs.
     return r'''JSON.stringify((()=>{const platform=PLATFORM, id=IDENT;
+      PLAYER_MEDIA_HELPER
       const visible=e=>!!(e&&e.getClientRects().length);
       const meta=k=>document.querySelector('meta[property="'+k+'"],meta[name="'+k+'"]')?.content||'';
       const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
@@ -108,13 +181,12 @@ def script(platform, source_id):
         if(video.currentSrc)urls.push(video.currentSrc);
         video.querySelectorAll('source[src]').forEach(s=>urls.push(s.src));
         if(platform==='x'){
-          const key=(video.poster||'').match(/\/(?:ext_tw_video_thumb|amplify_video_thumb)\/(\d+)\//)?.[1];
-          if(key)performance.getEntriesByType('resource').forEach(r=>{
-            if(r.name.includes('/'+key+'/')&&/\.(mp4|m3u8)(?:\?|$)/.test(r.name))urls.push(r.name);});
+          urls.push(...(playerMedia(video)?.media||[]));
         }}
       return {canonical_url:canonical,id,published,creator,title,views,
+        native_media:platform==='x'&&video&&boundPlayer?{...playerMedia(video),post_id:id,post_url:canonical}:null,
         media:urls.filter(u=>/^https:\/\//.test(u)).slice(0,12),user_agent:navigator.userAgent};})())'''.replace(
-            "PLATFORM", json.dumps(platform)).replace("IDENT", json.dumps(source_id))
+            "PLATFORM", json.dumps(platform)).replace("IDENT", json.dumps(source_id)).replace("PLAYER_MEDIA_HELPER", X_PLAYER_MEDIA)
 
 
 def capture(row, cfg, now):
@@ -154,10 +226,18 @@ def capture(row, cfg, now):
             raise AccessError(reason)
     if doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file():
         return doc  # refresh publication/metrics without touching inspected bytes
+    if platform == "x":
+        native = x_media_plan(payload.get("native_media"), url, now)
+        if native:
+            doc.update(source_download=native["source_download"], source_evidence=native["source_evidence"],
+                       access_status="normal source page media captured")
+            return doc
     media = []
     for source in payload.get("media", []):
         try:
             media_host(platform, source)
+            if platform == "x" and x_resource_kind(source) not in (0, 1):
+                continue  # split tracks need the bound pair above, not an audio-only fallback
             if source not in media:
                 media.append(source)
         except (AccessError, ValueError):
@@ -167,14 +247,14 @@ def capture(row, cfg, now):
     ua = payload.get("user_agent", "")
     if not isinstance(ua, str) or not ua or len(ua) > 1000 or any(c in ua for c in "\r\n"):
         raise AccessError("invalid normal-page user agent")
-    media.sort(key=lambda source: ".m3u8" in urlsplit(source).path)
+    media.sort(key=x_resource_kind if platform == "x" else lambda source: ".m3u8" in urlsplit(source).path)
     doc["source_download"] = {"version": 1, "platform": platform, "source_id": doc["source_id"],
         "captured_at": now, "expires_at": now + 3600, "user_agent": ua, "media": media[:3]}
     doc["access_status"] = "normal source page media captured"
     return doc
 
 
-def download(doc, destination, cfg, store, now):
+def download(doc, destination, cfg, store, now, *, validate=None):
     """Copy observed MP4s or unencrypted VOD HLS through the pinned HTTPS reader."""
     from . import media
     plan = doc["source_download"]
@@ -239,6 +319,8 @@ def download(doc, destination, cfg, store, now):
             if ".m3u8" not in urlsplit(url).path:
                 with destination.open("wb") as out:
                     fetch(url, out)
+                if validate:
+                    validate(destination)
                 destination.chmod(0o444)
                 return
             text = playlist(url)
@@ -269,6 +351,10 @@ def download(doc, destination, cfg, store, now):
                         audio_url = urljoin(url, matched[0]["URI"])
                 url = urljoin(url, variants[0][1].strip())
                 text = playlist(url)
+            elif platform == "x" and x_resource_kind(url) == 2 and plan.get("audio_media"):
+                # Both track URLs were observed for this exact native player.
+                # Do not synthesize a missing master URL or infer another CDN.
+                audio_url = plan["audio_media"]
             tracks = [segments(url, text)]
             if audio_url:
                 tracks.append(segments(audio_url, playlist(audio_url)))
@@ -285,6 +371,8 @@ def download(doc, destination, cfg, store, now):
                               "-c", "copy", "-movflags", "+faststart", "-f", "mp4", str(destination)], cfg)
             if destination.stat().st_size > cfg.max_download_bytes:
                 raise AccessError("source output exceeds file cap")
+            if validate:
+                validate(destination)
             destination.chmod(0o444)
             return
         except Deferred:

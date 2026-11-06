@@ -322,6 +322,7 @@ def _x_media_work(store, cfg, owner, now):
     if not job:
         return False
     try:
+        media._job_deadline = time.monotonic() + cfg.media_job_seconds
         source = store.meta("x_media:" + job["item"])
         result = reconcile.media_fingerprint(source, store, cfg, now, offload=False)
         with store.transaction() as db:
@@ -334,6 +335,8 @@ def _x_media_work(store, cfg, owner, now):
         store.finish(job, time.time(), repeat=exc.retry_after)
     except Exception as exc:
         store.finish(job, time.time(), error=type(exc).__name__)
+    finally:
+        media._job_deadline = None
     return True
 
 

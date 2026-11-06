@@ -1,5 +1,48 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-06 — Morning misses and growth audit
+
+The 00:25 operator start loaded the latest code, but the 05:00 and 07:00 slots
+expired with zero ready clips. The external X result used by candidate
+`4121a5edb100a518b98c9e1a1c39143a` still had only sixteen of thirty samples.
+Its required 33.333–35.417-second cell lay between observed buffered ranges
+ending at 33.153 and starting at 35.97 seconds. Preparatory playback could not
+decode the requested 34.375-second sample. Complete-range diagnostics exposed
+this; they did not establish a completed fingerprint.
+
+Another prepared candidate had inadequate watermark evidence and scores below
+the fallback floors, yet still consumed novelty reads. Eleven source reviews
+had rejected real/unsuitable footage after broad celebrity-performance discovery;
+the latest searches lacked explicit AI terms. Download usage was only about
+67 MB of the 4 GB daily allowance, so raising that allowance was not a remedy.
+
+The repair adds a full local-decode path from post/player-bound public resources,
+cheap deferral of independently ineligible novelty work, and more precise AI
+discovery/related-lead ordering. No missing-frame or real-media refusal is waived.
+
+A bounded read-only diagnostic captured the stuck post's actual player resources.
+The first attempt exposed an audio-only MP4 selection bug; resource classification
+now excludes it and pairs the actually observed video/audio HLS playlists. Local
+decoding completed all thirty samples for external post `1824474462604947809`,
+with actual duration 62.577778 seconds and retained file hash/provenance. The
+operator restarted the bot at 08:16; its own publisher reused the completed
+fingerprint and advanced to the next comparison. This confirms that specific
+blocker is cleared, not a new publication or coverage of later slots. The next
+comparison, external post `1493261423413280771`, subsequently completed all thirty
+samples through the running bot's own independent media worker. Two additional
+publicly indexed AI-music leads were ingested as unverified candidates; their
+source timestamp, original media and inspection remain pending.
+
+The Reply audit found 751 authors among the last 1,000 confirmed Replies and
+repeated interest-only phrasing. November 5 reached 658 authors through 856
+Replies: 296 authors were new to retained history and 362 had prior-day contact.
+Prior contact is not proof of mutual engagement. Ordinary buffers now spread
+authors within like tiers; Voice and bounded recent memory improve contribution
+and phrase variety. The later request for more love adds specific affection,
+encouragement and optional hearts for art, wins and progress, preserving useful
+technical answers and sincere serious replies. The proposed seven-day discovery
+mix stays separate from these implemented changes and from any follow-policy decision.
+
 ## 2026-11-06 — Preparation after source capture resumed
 
 PR #392 deployed at 23:52:46 Toronto on November 5 as main PID 80667, with new

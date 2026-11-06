@@ -70,6 +70,22 @@ def test_visible_related_links_are_bounded_unverified_leads_not_metadata_approva
     assert source_browser.related_candidates(None, video_cfg, "source", 1000) == []
 
 
+def test_generated_related_clip_after_ten_real_dances_gets_a_preparation_lead(video_cfg):
+    links = [{"url": f"https://www.bilibili.com/video/BV{number:010d}",
+              "title": "Example Star dance at a real event"} for number in range(11)]
+    generated = {"url": "https://www.bilibili.com/video/BV1234567890",
+                 "title": "Example Star AI dance parody"}
+    result = source_browser.related_candidates(links + [generated], video_cfg, "fixture", 1000)
+    assert len(result) == 10
+    assert result[0]["canonical_url"] == generated["url"]
+    assert [item["canonical_url"] for item in result[1:]] == [item["url"] for item in links[:9]]
+    assert all(item["published_at"] is None and "inspection" not in item and "permission_id" not in item
+               for item in result)
+    # Rank within the bounded visible shelf; do not fetch or scan another page.
+    assert generated["url"] not in {item["canonical_url"] for item in source_browser.related_candidates(
+        links + [None] * 69 + [generated], video_cfg, "fixture", 1000)}
+
+
 def test_small_source_can_use_remaining_bytes_and_refunds_partial_failures(video_store, video_cfg, tmp_path, monkeypatch):
     from src.video import media
     from pathlib import Path

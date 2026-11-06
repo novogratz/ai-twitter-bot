@@ -1,5 +1,43 @@
 # Video validation — November 6, 2026
 
+## Full native-media fingerprint and warmer Reply validation
+
+The 05:00 and 07:00 slots expired with no ready inventory. External X post
+`1824474462604947809` still had sixteen of thirty canvas samples because its
+required midpoint fell in an entirely unbuffered temporal cell. Its normal
+player exposed video/audio HLS resources under media ID `1824474271973859328`.
+The first local attempt selected an audio-only MP4 and correctly produced no
+fingerprint; the corrected classifier excludes audio-only and partial resources.
+The paired, actually observed playlists decoded successfully: duration
+**62.577778 seconds**, all **30/30** visual samples, audio fingerprint, SHA-256
+`a1b01e2a9f5ae488abce1b7d152844cfc63951d4c24315408378cb1b7cefb4d2`.
+The saved result retains post/player/resource provenance. The sixteen earlier
+canvas samples, actual charges, posting history and publication claims remain.
+
+The operator's independent 08:16 restart loaded the current main and replaced
+verified stale discovery/media workers. The main publisher reused this complete
+fingerprint and advanced to the next external comparison. Its own media worker
+then completed external post `1493261423413280771`: thirty samples, duration
+59.071565 seconds, SHA-256
+`2ada06c4ce10b4f3d4e7ea4a7ad6b11f24f6c032ec71aaae95c23f92f0ea631e`.
+Separate browser
+diagnostics stopped once the main owned Safari. At this checkpoint there was
+still no new confirmed post and the 09:00 slot remained pending.
+
+Regression tests cover exact post/player binding, expiry, audio-only and segment
+rejection, real split-HLS mux/decode, duration/hash/complete-sequence requirements,
+charged failed alternatives, durable offloading and cheap novelty waits for
+actual QC/score holds. Discovery tests retain explicit AI performance terms,
+language/cast rotation and bounded related-link ranking. Reply tests cover
+author diversity within like tiers, unchanged watched ordering, complete buffer
+retention, bounded phrase memory and warm Voice guidance without forced praise.
+The video suite passed **509 tests** and the complete suite passed
+**2,780 tests in 69.49 seconds**. Generated configuration and whitespace checks
+passed. The no-browser startup dry-run retained all ten Toronto slots, automatic
+once-daily startup without a Reply hold, and Reply budgets 12/80/80. These results
+prove the tested fixes and two real completed fingerprints; they do not establish
+sustained two-hour publication.
+
 ## Early age screening and remaining fingerprint stall
 
 The PR #392 restart at 23:52:46 loaded main 80667 and discovery/media workers

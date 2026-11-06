@@ -65,7 +65,7 @@ class Buffer:
                 age = x_urls.age(candidate.url)
                 if age is None or age < timedelta(0) or age > max_age:
                     self.entries.pop(sid)
-            return reply_pipeline.prioritize(self.entries.values())
+            return reply_pipeline.prioritize(self.entries.values(), diversify_authors=True)
 
     def run(self, job, cycle, **budgets):
         candidates = self.pending()

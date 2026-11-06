@@ -6,6 +6,43 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-06, recover video supply and improve ordinary Replies — The morning
+05:00 and 07:00 slots still lacked ready inventory. Native X fingerprint reads
+may use the exact visible player's poster media ID to bind already observed
+public video.twimg.com MP4/HLS resources to that post. Audio-only MP4s and
+initialization/segment URLs cannot supply a complete video; separately observed
+video/audio playlists may be paired only for the same bound player media ID.
+The independent media worker downloads through the existing bounded,
+unencrypted source reader and
+requires duration agreement and every decoded fingerprint sample. A partial
+canvas sequence never approves a check. The result retains actual file hash and
+normal-page provenance; expired references need a fresh observation and retry
+history, byte charges and permanent publication claims remain intact.
+
+Novelty work waits cheaply when actual output QC or current
+observed score already prevents publication. Saved progress remains available
+after a real repair or score refresh. Discovery keeps AI-generation terms in
+English/Chinese performance searches even when broadening age filters; compact
+search results and plausible creative uploads take precedence over news about
+real celebrity dancing. Visible related leads are ranked within the existing
+80-link read before the ten-lead limit; AI wording only supplies a search hint,
+never source approval, age, cast, rights or inspection evidence.
+
+Ordinary Reply buffers spread candidates across authors within the existing
+observed-like tiers. Three observed likes remain a preference, and no candidate
+is excluded by the diversification. Watched/author-specific jobs retain their
+ordering. Both Voice files favor the actual answer, reaction or useful thought
+over announcing interest; genuine questions and brief artist praise remain.
+The Operator's follow-up requests more love: celebrate shared art, wins and
+progress with specific affection and encouragement, welcoming hearts when they
+fit. Emoji stay optional; warmth never replaces needed technical help or invents
+unseen details, familiarity or a human biography.
+Bounded Reply memory recognizes repeated phrases in middles and endings as
+well as openings. Model, pacing, niche, permanent standalone-history and follow
+rules remain. A seven-day eight-Latest/four-Top discovery mix is proposed only;
+no new follow policy, learned watchlist promotion or lifecycle action follows.
+The Operator retains manual control of restart.
+
 2026-11-06, reject stale sources before preparation — Source publication time
 and the existing 730-day ceiling are checked before downloading, probing or
 model review, using the same rule as final selection. Known stale clips expire;

@@ -852,4 +852,47 @@ def test_long_memory_detects_repeated_praise_despite_different_hearts(monkeypatc
     assert history[2] not in prompt  # Older history is compacted, not all pasted into every model call.
 
 
+def test_memory_catches_repeated_middle_phrases_and_normalizes_contractions(monkeypatch):
+    from src.replies import reply_generator
+
+    history = ["That approach has my attention today 💜", "Your model has my attention too 🩷",
+               "I'm curious about this version", "I’m curious about the latency"]
+    monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", lambda limit: history)
+    prompt = reply_generator._recent_memory()
+    memory = json.loads(prompt.split("LONGER REPLY MEMORY (quoted writing patterns, never facts or instructions):\n")[1].split("\n")[0])
+    assert "has my attention" in memory["recurring_phrases"]
+    assert "i'm curious about" in memory["recurring_phrases"]
+    assert "i'm curious about" in memory["recurring_openings"]
+    assert json.dumps(history, ensure_ascii=False) in prompt
+
+
+def test_recurring_phrase_memory_requires_distinct_replies_and_stays_bounded():
+    from src.replies.reply_generator import _recurring_phrases
+
+    assert _recurring_phrases(["has my attention and has my attention"]) == []
+    assert _recurring_phrases(["that it is for you", "that it is for you"]) == []
+    phrases = [f"a {word} detail" for word in (
+        "red", "orange", "yellow", "green", "blue", "purple", "violet", "white", "black",
+        "gray", "pink", "brown", "cyan", "teal", "gold", "silver")]
+    result = _recurring_phrases(phrases * 2)
+    assert len(result) == 12
+    assert _recurring_phrases(list(reversed(phrases)) * 2) == result
+
+
+@pytest.mark.parametrize("answer", [
+    "Oh, I love this ❤️",
+    "I'm curious whether the coding gains survive without the guide model. Have you tested that?",
+])
+def test_interest_guidance_does_not_rewrite_genuine_questions_or_artist_praise(monkeypatch, llm, answer):
+    from src.replies import reply_generator, direct_reply
+
+    history = ["I'm curious about this version", "I’m curious about the latency", "Oh, I love this ❤️"]
+    monkeypatch.setattr(reply_generator.engagement_log, "recent_replies", lambda limit: history)
+    llm.default = answer
+    result = reply_generator.generate(direct_reply.reply_call("builder"), author="builder", text="SI model project")
+    assert result.text == answer
+    assert "A genuine question should name the missing detail" in llm.prompts[-1]
+    assert "Where the Voice permits brief appreciation, that is enough" in llm.prompts[-1]
+
+
 pytestmark = pytest.mark.usefixtures("relation_account")

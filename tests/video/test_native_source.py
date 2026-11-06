@@ -36,7 +36,7 @@ def test_normal_x_page_queues_media_without_publishing_or_model_call(video_store
     connectors.ingest(video_store, "x", [{"canonical_url": url, "source_id": "123", "creator": "creator",
                                          "permission_id": "grant"}], now, cfg)
     payload = {"canonical_url": url, "published": now - 3600, "creator": "creator", "title": "Example Star dance parody",
-               "views": "49.9K views", "media": ["https://video.twimg.com/ext_tw_video/321/pu/vid/a.mp4"],
+               "views": "49.9K views", "media": ["https://video.twimg.com/ext_tw_video/321/pu/vid/640x360/a.mp4"],
                "user_agent": "Fixture Safari"}
     monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
     monkeypatch.setattr(safari, "open_url", lambda url: True)

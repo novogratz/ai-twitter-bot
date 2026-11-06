@@ -19,6 +19,22 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+The November 6 morning repair gives stalled X video checks a second actual-media
+path: resources already loaded for the exact native player can be downloaded by
+the media worker and fully fingerprinted locally. Missing frames are never
+approved. Clips already failing watermark/QC or score do not consume
+duplicate-check reads while awaiting a real repair. Discovery now keeps explicit
+AI-performance terms when widening to older sources and prioritizes plausible
+generated recommendations within the same bounded source read.
+
+Ordinary Reply buffers spread their existing like-preferred candidates across
+authors. Voice guidance asks for the useful thought itself and keeps short artist
+praise. The requested warmer voice gives more affection and encouragement to art,
+wins and progress, with optional hearts that fit the moment. Recent memory
+catches repeated wording throughout each Reply. Watched
+priority, pacing, follow rules and the three-like preference remain. The proposed
+eight-Latest/four-Top search experiment is not enabled by these changes.
+
 Source dates and the two-year age ceiling are now checked before expensive media
 preparation. A clip already known to be too old cannot consume download or model
 capacity ahead of the next slot. Unknown dates stay held for actual source evidence.
