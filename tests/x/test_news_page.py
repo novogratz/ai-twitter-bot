@@ -10,7 +10,7 @@ from src.x import news_page
 
 
 @pytest.mark.parametrize("mode,allowed", [
-    ("home_behind_dialog", True), ("inline", True), ("wrong_text", False),
+    ("home_behind_dialog", True), ("nested_dialog", True), ("inline", True), ("wrong_text", False),
     ("wrong_owner", False), ("two_dialogs", False), ("two_fields", False),
     ("disabled", False),
 ])
@@ -25,13 +25,14 @@ def test_only_the_unique_matching_composer_can_submit(monkeypatch, mode, allowed
       const button = {getClientRects:visible, disabled:mode==='disabled', getAttribute:()=>null, click:()=>clicks++};
       const field = {getClientRects:visible, innerText:mode==='wrong_text'?'Unreviewed text':text};
       const background = {getClientRects:visible, innerText:''};
-      const area = {getClientRects:visible, querySelectorAll:s=>s.includes('tweetTextarea') ?
+      const area = {getClientRects:visible, contains:()=>false, querySelectorAll:s=>s.includes('tweetTextarea') ?
         (mode==='two_fields' ? [field,background] : [field]) : [button]};
+      const outer = {getClientRects:visible, contains:d=>d===area, querySelectorAll:area.querySelectorAll};
       const main = {querySelectorAll:s=>s.includes('tweetTextarea') ? [background] : [button]};
       const location = {hostname:'x.com'};
       const document = {
         querySelector:s=>s.includes('Profile_Link') ? {getAttribute:()=>'/'+(mode==='wrong_owner'?'someone_else':handle)} : (mode==='inline'?area:main),
-        querySelectorAll:s=>s==='[role="dialog"]' ? (mode==='inline'?[]:mode==='two_dialogs'?[area,area]:[area]) : [background,field]
+        querySelectorAll:s=>s==='[role="dialog"]' ? (mode==='inline'?[]:mode==='two_dialogs'?[area,area]:mode==='nested_dialog'?[outer,area]:[area]) : [background,field]
       };
     """
     observed = []

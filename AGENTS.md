@@ -22,8 +22,9 @@ The same request/day identity remains, with the prior expiry preserved in an
 event. Posted, reserved, ambiguous, attempted and retry-exhausted requests cannot
 reset. Reinspection after a policy change prepares observed performances before
 unsuitable footage; this is ordering only. No second publisher or extra quota.
-The news composer checks the unique active dialog separately from the home
-composer behind it, retaining exact text, account, button and receipt checks.
+The news composer checks the unique innermost dialog separately from its nested
+wrapper and the home composer behind it. Separate competing dialogs still refuse;
+exact text, account, button and receipt checks remain.
 
 2026-11-07, MEGA-BANGER discovery and ninety-minute videos — The Operator's
 research brief now lives in `accounts/theaishrink/video_discovery_prompt.md`,

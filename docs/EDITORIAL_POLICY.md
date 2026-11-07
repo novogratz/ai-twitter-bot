@@ -5,7 +5,8 @@
 An approved startup main story waiting for admission leaves the news worker
 available for minute delivery retries; that wait does not count as research
 coverage. News preparation scopes exact text and button checks to one visible
-dialog when present; multiple dialogs or mismatched text/account still refuse.
+innermost dialog when present; X's ancestor wrapper is not a second composer.
+Separate competing dialogs or mismatched text/account still refuse.
 
 The Operator explicitly requests startup news and video, and authorizes live
 start/restart and bug fixing. The launcher defaults `STARTUP_PUBLICATIONS=1`

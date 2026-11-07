@@ -16,6 +16,9 @@ and repeated composer failures. Pending approved startup news now yields the
 worker to delivery retries, without advancing research coverage. Composer
 inspection distinguishes the intent dialog from the home composer behind it
 and records bounded failure reasons while retaining exact-content admission.
+The 14:44 read-only DOM check confirmed two nested role=dialog elements around
+one textarea and one Post button. The composer now counts only innermost dialogs;
+separate competing dialogs still fail admission.
 
 ## 2026-11-07 — MEGA-BANGER discovery integrated with existing video/news workers
 

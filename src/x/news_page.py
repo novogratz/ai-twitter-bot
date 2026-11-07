@@ -25,7 +25,10 @@ def _composer_state(text, *, click=False):
       if ((owner || '').toLowerCase() !== '/' + HANDLE.toLowerCase()) return result(false, 'wrong_owner');
       // The home-page composer can remain visible behind the intent dialog.
       // Scope both the text and Post button to the single active dialog.
-      const dialogs = [...document.querySelectorAll('[role="dialog"]')].filter(e=>e.getClientRects().length);
+      const allDialogs = [...document.querySelectorAll('[role="dialog"]')].filter(e=>e.getClientRects().length);
+      // X nests its aria-modal dialog inside a second role=dialog wrapper.
+      // Count innermost dialogs, retaining refusal for separate modal layers.
+      const dialogs = allDialogs.filter(d=>!allDialogs.some(other=>other!==d && d.contains(other)));
       if (dialogs.length > 1) return result(false, 'ambiguous_dialog');
       const area = dialogs[0] || document.querySelector('main');
       const fields = [...(area?.querySelectorAll('[data-testid^="tweetTextarea_"][contenteditable="true"]') || [])].filter(e=>e.getClientRects().length);
