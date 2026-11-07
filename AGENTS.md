@@ -64,6 +64,22 @@ retries. An optional different-story backup stays in the local inbox; email has
 no adapter. Source outages remain operational errors. PR, merge and push are
 requested; no start/restart is included. Local switches apply on the next start.
 
+The first live news audit found a supplemental-search timeout and an initial
+window that missed the legacy news gap. Supplemental discovery now requests at
+most four queries in two search calls alongside the already fetched feeds;
+actual page reads and verification follow selection.
+Fallback evidence reads prefer linked reports, artifacts and independent
+advisories over homepages and navigation. Original-source hosts observed during
+the audit are explicitly configured; the fetched-claim and corroboration gates
+remain mandatory.
+Before the first complete news scan, a dated confirmed legacy source post
+anchors catch-up; pending submissions never supply that date, and earlier
+coverage remains unknown. A complete scan restores the normal overlapping
+24-hour window. `news.py --prepare-only run` can prepare independently reviewed
+picks under the same run lock for the running bot's next hourly delivery. It
+does not take Safari ownership or claim a delivery. The Operator explicitly
+requested this bot start; publication still requires an actual X receipt.
+
 2026-11-07, broader Replies with major AI accounts first — The Operator requests
 more SI/AI Replies across accounts, giving larger accounts priority. The Account
 and local environment budget sixteen rotating searches per direct cycle: four

@@ -240,6 +240,12 @@ class Codex:
             return answer
 
 
+class PendingDelivery:
+    """Operator preparation leaves delivery to the single running publisher."""
+    def send(self, delivery_id, payload):
+        raise security.Deferred("prepared for the bot's next hourly news run")
+
+
 class Delivery:
     def __init__(self, cfg, inbox=None):
         self.cfg, self.inbox = cfg, Path(inbox or str(INBOX))

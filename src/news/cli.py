@@ -18,10 +18,13 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Verified news; Safari only with NEWS_AUTO_PUBLISH opt-in, no email")
     parser.add_argument("--config", help="Account news TOML override")
     parser.add_argument("--dry-run", action="store_true", help="Show configuration only; no reads/models/delivery")
+    parser.add_argument("--prepare-only", action="store_true", help="Run discovery/review and leave approved picks pending for the bot's next hourly run")
     parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack"))
     parser.add_argument("delivery_id", nargs="?")
     args = parser.parse_args(argv)
     cfg = load(args.config)
+    if args.prepare_only and args.command != "run":
+        parser.error("--prepare-only is only valid with run")
     if args.dry_run:
         print(json.dumps({"timezone": "America/Toronto", "interval_hours": 1, "delivery": cfg.delivery_adapter,
             "search": cfg.search_adapter, "source_count": len(cfg.sources), "automatic_x": settings.get("NEWS_AUTO_PUBLISH"),
@@ -39,7 +42,11 @@ def main(argv=None):
     store = Store()
     if args.command == "run":
         # Empty or held runs produce no stdout and no destination message.
-        for payload in run(cfg, store=store):
+        delivery = None
+        if args.prepare_only:
+            from .adapters import PendingDelivery
+            delivery = PendingDelivery()
+        for payload in run(cfg, store=store, delivery=delivery):
             print(payload["display"] + "\n")
     elif args.command == "ack":
         if not args.delivery_id:
