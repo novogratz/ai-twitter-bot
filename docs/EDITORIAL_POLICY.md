@@ -1,4 +1,45 @@
-# Editorial policy — November 6, 2026
+# Editorial policy — November 7, 2026
+
+## Broader AI/SI Reply discovery and major-account priority
+
+The Operator requests more Replies to relevant content across accounts, with
+larger accounts first. The Account enables an ordinary Reply preference for
+its existing `network.big_ai_hype` group. This is an explicit configured group,
+not inferred or scraped follower size. Within each author-priority tier, three
+observed likes retain preference, author variety remains and actual parent-post
+views order comparable candidates. Lower-like and unknown-view sources remain
+eligible. A quoted post's analytics cannot supply its parent's view count;
+invalid/missing views stay unknown. Reach coverage requires an observed view
+counter, including a known zero; trending input preserves unknown views.
+Rediscovery never prolongs buffer freshness.
+When its four-hundred-source buffer is full, this Account retains configured
+major-author sources first, then the newest within each group. Other Accounts
+with the preference disabled keep newest-source eviction. The thirty-minute
+buffer limit and any tighter source freshness still apply; rediscovery takes
+the earlier expiry when a stricter search returns the same post.
+
+The direct-cycle budget is sixteen searches: four rotating grouped-author Latest,
+eight Top and four first-hour Latest. Independent cursors and bounded backfill
+stay within the total; generation may finish before every ordinary search runs.
+Priority groups are read before draining the ordinary buffer. Their results need
+an exact URL-derived listed author, a standalone root, AI/SI relevance and an age
+within 24 hours or the stricter configured source limit. Ordinary Latest keeps
+its first-hour bound. Routine Top queries remove their thirty/fifty-like floors;
+separate high-traction searches keep their floors. This replaces the previous
+ordinary like-tier-first ordering and the proposed eight-Latest/four-Top mix.
+
+The English Reply fallback gains ordinary art, affection and technical vocabulary.
+It remains limited to eighty characters and wholly recognized English words; it
+can resolve a shared `on` language marker, never explicit French or mixed prose,
+unknown words or generic applause. `from` is recognized as a full English marker.
+The fallback remains Reply-only. Warmth, truthful context and technical substance
+continue to follow the Voice.
+
+The existing eighty-Reply direct and eighty-generation per-feed budgets, uncapped daily Replies,
+Sol/xhigh, eight-second spacing plus zero-to-four seconds jitter, parent likes,
+standalone/permanent history, niche checks, watched ordering and follow rules
+remain. No new scheduler job or browser publisher is added. Code and settings
+require the Operator's next explicit restart; the video schedule is unchanged.
 
 ## Preserve preparation capacity
 

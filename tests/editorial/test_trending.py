@@ -43,6 +43,19 @@ def test_trending_posts_are_fresh_ranked_anonymous_and_cached(monkeypatch):
     assert len(searches) == len(account.current().searches.trending)
 
 
+@pytest.mark.parametrize("views, expected", [(None, None), (False, None), (True, None), (-1, None),
+                                           ("250", None), (1.5, None), (0, 0), (250, 250)])
+def test_trend_prompt_keeps_unknown_views_distinct_from_observed_zero(monkeypatch, views, expected):
+    from src.x import scraper
+    from tests.helpers import fresh
+    tweet = dict(url=fresh("writer", 10), text="A useful AI model", likes=10, views=views)
+    monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: [tweet])
+    posts = trending.collect_trending_posts(("11:00", "fixture"), datetime.now(TORONTO))
+    assert len(posts) == 1 and posts[0]["views"] == expected
+    assert posts[0]["likes"] == 10 and posts[0]["likes_per_minute"] == 1
+    assert ('"views": null' if expected is None else f'"views": {expected}') in trending.trend_block(posts)
+
+
 @pytest.mark.parametrize("raw, kept", [
     ("New AI model, details at t.co/abc123 today", "New AI model, details at today"),
     ("The AI paper lives on site.com/papers/42 now", "The AI paper lives on now"),

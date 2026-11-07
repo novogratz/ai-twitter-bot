@@ -19,6 +19,21 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+The November 7 Reply update searches more widely while giving the configured
+major AI accounts first turn. Up to **16 searches per cycle** cover four grouped
+major-author Latest searches, eight Top searches and four first-hour Latest
+searches. Routine Top searches no longer require thirty or fifty likes, so
+smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
+major authors, then three-plus observed likes, with author variety and actual
+parent-post views ordering comparable candidates. Missing views stay unknown;
+no follower or view threshold excludes otherwise eligible posts.
+At the existing buffer limit, configured major authors also take precedence over
+other sources; the newest sources win within each group.
+
+Short affectionate and technical English Replies also avoid more false language
+refusals. The narrow vocabulary check still rejects unclear or mixed-language
+text. These code and configuration changes load at the next manual bot restart.
+
 Preparation stops before rendering a source whose reviewed scores cannot qualify
 even with the maximum remaining points. The original and its review stay saved;
 no guessed scores are recorded. Native X metadata loading also waits for actual
@@ -33,13 +48,13 @@ duplicate-check reads while awaiting a real repair. Discovery now keeps explicit
 AI-performance terms when widening to older sources and prioritizes plausible
 generated recommendations within the same bounded source read.
 
-Ordinary Reply buffers spread their existing like-preferred candidates across
-authors. Voice guidance asks for the useful thought itself and keeps short artist
+Ordinary Reply buffers spread candidates across authors within their priority
+and like tiers. Voice guidance asks for the useful thought itself and keeps short artist
 praise. The requested warmer voice gives more affection and encouragement to art,
 wins and progress, with optional hearts that fit the moment. Recent memory
 catches repeated wording throughout each Reply. Watched
-priority, pacing, follow rules and the three-like preference remain. The proposed
-eight-Latest/four-Top search experiment is not enabled by these changes.
+priority, pacing, follow rules and the three-like preference remain. November 7's
+search allocation replaces the earlier eight-Latest/four-Top proposal.
 
 Source dates and the two-year age ceiling are now checked before expensive media
 preparation. A clip already known to be too old cannot consume download or model
@@ -55,8 +70,8 @@ unsupported legacy IDs before its bounded query, so one old link cannot stop
 preparation of valid videos. Verify both current workers and ready inventory
 after a restart; a merged PR alone does not update an already running process.
 
-The latest November 4 request makes the increased Reply capacity permanent:
-**12 rotating searches, 80 direct-cycle Replies and 80 generations per feed**.
+The November 7 configuration keeps the increased Reply capacity permanent:
+**16 rotating searches, 80 direct-cycle Replies and 80 generations per feed**.
 The Account and local environment agree, and the earlier date boost is cleared
 so these budgets are not doubled again. Prefer discovered posts with **three or
 more observed likes**, while other eligible posts remain available. These are
@@ -150,8 +165,9 @@ apply. These code/settings changes need an explicitly requested restart; none
 is performed here.
 
 The follow-up improvements prioritize already-discovered posts with **at least
-three observed likes**, then other eligible posts; missing counters stay unknown.
-There is no new popularity cutoff or extra scrape. Early-bird and mega-watch use
+three observed likes** within the configured author-priority tiers, then other
+eligible posts; missing counters stay unknown.
+This ordering needs no popularity cutoff or additional counter scrape. Early-bird and mega-watch use
 bounded Latest author searches with exact author checks. Search and each Home
 feed retain up to 400 unused source posts for at most 30 minutes (or until their
 source freshness expires), with no posting claims. Both feeds are still read

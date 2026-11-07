@@ -73,7 +73,10 @@ per-job language selection, always uses `voice_en.md`, and checks the final
 outgoing text on every publication surface. French, mixed or unidentified
 prose is refused; literal URLs and @handles do not decide the language.
 For Replies up to 80 characters, a narrow English-word fallback also recognizes
-clear short reactions. Generic applause and emoji-only text remain refused.
+clear short reactions, including affectionate and technical vocabulary. Every
+word must be recognized; this can also resolve the shared English/French `on`
+marker, but never explicit French/mixed prose or unknown words. Generic applause
+and emoji-only text remain refused.
 
 The optional Account boolean `standalone_replies_only` defaults to false for
 other Accounts; the live Account sets it to true. It disables debate, replyback
@@ -113,16 +116,34 @@ the existing rotating search budget. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
 report values only; the live Account and local `.env` set 1500/1800. They change neither admission,
 spacing, generation budgets nor the uncapped daily Reply policy.
 
-The November 4 volume request retains
+The November 7 volume request retains
 `MIN_SECONDS_BETWEEN_REPLIES=8` and `REPLY_JITTER_SECONDS=4` in the Account and
 local `.env`, replacing the local 20/10 override. The engine floor stays eight.
 Account and local `DIRECT_REPLY_MAX_PER_CYCLE=80` and
 `FEED_SWEEP_MAX_REPLIES_PER_CYCLE=80` replace 40/40, and
-`DIRECT_REPLY_QUERIES_PER_CYCLE=12` replaces six. These values persist every day.
+`DIRECT_REPLY_QUERIES_PER_CYCLE=16` replaces twelve. These values persist every day.
+`DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4` reserves four grouped Latest searches
+of `network.big_ai_hype` before ordinary buffered drafting. Returned authors must
+match the queried group by status URL, be standalone AI/SI originals and be at
+most 24 hours old (or the tighter configured source limit). These groups name
+operator-designated major accounts, not observed follower counts.
+`DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4` reserves four ordinary first-hour Latest
+searches; the remaining eight go to Top. Each pool rotates separately, missing
+pool capacity can backfill from another pool, and the total stays bounded. A
+cycle may finish its Reply budget before every ordinary query runs.
+`REPLY_PRIORITIZE_LARGE_ACCOUNTS=1` places the configured group first in ordinary
+buffered Reply ordering. Like preference then applies within each group, with
+author variety and observed parent views ordering comparable candidates.
+At the existing buffer limit, configured major authors are retained first, then
+the newest source IDs within each group; the disabled default retains newest
+sources alone. Rediscovery can tighten an earlier source expiry, never extend it.
+Unknown views are not zero; only the exact parent's analytics can provide them.
+Other Accounts default to no major-author searches or ordering preference.
 `REPLY_PREFERRED_MIN_LIKES=3` prefers strictly more than two observed likes,
-without excluding otherwise eligible lower-liked or unknown-count sources. Six
-first-hour Latest queries expand creative and technical discovery without
-popularity floors. Discovery budgets and admission checks still apply. Browser and
+without excluding otherwise eligible lower-liked or unknown-count sources.
+Routine Top queries and first-hour Latest queries have no popularity floors;
+the separate high-traction Top queries retain their floors.
+Discovery budgets and admission checks still apply. Browser and
 model work add time beyond the required gap, so settings cannot promise volume.
 Repeated watched-parent Reply attempts double `PRIORITY_WATCH_REPLY_RETRY_SECONDS`
 up to `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` (default and ceiling 900 seconds,
@@ -132,8 +153,8 @@ parents and independent like/repost retries are unaffected.
 
 `REPLY_VOLUME_BOOST_DATE` optionally doubles those three discovery/generation
 budgets on one Toronto date, written as `YYYY-MM-DD`; blank disables it and an
-invalid date refuses startup. The local setting is blank now that 12/80/80 is
-the persistent Account baseline, avoiding a second doubling on November 4.
+invalid date refuses startup. The local setting is blank now that 16/80/80 is
+the persistent Account baseline, avoiding a second doubling.
 An explicitly configured date still expires at midnight without reloading
 settings or changing the file.
 Explicit manual `max_replies` arguments remain exact. This changes neither
@@ -306,6 +327,9 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `VIP_SCAN_HANDLES` | str | blank |  | Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set. |
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` | floor `0` | Replies one direct_reply cycle may ship; zero disables its scheduled generation. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` | floor `1` | Search queries one direct_reply cycle scrapes. |
+| `DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE` | int | `0` | floor `0`, ceiling `16` | Rotating Latest searches of the Account's big_ai_hype authors within the total search budget; zero disables this lane. |
+| `DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE` | int | `4` | floor `0` | First-hour Latest searches reserved within the total search budget after priority-author searches; remaining capacity goes to Top, with bounded backfill. |
+| `REPLY_PRIORITIZE_LARGE_ACCOUNTS` | 0 or 1 | `0` | floor `0` | Prefer the Account's configured big_ai_hype authors in ordinary buffered Replies, then like tiers, author variety and observed post views; no follower-count or eligibility claim. |
 | `REPLY_VOLUME_BOOST_DATE` | YYYY-MM-DD date or blank | blank |  | Toronto date (YYYY-MM-DD) on which search, direct-cycle and per-feed Reply budgets double; blank disables it. Automatically expires at midnight; never changes pacing or admission. |
 | `REPLY_DAILY_TARGET_MIN` | int | `0` | floor `0` | Advisory daily Reply target; never changes admission or pacing. |
 | `REPLY_DAILY_TARGET_MAX` | int | `0` | floor `0` | Upper advisory daily Reply target; neither a cap nor a quota to fill. |

@@ -63,7 +63,10 @@ def collect_trending_posts(slot, now=None) -> list:
             seen.add(sid)
             minutes = max(age.total_seconds() / 60, 1.0)
             likes = int(tweet.get("likes") or 0)
-            posts.append(dict(text=text, likes=likes, views=int(tweet.get("views") or 0),
+            views = tweet.get("views")
+            if type(views) is not int or views < 0:
+                views = None
+            posts.append(dict(text=text, likes=likes, views=views,
                               age_minutes=int(minutes), likes_per_minute=round(likes / minutes, 2)))
     posts.sort(key=lambda p: p["likes_per_minute"], reverse=True)
     posts = posts[:TREND_POSTS]

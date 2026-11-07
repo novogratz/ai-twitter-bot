@@ -278,7 +278,7 @@ def _fresh_job_memory(monkeypatch):
     from src.replies import reply_pipeline as _pipeline
     monkeypatch.setattr(_pipeline, "_skipped", {})
     from src.replies import direct_reply as _dr
-    monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSET", [0])
+    monkeypatch.setattr(_dr, "_QUERY_ROTATION_OFFSETS", {})
     from src.replies import candidate_buffer as _buffer
     monkeypatch.setattr(_buffer, "SEARCH", _buffer.Buffer())
     monkeypatch.setattr(_buffer, "FEEDS", {name: _buffer.Buffer() for name in ("FEED", "FOLLOWING")})

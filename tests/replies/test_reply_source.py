@@ -130,4 +130,17 @@ def test_unreadable_or_invalid_like_count_is_unknown(likes):
     assert reply_source.observed_likes({"likes": likes}) is None
 
 
+@pytest.mark.parametrize("views", [None, -1, True, "2000", "unknown", 2.5])
+def test_unreadable_or_invalid_view_count_is_unknown(views):
+    post = {"url": fresh("builder"), "text": "SI model", "views": views}
+    assert reply_source.observed_views(post) is None
+    assert reply_source.select([post], Declaration(max_age=HOUR), "FEED")[0].views is None
+
+
+@pytest.mark.parametrize("views", [0, 1234])
+def test_feed_candidates_keep_observed_parent_views_without_a_popularity_floor(views):
+    post = {"url": fresh("builder"), "text": "SI model", "views": views}
+    assert reply_source.select([post], Declaration(max_age=HOUR), "FEED")[0].views == views
+
+
 pytestmark = pytest.mark.usefixtures("open_topic_account")

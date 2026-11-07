@@ -21,8 +21,11 @@ class Buffer:
         if expired:
             reply_diagnostics.record("candidates", "expired", items=len(expired))
         limit = settings.get("REPLY_CANDIDATE_BUFFER_LIMIT")
-        # Keep the freshest sources when the bounded buffer is full.
-        oldest = sorted(self.entries, key=int)[:max(0, len(self.entries) - limit)]
+        # A full ordinary buffer must not discard a just-discovered priority
+        # author before ranking. Within each group, keep the freshest sources.
+        large = reply_pipeline.priority_authors()
+        oldest = sorted(self.entries, key=lambda sid: (
+            x_urls.author(self.entries[sid].url) in large, int(sid)))[:max(0, len(self.entries) - limit)]
         for sid in oldest:
             self.entries.pop(sid)
         if oldest:
@@ -47,9 +50,12 @@ class Buffer:
                     continue
                 sid = x_urls.status_id(url)
                 if sid in self.entries:
-                    # Rediscovery neither extends TTL nor widens source freshness.
-                    if candidate.likes is not None:
-                        self.entries[sid] = replace(self.entries[sid], likes=candidate.likes)
+                    # Keep the earliest source horizon even when rediscovery
+                    # supplies no counters. A wider lane can never extend TTL.
+                    counters = {name: getattr(candidate, name) for name in ("likes", "views")
+                                if type(getattr(candidate, name)) is int and getattr(candidate, name) >= 0}
+                    self.entries[sid] = replace(self.entries[sid], **counters,
+                                               expires_at=min(self.entries[sid].expires_at, expires))
                     continue
                 self.entries[sid] = replace(candidate, url=url, expires_at=expires)
                 added += 1
@@ -65,7 +71,7 @@ class Buffer:
                 age = x_urls.age(candidate.url)
                 if age is None or age < timedelta(0) or age > max_age:
                     self.entries.pop(sid)
-            return reply_pipeline.prioritize(self.entries.values(), diversify_authors=True)
+            return reply_pipeline.prioritize(self.entries.values(), diversify_authors=True, ordinary=True)
 
     def run(self, job, cycle, **budgets):
         candidates = self.pending()
@@ -73,7 +79,7 @@ class Buffer:
             return 0
         reply_diagnostics.record("candidates", "offered", items=len(candidates))
         try:
-            return reply_pipeline.run(job, candidates, cycle, **budgets)
+            return reply_pipeline.run(job, candidates, cycle, ordinary_priority=True, **budgets)
         finally:
             # Only resolved work leaves the buffer. An unused lookahead, a
             # rate-limit result or an interrupted run remains unclaimed here.

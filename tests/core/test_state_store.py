@@ -333,12 +333,15 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
     assert path.read_text() == CORRUPT
 
 
-def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operator_folder, caplog):
+@pytest.mark.parametrize("priority_queries", [0, 4])
+def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(
+        monkeypatch, operator_folder, caplog, settings_override, priority_queries):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
     from src.replies import direct_reply as dr
     from tests.helpers import fresh, scheduled_job
+    settings_override(DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=priority_queries)
     path = _corrupt(operator_folder, "respect_list.json")
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
@@ -353,7 +356,10 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(monkeypatch, operat
 
     scheduled_job("direct_reply_job")()
 
-    assert len(scraped) == 1, "the cycle stops, it does not move to the next query"
+    # @someone is not in a priority-author group: those bounded discovery reads
+    # produce no eligible candidate. The first ordinary query reaches the prompt
+    # failure and must still halt the cycle before any further ordinary search.
+    assert len(scraped) == priority_queries + 1
     assert "respect_list.json is unreadable" in caplog.text
     assert "direct_reply halted" in caplog.text
     assert path.read_text() == CORRUPT

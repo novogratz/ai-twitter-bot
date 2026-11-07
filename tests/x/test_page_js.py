@@ -229,6 +229,16 @@ def test_scrape_parses_the_page_answer(monkeypatch, browser):
     browser(json.dumps([{"u": OWN_POST, "t": "hello", "a": "Someone", "l": 3, "r": 1}]))
     tweets = scraper._scrape_tweets_from_page("search 'ai'", 10)
     assert [(t["url"], t["likes"], t["replies"]) for t in tweets] == [(OWN_POST, 3, 1)]
+    assert tweets[0]["views"] is None
+
+
+@pytest.mark.parametrize("views,expected", [(None, None), (0, 0), (1234, 1234),
+                                           (True, None), (-1, None), ("1234", None), (1.5, None)])
+def test_scraped_view_counts_preserve_unknown_and_validate_actual_integers(monkeypatch, browser, views, expected):
+    from src.x import scraper
+
+    browser(json.dumps([{"u": OWN_POST, "t": "SI model", "a": "Someone", "v": views}]))
+    assert scraper._scrape_tweets_from_page("search 'si'", 10)[0]["views"] == expected
 
 
 def test_each_scraped_viewport_is_offered_before_the_feed_finishes(monkeypatch, browser):
@@ -314,6 +324,55 @@ def test_scrape_keeps_outer_original_and_quote_context_separate(monkeypatch, bro
     assert result[0]["qt"] == "SI video with consistent characters."
     assert result[0]["ts"] == "2026-10-26T11:00:00Z"
     assert result[0]["ir"] is False
+
+
+@pytest.mark.parametrize("label,expected", [
+    ("12.3K views", 12300), ("1,234 Views. View post analytics", 1234),
+    ("0 Views", 0), ("1\u202f234 vues", 1234), ("1.2M", 1_200_000),
+    ("Views unavailable", None), ("-12 views", None), ("1,23 views", None),
+    ("1.2.3K views", None), ("1.2 views", None), ("Viewed post 123", None),
+])
+def test_scraper_reads_only_a_valid_count_from_the_exact_original_analytics_link(
+        monkeypatch, browser, label, expected):
+    fake = browser()
+    _tweets(monkeypatch)
+    fake_dom = r'''
+    const article = {innerHTML:'', innerText:'SI model project'};
+    const nested = {};
+    function element(text, href, quoted=false, owner=article, time=false) {
+      return {
+        textContent:text,
+        closest:selector => selector === 'article' ? owner : quoted ? {} : null,
+        getAttribute:name => name === 'href' ? href : name === 'aria-label' ? text : '2026-11-07T12:00:00Z',
+        querySelector:selector => time && selector === 'time[datetime]' ? element('', '') : null
+      };
+    }
+    const original = element('', '/builder/status/300', false, article, true);
+    const analytics = [
+      element('900K Views', '/quoted/status/100/analytics', true),
+      element('800K Views', '/builder/status/300/analytics', true),
+      element('700K Views', '/nested/status/200/analytics', false, nested),
+      element('600K Views', 'https://evil.test/builder/status/300/analytics'),
+      element('500K Views', '/other/status/400/analytics'),
+      element(LABEL, 'https://x.com/BUILDER/status/300/analytics')
+    ];
+    article.querySelectorAll = selector => {
+      if (selector.includes('tweetText')) return [element('SI model project', '')];
+      if (selector.includes('/analytics')) return analytics;
+      if (selector.includes('/status/')) return [original];
+      return [];
+    };
+    article.querySelector = selector => selector.includes('User-Name') ? element('Builder', '') : null;
+    const document = {querySelectorAll:() => [article]};
+    '''.replace("LABEL", json.dumps(label))
+    result = json.loads(_node_run(fake.calls[0].js, fake_dom))
+    assert result[0]["v"] == expected
+    # No exact own link must remain unknown even when quoted/nested counts exist.
+    missing = fake_dom.replace("element(" + json.dumps(label) + ", 'https://x.com/BUILDER/status/300/analytics')", "null")
+    missing = missing.replace("return analytics;", "return analytics.filter(Boolean);")
+    assert json.loads(_node_run(fake.calls[0].js, missing))[0]["v"] is None
+    duplicate = fake_dom.replace("return analytics;", "return analytics.concat(analytics[analytics.length - 1]);")
+    assert json.loads(_node_run(fake.calls[0].js, duplicate))[0]["v"] is None
 
 
 def test_own_replies_script_reads_a_thread(monkeypatch, browser):

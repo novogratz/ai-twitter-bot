@@ -123,7 +123,7 @@ def direct(monkeypatch, llm, chokepoint, settings_override):
     from src.x import scraper
 
     lanes = {"vip": [], "search": [], "queries": []}
-    settings_override(VIP_SCAN_HANDLES="SpecialVip")
+    settings_override(VIP_SCAN_HANDLES="SpecialVip", DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=0)
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **k: list(lanes["vip"]))
 
     def search(query, **k):
