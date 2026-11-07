@@ -33,7 +33,7 @@ uv run --with-requirements requirements-video.txt python bin/news.py --dry-run r
 uv run --with-requirements requirements-video.txt python bin/news.py status
 uv run --with-requirements requirements-video.txt python bin/news.py check-sources
 uv run --with-requirements requirements-video.txt python bin/news.py import-history
-# Prepare/review now while the bot runs; approved picks stay pending for its next hourly run:
+# Prepare/review now while the bot runs; its delivery worker picks up approved drafts:
 uv run --with-requirements requirements-video.txt python bin/news.py --prepare-only run
 # Manual draft-only run, with no X publication:
 NEWS_AUTO_PUBLISH=0 uv run --with-requirements requirements-video.txt python bin/news.py run
@@ -70,6 +70,13 @@ around video windows/successes. Active or uncertain video reservations defer
 news. Video final admission also respects confirmed/uncertain news. Replies
 retain existing pacing and priority. Backups are drafts, not automatic extra
 public posts.
+
+The same scheduler checks pending deliveries every minute, serialized with the
+hourly discovery job. A protected video window therefore does not require another
+hourly search before delivery can retry. This check performs no discovery or
+model calls, creates no new picks and is silent when nothing is due. It retains
+the same delivery IDs, retry limits and publication gates; uncertain sends never
+retry automatically.
 
 Each tweet has intentional blank lines and one fetched source link at the end.
 Attribution and qualifiers are mandatory. Complete tweets use

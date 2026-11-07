@@ -10,7 +10,7 @@ from . import history
 from .adapters import HTTP
 from .config import load
 from .editor import TZ
-from .pipeline import run
+from .pipeline import retry_pending, run
 from .store import Store
 
 
@@ -18,7 +18,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Verified news; Safari only with NEWS_AUTO_PUBLISH opt-in, no email")
     parser.add_argument("--config", help="Account news TOML override")
     parser.add_argument("--dry-run", action="store_true", help="Show configuration only; no reads/models/delivery")
-    parser.add_argument("--prepare-only", action="store_true", help="Run discovery/review and leave approved picks pending for the bot's next hourly run")
+    parser.add_argument("--prepare-only", action="store_true", help="Run discovery/review and leave approved picks pending for the bot's delivery worker")
     parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack"))
     parser.add_argument("delivery_id", nargs="?")
     args = parser.parse_args(argv)
@@ -32,11 +32,14 @@ def main(argv=None):
         return
     if args.command == "serve":
         from apscheduler.schedulers.blocking import BlockingScheduler
+        from apscheduler.executors.pool import ThreadPoolExecutor
         from apscheduler.triggers.interval import IntervalTrigger
-        scheduler = BlockingScheduler(timezone=TZ)
+        scheduler = BlockingScheduler(timezone=TZ, executors={"default": ThreadPoolExecutor(1)})
         scheduler.add_job(run, IntervalTrigger(hours=1, timezone=TZ), kwargs={"cfg": cfg},
                           id="news_discovery", max_instances=1, coalesce=True, misfire_grace_time=3600,
                           next_run_time=datetime.now(TZ))
+        scheduler.add_job(retry_pending, IntervalTrigger(minutes=1, timezone=TZ), kwargs={"cfg": cfg},
+                          id="news_delivery", max_instances=1, coalesce=True, misfire_grace_time=60)
         scheduler.start()
         return
     store = Store()

@@ -1,6 +1,7 @@
 """Discover → evidence → verify → deduplicate → rank → review → outbox."""
 from datetime import datetime, timezone
 import json
+from pathlib import Path
 import time
 import uuid
 from urllib.parse import urlsplit
@@ -13,7 +14,7 @@ from ..video.security import Deferred
 from . import editor, history
 from .adapters import Codex, Delivery, HTTP, canonical
 from .config import load
-from .store import Store, dumps, identity
+from .store import DATABASE, Store, dumps, identity
 
 
 def deliver(store, cfg, adapter, now, limit=2):
@@ -46,6 +47,31 @@ def deliver(store, cfg, adapter, now, limit=2):
             store.execute("UPDATE outbox SET state=?,due=?,error=? WHERE id=?",
                 (state, now + max(60 * 2 ** min(row["attempts"], 8), getattr(exc, "retry_after", 0)), type(exc).__name__, row["id"]))
     return delivered
+
+
+def retry_pending(cfg=None, *, store=None, delivery=None, now=None):
+    """Retry the durable outbox without discovery, model calls or new picks."""
+    now = time.time() if now is None else now
+    if store is None:
+        if not Path(str(DATABASE)).exists():
+            return []
+        store = Store()
+    try:
+        with store.lock():
+            if not store.rows("SELECT id FROM outbox WHERE state='pending' AND due<=? LIMIT 1", (now,)):
+                return []
+            cfg = cfg or load()
+            if delivery is None:
+                if settings.get("NEWS_AUTO_PUBLISH"):
+                    from .publisher import SafariDelivery
+                    delivery = SafariDelivery(store, cfg)
+                else:
+                    delivery = Delivery(cfg)
+            return deliver(store, cfg, delivery, now)
+    except BlockingIOError:
+        # A manual preparation or hourly scan owns the same outbox. Its next
+        # delivery pass, or the next minute tick, will see the retained claim.
+        return []
 
 
 def _compact_history(rows):

@@ -76,13 +76,18 @@ Before the first complete news scan, a dated confirmed legacy source post
 anchors catch-up; pending submissions never supply that date, and earlier
 coverage remains unknown. A complete scan restores the normal overlapping
 24-hour window. `news.py --prepare-only run` can prepare independently reviewed
-picks under the same run lock for the running bot's next hourly delivery. It
+picks under the same run lock for the running bot's next delivery pass. It
 does not take Safari ownership or claim a delivery. The Operator explicitly
 requested this bot start; publication still requires an actual X receipt.
 An unpublished verification hold may clear with adequate evidence; it is not a
 prior alert. Attributed company results remain explicitly attributed and limited,
 never labelled independently verified without corroboration. Disputed claims,
 consequential security allegations and damage claims retain that requirement.
+The same scheduler checks the durable news outbox every minute, serialized with
+hourly discovery. Video/spacing deferrals keep the same approved bytes and ID;
+no search or model call runs on this tick. All admission checks, retry limits,
+expiry and uncertain-send holds remain. This also picks up approved manual
+preparation on the next delivery pass rather than the next hourly search.
 
 2026-11-07, broader Replies with major AI accounts first — The Operator requests
 more SI/AI Replies across accounts, giving larger accounts priority. The Account
