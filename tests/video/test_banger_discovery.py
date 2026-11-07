@@ -70,6 +70,8 @@ def test_seed_history_is_idempotent_permanent_and_explicitly_partial(video_store
     assert len(video_store.rows("SELECT * FROM personal_memory")) == count >= 20
     for url in ("https://www.instagram.com/reel/DfaamAusdla", "https://x.com/DFF6769/status/2118753368755827140"):
         assert "delivered" in memory.refusal(video_store, {"canonical_url": url})
+    assert "delivered" in memory.refusal(video_store, {"canonical_url": "https://x.com/dff6769/status/2118753368755827140"})
+    assert "delivered" in memory.refusal(video_store, {"canonical_url": "https://www.instagram.com/p/DfaamAusdla"})
     assert "rejected" in memory.refusal(video_store, {"title": "WE WERE ALWAYS BLUE!"})
     assert not memory.refusal(video_store, {"title": "A different What Is Love performance"})
     assert "partial" in json.dumps(video_store.meta("personal_memory_coverage")).lower()
@@ -77,12 +79,14 @@ def test_seed_history_is_idempotent_permanent_and_explicitly_partial(video_store
 
 def test_delivery_memory_survives_changed_url_and_media_cleanup(video_store, qualified, at):
     memory.remember(video_store, video_store.candidate("clip1"), "delivered", at().timestamp())
+    memory.remember(video_store, video_store.candidate("clip1"), "rejected", at().timestamp() + 1)
+    assert {r["state"] for r in video_store.rows("SELECT state FROM personal_memory")} == {"delivered", "rejected"}
     changed = deepcopy(qualified)
     changed.update(canonical_url="https://www.tiktok.com/@another/video/123456789", source_id="different")
-    assert "delivered" in memory.refusal(video_store, changed)
+    assert "rejected" in memory.refusal(video_store, changed)
     with video_store.transaction() as db:
         db.execute("DELETE FROM candidates")
-    assert "delivered" in memory.refusal(video_store, changed)
+    assert "rejected" in memory.refusal(video_store, changed)
 
 
 @pytest.mark.parametrize("platform,url,expected", [

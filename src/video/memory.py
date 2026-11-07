@@ -12,6 +12,15 @@ def normalized(value):
     return " ".join(re.findall(r"\w+", str(value).casefold()))
 
 
+def url_identity(url):
+    from .connectors import HOSTS, video_id
+    try:
+        platform = next((p for p, hosts in HOSTS.items() if urlsplit(url).hostname in hosts), None)
+        return (platform, video_id(platform, url)) if platform else None
+    except (TypeError, ValueError):
+        return None
+
+
 def import_seed(store, cfg, now):
     if not cfg.discovery_memory_file:
         return
@@ -45,9 +54,10 @@ def import_seed(store, cfg, now):
 
 def refusal(store, doc):
     from .media import matches_history
-    for row in store.rows("SELECT state,document FROM personal_memory"):
+    ident = url_identity(doc.get("canonical_url", ""))
+    for row in store.rows("SELECT state,document FROM personal_memory ORDER BY recorded DESC"):
         prior = json.loads(row["document"])
-        exact = doc.get("canonical_url") and doc["canonical_url"] in prior.get("urls", [])
+        exact = ident and ident in {url_identity(url) for url in prior.get("urls", [])}
         title = prior.get("match_title") is True and normalized(doc.get("title")) == normalized(prior.get("title"))
         if exact or title or matches_history(doc, prior):
             return "owner already " + row["state"] + " this footage"
@@ -61,7 +71,7 @@ def remember(store, row, state, now):
     doc = row["document"]
     record = {key: doc[key] for key in ("platform", "source_id", "title", "original_sha256", "output_sha256",
                                        "original_fingerprint", "output_fingerprint") if key in doc}
-    record.update(id="candidate-" + row["id"], urls=[doc["canonical_url"]], state=state,
+    record.update(id="candidate-" + row["id"] + "-" + state, urls=[doc["canonical_url"]], state=state,
                   source_url=doc["canonical_url"], evidence="explicit operator CLI decision")
     with store.transaction() as db:
         db.execute("INSERT OR IGNORE INTO personal_memory VALUES(?,?,?,?)",
