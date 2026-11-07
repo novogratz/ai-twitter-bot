@@ -34,6 +34,9 @@ def status(store, cfg, now=None):
             "operator_selection": store.meta(SELECTION_KEY),
             "buffer": store.rows("SELECT state,COUNT(*) AS count FROM candidates GROUP BY state"),
             "window_coverage": inventory.report(store, cfg, now),
+            "reserve": store.meta("reserve-health"),
+            "personal_memory": store.meta("personal_memory_coverage"),
+            "discovery_rotation": {p: store.meta("discovery-allocation:" + p) for p in cfg.platforms},
             "workers": store.rows("SELECT * FROM workers"),
             "worker_resources": store.meta("resource_observation"), "reply_telemetry": telemetry,
             "throttle": {role: store.meta("throttle:" + role) for role in ("discovery", "media")},
@@ -126,7 +129,10 @@ def preflight(store, cfg, *, network=False):
     submissions = FileJournal().submissions(schedule.local(schedule.utc_now()).date())
     if submissions.pending:
         blockers.append("legacy editorial submission is pending; reconcile before takeover")
-    return {"ready_for_live": not blockers, "blockers": blockers, "status": status(store, cfg)}
+    observed = status(store, cfg)
+    available = observed["window_coverage"]["eligible_distinct"]
+    return {"ready_for_live": not blockers, "ready_to_publish": not blockers and available > 0,
+            "reserve_ready": available >= cfg.ready_reserve_min, "blockers": blockers, "status": observed}
 
 
 def daily_report(store, cfg, now=None):

@@ -1,13 +1,16 @@
 # Existing-video pipeline
 
-## Current Account: mixed banger publishing
+## Current Account: MEGA-BANGER discovery and publishing
 
-The 2026-11-07 Account runs thirteen video windows at 90-minute intervals and ten
-sourced news windows at two-hour intervals. `news_enabled=false` preserves the
-legacy video-exclusive engine mode for other Accounts. Explicit daily ceilings
-are 13 videos, 10 news and the existing one-extra startup video; no catch-up.
+The 2026-11-07 Account runs thirteen video windows at 90-minute intervals alongside
+the existing [verified-news worker](NEWS.md). That worker retains hourly discovery,
+two-hour minimum news spacing and its separate text daily ceiling (seven locally,
+at most eight). Videos retain thirteen slots and the existing one-extra startup
+allowance; there is no outage catch-up or second editor/publisher.
 
-Codex chooses one 8–60 second contiguous excerpt from a source up to five minutes.
+Codex chooses one 8–120 second contiguous excerpt from a source up to five minutes.
+Prefer 15–30 seconds when a complete joke/chorus fits; preserve a strong full
+performance when shortening would lose its payoff.
 The preserved source hash binds start/end, cast and hook evidence. Output review
 checks actual edited content and the first second at 0/.2/.4/.6/.8 seconds. Audio
 is compared against the exact source interval, not the whole untrimmed audio.
@@ -15,6 +18,38 @@ Retained source overlays are matched with the same timestamp offset. Technical
 quality, source permission, cast attribution, synthetic performance, freshness and
 permanent novelty remain required. Only source/output quality above the Account
 floors earns publication; no engagement prediction supplies score points.
+
+The operator-owned [brief](../accounts/theaishrink/video_discovery_prompt.md),
+[query bank](../accounts/theaishrink/video_query_bank.txt) and
+[partial memory seed](../accounts/theaishrink/video_memory.json) feed the existing
+discovery worker. Persistent turns rotate fresh/archive/new-creator searches
+60/30/10, with concept, creator and source-chain lanes. Provider weights favor
+Instagram/Bilibili 40/30; remaining effort uses TikTok 10, RedNote 4, X 5,
+YouTube 7 and Douyin 4. Cooling/blocked sources yield their turn. Three shared
+research calls per hour and existing daily budgets bound work. One archive pass
+per Toronto day can request up to 120 leads/six queries; ordinary passes use
+30 leads/three queries. A blocked page is not an empty feed. Creator progress
+records bounded search passes, not fabricated exhaustive profile crawling.
+
+Five-minute reserve maintenance refreshes expiring X checks and brings source
+polls forward below three eligible distinct clips. Target inventory remains
+sixteen. Completed negative reviews and exhausted media retries are not reset by
+maintenance. New editing policy can re-inspect a saved unclaimed source once.
+Owner `shown`/`delivered`/`rejected` memory is permanent; use
+`bin/video.py remember CANDIDATE delivered` only after actual owner delivery.
+Preparation alone does not create a delivery or publication record.
+
+The discovery adapter keeps existing candidate field names and adds `handoff`
+inside the same `candidates.document`: version/candidate/cluster/status, public
+source identity and dates, actual probe/hash, attributed cast and timestamped
+performance evidence, song attribution, excerpt, all editorial components,
+matching X copies/maximum views, personal-history coverage, cleanup and usage.
+`src/video/handoff.py` documents the mapper. It includes no signed CDN URLs,
+cookies, tokens or shell commands. `QUALIFIED` is distinct from owner-delivered
+and confirmed-X-published. Missing history/QC/usage/exposure yields `HOLD`.
+New source variants share a cluster only after actual temporal matching; larger
+encoded dimensions alone never establish native detail. YouTube/Douyin searches
+are lead-only; there is no fabricated download adapter or new permission grant.
 
 `audience_examples` holds bounded actual own-post observations as search/style
 context. It is not a new-source approval, a replay list, or evidence of causal
@@ -76,21 +111,24 @@ reported honestly; no placeholder or repeat is posted. `initial_history_pages = 
 allows selection after six fully imported profile pages while older history is
 backfilled. Set it to `0` to require complete archive import again. Status exposes
 initial readiness and archive completeness separately; never reset posting history.
-`allow_unknown_momentum = true` enables the documented quality fallback for missing
-engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
-Its engine fallback retains 18/20 fit, 14/20 entertainment, 10/15 quality and
-80 percent of the 75 observable points. The live banger policy additionally
-requires 18/17/12 source and output floors plus the verified first second;
-missing momentum remains unknown.
+Other Accounts can retain `allow_unknown_momentum` and the historical raw-score
+fallback. The live Account instead requires the separate 88/100 banger rubric
+(92 exceptional, 82–87.99 reserve), minimum 8/10 hook/performance/fit/quality,
+18/17/12 source/output floors and the verified first second. Missing comparable
+engagement gets a labeled neutral editorial 5/10; raw momentum stays unknown.
 Cast labels are creator attribution, not facial identification of real people.
 
 Sources favor the last 72 hours, then progressively older week/month/year bands,
 up to 730 days. The approved fictional cast is Elon Musk, Sam Altman, Dario
-Amodei, Donald Trump and Mark Zuckerberg, in synthetic dance, singing, music
-or comedy parody. X sources additionally require source-bound observed views
+Amodei, Donald Trump and Jensen Huang, in synthetic dance, singing, music,
+comedy or cinematic parody. X sources additionally require source-bound observed views
 at most 50,000, refreshed within an hour. Rounded counters use a conservative
 upper bound: a bare `50K` is not proof of no more than 50,000. Unknown, invalid,
 stale and over-limit counters hold the source, including operator selections.
+Across matching X copies, use the highest observed counter, retain known large
+copies across searches and require evidence no older than six hours. Unknown,
+stale or truncated coverage holds. No public match is bounded search evidence,
+never proof of exclusivity.
 
 Normal-page source capture now rotates across all enabled platforms. It uses
 the exact source page's publication metadata and observed media references;
@@ -241,13 +279,13 @@ scheduler's overnight pause.
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 05:00, 07:00, 09:00, 11:00 |
-| Afternoon | 13:00, 15:00, 17:00 |
-| Evening | 19:00, 21:00, 23:00 |
+| Morning | 05:00, 06:30, 08:00, 09:30, 11:00 |
+| Afternoon | 12:30, 14:00, 15:30, 17:00 |
+| Evening | 18:30, 20:00, 21:30, 23:00 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. Five to ten distinct slots are configurable; this Account uses ten and
-`scheduled_daily_cap=10`. Other Accounts retain the default ceiling of eight.
+rules. Five to thirteen distinct slots are configurable; this Account uses thirteen
+and `scheduled_daily_cap=13`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -256,7 +294,7 @@ deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
 `protect_primary_windows = true` prioritizes one video at each configured main
-window. This Account has ten main windows and no paired slots. If a different
+window. This Account has thirteen main windows and no paired slots. If a different
 configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
 for the next five main windows, including tomorrow morning. Coverage accounts
@@ -678,7 +716,7 @@ Output inspection must return `full_clip_inspected=true`, `overlays_clean=true` 
 bound to the output hash. Local QC decodes every frame, compares native duration/
 frame rate, PCM correlation/timing and introduced black/frozen intervals.
 
-Ranking weights are 25 momentum, 20 fit, 20 hook/entertainment, 15 AV quality,
+The legacy raw ranking weights are 25 momentum, 20 fit, 20 hook/entertainment, 15 AV quality,
 10 freshness, 10 novelty. Measured views/hour requires multiple observations at
 least five minutes apart; platform/day-age cohorts require at least five valid
 peers. Unknown components contribute no awarded points and remain labeled
@@ -688,6 +726,15 @@ This is a selection heuristic, not a virality forecast. With at least five other
 comparable clips from the same creator, momentum combines 75% platform/age
 percentile and 25% creator-baseline percentile. Both values and coverage remain
 visible; no creator baseline is invented when observations are missing.
+
+The live banger rubric is separate: hook/payoff 25, performance 20, account fit
+15, picture/sound 15, concept novelty 10, comparable engagement 10 and original
+freshness 5. Components use the full 0–10 anchors. Automatic handoff needs 88 and
+every hard gate; an old exceptional clip can beat a weaker recent one. Within two
+points, prefer creator/song/concept variety and lower known matching exposure.
+No large-cast reward or compulsory cast rotation applies. These are editorial
+judgments, not measured retention. Language-dependent jokes need verified
+transcript/translation; the current SoundAnalysis backend cannot supply it.
 
 Dedup uses source IDs, canonical URLs, original hashes, ordered full/central
 visual hashes and audio spectral fingerprints. Shared music alone cannot merge

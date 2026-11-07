@@ -1,19 +1,26 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# Mixed sourced news and video schedule, operator 2026-11-07.
+# Video schedule alongside the existing verified-news worker, operator 2026-11-07.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
 windows = ["05:00", "06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30", "20:00", "21:30", "23:00"]
 paired_windows = []
 scheduled_daily_cap = 13
-news_enabled = true
-news_daily_cap = 10
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
-edit_max_seconds = 60
+edit_max_seconds = 120
 min_hook_score = 8
 bangers_only = true
 one_line_caption = true
+discovery_prompt_file = "video_discovery_prompt.md"
+discovery_memory_file = "video_memory.json"
+query_bank_file = "video_query_bank.txt"
+adaptive_discovery = true
+discovery_calls_per_hour = 3
+ready_reserve_min = 3
+banger_min_score = 88.0
+x_max_views = 50000
+x_reach_max_age_seconds = 21600
 startup_on_boot = true
 pair_minutes = 15
 protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
@@ -29,7 +36,7 @@ day_poll_seconds = 1200
 night_poll_seconds = 600
 buffer_target = 16
 queue_limit = 500
-score_threshold = 80.0
+score_threshold = 80.0 # preserved raw ranking; banger_min_score controls the new editorial rubric
 confidence_min = 0.9
 preferred_age_hours = 72
 max_age_hours = 17520 # recent first; progressively older fallback up to 730 days
@@ -83,6 +90,7 @@ sam = "@sama"
 # No guessed X handles for cast members without a configured verified handle.
 
 [platforms.instagram]
+weight = 40
 enabled = true
 safari_player = true
 public_search = true
@@ -93,6 +101,7 @@ permission_reference = ""
 # Alternatively: provider_command = ["/absolute/path/to/licensed-provider-adapter"]
 
 [platforms.bilibili]
+weight = 30
 enabled = true
 safari_player = true
 public_search = true
@@ -102,6 +111,7 @@ creators = ["Claude最严厉的父亲", "AI大法师"]
 permission_reference = ""
 
 [platforms.rednote]
+weight = 4
 enabled = true
 safari_player = true
 public_search = true
@@ -110,6 +120,7 @@ creators = []
 permission_reference = ""
 
 [platforms.tiktok]
+weight = 10
 enabled = true
 safari_player = true
 public_search = true
@@ -118,8 +129,26 @@ creators = []
 permission_reference = ""
 
 [platforms.x]
-enabled = false
+weight = 5
+enabled = true
 safari_player = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+# Public leads only; no download or republication permission is implied.
+[platforms.youtube]
+weight = 7
+enabled = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+[platforms.douyin]
+weight = 4
+enabled = true
 public_search = true
 public_search_seconds = 7200
 creators = []

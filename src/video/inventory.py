@@ -28,6 +28,17 @@ def usable_until(doc, cfg):
     choice = doc.get("operator_selection", {})
     if ranking.selected(doc, choice.get("selected_at", 0)):
         return min(choice["expires_at"], grant_expiry)
+    if cfg.bangers_only:
+        from .bangers import score
+        # Stepwise original-age points can change before a future window.
+        for days in (2, 7, 30, 90, 365):
+            boundary = doc["published_at"] + days * 86400 + .01
+            if boundary > doc.get("ranking", {}).get("scored_at", 0):
+                graded = score(doc, boundary)
+                if graded["total"] is None or graded["total"] < cfg.banger_min_score:
+                    expiry = min(expiry, boundary)
+                    break
+        return expiry
     # Other score components can change at refresh. Account for known freshness
     # decay now; do not assume new observations will improve a marginal score.
     score = doc.get("ranking", {})
@@ -66,11 +77,12 @@ def surplus(candidates, now, cfg):
 
 
 def report(store, cfg, now):
+    from . import memory
     candidates = []
     for row in store.rows("SELECT * FROM candidates WHERE state='ready' AND id NOT IN "
                           "(SELECT candidate FROM content_claims) ORDER BY score DESC,discovered LIMIT 80"):
         doc = json.loads(row["document"])
-        if not ranking.gate(doc, cfg, now.timestamp(), final=True):
+        if not ranking.gate(doc, cfg, now.timestamp(), final=True) and not memory.refusal(store, doc):
             candidates.append((row, doc))
     claimed = [(row, json.loads(row["document"])) for row in store.rows(
         "SELECT c.* FROM candidates c JOIN content_claims p ON c.id=p.candidate")]

@@ -15,8 +15,9 @@ def access_status(note, items):
 
 def queries(targets, offset):
     """Keep synthetic performance explicit even when archive searches broaden."""
-    english = ("AI dance parody", "AI singing cover", "AI comedy parody", "AI music video", "AI boy band")
-    chinese = ("AI 舞蹈", "AI 翻唱", "AI 鬼畜", "AI 音乐视频", "AI 男团")
+    english = ("AI dance parody", "AI singing cover", "AI comedy parody", "AI music video", "AI boy band",
+               "AI Power Rangers transformation cinematic parody", "AI What Is Love duet", "AI Michael Jackson concert")
+    chinese = ("AI 舞蹈", "AI 翻唱", "AI 鬼畜", "AI 音乐视频", "AI 男团", "AI AIGC 战队 变身 特摄", "AI 神曲 合唱", "AI 演唱会")
     aliases_by_cast = list(targets.values())
     result = []
     for index in range(offset, offset + 3):
@@ -29,21 +30,24 @@ def queries(targets, offset):
 
 
 def search(store, cfg, platform, options, cursor, *, fresh=False):
-    from .connectors import HOSTS, canonical
+    from .connectors import HOSTS, canonical, video_id
+    from . import discovery_plan, memory
     now = time.time()
+    memory.import_seed(store, cfg, now)
     cache = store.meta("public_discovery:" + platform, {})
     # Search is deliberately sparser than cheap creator-feed polling. Preserve
     # subscribed Codex capacity; no alternate paid search service is started.
     if not fresh and cache.get("next", 0) > now:
         # Keep discovered URLs until ingestion commits. A crash between this
         # cache write and queue insertion must not hide the leads for two hours.
-        return {"version": 1, "items": cache.get("candidates", []), "cursor": cursor,
+        return {"version": 1, "items": cache.get("candidates", []), "cursor": cache.get("cursor", cursor),
                 "related_creators": cache.get("related_creators", []), "cached": True,
                 "searched_at": cache.get("checked_at"),
                 "access_note": cache.get("access_note", ""),
                 "platform_status": cache.get("platform_status", access_status(cache.get("access_note", ""), cache.get("items", 0)))}
     offset = int(cursor.get("query_offset", 0)) if isinstance(cursor, dict) else 0
     selected = queries(cfg.targets, offset)
+    plan, next_cursor = discovery_plan.plan(store, cfg, platform, options, cursor, now) if cfg.adaptive_discovery else ({}, dict(cursor or {}))
     source_schema = object_schema({
         "canonical_url": {"type": "string", "maxLength": 1000},
         "creator": {"type": ["string", "null"], "maxLength": 128},
@@ -52,7 +56,7 @@ def search(store, cfg, platform, options, cursor, *, fresh=False):
         "access_status": {"type": "string", "enum": ["public_metadata", "search_result_only", "login_required"]},
     })
     output_schema = object_schema({
-        "items": {"type": "array", "maxItems": 15, "items": source_schema},
+        "items": {"type": "array", "maxItems": plan.get("max_leads", 15), "items": source_schema},
         "related_creators": {"type": "array", "maxItems": 10, "items": {"type": "string", "maxLength": 128}},
         "access_note": {"type": "string", "maxLength": 600},
     })
@@ -75,15 +79,17 @@ action and concise visual comedy. Search Chinese creator vocabulary as well as
 English: AI翻唱, AI换脸, AI男团, 鬼畜, 舞蹈. Only ONE configured target needs to
 participate visibly; other fictional cast may accompany them. Avoid static portraits,
 reaction compilations and real news/speech footage. Look for self-contained strong
-moments in longer videos too: a later inspector can select an 8–60 second excerpt
-from an original up to five minutes. Search results never approve that edit.
+moments in longer videos too: a later inspector can select an 8–120 second excerpt
+from an original up to five minutes; a complete strong 60–120 second performance
+can remain whole. Search results never approve that edit.
 Keep an explicit AI/synthetic-generation term in every performance search, even
 when removing date filters. Plain celebrity-plus-dance searches mostly retrieve
 real rallies, interviews and old event footage. Prefer original creative uploads
 whose indexed description supports generated performance; news about a parody,
 reaction videos and genuine celebrity dancing are not the requested clips.
 An indexed AI label is only a discovery hint, never proof of synthetic content.
-Keep this incremental pass bounded: at most three web-search requests. Return
+Keep this pass bounded by the supplied plan (three web searches normally, six
+for its once-daily deep pass). Return
 the supported links found within that work; do not exhaustively chase every
 target, creator or related link in one session. Later passes rotate the queries.
 Request compact/short search responses where the tool supports them. Indexed
@@ -104,12 +110,16 @@ licenses, download links or claims that a candidate has been visually verified.
 evidence_url must be the exact individual video URL found in the results.
 
 Search request:
-""" + json.dumps({"platform": platform, "domains": sorted(HOSTS[platform]),
+""" + ("\nCurrent operator discovery brief (overrides earlier generic research suggestions):\n" + discovery_plan.operator_text(cfg.discovery_prompt_file) if cfg.discovery_prompt_file else "") + "\nBounded request data:\n" + json.dumps({"platform": platform, "domains": sorted(HOSTS[platform]),
         "queries": selected, "creators": options.get("creators", []),
+        "plan": plan,
         "audience_examples": cfg.audience_examples,
         "example_scope": "Observed own-post captions/counters, partial coverage and unequal ages. Style/search hints only, not visual evidence or causal predictions. Find DIFFERENT videos; never recycle these posted clips.",
         "targets": cfg.targets, "now_utc": datetime.fromtimestamp(now, timezone.utc).isoformat()}, ensure_ascii=False)
+    allocation = discovery_plan.admission(store, cfg, platform, now, fresh=fresh)
     if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
+        if allocation:
+            store.refund_budget("codex-discovery", allocation, 1, now)
         raise Deferred("source request budget exhausted")
     try:
         answer, receipt = codex_session.call(store, cfg, prompt, output_schema, purpose="discovery")
@@ -117,6 +127,8 @@ Search request:
         # codex_session.call defers only during admission, before launching the
         # provider. Failed/uncertain started calls remain charged.
         store.refund_budget(platform, "requests", 1, now)
+        if allocation:
+            store.refund_budget("codex-discovery", allocation, 1, now)
         raise
     if "web_search" not in receipt["tools"]:
         raise AccessError("public discovery produced no actual search tool evidence")
@@ -126,7 +138,7 @@ Search request:
             url = canonical(platform, item["canonical_url"])
             if canonical(platform, item["evidence_url"]) != url:
                 continue
-            source_id = urlsplit(url).path.rsplit("/", 1)[-1]
+            source_id = video_id(platform, url)
             creator = (item["creator"] or "").removeprefix("@").strip()
             if any(ord(char) < 32 for char in creator) or len(creator) > 128:
                 continue
@@ -137,11 +149,13 @@ Search request:
         except (ValueError, TypeError):
             continue
     platform_status = access_status(answer["access_note"], items)
+    next_cursor["query_offset"] = offset + len(selected)
+    discovery_plan.completed(store, platform, plan, now)
     store.set_meta("public_discovery:" + platform, {"next": now + max(1200, options.get("public_search_seconds", 7200)),
         "checked_at": now, "items": len(items), "access_note": answer["access_note"], "session": receipt,
         "platform_status": platform_status, "queries": selected,
-        "candidates": items, "related_creators": answer["related_creators"],
+        "candidates": items, "related_creators": answer["related_creators"], "cursor": next_cursor, "plan": plan,
         "returned": len(answer["items"]), "discarded": len(answer["items"]) - len(items)})
-    return {"version": 1, "items": items, "cursor": {"query_offset": offset + len(selected)},
+    return {"version": 1, "items": items, "cursor": next_cursor,
             "related_creators": answer["related_creators"], "public_search": True,
             "access_note": answer["access_note"], "platform_status": platform_status, "searched_at": now}

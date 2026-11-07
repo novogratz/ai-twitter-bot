@@ -88,9 +88,6 @@ def _last_write(action: str):
 
 def profile_submission_refusal(journal, now) -> str:
     """Include pending and operator-confirmed Originals and uncertain reposts."""
-    from ..video import profile
-    if profile.news_enabled():
-        return profile.refusal("news", now, journal=journal)
     from . import repost_store
     submitted = journal.submissions(now.date())
     used = (max(count_today(POST), submitted.published) + count_today(QUOTE)
@@ -166,18 +163,19 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
-def can_post(action: str, *, target: str = "", reply_parent: bool = False) -> Tuple[bool, str]:
+def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
     if action in (POST, RETWEET):
         from ..video.config import owns_profile, legacy_usage
-        from ..video.profile import news_enabled
-        mixed_news = action == POST and news_enabled()
-        if owns_profile() and not mixed_news:
+        news = news and action == POST and settings.get("NEWS_ENABLED") and settings.get("NEWS_AUTO_PUBLISH")
+        if owns_profile() and not news:
             return False, "main profile publications reserved for the video scheduler"
-        video_count, video_last = (0, None) if mixed_news else legacy_usage(now_local())
-        if video_count and profile_count_today() + video_count >= config.posts_ceiling():
+        video_count, video_last = legacy_usage(now_local())
+        # 2026-11-07: verified news has a bounded text budget alongside videos.
+        # post_news owns its reservation and reciprocal video spacing.
+        if not news and video_count and profile_count_today() + video_count >= config.posts_ceiling():
             return False, "daily profile ceiling includes confirmed video publications"
-        if video_last is not None and now_local().timestamp() - video_last < config.MIN_SECONDS_BETWEEN_POSTS:
+        if not news and video_last is not None and now_local().timestamp() - video_last < config.MIN_SECONDS_BETWEEN_POSTS:
             return False, "profile spacing includes the latest confirmed video"
     if stop_requested():
         return False, "stop requested"
@@ -188,10 +186,6 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False) -> Tu
         return False, f"scheduled break until {pause_end.isoformat(timespec='minutes')}"
     if action == QUOTE:
         return False, "automatic quote cap is 0"
-    if action == POST and mixed_news:
-        from ..video.profile import refusal
-        why = refusal("news", now_local())
-        return (False, why) if why else (True, "")
     if action == RETWEET:
         from . import repost_store
         if not repost_store.allowed_url(target):

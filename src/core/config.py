@@ -142,11 +142,8 @@ def dry_run() -> bool:
 _served("MAX_ORIGINALS_PER_DAY", "MIN_SECONDS_BETWEEN_POSTS")
 
 def posts_ceiling() -> int:
-    """News ceiling in mixed mode, otherwise the bounded legacy profile ceiling."""
-    from ..video.profile import news_enabled
-    if news_enabled():
-        from ..video.config import load
-        return load().news_daily_cap
+    """The day's ceiling of profile publications: the policy's eight, or
+    MAX_ORIGINALS_PER_DAY when an Account or .env sets it lower."""
     return min(MAX_PROFILE_POSTS_PER_DAY, settings.get("MAX_ORIGINALS_PER_DAY"))
 
 def post_targets() -> tuple[int, int]:

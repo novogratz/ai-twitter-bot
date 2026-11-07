@@ -11,14 +11,22 @@ commit `e7b4d47`.
 
 ## Process
 
+November 7 news addition: `NEWS_ENABLED` registers `news_job` in a dedicated
+single-thread executor on the existing scheduler, fifteen seconds after boot,
+then hourly. The scheduler stays running overnight; interaction jobs retain
+their `awake_job` wrappers, while news public reads can continue. Its Safari
+chokepoint enforces active hours and startup holds. News replaces legacy
+editorial slots, coexists with videos and uses a separate SQLite journal.
+`main.py --news` and `bin/news.py` expose the same worker. Ordinary starts create
+no second scheduler. Standalone `serve` is an alternative without the main bot.
+
 One Python process drives Safari through AppleScript and injected JavaScript.
 There is no X API client.
 
-`main.py` builds an APScheduler `BackgroundScheduler` with separate one-thread
-`editorial` and `video` executors, three one-thread watched-work executors, and
-`default` (twelve threads). Reply scans cannot starve news or video of a scheduler
-thread, but browser work shares `_safari_lock`, so a post can still wait behind
-another browser transaction. Video discovery and media preparation run separately.
+`main.py` builds an APScheduler `BackgroundScheduler` with two thread pools:
+`editorial` (one thread, originals only) and `default` (twelve threads, every
+other job). Reply scans cannot starve the editorial job of a thread, but all
+browser work shares `_safari_lock`, so a post can still wait behind a reply.
 Every job is an `IntervalTrigger` registered through the local `add()` helper,
 which wraps it in `active_hours.awake_job`. There are no cron triggers and
 no warmup phase. The Startup post is not a job: `main()` opens its window and
@@ -34,7 +42,7 @@ At start, `main()`:
 4. starts the scheduler paused, then checks the waking window and scheduled breaks
    every 15 seconds, pausing or resuming at either boundary.
 
-Flags: `--post-only` (profile publishing jobs only), `--reply-only` (conversation jobs
+Flags: `--post-only` (editorial job only), `--reply-only` (conversation jobs
 only), `--dry-run` (prints timezone, slots and job ids as JSON, then exits
 before touching the browser or a model).
 
@@ -106,8 +114,9 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
-| `editorial_job` | 2 min mixed / 10 min legacy | Reviews/publishes due sourced news; the live Account runs it alongside video. Approved drafts survive spacing until their original window ends. Dedicated editorial executor. |
-| `video_health_job` (`VIDEO_ENABLED=1`) | 2 s | Dedicated video executor owns thirteen 90-minute Toronto slots and durable startup requests. `video.news_enabled` retains the editorial job. Shared reservation exclusion/spacing prevents news/video collisions; separate discovery/media processes inspect, cut, watermark and verify output through the SQLite queue. |
+| `news_job` (`NEWS_ENABLED=1`) | 1 hour | Fetch, verify, persist event dedup, rank and independently review one main pick and optional backup. Main picks may publish through Safari with `NEWS_AUTO_PUBLISH`; backups remain drafts. No email. |
+| `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
+| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns thirteen Toronto slots, 05:00–23:00 every 90 minutes, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
 | `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |
@@ -163,15 +172,15 @@ before); `MemoryJournal` holds it in memory for tests. Each pass reads the
 file once, keeps the state in memory and saves it whole at each change; a
 new Toronto day is saved with the pass's first change.
 
-1. **Slot.** The live `account.toml` lists ten news slots, every two hours
-   from 05:30 through 23:30. None uses the optional trend/exceptional modes.
-   A slot is due for 45 minutes, never past `BEDTIME`, only if
+1. **Slot.** The `slots` of `account.toml` list 05:00, 07:15, 09:30, 10:00,
+   11:45, 13:00, 14:00, 15:00, 16:15, 18:30 and an optional 20:45, the
+   exceptional one; those with `trend = true` are 10:00, 13:00 and 15:00. A slot is due for 45 minutes, never past `BEDTIME`, only if
    the Slot journal has not closed it today and its attempts are not spent.
    A missed slot is not caught up. The Startup post, keyed `startup@HH:MM:SS`
    by the process start time, is a trend slot due for 45 minutes after
    `open_startup_window()`, which opens nothing outside waking hours. Each
    pass tries the Startup post first, then every open grid Slot in order
-   (other Accounts can configure overlapping windows), and moves on while a slot yields no draft; the
+   (09:30 and 10:00 overlap), and moves on while a slot yields no draft; the
    first draft ends the pass, so a pass submits once at most. Before any of
    it, the pass stops when `can_post` refuses or when the pending
    submissions forbid another (see Publish).
@@ -1026,21 +1035,3 @@ ordering; only an idle spacing wait yields, and recomputes the remaining ledger
 gap after another sender. Required parent likes, browser verification and final
 admission stay in the write chokepoints. No queue holds the browser during a
 model call. A long browser transaction or provider stall can still delay action.
-
-
-## Mixed publication and editorial cuts (2026-11-07)
-
-`video.profile` serializes reservation admission, keeping the existing guarded news
-journal and SQLite video claims authoritative. News claims carry exact reviewed
-text; the write chokepoint rejects callers without that claim. Video reservations,
-unknown submissions and conservative spacing are checked on both routes. Neither
-route holds the reservation lock while waiting for Safari. Model work runs in a
-separate executor, so news review cannot occupy the video scheduler.
-
-`video.editing` validates Codex’s source-hash-bound contiguous cut and quality
-floors. `video.media` trims video/audio to identical intervals, verifies output
-audio against that original segment, and preserves original bytes/fingerprints.
-`video.inspection` independently reviews output and its subsecond opening samples;
-retained-overlay OCR and native pixel checks use the cut’s source-time offset.
-Actual output quality determines selection; configuration examples supply style
-context only. No model prediction substitutes for observed views or media checks.

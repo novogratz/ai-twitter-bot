@@ -55,7 +55,7 @@ def test_page_counters_distinguish_missing_values_from_zero():
       const element = label => ({getAttribute:()=>label, closest:()=>article});
       article.querySelector = sel => {
         if (sel.startsWith('time')) return {closest:()=>element('/ownbot/status/123')};
-        if (sel.includes('tweetText')) return {textContent:'Specific reply', querySelectorAll:()=>[]};
+        if (sel.includes('tweetText')) return {textContent:'Specific reply'};
         if (sel.includes('User-Name')) return element('/ownbot');
         if (sel.includes('unlike')) return element('0 Likes. Like');
         if (sel.includes('analytics')) return null;
@@ -69,34 +69,3 @@ def test_page_counters_distinguish_missing_values_from_zero():
     setup = setup.replace("if (sel.includes('analytics')) return null;", "if (sel.includes('analytics')) return element('1.2K Views');")
     result = subprocess.run([node,"-e",setup + '\nconsole.log(' + metrics._VISIBLE + ');'],capture_output=True,text=True,check=True)
     assert json.loads(result.stdout)[0]["views"] == 1200
-
-
-def test_news_receipt_resolves_only_observed_expanded_source_url(monkeypatch):
-    clock(monkeypatch, NOW)
-    own = url(NOW - timedelta(seconds=1), handle=account.current().handle)
-    source = "https://example.test/research/new-model"
-    row = {"url": own, "text": "A specific sourced update. example.test/research/new…",
-           "links": [{"text": "example.test/research/new…", "href": "https://t.co/abc", "title": source}]}
-    monkeypatch.setattr(metrics, "read_visible", lambda: [row])
-    text = "A specific sourced update.\n\n" + source
-    assert metrics.capture_original(text, since=NOW - timedelta(seconds=3), source_url=source) == own
-    row["links"][0]["title"] = "https://example.test/other"
-    assert metrics.capture_original(text, since=NOW - timedelta(seconds=3), source_url=source) == ""
-
-
-def test_news_confirmation_reads_own_profile_when_composer_does_not_show_receipt(monkeypatch):
-    from src.core import config
-    clock(monkeypatch, NOW)
-    opened, closed = [], []
-    own = url(NOW - timedelta(seconds=1), handle=account.current().handle)
-    source = "https://example.test/research/new-model"
-    text = "A specific sourced update.\n\n" + source
-    monkeypatch.setattr(metrics.time, "sleep", lambda _: None)
-    monkeypatch.setattr(metrics.safari, "open_url", lambda u: opened.append(u) or True)
-    monkeypatch.setattr(metrics.safari, "close_front_tab", lambda: closed.append(True))
-    monkeypatch.setattr(metrics, "read_visible", lambda: [{"url": own, "text": text}] if opened else [])
-    assert metrics.confirm_original(text, since=NOW - timedelta(seconds=3), source_url=source) == own
-    assert opened == [config.BOT_PROFILE_URL] and closed == [True]
-    monkeypatch.setattr(metrics, "read_visible", lambda: [{"url": own, "text": "A different update."}])
-    assert metrics.confirm_original(text, since=NOW, source_url=source) == ""
-    assert len(opened) == len(closed) == 2

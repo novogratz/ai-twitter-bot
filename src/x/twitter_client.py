@@ -180,8 +180,7 @@ def post_tweet(text: str) -> WriteOutcome:
     echoed prompt lines) and hashtags, a trailing run whole and the `#` of
     an inline one.
 
-    Mixed news/video mode returns SHIPPED only after an exact own-status
-    receipt; legacy mode returns it once the submit keystroke ran. REFUSED on a policy,
+    Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
     content, respect list or dedup skip, FAILED when the page did not open or
     a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
@@ -189,12 +188,6 @@ def post_tweet(text: str) -> WriteOutcome:
     """
     from ..core import reply_wording
     text = reply_wording.apply(_scrub_metadata_leaks(text), kind="original")
-    from ..video import profile as video_profile
-    if video_profile.news_enabled():
-        from ..video.config import live
-        if not live() or not video_profile.matches_news_claim(text):
-            log.info("[POST] Mixed news/video mode requires a live, reviewed editorial reservation.")
-            return WriteOutcome.REFUSED
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -241,8 +234,6 @@ def post_tweet(text: str) -> WriteOutcome:
         return None
 
     def steps():
-        from ..guards.active_hours import now_local
-        started = now_local()
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
         if not _open_or_abort(url, "POST"):
@@ -251,16 +242,6 @@ def post_tweet(text: str) -> WriteOutcome:
 
         log.info("Auto-clicking Post...")
         if not _submit_or_abort("POST"):
-            return WriteOutcome.UNCONFIRMED
-        if video_profile.news_enabled():
-            from . import reply_metrics
-            # Only the exact own text/status after this submit confirms a news
-            # publication. A missing receipt keeps its durable pending claim.
-            receipt = reply_metrics.confirm_original(text, since=started, source_url=text.rsplit("\n\n", 1)[-1])
-            if receipt:
-                video_profile.note_news_receipt(receipt)
-                log.info("[POST] Confirmed sourced news: %s", receipt)
-                return WriteOutcome.SHIPPED
             return WriteOutcome.UNCONFIRMED
         log.info("Tweet submitted!")
         return WriteOutcome.SHIPPED
@@ -274,6 +255,66 @@ def post_tweet(text: str) -> WriteOutcome:
         rows=lambda: [(action_guard.POST, None)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(recheck,),
         steps=steps, after_record=after_record)
+
+
+def post_news(store, cfg, ident: str) -> WriteOutcome:
+    """Publish only a persisted, independently approved main news pick."""
+    from ..news import publisher
+    from ..video.security import Deferred
+    from ..guards import action_guard, content_guard, respect_list
+    from . import news_page, safari_video
+    from ..core.work_priority import REPLY, scope
+
+    payload = {}
+
+    def admit():
+        try:
+            payload.update(publisher.admit(store, cfg, ident, time.time()))
+            text = payload["tweet"]
+            if not content_guard.validate(text, kind="original")[0] or respect_list.scrub_text_or_skip(text)[1]:
+                return WriteOutcome.REFUSED
+            if content_guard.is_duplicate(text):
+                return WriteOutcome.REFUSED
+        except (ValueError, Deferred) as exc:
+            log.info("[NEWS] Publication deferred: %s", str(exc)[:200])
+            return WriteOutcome.REFUSED
+
+    def owner():
+        safari_video.require_browser_owner()
+
+    def steps():
+        try:
+            if not news_page.prepare(payload["tweet"]):
+                return WriteOutcome.FAILED
+            if admit() is not None:
+                return WriteOutcome.REFUSED
+            since = publisher.begin_submit(store, cfg, ident)
+            if not news_page.composer(payload["tweet"], click=True):
+                return WriteOutcome.UNCONFIRMED
+            source = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (ident,))[0]["document"])["url"]
+            url = news_page.receipt(payload["tweet"], source, since)
+            if not url:
+                return WriteOutcome.UNCONFIRMED
+            publisher.confirmed(store, ident, url, time.time())
+            return WriteOutcome.SHIPPED
+        except Exception:
+            state = store.rows("SELECT state FROM outbox WHERE id=?", (ident,))[0]["state"]
+            if state == "published":
+                return WriteOutcome.SHIPPED
+            return WriteOutcome.UNCONFIRMED if state in ("submitting", "publish_unknown") else WriteOutcome.FAILED
+        finally:
+            store.execute("UPDATE outbox SET state='publish_unknown',error='no exact own-status receipt' WHERE id=? AND state='submitting'", (ident,))
+
+    def record_text():
+        content_guard.note_posted(payload["tweet"])
+        _record_posted(payload["tweet"])
+
+    with safari_video.publisher_session(), scope(REPLY):
+        return confirmed_write.run("NEWS", WriteOutcome,
+            would=lambda: "publish verified news " + ident,
+            rows=lambda: [(action_guard.POST, ident)],
+            before_lock=(admit, confirmed_write.DRY_RUN_EXIT, owner), under_lock=(admit,),
+            steps=steps, after_record=record_text)
 
 
 def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:

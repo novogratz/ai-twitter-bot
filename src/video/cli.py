@@ -47,6 +47,9 @@ def main(argv=None):
     for name in ("preview", "reject", "retry", "review-output"):
         command = sub.add_parser(name)
         command.add_argument("candidate")
+    feedback = sub.add_parser("remember", help="Record an actual owner delivery/show/rejection; never publishes")
+    feedback.add_argument("candidate")
+    feedback.add_argument("decision", choices=("shown", "delivered", "rejected"))
     skip = sub.add_parser("skip")
     skip.add_argument("slot")
     source = sub.add_parser("platform")
@@ -67,6 +70,15 @@ def _execute(args):
     state_store.require_migrated()
     cfg, store = config.load(), Store()
     result = None
+    if args.command == "remember":
+        from .memory import remember
+        if settings.get("DRY_RUN"):
+            result = {"dry_run": True, "candidate": args.candidate, "decision": args.decision}
+        else:
+            remember(store, store.candidate(args.candidate), args.decision, time.time())
+            result = {"candidate": args.candidate, "decision": args.decision, "published": False}
+        print(json.dumps(result))
+        return
     if args.command == "worker":
         return workers.run(args.role, once=args.once)
     if args.command == "select":
@@ -214,6 +226,9 @@ def _execute(args):
         row = store.candidate(args.candidate)
         if row["state"] in ("reserved", "posted"):
             raise SystemExit("Cannot alter a reserved/posted clip; pause and reconcile its reservation")
+        if args.command == "reject":
+            from .memory import remember
+            remember(store, row, "rejected", time.time())
         with store.transaction() as db:
             if args.command == "reject":
                 from .selection import KEY

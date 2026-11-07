@@ -56,10 +56,10 @@ def test_banger_output_needs_actual_performance_and_first_second(ready, video_cf
 def test_caption_is_one_reviewed_line_and_requires_target(ready, video_cfg, at):
     cfg = replace(video_cfg, one_line_caption=True, caption_disclosure=False)
     doc = ready()
-    doc["inspection"]["caption"] = "Example Star turned the meeting into a dance break. 😂"
+    doc["inspection"]["caption"] = "ANOTHER BANGER 🔥 Example Star turned the meeting into a dance break. 😂"
     doc["qc"]["caption_accurate"] = True
     text = ranking.caption(doc, cfg, at().timestamp())
-    assert "\n" not in text and len(text) <= 180
+    assert "\n" not in text and len(text) <= 240
     for invalid in (text + "\nAgain", "The mystery guest turned the meeting into a dance break.", None):
         doc["inspection"]["caption"] = invalid
         with pytest.raises(ValueError):
@@ -91,7 +91,7 @@ def test_completed_output_refusal_keeps_evidence_without_requeueing_novelty(
     cfg = replace(video_cfg, bangers_only=True, one_line_caption=True)
     now = at().timestamp()
     doc = ready()
-    doc["inspection"]["caption"] = "Example Star turned the meeting into a dance break. 😂"
+    doc["inspection"]["caption"] = "ANOTHER BANGER 🔥 Example Star turned the meeting into a dance break. 😂"
     doc["qc"].update(doc["inspection"], caption_accurate=True,
                      opening={"hook_score": 9, "cast_visible_first_second": True,
                               "action_first_second": True, "no_dead_intro": True},

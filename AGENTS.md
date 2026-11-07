@@ -6,54 +6,63 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
-2026-11-07, sourced news plus edited performance bangers — The Operator requests
-SI news about every two hours and a synthetic performance video about every ninety
-minutes while the bot is awake and running, and requests implementation and push.
-This Account enables both schedulers: ten news windows at 05:30, 07:30, 09:30,
-11:30, 13:30, 15:30, 17:30, 19:30, 21:30 and 23:30 Toronto; thirteen video
-windows from 05:00 through 23:00 at ninety-minute intervals. The existing single
-extra startup-video allowance remains. These separate ceilings allow at most 24
-automated profile publications including startup; missed windows never accumulate.
-News/video reservations share exclusion and existing conservative profile spacing;
-uncertain sends block further profile publication. Replies retain their rules.
+2026-11-07, MEGA-BANGER discovery and ninety-minute videos — The Operator's
+research brief now lives in `accounts/theaishrink/video_discovery_prompt.md`,
+with a rotating query bank and partial owner-delivery/rejection seed. The existing
+pipeline schedules thirteen Toronto windows, 05:00 through 23:00 at ninety-minute
+intervals. Its only qualifying cast keys are Trump, Elon Musk, Jensen Huang,
+Sam Altman and Dario Amodei; guests do not independently qualify. Creator textual
+attribution supplies cast context, never biometric face identification. Songs,
+duets, dances and cinematic/Power Rangers-style parody qualify only after actual
+source/output review. Quality is never lowered to fill a slot.
 
-Only sourced news within 48 hours is eligible, with independent factual review
-and at least 4/5 each for newsworthiness, reader impact and opening hook. No
-Evergreen filler. Approved news drafts survive spacing in the guarded slot journal
-without another generation/attempt; they still expire at the original window end.
-Mixed-mode news needs an exact own-status receipt, including an observed expanded
-source link when X shortens its display. No receipt means pending, never success.
+The separate editorial rubric requires 88/100 and at least 8/10 hook/payoff,
+performance, fit and quality, alongside existing 18/17/12 review floors. Unknown
+comparable momentum gets an explicitly labeled neutral editorial prior, never
+fabricated metrics. Language-dependent jokes require verified transcript/translation;
+the current local audio classifier cannot supply that evidence. Codex selects a
+hash-bound contiguous 8–120 second cut from sources up to five minutes, preferring
+15–30 seconds when the complete joke fits. First-second review, aligned audio,
+original preservation and lowercase `@thesimaximalist` watermark remain mandatory.
+Captions are one reviewed English `ANOTHER BANGER 🔥` line with a full verified
+performer name, specific scene and supported song reference when available.
 
-Every video needs at least one creator-attributed fictional role from Elon Musk,
-Donald Trump, Jensen Huang, Sam Altman or Dario Amodei visibly performing. Other
-cast may accompany them; no other-cast-only video qualifies. Attribution is not
-face identification. Actual synthetic performance, audio and full temporal review
-remain required. Instagram and Bilibili get hourly public-discovery opportunities,
-RedNote every ninety minutes and TikTok every two hours, under shared budgets.
-X source discovery is disabled for this Account; required X history/novelty reads
-remain. Failed source pages back off so new leads get capacity.
+Bounded discovery rotates fresh/archive/new-creator searches and source recovery,
+favoring Instagram and Bilibili. YouTube/Douyin are public leads, not working media
+capture adapters or newly granted usage permission. Three research calls per hour
+share existing daily budgets; one deeper archive pass per Toronto day is allowed.
+The reserve targets sixteen distinct clips and warns below three. Six-hour matching
+X-copy checks use the highest observed exact-status views, default ceiling 50,000;
+known large copies, stale/unknown counts and personal duplicates hold. Explicit
+source X counts retain their tighter one-hour check. New source variants require
+matching sequences and independent quality review; larger dimensions prove no
+native detail. Owner shown/delivered/rejected memory and confirmed posting history
+survive cleanup. Existing startup allowance, Replies, verified-news publisher,
+permissions, active hours, uncertainty claims and manual start/restart remain.
+This supersedes earlier ten-slot/cast/caption and automatic scoring defaults.
 
-Codex selects one contiguous 8–60 second excerpt from an inspected original up to
-300 seconds, preferring 15–45 seconds and immediate visible action. Preserve the
-original bytes/hash/fingerprint and the cut's source-time mapping. No speed change,
-reordered action or replacement audio. Render the exact @thesimaximalist watermark,
-verify audio against the selected source interval, compare retained overlays at
-mapped times, and separately inspect rendered frames at 0, .2, .4, .6 and .8 seconds.
-Both source/excerpt review and finished output require fit 18/20, entertainment
-17/20 and quality 12/15; the opening needs 8/10, a visible target, immediate action
-and no dead intro. The output must independently verify a single grounded caption.
-This supersedes the old two-line slogan. Inspectors cannot award popularity.
+2026-11-07, verified SI news alongside videos — The Operator requests hourly
+news discovery, actual evidence verification, permanent event/URL deduplication
+and exceptional stories only, then explicitly authorizes automatic Safari
+posting when the ordinary bot starts. `NEWS_ENABLED` adds one hourly job alongside
+video workers; `NEWS_AUTO_PUBLISH` admits only its independently reviewed main
+pick. Public discovery may continue overnight; X writes retain active hours,
+startup-video holds, content/respect checks and the shared Safari queue.
+News replaces the legacy editorial slot/startup path when enabled. The existing
+text daily ceiling remains (seven locally, never above eight), with two-hour
+news spacing by default. Videos keep their separate budget. News protects thirty
+minutes around scheduled/confirmed videos; video final admission reciprocally
+checks confirmed or uncertain news. This narrowly supersedes video-only ownership
+for verified news; ordinary Originals/reposts gain no exemption.
 
-Among fully eligible clips, actual output quality/hook comes before recency;
-comparable clips retain creator/cast variety. Known dates up to 730 days remain
-eligible, with all rights, audio, QC, source age, permanent dedup and unknown-send
-holds intact. A material edit-policy change permits one new preparation of an
-unclaimed saved source; completed refusals under the same policy stay completed.
-The bounded 18-post Safari observation sample is recorded in
-`docs/si-content-observations-2026-11-07.json`; configured examples guide search and
-style only, with unequal lifetime ages and no causal or retention claims. No viral
-outcome or filled slot is guaranteed. This instruction does not start/restart the
-bot or clear production state; main/settings apply on the next explicit start.
+`news.sqlite3` retains evidence, events, decisions, coverage, costs and delivery
+claims. Missing history is recorded; corrupt accessible history refuses. Tweets
+have sensible blank lines, SI branding, BANGER and one fetched source URL, with
+complete X weighted length checked before independent review. Only an exact own
+status receipt confirms publication; ambiguous sends hold without automatic
+retries. An optional different-story backup stays in the local inbox; email has
+no adapter. Source outages remain operational errors. PR, merge and push are
+requested; no start/restart is included. Local switches apply on the next start.
 
 2026-11-07, broader Replies with major AI accounts first — The Operator requests
 more SI/AI Replies across accounts, giving larger accounts priority. The Account

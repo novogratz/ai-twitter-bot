@@ -60,7 +60,7 @@ def schema(cfg, stage):
         "all_samples_reviewed": boolean,
         "confidence": {"type": "number", "minimum": 0, "maximum": 1},
         "cast": {"type": "array", "items": {"type": "string", "enum": list(cfg.targets)}},
-        "performance": {"type": "string", "enum": ["dance", "singing", "music_parody", "comedy_parody", "unsuitable", "uncertain"]},
+        "performance": {"type": "string", "enum": ["dance", "singing", "music_parody", "comedy_parody", "cinematic_parody", "unsuitable", "uncertain"]},
         "synthetic_parody": boolean, "unsafe": boolean,
         "evidence": {"type": "array", "maxItems": 12, "items": object_schema({
             "at": {"type": "number", "minimum": 0}, "observation": {"type": "string", "maxLength": 500}})},
@@ -70,6 +70,14 @@ def schema(cfg, stage):
         "highlight": {"type": "string", "enum": ["none", "boy_band", "moonwalk", "duet", "synchronized_dance", "dramatic_high_note"]},
         "reason": {"type": "string", "maxLength": 1200},
     }
+    if cfg.bangers_only:
+        from .bangers import JUDGMENTS
+        properties.update(banger_scores=object_schema({key: {"type": "number", "minimum": 0, "maximum": 10} for key in JUDGMENTS}),
+                          banger_reason={"type": "string", "maxLength": 1200}, brand_fit=boolean,
+                          language_dependent=boolean,
+                          performance_notes=object_schema({key: {"type": "string", "maxLength": 600}
+                              for key in ("concept", "hook", "payoff", "identity_stability", "choreography_or_action",
+                                          "shot_rhythm", "sound_evidence", "song_attribution", "cleanup_risks")}))
     if stage == "source":
         properties.update({
             "safe_crop": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 4, "maxItems": 4},
@@ -87,7 +95,7 @@ def schema(cfg, stage):
                 "reason": {"type": "string", "maxLength": 600},
             })
         if cfg.one_line_caption:
-            properties["caption"] = {"type": "string", "maxLength": 180}
+            properties["caption"] = {"type": "string", "maxLength": 240}
     else:
         properties.update({"overlays_clean": boolean, "watermark_present": boolean,
                            "no_destructive_edit": boolean, "source_overlays_retained": boolean,
@@ -171,7 +179,7 @@ def audio_summary(evidence, duration):
 
 
 def frame_pack(path, folder, info, cfg):
-    rate = min(cfg.inspection_fps, info["fps"])
+    rate = min(cfg.inspection_fps, info["fps"], 300 / info["duration"])
     frames_dir = folder / "frames"
     frames_dir.mkdir()
     media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), "-an", "-vf",
@@ -235,7 +243,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
     if cap["status"] == "blocked":
         raise AccessError("; ".join(cap["missing"]))
     edit = extra.get("edit")
-    cache_key = hashlib.sha256(json.dumps({"revision": 7 if stage == "output" else 5, "hash": digest, "stage": stage,
+    cache_key = hashlib.sha256(json.dumps({"revision": 8 if stage == "output" else 6, "hash": digest, "stage": stage,
         "targets": cfg.targets, "watermark": cfg.watermark, "model": codex_session.model(cfg),
         "retained": retained, "source": source_review.get("sha256"),
         "fps": cfg.inspection_fps, "cast_context": context, "edit": edit,
@@ -296,7 +304,7 @@ Do not identify or verify real people from their faces. The creator's textual ca
 attribution, when supplied, describes the fictional roles in this synthetic parody;
 it is NOT a verified real-world identity. Use only those attributed cast keys, and
 only when the actual visual sequence supports a performed synthetic dance, song,
-music parody or comedy sketch. A comedy sketch still needs actual temporal action
+music parody, comedy sketch or cinematic parody. A sketch/reveal still needs actual temporal action
 and inspected audio; a title alone never proves the scene or synthetic origin.
 Do not infer identity, a real event or authenticity from resemblance. Without cast
 attribution leave cast empty. Metadata alone never establishes performance: inspect
@@ -311,7 +319,8 @@ speech or music evidence. Uncertain = low confidence and
 performance uncertain. Never raise confidence just to meet a threshold.
 
 Score fit /20, opening hook and entertainment /20, genuine video/audio quality /15.
-Do not score popularity, freshness or novelty: other code supplies those separately.
+Do not score measured popularity or freshness: other code supplies those separately.
+In the banger rubric, novelty judges the observed concept, not unmeasured audience exposure.
 Highlight must describe an actually observed moment, otherwise none. Check faces,
 hands, choreography and composition for artifacts. No new blurred patches or smears.
 
@@ -334,7 +343,8 @@ source, with an already-visible attributed target performer and immediate action
 at its first second. Start on a supplied sample timestamp. Cut dead intros, loading
 screens, slow setup and trailing credits, retaining a coherent musical phrase or
 comedic payoff. Do not reorder moments, invent motion, change speed or replace audio.
-Prefer 15–45 seconds when the scene supports it; never pad a weak clip. Score fit,
+Prefer 15–30 seconds when a whole chorus/joke fits; preserve a strong complete
+60–120 second performance when cutting would lose its escalation/payoff. Score fit,
 entertainment and quality for the chosen excerpt, while reviewing the WHOLE source
 for safety and provenance. If no strong cut exists, keep scores honestly low.
 Hook /10: 8+ requires instantly understandable performed action and a strong visual
@@ -348,12 +358,29 @@ finished excerpt; the source's proposed scores do not approve the output. A vali
 contiguous trim is intentional, not destructive, if performance/audio and the payoff
 remain coherent. Compare original OCR at output time PLUS the trusted cut start.
 
-For a one-line caption: write one short, natural English joke or observation about
-the observed performance, naming at least one attributed target. 25–180 characters,
+For a one-line caption: begin ANOTHER BANGER 🔥, then a short English visual joke
+using full names of principal attributed targets. A source-supported song reference
+may finish the line; never invent lyrics or song identity from sound categories.
+25–240 characters,
 no newline, URL, hashtag, generic second slogan or invented song/lyric/location.
 Do not invent a real event, relationship or endorsement. The footage is a synthetic
-parody. Emoji optional. Output caption_accurate checks that supplied caption against
+parody. No em dash or mass tags. Output caption_accurate checks that supplied caption against
 the actual finished excerpt; a clever caption cannot excuse unseen details.
+
+Bangers rubric: hook/payoff 25%, performance 20%, cast/account fit 15%, picture/sound
+15%, novelty of the actual concept 10%. The application supplies engagement 10%
+and original freshness 5%; do not invent them. Score each requested judgment 0–10:
+0 absent, 3 weak, 5 ordinary, 8 strong and evidenced, 9 exceptional, 10 rare benchmark.
+Do not rate every relevant clip nine. Explain real hook, escalation, payoff, timing,
+stability, shot rhythm and sound/cleanup limitations. Music-led Power Rangers-style
+reveals, transformations and non-graphic cinematic action comedy can qualify as
+cinematic_parody. Require actual temporal action, not a title or still portrait.
+brand_fit refuses hostile humiliation, political/party-affiliation anthems, campaign
+messaging, graphic action or misleading real events. Stay friendly toward Elon/Grok.
+language_dependent is true if understanding spoken words/lyrics is essential to the
+joke; without actual verified transcript/translation that is a HOLD. SoundAnalysis
+does not identify a song or transcribe lyrics. Label credited songs as attribution,
+not independently heard/verified music. Never call an upscale native high resolution.
 
 """ + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + "Measured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
@@ -381,6 +408,8 @@ the actual finished excerpt; a clever caption cannot excuse unseen details.
     if stage == "output":
         result["edit"] = edit
         result["opening_sample_times"] = opening_times
+    if cfg.bangers_only:
+        result["language_evidence_verified"] = False  # this backend has no transcript/translation verifier
     if stage == "output":
         result = output_ocr(result, source_review, cfg, retained, source_path=source_path, output_path=path)
     store.set_meta("inspection:" + cache_key, result)

@@ -5,9 +5,10 @@ import json
 
 
 def policy_revision(cfg):
-    return hashlib.sha256(json.dumps({"version": 1, "targets": cfg.targets, "watermark": cfg.watermark,
+    return hashlib.sha256(json.dumps({"version": 2, "targets": cfg.targets, "watermark": cfg.watermark,
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
-        "hook": cfg.min_hook_score, "bangers": cfg.bangers_only}, sort_keys=True).encode()).hexdigest()
+        "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
+        "caption": cfg.one_line_caption}, sort_keys=True).encode()).hexdigest()
 
 
 def plan(evidence, info, cfg, digest):
@@ -41,6 +42,9 @@ def plan(evidence, info, cfg, digest):
 def banger_refusal(review, cfg, *, output=False):
     if not cfg.bangers_only:
         return ""
+    from .bangers import review_refusal
+    if reason := review_refusal(review):
+        return reason
     for field, minimum, maximum in (("fit_score", 18, 20), ("entertainment_score", 17, 20), ("quality_score", 12, 15)):
         value = review.get(field)
         if type(value) not in (int, float) or not math.isfinite(value) or not minimum <= value <= maximum:
@@ -50,7 +54,7 @@ def banger_refusal(review, cfg, *, output=False):
         if (type(confidence) not in (int, float) or not math.isfinite(confidence) or confidence < cfg.confidence_min
                 or review.get("unsafe") is not False or review.get("synthetic_parody") is not True
                 or review.get("full_clip_inspected") is not True or review.get("audio_inspected") is not True
-                or review.get("performance") not in ("dance", "singing", "music_parody", "comedy_parody")):
+                or review.get("performance") not in ("dance", "singing", "music_parody", "comedy_parody", "cinematic_parody")):
             return "rendered performance verification incomplete"
         opening = review.get("opening", {})
         score = opening.get("hook_score")

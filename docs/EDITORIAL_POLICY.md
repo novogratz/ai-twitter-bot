@@ -1,56 +1,80 @@
 # Editorial policy — November 7, 2026
 
-## November 7: mixed news and edited performance videos
+## MEGA-BANGER discovery and ninety-minute video slots
 
-2026-11-07, sourced news plus edited performance bangers — The Operator requests
-SI news about every two hours and a synthetic performance video about every ninety
-minutes while the bot is awake and running, and requests implementation and push.
-This Account enables both schedulers: ten news windows at 05:30, 07:30, 09:30,
-11:30, 13:30, 15:30, 17:30, 19:30, 21:30 and 23:30 Toronto; thirteen video
-windows from 05:00 through 23:00 at ninety-minute intervals. The existing single
-extra startup-video allowance remains. These separate ceilings allow at most 24
-automated profile publications including startup; missed windows never accumulate.
-News/video reservations share exclusion and existing conservative profile spacing;
-uncertain sends block further profile publication. Replies retain their rules.
+The current Account video schedule is 05:00, 06:30, 08:00, 09:30, 11:00, 12:30,
+14:00, 15:30, 17:00, 18:30, 20:00, 21:30 and 23:00 Toronto. One source-supported
+qualifying performer is enough: Donald Trump, Elon Musk, Jensen Huang, Sam Altman
+or Dario Amodei. Guests do not qualify alone. Favor songs, boy bands, duets,
+choreography and polished cinematic/superhero reveals. No hostile humiliation,
+party anthems, ordinary speeches or generic weak montages. Cast context is source
+attribution, not face identification.
 
-Only sourced news within 48 hours is eligible, with independent factual review
-and at least 4/5 each for newsworthiness, reader impact and opening hook. No
-Evergreen filler. Approved news drafts survive spacing in the guarded slot journal
-without another generation/attempt; they still expire at the original window end.
-Mixed-mode news needs an exact own-status receipt, including an observed expanded
-source link when X shortens its display. No receipt means pending, never success.
+The operator's discovery brief, query bank and partial history seed feed the
+existing queue. Instagram/Bilibili receive most bounded research effort; older
+excellent sources remain eligible within the existing two-year ceiling. Public
+YouTube/Douyin searches are lead-only capabilities. No new creator contact,
+publisher, usage grant or lifecycle action follows from a discovery result.
 
-Every video needs at least one creator-attributed fictional role from Elon Musk,
-Donald Trump, Jensen Huang, Sam Altman or Dario Amodei visibly performing. Other
-cast may accompany them; no other-cast-only video qualifies. Attribution is not
-face identification. Actual synthetic performance, audio and full temporal review
-remain required. Instagram and Bilibili get hourly public-discovery opportunities,
-RedNote every ninety minutes and TikTok every two hours, under shared budgets.
-X source discovery is disabled for this Account; required X history/novelty reads
-remain. Failed source pages back off so new leads get capacity.
+The separate editorial score weights hook/payoff 25, performance 20, fit 15,
+quality 15, novelty 10, observed engagement 10 and original freshness 5. Each
+component is 0–10; the first four must reach 8. Automatic publication requires
+88/100; 92 is exceptional and 82–87.99 remains research/reserve. Unknown momentum
+gets a labeled neutral 5/10 editorial prior and remains unknown in raw metrics.
+Existing source/output floors, actual audio evidence, hash binding and QC remain.
+Language-dependent jokes stay held without verified transcript/translation.
 
-Codex selects one contiguous 8–60 second excerpt from an inspected original up to
-300 seconds, preferring 15–45 seconds and immediate visible action. Preserve the
-original bytes/hash/fingerprint and the cut's source-time mapping. No speed change,
-reordered action or replacement audio. Render the exact @thesimaximalist watermark,
-verify audio against the selected source interval, compare retained overlays at
-mapped times, and separately inspect rendered frames at 0, .2, .4, .6 and .8 seconds.
-Both source/excerpt review and finished output require fit 18/20, entertainment
-17/20 and quality 12/15; the opening needs 8/10, a visible target, immediate action
-and no dead intro. The output must independently verify a single grounded caption.
-This supersedes the old two-line slogan. Inspectors cannot award popularity.
+Codex proposes one contiguous 8–120 second excerpt from sources up to five
+minutes, preferring 15–30 seconds when the full payoff fits. Output review checks
+the first second, retained action, aligned audio and lowercase Account watermark.
+The caption is one grounded English `ANOTHER BANGER 🔥` line with full principal
+performer names and a supported song reference when available. Required specific
+creator attribution is retained; optional disclosure/source footers remain off.
 
-Among fully eligible clips, actual output quality/hook comes before recency;
-comparable clips retain creator/cast variety. Known dates up to 730 days remain
-eligible, with all rights, audio, QC, source age, permanent dedup and unknown-send
-holds intact. A material edit-policy change permits one new preparation of an
-unclaimed saved source; completed refusals under the same policy stay completed.
-The bounded 18-post Safari observation sample is recorded in
-`docs/si-content-observations-2026-11-07.json`; configured examples guide search and
-style only, with unequal lifetime ages and no causal or retention claims. No viral
-outcome or filled slot is guaranteed. This instruction does not start/restart the
-bot or clear production state; main/settings apply on the next explicit start.
+Permanent personal-history matching includes shown, delivered, posted and rejected
+footage. Source upgrades require ordered matching scenes and independent quality
+review; larger encoded dimensions alone are no claim of native quality. Matching
+X copies use their largest exact-status observed views, not their sum or smallest
+copy. Six-hour evidence and the configured 50,000 ceiling apply; source X counts
+retain one-hour freshness. Known large copies cannot vanish on a later search.
+Uncertainty, inaccessible media and quality failures hold without filler. The
+sixteen-clip reserve and three-clip warning level are targets, not guaranteed
+supply. Existing news, Replies, startup allowance, active hours, permission and
+uncertain-send guards remain. Starting/restarting still needs the Operator.
 
+## Exceptional verified news and explicit Safari authorization
+
+The Operator requests hourly SI news and subsequently authorizes automatic
+publication through normal bot startup. `NEWS_ENABLED=1` adds one hourly news
+job alongside videos, including public research overnight. `NEWS_AUTO_PUBLISH=1`
+authorizes its independently reviewed main pick to use Safari. Both default off
+for other installations. News replaces the legacy editorial grid/startup path.
+
+Verification requires fetched original evidence, separate event/announcement/
+publication dates, exact supporting passages, honest attribution, mechanism and
+availability checks, and independent corroboration for consequential/disputed
+claims. A fresh article about an old event is not fresh news. Unknowns remain
+unknown. Rank significance, novelty, hook, relevance and freshness only after
+verification. No routine filler, virality promises or invented hype. At most one
+main pick and one stronger-threshold, different-story backup per run.
+
+SQLite retains canonical URLs, event/development identities, rejections, imported
+history, coverage gaps and a durable outbox. Retries preserve IDs. Publication
+requires unchanged reviewed text/evidence, active hours, startup holds, content,
+respect and dedup checks, and an exact own X status receipt. Clicks/timeouts alone
+are not success; uncertain sends retain claims and prohibit automatic retries.
+Backups remain local drafts. The text daily ceiling stays at most eight (seven
+locally), in addition to the separately authorized video schedule. News defaults
+to two-hour spacing and protects thirty minutes around video windows/successes.
+Active/uncertain video reservations defer news; video admission reciprocally
+checks news uncertainty and thirty-minute spacing. Other surfaces retain their
+video-mode restrictions.
+
+Tweets are English, sharp and factual with sensible blank lines, SI in generic
+prose, preserved official names/quotations, BANGER, no em dashes and exactly one
+credible fetched source URL at the end. All 280 weighted characters include the
+URL and whitespace. Qualifiers are never trimmed. The account has one editable
+news prompt. Email has no adapter. See [News operations](NEWS.md).
 
 ## Broader AI/SI Reply discovery and major-account priority
 

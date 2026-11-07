@@ -224,7 +224,7 @@ def capture(row, cfg, now):
         doc["source_metrics"] = {"views": view_upper_bound(payload.get("views")), "observed_at": now,
                                  "source_url": url, "displayed": str(payload.get("views", ""))[:200]}
         from .ranking import source_gate
-        reason = source_gate(doc, now)
+        reason = source_gate(doc, now, cfg)
         if reason:
             raise AccessError(reason)
     if doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file():

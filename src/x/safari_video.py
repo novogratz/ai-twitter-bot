@@ -125,7 +125,9 @@ _POSTS = r"""(() => {
       urls:[...a.querySelectorAll('[data-testid="tweetText"] a[href]')].map(e=>e.getAttribute('title') || e.href),
       likes:metric('[data-testid="like"], [data-testid="unlike"]'),
       shares:metric('[data-testid="retweet"], [data-testid="unretweet"]'),
-      replies:metric('[data-testid="reply"]'), views:metric('a[href$="/analytics"]')}];
+      replies:metric('[data-testid="reply"]'), views:metric('a[href$="/status/'+m[2]+'/analytics"]'),
+      views_label:(()=>{const el=a.querySelector('a[href$="/status/'+m[2]+'/analytics"]');
+        return own(el)?(el.getAttribute('aria-label')||el.textContent||''):'';})()}];
   });
   const text = document.querySelector('main')?.innerText || '';
   return JSON.stringify({posts, receipts:[...document.querySelectorAll('[data-testid="toast"] a[href*="/status/"]')].map(a=>a.href),
@@ -648,7 +650,11 @@ class SafariVideoClient:
                 safari.close_front_tab()
         data, media = [], []
         for post in posts.values():
+            from ..video.native_source import view_upper_bound
+            views = view_upper_bound(post["views_label"]) if post.get("views_label") else post.get("views")
             item = {"id": post["id"], "text": post["text"], "created_at": post["created_at"],
+                    "url": post["url"],
+                    "view_observation": {"post_id": post["id"], "url": post["url"], "views": views, "at": time.time()},
                     "entities": {"urls": [{"expanded_url": u} for u in post["urls"]]}}
             if post["video"]:
                 key = "browser:" + post["id"]
@@ -668,6 +674,7 @@ class SafariVideoClient:
     def observe_native_media(self, item):
         """Bounded normal-page observation only; no job, decode or publication."""
         from ..video.native_source import x_media_plan
+        from ..video.config import source_duration_limit
         match = re.fullmatch(r"https://x\.com/[A-Za-z0-9_]{1,15}/status/(\d+)", item.get("post_url", ""))
         if not match:
             raise AccessError("exact video post URL is required for visible-frame matching")
@@ -684,7 +691,7 @@ class SafariVideoClient:
                     info = _json(_video_metadata_script(post_id), min(8, deadline - time.monotonic()))
                     duration = info.get("duration")
                     doc = x_media_plan(info.get("native_media"), item["post_url"], time.time())
-                    if (doc and type(duration) in (int, float) and .5 <= duration <= self.cfg.max_duration_seconds):
+                    if (doc and type(duration) in (int, float) and .5 <= duration <= source_duration_limit(self.cfg)):
                         return {"media_key": item.get("media_key", "browser:" + post_id), "post_url": item["post_url"],
                                 "duration": duration, "native_source": doc}
                     time.sleep(.25)
@@ -701,6 +708,7 @@ class SafariVideoClient:
         from PIL import Image, ImageStat
         from ..video.media import visual_hash
         from ..video.native_source import x_media_plan
+        from ..video.config import source_duration_limit
         from ..video import reconcile
         url = item.get("post_url", "")
         match = re.fullmatch(r"https://x\.com/[A-Za-z0-9_]{1,15}/status/(\d+)", url)
@@ -729,7 +737,7 @@ class SafariVideoClient:
                         break
                     info = _json(_video_metadata_script(post_id), min(8, remaining))
                     duration = info.get("duration")
-                    usable_native = (type(duration) in (int, float) and .5 <= duration <= self.cfg.max_duration_seconds
+                    usable_native = (type(duration) in (int, float) and .5 <= duration <= source_duration_limit(self.cfg)
                                      and x_media_plan(info.get("native_media"), url, time.time()) is not None)
                     # An audio playlist can arrive before the native video. Keep
                     # ordinary playback loading until video bytes or frames exist.

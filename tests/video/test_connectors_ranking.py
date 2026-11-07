@@ -6,8 +6,8 @@ import pytest
 from src.video import connectors, ranking
 
 
-def test_five_adapters_honestly_blocked_without_access(video_cfg):
-    assert set(connectors.ADAPTERS) == {"instagram", "tiktok", "bilibili", "rednote", "x"}
+def test_adapters_honestly_blocked_without_access(video_cfg):
+    assert set(connectors.ADAPTERS) == {"instagram", "tiktok", "bilibili", "rednote", "x", "youtube", "douyin"}
     for cls in connectors.ADAPTERS.values():
         assert cls(video_cfg).capability()["status"] == "blocked"
 

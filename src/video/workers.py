@@ -32,7 +32,8 @@ def runtime_generation(cfg):
     config_path = Path(settings.get("VIDEO_CONFIG_FILE") or root / "accounts" / account / "video.toml").resolve()
     paths = sorted(set((root / "src").rglob("*.py")) | {
         root / "bin" / "video.py", root / "bin" / "video_av_probe.swift",
-        root / "requirements.txt", root / "requirements-video.txt", root / "accounts" / account / "account.toml", config_path})
+        root / "requirements.txt", root / "requirements-video.txt", root / "accounts" / account / "account.toml", config_path}
+        | {Path(path) for path in (cfg.discovery_prompt_file, cfg.discovery_memory_file, cfg.query_bank_file) if path})
     effective = {key: settings.get(key) for key in settings.DECLARED}
     digest = hashlib.sha256(json.dumps({"config": asdict(cfg), "settings": effective,
         "python": sys.version, "executable": sys.executable}, sort_keys=True, ensure_ascii=False).encode())
@@ -162,6 +163,9 @@ def run_once(role, store, cfg, owner, *, now=None):
     if store.meta("shutdown", False):
         return "shutdown"
     store.heartbeat(role, owner, now)
+    if role in ("publisher", "discovery"):
+        from .preparation import maintain_reserve
+        maintain_reserve(store, cfg, now)
     if role == "publisher":
         # Publishing keeps its reserved request budget under discovery/media load.
         from .startup import tick

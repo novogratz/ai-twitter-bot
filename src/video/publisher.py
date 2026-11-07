@@ -6,7 +6,6 @@ import uuid
 
 from . import config, inventory, ranking, schedule
 from .media import matches_history
-from .profile import serialized
 from .security import sha256
 from .store import dumps
 
@@ -109,10 +108,11 @@ def tick_calendar(store, now, cfg):
                 db.execute("UPDATE startup SET state='skipped',reason='eligible-time expiry' WHERE id=?", (request["id"],))
 
 
-@serialized
 def reserve(store, now, cfg, *, operator_direct=False):
     """No network under the transaction; refreshed ready assets compete atomically."""
     tick_calendar(store, now, cfg)
+    from . import memory
+    memory.import_seed(store, cfg, now.timestamp())
     if not config.live() or not schedule.eligible(now):
         return None
     if store.meta("paused", True) or store.meta("shutdown", False):
@@ -124,8 +124,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
         return None
     if store.meta("publish_retry_after", 0) > now.timestamp():
         return None
-    from .profile import refusal
-    if refusal("video", schedule.local(now), cfg, store=store):
+    from ..news.publisher import video_hold
+    if video_hold(now.timestamp()):
         return None
     stamp, day = now.timestamp(), schedule.local(now).date().isoformat()
     with store.transaction() as db:
@@ -185,6 +185,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         for candidate in rows:
             doc = json.loads(candidate["document"])
             reason = ranking.gate(doc, cfg, stamp, final=True)
+            reason = memory.refusal(store, doc) or reason
             if choice and (choice["sha256"] != doc.get("original_sha256") or not ranking.selected(doc, stamp)):
                 reason = "explicitly selected original changed or selection expired"
             if any(matches_history(doc, prior) for prior in history):
@@ -202,6 +203,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
             if slot:
                 db.execute("UPDATE slots SET reason='no eligible ready video' WHERE id=?", (slot["id"],))
             return None  # keep the slot open until grace; report final skip
+        if cfg.bangers_only:
+            valid.sort(key=lambda pair: ranking.editorial_strength(pair[1]), reverse=True)
         valid = inventory.distinct(valid)
         if cfg.protect_primary_windows and slot and not startup:
             primary = schedule.primary_slot(slot["id"], cfg)
@@ -233,9 +236,18 @@ def reserve(store, now, cfg, *, operator_direct=False):
             comparable = valid if choice else [(r, d) for r, d in valid if (r["score"] or 0) >= top_score - 3]
         def repetition(pair):
             _, doc = pair
+            if cfg.bangers_only:
+                notes = doc.get("qc", {}).get("performance_notes", {})
+                return sum(2 * (d["creator"] == doc["creator"]) + sum(
+                    bool(notes.get(key) and notes[key] == d.get("qc", {}).get("performance_notes", {}).get(key))
+                    for key in ("song_attribution", "concept")) for d in recent)
             return sum(2 * (d["creator"] == doc["creator"]) + (d["inspection"]["cast"] == doc["inspection"]["cast"])
                        + bool(d["inspection"].get("song") and d["inspection"].get("song") == doc["inspection"].get("song")) for d in recent)
-        row, doc = min(comparable, key=repetition)
+        def tie_break(pair):
+            maximum = pair[1].get("novelty", {}).get("highest_observed_views")
+            saturated = type(maximum) is int and maximum >= 10000
+            return repetition(pair), saturated if cfg.bangers_only else False
+        row, doc = min(comparable, key=tie_break)
         ident, token = uuid.uuid4().hex, uuid.uuid4().hex
         remaining = cfg.startup_seconds - schedule.eligible_seconds(datetime.fromtimestamp(startup["requested"], timezone.utc), now) if startup else 0
         deadline = slot["due"] + cfg.grace_seconds if slot else stamp + remaining
@@ -262,6 +274,10 @@ def reserve(store, now, cfg, *, operator_direct=False):
 
 
 def guard(store, ident, token, now, cfg, *, submitting=False):
+    from ..news.publisher import video_hold
+    news_reason = video_hold(now)
+    if news_reason:
+        raise ValueError(news_reason)
     if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc)):
         raise ValueError("video publishing disabled or overnight")
     if store.meta("paused", True) or store.meta("shutdown", False):
@@ -273,15 +289,15 @@ def guard(store, ident, token, now, cfg, *, submitting=False):
     if not rows or rows[0]["state"] not in ("reserved", "uploading") or rows[0]["lease"] < now:
         raise ValueError("lost publishing lease")
     row = rows[0]
-    from .profile import refusal
-    if reason := refusal("video", schedule.local(datetime.fromtimestamp(now, timezone.utc)), cfg,
-                         store=store, reservation=ident):
-        raise ValueError(reason)
     if row["transport"] != cfg.publishing_transport:
         raise ValueError("reservation transport changed; recover it before switching")
     if now > row["deadline"]:
         raise ValueError("publication deadline passed")
     doc = store.candidate(row["candidate"])["document"]
+    from . import memory
+    memory.import_seed(store, cfg, now)
+    if reason := memory.refusal(store, doc):
+        raise ValueError(reason)
     reason = ranking.gate(doc, cfg, now, final=True)
     if reason:
         raise ValueError(reason)

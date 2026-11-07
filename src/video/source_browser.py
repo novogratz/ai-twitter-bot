@@ -232,7 +232,7 @@ def capture_next(store, cfg, now):
                 raise Deferred("source request budget exhausted")
             native_source.capture(row, cfg, now)
             _source_succeeded(doc)
-            reason = ranking.source_gate(doc, now)
+            reason = ranking.source_gate(doc, now, cfg)
             if reason:
                 raise AccessError(reason)
             store.save_candidate(row["id"], doc, time.time(), state=row["state"] if downloaded else "discovered",

@@ -10,7 +10,7 @@ import subprocess
 import tempfile
 import time
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from . import ranking
 from .security import AccessError, Deferred, imported_file, request, sha256
@@ -107,7 +107,9 @@ def probe(path, cfg, *, source=False):
     data = json.loads(bounded_command(["ffprobe", "-v", "error", "-protocol_whitelist", "file,pipe",
                                      "-show_format", "-show_streams", "-of", "json", str(path)], timeout=30))
     streams = data["streams"]
-    video = next(s for s in streams if s["codec_type"] == "video")
+    video = next((s for s in streams if s["codec_type"] == "video"), None)
+    if video is None:
+        raise UnsupportedMedia("complete source contains no video stream")
     audio = next((s for s in streams if s["codec_type"] == "audio"), None)
     duration = float(data["format"]["duration"])
     fps = float(Fraction(video["avg_frame_rate"]))
@@ -122,6 +124,8 @@ def probe(path, cfg, *, source=False):
             or any(s.get("side_data_type") == "Display Matrix" and s.get("rotation", 0) != 0 for s in video.get("side_data_list", []))):
         raise UnsupportedMedia("unsupported duration, audio, rotation, aspect, dimensions or genuine frame rate")
     return {"duration": duration, "width": width, "height": height, "fps": fps, "sample_aspect_ratio": sar,
+            "video_bitrate": int(video["bit_rate"]) if str(video.get("bit_rate", "")).isdigit() else None,
+            "audio_bitrate": int(audio["bit_rate"]) if str(audio.get("bit_rate", "")).isdigit() else None,
             "audio_start": float(audio.get("start_time", 0)), "video_start": float(video.get("start_time", 0)),
             "video_codec": video["codec_name"], "audio_codec": audio["codec_name"]}
 
@@ -138,7 +142,7 @@ def fingerprint(path, info, cfg):
     """Ordered full/central image hashes plus spectral audio; music alone never dedups."""
     import numpy as np
     count = min(30, max(4, math.ceil(info["duration"])))
-    samples = []
+    samples, mirrored = [], []
     for index in range(count):
         at = min(info["duration"] - .05, (index + .5) * info["duration"] / count)
         raw = ffmpeg(["-ss", str(at), "-protocol_whitelist", "file,pipe", "-i", str(path),
@@ -147,6 +151,7 @@ def fingerprint(path, info, cfg):
             raise ValueError("missing temporal frame")
         frame = Image.frombytes("L", (64, 64), raw)
         samples.append(visual_hash(frame))
+        mirrored.append(visual_hash(ImageOps.mirror(frame)))
     pcm = audio_samples(path, cfg)
     spectral = []
     for start in range(0, len(pcm) - 4000, 4000):
@@ -155,7 +160,8 @@ def fingerprint(path, info, cfg):
                                                                    np.geomspace(10, 2000, 17).astype(int)[1:])])
         bits = bands[1:] > bands[:-1]
         spectral.append(sum(int(bit) << i for i, bit in enumerate(bits)))
-    return {"sha256": sha256(path), "visual": samples, "audio": spectral, "duration": info["duration"]}
+    return {"sha256": sha256(path), "visual": samples, "mirrored_visual": mirrored,
+            "audio": spectral, "duration": info["duration"]}
 
 
 def visual_hash(frame):
@@ -170,6 +176,14 @@ def visual_hash(frame):
 
 
 def duplicate(left, right):
+    if _sequence_duplicate(left, right):
+        return True
+    return any(_sequence_duplicate(a, b) for a, b in (
+        (left | {"visual": left.get("mirrored_visual", [])}, right),
+        (left, right | {"visual": right.get("mirrored_visual", [])})))
+
+
+def _sequence_duplicate(left, right):
     if left["sha256"] == right["sha256"]:
         return True
     a, b = left.get("visual", []), right.get("visual", [])
@@ -227,7 +241,7 @@ def matches_history(doc, posted):
 def download(doc, destination, cfg, store, now):
     if not ranking.permission(doc, cfg, now):
         raise AccessError("licensed video and audio permission required before downloading")
-    if reason := ranking.source_gate(doc, now):
+    if reason := ranking.source_gate(doc, now, cfg):
         raise AccessError(reason)
     used = sum(p.stat().st_size for root in (ASSETS, SAVED_ASSETS)
                for p in Path(str(root)).rglob("*") if p.is_file())
@@ -467,6 +481,11 @@ def _process(store, job, now, cfg):
     if row["state"] in ("rejected", "posted", "reserved", "duplicate", "expired"):
         return
     doc = row["document"]
+    from . import memory
+    memory.import_seed(store, cfg, now)
+    if why := memory.refusal(store, doc):
+        store.save_candidate(row["id"], doc, now, state="duplicate", reason=why, job=job)
+        return
     if cfg.auto_edit:
         from .editing import policy_revision
         doc["editing_policy_revision"] = policy_revision(cfg)
@@ -483,7 +502,7 @@ def _process(store, job, now, cfg):
     folder.mkdir(parents=True, exist_ok=True)
     original, output = folder / "original.mp4", folder / "branded.mp4"
     try:
-        source_reason = ranking.source_gate(doc, time.time())
+        source_reason = ranking.source_gate(doc, time.time(), cfg)
         if source_reason == _STALE_X_METRICS:
             raise Deferred(source_reason, retry_after=60)
         if source_reason:
@@ -521,8 +540,27 @@ def _process(store, job, now, cfg):
         doc["probe"] = info
         original_fp = fingerprint(original, info, cfg)
         doc["original_fingerprint"] = original_fp
-        for old in store.rows("SELECT id,fingerprint FROM candidates WHERE fingerprint IS NOT NULL AND id<>?", (row["id"],)):
+        if why := memory.refusal(store, doc):
+            store.save_candidate(row["id"], doc, time.time(), state="duplicate", reason=why,
+                                 fingerprint=original_fp, job=job)
+            return
+        doc.setdefault("content_cluster", row["id"])
+        for old in store.rows("SELECT id,state,document,fingerprint FROM candidates WHERE fingerprint IS NOT NULL AND id<>?", (row["id"],)):
             if duplicate(original_fp, json.loads(old["fingerprint"])):
+                previous = json.loads(old["document"])
+                previous_info = previous.get("probe", {})
+                higher_detail_candidate = info.get("width", 0) * info.get("height", 0) > 1.15 * previous_info.get("width", 0) * previous_info.get("height", 0)
+                claimed = store.rows("SELECT 1 FROM content_claims WHERE candidate=?", (old["id"],))
+                if (cfg.bangers_only and higher_detail_candidate and old["state"] in ("held", "ready", "discovered", "duplicate")
+                        and not claimed and not memory.refusal(store, previous)):
+                    # A matched, larger source is a research alternative, not
+                    # proof of native detail or permission to republish footage.
+                    doc["content_cluster"] = previous.get("content_cluster", old["id"])
+                    doc.setdefault("verified_source_variants", []).append({"candidate": old["id"],
+                        "url": previous.get("canonical_url"), "probe": previous_info,
+                        "original_sha256": previous.get("original_sha256"),
+                        "matching": "ordered visual/audio fingerprint", "native_detail_verified": False})
+                    continue
                 store.save_candidate(row["id"], doc, time.time(), state="duplicate", reason=f"same sequence as {old['id']}", fingerprint=original_fp, job=job)
                 return
         for old in store.rows("SELECT payload FROM history"):
