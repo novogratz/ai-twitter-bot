@@ -20,6 +20,29 @@ def test_reach_reports_missing_coverage_without_inventing_homepage_views():
     assert report["homepage_views"] is None
 
 
+@pytest.mark.parametrize("views", [None, False, True, -1, "250", 1.5])
+def test_unknown_or_invalid_views_do_not_claim_observed_reach_coverage(views):
+    from src.editorial.reach_report import summarize
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    post = dict(ts=now.isoformat(), text="A useful AI workflow", slot="08:00")
+    tweet = dict(url=f"https://x.com/{config.BOT_HANDLE}/status/1", text=post["text"], views=views, likes=5)
+    report = summarize([post], [tweet], now)
+    assert report["views"] == 0 and report["originals_observed"] == 0
+    assert report["originals_published"] == 1 and not report["coverage_complete"]
+    assert report["top_posts"] == []
+
+
+@pytest.mark.parametrize("views", [0, 250])
+def test_observed_views_including_zero_count_toward_coverage(views):
+    from src.editorial.reach_report import summarize
+    now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
+    post = dict(ts=now.isoformat(), text="A useful AI workflow", slot="08:00")
+    tweet = dict(url=f"https://x.com/{config.BOT_HANDLE}/status/1", text=post["text"], views=views, likes=5)
+    report = summarize([post], [tweet | {"views": None}, tweet], now)
+    assert report["views"] == views and report["originals_observed"] == 1
+    assert report["coverage_complete"] and report["top_posts"][0]["views"] == views
+
+
 def test_a_failed_measurement_leaves_the_safari_health_file_alone(monkeypatch, caplog):
     """Issue #236: the reach report stays out of the Safari failure counter;
     its failure is logged with its traceback."""

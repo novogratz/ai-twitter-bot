@@ -62,6 +62,12 @@ def observed_likes(tweet: dict) -> int | None:
     return value if type(value) is int and value >= 0 else None
 
 
+def observed_views(tweet: dict) -> int | None:
+    """Observed post reach; a missing count says nothing about audience size."""
+    value = tweet.get("views")
+    return value if type(value) is int and value >= 0 else None
+
+
 def freshness_sort_key(tweet):
     """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
     to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
@@ -106,5 +112,6 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:
             continue
-        candidates.append(Candidate(url, text, tag, is_reply=is_reply, likes=observed_likes(tweet)))
+        candidates.append(Candidate(url, text, tag, is_reply=is_reply,
+                                    likes=observed_likes(tweet), views=observed_views(tweet)))
     return candidates

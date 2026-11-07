@@ -285,7 +285,7 @@ _FR_MARKERS = (
     " marché", " bourse", " entreprise", " croissance", " année", " déjà ",
 )
 _EN_MARKERS = (
-    " the ", " and ", " is ", " are ", " of ", " to ", " for ", " with ",
+    " the ", " and ", " is ", " are ", " of ", " to ", " for ", " with ", " from ",
     " this ", " that ", " these ", " their ", " you ", " your ", " it's ",
     " they ", " we ", " will ", " just ", " market", " growth", " company ",
     " here ", " there ", " about ", " than ", " because ",
@@ -309,7 +309,8 @@ _SHORT_ENGLISH_CUES = re.compile(
     r"tiny|cheap|cheaper|expensive|faster|slower|wins|hurts|hurt|works|working|"
     r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
     r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
-    r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds)\b", re.IGNORECASE)
+    r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds|"
+    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists)\b", re.IGNORECASE)
 _FRENCH_REPLY_CUES = re.compile(
     r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
     r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
@@ -343,6 +344,14 @@ such fun matchup tender idea image images generation inside vs clear pricing
 easier designer eye prompt preset spell seventeen sounds like safe request
 charmed brain excellent listening little vampire drama handing github tasks
 very tempting order tracking me
+charming stargazing playful sweet story stories character characters concept
+concepts premise premises haiku art artist artists artwork fantasy collection
+collections anniversary morning treat weekend welcome romantic seeing celebrated
+celebration celebrate celebrating glorious silliness honeymoon
+self reflection on builder builders row rows insists private query queries one
+command honest personal taste deserve deserves save button blind comparisons
+crushes give agents house style snake suspense happy congrats congratulations
+go build robot technicians
 """.split())
 
 
@@ -616,7 +625,9 @@ def validate(text: str, kind: str = "original", *, source_language: str = "") ->
         # Operator, 2026-10-23: every surface uses English; references are not prose.
         prose = re.sub(r"https?://\S+|@[A-Za-z0-9_]+", "", text)
         lang, conf = detect_language(prose)
-        short_english = kind == "reply" and lang == "unknown" and _short_english_reply(prose)
+        # A closed English vocabulary can also resolve a lone shared "on"
+        # marker. Unknown words, accents and explicit French still refuse.
+        short_english = kind == "reply" and lang != "en" and _short_english_reply(prose)
         # A source is someone else's post, not our drafted Original. X's
         # English tag or an unambiguous short reaction can resolve an unknown
         # result. Neither relaxes the language/quality gate on our Reply.

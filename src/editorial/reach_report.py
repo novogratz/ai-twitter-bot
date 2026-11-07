@@ -23,12 +23,13 @@ def summarize(published, scraped, now=None):
         prefix = " ".join(post["text"].split())[:100]
         matches = [t for t in scraped
                    if not t.get("is_reply")
+                   and type(t.get("views")) is int and t["views"] >= 0
                    and f"x.com/{config.BOT_HANDLE.lower()}/status/" in (t.get("url") or "").lower()
                    and " ".join((t.get("text") or "").split()).startswith(prefix)]
         if matches:
-            tweet = max(matches, key=lambda t: int(t.get("views") or 0))
+            tweet = max(matches, key=lambda t: t["views"])
             observed.append(dict(text=post["text"], slot=post["slot"], url=tweet["url"],
-                                 views=int(tweet.get("views") or 0), likes=int(tweet.get("likes") or 0)))
+                                 views=tweet["views"], likes=int(tweet.get("likes") or 0)))
     return dict(as_of=now.isoformat(), target_views=TARGET_VIEWS,
                 metric="Observed lifetime views of originals published in the last 7 days",
                 views=sum(p["views"] for p in observed),

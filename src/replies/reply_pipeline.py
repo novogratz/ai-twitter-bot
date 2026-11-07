@@ -72,6 +72,7 @@ class Candidate:
     queued_at: float = field(default_factory=time.monotonic, compare=False, repr=False)
     expires_at: float | None = None  # buffered source freshness, never a posting claim
     likes: int | None = None  # observed parent counter; missing is unknown
+    views: int | None = None  # observed parent reach, never an author follower count
 
 
 @dataclass
@@ -108,14 +109,14 @@ def _send_turn():
 
 
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
-        max_shipped: int | None = None) -> int:
-    """Prefer sufficiently liked parents, preserving source order within each group.
+        max_shipped: int | None = None, ordinary_priority: bool = False) -> int:
+    """Order a job's candidates without changing admission or its write priority.
 
     `max_generations` bounds the candidates admitted (the generations paid),
     `max_shipped` the Replies shipped. Nothing is admitted once
     `cycle.rate_limited` is set. A job without a ReplyCall takes only
     candidates that carry their reply: ValueError before any admission."""
-    candidates = prioritize(candidates)
+    candidates = prioritize(candidates, ordinary=ordinary_priority, diversify_authors=ordinary_priority)
     if job.reply_call is None:
         candidates = list(candidates)
         if any(not c.reply for c in candidates):
@@ -145,25 +146,44 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
     return shipped
 
 
-def prioritize(candidates, *, diversify_authors=False):
-    """Prefer observed likes; ordinary buffers may spread each tier across authors.
+def priority_authors():
+    """The operator-designated large-account group, only when enabled."""
+    if not settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS"):
+        return set()
+    return {handle.lower().lstrip("@") for handle in account.current().network.big_ai_hype}
 
-    One author's first candidate precedes their second within its like tier.
-    Source order breaks ties, and every candidate remains available. The
-    default preserves watched/author-specific job ordering exactly.
+
+def prioritize(candidates, *, diversify_authors=False, ordinary=False):
+    """Ordinary buffers prefer configured authors, then likes and observed views.
+
+    The author group is operator-selected, never an inferred follower count.
+    Each author offers their highest-view post first; authors rotate within
+    comparable author/like tiers, then observed reach and source order break ties.
+    Every candidate remains available. Default/watched jobs keep their existing
+    stable like preference; only ordinary buffered work opts into reach ranking.
     """
     threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
+    large = priority_authors() if ordinary else set()
     seen = Counter()
+
+    def reach(candidate):
+        views = candidate.views if type(candidate.views) is int and candidate.views >= 0 else None
+        return (views is None, -(views if views is not None else 0))
+
+    if ordinary:
+        # Assign each author's first round to their strongest observed post.
+        candidates = sorted(candidates, key=reach)
 
     def key(candidate):
         preference = bool(threshold and (candidate.likes is None or candidate.likes < threshold))
-        if not diversify_authors:
-            return (preference, 0)
         author = x_urls.author(candidate.url) or candidate.url
-        group = (preference, author)
+        leading = (author not in large, preference) if large else (preference,)
+        if not diversify_authors:
+            return (*leading, *(reach(candidate) if ordinary else ()), 0)
+        group = (*leading, author)
         occurrence = seen[group]
         seen[group] += 1
-        return (preference, occurrence)
+        return (*leading, occurrence, *(reach(candidate) if ordinary else ()))
 
     return sorted(candidates, key=key)
 

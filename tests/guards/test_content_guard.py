@@ -41,6 +41,66 @@ def test_observed_clear_english_reactions_pass(text):
     assert cg.validate(text, kind="reply") == (True, "")
 
 
+@pytest.mark.parametrize("text", [
+    "Such a charming stargazing idea 💜",
+    "Such a fun character idea 💖",
+    "Such a playful concept 💖",
+    "Such a sweet love story 💕",
+    "Such a tender little haiku 💕",
+    "Such a lovely story idea 💕",
+    "A lovely morning treat 💖",
+    "Happy art anniversary 💖",
+    "Love seeing SI art celebrated ❤️",
+    "More fantasy art, yes please 🩷",
+    "Such a sweet premise 🩷",
+    "Such a fun SI collection 💖",
+    "Self-reflection looks good on a benchmark builder 🩷",
+    "Every row insists on a private query 😅",
+    "One test command keeps “done” honest.",
+    "Personal taste deserves a save button 🩷",
+    "Blind comparisons keep model crushes honest 😅",
+    "Give agents a house style, please 🩷",
+    "Love a little snake suspense 💜",
+    "Congrats, go build those robot technicians 🩷",
+])
+def test_observed_affection_and_specific_short_english_are_not_lost(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("text", [
+    "A worktree per feature helps keep parallel agents from trampling each other’s edits, very civilized.",
+    "Forking a teammate’s site beats rebuilding from screenshots.",
+    "Clear capture requirements save contributors from guessing.",
+])
+def test_from_is_counted_as_a_full_english_function_word(text):
+    assert cg.detect_language(text)[0] == "en"
+    assert cg.validate(text, kind="reply") == (True, "")
+
+
+@pytest.mark.parametrize("text", [
+    "Such a lovely quuxaloom 💜", "Such a charming jardin 💜",
+    "Happy art anniversaire 💖", "Love seeing SI art célébré ❤️",
+    "Such a lovely story, merci beaucoup 💕", "Such a sweet premise mais pas utile",
+    "On voit une belle image.", "On me dit que cette idée est bonne.",
+    "On aime ce modèle, good work.", "Love seeing art, on est heureux.",
+    "Self-reflection looks good, mais on reste prudents.",
+    "Every row insists on une requête privée.",
+    "Love seeing абракадабра", "Such a lovely wunderbar",
+    "Great post 💜", "Amazing!", "💜💖💕🩷💜💖💕🩷",
+])
+def test_short_english_vocabulary_never_admits_unknown_french_or_generic_text(text):
+    assert not cg.validate(text, kind="reply")[0]
+
+
+@pytest.mark.parametrize("text", [
+    "Such a charming stargazing idea 💜",
+    "Love seeing SI art celebrated ❤️",
+    "Every row insists on a private query 😅",
+])
+def test_new_short_english_evidence_stays_reply_only(text):
+    assert not cg.validate(text, kind="original")[0]
+
+
 @pytest.mark.parametrize("kind", ["original", "reply", "source"])
 @pytest.mark.parametrize("text", [
     "You're tempting me, merci beaucoup 🩷",

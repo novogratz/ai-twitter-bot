@@ -153,3 +153,90 @@ def test_author_diversity_is_opt_in_so_watched_job_order_is_unchanged():
              replace(candidate(3, likes=3), url=fresh("another", n=3))]
     assert pipeline.prioritize(items) == items
     assert pipeline.prioritize(items, diversify_authors=True) == [items[0], items[2], items[1]]
+
+
+@pytest.mark.parametrize("pipelined", [False, True])
+def test_ordinary_priority_survives_pipeline_sort_and_rotates_authors_before_second_posts(
+        monkeypatch, settings_override, llm, chokepoint, pipelined):
+    from dataclasses import replace
+    from src.core import account
+
+    loaded = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, network=replace(
+        loaded.network, big_ai_hype=("PriorityOne", "prioritytwo"))))
+    settings_override(REPLY_PRIORITIZE_LARGE_ACCOUNTS=True, REPLY_PREFERRED_MIN_LIKES=3)
+    items = [replace(candidate(n, likes=likes, views=views), url=fresh(author, n=n))
+             for n, (author, likes, views) in enumerate([
+                 ("small", 300, 1_000_000), ("priorityone", 0, 10_000),
+                 ("priorityone", 3, 900), ("priorityone", 3, 1000),
+                 ("prioritytwo", 3, 800), ("unknown", 3, None), ("zero", 3, 0)])]
+    buffer = buffers.Buffer()
+    buffer.offer(items, max_age=timedelta(hours=1))
+    ordered = buffer.pending()
+    assert [c.url for c in ordered] == [items[n].url for n in (3, 4, 2, 1, 0, 6, 5)]
+    assert pipeline.prioritize(ordered, ordinary=True, diversify_authors=True) == ordered
+    assert buffer.run(job(pipelined), pipeline.Cycle(), max_generations=2) == 2
+    assert chokepoint.sent == [items[3].url, items[4].url]
+    assert buffer.run(job(pipelined), pipeline.Cycle(), max_generations=5) == 5
+    assert chokepoint.sent == [items[n].url for n in (3, 4, 2, 1, 0, 6, 5)]
+    # The same configured author and view counters never reorder watched jobs.
+    assert pipeline.prioritize(items) == [items[n] for n in (0, 2, 3, 4, 5, 6, 1)]
+
+
+def test_view_rediscovery_refreshes_ranking_without_erasing_observations_or_extending_ttl():
+    from dataclasses import replace
+
+    buffer = buffers.Buffer()
+    first, second = candidate(1, likes=3, views=10), candidate(2, likes=3, views=100)
+    buffer.offer([first, second], max_age=timedelta(hours=1))
+    assert [c.url for c in buffer.pending()] == [second.url, first.url]
+    expiry = next(c.expires_at for c in buffer.pending() if c.url == first.url)
+    buffer.offer([replace(first, views=200)], max_age=timedelta(days=3))
+    assert buffer.pending()[0].url == first.url
+    assert buffer.pending()[0].views == 200 and buffer.pending()[0].expires_at == expiry
+    for missing in (None, True, -1, "99999"):
+        buffer.offer([replace(first, likes=None, views=missing)], max_age=timedelta(days=3))
+        assert buffer.pending()[0].views == 200 and buffer.pending()[0].likes == 3
+        assert buffer.pending()[0].expires_at == expiry
+
+
+@pytest.mark.parametrize("views", [None, 999])
+def test_rediscovery_tightens_a_priority_sources_horizon_even_without_new_counters(monkeypatch, views):
+    from dataclasses import replace
+
+    now = [time.time()]
+    monkeypatch.setattr(buffers.time, "time", lambda: now[0])
+    buffer = buffers.Buffer()
+    item = candidate(minutes=55, likes=3, views=100)
+    buffer.offer([item], max_age=timedelta(hours=24))
+    expiry = buffer.pending()[0].expires_at
+    buffer.offer([replace(item, likes=None, views=views)], max_age=timedelta(hours=1))
+    tighter = buffer.pending()[0]
+    assert tighter.expires_at < expiry
+    assert tighter.views == (100 if views is None else views)
+    assert tighter.likes == 3
+    now[0] += 6 * 60
+    assert buffer.pending() == []
+
+
+@pytest.mark.parametrize("enabled", [False, True])
+def test_full_buffer_retains_older_priority_source_only_when_enabled(monkeypatch, settings_override, enabled):
+    from dataclasses import replace
+    from src.core import account
+
+    loaded = account.current()
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, network=replace(
+        loaded.network, big_ai_hype=("Major",))))
+    settings_override(REPLY_CANDIDATE_BUFFER_LIMIT=2, REPLY_PRIORITIZE_LARGE_ACCOUNTS=enabled)
+    now = [time.time()]
+    monkeypatch.setattr(buffers.time, "time", lambda: now[0])
+    buffer = buffers.Buffer()
+    ordinary, newest = candidate(1, minutes=10), candidate(2, minutes=1)
+    major = replace(candidate(3, minutes=12 * 60), url=fresh("major", minutes=12 * 60, n=3))
+    buffer.offer([ordinary, newest], max_age=timedelta(hours=24))
+    buffer.offer([major], max_age=timedelta(hours=24))
+    assert {item.url for item in buffer.pending()} == {
+        newest.url, major.url if enabled else ordinary.url}
+    assert replied_store.load_replied() == set()
+    now[0] += 31 * 60
+    assert buffer.pending() == []  # Priority never extends the source's TTL.

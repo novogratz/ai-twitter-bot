@@ -77,6 +77,9 @@ REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300,
                       "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
                       "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2,
                       "DIRECT_REPLY_QUERIES_PER_CYCLE": 8, "DIRECT_REPLY_MAX_PER_CYCLE": 3,
+                      "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
+                      "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 4,
+                      "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
                       "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 8}
 
 
@@ -131,7 +134,7 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
         "reply_volume_boost_date", "reply_discovery_generation_budgets"}
     assert shown["reply_volume_boost_date"] == ""
     assert shown["reply_discovery_generation_budgets"] == {
-        "DIRECT_REPLY_QUERIES_PER_CYCLE": 12,
+        "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
         "DIRECT_REPLY_MAX_PER_CYCLE": 80,
         "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
     }
@@ -148,7 +151,10 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
         "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
         "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800,
-        "REPLY_PREFERRED_MIN_LIKES": 3, "DIRECT_REPLY_QUERIES_PER_CYCLE": 12,
+        "REPLY_PREFERRED_MIN_LIKES": 3, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
+        "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
+        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 4,
+        "REPLY_PRIORITIZE_LARGE_ACCOUNTS": True,
         "DIRECT_REPLY_MAX_PER_CYCLE": 80, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
     assert shown["settings_warnings"] == []
 

@@ -162,12 +162,14 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
     js_code = """
     (function() {
         function extractFromLabel(label) {
-            var m = (label || '').match(/(\\d[\\d,\\.KMkm]*)/);
-            if (!m) return 0;
-            var s = m[1].replace(/,/g, '').toLowerCase();
-            if (s.indexOf('k') !== -1) return Math.round(parseFloat(s) * 1000);
-            if (s.indexOf('m') !== -1) return Math.round(parseFloat(s) * 1000000);
-            return parseInt(s, 10) || 0;
+            // Only a counter label (or bare compact count) is evidence.
+            // Malformed grouping, unavailable labels and negatives stay unknown.
+            var m = (label || '').trim().match(/^((?:\\d{1,3}(?:[, \\u00a0\\u202f]\\d{3})+|\\d+)(?:\\.\\d+)?)\\s*([KMB]?)(?:\\s+(?:views?|vues?)(?:[.\\s].*)?)?$/i);
+            if (!m) return null;
+            var n = Number(m[1].replace(/[, \\u00a0\\u202f]/g, ''));
+            if (!m[2] && !Number.isInteger(n)) return null;
+            var count = Math.round(n * ({k:1000, m:1000000, b:1000000000}[m[2].toLowerCase()] || 1));
+            return Number.isSafeInteger(count) && count >= 0 ? count : null;
         }
         function extractCount(article, testid) {
             var btn = article.querySelector('[data-testid="' + testid + '"]');
@@ -228,11 +230,22 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             var tl = detectTranslatedLang(a);
             var isReply = detectReplyArticle(a, text);
             var ts = timeEl ? timeEl.getAttribute('datetime') : '';
-            // Views: the analytics link's aria-label carries the count
-            // ("12.3K views"). Powers performance.scrape_own_metrics.
-            var views = 0;
-            var an = a.querySelector('a[href*="/analytics"]');
-            if (an) views = extractFromLabel(an.getAttribute('aria-label') || '');
+            // Reach belongs to this exact original, never its quoted card,
+            // nested article or another status's analytics link.
+            var views = null;
+            var parentPath = url ? url.slice('https://x.com'.length).toLowerCase() : '';
+            var analytics = Array.from(a.querySelectorAll('a[href*="/analytics"]')).filter(el => {
+                if (el.closest('article') !== a || el.closest('[data-testid="quoteTweet"], div[role="link"]')) return false;
+                try {
+                    var target = new URL(el.getAttribute('href'), 'https://x.com');
+                    return ['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'].includes(target.hostname)
+                        && target.pathname.toLowerCase() === parentPath + '/analytics';
+                } catch (_) { return false; }
+            });
+            if (analytics.length === 1) {
+                var an = analytics[0];
+                views = extractFromLabel(an.getAttribute('aria-label') || an.textContent || '');
+            }
             if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
@@ -294,7 +307,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             # had unknown age and the hard 48h freshness gate skipped 100% of
             # feed/search candidates ("No viable candidates this cycle").
             "timestamp": t.get("ts") or "",
-            "views": int(t.get("v") or 0),
+            "views": t["v"] if type(t.get("v")) is int and t["v"] >= 0 else None,
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")

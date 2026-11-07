@@ -1,5 +1,45 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-07 — Broader Reply discovery and fewer false language refusals
+
+The Operator asks to push Replies across SI/AI content, prioritizing larger
+accounts while including smaller authors. The preceding 24-hour log audit
+(November 6–7, approximately 05:48 Toronto) found 949 confirmed Reply receipts,
+1,284 generation requests, 157 model declines and 74 language refusals. A saved
+runtime-report snapshot separately showed 6,858 already-seen admissions against
+59 new admissions. Raising the eighty-generation budget would not address that
+repeated supply. Of 3,065 search starts in the log window, 2,436 targeted the
+existing Elon watch; the explicitly requested watch interval remains unchanged.
+
+The new sixteen-query allocation reserves four grouped Latest searches for the
+configured major AI authors and rotates eight Top/four first-hour Latest searches
+independently. Removing routine Top popularity floors broadens discovery; exact
+author/root/freshness and AI/SI checks still decide admissibility. The existing
+priority group orders ordinary buffers before their three-like preference,
+author variety and actual parent views. Missing views stay unknown and quoted
+analytics are excluded. Downstream reach coverage excludes missing counters and
+trending model input retains unknown views. No follower-size estimate or growth
+guarantee is added.
+Full-buffer eviction follows the configured major-author preference before
+source recency, preventing a valid older priority source from being discarded
+before drafting. Rediscovery through a tighter freshness lane shortens expiry;
+the same bounded buffer and permanent publication history remain.
+
+Narrow language regression cases reproduce real rejections including “Such a
+charming stargazing idea” and English sentences with the shared word `on`.
+Replaying the 74 refusal texts through the revised language check recognizes
+32 as English; 42 remain refused. This is an offline language result, not new
+publication or proof that every other admission check would pass. Explicit
+French, mixed-language, unknown-word, generic and Original fallback controls
+remain. The operator retains manual control of the next main-bot restart.
+
+Validation passed 2,909 isolated tests. The local dry run reports sixteen search
+queries, eighty direct Replies/eighty generations per feed, uncapped daily Replies
+and the existing eight-second gap plus zero-to-four seconds jitter. The real
+Account's query plan resolves to four priority/eight Top/four first-hour Latest
+searches within its total budget. These are configuration and regression results,
+not a new live throughput measurement.
+
 ## 2026-11-06 — Confirmed 09:00 scheduled video
 
 The operator restarted the main bot at 08:45:41 Toronto after the final production

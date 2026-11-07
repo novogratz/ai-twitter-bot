@@ -6,6 +6,39 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-07, broader Replies with major AI accounts first — The Operator requests
+more SI/AI Replies across accounts, giving larger accounts priority. The Account
+and local environment budget sixteen rotating searches per direct cycle: four
+grouped Latest searches of `network.big_ai_hype`, eight Top searches and four
+first-hour Latest searches. Separate cursors rotate each pool; allocations and
+backfill never exceed the total. Priority-author reads precede ordinary buffered
+drafting and require the exact URL-derived listed author, a standalone original,
+AI/SI relevance and a verified age within 24 hours or the tighter source limit.
+The group is an operator designation, not a measured follower-count claim.
+
+Ordinary buffered Replies prefer those configured authors, then three-plus
+observed likes, retaining author variety and using observed parent-post views
+among comparable candidates. Lower/unknown counts remain eligible. Analytics
+counts must belong to the exact outer status; missing or invalid views stay
+unknown, and rediscovery cannot extend buffer expiry. Reach coverage counts only
+observed view counters; trending input preserves unknown views. Routine Top queries drop
+their thirty/fifty-like search floors; the separate high-traction queries retain
+theirs. When the ordinary buffer is full, this Account keeps configured major
+authors first, then the newest sources within each group; the four-hundred-source
+and thirty-minute limits remain. Rediscovery may tighten, never extend, expiry.
+This supersedes the earlier ordinary like-tier-first ordering and the
+proposed eight-Latest/four-Top experiment. Watched-job ordering remains.
+
+The short English Reply fallback recognizes more ordinary affectionate, artistic
+and technical words and can resolve a shared `on` marker only with its complete
+closed English vocabulary. Its eighty-character bound, explicit French/mixed
+refusals, unknown-word and generic-response checks remain; the full-word `from`
+marker supplies ordinary English evidence. The warmer Voice remains in force.
+The direct Reply and per-feed generation budgets stay eighty, with no daily Reply cap. Sol/xhigh,
+eight-second spacing plus zero-to-four-second jitter, parent likes, AI/SI scope,
+permanent one-Reply-per-original history, follow rules and video workers remain.
+Code and settings load on the Operator's next explicitly requested restart.
+
 2026-11-06, preserve preparation capacity and wait for actual video — A completed
 source review can stop before render/output inspection only when its actual
 fit, entertainment and quality scores cannot reach either publication rule even

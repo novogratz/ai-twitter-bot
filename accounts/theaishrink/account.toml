@@ -167,9 +167,13 @@ REPLY_JITTER_SECONDS = 4
 REPLY_DAILY_TARGET_MIN = 1500
 REPLY_PREFERRED_MIN_LIKES = 3
 REPLY_DAILY_TARGET_MAX = 1800
-# Operator, 2026-11-04: keep increased discovery/generation capacity every day.
-# Three observed likes means strictly more than two; it is a preference only.
-DIRECT_REPLY_QUERIES_PER_CYCLE = 12
+# Operator, 2026-11-07: major AI accounts first, broader discovery for everyone.
+# Total: four priority-author Latest, eight Top, four first-hour Latest searches.
+# Three observed likes remain a preference within each author-priority group.
+DIRECT_REPLY_QUERIES_PER_CYCLE = 16
+DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 4
+DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE = 4
+REPLY_PRIORITIZE_LARGE_ACCOUNTS = true
 DIRECT_REPLY_MAX_PER_CYCLE = 80
 FEED_SWEEP_MAX_REPLIES_PER_CYCLE = 80
 
@@ -294,19 +298,19 @@ latest = [
 ]
 # Every alternative of a query, read with AND before OR or OR before AND,
 # finds posts `post` keeps: a company or energy word goes with AI.
-# direct_reply rotates through `replies` then `hot_tab`, a slice per cycle,
-# on the Top tab; a result must be on the niche.
+# direct_reply rotates through `replies` then `hot_tab` within its Top budget;
+# a result must be on the niche. Routine searches have no popularity floor.
 replies = [
-    '("why would" OR "why is" OR "what am I missing") (GPU OR (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) lang:en min_faves:30',
-    '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en min_faves:50',
-    '(ChatGPT OR Claude OR Gemini OR Grok OR Llama OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) assistant)) lang:en min_faves:50',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (agents OR agentic)) OR "reasoning model" OR AGI) lang:en min_faves:30',
-    '("Claude Code" OR Cursor OR Copilot OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) coding)) lang:en min_faves:30',
-    '(((Meta OR Amazon OR Tesla) (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en min_faves:50',
-    '(GPU OR TPU OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (datacenter OR inference))) lang:en min_faves:50',
-    '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (TSMC OR AMD OR Broadcom OR chips OR power OR energy) lang:en min_faves:30',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (CoreWeave OR Nebius OR "Applied Digital" OR electricity)) OR "data center") lang:en min_faves:30',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (startup OR workflow OR release OR "open source")) OR DeepSeek) lang:en min_faves:30',
+    '("why would" OR "why is" OR "what am I missing") (GPU OR (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) lang:en',
+    '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en',
+    '(ChatGPT OR Claude OR Gemini OR Grok OR Llama OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) assistant)) lang:en',
+    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (agents OR agentic)) OR "reasoning model" OR AGI) lang:en',
+    '("Claude Code" OR Cursor OR Copilot OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) coding)) lang:en',
+    '(((Meta OR Amazon OR Tesla) (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en',
+    '(GPU OR TPU OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (datacenter OR inference))) lang:en',
+    '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (TSMC OR AMD OR Broadcom OR chips OR power OR energy) lang:en',
+    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (CoreWeave OR Nebius OR "Applied Digital" OR electricity)) OR "data center") lang:en',
+    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (startup OR workflow OR release OR "open source")) OR DeepSeek) lang:en',
 ]
 hot_tab = [
     '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en min_faves:500',

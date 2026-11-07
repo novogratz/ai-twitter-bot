@@ -104,7 +104,11 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
                              "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1500,
                              "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 3,
-                             "DIRECT_REPLY_QUERIES_PER_CYCLE": 12, "DIRECT_REPLY_MAX_PER_CYCLE": 80,
+                             "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
+                             "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
+                             "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 4,
+                             "REPLY_PRIORITIZE_LARGE_ACCOUNTS": True,
+                             "DIRECT_REPLY_MAX_PER_CYCLE": 80,
                              "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
@@ -919,10 +923,15 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
     ("likes", NETWORK["LIKE_QUERIES"]),
     ("trending", OLD_TREND_QUERIES),
 ])
-def test_research_keeps_both_vocabularies_and_existing_search_budgets(name, previous):
+def test_research_keeps_vocabularies_and_floors_only_for_high_traction_lanes(name, previous):
     queries = getattr(account.current().searches, name)
     assert len(queries) == len(previous)
     for before, after in zip(previous, queries):
+        if name == "replies":
+            # Ordinary Reply discovery admits smaller/newer posts too;
+            # observed popularity is a later ordering preference.
+            before = re.sub(r" min_faves:\d+", "", before)
+            assert "min_faves:" not in after
         assert re.findall(r"(?:lang|min_faves):\w+|-filter:replies", after) == re.findall(
             r"(?:lang|min_faves):\w+|-filter:replies", before)
         assert re.search(r"\bAI\b", after) and re.search(r"\bSI\b", after)

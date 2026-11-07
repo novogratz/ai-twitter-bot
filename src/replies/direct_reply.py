@@ -12,7 +12,8 @@ from ..guards.content_guard import REPLY_MAX_CHARS
 from ..x.scraper import scrape_profile_tweets, scrape_home_feed, scrape_x_search, scrape_following_feed
 from . import reply_pipeline, candidate_buffer
 from .reply_generator import LanguageRule, ReplyCall
-from .reply_source import freshness_sort_key, is_on_niche, source_text, observed_likes
+from .reply_source import (author_search_query, freshness_sort_key, is_on_niche, source_text,
+                           observed_likes, observed_views)
 
 # The VIP scan and the search lane set aside the same posts.
 JOB_NAME = "direct_reply"
@@ -141,7 +142,7 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
 SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)
 
 
-def _search_candidates(tweets: list, query: str, tab: str = "top") -> list:
+def _search_candidates(tweets: list, query: str, tab: str = "top", *, expected_authors=()) -> list:
     """Root search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the
     niche (queries are broad), fresh and rising first. A nested reply is
     skipped, as in the feed sweep: the model would see it without its root
@@ -149,34 +150,90 @@ def _search_candidates(tweets: list, query: str, tab: str = "top") -> list:
     per-query conversion is measurable (2026-06-08)."""
     limit = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     if tab == "latest":
-        limit = min(limit, timedelta(hours=1))
-    tag = "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
-    return [reply_pipeline.Candidate(t["url"], source_text(t), f"{tag}/{query[:60]}", likes=observed_likes(t))
+        limit = min(limit, timedelta(hours=24 if expected_authors else 1))
+    authors = {handle.lower().lstrip("@") for handle in expected_authors}
+    tag = "SEARCH-PRIORITY" if authors else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+    return [reply_pipeline.Candidate(t["url"], source_text(t), f"{tag}/{query[:60]}",
+                                    likes=observed_likes(t), views=observed_views(t))
             for t in sorted(tweets, key=freshness_sort_key)
             if t.get("url") and not x_urls.is_reply_like_tweet(t)
+            and (not authors or x_urls.author(t["url"]) in authors)
             and _fresh_enough(t["url"], limit) and is_on_niche(source_text(t))]
 
 
-# Rotation cursor for the per-cycle query slice. Process-lifetime state:
-# a restart just restarts the rotation, which is harmless (the slice is
-# shuffled downstream and every query recurs within ~3 cycles).
-_QUERY_ROTATION_OFFSET = [0]
+# Each bounded discovery pool rotates independently. Restarting the cursors
+# never changes the permanent per-original Reply history.
+_QUERY_ROTATION_OFFSETS = {}
 
 
-def _queries_for_cycle(all_queries: list) -> list:
+def _queries_for_cycle(all_queries: list, *, limit=None, pool="all") -> list:
     """Return this cycle's rotating slice of the reply search queries.
 
     DIRECT_REPLY_QUERIES_PER_CYCLE (default 8, read at call time) bounds
     how many Safari search scrapes one cycle pays for. K >= N degrades to
     the old scan-everything behavior."""
-    k = max(1, settings.reply_budget("DIRECT_REPLY_QUERIES_PER_CYCLE"))
+    k = settings.reply_budget("DIRECT_REPLY_QUERIES_PER_CYCLE") if limit is None else max(0, limit)
     n = len(all_queries)
     if n == 0 or k >= n:
         return list(all_queries)
-    start = _QUERY_ROTATION_OFFSET[0] % n
+    start = _QUERY_ROTATION_OFFSETS.get(pool, 0) % n
     picked = [all_queries[(start + i) % n] for i in range(k)]
-    _QUERY_ROTATION_OFFSET[0] = (start + k) % n
+    _QUERY_ROTATION_OFFSETS[pool] = (start + k) % n
     return picked
+
+
+def _priority_searches():
+    """Grouped Latest searches of the operator's designated large-account list."""
+    handles = list(dict.fromkeys(handle.lower().lstrip("@")
+                                for handle in account.current().network.big_ai_hype))
+    searches = []
+    for start in range(0, len(handles), 6):
+        group = tuple(handles[start:start + 6])
+        # Reuse the literal-handle validator; a display name can never add
+        # search operators. Source admission checks the returned author again.
+        authors = " OR ".join(author_search_query(handle).split()[0] for handle in group)
+        query = (f'({authors}) (AI OR SI OR ASI OR LLM OR superintelligence '
+                 'OR "artificial intelligence" OR "super intelligence" '
+                 'OR Grok OR OpenAI OR Anthropic OR Claude OR Gemini OR Codex OR GPU OR CUDA OR robotics) '
+                 '-filter:replies -filter:retweets')
+        searches.append((query, "latest", group))
+    return searches
+
+
+def _query_plan():
+    """Allocate one total read budget; short pools lend their unused capacity."""
+    searches = account.current().searches
+    total = settings.reply_budget("DIRECT_REPLY_QUERIES_PER_CYCLE")
+    priority = settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE")
+    latest = settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE")
+    pools = {
+        "priority": _priority_searches() if priority else [],
+        "top": [(query, "top", ()) for query in dict.fromkeys(searches.replies + searches.hot_tab)],
+        "latest": [(query, "latest", ()) for query in dict.fromkeys(searches.latest)],
+    }
+    counts = {"priority": min(priority, total, len(pools["priority"]))}
+    counts["latest"] = min(latest, total - counts["priority"], len(pools["latest"]))
+    counts["top"] = min(total - sum(counts.values()), len(pools["top"]))
+    spare = total - sum(counts.values())
+    for lane in ("priority", "top", "latest"):
+        extra = min(spare, len(pools[lane]) - counts[lane])
+        counts[lane] += extra
+        spare -= extra
+    selected = {lane: _queries_for_cycle(pools[lane], limit=counts[lane], pool=lane) for lane in pools}
+    ordinary = selected["top"] + selected["latest"]
+    random.shuffle(ordinary)
+    return selected["priority"], ordinary
+
+
+def _discover_query(query, tab, authors):
+    label = "SEARCH-PRIORITY" if authors else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+    tweets = reply_pipeline.scrape(label, repr(query), scrape_x_search, query,
+                                   max_tweets=25, tab=tab, text_limit=1200)
+    max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
+    if tab == "latest":
+        max_age = min(max_age, timedelta(hours=24 if authors else 1))
+    candidates = _search_candidates(tweets, query, tab, expected_authors=authors)
+    candidate_buffer.SEARCH.offer(candidates, max_age=max_age)
 
 
 def run_direct_reply_cycle(max_replies=None):
@@ -201,6 +258,18 @@ def run_direct_reply_cycle(max_replies=None):
     total = _run_vip_scan(cycle, remaining=remaining)
     if remaining is not None:
         remaining -= total
+    if cycle.rate_limited or (remaining is not None and remaining <= 0):
+        log.info(f"[DIRECT] Posted {total} replies this cycle.")
+        return
+
+    # Read the configured priority groups before ordinary buffered drafting,
+    # otherwise a full buffer can keep fresh priority posts undiscovered.
+    priority_queries, cycle_queries = _query_plan()
+    log.info("[DIRECT] Selected search plan: %s priority, %s Top, %s Latest (at most %s reads).",
+             len(priority_queries), sum(tab == "top" for _, tab, _ in cycle_queries),
+             sum(tab == "latest" for _, tab, _ in cycle_queries), len(priority_queries) + len(cycle_queries))
+    for query, tab, authors in priority_queries:
+        _discover_query(query, tab, authors)
 
     # Spend unused, still-fresh sources before paying for another browser scan.
     n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
@@ -211,37 +280,15 @@ def run_direct_reply_cycle(max_replies=None):
     # 2. SEARCH — primary reply engine for direct_reply.
     #    Feed sweeper owns For You / Following; this cycle owns search so
     #    the two engines don't waste time deduping the same feed tweets.
-    #    Scan a ROTATING SLICE of the queries per cycle (2026-07-10): the
-    #    old scan-ALL-26-queries-every-cycle burned most of each cycle's
-    #    Safari time re-scraping pools that churn slower than the 1-2 min
-    #    cycle interval (same query hit 4x/hour, mostly dedup-skips) —
-    #    replies/hr sagged to ~27 while search scrapes dominated. Full
-    #    coverage still lands every ceil(N/K) cycles (~5 min); the freed
-    #    Safari time goes to POSTING replies.
-    searches = account.current().searches
-    # Interleave Latest and Top without adding scrapes to the cycle's budget.
-    # Latest has no min_faves threshold: relevant builders can be discovered
-    # before they have accumulated a large audience.
-    from itertools import zip_longest
-    all_queries = [item for pair in zip_longest(
-        [(q, "latest") for q in searches.latest],
-        [(q, "top") for q in searches.replies + searches.hot_tab]) for item in pair if item]
-    cycle_queries = _queries_for_cycle(all_queries)
-    random.shuffle(cycle_queries)
-    for query, tab in cycle_queries:
+    #    Rotating Top and ordinary Latest pools share the remainder of the
+    #    same read budget. Source and generation budgets still stop this pass.
+    for query, tab, authors in cycle_queries:
         if cycle.rate_limited:
             break
         if remaining is not None and remaining <= 0:
             log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
-        tweets = reply_pipeline.scrape("SEARCH-HOT", repr(query), scrape_x_search, query,
-                                       max_tweets=25, tab=tab, text_limit=1200)
-        # The budget bounds each query's generations; only the Replies
-        # shipped come off it.
-        max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
-        if tab == "latest":
-            max_age = min(max_age, timedelta(hours=1))
-        candidate_buffer.SEARCH.offer(_search_candidates(tweets, query, tab), max_age=max_age)
+        _discover_query(query, tab, authors)
         n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
         total += n
         if remaining is not None:

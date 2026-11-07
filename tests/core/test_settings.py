@@ -96,10 +96,13 @@ def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
 
     fresh("")
     assert settings.get("REPLY_VOLUME_BOOST_DATE") == ""
-    for day in (4, 5, 6):
+    for day in (7, 8, 9):
         local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
         monkeypatch.setattr(active_hours, "now_local", lambda: local)
-        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [12, 80, 80]
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 80, 80]
+        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 4
+        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 4
+        assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is True
         assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 3
 
 
