@@ -78,6 +78,14 @@ URLs as 23 and weights Unicode/emoji; see
 [X's character rules](https://docs.x.com/fundamentals/counting-characters).
 Setuptools stays below 81 because the parser uses `pkg_resources` for its data.
 
+Verification distinguishes an attributed announcement from an independently
+established result. Company benchmarks and unreplicated research retain explicit
+attribution and material limitations; disputed claims, consequential security
+allegations and damage claims still require independent corroboration. An
+unpublished verification hold may clear when evidence is supplied. It is not a
+previous alert, and does not need an invented material event update. Published,
+delivered, queued and rejected developments keep their duplicate protection.
+
 SQLite permanently retains event/development IDs, canonical URLs, evidence,
 decisions, deliveries and imported history. Semantic comparisons retrieve
 relevant indexed records; this does not claim exhaustive knowledge of all past

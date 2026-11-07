@@ -44,6 +44,10 @@ coverage remains unknown. A complete scan restores the normal overlapping
 picks under the same run lock for the running bot's next hourly delivery. It
 does not take Safari ownership or claim a delivery. The Operator explicitly
 requested this bot start; publication still requires an actual X receipt.
+An unpublished verification hold may clear with adequate evidence; it is not a
+prior alert. Attributed company results remain explicitly attributed and limited,
+never labelled independently verified without corroboration. Disputed claims,
+consequential security allegations and damage claims retain that requirement.
 
 2026-11-07, broader Replies with major AI accounts first — The Operator requests
 more SI/AI Replies across accounts, giving larger accounts priority. The Account

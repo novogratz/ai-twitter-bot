@@ -72,19 +72,38 @@ drafts, alerts, recommendations and rejected stories. Set duplicate_of to a
 matching history ID. A new outlet is not a new event. Only a material new
 development can resurface; explain it using an exact update_evidence passage.
 Rewording, a new delivery window and changed editorial enthusiasm do not count.
+An unpublished held/verified candidate is not a previous alert or publication.
+It may be reconsidered when missing evidence becomes available. Reuse its event
+and development identity; do not invent a material event update just to clear a
+verification hold. Preserve deduplication of published, delivered, queued and
+rejected stories. Reading a story during an earlier incomplete verification
+attempt does not by itself make it a repeated alert.
 
 Every essential assertion needs a claims entry with an exact passage and its
 fetched URL. Verify important numbers, denominators, benchmark conditions,
 availability and limitations. Company benchmarks remain company claims.
 Unreplicated research remains attributed research. Preserve material
 uncertainty and identify speculation. Set verified=false when evidence is weak.
-Consequential security allegations, disputed claims, remarkable performance
-claims and claims of real-world damage require independent corroboration.
+Consequential security allegations, disputed claims and claims of real-world
+damage require independent corroboration. So does presenting a remarkable
+performance result as an established, independently verified fact.
 Set independent_required=true for these. Set independent_confirmed=true only
 when actually fetched sources from different owners independently support the
 claim, not when two outlets repeat one press release. corroboration_urls must
 include those fetched sources. A company's blog and its research team are one
 owner. Lack of corroboration holds a consequential/disputed story.
+
+Distinguish verification of an announcement from verification of its results.
+A credible original announcement can establish what a company released or
+reported. Unreplicated research and company benchmarks may be reported as
+explicitly attributed claims, with material benchmark conditions, availability
+limits and an explicit unreplicated/not-independently-verified qualifier where
+needed. Never mark those results independently confirmed. Do not require a
+third party to repeat the entire experiment merely to report the attributed
+announcement. Do not use attribution to excuse unsupported allegations,
+disputed claims, damage claims, or an implied independently established result.
+Narrow the claim when that leaves a genuinely exceptional, accurate story;
+otherwise hold it. Verification, quality and final review remain mandatory.
 
 Models, coordinating software, tools and human operators are different
 components. If a model refuses and software runs prewritten code, do not say
