@@ -117,6 +117,16 @@ def test_event_dedup_across_outlets_and_rejections(story, doc, cfg):
     assert editor.gate(story, [doc], [prior], NOW - 86400, NOW, cfg)[0] == "verified"
 
 
+def test_unpublished_hold_can_clear_when_evidence_is_complete(story, doc, cfg):
+    prior = {**deepcopy(story), "id":"held-candidate", "state":"held", "verified":False}
+    story["duplicate_of"] = prior["id"]
+    assert story["material_update"] is False
+    assert editor.gate(story, [doc], [prior], NOW-86400, NOW, cfg)[0] == "verified"
+    for state in ("rejected", "queued", "delivered", "published"):
+        prior["state"] = state
+        assert editor.gate(story, [doc], [prior], NOW-86400, NOW, cfg)[0] == "duplicate"
+
+
 def test_missing_attribution_and_qualifiers_are_not_trimmed(story):
     story["paragraphs"] = ["The model solved 80% of tasks. SI BANGER."]
     with pytest.raises(ValueError, match="qualifier"):
