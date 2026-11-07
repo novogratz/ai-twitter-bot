@@ -1,0 +1,171 @@
+# Hourly news uses the existing Codex Reply model and login.
+search_adapter = "codex"
+delivery_adapter = "file" # backups and draft-only mode; main picks use NEWS_AUTO_PUBLISH
+prompt_file = "news_prompt.md"
+candidates_per_run = 4
+model_calls_per_run = 8
+model_calls_per_day = 144
+requests_per_run = 80
+requests_per_day = 1200
+score_min = 85
+backup_score_min = 90
+video_gap_minutes = 30
+# Optional existing local recommendation/rejection and posting-queue records.
+history_files = ["../../growth/original_post_decisions.json"]
+queue_files = ["../../growth/opportunity_queue.json"]
+evidence_hosts = [
+  "x.com", "www.x.com", "twitter.com", "github.com", "raw.githubusercontent.com",
+  "arxiv.org", "export.arxiv.org", "www.reuters.com", "www.bloomberg.com",
+  "news.ycombinator.com", "www.reddit.com", "reddit.com", "research.google",
+  "research.nvidia.com", "developer.nvidia.com", "machinelearning.apple.com",
+  "www.microsoft.com", "blogs.microsoft.com", "www.amazon.science",
+  "about.fb.com", "ai.meta.com", "openai.com", "www.anthropic.com",
+  "docs.x.ai", "docs.anthropic.com", "platform.claude.com", "developers.openai.com",
+  "www.unitree.com", "agilityrobotics.com", "www.agilityrobotics.com", "www.physicalintelligence.company"
+]
+search_queries = [
+  "Elon Musk xAI Grok major model release capabilities official announcement",
+  "OpenAI Anthropic Google DeepMind major model release research agents",
+  "model agent security incident controlled evaluation attack original research corroboration",
+  "Meta NVIDIA Microsoft Apple Amazon Hugging Face chips infrastructure coding image video audio breakthrough",
+  "robotics Figure Boston Dynamics Unitree Agility extraordinary demonstration original",
+  "Reuters Bloomberg The Verge TechCrunch artificial intelligence major development",
+  "site:x.com OR site:news.ycombinator.com OR site:reddit.com extraordinary model agent demonstration original source"
+]
+
+# Endpoints were fetched and RSS/Atom parsed on 2026-11-07. Outages remain errors.
+[[sources]]
+name = "xAI"
+url = "https://x.ai/news"
+kind = "html"
+role = "primary"
+owner = "xai"
+path_prefix = "/news/"
+
+[[sources]]
+name = "OpenAI"
+url = "https://openai.com/news/rss.xml"
+kind = "rss"
+role = "primary"
+owner = "openai"
+path_prefix = "/"
+
+[[sources]]
+name = "Anthropic"
+url = "https://www.anthropic.com/news"
+kind = "html"
+role = "primary"
+owner = "anthropic"
+path_prefix = "/news/"
+
+[[sources]]
+name = "Google"
+url = "https://blog.google/innovation-and-ai/technology/ai/rss/"
+kind = "rss"
+role = "primary"
+owner = "google"
+path_prefix = "/"
+
+[[sources]]
+name = "DeepMind"
+url = "https://deepmind.google/blog/"
+kind = "html"
+role = "primary"
+owner = "google"
+path_prefix = "/blog/"
+
+[[sources]]
+name = "Meta"
+url = "https://ai.meta.com/blog/"
+kind = "html"
+role = "primary"
+owner = "meta"
+path_prefix = "/blog/"
+
+[[sources]]
+name = "NVIDIA"
+url = "https://blogs.nvidia.com/feed/"
+kind = "rss"
+role = "primary"
+owner = "nvidia"
+path_prefix = "/"
+
+[[sources]]
+name = "Microsoft Research"
+url = "https://www.microsoft.com/en-us/research/feed/"
+kind = "rss"
+role = "primary"
+owner = "microsoft"
+path_prefix = "/"
+
+[[sources]]
+name = "Apple"
+url = "https://www.apple.com/newsroom/rss-feed.rss"
+kind = "rss"
+role = "primary"
+owner = "apple"
+path_prefix = "/newsroom/"
+
+[[sources]]
+name = "Amazon"
+url = "https://aws.amazon.com/blogs/machine-learning/feed/"
+kind = "rss"
+role = "primary"
+owner = "amazon"
+path_prefix = "/blogs/"
+
+[[sources]]
+name = "Hugging Face"
+url = "https://huggingface.co/blog/feed.xml"
+kind = "rss"
+role = "primary"
+owner = "huggingface"
+path_prefix = "/blog/"
+
+[[sources]]
+name = "Boston Dynamics"
+url = "https://bostondynamics.com/blog/"
+kind = "html"
+role = "primary"
+owner = "bostondynamics"
+path_prefix = "/blog/"
+
+[[sources]]
+name = "Figure"
+url = "https://www.figure.ai/news"
+kind = "html"
+role = "primary"
+owner = "figure"
+path_prefix = "/news/"
+
+[[sources]]
+name = "TechCrunch"
+url = "https://techcrunch.com/category/artificial-intelligence/feed/"
+kind = "rss"
+role = "reporting"
+owner = "techcrunch"
+path_prefix = "/"
+
+[[sources]]
+name = "The Verge"
+url = "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+kind = "rss"
+role = "reporting"
+owner = "theverge"
+path_prefix = "/"
+
+[[sources]]
+name = "Hacker News"
+url = "https://hnrss.org/newest?q=AI"
+kind = "rss"
+role = "lead"
+owner = "hackernews"
+path_prefix = "/"
+
+[[sources]]
+name = "Reddit ML"
+url = "https://www.reddit.com/r/MachineLearning/new/.rss"
+kind = "rss"
+role = "lead"
+owner = "reddit"
+path_prefix = "/r/"

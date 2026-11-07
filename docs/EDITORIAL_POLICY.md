@@ -1,5 +1,39 @@
 # Editorial policy — November 7, 2026
 
+## Exceptional verified news and explicit Safari authorization
+
+The Operator requests hourly SI news and subsequently authorizes automatic
+publication through normal bot startup. `NEWS_ENABLED=1` adds one hourly news
+job alongside videos, including public research overnight. `NEWS_AUTO_PUBLISH=1`
+authorizes its independently reviewed main pick to use Safari. Both default off
+for other installations. News replaces the legacy editorial grid/startup path.
+
+Verification requires fetched original evidence, separate event/announcement/
+publication dates, exact supporting passages, honest attribution, mechanism and
+availability checks, and independent corroboration for consequential/disputed
+claims. A fresh article about an old event is not fresh news. Unknowns remain
+unknown. Rank significance, novelty, hook, relevance and freshness only after
+verification. No routine filler, virality promises or invented hype. At most one
+main pick and one stronger-threshold, different-story backup per run.
+
+SQLite retains canonical URLs, event/development identities, rejections, imported
+history, coverage gaps and a durable outbox. Retries preserve IDs. Publication
+requires unchanged reviewed text/evidence, active hours, startup holds, content,
+respect and dedup checks, and an exact own X status receipt. Clicks/timeouts alone
+are not success; uncertain sends retain claims and prohibit automatic retries.
+Backups remain local drafts. The text daily ceiling stays at most eight (seven
+locally), in addition to the separately authorized video schedule. News defaults
+to two-hour spacing and protects thirty minutes around video windows/successes.
+Active/uncertain video reservations defer news; video admission reciprocally
+checks news uncertainty and thirty-minute spacing. Other surfaces retain their
+video-mode restrictions.
+
+Tweets are English, sharp and factual with sensible blank lines, SI in generic
+prose, preserved official names/quotations, BANGER, no em dashes and exactly one
+credible fetched source URL at the end. All 280 weighted characters include the
+URL and whitespace. Qualifiers are never trimmed. The account has one editable
+news prompt. Email has no adapter. See [News operations](NEWS.md).
+
 ## Broader AI/SI Reply discovery and major-account priority
 
 The Operator requests more Replies to relevant content across accounts, with

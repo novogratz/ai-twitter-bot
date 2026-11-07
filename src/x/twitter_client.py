@@ -257,6 +257,66 @@ def post_tweet(text: str) -> WriteOutcome:
         steps=steps, after_record=after_record)
 
 
+def post_news(store, cfg, ident: str) -> WriteOutcome:
+    """Publish only a persisted, independently approved main news pick."""
+    from ..news import publisher
+    from ..video.security import Deferred
+    from ..guards import action_guard, content_guard, respect_list
+    from . import news_page, safari_video
+    from ..core.work_priority import REPLY, scope
+
+    payload = {}
+
+    def admit():
+        try:
+            payload.update(publisher.admit(store, cfg, ident, time.time()))
+            text = payload["tweet"]
+            if not content_guard.validate(text, kind="original")[0] or respect_list.scrub_text_or_skip(text)[1]:
+                return WriteOutcome.REFUSED
+            if content_guard.is_duplicate(text):
+                return WriteOutcome.REFUSED
+        except (ValueError, Deferred) as exc:
+            log.info("[NEWS] Publication deferred: %s", str(exc)[:200])
+            return WriteOutcome.REFUSED
+
+    def owner():
+        safari_video.require_browser_owner()
+
+    def steps():
+        try:
+            if not news_page.prepare(payload["tweet"]):
+                return WriteOutcome.FAILED
+            if admit() is not None:
+                return WriteOutcome.REFUSED
+            since = publisher.begin_submit(store, cfg, ident)
+            if not news_page.composer(payload["tweet"], click=True):
+                return WriteOutcome.UNCONFIRMED
+            source = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (ident,))[0]["document"])["url"]
+            url = news_page.receipt(payload["tweet"], source, since)
+            if not url:
+                return WriteOutcome.UNCONFIRMED
+            publisher.confirmed(store, ident, url, time.time())
+            return WriteOutcome.SHIPPED
+        except Exception:
+            state = store.rows("SELECT state FROM outbox WHERE id=?", (ident,))[0]["state"]
+            if state == "published":
+                return WriteOutcome.SHIPPED
+            return WriteOutcome.UNCONFIRMED if state in ("submitting", "publish_unknown") else WriteOutcome.FAILED
+        finally:
+            store.execute("UPDATE outbox SET state='publish_unknown',error='no exact own-status receipt' WHERE id=? AND state='submitting'", (ident,))
+
+    def record_text():
+        content_guard.note_posted(payload["tweet"])
+        _record_posted(payload["tweet"])
+
+    with safari_video.publisher_session(), scope(REPLY):
+        return confirmed_write.run("NEWS", WriteOutcome,
+            would=lambda: "publish verified news " + ident,
+            rows=lambda: [(action_guard.POST, ident)],
+            before_lock=(admit, confirmed_write.DRY_RUN_EXIT, owner), under_lock=(admit,),
+            steps=steps, after_record=record_text)
+
+
 def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:
     """Reserved video Original, using the existing Reply/Original Safari lock.
 

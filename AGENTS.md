@@ -6,6 +6,29 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-07, verified SI news alongside videos — The Operator requests hourly
+news discovery, actual evidence verification, permanent event/URL deduplication
+and exceptional stories only, then explicitly authorizes automatic Safari
+posting when the ordinary bot starts. `NEWS_ENABLED` adds one hourly job alongside
+video workers; `NEWS_AUTO_PUBLISH` admits only its independently reviewed main
+pick. Public discovery may continue overnight; X writes retain active hours,
+startup-video holds, content/respect checks and the shared Safari queue.
+News replaces the legacy editorial slot/startup path when enabled. The existing
+text daily ceiling remains (seven locally, never above eight), with two-hour
+news spacing by default. Videos keep their separate budget. News protects thirty
+minutes around scheduled/confirmed videos; video final admission reciprocally
+checks confirmed or uncertain news. This narrowly supersedes video-only ownership
+for verified news; ordinary Originals/reposts gain no exemption.
+
+`news.sqlite3` retains evidence, events, decisions, coverage, costs and delivery
+claims. Missing history is recorded; corrupt accessible history refuses. Tweets
+have sensible blank lines, SI branding, BANGER and one fetched source URL, with
+complete X weighted length checked before independent review. Only an exact own
+status receipt confirms publication; ambiguous sends hold without automatic
+retries. An optional different-story backup stays in the local inbox; email has
+no adapter. Source outages remain operational errors. PR, merge and push are
+requested; no start/restart is included. Local switches apply on the next start.
+
 2026-11-07, broader Replies with major AI accounts first — The Operator requests
 more SI/AI Replies across accounts, giving larger accounts priority. The Account
 and local environment budget sixteen rotating searches per direct cycle: four
