@@ -190,6 +190,71 @@ def test_delivery_retry_after_destination_accepts_uses_identical_id(store, cfg, 
     assert len(list((tmp_path / "inbox").iterdir())) == 1
 
 
+def test_due_outbox_retries_between_searches_with_same_reviewed_bytes(store, cfg, story, doc, tmp_path, monkeypatch):
+    seed(store)
+    pipeline.run(cfg, store=store, http=Sources(doc), model=Model(story), delivery=PendingDelivery(),
+                 now=NOW, import_history=False)
+    original = store.rows("SELECT * FROM outbox")[0]
+    watermark = store.meta("last_complete")
+    def forbidden(*args, **kwargs):
+        pytest.fail("delivery retries must not discover or call a model")
+    monkeypatch.setattr(pipeline, "HTTP", forbidden)
+    monkeypatch.setattr(pipeline, "Codex", forbidden)
+    calls = []
+    real = Delivery(cfg, tmp_path / "inbox")
+    class AfterVideo:
+        def send(self, ident, payload):
+            calls.append((ident, payload))
+            if len(calls) == 1:
+                raise Deferred("protected video window")
+            return real.send(ident, payload)
+    adapter = AfterVideo()
+    assert pipeline.retry_pending(cfg, store=store, delivery=adapter, now=NOW+60) == []
+    assert store.rows("SELECT attempts FROM outbox")[0]["attempts"] == 0
+    assert pipeline.retry_pending(cfg, store=store, delivery=adapter, now=NOW+119) == []
+    result = pipeline.retry_pending(cfg, store=Store(store.path), delivery=adapter, now=NOW+120)
+    assert result == [json.loads(original["payload"])]
+    assert calls[0] == calls[1] == (original["id"], result[0])
+    assert pipeline.retry_pending(cfg, store=store, delivery=adapter, now=NOW+180) == []
+    assert len(calls) == 2 and len(store.rows("SELECT * FROM runs")) == 1
+    assert store.meta("last_complete") == watermark
+
+
+def test_delivery_tick_is_silent_without_database_or_pending_work(store, cfg, tmp_path, monkeypatch, capsys):
+    missing = tmp_path / "missing.sqlite3"
+    monkeypatch.setattr(pipeline, "DATABASE", missing)
+    assert pipeline.retry_pending(cfg, now=NOW) == []
+    assert not missing.exists()
+    assert pipeline.retry_pending(cfg, store=store, delivery=object(), now=NOW) == []
+    assert capsys.readouterr().out == ""
+
+
+@pytest.mark.parametrize("state", ["submitting", "publish_unknown", "expired"])
+def test_delivery_tick_never_sends_uncertain_or_expired_drafts(store, cfg, story, doc, state):
+    seed(store)
+    pipeline.run(cfg, store=store, http=Sources(doc), model=Model(story), delivery=PendingDelivery(),
+                 now=NOW, import_history=False)
+    if state == "expired":
+        store.execute("UPDATE outbox SET expires=?", (NOW+30,))
+    else:
+        store.execute("UPDATE outbox SET state=?", (state,))
+    class Forbidden:
+        def send(self, *args):
+            pytest.fail("this draft is not safe to retry")
+    assert pipeline.retry_pending(cfg, store=store, delivery=Forbidden(), now=NOW+60) == []
+    assert store.rows("SELECT state FROM outbox")[0]["state"] == state
+
+
+def test_delivery_tick_yields_to_manual_preparation_lock(store, cfg, story, doc, tmp_path):
+    seed(store)
+    pipeline.run(cfg, store=store, http=Sources(doc), model=Model(story), delivery=PendingDelivery(),
+                 now=NOW, import_history=False)
+    with store.lock():
+        assert pipeline.retry_pending(cfg, store=Store(store.path), delivery=object(), now=NOW+60) == []
+    assert store.rows("SELECT attempts,state FROM outbox")[0] == {"attempts":0, "state":"pending"}
+    assert len(pipeline.retry_pending(cfg, store=store, delivery=Delivery(cfg, tmp_path / "inbox"), now=NOW+60)) == 1
+
+
 def test_source_outage_preserves_watermark_and_backfills(store, cfg, caplog):
     cfg = replace(cfg, sources=[{"name":"Lab", "url": "https://lab.example.com/feed", "kind":"rss", "role":"primary", "owner":"lab", "path_prefix":"/"}])
     store.set_meta("last_complete", NOW - 3 * 86400)
@@ -293,9 +358,13 @@ def test_news_job_coexists_with_videos_without_restoring_editorial(settings_over
     settings_override(NEWS_ENABLED=True, NEWS_AUTO_PUBLISH=True, VIDEO_ENABLED=True)
     scheduler = build_scheduler()
     assert scheduler.get_job("news_job").trigger.interval.total_seconds() == 3600
+    retry = scheduler.get_job("news_delivery_job")
+    assert retry.trigger.interval.total_seconds() == 60
+    assert retry.executor == scheduler.get_job("news_job").executor == "news"
     assert scheduler.get_job("video_health_job")
     assert not scheduler.get_job("editorial_job")
     assert not build_scheduler(reply_only=True).get_job("news_job")
+    assert not build_scheduler(reply_only=True).get_job("news_delivery_job")
 
 
 def pending(store, cfg, story, doc):

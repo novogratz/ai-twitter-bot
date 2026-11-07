@@ -75,11 +75,15 @@ def build_scheduler(*, post_only=False, reply_only=False):
             "editorial_job", executor="editorial", first_seconds=10)
 
     if not reply_only and settings.get("NEWS_ENABLED"):
-        from src.news.pipeline import run as run_news
+        from src.news.pipeline import retry_pending, run as run_news
         # Public discovery may run overnight. Its Safari write chokepoint owns
         # waking hours and the video-first hold, just like every other write.
         scheduler.add_job(run_news, trigger=IntervalTrigger(hours=1, timezone=config.BOT_TIMEZONE),
                           id="news_job", executor="news", next_run_time=datetime.now(timezone.utc) + timedelta(seconds=15))
+        # Delivery deferrals need not wait another hour. The same one-thread
+        # executor and durable run lock serialize this with discovery.
+        scheduler.add_job(retry_pending, trigger=IntervalTrigger(minutes=1, timezone=config.BOT_TIMEZONE),
+                          id="news_delivery_job", executor="news")
 
     if not post_only:
         from src.replies.direct_reply import run_direct_reply_cycle
