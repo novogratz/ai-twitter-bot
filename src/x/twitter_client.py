@@ -292,12 +292,13 @@ def post_news(store, cfg, ident: str) -> WriteOutcome:
             if not news_page.composer(payload["tweet"], click=True):
                 return WriteOutcome.UNCONFIRMED
             source = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (ident,))[0]["document"])["url"]
-            url = news_page.receipt(payload["tweet"], source, since)
+            url = news_page.receipt(payload["tweet"], source, since, store=store, cfg=cfg)
             if not url:
                 return WriteOutcome.UNCONFIRMED
             publisher.confirmed(store, ident, url, time.time())
             return WriteOutcome.SHIPPED
-        except Exception:
+        except Exception as exc:
+            log.warning("[NEWS] Publication step failed (%s); recorded send state retained.", type(exc).__name__)
             state = store.rows("SELECT state FROM outbox WHERE id=?", (ident,))[0]["state"]
             if state == "published":
                 return WriteOutcome.SHIPPED
@@ -315,6 +316,36 @@ def post_news(store, cfg, ident: str) -> WriteOutcome:
             rows=lambda: [(action_guard.POST, ident)],
             before_lock=(admit, confirmed_write.DRY_RUN_EXIT, owner), under_lock=(admit,),
             steps=steps, after_record=record_text)
+
+
+def reconcile_news(store, cfg):
+    """Read an uncertain news receipt through the sole Safari owner; never resend."""
+    from ..core import account, config
+    from ..core.work_priority import REPLY, scope
+    from ..guards import action_guard, content_guard
+    from ..news import publisher
+    from . import news_page, safari_video
+    if config.dry_run() or not settings.get("NEWS_ENABLED") or not settings.get("NEWS_AUTO_PUBLISH"):
+        return
+    with safari_video.publisher_session(), scope(REPLY), safari._safari_lock:
+        require_active()
+        rows = store.rows("SELECT * FROM outbox WHERE state IN ('submitting','publish_unknown') ORDER BY acknowledged LIMIT 1")
+        if not rows or not rows[0]["acknowledged"]:
+            return
+        row = rows[0]
+        payload = json.loads(row["payload"])
+        source = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (row["story"],))[0]["document"])["url"]
+        if not safari.open_url("https://x.com/" + account.current().handle):
+            return
+        try:
+            url = news_page.receipt(payload["tweet"], source, row["acknowledged"], store=store, cfg=cfg)
+            if url and publisher.confirmed(store, row["id"], url, time.time(), reconcile=True):
+                action_guard.record(action_guard.POST, target=row["id"])
+                content_guard.note_posted(payload["tweet"])
+                _record_posted(payload["tweet"])
+                log.info("[NEWS] Reconciled confirmed publication: %s", url)
+        finally:
+            safari.close_front_tab()
 
 
 def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:

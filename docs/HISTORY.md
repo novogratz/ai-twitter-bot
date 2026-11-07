@@ -1,5 +1,30 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-07 — Recover unattempted startup video and prioritize prepared news
+
+The 14:21 Toronto audit found the main bot stopped, an approved news draft
+waiting behind a protected video window, and the morning's startup video still
+stored as skipped after eligible-time expiry. Reusing that same-day skipped row
+prevented later boots from retrying even though no video send was attempted.
+The launcher now explicitly requests both startup publications. News tries its
+durable approved outbox before research; video rearming is limited to an expired
+request with zero attempts, no reservation and no consumed startup-day claim.
+An event preserves the earlier expiry. Starting or preparing is never counted
+as posting. The Operator authorizes startup and subsequent live bug fixes.
+The live follow-up also found news retries waiting behind a long research run
+and repeated composer failures. Pending approved startup news now yields the
+worker to delivery retries, without advancing research coverage. Composer
+inspection distinguishes the intent dialog from the home composer behind it
+and records bounded failure reasons while retaining exact-content admission.
+The 14:44 read-only DOM check confirmed two nested role=dialog elements around
+one textarea and one Post button. The composer now counts only innermost dialogs;
+separate competing dialogs still fail admission.
+The 14:46 send produced status `2119154448526110747`, but X moved its final source
+URL into a link card. A fresh profile read showed the exact body and timestamp;
+the observed t.co URL's HEAD response pointed to the exact reviewed OpenAI source.
+Receipt matching now handles this representation and the delivery worker can
+reconcile the existing uncertain claim from exact evidence without submitting.
+
 ## 2026-11-07 — MEGA-BANGER discovery integrated with existing video/news workers
 
 The Operator supplied the original research-agent brief and requested reliable

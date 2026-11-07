@@ -6,6 +6,30 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-07, startup news and video, then live bug fixing — The Operator requests
+both publications on script startup and authorizes starting/restarting the bot
+to verify the fix. `bin/run.sh` exposes `STARTUP_PUBLICATIONS=1` at its top and
+passes `--startup-publications` to the existing main process. Approved news gets
+the first news-executor turn, before discovery; while its approved main draft
+waits for admission, that worker stays available for delivery retries. A durable startup-news intent
+survives restarts; only an actual own-X receipt fulfills it. Video preparation
+and Replies remain independent. Active hours, quality, history, uncertainty,
+daily caps and spacing remain; starting is not proof either post shipped.
+
+An explicit script start may rearm a same-day video startup request only when it
+expired without any send attempt, reservation or consumed startup-day claim.
+The same request/day identity remains, with the prior expiry preserved in an
+event. Posted, reserved, ambiguous, attempted and retry-exhausted requests cannot
+reset. Reinspection after a policy change prepares observed performances before
+unsuitable footage; this is ordering only. No second publisher or extra quota.
+The news composer checks the unique innermost dialog separately from its nested
+wrapper and the home composer behind it. Separate competing dialogs still refuse;
+exact text, account, button and receipt checks remain.
+Receipt matching accepts X's trailing-link card only with the exact body and an
+observed source destination; a bounded, charged HEAD read may verify an observed
+t.co redirect without following it. The minute delivery worker can reconcile an
+uncertain send from that same exact own-status evidence. It never resubmits it.
+
 2026-11-07, MEGA-BANGER discovery and ninety-minute videos — The Operator's
 research brief now lives in `accounts/theaishrink/video_discovery_prompt.md`,
 with a rotating query bank and partial owner-delivery/rejection seed. The existing

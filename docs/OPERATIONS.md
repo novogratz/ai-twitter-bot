@@ -7,6 +7,17 @@ design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 The bot publishes on a real account. Start, stop and restart it only when the
 operator asks.
 
+The top of `bin/run.sh` exposes `STARTUP_PUBLICATIONS=1`. It passes
+`--startup-publications` to request verified news and video from the existing
+publishers, without waiting for a new hourly discovery run when an approved news
+draft is already queued. `STARTUP_PUBLICATIONS=0` uses ordinary configured jobs.
+An unattempted expired video request can rearm on a new start; confirmed/uncertain
+claims and daily caps persist. `bin/news.py status` exposes the startup-news
+receipt/intent; `bin/video.py status` exposes the video request and reserve. Check
+actual post URLs before reporting either startup publication as complete.
+The minute news worker also checks uncertain receipts without resubmitting.
+An unresolved claim continues to block further news/video sends.
+
 ## Setup
 
 Requirements: macOS, Safari logged in to x.com with **Develop → Allow

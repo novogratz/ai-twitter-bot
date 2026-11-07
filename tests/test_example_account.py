@@ -67,7 +67,8 @@ PRE_187_BOUNDED = {
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
-            "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news"}
+            "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news",
+            "startup_publications"}
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,

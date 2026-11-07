@@ -1,5 +1,17 @@
 # The SI Maximalist · @thesimaximalist
 
+`bin/run.sh` now starts with **`STARTUP_PUBLICATIONS=1`**: request one verified
+news post and one reviewed video through the existing publishers. The approved
+news outbox is checked first; discovery fills missing supply. Both still need
+confirmed X receipts, normal spacing and eligibility. An expired video startup
+that never attempted a send can retry on a new script start, retaining its daily
+claim and audit history. Replies run independently. Set the launcher switch to
+`0` to use only ordinary configured startup/scheduled behavior.
+News composition supports X's nested modal wrapper while checking the exact
+draft, account and Post button within the unique innermost dialog.
+Link-card receipts require the exact source destination. Uncertain sends get
+read-only receipt checks through the existing publisher, never automatic reposts.
+
 Verified SI news now runs hourly with the normal bot when `NEWS_ENABLED=1`.
 The Operator authorizes `NEWS_AUTO_PUBLISH=1`: exceptional, independently reviewed
 main picks publish through Safari alongside videos, normally at least two hours

@@ -122,8 +122,12 @@ Before a Safari click, the outbox records `submitting`. Only a unique recent
 own status with exact text and the observed source link yields `published`.
 Ambiguous receipts become `publish_unknown`; crashes after claiming may leave
 `submitting`. Neither retries automatically, and both block new news/video
-sends. Inspect the actual account and reconcile the retained claim manually
-using a verified receipt. Never reset/delete the database to retry a suspected
+sends. The minute delivery worker reads the actual profile through the existing
+Safari owner and can reconcile only the exact own-status receipt. Link-card
+rendering requires exact body text and a verified source destination; bounded
+t.co HEAD observations count against the existing request budget and never
+follow redirects. Missing evidence keeps the claim held. Never reset/delete
+the database to retry a suspected
 send. Local tests do not prove a live publication.
 
 ```bash

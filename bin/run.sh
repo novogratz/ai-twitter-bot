@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Startup priority: request one verified NEWS post and one reviewed VIDEO.
+# The existing publishers confirm each send and retain quality, dedup and spacing.
+# Set STARTUP_PUBLICATIONS=0 to use only the ordinary configured jobs.
+STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-1}"
 # Run the configured Account's bot in the FOREGROUND of this terminal.
 #
 # Press Ctrl-C to stop it cleanly (graceful shutdown via SIGTERM).
@@ -10,6 +14,10 @@
 # gated off and the launchd agent is disabled.
 
 set -euo pipefail
+case "$STARTUP_PUBLICATIONS" in
+  0|1) ;;
+  *) echo "[run] STARTUP_PUBLICATIONS must be 0 or 1." >&2; exit 2 ;;
+esac
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
@@ -40,9 +48,14 @@ fi
 find "$REPO_DIR" -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 
 echo "[run] Starting @$RUN_HANDLE bot. Press Ctrl-C to stop."
+set --
+if [[ "$STARTUP_PUBLICATIONS" == "1" ]]; then
+  set -- --startup-publications
+  echo "[run] Startup: news + video requested first; actual receipts confirm publication."
+fi
 echo "[run] Logs are also written to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"
 
 # Keep the terminal attached: the logger owns both console output and bot.log.
 # A scalar requirements path also works with Bash 3.2's nounset handling.
-exec uv run --with-requirements "$REQUIREMENTS_FILE" python -u main.py
+exec uv run --with-requirements "$REQUIREMENTS_FILE" python -u main.py "$@"
