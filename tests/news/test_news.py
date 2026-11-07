@@ -474,7 +474,7 @@ def test_safari_write_requires_exact_receipt_before_ledger(store,cfg,story,doc,m
         return True
     monkeypatch.setattr(news_page,"composer",click)
     receipt="https://x.com/ExampleAuthor/status/12345"
-    monkeypatch.setattr(news_page,"receipt",lambda *a:receipt if received else "")
+    monkeypatch.setattr(news_page,"receipt",lambda *a,**k:receipt if received else "")
     monkeypatch.setattr(safari,"close_front_tab",lambda:None)
     monkeypatch.setattr(twitter_client,"_record_posted",lambda *a:None)
     rows=[]
@@ -483,6 +483,36 @@ def test_safari_write_requires_exact_receipt_before_ledger(store,cfg,story,doc,m
     assert result is (WriteOutcome.SHIPPED if received else WriteOutcome.UNCONFIRMED)
     assert bool(rows) is received
     assert store.rows("SELECT state FROM outbox")[0]["state"] == ("published" if received else "publish_unknown")
+
+
+@pytest.mark.parametrize("received", [True, False])
+def test_uncertain_news_is_read_and_confirmed_once_without_resending(store, cfg, story, doc, monkeypatch, settings_override, received):
+    from src.x import twitter_client, news_page, safari_video, safari
+    from src.guards import content_guard, action_guard
+    from src.news import startup
+    settings_override(NEWS_ENABLED=True, NEWS_AUTO_PUBLISH=True, DRY_RUN=False)
+    ident = pending(store, cfg, story, doc)
+    store.execute("UPDATE outbox SET state='publish_unknown',acknowledged=?", (NOW,))
+    startup.request(store, "boot", NOW - 60)
+    monkeypatch.setattr(safari_video, "require_browser_owner", lambda: None)
+    monkeypatch.setattr(twitter_client, "require_active", lambda: None)
+    monkeypatch.setattr(safari, "open_url", lambda url: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(content_guard, "note_posted", lambda *a: None)
+    monkeypatch.setattr(twitter_client, "_record_posted", lambda *a: None)
+    def forbidden(*a, **kw):
+        pytest.fail("reconciliation must never compose or submit a post")
+    monkeypatch.setattr(news_page, "composer", forbidden)
+    monkeypatch.setattr(news_page, "prepare", forbidden)
+    monkeypatch.setattr(twitter_client, "post_news", forbidden)
+    monkeypatch.setattr(news_page, "receipt", lambda *a, **k: "https://x.com/example/status/123" if received else "")
+    rows = []
+    monkeypatch.setattr(action_guard, "record", lambda *a, **k: rows.append((a, k)))
+    assert pipeline.retry_pending(cfg, store=store, now=NOW + 60) == []
+    assert pipeline.retry_pending(cfg, store=store, now=NOW + 120) == []
+    assert len(rows) == int(received)
+    assert store.rows("SELECT state FROM outbox")[0]["state"] == ("published" if received else "publish_unknown")
+    assert store.meta(startup.KEY)["state"] == ("posted" if received else "pending")
 
 
 def test_news_exception_does_not_unlock_ordinary_originals(monkeypatch,settings_override):

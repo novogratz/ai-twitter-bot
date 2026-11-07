@@ -19,6 +19,11 @@ and records bounded failure reasons while retaining exact-content admission.
 The 14:44 read-only DOM check confirmed two nested role=dialog elements around
 one textarea and one Post button. The composer now counts only innermost dialogs;
 separate competing dialogs still fail admission.
+The 14:46 send produced status `2119154448526110747`, but X moved its final source
+URL into a link card. A fresh profile read showed the exact body and timestamp;
+the observed t.co URL's HEAD response pointed to the exact reviewed OpenAI source.
+Receipt matching now handles this representation and the delivery worker can
+reconcile the existing uncertain claim from exact evidence without submitting.
 
 ## 2026-11-07 — MEGA-BANGER discovery integrated with existing video/news workers
 

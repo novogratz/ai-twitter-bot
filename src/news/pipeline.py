@@ -58,6 +58,11 @@ def retry_pending(cfg=None, *, store=None, delivery=None, now=None):
         store = Store()
     try:
         with store.lock():
+            if (delivery is None and settings.get("NEWS_AUTO_PUBLISH")
+                    and store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown') LIMIT 1")):
+                from ..x.twitter_client import reconcile_news
+                cfg = cfg or load()
+                reconcile_news(store, cfg)
             if not store.rows("SELECT id FROM outbox WHERE state='pending' AND due<=? LIMIT 1", (now,)):
                 return []
             cfg = cfg or load()
@@ -136,7 +141,7 @@ def _run(cfg, store, http, model, delivery, now, import_history):
         # for the next admission retry while an approved main story is waiting.
         # Do not advance coverage: this pass has not researched any sources.
         if (store.meta("startup_news", {}).get("state") == "pending"
-                and store.rows("""SELECT id FROM outbox WHERE state='pending'
+                and store.rows("""SELECT id FROM outbox WHERE state IN ('pending','submitting','publish_unknown')
                     AND json_extract(payload,'$.role')='main' LIMIT 1""")):
             store.execute("UPDATE runs SET finished=?,status='startup_delivery_wait' WHERE id=?", (now, run_id))
             return results

@@ -9,6 +9,8 @@ claim and audit history. Replies run independently. Set the launcher switch to
 `0` to use only ordinary configured startup/scheduled behavior.
 News composition supports X's nested modal wrapper while checking the exact
 draft, account and Post button within the unique innermost dialog.
+Link-card receipts require the exact source destination. Uncertain sends get
+read-only receipt checks through the existing publisher, never automatic reposts.
 
 Verified SI news now runs hourly with the normal bot when `NEWS_ENABLED=1`.
 The Operator authorizes `NEWS_AUTO_PUBLISH=1`: exceptional, independently reviewed

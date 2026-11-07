@@ -25,6 +25,10 @@ unsuitable footage; this is ordering only. No second publisher or extra quota.
 The news composer checks the unique innermost dialog separately from its nested
 wrapper and the home composer behind it. Separate competing dialogs still refuse;
 exact text, account, button and receipt checks remain.
+Receipt matching accepts X's trailing-link card only with the exact body and an
+observed source destination; a bounded, charged HEAD read may verify an observed
+t.co redirect without following it. The minute delivery worker can reconcile an
+uncertain send from that same exact own-status evidence. It never resubmits it.
 
 2026-11-07, MEGA-BANGER discovery and ninety-minute videos — The Operator's
 research brief now lives in `accounts/theaishrink/video_discovery_prompt.md`,

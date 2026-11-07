@@ -7,6 +7,11 @@ available for minute delivery retries; that wait does not count as research
 coverage. News preparation scopes exact text and button checks to one visible
 innermost dialog when present; X's ancestor wrapper is not a second composer.
 Separate competing dialogs or mismatched text/account still refuse.
+When X hides a trailing source URL in a link card, exact body, own author,
+submission-time bounds and the observed destination still must agree. At most
+three charged, DNS-pinned t.co HEAD reads may check redirects without following
+them. The existing minute worker may confirm an uncertain send from this evidence;
+missing evidence retains the hold and never authorizes resubmission.
 
 The Operator explicitly requests startup news and video, and authorizes live
 start/restart and bug fixing. The launcher defaults `STARTUP_PUBLICATIONS=1`

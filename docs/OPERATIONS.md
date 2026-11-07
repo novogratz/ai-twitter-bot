@@ -15,6 +15,8 @@ An unattempted expired video request can rearm on a new start; confirmed/uncerta
 claims and daily caps persist. `bin/news.py status` exposes the startup-news
 receipt/intent; `bin/video.py status` exposes the video request and reserve. Check
 actual post URLs before reporting either startup publication as complete.
+The minute news worker also checks uncertain receipts without resubmitting.
+An unresolved claim continues to block further news/video sends.
 
 ## Setup
 
