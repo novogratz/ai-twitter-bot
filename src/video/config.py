@@ -9,7 +9,7 @@ import tomllib
 
 from ..core import account, config as core_config, settings
 
-PLATFORMS = ("instagram", "tiktok", "bilibili", "rednote", "x")
+PLATFORMS = ("instagram", "tiktok", "bilibili", "rednote", "x", "youtube", "douyin")
 
 
 @dataclass(frozen=True)
@@ -19,6 +19,23 @@ class VideoConfig:
     windows: tuple = ("07:00", "09:00", "12:00", "17:00", "21:00")
     paired_windows: tuple = ("07:00", "21:00")
     scheduled_daily_cap: int = 8
+    auto_edit: bool = False
+    source_max_duration_seconds: int = 300
+    edit_min_seconds: int = 8
+    edit_max_seconds: int = 60
+    min_hook_score: int = 8
+    bangers_only: bool = False
+    one_line_caption: bool = False
+    audience_examples: tuple = ()
+    discovery_prompt_file: str = ""
+    discovery_memory_file: str = ""
+    query_bank_file: str = ""
+    adaptive_discovery: bool = False
+    discovery_calls_per_hour: int = 3
+    ready_reserve_min: int = 3
+    banger_min_score: float = 88.0
+    x_max_views: int = 50000
+    x_reach_max_age_seconds: int = 21600
     startup_on_boot: bool = False
     pair_minutes: int = 15
     protect_primary_windows: bool = True
@@ -99,8 +116,30 @@ class VideoConfig:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.startup_on_boot) is not bool:
             raise ValueError("startup_on_boot must be a boolean")
-        if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 10:
-            raise ValueError("scheduled_daily_cap must be 5..10")
+        if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 13:
+            raise ValueError("scheduled_daily_cap must be 5..13")
+        for name in ("auto_edit", "bangers_only", "one_line_caption", "adaptive_discovery"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} must be a boolean")
+        for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
+            if not isinstance(getattr(self, name), str):
+                raise ValueError(f"{name} must be a local operator file")
+        for name, lo, hi in (("discovery_calls_per_hour", 1, 6), ("ready_reserve_min", 1, 16),
+                             ("x_max_views", 0, 1000000), ("x_reach_max_age_seconds", 300, 21600)):
+            value = getattr(self, name)
+            if type(value) is not int or not lo <= value <= hi:
+                raise ValueError(f"{name} must be {lo}..{hi}")
+        if type(self.banger_min_score) not in (int, float) or not 88 <= self.banger_min_score <= 100:
+            raise ValueError("banger_min_score must be 88..100")
+        for name in ("source_max_duration_seconds", "edit_min_seconds", "edit_max_seconds", "min_hook_score"):
+            if type(getattr(self, name)) is not int:
+                raise ValueError(f"{name} must be an integer")
+        if self.auto_edit and not 8 <= self.edit_min_seconds <= self.edit_max_seconds <= self.max_duration_seconds:
+            raise ValueError("edit duration must be 8 seconds through the output duration limit")
+        if not self.max_duration_seconds <= self.source_max_duration_seconds <= 300:
+            raise ValueError("source duration must be within the output limit and 300 seconds")
+        if not 8 <= self.min_hook_score <= 10:
+            raise ValueError("opening hook threshold must be 8..10")
         if not set(self.target_handles) <= set(self.targets) or any(
                 not isinstance(handle, str) or not re.fullmatch(r"@[A-Za-z0-9_]{1,15}", handle)
                 for handle in self.target_handles.values()):
@@ -122,8 +161,15 @@ class VideoConfig:
             value = getattr(self, key)
             if type(value) not in (int, float) or not math.isfinite(value):
                 raise ValueError(f"video {key} must be a finite number")
-        for name in ("windows", "paired_windows", "inspection_command", "media_hosts", "local_import_roots"):
+        for name in ("windows", "paired_windows", "inspection_command", "media_hosts", "local_import_roots", "audience_examples"):
             object.__setattr__(self, name, tuple(getattr(self, name)))
+        if len(self.audience_examples) > 6 or any(not isinstance(item, dict)
+                or type(item.get("views")) is not int or item["views"] < 0
+                or not isinstance(item.get("url"), str) or not item["url"].startswith("https://x.com/")
+                or not isinstance(item.get("observed_at"), str)
+                or not isinstance(item.get("caption"), str) or len(item["caption"]) > 600
+                for item in self.audience_examples):
+            raise ValueError("audience examples require at most six observed public posts")
         for key in ("pair_minutes", "min_spacing_seconds", "grace_seconds", "startup_seconds", "queue_limit",
                     "buffer_target", "lease_seconds", "task_timeout_seconds", "render_timeout_seconds",
                     "day_poll_seconds", "night_poll_seconds", "max_attempts", "max_download_bytes",
@@ -165,6 +211,10 @@ class VideoConfig:
 
 def enabled():
     return settings.get("VIDEO_ENABLED")
+
+
+def source_duration_limit(cfg):
+    return cfg.source_max_duration_seconds if cfg.auto_edit else cfg.max_duration_seconds
 
 
 def live():
@@ -212,6 +262,12 @@ def load() -> VideoConfig:
     unknown = set(raw) - {f.name for f in fields(VideoConfig)}
     if unknown:
         raise ValueError(f"unknown video configuration keys: {sorted(unknown)}")
+    for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
+        if raw.get(name):
+            source = (path.parent / raw[name]).resolve()
+            if not source.is_relative_to(path.parent.resolve()) or not source.is_file() or source.stat().st_size > 2_000_000:
+                raise ValueError(f"{name} must exist inside the video configuration folder")
+            raw[name] = str(source)
     return VideoConfig(**raw)
 
 

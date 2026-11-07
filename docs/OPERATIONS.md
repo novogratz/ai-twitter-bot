@@ -577,7 +577,7 @@ root:
 | `news.lock` | `news.store` | Whole-run OS lock across scheduler and manual runs | never delete while held |
 | `news_inbox/` | `news.adapters` | Stable-ID draft/backup JSON files with complete tweet and recommendation | durable; acknowledgement preserves history |
 | `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
-| `video_pipeline.sqlite3`, `-wal`, `-shm` | `video.store` | Durable candidates, worker leases, inspection evidence, metrics, source/model budgets, profile history, explicit video-first interaction hold, startup requests, slots and unknown/confirmed sends | guarded SQLite journal; preserve across deploys |
+| `video_pipeline.sqlite3`, `-wal`, `-shm` | `video.store` | Durable candidates and structured handoffs, leases, inspection/metrics/budgets, posting history, permanent owner shown/delivered/rejected memory, highest matching-copy reach observations, discovery cursors, reserve health, startup/slots and unknown/confirmed sends | guarded SQLite journal; preserve across deploys and cleanup |
 | `video_assets/` | `video.media` | Unchanged originals, branded outputs and bounded temporary artifacts | retained while needed; automatic expiry cleanup |
 | `video_tools/` | `video.inspection.prepare` | Compiled local Apple audio/OCR helper, keyed by trusted source hash | disposable build cache; rebuild with `prepare-inspector` |
 | `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |

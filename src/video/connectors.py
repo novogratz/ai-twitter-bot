@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qs, urlsplit, urlunsplit
 
 from .security import AccessError, Deferred, json_request
 from .store import dumps
@@ -13,13 +13,17 @@ HOSTS = {"instagram": {"www.instagram.com", "instagram.com"},
          "tiktok": {"www.tiktok.com", "tiktok.com"},
          "bilibili": {"www.bilibili.com", "bilibili.com"},
          "rednote": {"www.xiaohongshu.com", "xiaohongshu.com"},
-         "x": {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}}
+         "x": {"x.com", "www.x.com", "twitter.com", "www.twitter.com"},
+         "youtube": {"youtube.com", "www.youtube.com", "youtu.be"},
+         "douyin": {"douyin.com", "www.douyin.com"}}
 REASONS = {
     "instagram": "Needs a permitted creator feed/provider and licensed original; no Meta access configured.",
     "tiktok": "Needs opted-in creator feed/provider and licensed original; Research Tools are ineligible for commercial use.",
     "bilibili": "Needs authorized creator feed/provider; official Open Platform requires application and user authorization.",
     "rednote": "Needs permitted creator feed/provider; reviewed commerce docs do not establish a public video-search API.",
     "x": "Needs public discovery or an authorized feed; source views and original media must be verified.",
+    "youtube": "Public leads only unless an authorized feed supplies media and usage eligibility; no native downloader configured.",
+    "douyin": "Public leads only unless an authorized feed supplies media and usage eligibility; no native downloader configured.",
 }
 
 
@@ -27,15 +31,28 @@ def canonical(platform, url):
     part = urlsplit(url)
     if part.scheme != "https" or part.hostname not in HOSTS[platform] or part.username or part.password or part.port:
         raise ValueError("invalid platform source URL")
+    if platform == "youtube":
+        ident = (part.path.strip("/") if part.hostname == "youtu.be" else
+                 parse_qs(part.query).get("v", [""])[0] if part.path == "/watch" else
+                 part.path.rstrip("/").split("/")[-1] if part.path.startswith("/shorts/") else "")
+        if not re.fullmatch(r"[A-Za-z0-9_-]{11}", ident):
+            raise ValueError("source URL must identify a YouTube video")
+        return "https://www.youtube.com/watch?v=" + ident
     patterns = {"instagram": r"/(?:reel|reels|p)/[A-Za-z0-9_-]+/?",
                 "tiktok": r"/@[\w.-]+/video/\d+/?",
                 "bilibili": r"/video/(?:BV[\w]+|av\d+)/?",
                 "rednote": r"/(?:explore|discovery/item)/[A-Za-z0-9]+/?",
-                "x": r"/[A-Za-z0-9_]{1,15}/status/[0-9]+/?"}
+                "x": r"/[A-Za-z0-9_]{1,15}/status/[0-9]+/?",
+                "douyin": r"/video/[0-9]+/?"}
     if not re.fullmatch(patterns[platform], part.path):
         raise ValueError("source URL must identify a video, not a search/profile")
     host = "x.com" if platform == "x" else "www." + part.hostname.removeprefix("www.")
     return urlunsplit(("https", host, part.path.rstrip("/"), "", ""))
+
+
+def video_id(platform, url):
+    url = canonical(platform, url)
+    return parse_qs(urlsplit(url).query)["v"][0] if platform == "youtube" else urlsplit(url).path.rsplit("/", 1)[-1]
 
 
 def timestamp(value):
@@ -136,10 +153,20 @@ class X(CreatorFeed):
     platform = "x"
 
 
-ADAPTERS = {c.platform: c for c in (Instagram, TikTok, Bilibili, RedNote, X)}
+class YouTube(CreatorFeed):
+    platform = "youtube"
+
+
+class Douyin(CreatorFeed):
+    platform = "douyin"
+
+
+ADAPTERS = {c.platform: c for c in (Instagram, TikTok, Bilibili, RedNote, X, YouTube, Douyin)}
 
 
 def ingest(store, platform, items, now, cfg):
+    from . import memory
+    memory.import_seed(store, cfg, now)
     accepted = 0
     for item in items[:200]:
         try:
@@ -158,6 +185,9 @@ def ingest(store, platform, items, now, cfg):
                         "access_status": item.get("access_status", "discovered"), "novelty": {"state": "unchecked"}})
             if not published or not doc.get("publication_evidence"):
                 doc["published_at"] = None  # discovery is never proof of upload time
+            if reason := memory.refusal(store, doc):
+                store.event(now, "personal_duplicate", platform, reason)
+                continue
             ident = hashlib.sha256(f"{platform}:{source_id}".encode()).hexdigest()[:32]
             with store.transaction() as db:
                 count = db.execute("SELECT COUNT(*) FROM candidates WHERE state IN ('discovered','held','ready')").fetchone()[0]
@@ -202,6 +232,8 @@ def ingest(store, platform, items, now, cfg):
 
 
 def discover(store, platform, now, cfg, *, fresh=False):
+    from . import memory
+    memory.import_seed(store, cfg, now)
     adapter = ADAPTERS[platform](cfg)
     if store.meta("platform_disabled:" + platform, False):
         store.set_meta("source:" + platform, {"status": "blocked", "reason": "disabled by operator"})

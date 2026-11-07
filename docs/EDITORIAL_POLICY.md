@@ -1,5 +1,47 @@
 # Editorial policy — November 7, 2026
 
+## MEGA-BANGER discovery and ninety-minute video slots
+
+The current Account video schedule is 05:00, 06:30, 08:00, 09:30, 11:00, 12:30,
+14:00, 15:30, 17:00, 18:30, 20:00, 21:30 and 23:00 Toronto. One source-supported
+qualifying performer is enough: Donald Trump, Elon Musk, Jensen Huang, Sam Altman
+or Dario Amodei. Guests do not qualify alone. Favor songs, boy bands, duets,
+choreography and polished cinematic/superhero reveals. No hostile humiliation,
+party anthems, ordinary speeches or generic weak montages. Cast context is source
+attribution, not face identification.
+
+The operator's discovery brief, query bank and partial history seed feed the
+existing queue. Instagram/Bilibili receive most bounded research effort; older
+excellent sources remain eligible within the existing two-year ceiling. Public
+YouTube/Douyin searches are lead-only capabilities. No new creator contact,
+publisher, usage grant or lifecycle action follows from a discovery result.
+
+The separate editorial score weights hook/payoff 25, performance 20, fit 15,
+quality 15, novelty 10, observed engagement 10 and original freshness 5. Each
+component is 0–10; the first four must reach 8. Automatic publication requires
+88/100; 92 is exceptional and 82–87.99 remains research/reserve. Unknown momentum
+gets a labeled neutral 5/10 editorial prior and remains unknown in raw metrics.
+Existing source/output floors, actual audio evidence, hash binding and QC remain.
+Language-dependent jokes stay held without verified transcript/translation.
+
+Codex proposes one contiguous 8–120 second excerpt from sources up to five
+minutes, preferring 15–30 seconds when the full payoff fits. Output review checks
+the first second, retained action, aligned audio and lowercase Account watermark.
+The caption is one grounded English `ANOTHER BANGER 🔥` line with full principal
+performer names and a supported song reference when available. Required specific
+creator attribution is retained; optional disclosure/source footers remain off.
+
+Permanent personal-history matching includes shown, delivered, posted and rejected
+footage. Source upgrades require ordered matching scenes and independent quality
+review; larger encoded dimensions alone are no claim of native quality. Matching
+X copies use their largest exact-status observed views, not their sum or smallest
+copy. Six-hour evidence and the configured 50,000 ceiling apply; source X counts
+retain one-hour freshness. Known large copies cannot vanish on a later search.
+Uncertainty, inaccessible media and quality failures hold without filler. The
+sixteen-clip reserve and three-clip warning level are targets, not guaranteed
+supply. Existing news, Replies, startup allowance, active hours, permission and
+uncertain-send guards remain. Starting/restarting still needs the Operator.
+
 ## Exceptional verified news and explicit Safari authorization
 
 The Operator requests hourly SI news and subsequently authorizes automatic

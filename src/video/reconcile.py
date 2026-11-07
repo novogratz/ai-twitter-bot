@@ -9,6 +9,7 @@ import tempfile
 import time
 
 from . import ranking
+from .config import source_duration_limit
 from .media import duplicate, fingerprint, probe
 from .publisher import confirm
 from .security import AccessError, Deferred, request, sha256
@@ -45,7 +46,7 @@ def native_fingerprint_result(store, post_id, now):
 def queue_native_fingerprint(store, item, observed, duration, cfg, now):
     from .native_source import x_media_plan
     if (type(duration) not in (int, float) or not math.isfinite(duration)
-            or not .5 <= duration <= cfg.max_duration_seconds):
+            or not .5 <= duration <= source_duration_limit(cfg)):
         return None
     document = x_media_plan(observed, item["post_url"], now)
     if document is None:
@@ -85,7 +86,7 @@ def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
                     "user_agent": plan.get("user_agent")}
         verified = x_media_plan(observed, media.get("post_url", ""), plan.get("captured_at", 0))
         if (verified is None or verified != native or type(media.get("duration")) not in (int, float)
-                or not .5 <= media["duration"] <= cfg.max_duration_seconds):
+                or not .5 <= media["duration"] <= source_duration_limit(cfg)):
             raise AccessError("native video resource identity is unverified")
         if not 0 <= now - plan["captured_at"] < 3600 or now >= plan["expires_at"]:
             raise Deferred("native video resources need a fresh normal-page observation", retry_after=30)
@@ -100,7 +101,7 @@ def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
                 def validate(path):
                     nonlocal info
                     try:
-                        info = probe(path, cfg)
+                        info = probe(path, cfg, source=True) if cfg.auto_edit else probe(path, cfg)
                     except (StopIteration, KeyError, TypeError) as exc:
                         raise AccessError("native resource does not contain complete video and audio") from exc
                     if abs(info["duration"] - media["duration"]) > .25:
@@ -151,7 +152,8 @@ def media_fingerprint(media, store, cfg, now, *, offload=True, client=None):
         finally:
             consumed = path.stat().st_size if path.exists() else 0
             store.refund_budget("x_media", "download_bytes", max(0, allowance - consumed), now)
-        return fingerprint(path, probe(path, cfg), cfg)
+        info = probe(path, cfg, source=True) if cfg.auto_edit else probe(path, cfg)
+        return fingerprint(path, info, cfg)
 
 
 def import_history(store, client, cfg, now):
@@ -216,6 +218,10 @@ def preparation_reason(doc, cfg, now):
     """Spend novelty reads on clips whose actual preparation could qualify."""
     if doc.get("qc") and (reason := ranking.output_gate(doc, cfg)):
         return reason
+    if cfg.bangers_only:
+        from .bangers import score
+        reviewed = score(doc, now)
+        return "" if reviewed["total"] is not None and (ranking.selected(doc, now) or reviewed["total"] >= cfg.banger_min_score) else "current excerpt is below banger threshold"
     parts = doc.get("ranking", {}).get("components", {})
     if not ranking.selected(doc, now) and parts:
         # This upper bound is only a cost-admission calculation. It never
@@ -231,6 +237,9 @@ def preparation_reason(doc, cfg, now):
 
 def novelty(store, row, client, cfg, now, *, operator_direct=False):
     doc = row["document"]
+    if cfg.bangers_only and not operator_direct and row.get("fingerprint"):
+        from .exposure import check
+        return check(store, row, client, cfg, now)
     if operator_direct and not ranking.selected(doc, now):
         raise ValueError("direct source-identifier check requires an active operator selection")
     if not row.get("fingerprint"):

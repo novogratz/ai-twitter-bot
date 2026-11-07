@@ -1,10 +1,26 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# This replaces main-post editorial/repost scheduling only while enabled.
+# Video schedule alongside the existing verified-news worker, operator 2026-11-07.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["05:00", "07:00", "09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00"]
+windows = ["05:00", "06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30", "20:00", "21:30", "23:00"]
 paired_windows = []
-scheduled_daily_cap = 10
+scheduled_daily_cap = 13
+auto_edit = true
+source_max_duration_seconds = 300
+edit_min_seconds = 8
+edit_max_seconds = 120
+min_hook_score = 8
+bangers_only = true
+one_line_caption = true
+discovery_prompt_file = "video_discovery_prompt.md"
+discovery_memory_file = "video_memory.json"
+query_bank_file = "video_query_bank.txt"
+adaptive_discovery = true
+discovery_calls_per_hour = 3
+ready_reserve_min = 3
+banger_min_score = 88.0
+x_max_views = 50000
+x_reach_max_age_seconds = 21600
 startup_on_boot = true
 pair_minutes = 15
 protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
@@ -20,7 +36,7 @@ day_poll_seconds = 1200
 night_poll_seconds = 600
 buffer_target = 16
 queue_limit = 500
-score_threshold = 80.0
+score_threshold = 80.0 # preserved raw ranking; banger_min_score controls the new editorial rubric
 confidence_min = 0.9
 preferred_age_hours = 72
 max_age_hours = 17520 # recent first; progressively older fallback up to 730 days
@@ -55,17 +71,17 @@ codex_inspection_reserve = 48
 codex_max_reply_calls = 2
 inspection_fps = 1 # temporal inspection across the full clip; reserve capacity for the ready buffer
 font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"
-watermark = "@Thesimaximalist"
+watermark = "@thesimaximalist"
 media_hosts = []
 local_import_roots = []
 x_reads_enabled = false
 
 [targets]
-elon = ["Elon Musk", "马斯克"]
-trump = ["Donald Trump", "特朗普"]
-dario = ["Dario Amodei", "达里奥", "阿莫迪"]
-sam = ["Sam Altman", "山姆·奥特曼"]
-zuckerberg = ["Mark Zuckerberg", "Zuckerberg", "扎克伯格"]
+elon = ["Elon Musk", "Elon", "马斯克"]
+trump = ["Donald Trump", "Trump", "特朗普", "川普"]
+dario = ["Dario Amodei", "Dario", "达里奥", "阿莫迪"]
+sam = ["Sam Altman", "Altman", "山姆·奥特曼", "奥特曼"]
+jensen = ["Jensen Huang", "Jensen", "黄仁勋", "老黄"]
 
 [target_handles]
 elon = "@elonmusk"
@@ -74,33 +90,37 @@ sam = "@sama"
 # No guessed X handles for cast members without a configured verified handle.
 
 [platforms.instagram]
+weight = 40
 enabled = true
 safari_player = true
 public_search = true
-public_search_seconds = 7200
+public_search_seconds = 3600
 creators = ["ai_xiaomu"]
 permission_reference = ""
 # feed = "/absolute/path/to/authorized-instagram-feed.json"
 # Alternatively: provider_command = ["/absolute/path/to/licensed-provider-adapter"]
 
-[platforms.tiktok]
-enabled = true
-safari_player = true
-public_search = true
-public_search_seconds = 7200
-creators = []
-permission_reference = ""
-
 [platforms.bilibili]
+weight = 30
 enabled = true
 safari_player = true
 public_search = true
-public_search_seconds = 7200
+public_search_seconds = 3600
 # Public research leads only; monitoring never grants reuse permission.
 creators = ["Claude最严厉的父亲", "AI大法师"]
 permission_reference = ""
 
 [platforms.rednote]
+weight = 4
+enabled = true
+safari_player = true
+public_search = true
+public_search_seconds = 5400
+creators = []
+permission_reference = ""
+
+[platforms.tiktok]
+weight = 10
 enabled = true
 safari_player = true
 public_search = true
@@ -109,8 +129,26 @@ creators = []
 permission_reference = ""
 
 [platforms.x]
+weight = 5
 enabled = true
 safari_player = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+# Public leads only; no download or republication permission is implied.
+[platforms.youtube]
+weight = 7
+enabled = true
+public_search = true
+public_search_seconds = 7200
+creators = []
+permission_reference = ""
+
+[platforms.douyin]
+weight = 4
+enabled = true
 public_search = true
 public_search_seconds = 7200
 creators = []
@@ -142,3 +180,40 @@ evidence = "Operator confirmed on 2026-11-01 permission for current/future Insta
 # evidence = "/private/contracts/permission-and-music-license.pdf"
 # expires_at = 1798761600  # UTC Unix seconds; replace with actual permission expiry.
 # attribution = "Credit: @licensed_creator"
+
+# Actual own-post observations. Style hints, never predicted engagement or source approval.
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2118431727886684202"
+caption = "ANOTHER BANGER 🔥 Donald Trump and JD Vance turned the White House into a boy band. Never gonna give you up. 😂🎤"
+views = 398345
+likes = 4592
+observed_at = "2026-11-07T12:15:17.443242-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2114651462919741942"
+caption = "AGI is on the way 🎶🎶\n\nElon, Jensen, Zuck, Sam and Dario in a hangar singing “I Want It That Way” but every line is about AGI being on the way 🤣🤣"
+views = 91719
+likes = 978
+observed_at = "2026-11-07T12:22:32.858951-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2113942535320088678"
+caption = "Elon and Trump, the bromance banger is back and we love to see it!!! 🤣🤣💀💀"
+views = 47697
+likes = 832
+observed_at = "2026-11-07T12:22:32.858960-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2115431659009159428"
+caption = "POV: Elon, Jensen, Sam & Dario said “just one drink.” 😂🍻\n\nANOTHER ABSOLUTE BANGER 💃💃"
+views = 36832
+likes = 659
+observed_at = "2026-11-07T12:22:32.858932-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2118062603347915107"
+caption = "Jensen Huang sold the GPUs. Then sold out the stadium. 😂🎤\n\nElon Musk, Mark Zuckerberg, Sundar Pichai and Bill Gates got front-row seats.\n\nTHE SI WORLD TOUR IS AN ABSOLUTE BANGER! 🔥"
+views = 8522
+likes = 100
+observed_at = "2026-11-07T12:22:32.858971-05:00"

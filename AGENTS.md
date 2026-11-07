@@ -6,6 +6,41 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-07, MEGA-BANGER discovery and ninety-minute videos — The Operator's
+research brief now lives in `accounts/theaishrink/video_discovery_prompt.md`,
+with a rotating query bank and partial owner-delivery/rejection seed. The existing
+pipeline schedules thirteen Toronto windows, 05:00 through 23:00 at ninety-minute
+intervals. Its only qualifying cast keys are Trump, Elon Musk, Jensen Huang,
+Sam Altman and Dario Amodei; guests do not independently qualify. Creator textual
+attribution supplies cast context, never biometric face identification. Songs,
+duets, dances and cinematic/Power Rangers-style parody qualify only after actual
+source/output review. Quality is never lowered to fill a slot.
+
+The separate editorial rubric requires 88/100 and at least 8/10 hook/payoff,
+performance, fit and quality, alongside existing 18/17/12 review floors. Unknown
+comparable momentum gets an explicitly labeled neutral editorial prior, never
+fabricated metrics. Language-dependent jokes require verified transcript/translation;
+the current local audio classifier cannot supply that evidence. Codex selects a
+hash-bound contiguous 8–120 second cut from sources up to five minutes, preferring
+15–30 seconds when the complete joke fits. First-second review, aligned audio,
+original preservation and lowercase `@thesimaximalist` watermark remain mandatory.
+Captions are one reviewed English `ANOTHER BANGER 🔥` line with a full verified
+performer name, specific scene and supported song reference when available.
+
+Bounded discovery rotates fresh/archive/new-creator searches and source recovery,
+favoring Instagram and Bilibili. YouTube/Douyin are public leads, not working media
+capture adapters or newly granted usage permission. Three research calls per hour
+share existing daily budgets; one deeper archive pass per Toronto day is allowed.
+The reserve targets sixteen distinct clips and warns below three. Six-hour matching
+X-copy checks use the highest observed exact-status views, default ceiling 50,000;
+known large copies, stale/unknown counts and personal duplicates hold. Explicit
+source X counts retain their tighter one-hour check. New source variants require
+matching sequences and independent quality review; larger dimensions prove no
+native detail. Owner shown/delivered/rejected memory and confirmed posting history
+survive cleanup. Existing startup allowance, Replies, verified-news publisher,
+permissions, active hours, uncertainty claims and manual start/restart remain.
+This supersedes earlier ten-slot/cast/caption and automatic scoring defaults.
+
 2026-11-07, verified SI news alongside videos — The Operator requests hourly
 news discovery, actual evidence verification, permanent event/URL deduplication
 and exceptional stories only, then explicitly authorizes automatic Safari

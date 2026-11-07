@@ -44,6 +44,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS one_publisher ON reservations((1))
  WHERE state IN ('reserved','uploading','submitting','publish_unknown');
 CREATE TABLE IF NOT EXISTS content_claims(candidate TEXT PRIMARY KEY, reservation TEXT NOT NULL UNIQUE);
 CREATE TABLE IF NOT EXISTS history(post_id TEXT PRIMARY KEY, published REAL, payload TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS personal_memory(id TEXT PRIMARY KEY, state TEXT NOT NULL, document TEXT NOT NULL, recorded REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS exposure_memory(cluster TEXT, post_id TEXT, views INTEGER, observed REAL, document TEXT NOT NULL,
+ PRIMARY KEY(cluster,post_id));
 CREATE TABLE IF NOT EXISTS costs(day TEXT, provider TEXT, kind TEXT, amount REAL NOT NULL,
  PRIMARY KEY(day,provider,kind));
 CREATE TABLE IF NOT EXISTS circuits(provider TEXT PRIMARY KEY, failures INTEGER NOT NULL, until REAL NOT NULL);

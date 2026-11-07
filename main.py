@@ -46,6 +46,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
         executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1), "news": ThreadPoolExecutor(1),
+                   "video": ThreadPoolExecutor(1),
                    "watch": ThreadPoolExecutor(1), "watch_actions": ThreadPoolExecutor(1),
                    "watch_reply": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
@@ -64,7 +65,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
     if not reply_only and settings.get("VIDEO_ENABLED"):
         from src.video.workers import health_job
         add(health.wrap_job(health_job, "video_health", safari_health=False), 2 / 60,
-            "video_health_job", executor="editorial", first_seconds=2)
+            "video_health_job", executor="video", first_seconds=2)
     elif not reply_only and not settings.get("NEWS_ENABLED"):
         # Polling retries only the current window. State survives restarts;
         # a dedicated worker prevents reply scans from starving originals.
