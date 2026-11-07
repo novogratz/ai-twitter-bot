@@ -132,6 +132,14 @@ def _run(cfg, store, http, model, delivery, now, import_history):
         allow_new = not pending and not store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')")
         if pending:
             results = deliver(store, cfg, delivery, now)
+        # Startup delivery and research share one worker. Keep that worker free
+        # for the next admission retry while an approved main story is waiting.
+        # Do not advance coverage: this pass has not researched any sources.
+        if (store.meta("startup_news", {}).get("state") == "pending"
+                and store.rows("""SELECT id FROM outbox WHERE state='pending'
+                    AND json_extract(payload,'$.role')='main' LIMIT 1""")):
+            store.execute("UPDATE runs SET finished=?,status='startup_delivery_wait' WHERE id=?", (now, run_id))
+            return results
         for source in cfg.sources:
             try:
                 leads = http.discover(source)

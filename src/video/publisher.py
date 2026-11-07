@@ -70,7 +70,7 @@ def replace_deleted(store, post_id, request_id, now, cfg, *, operator_reports_de
         return dict(db.execute("SELECT * FROM reservations WHERE id=?", (ident,)).fetchone())
 
 
-def request_startup(store, request_id, now, cfg, *, explicit_live=False):
+def request_startup(store, request_id, now, cfg, *, explicit_live=False, retry_expired=False):
     if not explicit_live or not config.live():
         return None
     day = schedule.local(now).date().isoformat()
@@ -78,8 +78,20 @@ def request_startup(store, request_id, now, cfg, *, explicit_live=False):
         old = db.execute("SELECT * FROM startup WHERE id=? OR requested_day=? OR state IN ('pending','reserved')",
                          (request_id, day)).fetchone()
         if old:
-            return dict(old)
-        db.execute("INSERT INTO startup(id,requested_day,requested) VALUES(?,?,?)", (request_id, day, now.timestamp()))
+            # An explicit new script start can renew only an expired request
+            # that NEVER attempted a send. Preserve the same identity/day cap,
+            # every reservation, and the old expiry as an immutable event.
+            eligible = (retry_expired and old["requested_day"] == day and old["state"] == "skipped"
+                        and old["reason"] == "eligible-time expiry" and old["reservation"] is None and old["attempts"] == 0)
+            if (not eligible or db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone()
+                    or db.execute("SELECT 1 FROM reservations WHERE startup=?", (old["id"],)).fetchone()):
+                return dict(old)
+            db.execute("INSERT INTO events(at,kind,item,detail) VALUES(?,?,?,?)",
+                       (now.timestamp(), "startup_unattempted_expiry_rearmed", old["id"], dumps(dict(old))))
+            request_id = old["id"]
+            db.execute("UPDATE startup SET state='pending',requested=?,reason='' WHERE id=?", (now.timestamp(), request_id))
+        else:
+            db.execute("INSERT INTO startup(id,requested_day,requested) VALUES(?,?,?)", (request_id, day, now.timestamp()))
         from .preparation import recover_supply
         recover_supply(db, cfg, now.timestamp())
         for platform in config.PLATFORMS:

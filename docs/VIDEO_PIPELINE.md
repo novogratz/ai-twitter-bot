@@ -748,6 +748,15 @@ unchecked. No-match has only the recorded search scope.
 
 ## Startup runbook and commands
 
+The launcher now defaults `STARTUP_PUBLICATIONS=1` at its top. This prioritizes
+the approved news outbox before research and requests the configured startup
+video through the existing publisher. An unattempted same-day startup expiry
+can rearm on a new script start only when it has no reservation or consumed day
+claim. The former expiry stays in an event; failed/unknown/confirmed sends never
+reset. News and video keep spacing and quality gates, and only confirmed receipts
+count. Replies continue independently. `STARTUP_PUBLICATIONS=0` opts out of this
+extra startup coordination; ordinary configured jobs still run.
+
 **Normal parallel startup:** the current Account sets `startup_on_boot=true`.
 An explicitly requested `./bin/run.sh` starts Reply work and queues one durable
 video request independently. It does not hold Replies while the clip is prepared.

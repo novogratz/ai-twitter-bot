@@ -54,6 +54,36 @@ def test_old_expired_pending_request_does_not_swallow_new_boot(boot, video_store
     assert video_store.rows("SELECT state FROM startup WHERE id='old'")[0]["state"] == "skipped"
 
 
+def test_new_script_start_rearms_only_unattempted_same_day_expiry(boot, video_store, video_cfg, at):
+    old = publisher.request_startup(video_store, "morning", at(8), video_cfg, explicit_live=True)
+    publisher.tick_calendar(video_store, at(10), video_cfg)
+    assert boot()["state"] == "skipped"  # ordinary request remains idempotent
+    renewed = boot(retry_expired=True)
+    assert renewed["id"] == old["id"] and renewed["state"] == "pending"
+    assert len(video_store.rows("SELECT * FROM startup")) == 1
+    assert len(video_store.rows("SELECT * FROM events WHERE kind='startup_unattempted_expiry_rearmed'")) == 1
+    assert boot(retry_expired=True)["state"] == "pending"
+    assert len(video_store.rows("SELECT * FROM events WHERE kind='startup_unattempted_expiry_rearmed'")) == 1
+    assert not video_store.rows("SELECT * FROM reservations")
+
+
+@pytest.mark.parametrize("change", ["attempted", "claimed_day", "posted", "retry_exhausted"])
+def test_script_restart_cannot_reset_any_consumed_or_attempted_startup(boot, video_store, video_cfg, at, change):
+    publisher.request_startup(video_store, "morning", at(8), video_cfg, explicit_live=True)
+    publisher.tick_calendar(video_store, at(10), video_cfg)
+    with video_store.transaction() as db:
+        if change == "attempted":
+            db.execute("UPDATE startup SET attempts=1")
+        elif change == "claimed_day":
+            db.execute("INSERT INTO startup_days VALUES(?,?,?)", (str(at().date()), "morning", "claimed"))
+        elif change == "posted":
+            db.execute("UPDATE startup SET state='posted'")
+        else:
+            db.execute("UPDATE startup SET reason='bounded publishing retries exhausted'")
+    assert boot(retry_expired=True)["state"] in ("skipped", "posted")
+    assert not video_store.rows("SELECT * FROM events WHERE kind='startup_unattempted_expiry_rearmed'")
+
+
 def test_overnight_boot_preserves_request_until_active_time(boot, video_store, at, monkeypatch):
     monkeypatch.setattr(schedule, "utc_now", lambda: at(2))
     request = boot()

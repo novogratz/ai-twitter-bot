@@ -1,5 +1,24 @@
 # Editorial policy — November 7, 2026
 
+## Startup publications
+
+An approved startup main story waiting for admission leaves the news worker
+available for minute delivery retries; that wait does not count as research
+coverage. News preparation scopes exact text and button checks to one visible
+dialog when present; multiple dialogs or mismatched text/account still refuse.
+
+The Operator explicitly requests startup news and video, and authorizes live
+start/restart and bug fixing. The launcher defaults `STARTUP_PUBLICATIONS=1`
+and passes `--startup-publications`. An approved news draft gets the first news
+worker turn, with verification/discovery used when needed. A durable news intent
+is fulfilled only by the publisher's actual confirmed X receipt. Video retains
+its once-daily extra startup allowance and all inspection/novelty gates. A new
+script start may rearm only a same-day expired, unattempted, unreserved request
+with no startup-day claim. The old expiry remains in the event journal. Failed,
+unknown, consumed and retry-exhausted sends cannot be reset. Source preparation
+may prioritize previously observed performances, without approving them. Both
+posts retain active hours and spacing; Replies continue independently.
+
 ## MEGA-BANGER discovery and ninety-minute video slots
 
 The current Account video schedule is 05:00, 06:30, 08:00, 09:30, 11:00, 12:30,

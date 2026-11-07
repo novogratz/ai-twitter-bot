@@ -56,7 +56,10 @@ def test_only_a_run_with_the_editorial_job_opens_a_startup_post(monkeypatch, fla
 
 
 @pytest.mark.parametrize("flags, requested", [([], True), (["--post-only"], True),
-                                             (["--reply-only"], False), (["--dry-run"], False)])
+                                             (["--reply-only"], False), (["--dry-run"], False),
+                                             (["--startup-publications"], True),
+                                             (["--startup-publications", "--reply-only"], False),
+                                             (["--startup-publications", "--dry-run"], False)])
 def test_video_boot_is_requested_only_by_live_video_scheduler(monkeypatch, settings_override, flags, requested):
     import sys
     import main
@@ -76,7 +79,7 @@ def test_video_boot_is_requested_only_by_live_video_scheduler(monkeypatch, setti
     monkeypatch.setattr(sys, "argv", ["main.py", *flags])
     monkeypatch.setattr(main, "_acquire_singleton_lock", lambda: None)
     monkeypatch.setattr(main, "build_scheduler", lambda **k: Scheduler())
-    monkeypatch.setattr(main, "_request_startup_video", lambda: calls.append(True))
+    monkeypatch.setattr(main, "_request_startup_video", lambda **kwargs: calls.append(kwargs))
     monkeypatch.setattr(main.signal, "signal", lambda *a: None)
     monkeypatch.setattr(workers, "Supervisor", object)
     if "--dry-run" in flags:
@@ -84,7 +87,7 @@ def test_video_boot_is_requested_only_by_live_video_scheduler(monkeypatch, setti
     else:
         with pytest.raises(Started):
             main.main()
-    assert calls == ([True] if requested else [])
+    assert calls == ([{"retry_expired": "--startup-publications" in flags}] if requested else [])
 
 
 def test_the_start_reports_an_unknown_llm_provider(monkeypatch, settings_override, capsys, caplog):

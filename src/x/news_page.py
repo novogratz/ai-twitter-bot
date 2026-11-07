@@ -5,6 +5,7 @@ import time
 from urllib.parse import urlencode
 
 from ..core import account
+from ..core.logger import log
 from ..guards.active_hours import require_active
 from . import safari, x_urls
 
@@ -14,33 +15,47 @@ def _read(js):
     return json.loads(raw)
 
 
-def composer(text, *, click=False):
+def _composer_state(text, *, click=False):
     # Repeat identity, unique composer, exact text and button checks at click.
     js = r"""((TEXT,HANDLE,CLICK) => {
       const norm = x => (x || '').replace(/\s+/g,' ').trim();
-      if (!['x.com','www.x.com'].includes(location.hostname)) return 'false';
+      const result = (ready, reason) => JSON.stringify({ready, reason});
+      if (!['x.com','www.x.com'].includes(location.hostname)) return result(false, 'wrong_host');
       const owner = document.querySelector('[data-testid="AppTabBar_Profile_Link"]')?.getAttribute('href');
-      if ((owner || '').toLowerCase() !== '/' + HANDLE.toLowerCase()) return 'false';
-      const fields = [...document.querySelectorAll('[data-testid^="tweetTextarea_"][contenteditable="true"]')].filter(e=>e.getClientRects().length);
-      if (fields.length !== 1 || norm(fields[0].innerText) !== norm(TEXT)) return 'false';
-      const area = fields[0].closest('[role="dialog"]') || document.querySelector('main');
+      if ((owner || '').toLowerCase() !== '/' + HANDLE.toLowerCase()) return result(false, 'wrong_owner');
+      // The home-page composer can remain visible behind the intent dialog.
+      // Scope both the text and Post button to the single active dialog.
+      const dialogs = [...document.querySelectorAll('[role="dialog"]')].filter(e=>e.getClientRects().length);
+      if (dialogs.length > 1) return result(false, 'ambiguous_dialog');
+      const area = dialogs[0] || document.querySelector('main');
+      const fields = [...(area?.querySelectorAll('[data-testid^="tweetTextarea_"][contenteditable="true"]') || [])].filter(e=>e.getClientRects().length);
+      if (fields.length !== 1) return result(false, 'ambiguous_composer');
+      if (norm(fields[0].innerText) !== norm(TEXT)) return result(false, 'text_mismatch');
       const buttons = [...(area?.querySelectorAll('[data-testid="tweetButton"],[data-testid="tweetButtonInline"]') || [])].filter(b=>b.getClientRects().length);
-      if (buttons.length !== 1 || buttons[0].disabled || buttons[0].getAttribute('aria-disabled') === 'true') return 'false';
+      if (buttons.length !== 1 || buttons[0].disabled || buttons[0].getAttribute('aria-disabled') === 'true') return result(false, 'button_unavailable');
       if (CLICK) buttons[0].click();
-      return 'true';
+      return result(true, CLICK ? 'clicked' : 'ready');
     })(""" + ",".join((json.dumps(text), json.dumps(account.current().handle), "true" if click else "false")) + ")"
     require_active()
-    return _read(js) is True
+    return _read(js)
+
+
+def composer(text, *, click=False):
+    return _composer_state(text, click=click).get("ready") is True
 
 
 def prepare(text):
     require_active()
     if not safari.open_url("https://x.com/intent/post?" + urlencode({"text": text})):
+        log.info("[NEWS] Composer preparation failed: open_url")
         return False
+    state = {}
     for _ in range(8):
         time.sleep(1)
-        if composer(text):
+        state = _composer_state(text)
+        if state.get("ready") is True:
             return True
+    log.info("[NEWS] Composer preparation failed: %s", state.get("reason", "unreadable"))
     return False
 
 

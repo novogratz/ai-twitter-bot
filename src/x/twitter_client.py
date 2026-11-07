@@ -297,7 +297,8 @@ def post_news(store, cfg, ident: str) -> WriteOutcome:
                 return WriteOutcome.UNCONFIRMED
             publisher.confirmed(store, ident, url, time.time())
             return WriteOutcome.SHIPPED
-        except Exception:
+        except Exception as exc:
+            log.warning("[NEWS] Publication step failed (%s); recorded send state retained.", type(exc).__name__)
             state = store.rows("SELECT state FROM outbox WHERE id=?", (ident,))[0]["state"]
             if state == "published":
                 return WriteOutcome.SHIPPED

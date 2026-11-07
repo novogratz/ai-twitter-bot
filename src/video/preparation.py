@@ -73,9 +73,17 @@ def recover_supply(db, cfg, now):
         # unclaimed sources. Completed refusals under this policy stay completed.
         from .editing import policy_revision
         revision = policy_revision(cfg)
-        for row in db.execute("SELECT id,document FROM candidates WHERE state='held' "
+        rows = db.execute("SELECT id,document FROM candidates WHERE state='held' "
                               "AND published>=? AND published<=? AND id NOT IN (SELECT candidate FROM content_claims)",
-                              (now - cfg.max_age_hours * 3600, now)).fetchall():
+                              (now - cfg.max_age_hours * 3600, now)).fetchall()
+        def priority(row):
+            doc = json.loads(row["document"])
+            review = doc.get("inspection", {})
+            performed = review.get("performance") in ("dance", "singing", "music_parody", "comedy_parody", "cinematic_parody")
+            scores = [review.get(k) for k in ("entertainment_score", "quality_score")]
+            return performed, bool(doc.get("original_sha256")), sum(v for v in scores if type(v) in (int, float))
+        # Preparation order only; the new source/output reviews still decide.
+        for position, row in enumerate(sorted(rows, key=priority, reverse=True)):
             doc = json.loads(row["document"])
             if doc.get("editing_policy_revision") == revision:
                 continue
@@ -86,7 +94,7 @@ def recover_supply(db, cfg, now):
             # A new plan is a new job kind of work, not permission to reset a
             # previously exhausted transient-error allowance.
             db.execute("INSERT INTO jobs(kind,item,due) VALUES('media',?,?) ON CONFLICT(kind,item) DO UPDATE SET "
-                       "state='pending',due=excluded.due WHERE jobs.state='done'", (row["id"], now))
+                       "state='pending',due=excluded.due WHERE jobs.state='done'", (row["id"], now + position / 1000))
 
 
 def prepare_upcoming(store, cfg, now):

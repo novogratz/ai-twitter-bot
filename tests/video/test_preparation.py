@@ -83,3 +83,20 @@ def test_normal_stop_does_not_trip_provider_circuit(video_store, video_cfg, at, 
     monkeypatch.setattr(safari_video, 'SafariVideoClient', Client)
     assert workers._x_work(video_store, replace(video_cfg, publishing_transport='safari'), 'test', at().timestamp()) == 'interaction cooldown'
     assert video_store.rows('SELECT * FROM circuits') == []
+
+
+def test_policy_reinspection_prepares_observed_performances_before_unsuitable_footage(video_store, video_cfg, ready, at):
+    cfg = replace(video_cfg, auto_edit=True)
+    now = at().timestamp()
+    for ident, kind in (("real-speech", "unsuitable"), ("performance", "music_parody")):
+        doc = ready(ident)
+        doc["inspection"]["performance"] = kind
+        video_store.save_candidate(ident, doc, now, state="held")
+        video_store.enqueue("media", ident, now)
+    with video_store.transaction() as db:
+        db.execute("UPDATE jobs SET state='done'")
+        preparation.recover_supply(db, cfg, now)
+    first = video_store.claim("media", "fixture", now + 1, cfg)
+    assert first["item"] == "performance"
+    assert video_store.candidate("performance")["state"] == "held"
+    assert not video_store.rows("SELECT * FROM reservations")

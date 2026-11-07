@@ -134,7 +134,10 @@ def begin_submit(store, cfg, ident):
 def confirmed(store, ident, url, now):
     receipt = {"id": ident, "accepted": True, "post_url": url, "confirmed_at": now}
     with store.connect() as db:
-        db.execute("UPDATE outbox SET state='published',receipt=?,acknowledged=?,error=NULL WHERE id=? AND state='submitting'",
-                   (dumps(receipt), now, ident))
+        changed = db.execute("UPDATE outbox SET state='published',receipt=?,acknowledged=?,error=NULL WHERE id=? AND state='submitting'",
+                             (dumps(receipt), now, ident)).rowcount
         db.execute("UPDATE stories SET state='published' WHERE id=?", (ident,))
+        if changed:
+            from .startup import confirmed as confirm_startup
+            confirm_startup(db, ident, url, now)
     return receipt

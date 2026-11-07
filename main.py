@@ -6,6 +6,7 @@ import logging
 import os
 import signal
 import threading
+import uuid
 
 from src.core import settings
 
@@ -19,6 +20,7 @@ from src.editorial.editorial_bot import open_startup_window, run_editorial_cycle
 from src.core.logger import log
 
 _SINGLETON_LOCK_HANDLE = None
+_BOOT_REQUEST_ID = "boot:" + uuid.uuid4().hex
 
 
 def _acquire_singleton_lock():
@@ -37,7 +39,7 @@ def _acquire_singleton_lock():
     _SINGLETON_LOCK_HANDLE = handle
 
 
-def build_scheduler(*, post_only=False, reply_only=False):
+def build_scheduler(*, post_only=False, reply_only=False, startup_publications=False):
     from apscheduler.schedulers.background import BackgroundScheduler
     from apscheduler.executors.pool import ThreadPoolExecutor
     from apscheduler.triggers.interval import IntervalTrigger
@@ -83,7 +85,8 @@ def build_scheduler(*, post_only=False, reply_only=False):
         # Delivery deferrals need not wait another hour. The same one-thread
         # executor and durable run lock serialize this with discovery.
         scheduler.add_job(retry_pending, trigger=IntervalTrigger(minutes=1, timezone=config.BOT_TIMEZONE),
-                          id="news_delivery_job", executor="news")
+                          id="news_delivery_job", executor="news", **({"next_run_time": datetime.now(timezone.utc) + timedelta(seconds=1)}
+                              if startup_publications else {}))
 
     if not post_only:
         from src.replies.direct_reply import run_direct_reply_cycle
@@ -149,6 +152,8 @@ def main():
     mode.add_argument("--post-only", action="store_true")
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
+    parser.add_argument("--startup-publications", action="store_true",
+                        help="Request verified startup news and video; prioritize existing approved drafts, preserving all gates")
     parser.add_argument("--video", nargs=argparse.REMAINDER, help="Video administration (same as bin/video.py)")
     parser.add_argument("--news", nargs=argparse.REMAINDER, help="Verified news commands (same as bin/news.py)")
     args = parser.parse_args()
@@ -166,7 +171,8 @@ def main():
         raise SystemExit(f"Refusing to start: {exc}.")
     for warning in settings.startup_warnings():
         log.warning(f"[SETTINGS] {warning}")
-    scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only)
+    scheduler = build_scheduler(post_only=args.post_only, reply_only=args.reply_only,
+                                startup_publications=args.startup_publications)
     from src.core.llm_client import ignored_fallbacks, unknown_providers
     unknown = unknown_providers()
     for setting in unknown:
@@ -195,6 +201,7 @@ def main():
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
                           "news": {"enabled": settings.get("NEWS_ENABLED"), "hourly": True,
                                    "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False},
+                          "startup_publications": args.startup_publications and not args.reply_only,
                           "quotes": 0,
                           "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),
@@ -220,8 +227,10 @@ def main():
     stop = threading.Event()
     from src.video.workers import Supervisor
     video_supervisor = Supervisor() if settings.get("VIDEO_ENABLED") and not args.reply_only else None
+    if args.startup_publications and not args.reply_only:
+        _request_startup_news()
     if video_supervisor:
-        _request_startup_video()
+        _request_startup_video(retry_expired=args.startup_publications)
 
     def shutdown(signum, frame):
         from src.guards.active_hours import request_stop
@@ -298,7 +307,19 @@ def main():
         log.info("Bot stopped.")
 
 
-def _request_startup_video():
+def _request_startup_news():
+    from src.news import startup
+    from src.news.store import Store
+    import time
+    if not settings.get("NEWS_ENABLED") or not settings.get("NEWS_AUTO_PUBLISH") or config.dry_run():
+        return None
+    intent = startup.request(Store(), _BOOT_REQUEST_ID, time.time())
+    log.info("[STARTUP] News request %s: %s; approved outbox checked first, otherwise fresh verification runs.",
+             intent["request_id"], intent["state"])
+    return intent
+
+
+def _request_startup_video(*, retry_expired=False):
     """Record the configured boot request; the separate publisher performs it."""
     from src.video import config as video_config, publisher, schedule
     from src.video.store import Store
@@ -315,7 +336,7 @@ def _request_startup_video():
         # reserved/uncertain sends remain claimed by their original request.
         publisher.tick_calendar(store, now, cfg)
         request_id = "boot:" + schedule.local(now).date().isoformat()
-        request = publisher.request_startup(store, request_id, now, cfg, explicit_live=True)
+        request = publisher.request_startup(store, request_id, now, cfg, explicit_live=True, retry_expired=retry_expired)
         if request:
             log.info("[VIDEO] Startup request %s: %s; Reply workers continue independently.",
                      request["id"], request["state"])

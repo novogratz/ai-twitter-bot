@@ -187,6 +187,12 @@ retain the tighter one-hour check. These settings create no extra publisher.
 
 ## Policy ceilings
 
+`bin/run.sh` has a [launcher-only startup switch](OPERATIONS.md#start) (default
+`1`, allowed `0`/`1`), passed as `main.py --startup-publications`. It does not enable
+disabled news/video features or bypass their publication settings. It prioritizes
+approved startup news and permits rearming an expired, never-attempted startup
+video within the existing daily allowance. It is not an `.env` setting.
+
 The current rules are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md). These
 hold whatever `.env` says:
 

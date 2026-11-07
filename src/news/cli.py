@@ -58,6 +58,7 @@ def main(argv=None):
         print("Acknowledged " + args.delivery_id)
     elif args.command == "status":
         print(json.dumps({"runs": store.rows("SELECT * FROM runs ORDER BY started DESC LIMIT 5"),
+                          "startup": store.meta("startup_news"),
                           "outbox": store.rows("SELECT id,state,attempts,acknowledged,error FROM outbox ORDER BY due DESC LIMIT 20"),
                           "coverage": store.rows("SELECT * FROM coverage"),
                           "costs": store.rows("SELECT * FROM costs ORDER BY day DESC LIMIT 9")}, indent=2))
