@@ -131,7 +131,7 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     shown = dry_run({})
     assert shown["startup_interactions_held"] is False
     assert set(shown) == set(PRE_187) | NEW_KEYS | {
-        "reply_volume_boost_date", "reply_discovery_generation_budgets"}
+        "reply_volume_boost_date", "reply_discovery_generation_budgets", "news_slots", "news_daily_cap"}
     assert shown["reply_volume_boost_date"] == ""
     assert shown["reply_discovery_generation_budgets"] == {
         "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
@@ -143,9 +143,9 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
     expected["reposts"] = "watched authors only"
     assert shown["auto_engage_handles"] == ["elonmusk"]
-    expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
-    expected["slots"][1][1] = "A useful SI video or image workflow: concrete first step, output and limitation"
-    expected["slots"][6][1] = "An SI video, image or model tool update and what changes for creators"
+    expected["slots"] = [[f"{hour:02}:30", "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters"]
+                         for hour in range(5, 24, 2)]
+    expected["trend_slots"] = []
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,

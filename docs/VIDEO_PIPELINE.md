@@ -1,5 +1,28 @@
 # Existing-video pipeline
 
+## Current Account: mixed banger publishing
+
+The 2026-11-07 Account runs thirteen video windows at 90-minute intervals and ten
+sourced news windows at two-hour intervals. `news_enabled=false` preserves the
+legacy video-exclusive engine mode for other Accounts. Explicit daily ceilings
+are 13 videos, 10 news and the existing one-extra startup video; no catch-up.
+
+Codex chooses one 8–60 second contiguous excerpt from a source up to five minutes.
+The preserved source hash binds start/end, cast and hook evidence. Output review
+checks actual edited content and the first second at 0/.2/.4/.6/.8 seconds. Audio
+is compared against the exact source interval, not the whole untrimmed audio.
+Retained source overlays are matched with the same timestamp offset. Technical
+quality, source permission, cast attribution, synthetic performance, freshness and
+permanent novelty remain required. Only source/output quality above the Account
+floors earns publication; no engagement prediction supplies score points.
+
+`audience_examples` holds bounded actual own-post observations as search/style
+context. It is not a new-source approval, a replay list, or evidence of causal
+performance. The original 100-point score retains unknown momentum; when output
+QC exists in bangers-only mode, its actual fit/entertainment/quality scores are
+used instead of the proposed source-cut scores.
+
+
 Actual source scores are checked for absolute feasibility before rendering.
 Only when even maximum remaining points cannot meet the standard or editorial
 fallback rule does preparation stop with a completed source-score hold. Saved
@@ -39,11 +62,9 @@ Bilibili selection filters supported `BV…` IDs before its bounded query. An
 unsupported legacy `av…` lead must never cause an early return that blocks later
 valid candidates. Unsupported links remain leads, not verified media.
 
-Current Account policy (latest operator instruction, 2026-11-05): **ten daily
-slots**, every two hours from 05:00 through 23:00 Toronto. Captions begin with
-`POV:` and a playful scene based on inspected performance/attributed cast, using
-configured cast handles and emojis, followed by a blank line and
-`ANOTHER ABSOLUTE SI BANGER! 🔥`. Optional
+The prior November 5 policy used ten two-hour slots and a two-line POV/slogan
+caption. November 7 supersedes both: thirteen 90-minute slots and one grounded,
+output-verified caption naming at least one of the five permitted cast roles. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
 five platforms, including X, until revoked. Source subtitles, logos and credits may remain;
@@ -57,8 +78,10 @@ backfilled. Set it to `0` to require complete archive import again. Status expos
 initial readiness and archive completeness separately; never reset posting history.
 `allow_unknown_momentum = true` enables the documented quality fallback for missing
 engagement data. It preserves the raw score, unknown counts and every QC/dedup gate.
-Its November 5 floors are 18/20 fit, 14/20 entertainment, 10/15 quality and
-80 percent of the 75 observable points; missing momentum remains unknown.
+Its engine fallback retains 18/20 fit, 14/20 entertainment, 10/15 quality and
+80 percent of the 75 observable points. The live banger policy additionally
+requires 18/17/12 source and output floors plus the verified first second;
+missing momentum remains unknown.
 Cast labels are creator attribution, not facial identification of real people.
 
 Sources favor the last 72 hours, then progressively older week/month/year bands,

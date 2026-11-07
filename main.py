@@ -46,6 +46,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
         executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
+                   "video": ThreadPoolExecutor(1),
                    "watch": ThreadPoolExecutor(1), "watch_actions": ThreadPoolExecutor(1),
                    "watch_reply": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
@@ -64,13 +65,14 @@ def build_scheduler(*, post_only=False, reply_only=False):
     if not reply_only and settings.get("VIDEO_ENABLED"):
         from src.video.workers import health_job
         add(health.wrap_job(health_job, "video_health", safari_health=False), 2 / 60,
-            "video_health_job", executor="editorial", first_seconds=2)
-    elif not reply_only:
+            "video_health_job", executor="video", first_seconds=2)
+    from src.video.profile import news_enabled
+    if not reply_only and (not settings.get("VIDEO_ENABLED") or news_enabled()):
         # Polling retries only the current window. State survives restarts;
         # a dedicated worker prevents reply scans from starving originals.
         # Its failures are model timeouts, not Safari outages: kept out of
         # the Safari failure counter.
-        add(health.wrap_job(run_editorial_cycle, "editorial", safari_health=False), 10,
+        add(health.wrap_job(run_editorial_cycle, "editorial", safari_health=False), 2 if news_enabled() else 10,
             "editorial_job", executor="editorial", first_seconds=10)
 
     if not post_only:
@@ -168,7 +170,9 @@ def main():
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else min_target,
                           "target_posts": video_slots if settings.get("VIDEO_ENABLED") else target,
-                          "max_profile_posts": video_slots + 1 if settings.get("VIDEO_ENABLED") else config.posts_ceiling(),
+                          "max_profile_posts": (video_slots + 1 + (video_cfg.news_daily_cap if video_cfg.news_enabled else 0)) if video_cfg else config.posts_ceiling(),
+                          "news_slots": [s.clock for s in slots()] if video_cfg and video_cfg.news_enabled else [],
+                          "news_daily_cap": video_cfg.news_daily_cap if video_cfg and video_cfg.news_enabled else 0,
                           "replies": "unlimited",
                           "reply_volume_boost_date": settings.get("REPLY_VOLUME_BOOST_DATE"),
                           "reply_discovery_generation_budgets": {
@@ -217,8 +221,9 @@ def main():
     if settings.get("VIDEO_ENABLED"):
         from src.video.config import load as video_config
         from src.video.schedule import clocks as video_clocks
-        log.info("Bot started: %s video slots plus at most one startup video; transport=%s; replies unlimited; active %s.",
-                 len(video_clocks(video_config())), video_config().publishing_transport, window_label())
+        cfg = video_config()
+        log.info("Bot started: %s video slots, %s news slots, at most one startup video; transport=%s; replies unlimited; active %s.",
+                 len(video_clocks(cfg)), len(slots()) if cfg.news_enabled else 0, cfg.publishing_transport, window_label())
     else:
         log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
                  f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")

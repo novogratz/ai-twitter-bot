@@ -103,7 +103,7 @@ def ffmpeg(args, cfg, *, output_limit=2_000_000):
                            max_output=output_limit, memory_mb=cfg.max_media_memory_mb)
 
 
-def probe(path, cfg):
+def probe(path, cfg, *, source=False):
     data = json.loads(bounded_command(["ffprobe", "-v", "error", "-protocol_whitelist", "file,pipe",
                                      "-show_format", "-show_streams", "-of", "json", str(path)], timeout=30))
     streams = data["streams"]
@@ -114,7 +114,9 @@ def probe(path, cfg):
     width, height = int(video["width"]), int(video["height"])
     raw_sar = video.get("sample_aspect_ratio", "1:1")
     sar = float(Fraction(raw_sar.replace(":", "/"))) if raw_sar != "N/A" else 1.0
-    if (not audio or not .5 <= duration <= cfg.max_duration_seconds or not 1 <= fps <= 60
+    from .config import source_duration_limit
+    limit = source_duration_limit(cfg) if source else cfg.max_duration_seconds
+    if (not audio or not .5 <= duration <= limit or not 1 <= fps <= 60
             or not 32 <= width <= 4096 or not 32 <= height <= 4096 or not 1 / 3 <= width / height <= 3
             or not math.isfinite(sar) or not 1 / 16 <= sar <= 16 or not 1 / 3 <= width * sar / height <= 3
             or any(s.get("side_data_type") == "Display Matrix" and s.get("rotation", 0) != 0 for s in video.get("side_data_list", []))):
@@ -124,10 +126,11 @@ def probe(path, cfg):
             "video_codec": video["codec_name"], "audio_codec": audio["codec_name"]}
 
 
-def audio_samples(path, cfg):
+def audio_samples(path, cfg, *, start=0, duration=None):
     import numpy as np
-    raw = ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), "-vn", "-ac", "1", "-ar", "8000",
-                  "-f", "s16le", "pipe:1"], cfg, output_limit=3_000_000)
+    trim = (["-ss", str(start)] if start else []) + (["-t", str(duration)] if duration is not None else [])
+    raw = ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), *trim, "-vn", "-ac", "1", "-ar", "8000",
+                  "-f", "s16le", "pipe:1"], cfg, output_limit=5_000_000)
     return np.frombuffer(raw, dtype="<i2").astype(float)
 
 
@@ -295,6 +298,8 @@ def inspect(path, stage, cfg, store, now, **extra):
 
 
 def render(original, output, info, evidence, cfg):
+    from .editing import plan
+    edit = plan(evidence, info, cfg, sha256(original)) if cfg.auto_edit else None
     crop = evidence.get("safe_crop", [0, 0, info["width"], info["height"]])
     retaining = cfg.allow_source_overlays and evidence.get("overlays_removable_by_crop") is not True
     if retaining:
@@ -328,15 +333,18 @@ def render(original, output, info, evidence, cfg):
     if position not in ("top", "bottom") or evidence.get("watermark_clear_of_action") is not True:
         raise ValueError("watermark safe placement unverified")
     ypos = "H-h-0.06*H" if position == "bottom" else "0.06*H"
-    filters = f"[0:v]crop={w}:{h}:{x}:{y},scale={ow}:{oh},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+    cut = f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS," if edit else ""
+    filters = f"[0:v]{cut}crop={w}:{h}:{x}:{y},scale={ow}:{oh},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+    if edit:
+        filters += f";[0:a:0]atrim=start={edit['start_seconds']}:end={edit['end_seconds']},asetpts=PTS-STARTPTS[aout]"
     # Reserve container/audio headroom before encoding. Unbounded CRF can make a
     # good source too large for the configured composer/inspection byte limit.
-    maxrate = int(cfg.max_download_bytes * .90 * 8 / info["duration"] - 192_000)
+    maxrate = int(cfg.max_download_bytes * .90 * 8 / (edit["duration"] if edit else info["duration"]) - 192_000)
     if maxrate < 100_000:
         raise ValueError("configured output byte budget is too small")
     try:
         ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(original), "-i", str(watermark_path),
-                "-filter_complex", filters, "-map", "[out]", "-map", "0:a:0", "-sn", "-dn", "-map_metadata", "-1",
+                "-filter_complex", filters, "-map", "[out]", "-map", "[aout]" if edit else "0:a:0", "-sn", "-dn", "-map_metadata", "-1",
                 "-c:v", "libx264", "-threads", "1", "-preset", "veryfast", "-crf", "16", "-profile:v", "high",
                 "-maxrate", str(maxrate), "-bufsize", str(maxrate * 2),
                 "-pix_fmt", "yuv420p", "-x264-params", "open-gop=0", "-fps_mode", "passthrough",
@@ -345,12 +353,16 @@ def render(original, output, info, evidence, cfg):
             raise ValueError("rendered output exceeds configured byte budget")
     finally:
         watermark_path.unlink(missing_ok=True)
+    return edit
 
 
-def technical_qc(original, output, original_info, cfg):
+def technical_qc(original, output, original_info, cfg, *, edit=None):
     result = probe(output, cfg)
     ffmpeg(["-xerror", "-protocol_whitelist", "file,pipe", "-i", str(output), "-f", "null", "-"], cfg)
-    if abs(result["duration"] - original_info["duration"]) > .15 or abs(result["fps"] - original_info["fps"]) > .1:
+    expected = edit["duration"] if edit else original_info["duration"]
+    if edit and edit.get("source_sha256") != sha256(original):
+        raise ValueError("cut source changed")
+    if abs(result["duration"] - expected) > .15 or abs(result["fps"] - original_info["fps"]) > .1:
         raise ValueError("duration or genuine frame rate changed")
     if result["video_codec"] != "h264" or result["audio_codec"] != "aac":
         raise ValueError("output codec mismatch")
@@ -362,15 +374,18 @@ def technical_qc(original, output, original_info, cfg):
     if abs(result["width"] / result["height"] - original_ratio) > tolerance:
         raise ValueError("display proportions changed")
     import numpy as np
-    a, b = audio_samples(original, cfg), audio_samples(output, cfg)
+    a = audio_samples(original, cfg, start=edit["start_seconds"], duration=expected) if edit else audio_samples(original, cfg)
+    b = audio_samples(output, cfg)
     n = min(len(a), len(b))
     correlation = float(np.corrcoef(a[:n], b[:n])[0, 1])
     if not math.isfinite(correlation) or correlation < .95 or abs(result["audio_start"] - result["video_start"]) > .08:
         raise ValueError("audio timing/signal changed or silent")
     defects = []
-    for path, duration in ((original, original_info["duration"]), (output, result["duration"])):
+    for path, duration in ((original, expected), (output, result["duration"])):
+        cut_filter = (f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS,"
+                      if edit and path == original else "")
         tags = ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), "-an", "-vf",
-                       "blackdetect=d=0.15:pix_th=0.05,freezedetect=n=-50dB:d=1,metadata=print:file=-",
+                       cut_filter + "blackdetect=d=0.15:pix_th=0.05,freezedetect=n=-50dB:d=1,metadata=print:file=-",
                        "-f", "null", "-"], cfg).decode("utf-8", "replace")
         totals = {}
         for kind, prefix in (("black", "lavfi.black_"), ("freeze", "lavfi.freezedetect.freeze_")):
@@ -388,7 +403,7 @@ def technical_qc(original, output, original_info, cfg):
     if any(defects[1][kind] > defects[0][kind] + .15 for kind in ("black", "freeze")):
         raise ValueError("introduced black/frozen frames")
     return {"decoded": True, "audio_sync": True, "audio_correlation": correlation,
-            "no_new_black_freeze": True, "defect_seconds": defects, "probe": result}
+            "no_new_black_freeze": True, "defect_seconds": defects, "probe": result, "edit": edit}
 
 
 def process(store, job, now, cfg):
@@ -398,6 +413,27 @@ def process(store, job, now, cfg):
         return _process(store, job, now, cfg)
     finally:
         _job_deadline = None
+
+
+def finish_output_review(store, row, doc, now, cfg, job, original_fp):
+    """A completed editorial refusal holds its evidence without transient retries."""
+    refusal = ranking.output_gate(doc, cfg)
+    if not refusal:
+        try:
+            doc["caption"] = ranking.caption(doc, cfg, now)
+        except ValueError as exc:
+            refusal = str(exc)
+    doc = ranking.refresh(store, row | {"document": doc}, now, cfg)
+    why = refusal or ranking.gate(doc, cfg, now, final=True)
+    if refusal:
+        doc["preparation_hold"] = {"stage": "output_review", "reason": refusal,
+                                   "sha256": doc["output_sha256"], "at": now}
+    else:
+        doc.pop("preparation_hold", None)
+    store.save_candidate(row["id"], doc, now, state="held" if why else "ready", reason=why,
+                         score=doc["ranking"]["total"], fingerprint=original_fp, job=job)
+    if not refusal:
+        store.enqueue("novelty", row["id"], now)
 
 
 def review_output(store, job, now, cfg):
@@ -417,16 +453,11 @@ def review_output(store, job, now, cfg):
         why = ranking.gate(doc, cfg, now)
         if why:
             raise ValueError(why)
-        technical = technical_qc(original, output, doc["probe"], cfg)
+        technical = technical_qc(original, output, doc["probe"], cfg, **({"edit": doc["edit"]} if doc.get("edit") else {}))
         final = inspect(output, "output", cfg, store, now, original_path=str(original),
-                        source_inspection=doc["inspection"], duration=doc["probe"]["duration"])
+                        source_inspection=doc["inspection"], edit=doc.get("edit"), duration=technical["probe"]["duration"])
         doc["qc"] = {**final, **technical}
-        doc["caption"] = ranking.caption(doc, cfg, time.time())
-        doc = ranking.refresh(store, row | {"document": doc}, time.time(), cfg)
-        why = ranking.gate(doc, cfg, time.time(), final=True)
-        store.save_candidate(row["id"], doc, time.time(), state="held" if why else "ready", reason=why,
-                             score=doc["ranking"]["total"], fingerprint=json.loads(row["fingerprint"]), job=job)
-        store.enqueue("novelty", row["id"], time.time())
+        finish_output_review(store, row, doc, time.time(), cfg, job, json.loads(row["fingerprint"]))
     finally:
         _job_deadline = None
 
@@ -436,6 +467,9 @@ def _process(store, job, now, cfg):
     if row["state"] in ("rejected", "posted", "reserved", "duplicate", "expired"):
         return
     doc = row["document"]
+    if cfg.auto_edit:
+        from .editing import policy_revision
+        doc["editing_policy_revision"] = policy_revision(cfg)
     checked_at = time.time()
     if reason := ranking.publication_gate(doc, cfg, checked_at):
         # A source read can resolve an old or missing date after discovery has
@@ -458,8 +492,9 @@ def _process(store, job, now, cfg):
             store.save_candidate(row["id"], doc, time.time(), state="held", reason=source_reason,
                                  fingerprint=doc.get("original_fingerprint"), job=job)
             return
+        from .config import source_duration_limit
         if (doc.get("source_duration_evidence", {}).get("source_id") == doc.get("source_id")
-                and doc.get("source_duration", 0) > cfg.max_duration_seconds):
+                and doc.get("source_duration", 0) > source_duration_limit(cfg)):
             raise UnsupportedMedia("source duration exceeds configured maximum")
         grant = ranking.permission(doc, cfg, now)
         if grant:
@@ -482,7 +517,7 @@ def _process(store, job, now, cfg):
         # Keep complete downloaded bytes even when probing rejects their format.
         # Otherwise every bounded retry downloads that same unusable source again.
         doc.update(original_path=str(original), original_sha256=sha256(original))
-        info = probe(original, cfg)
+        info = probe(original, cfg, source=True) if cfg.auto_edit else probe(original, cfg)
         doc["probe"] = info
         original_fp = fingerprint(original, info, cfg)
         doc["original_fingerprint"] = original_fp
@@ -495,6 +530,16 @@ def _process(store, job, now, cfg):
                 store.save_candidate(row["id"], doc, time.time(), state="duplicate", reason="already in own history", fingerprint=original_fp, job=job)
                 return
         doc["inspection"] = inspect(original, "source", cfg, store, now, duration=info["duration"], source_document=doc)
+        if cfg.auto_edit:
+            from .editing import plan
+            try:
+                doc["edit"] = plan(doc["inspection"], info, cfg, doc["original_sha256"])
+            except ValueError as exc:
+                doc["preparation_hold"] = {"stage": "editorial_cut", "reason": str(exc),
+                                           "sha256": doc["original_sha256"], "at": time.time()}
+                store.save_candidate(row["id"], doc, time.time(), state="held", reason=str(exc),
+                                     fingerprint=original_fp, job=job)
+                return
         reason = ranking.gate(doc, cfg, time.time())
         if reason == _STALE_X_METRICS:
             raise Deferred(reason, retry_after=60)
@@ -513,17 +558,12 @@ def _process(store, job, now, cfg):
         doc.pop("preparation_hold", None)
         render(original, output, info, doc["inspection"], cfg)
         doc.update(output_path=str(output), output_sha256=sha256(output), brand=cfg.watermark)
-        technical = technical_qc(original, output, info, cfg)
+        technical = technical_qc(original, output, info, cfg, **({"edit": doc["edit"]} if doc.get("edit") else {}))
         final = inspect(output, "output", cfg, store, now, original_path=str(original),
-                        source_inspection=doc["inspection"], duration=info["duration"])
+                        source_inspection=doc["inspection"], edit=doc.get("edit"), duration=technical["probe"]["duration"])
         doc["qc"] = {**final, **technical}
         doc["output_fingerprint"] = fingerprint(output, technical["probe"], cfg)
-        doc["caption"] = ranking.caption(doc, cfg, now)
-        doc = ranking.refresh(store, row | {"document": doc}, now, cfg)
-        reason = ranking.gate(doc, cfg, now, final=True)
-        store.save_candidate(row["id"], doc, time.time(), state="held" if reason else "ready", reason=reason,
-                             score=doc["ranking"]["total"], fingerprint=original_fp, job=job)
-        store.enqueue("novelty", row["id"], now)
+        finish_output_review(store, row, doc, time.time(), cfg, job, original_fp)
     except UnsupportedMedia as exc:
         doc["preparation_hold"] = {"stage": "probe", "reason": str(exc),
                                    "sha256": doc.get("original_sha256"), "at": time.time()}

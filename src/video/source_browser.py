@@ -8,7 +8,20 @@ import time
 from urllib.parse import parse_qs, urlsplit
 
 from . import ranking
+from .config import source_duration_limit
 from .security import AccessError, Deferred, request
+
+
+def _source_failed(doc, now):
+    """Spend the reserve on new leads before repeatedly opening blocked pages."""
+    attempts = min(8, int(doc.get("source_capture_failures", 0)) + 1)
+    doc["source_capture_failures"] = attempts
+    doc["source_capture_retry_at"] = now + min(86400, 1200 * 3 ** (attempts - 1))
+
+
+def _source_succeeded(doc):
+    doc.pop("source_capture_retry_at", None)
+    doc.pop("source_capture_failures", None)
 
 
 def media_host(url):
@@ -71,10 +84,12 @@ def _capture_bilibili(store, cfg, now):
     for item in candidates:
         row = store.candidate(item["id"])
         doc = row["document"]
+        if doc.get("source_capture_retry_at", 0) > now:
+            continue
         if not isinstance(doc.get("source_id"), str) or not re.fullmatch(r"BV[A-Za-z0-9]{10}", doc["source_id"]):
             continue
         if (doc.get("source_duration_evidence", {}).get("source_id") == doc.get("source_id")
-                and doc.get("source_duration", 0) > cfg.max_duration_seconds):
+                and doc.get("source_duration", 0) > source_duration_limit(cfg)):
             continue
         downloaded = bool(doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file())
         if (not downloaded and ranking.permission(doc, cfg, now) and not doc.get("local_file") and not doc.get("media_url")
@@ -123,7 +138,7 @@ def _capture_bilibili(store, cfg, now):
             ingest(store, "bilibili", leads, now, cfg)
         duration = payload.get("duration")
         if (payload.get("id") == source_id and type(duration) in (int, float)
-                and math.isfinite(duration) and duration > cfg.max_duration_seconds):
+                and math.isfinite(duration) and duration > source_duration_limit(cfg)):
             doc["source_duration"] = duration
             doc["source_duration_evidence"] = {"source_id": source_id, "observed_at": now}
             doc["preparation_hold"] = {"stage": "source_duration", "reason": "source exceeds configured duration", "at": now}
@@ -138,6 +153,7 @@ def _capture_bilibili(store, cfg, now):
         doc.update(published_at=payload["published"], creator=str(payload.get("creator") or doc["creator"]),
                    title=str(payload.get("title", ""))[:2000], access_status="normal Safari player media available",
                    publication_evidence="Timestamp from the authenticated normal video page; not discovery time")
+        _source_succeeded(doc)
         store.save_candidate(row["id"], doc, time.time(), state=row["state"] if downloaded else "discovered",
                              reason=row["reason"] if downloaded else "source media captured; verification queued",
                              score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
@@ -157,6 +173,7 @@ def _capture_bilibili(store, cfg, now):
         if isinstance(exc, (OutsideActiveHours, Deferred)):
             raise
         from .config import safe_label
+        _source_failed(doc, now)
         detail = safe_label(str(exc)) if isinstance(exc, AccessError) else type(exc).__name__
         store.save_candidate(row["id"], doc, time.time(), state=row["state"],
                              reason="source player unavailable: " + detail, score=row["score"],
@@ -193,6 +210,8 @@ def capture_next(store, cfg, now):
                                "COALESCE(json_extract(document,'$.source_capture_attempt'),0),published DESC,discovered DESC LIMIT 80", (platform,)):
             row = store.candidate(item["id"])
             doc = row["document"]
+            if doc.get("source_capture_retry_at", 0) > now:
+                continue
             refresh_x = platform == "x" and now - doc.get("source_metrics", {}).get("observed_at", 0) >= 1800
             have_original = doc.get("original_sha256") and Path(doc.get("original_path", "")).is_file()
             needs_source = not (have_original or doc.get("media_url") or doc.get("local_file"))
@@ -212,6 +231,7 @@ def capture_next(store, cfg, now):
             if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
                 raise Deferred("source request budget exhausted")
             native_source.capture(row, cfg, now)
+            _source_succeeded(doc)
             reason = ranking.source_gate(doc, now)
             if reason:
                 raise AccessError(reason)
@@ -235,6 +255,7 @@ def capture_next(store, cfg, now):
             if isinstance(exc, (OutsideActiveHours, Deferred)):
                 raise
             reason = safe_label(str(exc)) if isinstance(exc, AccessError) else type(exc).__name__
+            _source_failed(doc, now)
             store.save_candidate(row["id"], doc, time.time(), state="held", reason="source player unavailable: " + reason,
                                  score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
             store.set_meta("source_player:" + platform, {"status": "limited", "checked_at": now, "reason": reason})

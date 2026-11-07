@@ -19,6 +19,32 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
+The latest November 7 policy runs **sourced SI news every two hours** (05:30–23:30)
+and **SI performance videos every 90 minutes** (05:00–23:00), in separate workers
+sharing publication spacing. News has ten opportunities; video has thirteen, plus
+the existing once-daily startup allowance. Quiet supply skips a window, never
+creates a burst or weak filler.
+
+Videos must visibly feature at least one of **Elon, Trump, Jensen Huang, Sam Altman
+or Dario Amodei**, in an inspected synthetic musical/dance/comedy performance.
+Codex chooses a coherent 8–60 second cut (usually 15–45 seconds), removes dead
+setup/tails, and the renderer adds **@thesimaximalist**. Original bytes and audio
+are preserved; output/audio alignment, source overlays and five actual subsecond
+opening frames are checked again. Only strong reviewed hooks and quality pass.
+Captions are one grounded line, independently checked against the edited scene.
+Older eligible clips remain available up to two years; quality comes before age.
+
+Discovery prioritizes Instagram and Bilibili, then RedNote and TikTok. Bounded
+[observations of 18 own posts](docs/si-content-observations-2026-11-07.json) inform
+search and caption style; their unequal lifetime view counts are not causal
+predictions. News comes from trusted sources within 48 hours, with separate
+factual and quality review. Approved news waits through video spacing without
+repeated model calls, and only an exact receipt confirms publication.
+
+Code/config changes take effect on the next explicitly requested start/restart.
+No production claims or history are reset. Earlier dated policies below apply
+only where this amendment has not superseded them.
+
 The November 7 Reply update searches more widely while giving the configured
 major AI accounts first turn. Up to **16 searches per cycle** cover four grouped
 major-author Latest searches, eight Top searches and four first-hour Latest
@@ -78,17 +104,9 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos now have **ten daily Toronto slots, every two hours from 05:00 through
-23:00**. The Account requests a video automatically on startup, without holding
-Replies, using the existing once-per-day extra-startup allowance. Independent
-discovery/media workers prioritize recent synthetic dance, song and parody clips
-featuring Elon Musk, Sam Altman, Dario Amodei, Trump or Zuckerberg, with fallback
-up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
-X clips require a known view count of at most 50,000. Captions use a grounded
-`POV:` scene and emojis, then a blank line and
-`ANOTHER ABSOLUTE SI BANGER! 🔥`. Actual inspection and audio evidence, permanent
-posting memory and confirmed receipts remain required. An empty or inaccessible
-queue is reported as a missed slot, never a successful post.
+The former ten-video-only schedule and two-line caption have been replaced by
+the mixed news/video policy above. Existing inspection, publication receipts and
+permanent history remain mandatory.
 
 On startup, the supervisor also replaces verified discovery/media workers left
 running older code or configuration, waiting for their role locks to release.

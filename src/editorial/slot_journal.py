@@ -107,6 +107,13 @@ class SlotJournal:
         """The Editor's reason on `clock`'s last Attempt of `day`, or ""."""
         return self._of(day).get("feedback", {}).get(clock, "")
 
+    def ready_draft(self, clock: str, day: date):
+        return self._of(day).get("ready_drafts", {}).get(clock)
+
+    def keep_draft(self, clock: str, audit: dict, source: dict) -> None:
+        self._data.setdefault("ready_drafts", {})[clock] = {"audit": audit, "source": source}
+        self._save()
+
     def submissions(self, day: date) -> Submissions:
         """`day`'s Slots marked published, and its pending submissions: in
         `pending_sources` or a Slot marked pending, the Operator's hand
@@ -138,12 +145,14 @@ class SlotJournal:
             url=url, text=text, ts=at.isoformat())
         self._save()
 
-    def confirm(self, clock: str, url: str, text: str, angle: str, at: datetime) -> None:
+    def confirm(self, clock: str, url: str, text: str, angle: str, at: datetime, *, published_url="") -> None:
         """The reserved submission of `clock` shipped at `at`."""
         del self._data["pending_sources"][self._pending_key(clock)]
         self._data["slots"][clock] = "published"
+        self._data.get("ready_drafts", {}).pop(clock, None)
         self._data.setdefault("published", []).append(
-            dict(ts=at.isoformat(), text=text, source_url=url, angle=angle, slot=clock))
+            dict(ts=at.isoformat(), text=text, source_url=url, angle=angle, slot=clock,
+                 **({"published_url": published_url} if published_url else {})))
         self._save()
 
     def release(self, clock: str) -> None:

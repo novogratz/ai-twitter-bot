@@ -305,6 +305,7 @@ def download(doc, destination, cfg, store, now, *, validate=None):
         return {key: quoted if quoted else plain for key, quoted, plain in
                 re.findall(r'(?:^|,)([A-Z0-9-]+)=(?:"([^"]*)"|([^,]*))', value)}
     def segments(url, text):
+        from .config import source_duration_limit
         if ("#EXTM3U" not in text or "#EXT-X-ENDLIST" not in text
                 or re.search(r"#EXT-X-(?:KEY:(?!METHOD=NONE)|SESSION-KEY|BYTERANGE|DISCONTINUITY)", text)):
             raise AccessError("source HLS must be complete, unencrypted and independently readable")
@@ -312,7 +313,7 @@ def download(doc, destination, cfg, store, now, *, validate=None):
         urls = [urljoin(url, line.strip()) for line in text.splitlines() if line.strip() and not line.startswith("#")]
         init = re.findall(r'#EXT-X-MAP:URI="([^"]+)"', text)
         if (not durations or len(durations) != len(urls) or len(urls) > 400
-                or sum(durations) > cfg.max_duration_seconds + 2 or len(init) > 1):
+                or sum(durations) > source_duration_limit(cfg) + 2 or len(init) > 1):
             raise AccessError("source HLS exceeds bounded duration or segment structure")
         if init:
             urls.insert(0, urljoin(url, init[0]))

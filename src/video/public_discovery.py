@@ -70,6 +70,13 @@ Do NOT infer a publication timestamp from discovery or a search crawl date.
 This step identifies candidates only; actual video/audio inspection and the
 operator's video/music permission records are separate and mandatory.
 Use the selected English/Chinese queries and check configured creator profiles.
+Prioritize performed synthetic music parodies, boy-band scenes, recognizable dance
+action and concise visual comedy. Search Chinese creator vocabulary as well as
+English: AI翻唱, AI换脸, AI男团, 鬼畜, 舞蹈. Only ONE configured target needs to
+participate visibly; other fictional cast may accompany them. Avoid static portraits,
+reaction compilations and real news/speech footage. Look for self-contained strong
+moments in longer videos too: a later inspector can select an 8–60 second excerpt
+from an original up to five minutes. Search results never approve that edit.
 Keep an explicit AI/synthetic-generation term in every performance search, even
 when removing date filters. Plain celebrity-plus-dance searches mostly retrieve
 real rallies, interviews and old event footage. Prefer original creative uploads
@@ -99,6 +106,8 @@ evidence_url must be the exact individual video URL found in the results.
 Search request:
 """ + json.dumps({"platform": platform, "domains": sorted(HOSTS[platform]),
         "queries": selected, "creators": options.get("creators", []),
+        "audience_examples": cfg.audience_examples,
+        "example_scope": "Observed own-post captions/counters, partial coverage and unequal ages. Style/search hints only, not visual evidence or causal predictions. Find DIFFERENT videos; never recycle these posted clips.",
         "targets": cfg.targets, "now_utc": datetime.fromtimestamp(now, timezone.utc).isoformat()}, ensure_ascii=False)
     if not store.budget(platform, "requests", 1, cfg.request_budget - cfg.publishing_request_reserve, now):
         raise Deferred("source request budget exhausted")

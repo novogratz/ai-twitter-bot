@@ -84,16 +84,23 @@ OLD_TREND_QUERIES = [
     '"artificial intelligence" lang:en min_faves:50 -filter:replies',
     'AI lang:en min_faves:200 -filter:replies',
 ]
+NEWS_ANGLE = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters"
+NEWS_SLOTS = [(f"{hour:02}:30", NEWS_ANGLE) for hour in range(5, 24, 2)]
+NEWS_FEEDS = [(name, {"Google AI": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+                       "Mistral AI": "https://mistral.ai/news/rss"}.get(name, url))
+              for name, url in OLD["FEEDS"] if name != "The Decoder"]
+FOURTH_SLOT = '{ clock = "11:30", angle = "' + NEWS_ANGLE + '" }'
 
 
-def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
+def test_the_account_has_two_hour_primary_source_news_and_preserves_reply_policy():
     loaded = account.load("theaishrink")
     ed = loaded.editorial
-    assert list(ed.slots) == OLD["SLOTS"]
-    assert sorted(ed.trend_clocks) == OLD["TREND_SLOTS"]
+    assert list(ed.slots) == NEWS_SLOTS
+    assert not ed.trend_clocks
     assert ed.trend_angle == OLD["TREND_PURPOSE"]
-    assert ed.exceptional_clocks == {OLD["EXCEPTIONAL_SLOT"]}
-    assert list(ed.feeds) == OLD["FEEDS"]
+    assert not ed.exceptional_clocks
+    assert ed.news_only and ed.bangers_only and ed.max_news_age_hours == 48
+    assert list(ed.feeds) == NEWS_FEEDS
     assert [(t.topic, t.title, t.url) for t in ed.evergreen] == OLD["KNOWLEDGE"]
     assert {t.publisher for t in ed.evergreen} == {OLD["KNOWLEDGE_PUBLISHER"]}
     assert sorted(ed.trusted_hosts) == OLD["HOSTS"]
@@ -144,9 +151,9 @@ def test_strict_topic_requires_a_boolean(accounts, fresh):
 
 def test_the_editorial_reads_the_loaded_account():
     assert settings.get("BOT_ACCOUNT") == "theaishrink"
-    assert [tuple(slot) for slot in editorial.slots()] == OLD["SLOTS"]
-    assert sorted(editorial.trend_slots()) == OLD["TREND_SLOTS"]
-    assert [slot.clock for slot in editorial.slots() if slot.exceptional] == [OLD["EXCEPTIONAL_SLOT"]]
+    assert [tuple(slot) for slot in editorial.slots()] == NEWS_SLOTS
+    assert not editorial.trend_slots()
+    assert not [slot for slot in editorial.slots() if slot.exceptional]
     assert config.BOT_HANDLE == OLD["BOT_HANDLE"]
 
 
@@ -237,7 +244,7 @@ def test_main_stops_on_an_unknown_bot_account():
 @pytest.mark.parametrize("old, new, named", [
     ('handle = "thesimaximalist"', 'handle = "thesimaximalist"\nnickname = "shrink"', "nickname"),
     ('trend_angle =', 'trend_hours = 3\ntrend_angle =', "editorial.trend_hours"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = true, weight = 2 }',
+    (FOURTH_SLOT, '{ clock = "11:30", trend = true, weight = 2 }',
      "editorial.slots[3].weight"),
     ('publisher = "OpenAI", url', 'publisher = "OpenAI", lang = "en", url', "editorial.feeds[0].lang"),
     ('[relevance]', '[relevance]\nniche = "ai"', "relevance.niche"),
@@ -256,9 +263,9 @@ def test_an_unknown_key_stops_the_start(accounts, fresh, old, new, named):
 @pytest.mark.parametrize("old, new, named", [
     ('handle = "thesimaximalist"', "handle = 3", "handle"),
     ('language = "en"', 'language = "de"', "language"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10:00", trend = "yes" }', "editorial.slots[3].trend"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "10h00", trend = true }', "editorial.slots[3].clock"),
-    ('{ clock = "10:00", trend = true }', '{ clock = "09:00", trend = true }', "editorial.slots[3].clock"),
+    (FOURTH_SLOT, '{ clock = "11:30", trend = "yes" }', "editorial.slots[3].trend"),
+    (FOURTH_SLOT, '{ clock = "11h30", trend = true }', "editorial.slots[3].clock"),
+    (FOURTH_SLOT, '{ clock = "09:00", trend = true }', "editorial.slots[3].clock"),
     ('"openai.com", "blog.google"', '"openai.com", 7', "editorial.trusted_hosts[1]"),
     ('chat_templating"\npublisher = "Hugging Face docs"', 'chat_templating"\npublisher = true',
      "editorial.evergreen[0].publisher"),
@@ -284,7 +291,7 @@ def test_a_badly_typed_value_stops_the_start(accounts, fresh, old, new, named):
      "editorial.slots[3].angle must be absent when trend = true, which takes trend_angle instead."),
 ])
 def test_a_slot_angle_is_required_or_forbidden_by_trend(accounts, fresh, new, problem):
-    old = '{ clock = "10:00", trend = true }'
+    old = FOURTH_SLOT
     source = re.sub(r"blocked_accounts = \[[\s\S]*?\]", "blocked_accounts = []", THEAISHRINK, count=1)
     assert source.count(old) == 1
     accounts("theaishrink", source.replace(old, new))

@@ -1,5 +1,6 @@
 """Prepare before a due window; persist work and warn before supply becomes late."""
 from datetime import datetime, timedelta, timezone
+import json
 
 from ..core.logger import log
 from . import schedule
@@ -18,6 +19,25 @@ def recover_supply(db, cfg, now):
                "WHERE kind IN ('media','novelty','inspect_source','inspect_output') AND state='dead' "
                "AND item IN (SELECT id FROM candidates WHERE state='held') "
                "AND item NOT IN (SELECT candidate FROM content_claims)", (now,))
+    if cfg.auto_edit:
+        # A material editing/cast change permits ONE new preparation of saved,
+        # unclaimed sources. Completed refusals under this policy stay completed.
+        from .editing import policy_revision
+        revision = policy_revision(cfg)
+        for row in db.execute("SELECT id,document FROM candidates WHERE state='held' "
+                              "AND published>=? AND published<=? AND id NOT IN (SELECT candidate FROM content_claims)",
+                              (now - cfg.max_age_hours * 3600, now)).fetchall():
+            doc = json.loads(row["document"])
+            if doc.get("editing_policy_revision") == revision:
+                continue
+            if db.execute("SELECT 1 FROM jobs WHERE item=? AND state='running'", (row["id"],)).fetchone():
+                continue
+            doc["editing_policy_revision"] = revision
+            db.execute("UPDATE candidates SET document=? WHERE id=?", (dumps(doc), row["id"]))
+            # A new plan is a new job kind of work, not permission to reset a
+            # previously exhausted transient-error allowance.
+            db.execute("INSERT INTO jobs(kind,item,due) VALUES('media',?,?) ON CONFLICT(kind,item) DO UPDATE SET "
+                       "state='pending',due=excluded.due WHERE jobs.state='done'", (row["id"], now))
 
 
 def prepare_upcoming(store, cfg, now):

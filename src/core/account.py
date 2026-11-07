@@ -60,6 +60,9 @@ class Editorial:
     evergreen: tuple  # EvergreenTopic
     trusted_hosts: frozenset
     use_reply_route: bool = False  # opt in to the configured Reply provider/model for draft and review
+    news_only: bool = False
+    bangers_only: bool = False
+    max_news_age_hours: int = 48
 
 
 @dataclass(frozen=True)
@@ -167,7 +170,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list},
-                       optional={"use_reply_route": bool})
+                       optional={"use_reply_route": bool, "news_only": bool, "bangers_only": bool,
+                                 "max_news_age_hours": int})
     relevance = _Table(shown, "relevance", top["relevance"],
                        required={"topic": str, "off_topic": str})
     _check_voice(folder, os.path.dirname(shown))
@@ -189,6 +193,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
 
 
 def _editorial(table) -> Editorial:
+    if not 1 <= table.get("max_news_age_hours", 48) <= 48:
+        table.fail("max_news_age_hours", "must be 1..48")
     slots, trend, exceptional = [], set(), set()
     for i, raw in enumerate(table.items("slots", dict)):
         slot = _Table(table.file, f"editorial.slots[{i}]", raw, required={"clock": str},
@@ -218,6 +224,8 @@ def _editorial(table) -> Editorial:
     return Editorial(slots=tuple(slots), trend_angle=table["trend_angle"],
                      trend_clocks=frozenset(trend), exceptional_clocks=frozenset(exceptional),
                      feeds=feeds, evergreen=evergreen,
+                     news_only=table.get("news_only", False), bangers_only=table.get("bangers_only", False),
+                     max_news_age_hours=table.get("max_news_age_hours", 48),
                      trusted_hosts=frozenset(table.items("trusted_hosts", str)),
                      use_reply_route=table.get("use_reply_route", False))
 

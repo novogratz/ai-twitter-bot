@@ -180,7 +180,8 @@ def post_tweet(text: str) -> WriteOutcome:
     echoed prompt lines) and hashtags, a trailing run whole and the `#` of
     an inline one.
 
-    Returns SHIPPED once the submit keystroke ran, REFUSED on a policy,
+    Mixed news/video mode returns SHIPPED only after an exact own-status
+    receipt; legacy mode returns it once the submit keystroke ran. REFUSED on a policy,
     content, respect list or dedup skip, FAILED when the page did not open or
     a step before the submit failed,
     UNCONFIRMED when the submit keystroke failed, DRY_RUN on a dry run.
@@ -188,6 +189,12 @@ def post_tweet(text: str) -> WriteOutcome:
     """
     from ..core import reply_wording
     text = reply_wording.apply(_scrub_metadata_leaks(text), kind="original")
+    from ..video import profile as video_profile
+    if video_profile.news_enabled():
+        from ..video.config import live
+        if not live() or not video_profile.matches_news_claim(text):
+            log.info("[POST] Mixed news/video mode requires a live, reviewed editorial reservation.")
+            return WriteOutcome.REFUSED
 
     # Hard reject — if tool-call markup OR a JSON stream envelope survived
     # scrubbing, refuse to post. Both of these went live in prod 2026-05-13
@@ -234,6 +241,8 @@ def post_tweet(text: str) -> WriteOutcome:
         return None
 
     def steps():
+        from ..guards.active_hours import now_local
+        started = now_local()
         url = "https://x.com/intent/post?" + urllib.parse.urlencode({"text": text})
         log.info("Opening Twitter in your browser...")
         if not _open_or_abort(url, "POST"):
@@ -242,6 +251,16 @@ def post_tweet(text: str) -> WriteOutcome:
 
         log.info("Auto-clicking Post...")
         if not _submit_or_abort("POST"):
+            return WriteOutcome.UNCONFIRMED
+        if video_profile.news_enabled():
+            from . import reply_metrics
+            # Only the exact own text/status after this submit confirms a news
+            # publication. A missing receipt keeps its durable pending claim.
+            receipt = reply_metrics.confirm_original(text, since=started, source_url=text.rsplit("\n\n", 1)[-1])
+            if receipt:
+                video_profile.note_news_receipt(receipt)
+                log.info("[POST] Confirmed sourced news: %s", receipt)
+                return WriteOutcome.SHIPPED
             return WriteOutcome.UNCONFIRMED
         log.info("Tweet submitted!")
         return WriteOutcome.SHIPPED

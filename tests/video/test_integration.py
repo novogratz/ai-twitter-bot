@@ -5,6 +5,8 @@ from src.video import workers
 
 def test_video_replaces_editorial_job_preserving_reply_jobs(video_cfg, monkeypatch, settings_override):
     import main
+    from src.video import config
+    monkeypatch.setattr(config, "load", lambda: video_cfg)
     settings_override(VIDEO_ENABLED=False)
     before = {j.id for j in main.build_scheduler().get_jobs()}
     settings_override(VIDEO_ENABLED=True)
@@ -14,7 +16,9 @@ def test_video_replaces_editorial_job_preserving_reply_jobs(video_cfg, monkeypat
     assert "direct_reply_job" in after and "feed_sweep_job" in after
 
 
-def test_legacy_profile_chokepoint_refuses_when_video_owns_schedule(settings_override):
+def test_legacy_profile_chokepoint_refuses_when_video_owns_schedule(settings_override, monkeypatch, video_cfg):
+    from src.video import config
+    monkeypatch.setattr(config, "load", lambda: video_cfg)
     settings_override(VIDEO_ENABLED=True)
     assert not action_guard.can_post(action_guard.POST)[0]
     assert not action_guard.can_post(action_guard.RETWEET)[0]

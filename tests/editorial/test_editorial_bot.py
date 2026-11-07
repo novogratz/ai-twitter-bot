@@ -24,6 +24,16 @@ def use_editorial(monkeypatch, **fields):
     monkeypatch.setattr(account, "current", lambda: swapped)
 
 
+@pytest.fixture(autouse=True)
+def legacy_editorial_policy(monkeypatch):
+    """Exercise the optional original/teaching policy independently of live news-only settings."""
+    clocks = ("05:00", "07:15", "09:30", "10:00", "11:45", "13:00", "14:00", "15:00", "16:15", "18:30", "20:45")
+    use_editorial(monkeypatch, slots=tuple((clock, "A sourced useful update") for clock in clocks),
+                  trend_clocks=frozenset(("10:00", "13:00", "15:00")),
+                  exceptional_clocks=frozenset(("20:45",)), news_only=False,
+                  bangers_only=False, max_news_age_hours=48)
+
+
 def test_slots_do_not_catch_up_or_repeat_after_restart():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
     assert editorial.due_slot(at(5, 0), {})[0] == "05:00"

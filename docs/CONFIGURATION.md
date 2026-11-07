@@ -163,13 +163,33 @@ spacing, admission, scheduler concurrency nor the advisory daily targets.
 a newly selected date still requires the Operator's next explicit restart.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
-Account uses ten two-hour slots from 05:00 through 23:00 Toronto,
-`scheduled_daily_cap=10`, `startup_on_boot=true`, `preferred_age_hours=72` and
-`max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
-TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
-The startup request creates no Reply hold; publication still uses durable claims,
-inspection, dedup and existing spacing. The [README](../README.md) links the
-video pipeline guide and operating commands.
+Account uses thirteen 90-minute slots from 05:00 through 23:00 Toronto,
+`scheduled_daily_cap=13`, `startup_on_boot=true`, `preferred_age_hours=72` and
+`max_age_hours=17520` (730 days). `news_enabled=true` retains the separate
+editorial worker with `news_daily_cap=10`: ten two-hour news opportunities from
+05:30 through 23:30. News uses `editorial.news_only=true`,
+`editorial.bangers_only=true` and `editorial.max_news_age_hours=48` in
+`account.toml`. These optional Account fields default to false/false/48 for
+other Accounts. News and video share publication spacing and uncertain-send
+holds; each has its own daily limit. A colliding news slot waits within its
+45-minute window, keeping its reviewed draft.
+
+`auto_edit=true` enables a Codex-selected contiguous cut from an inspected
+source up to `source_max_duration_seconds=300`. `edit_min_seconds=8` and
+`edit_max_seconds=60` bound the finished excerpt; `min_hook_score=8` and
+`bangers_only=true` require strong source and independent output reviews with
+five actual frames from the first second. `one_line_caption=true` requires an
+output-verified caption naming an attributed target. These mode flags default
+to false; the original whole-video path remains available for other Accounts.
+`audience_examples` holds at most six observed own posts as style context,
+never source approval or measured retention. The exact watermark and five
+permitted cast keys live in this Account's configuration.
+
+Discovery prioritizes Instagram, Bilibili, RedNote and TikTok. X discovery is
+disabled for this Account; existing authorized X leads still require current
+observed source views at most 50,000. The startup request creates no Reply hold;
+publication retains durable claims, inspection, dedup and existing spacing.
+The [README](../README.md) links the video pipeline guide and operating commands.
 
 ## Policy ceilings
 

@@ -41,13 +41,18 @@ def draft_schema() -> dict:
 
 
 def review_schema() -> dict:
+    from ..core import account
+    scores = ({key: {"type": "integer", "minimum": 0, "maximum": 5}
+               for key in ("newsworthiness", "reader_impact", "opening_hook")}
+              if account.current().editorial.bangers_only else {})
     return {
         "type": "object",
         "properties": {
             **{key: {"type": "boolean"} for key in review_flags()},
+            **scores,
             "reason": {"type": "string", "maxLength": 600},
         },
-        "required": [*review_flags(), "reason"],
+        "required": [*review_flags(), *scores, "reason"],
         "additionalProperties": False,
     }
 

@@ -30,7 +30,10 @@ _VISIBLE = r"""(() => {
     const like = a.querySelector('[data-testid="like"], [data-testid="unlike"]');
     const views = a.querySelector('a[href$="/status/' + match[2] + '/analytics"]');
     return [{url:'https://x.com/' + match[1] + '/status/' + match[2], text:text.textContent.trim(),
-             likes:count(own(like) ? like : null), views:count(own(views) ? views : null)}];
+             likes:count(own(like) ? like : null), views:count(own(views) ? views : null),
+             links:Array.from(text.querySelectorAll('a[href]')).map(link => ({text:link.textContent,
+               href:link.getAttribute('href'), title:link.getAttribute('title'),
+               expanded:link.getAttribute('data-expanded-url')}))}];
   }));
 })()"""
 
@@ -59,6 +62,47 @@ def capture(text: str, *, since, parent: str) -> str:
                 and " ".join(str(row.get("text", "")).split()) == expected):
             matches.add(url)
     return next(iter(matches)) if len(matches) == 1 else ""
+
+
+def capture_original(text: str, *, since, source_url: str) -> str:
+    """Resolve X's displayed short URL only with that anchor's exact expanded URL."""
+    now = active_hours.now_local()
+    expected = " ".join(text.split())
+    matches = set()
+    for row in read_visible():
+        url = x_urls.canonical_status_url(row.get("url", ""))
+        at = x_urls.posted_at(url)
+        if not (url and x_urls.author(url) in account.own_handles() and at and since - timedelta(seconds=5) <= at <= now):
+            continue
+        observed = str(row.get("text", ""))
+        for link in row.get("links", []):
+            if source_url in (link.get("href"), link.get("title"), link.get("expanded")) and link.get("text"):
+                observed = observed.replace(link["text"], source_url)
+        if " ".join(observed.split()) == expected:
+            matches.add(url)
+    return next(iter(matches)) if len(matches) == 1 else ""
+
+
+def confirm_original(text: str, *, since, source_url: str) -> str:
+    """Bounded receipt read under the caller's Safari lock; never submit again."""
+    for _ in range(2):
+        time.sleep(2)
+        if receipt := capture_original(text, since=since, source_url=source_url):
+            return receipt
+    # The intent composer need not show the new post after it closes. Read the
+    # own profile once, preserving the same exact text, source and time checks.
+    from ..core import config
+    if not safari.open_url(config.BOT_PROFILE_URL):
+        return ""
+    try:
+        time.sleep(4)
+        for _ in range(3):
+            if receipt := capture_original(text, since=since, source_url=source_url):
+                return receipt
+            time.sleep(2)
+        return ""
+    finally:
+        safari.close_front_tab()
 
 
 def observe(url: str) -> dict | None:

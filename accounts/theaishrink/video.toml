@@ -1,10 +1,19 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# This replaces main-post editorial/repost scheduling only while enabled.
+# Mixed sourced news and video schedule, operator 2026-11-07.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["05:00", "07:00", "09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00"]
+windows = ["05:00", "06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30", "20:00", "21:30", "23:00"]
 paired_windows = []
-scheduled_daily_cap = 10
+scheduled_daily_cap = 13
+news_enabled = true
+news_daily_cap = 10
+auto_edit = true
+source_max_duration_seconds = 300
+edit_min_seconds = 8
+edit_max_seconds = 60
+min_hook_score = 8
+bangers_only = true
+one_line_caption = true
 startup_on_boot = true
 pair_minutes = 15
 protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
@@ -55,17 +64,17 @@ codex_inspection_reserve = 48
 codex_max_reply_calls = 2
 inspection_fps = 1 # temporal inspection across the full clip; reserve capacity for the ready buffer
 font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"
-watermark = "@Thesimaximalist"
+watermark = "@thesimaximalist"
 media_hosts = []
 local_import_roots = []
 x_reads_enabled = false
 
 [targets]
-elon = ["Elon Musk", "马斯克"]
-trump = ["Donald Trump", "特朗普"]
-dario = ["Dario Amodei", "达里奥", "阿莫迪"]
-sam = ["Sam Altman", "山姆·奥特曼"]
-zuckerberg = ["Mark Zuckerberg", "Zuckerberg", "扎克伯格"]
+elon = ["Elon Musk", "Elon", "马斯克"]
+trump = ["Donald Trump", "Trump", "特朗普", "川普"]
+dario = ["Dario Amodei", "Dario", "达里奥", "阿莫迪"]
+sam = ["Sam Altman", "Altman", "山姆·奥特曼", "奥特曼"]
+jensen = ["Jensen Huang", "Jensen", "黄仁勋", "老黄"]
 
 [target_handles]
 elon = "@elonmusk"
@@ -77,11 +86,28 @@ sam = "@sama"
 enabled = true
 safari_player = true
 public_search = true
-public_search_seconds = 7200
+public_search_seconds = 3600
 creators = ["ai_xiaomu"]
 permission_reference = ""
 # feed = "/absolute/path/to/authorized-instagram-feed.json"
 # Alternatively: provider_command = ["/absolute/path/to/licensed-provider-adapter"]
+
+[platforms.bilibili]
+enabled = true
+safari_player = true
+public_search = true
+public_search_seconds = 3600
+# Public research leads only; monitoring never grants reuse permission.
+creators = ["Claude最严厉的父亲", "AI大法师"]
+permission_reference = ""
+
+[platforms.rednote]
+enabled = true
+safari_player = true
+public_search = true
+public_search_seconds = 5400
+creators = []
+permission_reference = ""
 
 [platforms.tiktok]
 enabled = true
@@ -91,25 +117,8 @@ public_search_seconds = 7200
 creators = []
 permission_reference = ""
 
-[platforms.bilibili]
-enabled = true
-safari_player = true
-public_search = true
-public_search_seconds = 7200
-# Public research leads only; monitoring never grants reuse permission.
-creators = ["Claude最严厉的父亲", "AI大法师"]
-permission_reference = ""
-
-[platforms.rednote]
-enabled = true
-safari_player = true
-public_search = true
-public_search_seconds = 7200
-creators = []
-permission_reference = ""
-
 [platforms.x]
-enabled = true
+enabled = false
 safari_player = true
 public_search = true
 public_search_seconds = 7200
@@ -142,3 +151,40 @@ evidence = "Operator confirmed on 2026-11-01 permission for current/future Insta
 # evidence = "/private/contracts/permission-and-music-license.pdf"
 # expires_at = 1798761600  # UTC Unix seconds; replace with actual permission expiry.
 # attribution = "Credit: @licensed_creator"
+
+# Actual own-post observations. Style hints, never predicted engagement or source approval.
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2118431727886684202"
+caption = "ANOTHER BANGER 🔥 Donald Trump and JD Vance turned the White House into a boy band. Never gonna give you up. 😂🎤"
+views = 398345
+likes = 4592
+observed_at = "2026-11-07T12:15:17.443242-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2114651462919741942"
+caption = "AGI is on the way 🎶🎶\n\nElon, Jensen, Zuck, Sam and Dario in a hangar singing “I Want It That Way” but every line is about AGI being on the way 🤣🤣"
+views = 91719
+likes = 978
+observed_at = "2026-11-07T12:22:32.858951-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2113942535320088678"
+caption = "Elon and Trump, the bromance banger is back and we love to see it!!! 🤣🤣💀💀"
+views = 47697
+likes = 832
+observed_at = "2026-11-07T12:22:32.858960-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2115431659009159428"
+caption = "POV: Elon, Jensen, Sam & Dario said “just one drink.” 😂🍻\n\nANOTHER ABSOLUTE BANGER 💃💃"
+views = 36832
+likes = 659
+observed_at = "2026-11-07T12:22:32.858932-05:00"
+
+[[audience_examples]]
+url = "https://x.com/thesimaximalist/status/2118062603347915107"
+caption = "Jensen Huang sold the GPUs. Then sold out the stadium. 😂🎤\n\nElon Musk, Mark Zuckerberg, Sundar Pichai and Bill Gates got front-row seats.\n\nTHE SI WORLD TOUR IS AN ABSOLUTE BANGER! 🔥"
+views = 8522
+likes = 100
+observed_at = "2026-11-07T12:22:32.858971-05:00"

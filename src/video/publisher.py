@@ -6,6 +6,7 @@ import uuid
 
 from . import config, inventory, ranking, schedule
 from .media import matches_history
+from .profile import serialized
 from .security import sha256
 from .store import dumps
 
@@ -108,6 +109,7 @@ def tick_calendar(store, now, cfg):
                 db.execute("UPDATE startup SET state='skipped',reason='eligible-time expiry' WHERE id=?", (request["id"],))
 
 
+@serialized
 def reserve(store, now, cfg, *, operator_direct=False):
     """No network under the transaction; refreshed ready assets compete atomically."""
     tick_calendar(store, now, cfg)
@@ -121,6 +123,9 @@ def reserve(store, now, cfg, *, operator_direct=False):
     if not store.meta("account_verified", False):
         return None
     if store.meta("publish_retry_after", 0) > now.timestamp():
+        return None
+    from .profile import refusal
+    if refusal("video", schedule.local(now), cfg, store=store):
         return None
     stamp, day = now.timestamp(), schedule.local(now).date().isoformat()
     with store.transaction() as db:
@@ -207,9 +212,9 @@ def reserve(store, now, cfg, *, operator_direct=False):
                     db.execute("UPDATE slots SET reason='inventory held for upcoming primary windows' WHERE id=?", (slot["id"],))
                     return None  # a replenished buffer can still use this slot within grace
         fresh = [(r, d) for r, d in valid if stamp - d["published_at"] <= cfg.preferred_age_hours * 3600]
-        if fresh:
+        if fresh and not cfg.bangers_only:
             valid = fresh
-        elif not choice:
+        elif not choice and not cfg.bangers_only:
             # 2026-11-04: progressively older fallback, never choose a two-year
             # archive clip ahead of an eligible recent-week/month candidate.
             for days in (7, 30, 90, 365, 730):
@@ -219,8 +224,13 @@ def reserve(store, now, cfg, *, operator_direct=False):
                     break
         recent = [json.loads(r[0]) for r in db.execute("SELECT c.document FROM candidates c JOIN reservations r "
                   "ON r.candidate=c.id WHERE r.state='confirmed' ORDER BY r.confirmed DESC LIMIT 4")]
-        top_score = valid[0][0]["score"] or 0
-        comparable = valid if choice else [(r, d) for r, d in valid if (r["score"] or 0) >= top_score - 3]
+        if cfg.bangers_only and not choice:
+            valid.sort(key=lambda pair: (ranking.editorial_strength(pair[1]), pair[0]["score"] or 0), reverse=True)
+            best = ranking.editorial_strength(valid[0][1])
+            comparable = [(r, d) for r, d in valid if ranking.editorial_strength(d) >= best - 2]
+        else:
+            top_score = valid[0][0]["score"] or 0
+            comparable = valid if choice else [(r, d) for r, d in valid if (r["score"] or 0) >= top_score - 3]
         def repetition(pair):
             _, doc = pair
             return sum(2 * (d["creator"] == doc["creator"]) + (d["inspection"]["cast"] == doc["inspection"]["cast"])
@@ -263,6 +273,10 @@ def guard(store, ident, token, now, cfg, *, submitting=False):
     if not rows or rows[0]["state"] not in ("reserved", "uploading") or rows[0]["lease"] < now:
         raise ValueError("lost publishing lease")
     row = rows[0]
+    from .profile import refusal
+    if reason := refusal("video", schedule.local(datetime.fromtimestamp(now, timezone.utc)), cfg,
+                         store=store, reservation=ident):
+        raise ValueError(reason)
     if row["transport"] != cfg.publishing_transport:
         raise ValueError("reservation transport changed; recover it before switching")
     if now > row["deadline"]:

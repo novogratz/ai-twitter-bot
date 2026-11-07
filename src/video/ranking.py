@@ -67,6 +67,9 @@ def score(doc, observations, peers, now, cfg):
     if measured is not None and len(comparable) >= 5:
         momentum = 25 * (sum(v < measured for v in comparable) + .5 * sum(v == measured for v in comparable)) / len(comparable)
     evidence = doc.get("inspection", {})
+    if (cfg.bangers_only and doc.get("output_sha256")
+            and doc.get("qc", {}).get("sha256") == doc["output_sha256"]):
+        evidence = doc["qc"]
     age = (now - doc["published_at"]) / 3600 if doc.get("published_at") else None
     freshness = None if age is None else max(0, 10 * (1 - max(0, age) / cfg.max_age_hours))
     components = {"momentum": momentum, "fit": evidence.get("fit_score"),
@@ -82,6 +85,9 @@ def score(doc, observations, peers, now, cfg):
 def source_score_gate(doc, cfg, now):
     """Refuse render cost only when the actual source scores cannot qualify."""
     evidence = doc.get("inspection", {})
+    from .editing import banger_refusal
+    if reason := banger_refusal(evidence, cfg):
+        return reason
     observed = {key: evidence.get(key + "_score") for key in ("fit", "entertainment", "quality")}
     _validate_score_components(observed)
     if selected(doc, now):
@@ -113,6 +119,19 @@ def output_gate(doc, cfg):
     if doc.get("brand") != cfg.watermark:
         return "rendered branding does not match current operator configuration"
     qc = doc.get("qc", {})
+    from .editing import banger_refusal, plan
+    if reason := banger_refusal(qc, cfg, output=True):
+        return reason
+    if cfg.auto_edit:
+        try:
+            expected = plan(doc.get("inspection", {}), doc.get("probe", {}), cfg, doc.get("original_sha256"))
+        except (ValueError, KeyError, TypeError):
+            return "editorial cut unverified"
+        if (expected != doc.get("edit") or qc.get("edit") != expected
+                or abs(qc.get("probe", {}).get("duration", -1) - expected["duration"]) > .15):
+            return "output does not match reviewed editorial cut"
+    if cfg.one_line_caption and qc.get("caption_accurate") is not True:
+        return "one-line caption not verified against output"
     if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze", "watermark_present")):
         return "output quality uncertain"
     if qc.get("overlays_clean") is not True and not (
@@ -199,8 +218,36 @@ def unknown_momentum_eligible(doc, cfg):
             and sum(parts[k] for k in weights) / 75 * 100 >= cfg.score_threshold)
 
 
+def editorial_strength(doc):
+    """Only actual inspected quality and opening scores; no projected popularity."""
+    review = doc.get("qc", {})
+    return sum(review.get(key, 0) for key in ("fit_score", "entertainment_score", "quality_score")) + 2 * review.get("opening", {}).get("hook_score", 0)
+
+
 def caption(doc, cfg, now):
     """Use verified cast/performance only; title, transcript and OCR are never instructions."""
+    if cfg.one_line_caption:
+        text = doc["inspection"].get("caption", "")
+        if not isinstance(text, str):
+            raise ValueError("one-line caption must be text")
+        cast = (doc.get("edit") or {}).get("cast", doc["inspection"].get("cast", []))
+        aliases = [alias for key in cast if key in cfg.targets for alias in cfg.targets[key]]
+        aliases += [cfg.target_handles[key] for key in cast if key in cfg.target_handles]
+        named = any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I) for alias in aliases)
+        if (not isinstance(text, str) or not 25 <= len(text) <= 180 or any(c in text for c in "\r\n#")
+                or re.search(r"https?://|[<>\[\]]", text) or not named
+                or doc.get("qc", {}).get("caption_accurate") is not True):
+            raise ValueError("one-line caption lacks verified scene/cast or format")
+        grant = permission(doc, cfg, now)
+        if not grant:
+            raise ValueError("caption permission expired")
+        if cfg.caption_disclosure:
+            text += " Synthetic SI parody."
+        if grant.get("attribution"):
+            text += " " + grant["attribution"]
+        if len(text) > 280 or "\n" in text or "\r" in text:
+            raise ValueError("one-line caption cannot preserve required attribution")
+        return text
     cast = doc["inspection"]["cast"]
     names = [cfg.target_handles.get(name, cfg.targets[name][0]) for name in cast if name in cfg.targets]
     who = " and ".join(names[:3])

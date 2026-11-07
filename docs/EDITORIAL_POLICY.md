@@ -1,5 +1,57 @@
 # Editorial policy — November 7, 2026
 
+## November 7: mixed news and edited performance videos
+
+2026-11-07, sourced news plus edited performance bangers — The Operator requests
+SI news about every two hours and a synthetic performance video about every ninety
+minutes while the bot is awake and running, and requests implementation and push.
+This Account enables both schedulers: ten news windows at 05:30, 07:30, 09:30,
+11:30, 13:30, 15:30, 17:30, 19:30, 21:30 and 23:30 Toronto; thirteen video
+windows from 05:00 through 23:00 at ninety-minute intervals. The existing single
+extra startup-video allowance remains. These separate ceilings allow at most 24
+automated profile publications including startup; missed windows never accumulate.
+News/video reservations share exclusion and existing conservative profile spacing;
+uncertain sends block further profile publication. Replies retain their rules.
+
+Only sourced news within 48 hours is eligible, with independent factual review
+and at least 4/5 each for newsworthiness, reader impact and opening hook. No
+Evergreen filler. Approved news drafts survive spacing in the guarded slot journal
+without another generation/attempt; they still expire at the original window end.
+Mixed-mode news needs an exact own-status receipt, including an observed expanded
+source link when X shortens its display. No receipt means pending, never success.
+
+Every video needs at least one creator-attributed fictional role from Elon Musk,
+Donald Trump, Jensen Huang, Sam Altman or Dario Amodei visibly performing. Other
+cast may accompany them; no other-cast-only video qualifies. Attribution is not
+face identification. Actual synthetic performance, audio and full temporal review
+remain required. Instagram and Bilibili get hourly public-discovery opportunities,
+RedNote every ninety minutes and TikTok every two hours, under shared budgets.
+X source discovery is disabled for this Account; required X history/novelty reads
+remain. Failed source pages back off so new leads get capacity.
+
+Codex selects one contiguous 8–60 second excerpt from an inspected original up to
+300 seconds, preferring 15–45 seconds and immediate visible action. Preserve the
+original bytes/hash/fingerprint and the cut's source-time mapping. No speed change,
+reordered action or replacement audio. Render the exact @thesimaximalist watermark,
+verify audio against the selected source interval, compare retained overlays at
+mapped times, and separately inspect rendered frames at 0, .2, .4, .6 and .8 seconds.
+Both source/excerpt review and finished output require fit 18/20, entertainment
+17/20 and quality 12/15; the opening needs 8/10, a visible target, immediate action
+and no dead intro. The output must independently verify a single grounded caption.
+This supersedes the old two-line slogan. Inspectors cannot award popularity.
+
+Among fully eligible clips, actual output quality/hook comes before recency;
+comparable clips retain creator/cast variety. Known dates up to 730 days remain
+eligible, with all rights, audio, QC, source age, permanent dedup and unknown-send
+holds intact. A material edit-policy change permits one new preparation of an
+unclaimed saved source; completed refusals under the same policy stay completed.
+The bounded 18-post Safari observation sample is recorded in
+`docs/si-content-observations-2026-11-07.json`; configured examples guide search and
+style only, with unequal lifetime ages and no causal or retention claims. No viral
+outcome or filled slot is guaranteed. This instruction does not start/restart the
+bot or clear production state; main/settings apply on the next explicit start.
+
+
 ## Broader AI/SI Reply discovery and major-account priority
 
 The Operator requests more Replies to relevant content across accounts, with

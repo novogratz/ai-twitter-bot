@@ -75,8 +75,9 @@ def _reply_search(monkeypatch):
 
 
 def _source():
+    from src.guards.active_hours import now_local
     return dict(id="0", title="Chat templates", url="https://huggingface.co/docs/transformers/chat_templating",
-                publisher="Hugging Face", body=" ".join(EVIDENCE), kind="knowledge", published_at="")
+                publisher="Hugging Face", body=" ".join(EVIDENCE), kind="news", published_at=now_local().isoformat())
 
 
 def _draft():

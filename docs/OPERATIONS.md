@@ -573,7 +573,7 @@ root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
-| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
+| `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, reviewed drafts waiting within their window, published originals/receipts, used sources | guarded |
 | `video_pipeline.sqlite3`, `-wal`, `-shm` | `video.store` | Durable candidates, worker leases, inspection evidence, metrics, source/model budgets, profile history, explicit video-first interaction hold, startup requests, slots and unknown/confirmed sends | guarded SQLite journal; preserve across deploys |
 | `video_assets/` | `video.media` | Unchanged originals, branded outputs and bounded temporary artifacts | retained while needed; automatic expiry cleanup |
 | `video_tools/` | `video.inspection.prepare` | Compiled local Apple audio/OCR helper, keyed by trusted source hash | disposable build cache; rebuild with `prepare-inspector` |
@@ -901,3 +901,27 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+
+## Mixed news/video deployment (2026-11-07)
+
+The Account’s `video.toml` enables `news_enabled`, `auto_edit`, `bangers_only` and
+`one_line_caption`. Start/restart remains an explicit operator action. No migration
+or history reset is needed. `main.py --dry-run` shows separate news/video slots,
+ceilings and executors without publishing. Old running workers are replaced through
+the existing verified generation handover on the next main start.
+
+The guarded editorial journal now keeps `ready_drafts` for approved news that is
+waiting for publication spacing. These are not pending submissions, do not consume
+a publication claim, and expire with the original slot window. `pending_sources`
+still means an uncertain send and must never be automatically retried. Confirmed
+mixed-mode news records its exact `published_url`. Existing recovery rules apply.
+
+Video candidates retain `edit` (source hash, start/end, cast and hook evidence),
+`editing_policy_revision`, full source inspection and output QC. Output time zero
+maps to `edit.start_seconds` in the preserved source. Completed reviews do not
+retry under the same edit policy. Material policy changes can requeue unclaimed
+completed work once; posted/reserved/uncertain content remains protected.
+
+Verify actual ready inventory, source access and confirmed receipts after restart.
+The schedule and passing offline tests alone do not prove future slot coverage.

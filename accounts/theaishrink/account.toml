@@ -22,34 +22,34 @@ auto_engage_handles = ["elonmusk"]
 [editorial]
 # Operator, 2026-10-26: use the working Codex Reply route for originals too.
 use_reply_route = true
+news_only = true
+bangers_only = true
+max_news_age_hours = 48
 # The angle of every trend Slot and of the Startup post.
 trend_angle = "Trending: the SI topic X is talking about right now, told from a trusted source"
-# Earliest first. A trend Slot takes trend_angle; the exceptional Slot takes
-# only news under twelve hours old or an unusually useful source.
+# Ten news opportunities, two hours apart, in Toronto waking hours.
 slots = [
-    { clock = "05:00", angle = "Priority: the SI update worth understanding this morning" },
-    { clock = "07:15", angle = "A useful SI video or image workflow: concrete first step, output and limitation" },
-    { clock = "09:30", angle = "Priority: an SI article or model update with a sharp consequence" },
-    { clock = "10:00", trend = true },
-    { clock = "11:45", angle = "An SI concept explained through a clear example" },
-    { clock = "13:00", trend = true },
-    { clock = "14:00", angle = "An SI video, image or model tool update and what changes for creators" },
-    { clock = "15:00", trend = true },
-    { clock = "16:15", angle = "Priority: an evidence-backed take on an SI tradeoff" },
-    { clock = "18:30", angle = "A practical SI idea worth saving or sharing" },
-    { clock = "20:45", angle = "Optional: an exceptional fresh SI update or unusually useful source", exceptional = true },
+    { clock = "05:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "07:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "09:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "11:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "13:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "15:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "17:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "19:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "21:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
+    { clock = "23:30", angle = "A consequential new SI capability, model, research result or creative tool: the concrete change and why it matters" },
 ]
 # News items: RSS or Atom feeds, read on a host of trusted_hosts only.
 feeds = [
     { publisher = "OpenAI", url = "https://openai.com/news/rss.xml" },
-    { publisher = "Google AI", url = "https://blog.google/technology/ai/rss/" },
+    { publisher = "Google AI", url = "https://blog.google/innovation-and-ai/technology/ai/rss/" },
     { publisher = "DeepMind", url = "https://deepmind.google/blog/rss.xml" },
     { publisher = "Hugging Face", url = "https://huggingface.co/blog/feed.xml" },
     { publisher = "NVIDIA", url = "https://blogs.nvidia.com/feed/" },
     { publisher = "Microsoft Research", url = "https://www.microsoft.com/en-us/research/feed/" },
-    { publisher = "Mistral AI", url = "https://mistral.ai/rss.xml" },
+    { publisher = "Mistral AI", url = "https://mistral.ai/news/rss" },
     { publisher = "Replicate", url = "https://replicate.com/blog/rss" },
-    { publisher = "The Decoder", url = "https://the-decoder.com/feed/" },
     { publisher = "arXiv cs.AI", url = "https://rss.arxiv.org/rss/cs.AI" },
 ]
 # The only hosts a source, a feed or a redirect may be fetched from, over https.
@@ -59,7 +59,7 @@ trusted_hosts = [
     "replicate.com", "the-decoder.com", "arxiv.org", "rss.arxiv.org",
 ]
 
-# Evergreen topics fill quiet news days, rotated daily; never presented as new.
+# Retained documentation topics are inactive while news_only is true.
 [[editorial.evergreen]]
 topic = "chat_templates"
 title = "Why a chat template changes model behavior"

@@ -3720,3 +3720,18 @@ Mandatory invariants:
 > [`AGENTS.md`](../AGENTS.md); nothing loads this archive automatically.
 
 This file is read by Claude Code agentic sessions when working on the bot's source. It exists to give the AI context about the project so first-time edits don't break invariants.
+
+
+## 2026-11-07 — video-only scheduling left news manual
+
+The Operator requested both formats and explicit automatic editing. The audit found
+video mode disabling news, four missed morning video slots, no ready inventory and
+44 held sources. Long-source refusals and incomplete performance reviews were the
+largest held groups. Read-only Safari observations of 18 own posts included the
+requested Trump/boy-band reference (~398k observed views) and an October SI-team
+boy-band post (~92k); these are unequal-age public counters, not causal evidence.
+
+The new mixed schedule, quality-reviewed news queue, source-hash-bound Codex cuts,
+output opening checks, exact lowercase watermark and five-member cast policy address
+those gaps. Original media, histories and unknown-send claims remain intact. No
+automatic start/restart or live publication accompanies implementation.

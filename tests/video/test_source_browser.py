@@ -57,6 +57,31 @@ def test_source_capture_only_queues_independent_media_and_records_observed_metri
     assert source_browser.capture_next(video_store, cfg, now + 30) is None
 
 
+def test_inaccessible_source_backs_off_then_clears_backoff_after_verified_capture(
+        video_store, video_cfg, at, monkeypatch):
+    from src.x import safari, safari_video
+    now = at().timestamp()
+    cfg = replace(video_cfg, platforms={"bilibili": {"safari_player": True}},
+                  permissions={"grant": video_cfg.permissions["grant"] | {"platform": "bilibili"}})
+    connectors.ingest(video_store, "bilibili", [{"canonical_url": "https://www.bilibili.com/video/BV1234567890",
+        "source_id": "BV1234567890", "creator": "creator", "permission_id": "grant"}], now, cfg)
+    opened = []
+    monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda *a: opened.append(True) or True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **kw: "")
+    assert source_browser.capture_next(video_store, cfg, now) == "source player unavailable"
+    assert source_browser.capture_next(video_store, cfg, now + 600) is None
+    assert len(opened) == 1
+    assert source_browser.capture_next(video_store, cfg, now + 1200) == "source player unavailable"
+    assert source_browser.capture_next(video_store, cfg, now + 3000) is None
+    assert len(opened) == 2
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **kw: json.dumps(player(now)))
+    assert source_browser.capture_next(video_store, cfg, now + 4800) == "source media captured"
+    doc = video_store.candidate(video_store.rows("SELECT id FROM candidates")[0]["id"])["document"]
+    assert "source_capture_retry_at" not in doc and "source_capture_failures" not in doc
+
+
 def test_visible_related_links_are_bounded_unverified_leads_not_metadata_approval(video_cfg):
     link = {"url": "https://www.bilibili.com/en/video/BV1234567890/?track=123",
             "title": "Example Star dance music parody", "confidence": 1, "permission_id": "forged"}

@@ -152,8 +152,9 @@ def recover_orphaned_novelty_reads(store, now):
 
 
 def seed_jobs(store, cfg, now):
-    for platform in config.PLATFORMS:
-        store.enqueue("discovery", platform, now)
+    for platform in (cfg.platforms or dict.fromkeys(config.PLATFORMS)):
+        if cfg.platforms.get(platform, {}).get("enabled", True):
+            store.enqueue("discovery", platform, now)
 
 
 def run_once(role, store, cfg, owner, *, now=None):
