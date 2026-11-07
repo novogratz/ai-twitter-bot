@@ -45,7 +45,7 @@ def build_scheduler(*, post_only=False, reply_only=False):
 
     scheduler = BackgroundScheduler(
         timezone=config.BOT_TIMEZONE,
-        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1),
+        executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1), "news": ThreadPoolExecutor(1),
                    "watch": ThreadPoolExecutor(1), "watch_actions": ThreadPoolExecutor(1),
                    "watch_reply": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
@@ -65,13 +65,20 @@ def build_scheduler(*, post_only=False, reply_only=False):
         from src.video.workers import health_job
         add(health.wrap_job(health_job, "video_health", safari_health=False), 2 / 60,
             "video_health_job", executor="editorial", first_seconds=2)
-    elif not reply_only:
+    elif not reply_only and not settings.get("NEWS_ENABLED"):
         # Polling retries only the current window. State survives restarts;
         # a dedicated worker prevents reply scans from starving originals.
         # Its failures are model timeouts, not Safari outages: kept out of
         # the Safari failure counter.
         add(health.wrap_job(run_editorial_cycle, "editorial", safari_health=False), 10,
             "editorial_job", executor="editorial", first_seconds=10)
+
+    if not reply_only and settings.get("NEWS_ENABLED"):
+        from src.news.pipeline import run as run_news
+        # Public discovery may run overnight. Its Safari write chokepoint owns
+        # waking hours and the video-first hold, just like every other write.
+        scheduler.add_job(run_news, trigger=IntervalTrigger(hours=1, timezone=config.BOT_TIMEZONE),
+                          id="news_job", executor="news", next_run_time=datetime.now(timezone.utc) + timedelta(seconds=15))
 
     if not post_only:
         from src.replies.direct_reply import run_direct_reply_cycle
@@ -138,7 +145,11 @@ def main():
     mode.add_argument("--reply-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="Show schedule and policy, then exit without browser/LLM calls")
     parser.add_argument("--video", nargs=argparse.REMAINDER, help="Video administration (same as bin/video.py)")
+    parser.add_argument("--news", nargs=argparse.REMAINDER, help="Verified news commands (same as bin/news.py)")
     args = parser.parse_args()
+    if args.news is not None:
+        from src.news.cli import main as news_main
+        return news_main((["--dry-run"] if args.dry_run else []) + args.news)
     if args.video is not None:
         from src.video.cli import main as video_main
         return video_main((["--dry-run"] if args.dry_run else []) + args.video)
@@ -166,9 +177,10 @@ def main():
         video_cfg = video_config() if settings.get("VIDEO_ENABLED") else None
         video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
-                          "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else min_target,
-                          "target_posts": video_slots if settings.get("VIDEO_ENABLED") else target,
-                          "max_profile_posts": video_slots + 1 if settings.get("VIDEO_ENABLED") else config.posts_ceiling(),
+                          "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else (0 if settings.get("NEWS_ENABLED") else min_target),
+                          "target_posts": video_slots if settings.get("VIDEO_ENABLED") else (0 if settings.get("NEWS_ENABLED") else target),
+                          "max_profile_posts": (video_slots + 1 + (config.posts_ceiling() if settings.get("NEWS_ENABLED") else 0)
+                                                if settings.get("VIDEO_ENABLED") else config.posts_ceiling()),
                           "replies": "unlimited",
                           "reply_volume_boost_date": settings.get("REPLY_VOLUME_BOOST_DATE"),
                           "reply_discovery_generation_budgets": {
@@ -176,14 +188,17 @@ def main():
                           "advisory_reply_targets": [settings.get("REPLY_DAILY_TARGET_MIN"),
                                                      settings.get("REPLY_DAILY_TARGET_MAX")],
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
+                          "news": {"enabled": settings.get("NEWS_ENABLED"), "hourly": True,
+                                   "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False},
                           "quotes": 0,
                           "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),
                           "slots": _main_slots(),
-                          "trend_slots": [] if settings.get("VIDEO_ENABLED") else sorted(trend_slots()),
+                          "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),
                           "startup_post": (("automatic video request on start; at most one extra per Toronto day"
                                             if video_cfg.startup_on_boot else "explicit persistent video activation only")
-                                           if video_cfg else "every start in waking hours, restarts included"),
+                                           if video_cfg else ("none; hourly news discovery" if settings.get("NEWS_ENABLED")
+                                                              else "every start in waking hours, restarts included")),
                           "startup_interactions_held": bool(waiting_reason()),
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
@@ -194,7 +209,7 @@ def main():
 
     _acquire_singleton_lock()
     state_store.ensure_root()
-    if not args.reply_only and not settings.get("VIDEO_ENABLED"):
+    if not args.reply_only and not settings.get("VIDEO_ENABLED") and not settings.get("NEWS_ENABLED"):
         # The editorial job publishes it, after every restart too.
         open_startup_window()
     stop = threading.Event()
@@ -219,6 +234,9 @@ def main():
         from src.video.schedule import clocks as video_clocks
         log.info("Bot started: %s video slots plus at most one startup video; transport=%s; replies unlimited; active %s.",
                  len(video_clocks(video_config())), video_config().publishing_transport, window_label())
+    elif settings.get("NEWS_ENABLED") and not args.reply_only:
+        log.info("Bot started: hourly verified news, automatic Safari=%s; replies active %s.",
+                 settings.get("NEWS_AUTO_PUBLISH"), window_label())
     else:
         log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
                  f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
@@ -256,7 +274,12 @@ def main():
                     else:
                         log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
                 else:
-                    scheduler.pause()
+                    # All interaction jobs still have awake_job guards. Keep
+                    # only the public news reader running during the night.
+                    if settings.get("NEWS_ENABLED") and not args.reply_only:
+                        scheduler.resume()
+                    else:
+                        scheduler.pause()
                     if pause_end is not None:
                         log.info("[BREAK] Paused until %s.", pause_end.isoformat())
                     else:
@@ -302,6 +325,8 @@ def _main_slots():
         from src.video.config import load
         from src.video.schedule import clocks
         return list(clocks(load()))
+    if settings.get("NEWS_ENABLED"):
+        return []
     return slots()
 
 

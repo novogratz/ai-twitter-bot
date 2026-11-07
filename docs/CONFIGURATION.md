@@ -270,6 +270,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `VIDEO_LIVE` | 0 or 1 | `0` |  | Permit video API uploads/posts after explicit activation; DRY_RUN still overrides. Defaults off. |
 | `VIDEO_CONFIG_FILE` | str | blank |  | Operator video TOML path; blank uses accounts/<BOT_ACCOUNT>/video.toml. |
 | `VIDEO_CREDENTIALS_FILE` | str | blank |  | Private (mode 600) JSON credentials path for official X API user access; never a token value. |
+| `NEWS_CONFIG_FILE` | str | blank |  | News worker TOML; blank uses the Account news.toml. NEWS_ENABLED adds it to normal bot startup. |
+| `NEWS_WEBHOOK_URL` | str | blank |  | Optional HTTPS draft destination, used only when news delivery_adapter is webhook. |
+| `NEWS_WEBHOOK_TOKEN` | str | blank |  | Optional bearer credential for the configured news draft webhook; never an X/email credential. |
+| `NEWS_ENABLED` | 0 or 1 | `0` |  | Run hourly verified news discovery with the normal bot; independent of video mode. |
+| `NEWS_AUTO_PUBLISH` | 0 or 1 | `0` |  | Explicit operator opt-in to publish verified main news picks through Safari. Backups remain drafts. |
+| `NEWS_MIN_SECONDS_BETWEEN_POSTS` | int | `7200` | floor `1200` | Minimum gap between news publications, including uncertain attempts. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |

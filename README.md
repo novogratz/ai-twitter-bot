@@ -1,5 +1,12 @@
 # The SI Maximalist · @thesimaximalist
 
+Verified SI news now runs hourly with the normal bot when `NEWS_ENABLED=1`.
+The Operator authorizes `NEWS_AUTO_PUBLISH=1`: exceptional, independently reviewed
+main picks publish through Safari alongside videos, normally at least two hours
+apart. Quiet runs stay silent. Tweets have clean paragraph breaks and one source
+link; permanent event history and uncertain-send holds prevent automatic repeats.
+Backups stay in the local inbox. See [news setup and commands](docs/NEWS.md).
+
 A Safari-driven SI account with the voice of a fictional, smart, affectionate
 45-year-old mom and SI artist. She loves tech, generated art, SI news,
 celebrity parodies and creative chaos, especially Grok Imagine. Public prose uses

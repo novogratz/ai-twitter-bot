@@ -24,6 +24,7 @@ WRITTEN_BY_BIN = ("mass_unfollow_results.json",)
 # State files declared after #207: they never lived at the root, so
 # bin/migrate_state.py has nothing of theirs to move.
 BORN_AFTER_207 = frozenset({"priority_watch_state.json", "reposted_tweets.json",
+                           "news.sqlite3", "news.lock", "news_inbox", "news_watch_history.json", "posting_queue.json",
                            "reply_feedback.json", "reply_performance.json", "reply_performance.md",
                            "video_pipeline.sqlite3", "video_assets", "video_saved_assets", "video_tools", "video_daily_report.json"})
 

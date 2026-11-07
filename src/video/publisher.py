@@ -252,6 +252,10 @@ def reserve(store, now, cfg, *, operator_direct=False):
 
 
 def guard(store, ident, token, now, cfg, *, submitting=False):
+    from ..news.publisher import video_hold
+    news_reason = video_hold(now)
+    if news_reason:
+        raise ValueError(news_reason)
     if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc)):
         raise ValueError("video publishing disabled or overnight")
     if store.meta("paused", True) or store.meta("shutdown", False):

@@ -11,6 +11,15 @@ commit `e7b4d47`.
 
 ## Process
 
+November 7 news addition: `NEWS_ENABLED` registers `news_job` in a dedicated
+single-thread executor on the existing scheduler, fifteen seconds after boot,
+then hourly. The scheduler stays running overnight; interaction jobs retain
+their `awake_job` wrappers, while news public reads can continue. Its Safari
+chokepoint enforces active hours and startup holds. News replaces legacy
+editorial slots, coexists with videos and uses a separate SQLite journal.
+`main.py --news` and `bin/news.py` expose the same worker. Ordinary starts create
+no second scheduler. Standalone `serve` is an alternative without the main bot.
+
 One Python process drives Safari through AppleScript and injected JavaScript.
 There is no X API client.
 
@@ -105,6 +114,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 
 | Job | Every | What the cycle does today |
 |---|---|---|
+| `news_job` (`NEWS_ENABLED=1`) | 1 hour | Fetch, verify, persist event dedup, rank and independently review one main pick and optional backup. Main picks may publish through Safari with `NEWS_AUTO_PUBLISH`; backups remain drafts. No email. |
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Owns configured Toronto video slots (ten, 05:00–23:00 every two hours for the live Account) and durable startup requests, including configured boot requests. Uses the existing Safari lock/write wrapper; required reads retain bounded ready-Reply FIFO turns. Separate discovery/media processes do public discovery, Codex inspection and rendering through the SQLite queue. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |

@@ -573,6 +573,9 @@ root:
 
 | File | Written by | Holds | Policy |
 |---|---|---|---|
+| `news.sqlite3`, `-wal`, `-shm` | `news.store` | Evidence, permanent events, imported history, coverage gaps, budgets, outbox and confirmed/uncertain news sends | guarded SQLite; preserve across deploys |
+| `news.lock` | `news.store` | Whole-run OS lock across scheduler and manual runs | never delete while held |
+| `news_inbox/` | `news.adapters` | Stable-ID draft/backup JSON files with complete tweet and recommendation | durable; acknowledgement preserves history |
 | `editorial_state.json` | `slot_journal` (the Slot journal, for `editorial_bot`) | Slots, attempts, feedback, published originals, used sources | guarded |
 | `video_pipeline.sqlite3`, `-wal`, `-shm` | `video.store` | Durable candidates, worker leases, inspection evidence, metrics, source/model budgets, profile history, explicit video-first interaction hold, startup requests, slots and unknown/confirmed sends | guarded SQLite journal; preserve across deploys |
 | `video_assets/` | `video.media` | Unchanged originals, branded outputs and bounded temporary artifacts | retained while needed; automatic expiry cleanup |
