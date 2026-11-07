@@ -33,6 +33,10 @@ The first live news audit found a supplemental-search timeout and an initial
 window that missed the legacy news gap. Supplemental discovery now requests at
 most four queries in two search calls alongside the already fetched feeds;
 actual page reads and verification follow selection.
+Fallback evidence reads prefer linked reports, artifacts and independent
+advisories over homepages and navigation. Original-source hosts observed during
+the audit are explicitly configured; the fetched-claim and corroboration gates
+remain mandatory.
 Before the first complete news scan, a dated confirmed legacy source post
 anchors catch-up; pending submissions never supply that date, and earlier
 coverage remains unknown. A complete scan restores the normal overlapping

@@ -53,6 +53,28 @@ def _compact_history(rows):
             for r in rows]
 
 
+def _supporting_links(document, cfg):
+    """Prefer actual papers, artifacts and corroboration over site navigation."""
+    ranked, seen = [], {document["url"].rstrip("/")}
+    generic = {"/news", "/blog", "/research", "/index", "/about", "/pricing", "/docs"}
+    for link in document.get("links", []):
+        url = link["url"]
+        path = urlsplit(url).path.rstrip("/")
+        title = " ".join(link.get("title", "").lower().split())
+        info = cfg.source_info(url)
+        if (url.rstrip("/") in seen or not path or path in generic
+                or info["role"] not in ("primary", "evidence")
+                or title in ("home", "news", "blog", "research", "about", "pricing", "sign in", "log in")):
+            continue
+        seen.add(url.rstrip("/"))
+        evidence = any(term in title + " " + path.lower() for term in
+                       ("paper", "report", "system-card", "system card", "model card", "download", "weights",
+                        "checkpoint", "repository", "github", "fix", "advisori", "benchmark", "proof", ".pdf"))
+        score = 2 * evidence + (info["owner"] != document.get("owner"))
+        ranked.append((score, url))
+    return [url for _, url in sorted(ranked, key=lambda item: item[0], reverse=True)[:2]]
+
+
 def run(cfg=None, *, store=None, http=None, model=None, delivery=None, now=None, import_history=True):
     cfg, store, now = cfg or load(), store or Store(), time.time() if now is None else now
     if delivery is None and settings.get("NEWS_AUTO_PUBLISH"):
@@ -121,9 +143,7 @@ def _run(cfg, store, http, model, delivery, now, import_history):
                 docs = [http.document(lead["url"])]
                 evidence_urls = list(dict.fromkeys(lead.get("evidence_urls", [])))[:3]
                 # Actual outgoing evidence links can establish original provenance even without search.
-                evidence_urls += [x["url"] for x in docs[0].get("links", [])
-                                  if http.cfg.source_info(x["url"])["role"] in ("primary", "evidence")
-                                  and x["url"] != docs[0]["url"]][:2] if hasattr(http, "cfg") else []
+                evidence_urls += _supporting_links(docs[0], http.cfg) if hasattr(http, "cfg") else []
                 for url in dict.fromkeys(evidence_urls):
                     try:
                         docs.append(http.document(url))

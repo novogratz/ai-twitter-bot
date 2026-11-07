@@ -346,6 +346,22 @@ def test_short_primary_index_links_survive_as_unverified_url_leads(store, cfg, m
     assert leads[0]["title"] == "URL lead: /research/release"
 
 
+def test_supporting_links_use_artifacts_and_corroboration_before_navigation(cfg, doc):
+    paper = "https://lab.example.com/research/model-paper.pdf"
+    fixes = "https://report.example.org/security/advisories/release-1"
+    cfg = replace(cfg, evidence_hosts=[*cfg.evidence_hosts, "report.example.org"])
+    doc["owner"] = cfg.source_info(URL)["owner"]
+    doc["links"] = [
+        {"url":"https://lab.example.com/", "title":"Lab"},
+        {"url":"https://lab.example.com/blog", "title":"Blog"},
+        {"url":URL+"/", "title":"This announcement"},
+        {"url":"https://lab.example.com/research/team", "title":"Meet our team"},
+        {"url":paper, "title":"Read the paper"},
+        {"url":fixes, "title":"Released fixes"},
+        {"url":"https://x.com/lab/status/123", "title":"Independent report"}]
+    assert pipeline._supporting_links(doc, cfg) == [fixes, paper]
+
+
 def test_rate_limit_cooldown_persists_without_repeated_requests(store, cfg, monkeypatch):
     from src.video import security
     calls = []

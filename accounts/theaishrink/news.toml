@@ -22,6 +22,7 @@ evidence_hosts = [
   "about.fb.com", "ai.meta.com", "openai.com", "www.anthropic.com",
   "docs.x.ai", "docs.anthropic.com", "platform.claude.com", "developers.openai.com",
   "metr.org", "censys.com", "psi.inc",
+  "www.mozilla.org", "deploymentsafety.openai.com",
   "www.unitree.com", "agilityrobotics.com", "www.agilityrobotics.com", "www.physicalintelligence.company"
 ]
 search_queries = [
