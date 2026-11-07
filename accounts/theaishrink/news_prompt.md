@@ -22,10 +22,12 @@ DISCOVER:
 Use permitted live search for a bounded supplement to the configured source
 feeds, which the application has already fetched across the company/topic groups.
 Keep xAI/Grok priority and combine other companies/topics in broad queries.
-Make at most four search calls and open at most four promising original pages.
+Make at most two batched search calls with at most four queries in total.
+Keep search responses brief. Do not open or crawl pages during discovery.
 Finish with the best leads found within that budget; do not exhaustively crawl
 every company, follow every link, or try to fill all 24 lead positions. The
-application will fetch and verify the selected evidence in later stages.
+application will fetch and verify the selected evidence in later stages; a
+search result is only a lead, never approval of the claim or its date.
 Use the entire requested time interval in searches and preserve actual dates.
 Official announcements, release notes, repositories, research papers, technical
 reports and original demonstrations come first. Reuters, Bloomberg, The Verge

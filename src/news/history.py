@@ -20,6 +20,40 @@ POST_QUEUE = StatePath("posting_queue.json")
 REVIEW_HISTORY = StatePath("editorial_review.jsonl")
 
 
+def startup_window(store, start, now):
+    """Catch up from confirmed legacy news, never from a pending submission.
+
+    A publication is a conservative migration anchor, not evidence that every
+    earlier story was searched. A completed new-worker scan supersedes it.
+    """
+    if store.meta("last_complete") is not None:
+        return start
+    data = STATE.read()
+    published = data.get("published", [])
+    if not isinstance(published, list):
+        raise ValueError("legacy news publication history is malformed")
+    dates = []
+    for row in published:
+        if (not isinstance(row, dict) or not isinstance(row.get("text"), str) or not row["text"].strip()
+                or not isinstance(row.get("source_url"), str)):
+            continue
+        try:
+            canonical(row["source_url"])
+        except ValueError:
+            continue
+        at = timestamp(row.get("ts", ""))
+        if at is not None and 0 < at <= now:
+            dates.append(at)
+    if not dates:
+        store.coverage("legacy_startup_window", "missing", "no dated confirmed legacy source post; using initial window", now)
+        return start
+    anchor = max(dates)
+    store.set_meta("legacy_startup_anchor", {"at": anchor, "origin": str(STATE.path)})
+    store.coverage("legacy_startup_window", "read",
+                   "last recorded legacy source post anchors catch-up; earlier search completeness unknown", now)
+    return min(start, anchor)
+
+
 def records(value):
     if isinstance(value, dict):
         if any(isinstance(value.get(k), str) and value[k] for k in ("text", "tweet", "title", "summary", "caption", "url", "source_url", "event_key")):

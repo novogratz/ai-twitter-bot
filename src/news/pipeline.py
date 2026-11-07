@@ -72,6 +72,12 @@ def _run(cfg, store, http, model, delivery, now, import_history):
     errors, results = [], []
     try:
         occupied = history.context(store, cfg, now) if import_history else []
+        if import_history:
+            extended = history.startup_window(store, start, now)
+            if extended < start:
+                start = extended
+                store.set_meta("first_window", start)
+                store.execute("UPDATE runs SET window_start=? WHERE id=?", (start, run_id))
         # Retry delivery without suppressing hourly discovery. A retrying run
         # creates no additional picks, so it cannot send two main stories.
         pending = store.rows("SELECT id FROM outbox WHERE state='pending'")

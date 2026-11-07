@@ -33,6 +33,8 @@ uv run --with-requirements requirements-video.txt python bin/news.py --dry-run r
 uv run --with-requirements requirements-video.txt python bin/news.py status
 uv run --with-requirements requirements-video.txt python bin/news.py check-sources
 uv run --with-requirements requirements-video.txt python bin/news.py import-history
+# Prepare/review now while the bot runs; approved picks stay pending for its next hourly run:
+uv run --with-requirements requirements-video.txt python bin/news.py --prepare-only run
 # Manual draft-only run, with no X publication:
 NEWS_AUTO_PUBLISH=0 uv run --with-requirements requirements-video.txt python bin/news.py run
 uv run --with-requirements requirements-video.txt python bin/news.py ack DELIVERY_ID
@@ -45,6 +47,12 @@ standalone draft-only installation, `NEWS_AUTO_PUBLISH=0 ... python bin/news.py
 serve` runs one hourly scheduler. Intervals use `America/Toronto` with DST; UTC
 search boundaries persist. Successful runs overlap the last 24 hours. Downtime
 or partial coverage keeps the previous watermark to cover the missed interval.
+Before the first complete new-worker run, the last dated, confirmed source post
+in the legacy editorial journal also anchors catch-up. Pending submissions never
+supply that date. This records a conservative migration boundary, not complete
+historical search coverage; ordinary completed runs return to the overlapping
+24-hour window. Preparation uses the same run lock, evidence checks and outbox;
+it neither takes Safari from the running bot nor marks a pending draft delivered.
 
 ## Selection and delivery
 
