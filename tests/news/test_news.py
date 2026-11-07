@@ -7,7 +7,7 @@ import json
 import pytest
 
 from src.news import editor, history, pipeline, publisher
-from src.news.adapters import Delivery, HTTP, canonical
+from src.news.adapters import Delivery, HTTP, PendingDelivery, canonical
 from src.news.config import NewsConfig
 from src.news.store import Store, identity
 from src.video.security import Deferred
@@ -192,6 +192,69 @@ def test_source_outage_preserves_watermark_and_backfills(store, cfg, caplog):
     assert "Partial coverage" in caplog.text
 
 
+def test_legacy_startup_uses_confirmed_source_posts_only(store, monkeypatch):
+    from types import SimpleNamespace
+    old = datetime(2026, 10, 31, 19, 13, tzinfo=timezone.utc)
+    data = {"published": [
+        {"ts": old.isoformat(), "text": "Recorded news", "source_url": URL},
+        {"ts": WHEN, "text": "Unsourced text", "source_url": ""},
+        {"ts": WHEN, "text": "Invalid source", "source_url": "not-a-url"},
+        {"ts": "2026-11-08T12:00:00Z", "text": "Future", "source_url": URL},
+        {"ts": "invalid", "text": "Unknown time", "source_url": URL}],
+        "pending_sources": {"today": {"ts": WHEN, "text": "Unconfirmed", "url": URL}}}
+    before = deepcopy(data)
+    monkeypatch.setattr(history, "STATE", SimpleNamespace(path="legacy.json", read=lambda: data))
+    assert history.startup_window(store, NOW-86400, NOW) == old.timestamp()
+    assert store.meta("legacy_startup_anchor") == {"at": old.timestamp(), "origin": "legacy.json"}
+    assert data == before
+
+
+def test_complete_news_scan_supersedes_legacy_anchor(store, monkeypatch):
+    from types import SimpleNamespace
+    store.set_meta("last_complete", NOW-3600)
+    def unexpected_read():
+        raise AssertionError("completed news must not restart old catch-up")
+    monkeypatch.setattr(history, "STATE", SimpleNamespace(read=unexpected_read))
+    assert history.startup_window(store, NOW-86400, NOW) == NOW-86400
+
+
+def test_partial_initial_run_recovers_legacy_gap_until_complete(store, cfg, monkeypatch):
+    from types import SimpleNamespace
+    old = datetime(2026, 10, 31, 19, 13, tzinfo=timezone.utc)
+    monkeypatch.setattr(history, "STATE", SimpleNamespace(path="legacy.json", read=lambda:
+        {"published": [{"ts": old.isoformat(), "text": "Recorded news", "source_url": URL}]}))
+    monkeypatch.setattr(history, "context", lambda *a: [])
+    # An installation that already had a partial 24-hour first run still catches up.
+    store.set_meta("first_window", NOW-86400)
+    class Down(Sources):
+        def discover(self, source):
+            raise TimeoutError
+    outage = replace(cfg, sources=[{"name":"Lab", "url":"https://lab.example.com/feed", "kind":"rss",
+                                    "role":"primary", "owner":"lab", "path_prefix":"/"}])
+    pipeline.run(outage, store=store, http=Down({}), model=Model({}), delivery=object(), now=NOW)
+    assert store.meta("last_complete") is None
+    assert store.meta("first_window") == old.timestamp()
+    pipeline.run(cfg, store=store, http=Sources({}), model=Model({}), delivery=object(), now=NOW+3600)
+    assert store.meta("last_complete") == NOW+3600
+    pipeline.run(cfg, store=store, http=Sources({}), model=Model({}), delivery=object(), now=NOW+7200)
+    runs = store.rows("SELECT window_start,status FROM runs ORDER BY started")
+    assert runs == [{"window_start":old.timestamp(), "status":"partial"},
+                    {"window_start":old.timestamp(), "status":"complete"},
+                    {"window_start":NOW+7200-86400, "status":"complete"}]
+
+
+def test_preparation_keeps_reviewed_delivery_pending_without_ack(store, cfg, story, doc, tmp_path):
+    seed(store)
+    assert pipeline.run(cfg, store=store, http=Sources(doc), model=Model(story),
+        delivery=PendingDelivery(), now=NOW, import_history=False) == []
+    row = store.rows("SELECT * FROM outbox")[0]
+    assert row["state"] == "pending" and row["attempts"] == 0
+    assert row["receipt"] is None and row["acknowledged"] is None
+    delivered = pipeline.deliver(Store(store.path), cfg, Delivery(cfg, tmp_path/'inbox'), NOW+3600)
+    assert len(delivered) == 1 and delivered[0]["id"] == row["id"]
+    assert store.rows("SELECT state FROM outbox")[0]["state"] == "delivered"
+
+
 def test_history_import_missing_corrupt_and_queued(store, tmp_path):
     path = tmp_path / "history.json"
     history.import_file(store, path, NOW)
@@ -281,6 +344,22 @@ def test_short_primary_index_links_survive_as_unverified_url_leads(store, cfg, m
     leads = http.discover(source)
     assert len(leads) == 1
     assert leads[0]["title"] == "URL lead: /research/release"
+
+
+def test_supporting_links_use_artifacts_and_corroboration_before_navigation(cfg, doc):
+    paper = "https://lab.example.com/research/model-paper.pdf"
+    fixes = "https://report.example.org/security/advisories/release-1"
+    cfg = replace(cfg, evidence_hosts=[*cfg.evidence_hosts, "report.example.org"])
+    doc["owner"] = cfg.source_info(URL)["owner"]
+    doc["links"] = [
+        {"url":"https://lab.example.com/", "title":"Lab"},
+        {"url":"https://lab.example.com/blog", "title":"Blog"},
+        {"url":URL+"/", "title":"This announcement"},
+        {"url":"https://lab.example.com/research/team", "title":"Meet our team"},
+        {"url":paper, "title":"Read the paper"},
+        {"url":fixes, "title":"Released fixes"},
+        {"url":"https://x.com/lab/status/123", "title":"Independent report"}]
+    assert pipeline._supporting_links(doc, cfg) == [fixes, paper]
 
 
 def test_rate_limit_cooldown_persists_without_repeated_requests(store, cfg, monkeypatch):
