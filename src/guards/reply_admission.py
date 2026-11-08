@@ -17,6 +17,7 @@ job drops the post as after a model SKIP. Every environment switch and
 state file is read at call time; an unreadable Replied store or ledger
 raises `StateUnreadable`.
 """
+import csv
 import re
 from dataclasses import dataclass
 from enum import Enum
@@ -28,7 +29,7 @@ from . import (
     replied_store,
     respect_list,
 )
-from ..core import account, config, humanizer, reply_language, reply_wording, settings
+from ..core import account, config, engagement_log, humanizer, reply_language, reply_wording, settings
 from ..x import x_urls
 from ..core.logger import log
 
@@ -136,6 +137,11 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
         return Verdict(Refusal.TEXT, why, author)
+    try:
+        if engagement_log.repeated_reply(text):
+            return Verdict(Refusal.TEXT, "same wording as a recent confirmed Reply", author)
+    except (OSError, ValueError, csv.Error):
+        return Verdict(Refusal.TEXT, "recent Reply text unavailable", author)
     _, why = respect_list.scrub_text_or_skip(text, addressee=author)
     if why:
         return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)

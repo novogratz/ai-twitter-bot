@@ -9,7 +9,6 @@ that name), which hands back the answer already read in the output mode of
 the call profile the ReplyCall declares. The ReplyCall names its call
 surface; `llm_client.resolve` gives its model, provider and CLI options.
 """
-import hashlib
 import csv
 import re
 import time
@@ -189,7 +188,7 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
         "domain": account.current().domain,
         "reply_max_chars": REPLY_MAX_CHARS,
     })
-    delivery = _delivery(author, text) if call.profile.output is Output.TEXT else ""
+    delivery = _delivery() if call.profile.output is Output.TEXT else ""
     memory = _recent_memory()
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, delivery,
                                     memory, reply_wording.prompt_block(), *anchors]))
@@ -259,35 +258,18 @@ def _recurring_phrases(normalized):
     return result
 
 
-def _delivery(author: str, text: str) -> str:
-    """Vary casual length consistently; the Voice owns emoji and technical depth.
-
-    These are drafting directions, never padding, truncation or appended emoji.
-    Evidence and the Voice still decide whether the contribution fits.
-    """
-    seed = hashlib.sha256(f"{author.lower()}\n{text}".encode()).digest()
-    shape = seed[0] % 10
-    if shape < 3:
-        length = "Aim for 3–8 words: a specific reaction or a small joke about this post. Stop when it lands."
-    elif shape < 9:
-        length = "Aim for one conversational sentence, roughly 9–18 words. No second sentence explaining the first."
-    else:
-        length = "Use one or two short sentences, roughly 20–30 words, only if the point needs that space."
+def _delivery() -> str:
+    """Let the parent's intent determine length; the Voice owns personality."""
     return ("DELIVERY FOR THIS REPLY (within the task's character limit):\n"
-            "Follow the Voice's post-specific style first. If it applies, use its length and "
-            "emoji guidance instead of the defaults below.\n"
-            "A serious technical question or debate may need two or three complete sentences: "
-            "answer directly, explain the mechanism or tradeoff, and give its consequence. "
-            "That takes precedence over the casual length suggestion.\n"
-            f"FOR CASUAL REACTIONS: {length}\n"
-            "For every reply, follow the Voice's emoji guidance. "
-            "Compose them with the words, vary the expression, and match the parent's mood.\n"
-            "Let the parent's mood and meaning lead; these length suggestions are not quotas. "
-            "A relevant reaction can be enough; do not bolt on a lesson, caveat or question. "
-            "Lead with the answer, reaction or useful thought itself. Announcing interest "
-            "is not a substitute for it. A genuine question should name the missing detail "
-            "and matter to this post; do not ask one simply to invite an answer. "
-            "Be specific to the supplied post outside the Voice's brief-appreciation cases. "
-            "For every reply, accuracy wins over brevity. "
-            "Do not research, browse or call tools for this reply. Use the supplied context and stable "
+            "Follow the Voice's post-specific style and emoji guidance. "
+            "Let the parent's intent determine length, not a word-count assignment. "
+            "A short reaction can stand alone; a serious technical question may need "
+            "two or three complete sentences. Answer first and stop when the thought is complete. "
+            "Do not automatically add a caveat, question, compliment or punchline. "
+            "For a question, answer what was asked before offering a broader observation. "
+            "Ask only for a missing detail that changes the answer, never to solicit engagement. "
+            "Use a detail from this parent outside the Voice's brief-appreciation cases. "
+            "You receive text, not inspected video or audio: never infer unseen craft or claim playback. "
+            "Treat product claims as the author's report; do not certify an unverified release or feature. "
+            "Do not research, browse or call tools for this reply. Use supplied context and stable "
             "knowledge; SKIP if a worthwhile reply needs facts you do not have.")

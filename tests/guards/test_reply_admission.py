@@ -229,3 +229,29 @@ def test_judges_write_nothing(monkeypatch, memory_ledger):
 
 
 pytestmark = pytest.mark.usefixtures("open_topic_account")
+
+
+@pytest.mark.parametrize("draft", ["Love this concept 💜", "LOVE THIS CONCEPT!", "Love this concept."])
+def test_recent_confirmed_wording_cannot_repeat_with_another_heart(monkeypatch, draft):
+    from src.core import engagement_log
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: ["Love this concept ❤️"])
+    verdict = judge_reply(url("artist"), draft)
+    assert verdict.refusal is Refusal.TEXT and "recent confirmed" in verdict.reason
+    assert not verdict.refusal.definitive
+
+
+def test_repetition_check_keeps_distinct_numbers_and_contributions(monkeypatch):
+    from src.core import engagement_log
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: ["That model fits in 8 GB."])
+    assert judge_reply(url("builder"), "That model fits in 16 GB.")
+    assert judge_reply(url("artist"), "Love the idea of a paper-collage city ❤️")
+
+
+def test_unreadable_recent_text_does_not_create_a_send_or_parent_claim(monkeypatch):
+    from src.core import engagement_log
+    def unreadable(*a):
+        raise OSError("fixture unavailable")
+    monkeypatch.setattr(engagement_log, "recent_replies", unreadable)
+    verdict = judge_reply(url("builder"), TEXT)
+    assert verdict.refusal is Refusal.TEXT and "unavailable" in verdict.reason
+    assert judge_parent(url("builder"))

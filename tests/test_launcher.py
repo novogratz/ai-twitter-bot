@@ -60,10 +60,13 @@ def launcher(tmp_path):
     for name in ("curl", "ollama", "codex", "pkill", "tee"):
         command(name, record + 'raise SystemExit("unexpected external command")\n')
 
-    def run(video="0", *, bad_config=False, exit_code=0, startup="1", stdout=subprocess.PIPE, stderr=subprocess.PIPE):
+    def run(video="0", *, bad_config=False, exit_code=0, startup=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
         env = dict(os.environ, PATH=f"{commands}{os.pathsep}{os.environ['PATH']}",
                    TEST_COMMAND_TRACE=str(trace), TEST_VIDEO_ENABLED=video,
-                   TEST_MAIN_EXIT=str(exit_code), TEST_BAD_CONFIG="1" if bad_config else "", STARTUP_PUBLICATIONS=startup)
+                   TEST_MAIN_EXIT=str(exit_code), TEST_BAD_CONFIG="1" if bad_config else "")
+        env.pop("STARTUP_PUBLICATIONS", None)
+        if startup is not None:
+            env["STARTUP_PUBLICATIONS"] = startup
         result = subprocess.run(["/bin/bash", str(scripts / "run.sh")], cwd=tmp_path,
                                 env=env, text=True, stdout=stdout, stderr=stderr, timeout=10)
         calls = [json.loads(line) for line in trace.read_text().splitlines()] if trace.exists() else []
@@ -79,13 +82,13 @@ def test_launcher_reaches_main_without_any_model_warmup(launcher, video, require
     assert "[run] Starting @ConfiguredBot bot." in result.stdout
     assert "fake main reached" in result.stdout
     assert [Path(call[0]).name for call in calls] == ["uv", "pgrep", "find", "uv"]
-    assert calls[-1][1:] == ["run", "--with-requirements", requirements, "python", "-u", "main.py", "--startup-publications"]
-    assert "news + video requested first" in result.stdout
+    assert calls[-1][1:] == ["run", "--with-requirements", requirements, "python", "-u", "main.py"]
+    assert "news + video requested first" not in result.stdout
 
 
-def test_launcher_startup_opt_out_and_bad_value(launcher):
-    result, calls = launcher(startup="0")
-    assert result.returncode == 0 and "--startup-publications" not in calls[-1]
+def test_launcher_explicit_startup_opt_in(launcher):
+    result, calls = launcher(startup="1")
+    assert result.returncode == 0 and "--startup-publications" in calls[-1]
 
 
 def test_bad_startup_setting_cannot_touch_running_processes(launcher):

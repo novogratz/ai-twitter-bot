@@ -12,6 +12,17 @@ def test_live_account_has_90_minute_video_cadence_and_five_qualifiers():
     assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario"}
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file
+    assert cfg.ultra_bangers_only and cfg.min_hook_score == 9
+    assert not cfg.startup_on_boot and cfg.buffer_target == 3 and cfg.ready_reserve_min == 1
+
+
+def test_no_news_or_legacy_original_jobs_in_exceptional_video_mode(settings_override):
+    import main
+    settings_override(VIDEO_ENABLED=True, NEWS_ENABLED=False, NEWS_AUTO_PUBLISH=False)
+    scheduler = main.build_scheduler()
+    assert not scheduler.get_job("news_job")
+    assert not scheduler.get_job("editorial_job")
+    assert scheduler.get_job("direct_reply_job") and scheduler.get_job("video_health_job")
 
 
 def test_news_video_and_replies_keep_independent_executors(settings_override):

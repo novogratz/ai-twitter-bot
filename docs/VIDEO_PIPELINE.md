@@ -1,12 +1,15 @@
 # Existing-video pipeline
 
-## Current Account: MEGA-BANGER discovery and publishing
+## Current Account: ultra bangers only
 
-The 2026-11-07 Account runs thirteen video windows at 90-minute intervals alongside
-the existing [verified-news worker](NEWS.md). That worker retains hourly discovery,
-two-hour minimum news spacing and its separate text daily ceiling (seven locally,
-at most eight). Videos retain thirteen slots and the existing one-extra startup
-allowance; there is no outage catch-up or second editor/publisher.
+The 2026-11-08 Account keeps thirteen 90-minute video opportunities, with no
+minimum publication target. News and automatic startup requests are disabled.
+Only exceptional inspected finds may publish automatically through the existing
+publisher. Source and output each need every editorial component at least 9/10
+and normalized editorial quality at least 95/100, excluding age and engagement.
+The full rubric still requires 88/100; fit/entertainment need 19/20, quality 14/15
+and the first-second hook 9/10. Empty windows stay empty. Four owner-selected
+benchmarks guide taste and remain permanent posted memory, never new finds.
 
 Codex chooses one 8–120 second contiguous excerpt from a source up to five minutes.
 Prefer 15–30 seconds when a complete joke/chorus fits; preserve a strong full
@@ -32,8 +35,7 @@ per Toronto day can request up to 120 leads/six queries; ordinary passes use
 records bounded search passes, not fabricated exhaustive profile crawling.
 
 Five-minute reserve maintenance refreshes expiring X checks and brings source
-polls forward below three eligible distinct clips. Target inventory remains
-sixteen. Completed negative reviews and exhausted media retries are not reset by
+polls forward below one eligible distinct clip. Target inventory is three. Completed negative reviews and exhausted media retries are not reset by
 maintenance. New editing policy can re-inspect a saved unclaimed source once.
 Owner `shown`/`delivered`/`rejected` memory is permanent; use
 `bin/video.py remember CANDIDATE delivered` only after actual owner delivery.
@@ -113,8 +115,8 @@ backfilled. Set it to `0` to require complete archive import again. Status expos
 initial readiness and archive completeness separately; never reset posting history.
 Other Accounts can retain `allow_unknown_momentum` and the historical raw-score
 fallback. The live Account instead requires the separate 88/100 banger rubric
-(92 exceptional, 82–87.99 reserve), minimum 8/10 hook/performance/fit/quality,
-18/17/12 source/output floors and the verified first second. Missing comparable
+plus the stricter ultra-quality checks above, 19/19/14 source/output floors
+and a verified 9/10 first second. Missing comparable
 engagement gets a labeled neutral editorial 5/10; raw momentum stays unknown.
 Cast labels are creator attribution, not facial identification of real people.
 
@@ -144,7 +146,7 @@ expires immediately; missing, invalid or future dates remain held. The job ends
 as a completed policy decision, retaining saved bytes and fingerprints. Only a
 current hash-bound operator selection can use the existing known-age exemption.
 
-While fewer than the target sixteen clips are ready, preparation receives a
+While fewer than the target three clips are ready, preparation receives a
 bounded ready-Reply FIFO turn. After two novelty batches, source capture gets
 one turn even when a duplicate check keeps deferring. Reconciliation precedes
 both. Capture favors unseen and least-recently attempted leads and reuses saved
@@ -240,8 +242,8 @@ uv run --with-requirements requirements-video.txt python bin/video.py replace-de
 
 This retains both receipts and transfers the same slot/startup-day claim. It is
 not an automatic retry or general duplicate exception. Ambiguous sends stay held.
-The live Account now opts into startup requests on ordinary starts, described
-below. See [current validation and
+The live Account disables startup requests on ordinary starts; historical
+opt-in behavior is described below. See [current validation and
 remaining limitations](VIDEO_VALIDATION.md) before interpreting older diagnostic
 snapshots.
 

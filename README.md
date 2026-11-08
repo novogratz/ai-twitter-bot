@@ -1,23 +1,22 @@
 # The SI Maximalist · @thesimaximalist
 
-`bin/run.sh` now starts with **`STARTUP_PUBLICATIONS=1`**: request one verified
-news post and one reviewed video through the existing publishers. The approved
-news outbox is checked first; discovery fills missing supply. Both still need
-confirmed X receipts, normal spacing and eligibility. An expired video startup
-that never attempted a send can retry on a new script start, retaining its daily
-claim and audit history. Replies run independently. Set the launcher switch to
-`0` to use only ordinary configured startup/scheduled behavior.
-News composition supports X's nested modal wrapper while checking the exact
-draft, account and Post button within the unique innermost dialog.
-Link-card receipts require the exact source destination. Uncertain sends get
-read-only receipt checks through the existing publisher, never automatic reposts.
+**Only ultra-high-quality parody videos may publish as originals. No news.**
+The four owner-selected references guide discovery and are saved as already posted.
+Each new source and edited output must clear exceptional editorial review, with
+an immediate opening, usable audio, the exact watermark and permanent dedup.
+Qualified finds still publish automatically through the existing video pipeline;
+empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
+Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
+`NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
 
-Verified SI news now runs hourly with the normal bot when `NEWS_ENABLED=1`.
-The Operator authorizes `NEWS_AUTO_PUBLISH=1`: exceptional, independently reviewed
-main picks publish through Safari alongside videos, normally at least two hours
-apart. Quiet runs stay silent. Tweets have clean paragraph breaks and one source
-link; permanent event history and uncertain-send holds prevent automatic repeats.
-Backups stay in the local inbox. See [news setup and commands](docs/NEWS.md).
+The November 8 Reply audit makes the voice more direct and natural: knowledgeable
+about SI and filmmaking, enthusiastic about Grok, and playful when the post fits.
+The parent's intent determines length. Current product claims and unseen media
+stay grounded in supplied evidence. Short English false refusals are fixed, and
+final admission checks the last twenty confirmed logged Replies for recycled
+wording even when the emoji changes. Search budgets, follow policy, pacing and
+permanent one-Reply-per-original history remain. Engagement reports measure
+observed outcomes; they cannot promise likes or attribute follower gains.
 
 A Safari-driven SI account with the voice of a fictional, smart, affectionate
 45-year-old mom and SI artist. She loves tech, generated art, SI news,
@@ -98,8 +97,8 @@ attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
 Videos now have **thirteen daily Toronto slots, every 90 minutes from 05:00 through
-23:00**. The Account requests a video automatically on startup, without holding
-Replies, using the existing once-per-day extra-startup allowance. Independent
+23:00**, as opportunities rather than targets. The Account disables automatic
+startup requests and reports no minimum original-post target. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
 featuring Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
 up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
@@ -112,12 +111,13 @@ queue is reported as a missed slot, never a successful post.
 
 The editable [discovery brief](accounts/theaishrink/video_discovery_prompt.md)
 drives fresh uploads, unseen back catalog and source-quality recovery, weighted
-toward Instagram and Bilibili. The new rubric requires 88/100 plus strong hook,
-performance, fit and quality. Power Rangers-style reveals and complete musical
+toward Instagram and Bilibili. The full rubric retains its 88/100 floor. Ultra mode additionally requires
+95/100 normalized editorial quality, every editorial component at least 9/10,
+and a 9/10 first-second opening in both source selection and output review. Power Rangers-style reveals and complete musical
 performances are supported. Codex selects an 8–120 second excerpt; FFmpeg applies
 the exact cut and watermark, followed by independent opening/audio/output checks.
-The reserve targets sixteen distinct eligible clips and reports shortages below
-three. YouTube/Douyin discovery supplies leads; media access remains limited.
+The reserve targets three exceptional eligible clips and reports shortages below
+one. YouTube/Douyin discovery supplies leads; media access remains limited.
 
 On startup, the supervisor also replaces verified discovery/media workers left
 running older code or configuration, waiting for their role locks to release.
@@ -512,14 +512,13 @@ create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
 The live Account opts into thirteen video windows at 90-minute intervals from
-05:00 through 23:00 alongside the existing verified-news job. Its configured
-startup request can add at most one startup video per day. Replies
-keep their engine and prompts; interactions now pause from midnight to 04:30,
+05:00 through 23:00 for exceptional finds, with news and automatic startup
+requests disabled. Replies retain their existing engine; interactions now pause from midnight to 04:30,
 while independent video discovery/media workers can continue overnight.
 
 All thirteen windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
-`video.py status` reports coverage and shortages. The sixteen-clip buffer is
+`video.py status` reports coverage and shortages. The three-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.
 
 Video posts use the existing **Safari/AppleScript** composer and shared Reply

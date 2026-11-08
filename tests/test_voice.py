@@ -42,10 +42,10 @@ def test_voice_keeps_warmth_and_honest_criticism():
 
 def test_voice_carries_editorial_strategy():
     text = " ".join(VOICE_FR.read_text().lower().split())
-    assert "at least three sourced originals" in text
-    assert "eight combined profile publications maximum" in text
+    assert "ultra-quality parody videos only" in text
+    assert "news and automatic startup posts are disabled" in text
     assert "no quotes or burst threads" in text
-    assert "explicitly watched authors" in text and "same publication limits and spacing" in text
+    assert "existing publisher" in text and "pacing" in text
     assert "one reply" in text and "standalone original, permanently" in text
     assert "no debate or follow-up exchanges" in text
 

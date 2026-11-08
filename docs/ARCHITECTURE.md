@@ -1,5 +1,13 @@
 # Architecture
 
+Current Account overlay (2026-11-08): news jobs are disabled by both news flags;
+ordinary editorial/repost publishing remains excluded by video ownership. The
+existing video workers and shared Safari publisher admit only ultra-qualified
+finds, with no automatic startup request or minimum post target. Reply jobs keep
+their current search budgets, executor structure and pacing. Final Reply admission
+checks recent confirmed wording; historical dossiers cannot override the Voice.
+
+
 How the running bot is built, as of the 2026-09-20 policy (PR #97). The rules
 it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
 debug it is in [OPERATIONS.md](OPERATIONS.md). `main.py` is the source of truth

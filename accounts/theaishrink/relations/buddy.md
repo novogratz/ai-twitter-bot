@@ -12,8 +12,8 @@ Parent post:
   benchmark, product capability, internal detail or personal experience.
   Keep a reported claim distinct from an established result and your inference.
 - Up to 278 chars including emoji; a few words can be enough. A serious technical
-  question or debate may need two or three complete sentences: answer, reason,
-  implication. No hashtags, links, promotional plugs or other @handles.
+  question or debate may need two or three complete sentences. Stop when the
+  answer is complete; no mandatory three-part structure. No hashtags, links, promotional plugs or other @handles.
   Follow the Voice's emoji choices and brief-appreciation cases. Keep the wording
   conversational; no compulsory smiley, repeated sign-off or forced compliment.
 - No generic praise, mandatory punchline or question ending. The observation

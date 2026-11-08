@@ -164,31 +164,38 @@ a newly selected date still requires the Operator's next explicit restart.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
 Account uses thirteen 90-minute slots from 05:00 through 23:00 Toronto,
-`scheduled_daily_cap=13`, `startup_on_boot=true`, `preferred_age_hours=72` and
+`scheduled_daily_cap=13`, `startup_on_boot=false`, `preferred_age_hours=72` and
 `max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
 TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
-The startup request creates no Reply hold; publication still uses durable claims,
+Ordinary starts create no startup request. Publication still uses durable claims,
 inspection, dedup and existing spacing. The [README](../README.md) links the
 video pipeline guide and operating commands.
 
-The live video configuration enables `auto_edit`, `bangers_only`,
+The live video configuration enables `auto_edit`, `bangers_only`, `ultra_bangers_only`,
 `one_line_caption` and `adaptive_discovery`. It reads the account-local
 `discovery_prompt_file`, `query_bank_file` and `discovery_memory_file` on research
 passes; paths must resolve inside the Account folder. Source duration is bounded
 by `source_max_duration_seconds=300`, the selected excerpt by `edit_max_seconds=120`.
-`banger_min_score=88` controls the separate editorial rubric. The original raw
+`banger_min_score=88` retains the full editorial rubric. Ultra mode additionally
+requires every editorial component at least 9/10, normalized editorial quality
+at least 95/100, fit/entertainment 19/20, technical quality 14/15 and
+`min_hook_score=9`. Engagement and freshness cannot raise the ultra quality score.
+Ultra mode requires automatic editing and the ordinary banger gates. The original raw
 ranking retains its unknown components. `discovery_calls_per_hour=3` is shared
 across sources and still subject to daily Codex/request budgets. Platform weights
 are 40/30/10/4/5/7/4 for Instagram/Bilibili/TikTok/RedNote/X/YouTube/Douyin;
-unavailable/cooling providers are skipped. `ready_reserve_min=3` warns below the
-existing `buffer_target=16`; it never waives eligibility. Matching X copies use
+unavailable/cooling providers are skipped. `ready_reserve_min=1` warns below the
+existing `buffer_target=3`; it never waives eligibility. Matching X copies use
 `x_max_views=50000` and `x_reach_max_age_seconds=21600`. Exact X source metrics
 retain the tighter one-hour check. These settings create no extra publisher.
 
 ## Policy ceilings
 
+The live Account disables news discovery and publication with `NEWS_ENABLED=0`
+and `NEWS_AUTO_PUBLISH=0`; existing news history and uncertain claims remain.
+
 `bin/run.sh` has a [launcher-only startup switch](OPERATIONS.md#start) (default
-`1`, allowed `0`/`1`), passed as `main.py --startup-publications`. It does not enable
+`0`, allowed `0`/`1`), passed as `main.py --startup-publications`. It does not enable
 disabled news/video features or bypass their publication settings. It prioritizes
 approved startup news and permits rearming an expired, never-attempted startup
 video within the existing daily allowance. It is not an `.env` setting.

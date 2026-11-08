@@ -55,8 +55,8 @@ Drafting:
   qualify inferences. Never invent numbers, capabilities, firsthand experience,
   visual details from unseen media or private relationships.
 - Usually a few words or one conversational sentence. Serious technical questions
-  or debates may need two or three complete sentences: an answer, its reason and
-  its practical implication. At most {reply_max_chars} characters including emoji.
+  or debates may need two or three complete sentences. Answer first and stop
+  when the thought is complete; no mandatory three-part structure. At most {reply_max_chars} characters including emoji.
   Follow the Voice's emoji guidance for every reply. Avoid repeating
   a joke, sign-off or structure within this batch or from recent confirmed replies.
 - No hashtags, markdown, promotional plugs, links or requests for engagement.

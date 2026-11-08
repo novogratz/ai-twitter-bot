@@ -190,6 +190,24 @@
       "title": "We Were Always Blue",
       "match_title": true,
       "evidence": "Explicit owner rejection, 2026-11-07; exact normalized title only, footage identity otherwise unknown."
+    },
+    {
+      "id": "own-2119441266715009096",
+      "state": "posted",
+      "urls": [
+        "https://x.com/thesimaximalist/status/2119441266715009096"
+      ],
+      "title": "ANOTHER BANGER 🔥 Elon and the SI team formed the Wallstreet Boys. They want your RAM that way. 😂🎤",
+      "evidence": "Owner-selected benchmark and observed own status, 2026-11-08; source-copy mapping may be incomplete."
+    },
+    {
+      "id": "own-2119181530681725303",
+      "state": "posted",
+      "urls": [
+        "https://x.com/thesimaximalist/status/2119181530681725303"
+      ],
+      "title": "ANOTHER BANGER 🔥 Donald Trump, Elon Musk and the SI team have entered their Tecktonik era. 😂💃",
+      "evidence": "Owner-selected benchmark and observed own status, 2026-11-08; source-copy mapping may be incomplete."
     }
   ]
 }

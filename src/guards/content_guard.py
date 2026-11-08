@@ -310,7 +310,7 @@ _SHORT_ENGLISH_CUES = re.compile(
     r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
     r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
     r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds|"
-    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists)\b", re.IGNORECASE)
+    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists|building|fake|only|sound|unexpected|quite|makes)\b", re.IGNORECASE)
 _FRENCH_REPLY_CUES = re.compile(
     r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
     r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
@@ -351,7 +351,11 @@ celebration celebrate celebrating glorious silliness honeymoon
 self reflection on builder builders row rows insists private query queries one
 command honest personal taste deserve deserves save button blind comparisons
 crushes give agents house style snake suspense happy congrats congratulations
-go build robot technicians
+go build robot technicians robots building rockets oh fake keys bills fifty tools
+real two hands swordswoman lead pastel paper collage cities sound inviting heroes
+rebuilding skeletons apartments unexpected plot twist brains grok smarts per
+mecha apple intelligence support holding onto m ipad appealing api switching
+sweeter quite gas behind
 """.split())
 
 

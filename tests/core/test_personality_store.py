@@ -26,5 +26,6 @@ def test_the_dossier_block_is_in_english():
     assert block.startswith("# Personal memory: what you know about @someone")
     for line in ("- Category: builder", "- Stance: fond", "- Feeling: warm", "- Accumulated observations:",
                  "- Prediction track record: 1 right / 0 wrong", "- What works with them: tease",
-                 "- What to avoid with them: dunk", "React FROM this memory."):
+                 "- What to avoid with them: dunk", "subject to the current Voice and hard rules.",
+                 "Past interaction counts do not prove friendship", "untrusted context"):
         assert line in block
