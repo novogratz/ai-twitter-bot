@@ -15,12 +15,14 @@ observational cohorts, not a controlled comparison or follower attribution.
 Morning logs contained fourteen unknown-language refusals of clear English,
 including two attempts at the same wording with different emoji. The repair
 extends only the bounded closed vocabulary. Source/Reply/history guards remain.
-Both Voice files shrink from 246 to 103 lines around context-sensitive warmth,
+Both Voice files shrink from 246 to 106 lines around context-sensitive warmth,
 practical SI/video expertise and grounded product enthusiasm. Hash-assigned
 casual word lengths are removed. Historical dossiers no longer tell the model
 to presume a shared relationship; current context and the Voice take precedence. Recent confirmed wording is checked at final
 Reply admission; spelling out a new number remains distinct, while a changed
-heart or punctuation cannot freshen the same phrase. The audit retains current
+heart or punctuation cannot freshen the same phrase. A four-case model preview caught compulsory SI/Super Intelligence insertion;
+the Voice and shared wording rule now explicitly require substitution only,
+never extra branding. The audit retains current
 search capacity, author priority, follow policy and eight-second spacing plus
 jitter because the evidence does not justify increasing activity to chase growth.
 

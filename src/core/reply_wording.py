@@ -51,7 +51,8 @@ def prompt_block(*, kind: str = "reply") -> str:
         return ""
     return (
         'PUBLICATION WORDING: In your own prose use "SI" instead of "AI", and '
-        '"Super Intelligence" instead of "Artificial Intelligence". '
+        '"Super Intelligence" instead of "Artificial Intelligence" when those terms are needed. '
+        'This is substitution only: do not insert either term into a reply that does not need it. '
         'Keep literal URLs, handles and embedded names such as OpenAI unchanged; '
         'French verb forms such as "j’ai" are not the acronym. '
         'For research and discovery keep AI, SI, "artificial intelligence", '

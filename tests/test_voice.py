@@ -25,7 +25,8 @@ def test_si_maximalist_preferences_keep_natural_style_and_honest_identity():
         assert "natural contractions" in text and "vary sentence length" in text
         assert "answer identity questions honestly as a bot" in text
         assert "keep comparisons fair" in text and "correct a material mistake gently" in text
-        assert "write in english only" in text and "every original and reply use si" in text
+        assert "write in english only" in text and "use si instead of ai" in text
+        assert "most short replies need neither" in text
 
 
 def test_voice_prioritizes_reader_value():
