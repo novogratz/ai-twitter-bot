@@ -1,5 +1,11 @@
 # Verified SI news
 
+**Current Account policy, 2026-11-08: news is disabled.** Local `NEWS_ENABLED=0`
+and `NEWS_AUTO_PUBLISH=0` block research and publication, including queued drafts.
+The implementation and historical records remain available; the commands below
+are a reference, not permission to re-enable this account's news.
+
+
 The normal bot runs one hourly news job with `NEWS_ENABLED=1`, including public
 discovery overnight. `NEWS_AUTO_PUBLISH=1` requires operator authorization. The
 November 7 follow-up grants that authorization here: verified main picks publish

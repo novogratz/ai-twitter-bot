@@ -7,7 +7,8 @@ design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 The bot publishes on a real account. Start, stop and restart it only when the
 operator asks.
 
-The top of `bin/run.sh` exposes `STARTUP_PUBLICATIONS=1`. It passes
+The top of `bin/run.sh` defaults to `STARTUP_PUBLICATIONS=0`: no startup post.
+The live Account also disables startup videos and news. An explicit `1` passes
 `--startup-publications` to request verified news and video from the existing
 publishers, without waiting for a new hourly discovery run when an approved news
 draft is already queued. `STARTUP_PUBLICATIONS=0` uses ordinary configured jobs.

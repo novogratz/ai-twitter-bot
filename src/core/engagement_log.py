@@ -13,6 +13,18 @@ _memory_key = None
 _memory = deque()
 
 
+def repeated_reply(text: str, limit: int = 20) -> bool:
+    """Catch recycled wording despite casing, punctuation or emoji changes.
+
+    Numbers and words stay intact. This is a bounded confirmed-text check,
+    separate from permanent one-Reply-per-parent history.
+    """
+    def words(value):
+        return re.findall(r"\w+(?:'\w+)*", value.casefold().replace("’", "'"))
+    wanted = words(text)
+    return bool(wanted) and any(words(previous) == wanted for previous in recent_replies(limit))
+
+
 def _log_key():
     path = os.fspath(config.ENGAGEMENT_LOG_FILE)
     try:

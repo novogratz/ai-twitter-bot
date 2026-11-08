@@ -1,5 +1,45 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-08 — Reply audit: natural delivery and observed refusal repairs
+
+The audit covered direct/search, feed, watched and structured Reply routes,
+shared generation, admission, buffers, source freshness, post confirmation,
+recent memory and outcome sampling. November 7 recorded 894 confirmed Replies,
+with median text length 98.5 characters. At 08:14 on November 8 the existing
+report covered 5,408 own receipts out of 5,563 seven-day Replies; its one-in-five
+sample had 478 first-window and 334 next-day observations. The 334 paired 24h
+samples contained 193 likes and 35,579 observed views. Short playful and longer
+technical contributions both appeared among liked samples. These are unequal,
+observational cohorts, not a controlled comparison or follower attribution.
+
+Morning logs contained fourteen unknown-language refusals of clear English,
+including two attempts at the same wording with different emoji. The repair
+extends only the bounded closed vocabulary. Source/Reply/history guards remain.
+Both Voice files shrink from 246 to 106 lines around context-sensitive warmth,
+practical SI/video expertise and grounded product enthusiasm. Hash-assigned
+casual word lengths are removed. Historical dossiers no longer tell the model
+to presume a shared relationship; current context and the Voice take precedence. Recent confirmed wording is checked at final
+Reply admission; spelling out a new number remains distinct, while a changed
+heart or punctuation cannot freshen the same phrase. A four-case model preview caught compulsory SI/Super Intelligence insertion;
+the Voice and shared wording rule now explicitly require substitution only,
+never extra branding. The audit retains current
+search capacity, author priority, follow policy and eight-second spacing plus
+jitter because the evidence does not justify increasing activity to chase growth.
+
+## 2026-11-08 — Replace publication quotas with ultra-video quality
+
+The Operator withdraws news and ordinary original publishing, supplying four
+own-account musical/dance references and explicitly authorizing exceptional new
+finds to post automatically. News switches and startup requests are disabled;
+existing video windows remain optional. Source and rendered-output reviews gain
+strict editorial-only quality requirements, without fabricating engagement or
+penalizing age in that additional score. Earlier grants, exact footage history,
+uncertain claims and source/output inspection remain. The references were read
+in Safari and sampled at six timestamps each, not fully watched/listened through.
+Their captions supply fictional cast context; rounded counters are snapshots.
+Two newly supplied references join partial posted memory. The Operator then
+requests a full Reply audit, improvements and restart/monitoring after validation.
+
 ## 2026-11-07 — Recover unattempted startup video and prioritize prepared news
 
 The 14:21 Toronto audit found the main bot stopped, an approved news draft

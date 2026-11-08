@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Startup priority: request one verified NEWS post and one reviewed VIDEO.
-# The existing publishers confirm each send and retain quality, dedup and spacing.
-# Set STARTUP_PUBLICATIONS=0 to use only the ordinary configured jobs.
-STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-1}"
+# 2026-11-08: no automatic startup post. News is off; only ultra-qualified videos.
+# The existing video publisher can post exceptional finds after all checks pass.
+# Startup requests are an explicit opt-in and cannot enable disabled features.
+STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-0}"
 # Run the configured Account's bot in the FOREGROUND of this terminal.
 #
 # Press Ctrl-C to stop it cleanly (graceful shutdown via SIGTERM).

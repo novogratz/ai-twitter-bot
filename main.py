@@ -188,8 +188,8 @@ def main():
         video_cfg = video_config() if settings.get("VIDEO_ENABLED") else None
         video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
-                          "min_target_posts": video_slots if settings.get("VIDEO_ENABLED") else (0 if settings.get("NEWS_ENABLED") else min_target),
-                          "target_posts": video_slots if settings.get("VIDEO_ENABLED") else (0 if settings.get("NEWS_ENABLED") else target),
+                          "min_target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
+                          "target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
                           "max_profile_posts": (video_slots + 1 + (config.posts_ceiling() if settings.get("NEWS_ENABLED") else 0)
                                                 if settings.get("VIDEO_ENABLED") else config.posts_ceiling()),
                           "replies": "unlimited",
@@ -246,8 +246,10 @@ def main():
     if settings.get("VIDEO_ENABLED"):
         from src.video.config import load as video_config
         from src.video.schedule import clocks as video_clocks
-        log.info("Bot started: %s video slots plus at most one startup video; transport=%s; replies unlimited; active %s.",
-                 len(video_clocks(video_config())), video_config().publishing_transport, window_label())
+        cfg = video_config()
+        log.info("Bot started: %s video opportunities; ultra-only=%s; automatic startup=%s; news=%s; transport=%s; replies unlimited; active %s.",
+                 len(video_clocks(cfg)), cfg.ultra_bangers_only, cfg.startup_on_boot,
+                 settings.get("NEWS_ENABLED"), cfg.publishing_transport, window_label())
     elif settings.get("NEWS_ENABLED") and not args.reply_only:
         log.info("Bot started: hourly verified news, automatic Safari=%s; replies active %s.",
                  settings.get("NEWS_AUTO_PUBLISH"), window_label())

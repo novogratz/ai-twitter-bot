@@ -1,16 +1,15 @@
 # THESIMAXIMALIST — continuous banger discovery
 
-Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-07.
+Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-08.
 
-Find exceptional EXISTING synthetic music, singing, dance, cinematic action and
-comedy parodies. The existing publisher targets one video approximately every
-90 minutes while awake. Supply that cadence by researching ahead and maintaining
-at least three distinct inspected, usable clips, with a target reserve of sixteen.
-Never wait until a slot to begin looking. Continue permitted research overnight.
-A clock does not make a weak video good: an empty or held reserve is a supply
-problem to report and repair, never permission to lower the bar, reuse footage,
-invent evidence, or call an unverified lead a ready video. No system can guarantee
-that a qualifying new source will be accessible on every pass.
+Find only ULTRA-HIGH-QUALITY existing synthetic music, singing, dance, cinematic
+and comedy parodies matching the owner's four benchmarks below. Qualifying finds
+are authorized for automatic posting by the existing publisher after every check.
+News is disabled. The 90-minute windows are opportunities, never posting targets.
+Keep researching ahead with a small reserve of up to three exceptional clips.
+An empty reserve is acceptable: do not lower standards, inflate scores, reuse
+footage or substitute merely relevant content. Continue permitted research
+independently of Replies. No system can guarantee a qualifying find per window.
 
 This agent discovers and hands off through the existing video queue. It never
 posts, contacts creators, starts the bot, changes news/replies, or creates a second
@@ -44,6 +43,12 @@ Blue” is an owner rejection, not a fresh suggestion.
 
 References are already known to the owner and MUST NOT be rediscovered:
 
+- Wallstreet Boys / RAM parody:
+  https://x.com/thesimaximalist/status/2119441266715009096
+- SI ensemble Tecktonik dance:
+  https://x.com/thesimaximalist/status/2119181530681725303
+- Trump/Melania Grease musical parody:
+  https://x.com/thesimaximalist/status/2119039295499506014
 - Trump/JD Vance White House boy band/Rickroll:
   https://x.com/thesimaximalist/status/2118431727886684202
 - SI Rangers group reveal:
@@ -141,8 +146,15 @@ Score inspected footage on anchored 0–10 judgments: 0 absent/broken, 3 weak,
 Do not give every relevant clip a nine. Weights: hook/payoff 25, performance 20,
 cast/account fit 15, picture/sound 15, audience novelty 10, engagement evidence 10,
 original freshness 5. Hook, performance, fit and quality must each be at least 8.
-88 qualifies; 92 is exceptional; 82–87.99 is reserve/research. View counts never
-override a failed gate. Missing comparable engagement uses a clearly labeled
+The prior 88-point overall floor remains, but is insufficient for this Account:
+ultra mode additionally requires EVERY editorial judgment (including novelty) at
+least 9/10 and at least 95/100 when those five editorial weights are normalized
+from 85 to 100. Engagement and age cannot increase that quality score. Source and
+rendered output must both pass; fit/entertainment must reach 19/20, quality 14/15,
+and the actual first-second opening 9/10. Ordinary strong clips stay held.
+View counts never override a failed gate. These are editorial judgments, not
+proof of future likes. Owner examples guide taste; rounded counters are dated
+snapshots and six sampled reference frames are not full video/audio inspection. Missing comparable engagement uses a clearly labeled
 neutral editorial 5/10, with low confidence and actual popularity still unknown.
 It is not measured momentum, retention or a probability of going viral.
 

@@ -492,3 +492,23 @@ def test_french_and_mixed_text_stay_refused_after_shared_word_fix(text):
 def test_natural_video_reply_with_modal_and_preposition_is_english():
     text = "A well-chosen cut can turn separate Grok Imagine clips into a story."
     assert cg.validate(text, kind="reply")[0]
+
+
+@pytest.mark.parametrize("text", [
+    "Robots building rockets? Oh, yes 💖", "Fake keys, very real token bills 😅",
+    "Fifty tools, still only two hands 😅", "A swordswoman lead, yes please 🩷",
+    "Pastel paper-collage cities sound so inviting 🩷", "More heroes, less time rebuilding skeletons 🩷",
+    "Old apartments were an unexpected plot twist 😅", "More brains per token, yes please 🩷",
+    "More Grok smarts per token. Yes please ❤️", "Such a fun mecha premise 💖",
+    "Apple Intelligence support makes holding onto an M1 iPad even more appealing.",
+    "One API makes switching models much sweeter 🩷", "Quite a gas bill behind those tokens.",
+])
+def test_november_eighth_observed_english_reactions_are_not_false_refusals(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+    assert not cg.validate(text + " merci beaucoup", kind="reply")[0]
+
+
+@pytest.mark.parametrize("text", ["Fake keys wunderbar", "Quite a gas bill bonjour",
+                                  "More brains per token абракадабра", "Robots building raketen"])
+def test_extended_short_vocabulary_keeps_unknown_and_mixed_language_closed(text):
+    assert not cg.validate(text, kind="reply")[0]

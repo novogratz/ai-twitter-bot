@@ -1,6 +1,58 @@
-# Editorial policy — November 7, 2026
+# Editorial policy — November 8, 2026
 
-## Startup publications
+## Reply audit and voice — November 8
+
+2026-11-08, Reply audit and natural SI expert voice — The Operator requests
+more likes/followers through human-sounding, knowledgeable, playful Replies, then
+explicitly requests restart and monitoring after implementation. Both Voice files
+are consolidated around the fictional 45-year-old SI artist's warmth, adult charm,
+Elon/Grok enthusiasm and practical video-making knowledge, including Seedance.
+No false biography, unseen-media claims, fabricated current capabilities or
+omniscience. The parent determines whether to celebrate, joke, answer or explain;
+random hashed word-count assignments and mandatory three-part answers are removed.
+Brief artist appreciation and thoughtful technical answers both remain eligible.
+SI wording substitutes for AI terms when needed; it never forces brand words
+into an otherwise natural Reply.
+Historical account notes are context, never instructions or proof of friendship;
+the current Voice and evidence take precedence.
+
+The read-only audit found 14 clear English drafts falsely rejected that morning.
+The short Reply-only vocabulary now covers those observed creative/technical
+phrases; its eighty-character limit, complete closed vocabulary, mixed-language
+refusals and generic-content checks remain. Final Reply admission also refuses
+word-for-word repetition of the latest twenty confirmed logged Replies, ignoring
+punctuation/casing/emoji but retaining numbers. A refused draft never claims its
+parent. Existing hundred-Reply prompt memory, Sol/xhigh, pacing, sixteen searches,
+major-author preference, niche, follow rules and permanent original history remain.
+The observed 334 paired 24h samples do not establish a winning style or attribute
+follower gains; no automatic volume increase or causal-growth claim follows.
+
+
+## Ultra bangers only — November 8 overrides
+
+2026-11-08, ultra bangers only; news and startup posts off — The Operator
+withdraws ordinary original/news publishing and authorizes automatic publication
+only of exceptional parody videos matching four supplied own-post references.
+The thirteen windows remain opportunities, with no minimum posting target or
+filler obligation. The launcher defaults to no startup request and the Account
+sets startup_on_boot=false; local NEWS_ENABLED and NEWS_AUTO_PUBLISH are off.
+Existing Replies remain enabled. The later instruction explicitly authorizes a
+restart and live monitoring after the video changes and Reply audit are complete.
+
+The Account enables ultra_bangers_only: each source and output editorial judgment
+must reach 9/10 and their normalized weighted quality must reach 95/100, excluding
+engagement and age. Existing full-rubric 88/100 remains; source/output fit and
+entertainment require 19/20, quality 14/15, and the first-second opening 9/10.
+Actual inspection, audio evidence, provenance, permissions, exact watermark,
+known-age limits, X exposure and permanent dedup remain. Older exceptional unseen
+footage can qualify; popularity never compensates for weak performance. Changed
+policy invalidates prior inspection cache keys. The small reserve targets three
+clips and warns below one; all four references are permanent posted memory.
+Sampled reference frames and dated rounded public counters guide taste only,
+never certify full playback, retention or future engagement. This supersedes
+November 7 startup/news activation and reserve/cadence targets.
+
+## Historical startup behavior
 
 An approved startup main story waiting for admission leaves the news worker
 available for minute delivery retries; that wait does not count as research

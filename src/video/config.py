@@ -25,6 +25,7 @@ class VideoConfig:
     edit_max_seconds: int = 60
     min_hook_score: int = 8
     bangers_only: bool = False
+    ultra_bangers_only: bool = False
     one_line_caption: bool = False
     audience_examples: tuple = ()
     discovery_prompt_file: str = ""
@@ -118,7 +119,7 @@ class VideoConfig:
             raise ValueError("startup_on_boot must be a boolean")
         if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 13:
             raise ValueError("scheduled_daily_cap must be 5..13")
-        for name in ("auto_edit", "bangers_only", "one_line_caption", "adaptive_discovery"):
+        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
@@ -140,6 +141,8 @@ class VideoConfig:
             raise ValueError("source duration must be within the output limit and 300 seconds")
         if not 8 <= self.min_hook_score <= 10:
             raise ValueError("opening hook threshold must be 8..10")
+        if self.ultra_bangers_only and (not self.bangers_only or not self.auto_edit or self.min_hook_score < 9):
+            raise ValueError("ultra bangers require inspected automatic cuts, bangers_only and a 9/10 opening")
         if not set(self.target_handles) <= set(self.targets) or any(
                 not isinstance(handle, str) or not re.fullmatch(r"@[A-Za-z0-9_]{1,15}", handle)
                 for handle in self.target_handles.values()):

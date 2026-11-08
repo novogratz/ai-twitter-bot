@@ -14,18 +14,16 @@ FR_VOICE_FILE = "Voice file voice_fr.md"
 EN_VOICE_FILE = "Voice file voice_en.md"
 
 
-def test_delivery_varies_casual_length_and_defers_emoji_to_voice_without_rewriting_output(llm):
+def test_delivery_uses_parent_intent_and_voice_without_rewriting_output(llm):
     from src.replies.reply_generator import _delivery, generate
     from src.replies.direct_reply import reply_call
 
-    directions = [_delivery("builder", f"Local model project {i}") for i in range(1000)]
-    assert 250 < sum("3–8 words" in d for d in directions) < 350
-    assert 550 < sum("one conversational sentence" in d for d in directions) < 650
-    assert 60 < sum("one or two short sentences" in d for d in directions) < 140
-    assert all("follow the Voice's emoji guidance" in d for d in directions)
-    assert all("takes precedence over the casual length suggestion" in d for d in directions)
-    assert not any("Use no emoji" in d for d in directions)
-    assert _delivery("builder", "same post") == _delivery("BUILDER", "same post")
+    direction = _delivery()
+    assert "parent's intent determine length" in direction
+    assert "Voice's post-specific style and emoji guidance" in direction
+    assert "two or three complete sentences" in direction
+    assert "never infer unseen craft or claim playback" in direction
+    assert "3–8 words" not in direction
     llm.default = "Offline wins. 🙂"
     result = generate(reply_call("builder"), author="builder", text="A local model works offline.")
     assert result.text == "Offline wins. 🙂"
@@ -62,8 +60,8 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
                                           text="Mon nouveau court métrage réalisé avec Grok Imagine.")
         assert result.text == llm.default and result.language == "en"
     prompt = llm.prompts[-1]
-    assert "Artist showcases (Replies):" in prompt
-    assert "Déborah (@dvorahfr)" in prompt and "usually 2–6 words and one heart" in prompt
+    assert "A creator sharing a finished SI artwork" in prompt
+    assert "usually 2–6 words with an optional heart" in prompt
     assert "Follow the Voice's post-specific style first" in prompt
     assert "Where the Voice permits brief appreciation, that is enough" in prompt
     assert json.dumps(recent, ensure_ascii=False) in prompt
@@ -891,7 +889,7 @@ def test_interest_guidance_does_not_rewrite_genuine_questions_or_artist_praise(m
     llm.default = answer
     result = reply_generator.generate(direct_reply.reply_call("builder"), author="builder", text="SI model project")
     assert result.text == answer
-    assert "A genuine question should name the missing detail" in llm.prompts[-1]
+    assert "Ask only for a missing detail that changes the answer" in llm.prompts[-1]
     assert "Where the Voice permits brief appreciation, that is enough" in llm.prompts[-1]
 
 

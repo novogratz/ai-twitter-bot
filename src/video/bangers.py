@@ -6,6 +6,22 @@ WEIGHTS = {"hook_payoff": 25, "performance": 20, "fit": 15, "quality": 15, "nove
 JUDGMENTS = tuple(key for key in WEIGHTS if key not in ("engagement", "freshness"))
 
 
+def editorial_total(review):
+    """Normalize actual editorial judgments alone; views and age cannot raise it."""
+    return round(sum(review["banger_scores"][key] * WEIGHTS[key] for key in JUDGMENTS)
+                 * 10 / sum(WEIGHTS[key] for key in JUDGMENTS), 4)
+
+
+def ultra_refusal(review):
+    if reason := review_refusal(review):
+        return reason
+    if any(review["banger_scores"][key] < 9 for key in JUDGMENTS):
+        return "ultra bangers require every editorial component at least 9/10"
+    if editorial_total(review) < 95:
+        return "ultra bangers require 95/100 editorial quality; reach and freshness cannot compensate"
+    return ""
+
+
 def review_refusal(review):
     scores = review.get("banger_scores", {})
     for key in JUDGMENTS:
@@ -43,7 +59,8 @@ def score(doc, now, *, source=False):
     points = {key: round(values[key] * weight / 10, 4) for key, weight in WEIGHTS.items()}
     total = round(sum(points.values()), 2)
     return {"status": "exceptional" if total >= 92 else "qualified" if total >= 88 else "reserve" if total >= 82 else "reject",
-            "total": total, "scores": values, "weighted_points": points, "reason": review["banger_reason"],
+            "total": total, "editorial_total": editorial_total(review),
+            "scores": values, "weighted_points": points, "reason": review["banger_reason"],
             "engagement_basis": "matched observed momentum percentile" if measured else "neutral editorial prior; no comparable observations",
             "engagement_confidence": "observed" if measured else "low",
             "measured_momentum": momentum if measured else None, "scored_at": now,
