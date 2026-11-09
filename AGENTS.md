@@ -6,6 +6,36 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-09, warmer conversation and a turn for other artists — The Operator
+finds the Replies too robotic and asks for affectionate, funny, knowledgeable
+conversation, occasional hearts and comments on other artists. Both Voice files,
+shared delivery and Relation/search prompts prefer a brief genuine reaction over
+automatic analysis. First attempts and progress deserve encouragement; real
+technical questions still get useful, accurate answers. Hearts are welcome,
+without quotas, rotation or repeated signatures. Recent dry explanatory output
+is history, not a style exemplar. No fake human biography, invented intimacy,
+unseen-media claims or fabricated tool expertise follows from the persona.
+
+The sixteen-read direct-cycle allocation becomes four major-author Latest,
+two creator Latest, six Top and four general first-hour Latest searches. Optional
+`searches.creators` and `DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE` default off for
+other Accounts. Cursors rotate independently; short pools backfill within the
+total. After priority reads, current artist discoveries receive at most four
+generation attempts before ordinary drafting, charged within the same cycle
+budget even when declined. Their URLs are retained just for this bounded turn
+within the existing 400-source buffer. Expiry never extends, source freshness
+and admission remain, and no Reply is promised. The lane identifies a search
+intent, not a verified human or creator; no watchlist or follow rule changes.
+The artist drafting turn skips tool roundups, promotion and aggregator reposts
+without an original creative contribution; the parent description is still data.
+Ordinary major-account preference and watched-job ordering remain.
+
+The Operator subsequently requests restart when ready and monitoring today.
+Complete validation before using the normal restart workflow. News/startup
+posts remain off; only ultra-quality original videos may publish. Sol/xhigh,
+English/SI wording, permanent one-Reply-per-standalone-original history, parent
+likes and existing pacing remain. No extra volume or growth guarantee is added.
+
 2026-11-08, Reply audit and natural SI expert voice — The Operator requests
 more likes/followers through human-sounding, knowledgeable, playful Replies, then
 explicitly requests restart and monitoring after implementation. Both Voice files

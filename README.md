@@ -9,8 +9,11 @@ empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
 Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
 `NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
 
-The November 8 Reply audit makes the voice more direct and natural: knowledgeable
-about SI and filmmaking, enthusiastic about Grok, and playful when the post fits.
+The November 9 refinement restores warmth as the default: delight, encouragement,
+affection and shared humor can be a whole Reply. Hearts are welcome without an
+emoji quota, rotation or repeated sign-off. Technical knowledge stays sharp for
+real questions; a technical topic alone does not require a mini explainer.
+Artists sharing work, progress and first attempts get a dedicated discovery turn.
 The parent's intent determines length. Current product claims and unseen media
 stay grounded in supplied evidence. Short English false refusals are fixed, and
 final admission checks the last twenty confirmed logged Replies for recycled
@@ -30,23 +33,29 @@ within the existing 278-character Reply limit. Facts stay grounded and bot
 identity stays honest. The Voice lives in `accounts/theaishrink/voice_en.md`; the old folder
 name preserves the existing state and history after the account rename.
 
-Technical expertise stays central: answer directly, explain the mechanism or
-tradeoff, and give its practical consequence. Personality comes through in the
+Technical questions get direct answers, with a mechanism or tradeoff when helpful.
+Ordinary conversation can stay short and affectionate. Personality comes through in the
 words and attention to the author, with no invented human life or viewing details.
 The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
-The November 7 Reply update searches more widely while giving the configured
-major AI accounts first turn. Up to **16 searches per cycle** cover four grouped
-major-author Latest searches, eight Top searches and four first-hour Latest
-searches. Routine Top searches no longer require thirty or fifty likes, so
+Up to **16 searches per cycle** cover four grouped major-author Latest searches,
+two artist Latest searches, six Top searches and four general first-hour Latest
+searches. Major-author reads come first, then fresh artist sources get up to four
+generation attempts before ordinary buffered drafting. Those attempts count
+within the cycle budget even when declined; they are not a posting quota.
+Artist queries rotate through shared work, first attempts and creative progress,
+with the same first-hour source limit and no popularity floor. They are discovery
+hints, never proof that an author is human or created the work.
+Routine Top searches no longer require thirty or fifty likes, so
 smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
 major authors, then three-plus observed likes, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
-At the existing buffer limit, configured major authors also take precedence over
-other sources; the newest sources win within each group.
+At the existing buffer limit, the current artist turn temporarily retains its
+sources; ordinary retention still prefers major authors, then newer sources.
+The same 400-source limit, expiry, source checks and permanent history apply.
 
 Short affectionate and technical English Replies also avoid more false language
 refusals. The narrow vocabulary check still rejects unclear or mixed-language
@@ -71,8 +80,8 @@ and like tiers. Voice guidance asks for the useful thought itself and keeps shor
 praise. The requested warmer voice gives more affection and encouragement to art,
 wins and progress, with optional hearts that fit the moment. Recent memory
 catches repeated wording throughout each Reply. Watched
-priority, pacing, follow rules and the three-like preference remain. November 7's
-search allocation replaces the earlier eight-Latest/four-Top proposal.
+priority, pacing, follow rules and the three-like preference remain. November 9's
+artist allocation replaces two of the previous eight Top searches.
 
 Source dates and the two-year age ceiling are now checked before expensive media
 preparation. A clip already known to be too old cannot consume download or model

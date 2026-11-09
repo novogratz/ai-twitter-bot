@@ -278,6 +278,7 @@ class Searches:
     likes: tuple
     trending: tuple  # the Top searches of the Trend slots and the Startup post
     latest: tuple = ()  # fresh builder/demo discoveries without a popularity threshold
+    creators: tuple = ()  # artist work/progress searches; discovery hints, not verified identities
 
 
 def _network(top) -> Network:
@@ -306,15 +307,15 @@ def _niche(top) -> Niche:
 
 def _searches(top) -> Searches:
     table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"latest": list})
-    for key in (*_SEARCHES, "latest"):
+                   optional={"latest": list, "creators": list})
+    for key in (*_SEARCHES, "latest", "creators"):
         if key not in table:
             continue
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
     return Searches(**{key: tuple(table[key]) for key in _SEARCHES},
-                    latest=tuple(table.get("latest", [])))
+                    latest=tuple(table.get("latest", [])), creators=tuple(table.get("creators", [])))
 
 
 class _Table:

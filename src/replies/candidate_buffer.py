@@ -14,7 +14,7 @@ class Buffer:
         self.lock = threading.RLock()
         self.entries = {}
 
-    def _prune(self, now):
+    def _prune(self, now, *, preferred_ids=()):
         expired = [sid for sid, candidate in self.entries.items() if candidate.expires_at <= now]
         for sid in expired:
             self.entries.pop(sid)
@@ -24,18 +24,23 @@ class Buffer:
         # A full ordinary buffer must not discard a just-discovered priority
         # author before ranking. Within each group, keep the freshest sources.
         large = reply_pipeline.priority_authors()
+        # An explicitly bounded discovery turn can retain its fresh sources
+        # until drafting, even when major authors fill the ordinary buffer.
+        # This preference belongs to this offer only, never a durable claim.
         oldest = sorted(self.entries, key=lambda sid: (
-            x_urls.author(self.entries[sid].url) in large, int(sid)))[:max(0, len(self.entries) - limit)]
+            sid in preferred_ids, x_urls.author(self.entries[sid].url) in large,
+            int(sid)))[:max(0, len(self.entries) - limit)]
         for sid in oldest:
             self.entries.pop(sid)
         if oldest:
             reply_diagnostics.record("candidates", "evicted", items=len(oldest))
 
-    def offer(self, candidates, *, max_age: timedelta):
+    def offer(self, candidates, *, max_age: timedelta, preferred_urls=()):
         now, added = time.time(), 0
         ttl = settings.get("REPLY_CANDIDATE_BUFFER_TTL_SECONDS")
+        preferred_ids = {x_urls.status_id(url) for url in preferred_urls}
         with self.lock:
-            self._prune(now)
+            self._prune(now, preferred_ids=preferred_ids)
             for candidate in candidates:
                 url = x_urls.canonical_status_url(candidate.url)
                 posted = x_urls.posted_at(url)
@@ -59,7 +64,7 @@ class Buffer:
                     continue
                 self.entries[sid] = replace(candidate, url=url, expires_at=expires)
                 added += 1
-            self._prune(now)
+            self._prune(now, preferred_ids=preferred_ids)
         reply_diagnostics.record("candidates", "buffered", items=added)
 
     def pending(self):
@@ -73,8 +78,11 @@ class Buffer:
                     self.entries.pop(sid)
             return reply_pipeline.prioritize(self.entries.values(), diversify_authors=True, ordinary=True)
 
-    def run(self, job, cycle, **budgets):
+    def run(self, job, cycle, *, only_urls=None, **budgets):
         candidates = self.pending()
+        if only_urls is not None:
+            selected = {x_urls.status_id(url) for url in only_urls}
+            candidates = [candidate for candidate in candidates if x_urls.status_id(candidate.url) in selected]
         if not candidates or cycle.rate_limited:
             return 0
         reply_diagnostics.record("candidates", "offered", items=len(candidates))

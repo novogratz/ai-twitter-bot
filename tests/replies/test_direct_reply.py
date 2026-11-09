@@ -95,7 +95,7 @@ def test_every_reply_and_like_query_finds_posts_on_the_niche():
     from src.core import account
     from src.replies.reply_source import is_on_niche
     replies, hot_tab = _searches()
-    for query in replies + hot_tab + list(account.current().searches.likes):
+    for query in replies + hot_tab + list(account.current().searches.likes) + list(account.current().searches.creators):
         for and_first in (True, False):
             for clause in _query_clauses(query, and_first):
                 assert is_on_niche(" ".join(clause)), f"{clause} of {query!r}"
@@ -251,7 +251,7 @@ def test_quoted_evidence_reaches_generation_without_changing_the_parent():
     assert direct_reply._search_candidates(posts, "SI video", "latest") == []
 
 
-def _discovery_account(monkeypatch, *, groups=10, top=14, latest=12):
+def _discovery_account(monkeypatch, *, groups=10, top=14, latest=12, creators=0):
     from dataclasses import replace
     from src.core import account
 
@@ -259,7 +259,8 @@ def _discovery_account(monkeypatch, *, groups=10, top=14, latest=12):
     custom = replace(loaded, network=replace(loaded.network,
         big_ai_hype=tuple(f"priority{i}" for i in range(groups * 6))),
         searches=replace(loaded.searches, replies=tuple(f"SI top {i}" for i in range(top)),
-                         hot_tab=(), latest=tuple(f"SI latest {i}" for i in range(latest))))
+                         hot_tab=(), latest=tuple(f"SI latest {i}" for i in range(latest)),
+                         creators=tuple(f"SI creator {i}" for i in range(creators))))
     monkeypatch.setattr(account, "current", lambda: custom)
     return custom
 
@@ -271,7 +272,8 @@ def test_priority_top_and_latest_pools_rotate_within_one_total_budget(monkeypatc
     settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4,
                       DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4, REPLY_VOLUME_BOOST_DATE="")
     plans = [dr._query_plan() for _ in range(3)]
-    for priority, ordinary in plans:
+    for priority, creators, ordinary in plans:
+        assert creators == []
         assert len(priority) == 4 and len(ordinary) == 12
         assert sum(tab == "top" for _, tab, _ in ordinary) == 8
         assert sum(tab == "latest" for _, tab, _ in ordinary) == 4
@@ -280,9 +282,9 @@ def test_priority_top_and_latest_pools_rotate_within_one_total_budget(monkeypatc
         assert all(f"from:{author}" in query for query, _, authors in priority for author in authors)
         assert all(all(term in query for term in ("AI OR SI OR ASI", "superintelligence", "Codex", "CUDA"))
                    and len(query) < 500 for query, _, _ in priority)
-    assert len({query for priority, _ in plans for query, _, _ in priority}) == 10
-    assert len({query for _, ordinary in plans for query, tab, _ in ordinary if tab == "top"}) == 14
-    assert len({query for _, ordinary in plans for query, tab, _ in ordinary if tab == "latest"}) == 12
+    assert len({query for priority, _, _ in plans for query, _, _ in priority}) == 10
+    assert len({query for _, _, ordinary in plans for query, tab, _ in ordinary if tab == "top"}) == 14
+    assert len({query for _, _, ordinary in plans for query, tab, _ in ordinary if tab == "latest"}) == 12
 
 
 @pytest.mark.parametrize("total,priority,latest,groups,top_pool,latest_pool,expected", [
@@ -299,7 +301,8 @@ def test_query_plan_clamps_requests_and_backfills_only_available_unique_queries(
     _discovery_account(monkeypatch, groups=groups, top=top_pool, latest=latest_pool)
     settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=total, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=priority,
                       DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=latest, REPLY_VOLUME_BOOST_DATE="")
-    selected, ordinary = dr._query_plan()
+    selected, creators, ordinary = dr._query_plan()
+    assert creators == []
     assert (len(selected), sum(tab == "top" for _, tab, _ in ordinary),
             sum(tab == "latest" for _, tab, _ in ordinary)) == expected
     assert len(set(selected + ordinary)) == len(selected + ordinary) <= total
@@ -381,6 +384,108 @@ def test_a_full_empty_discovery_pass_reads_exactly_the_selected_16_queries(
     assert sum(tab == "top" for _, tab in reads[4:]) == 8
     assert sum(tab == "latest" for _, tab in reads[4:]) == 4
     assert llm.calls == [] and chokepoint.sent == []
+
+
+def test_artist_searches_rotate_within_the_existing_16_read_budget(monkeypatch, settings_override):
+    from src.replies import direct_reply as dr
+
+    _discovery_account(monkeypatch, creators=6)
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2, DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4,
+                      REPLY_VOLUME_BOOST_DATE="")
+    plans = [dr._query_plan() for _ in range(3)]
+    for priority, creators, ordinary in plans:
+        assert len(priority) == 4 and len(creators) == 2
+        assert sum(tab == "top" for _, tab, _ in ordinary) == 6
+        assert sum(tab == "latest" for _, tab, _ in ordinary) == 4
+        assert all(tab == "latest" and authors == () for _, tab, authors in creators)
+        assert len(set(priority + creators + ordinary)) == 16
+    assert len({query for _, creators, _ in plans for query, _, _ in creators}) == 6
+
+
+@pytest.mark.parametrize("total,requested,expected", [(3, 2, 0), (5, 16, 1), (16, 0, 0), (16, 2, 2)])
+def test_artist_allocation_is_optional_and_cannot_exceed_total(monkeypatch, settings_override, total, requested, expected):
+    from src.replies import direct_reply as dr
+
+    _discovery_account(monkeypatch, creators=6)
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=total, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=requested, DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4,
+                      REPLY_VOLUME_BOOST_DATE="")
+    priority, creators, ordinary = dr._query_plan()
+    assert len(creators) == expected
+    assert len(set(priority + creators + ordinary)) == total
+
+
+def test_artist_query_shared_with_general_latest_is_only_read_once(monkeypatch, settings_override):
+    from dataclasses import replace
+    from src.core import account
+    from src.replies import direct_reply as dr
+
+    loaded = _discovery_account(monkeypatch, groups=0, top=0, latest=0, creators=1)
+    monkeypatch.setattr(account, "current", lambda: replace(loaded, searches=replace(
+        loaded.searches, latest=loaded.searches.creators)))
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2,
+                      REPLY_VOLUME_BOOST_DATE="")
+    priority, creators, ordinary = dr._query_plan()
+    assert len(creators) == 1 and priority == ordinary == []
+
+
+@pytest.mark.parametrize("draft_result", ["This SI model makes offline work easier.", "SKIP"])
+def test_artists_get_four_attempts_before_a_full_major_author_buffer_without_extra_budget(
+        monkeypatch, settings_override, llm, chokepoint, draft_result):
+    from datetime import timedelta
+    from src.replies import candidate_buffer, direct_reply as dr, reply_pipeline
+    from tests.helpers import fresh
+
+    loaded = _discovery_account(monkeypatch, groups=4, creators=6)
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2, DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4,
+                      REPLY_PRIORITIZE_LARGE_ACCOUNTS=True, REPLY_CANDIDATE_BUFFER_LIMIT=8,
+                      VIP_SCAN_HANDLES="", REPLY_VOLUME_BOOST_DATE="")
+    majors = [reply_pipeline.Candidate(fresh(f"priority{i}", n=i), "SI model project", "SEARCH-PRIORITY")
+              for i in range(8)]
+    candidate_buffer.SEARCH.offer(majors, max_age=timedelta(hours=24))
+    artists = [{"url": fresh(f"artist{i}", n=i + 100), "text": f"My first SI short film, project {i}", "likes": 0}
+               for i in range(6)]
+    reads, trace = [], []
+
+    def scrape(query, **kwargs):
+        reads.append(query)
+        trace.append("read")
+        return artists[:3] if query == loaded.searches.creators[0] else artists[3:] if query == loaded.searches.creators[1] else []
+
+    def draft(prompt):
+        trace.append("draft")
+        return draft_result if any(f"@artist{i}" in prompt for i in range(6)) else "A local SI model makes offline work easier."
+
+    monkeypatch.setattr(dr, "scrape_x_search", scrape)
+    llm.default = draft
+    dr.run_direct_reply_cycle(max_replies=6)
+    assert trace[:6] == ["read"] * 6  # four major reads, two artist reads before drafting
+    assert len(llm.calls) == 6  # four artist attempts, including SKIP, plus two ordinary
+    assert all(any(f"@artist{i}" in prompt for i in range(6)) for prompt in llm.prompts[:4])
+    assert all("@priority" in prompt for prompt in llm.prompts[4:])
+    assert len(chokepoint.sent) == (6 if draft_result != "SKIP" else 2)
+    assert len(candidate_buffer.SEARCH.entries) <= 8
+    assert any("/artist" in item.url for item in candidate_buffer.SEARCH.pending())
+
+
+def test_artist_sources_still_require_fresh_standalone_on_topic_posts(monkeypatch):
+    from dataclasses import replace
+    from src.core import account
+    from src.replies import direct_reply as dr
+    from tests.helpers import fresh
+
+    loaded = replace(account.current(), engagement_niche_only=True)
+    monkeypatch.setattr(account, "current", lambda: loaded)
+    good = {"url": fresh("artist"), "text": "My first SI short film", "likes": 0}
+    posts = [good, {**good, "url": fresh("nested", n=1), "is_reply": True},
+             {**good, "url": fresh("old", minutes=61, n=2)},
+             {**good, "url": fresh("future", minutes=-5, n=3)},
+             {**good, "url": fresh("offtopic", n=4), "text": "SI crypto NFT trading"}]
+    selected = dr._search_candidates(posts, "SI artist", "latest", creator=True)
+    assert len(selected) == 1 and selected[0].url == good["url"]
+    assert selected[0].source.startswith("SEARCH-CREATOR/") and selected[0].likes == 0
 
 
 pytestmark = pytest.mark.usefixtures("relation_account")

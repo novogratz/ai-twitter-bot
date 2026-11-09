@@ -3,6 +3,7 @@ the feed sweep, early bird and mega watch. The niche filter and candidate
 order come from the Reply source; early bird and mega watch import them from
 here until they take their candidates from it too."""
 import random
+from dataclasses import replace
 from datetime import timedelta
 from ..x import x_urls
 from ..core import account, settings
@@ -26,14 +27,18 @@ def always_reply_accounts() -> tuple:
 
 REPLY_PROMPT = """Respond to the actual person and point in the tweet below. First notice what
 they are doing: sharing a win, making a joke, asking for help or discussing a
-claim. Meet that intent. A specific reaction, dry joke, direct answer or useful
-observation can each stand alone. Talk to the author when that fits; do not just
-recap their headline for an audience. If they ask a question, answer it directly.
+claim. Meet that intent. Start from warmth and curiosity, not analysis. A little
+delight, encouragement, shared joke or direct answer can each stand alone.
+Talk to the author; do not recap their headline or explain their own point back
+to them. A technical topic is not automatically a request for a technical lesson.
+If they ask a question, answer it directly.
 Let an exciting development be exciting; do not automatically append a warning
 or a technical lesson. Correct only a material mistake. Avoid exaggerated hype,
-flattery and catchphrases. Follow the Voice's post-specific style first;
+empty flattery and catchphrases. Follow the Voice's post-specific style first;
 outside its brief-appreciation cases, avoid generic applause. A simple sincere
-line is welcome; do not force every reply into an analogy or punchline.
+line is welcome; do not force every reply into an analogy or punchline. When a
+creator shares art, a first attempt or progress, meet them with genuine interest
+or affection. A heart can fit that moment; it is neither required nor discouraged.
 
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.
@@ -141,10 +146,22 @@ def reply_call(author: str, language: LanguageRule = LanguageRule.PARENT_OR_FR_F
                      text_limit=1200)
 
 
+def _creator_reply_call(author):
+    return replace(reply_call(author), template=(
+        "ARTIST DISCOVERY TURN: this post should describe the author's own SI artwork, "
+        "film, animation, music, creative process or progress. SKIP tool announcements, "
+        "engagement bait, unrelated promotion and aggregator reposts without an original "
+        "creative contribution. The search query does not prove authorship or humanity. "
+        "For a relevant creator, react to the supplied description with the Voice's warmth; "
+        "do not pretend to have seen the media.\n\n" + REPLY_PROMPT))
+
+
 SEARCH_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-HOT", reply_call=reply_call, pipelined=True)
+CREATOR_JOB = reply_pipeline.Job(JOB_NAME, "SEARCH-CREATOR", reply_call=_creator_reply_call, pipelined=True)
+CREATOR_TURN_GENERATIONS = 4  # within the direct-cycle budget, never a posting quota
 
 
-def _search_candidates(tweets: list, query: str, tab: str = "top", *, expected_authors=()) -> list:
+def _search_candidates(tweets: list, query: str, tab: str = "top", *, expected_authors=(), creator=False) -> list:
     """Root search results under DIRECT_REPLY_MAX_AGE_MINUTES and on the
     niche (queries are broad), fresh and rising first. A nested reply is
     skipped, as in the feed sweep: the model would see it without its root
@@ -154,7 +171,7 @@ def _search_candidates(tweets: list, query: str, tab: str = "top", *, expected_a
     if tab == "latest":
         limit = min(limit, timedelta(hours=24 if expected_authors else 1))
     authors = {handle.lower().lstrip("@") for handle in expected_authors}
-    tag = "SEARCH-PRIORITY" if authors else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+    tag = "SEARCH-PRIORITY" if authors else "SEARCH-CREATOR" if creator else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
     return [reply_pipeline.Candidate(t["url"], source_text(t), f"{tag}/{query[:60]}",
                                     likes=observed_likes(t), views=observed_views(t))
             for t in sorted(tweets, key=freshness_sort_key)
@@ -207,35 +224,43 @@ def _query_plan():
     searches = account.current().searches
     total = settings.reply_budget("DIRECT_REPLY_QUERIES_PER_CYCLE")
     priority = settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE")
+    creators = settings.get("DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE")
     latest = settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE")
     pools = {
         "priority": _priority_searches() if priority else [],
+        "creators": [(query, "latest", ()) for query in dict.fromkeys(searches.creators)] if creators else [],
         "top": [(query, "top", ()) for query in dict.fromkeys(searches.replies + searches.hot_tab)],
         "latest": [(query, "latest", ()) for query in dict.fromkeys(searches.latest)],
     }
+    creator_queries = {query for query, _, _ in pools["creators"]}
+    pools["latest"] = [entry for entry in pools["latest"] if entry[0] not in creator_queries]
     counts = {"priority": min(priority, total, len(pools["priority"]))}
-    counts["latest"] = min(latest, total - counts["priority"], len(pools["latest"]))
+    counts["creators"] = min(creators, total - sum(counts.values()), len(pools["creators"]))
+    counts["latest"] = min(latest, total - sum(counts.values()), len(pools["latest"]))
     counts["top"] = min(total - sum(counts.values()), len(pools["top"]))
     spare = total - sum(counts.values())
-    for lane in ("priority", "top", "latest"):
+    for lane in ("priority", "top", "latest", "creators"):
         extra = min(spare, len(pools[lane]) - counts[lane])
         counts[lane] += extra
         spare -= extra
     selected = {lane: _queries_for_cycle(pools[lane], limit=counts[lane], pool=lane) for lane in pools}
     ordinary = selected["top"] + selected["latest"]
     random.shuffle(ordinary)
-    return selected["priority"], ordinary
+    return selected["priority"], selected["creators"], ordinary
 
 
-def _discover_query(query, tab, authors):
-    label = "SEARCH-PRIORITY" if authors else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+def _discover_query(query, tab, authors, *, creator=False, preferred_urls=()):
+    label = "SEARCH-PRIORITY" if authors else "SEARCH-CREATOR" if creator else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
     tweets = reply_pipeline.scrape(label, repr(query), scrape_x_search, query,
                                    max_tweets=25, tab=tab, text_limit=1200)
     max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
     if tab == "latest":
         max_age = min(max_age, timedelta(hours=24 if authors else 1))
-    candidates = _search_candidates(tweets, query, tab, expected_authors=authors)
-    candidate_buffer.SEARCH.offer(candidates, max_age=max_age)
+    candidates = _search_candidates(tweets, query, tab, expected_authors=authors, creator=creator)
+    urls = {candidate.url for candidate in candidates}
+    candidate_buffer.SEARCH.offer(candidates, max_age=max_age,
+                                  preferred_urls=set(preferred_urls) | urls if creator else ())
+    return urls
 
 
 def run_direct_reply_cycle(max_replies=None):
@@ -266,12 +291,30 @@ def run_direct_reply_cycle(max_replies=None):
 
     # Read the configured priority groups before ordinary buffered drafting,
     # otherwise a full buffer can keep fresh priority posts undiscovered.
-    priority_queries, cycle_queries = _query_plan()
-    log.info("[DIRECT] Selected search plan: %s priority, %s Top, %s Latest (at most %s reads).",
-             len(priority_queries), sum(tab == "top" for _, tab, _ in cycle_queries),
-             sum(tab == "latest" for _, tab, _ in cycle_queries), len(priority_queries) + len(cycle_queries))
+    priority_queries, creator_queries, cycle_queries = _query_plan()
+    log.info("[DIRECT] Selected search plan: %s priority, %s creator, %s Top, %s Latest (at most %s reads).",
+             len(priority_queries), len(creator_queries), sum(tab == "top" for _, tab, _ in cycle_queries),
+             sum(tab == "latest" for _, tab, _ in cycle_queries),
+             len(priority_queries) + len(creator_queries) + len(cycle_queries))
     for query, tab, authors in priority_queries:
         _discover_query(query, tab, authors)
+
+    # Let fresh artists get a small turn before an ordinary buffer full of
+    # major accounts can spend the whole cycle. Discovery does not verify a
+    # human identity or authorship: every source still faces normal admission.
+    creator_urls = set()
+    for query, tab, authors in creator_queries:
+        creator_urls.update(_discover_query(query, tab, authors, creator=True, preferred_urls=creator_urls))
+    if creator_urls:
+        attempted_before = len(cycle.tried)
+        n = candidate_buffer.SEARCH.run(
+            CREATOR_JOB, cycle, only_urls=creator_urls,
+            max_generations=min(CREATOR_TURN_GENERATIONS, remaining) if remaining is not None else CREATOR_TURN_GENERATIONS)
+        total += n
+        if remaining is not None:
+            # Declined/failed drafts spend this early turn too; no extra
+            # allowance is created for finding a publishable artist Reply.
+            remaining -= len(cycle.tried) - attempted_before
 
     # Spend unused, still-fresh sources before paying for another browser scan.
     n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
