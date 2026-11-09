@@ -10,6 +10,9 @@ without automatic criticism or homework. Hearts are welcome, never a quota,
 rotation or identical sign-off. First-person taste is allowed; invented human
 life, private relationships, firsthand use and unseen-media claims are not.
 Recent Replies are repetition memory, not a style guide to imitate.
+The live restart exposed a false English refusal of a short autumn-themed artist
+reaction. The closed short-Reply vocabulary adds `autumn` only; its eighty-character
+bound, required English cues and mixed/French/unknown-word refusals remain.
 
 The direct cycle retains sixteen search reads: four grouped major-author Latest,
 two rotating creator Latest, six Top and four general first-hour Latest. Creator

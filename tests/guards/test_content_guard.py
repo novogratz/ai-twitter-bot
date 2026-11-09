@@ -512,3 +512,13 @@ def test_november_eighth_observed_english_reactions_are_not_false_refusals(text)
                                   "More brains per token абракадабра", "Robots building raketen"])
 def test_extended_short_vocabulary_keeps_unknown_and_mixed_language_closed(text):
     assert not cg.validate(text, kind="reply")[0]
+
+
+@pytest.mark.parametrize("text,allowed", [
+    ("Such a lovely autumn idea. 🩷", True),
+    ("Such a lovely automne idea. 🩷", False),
+    ("Such a lovely autumn idea. Merci beaucoup 🩷", False),
+    ("Such a lovely autumn idea. " * 4, False),
+])
+def test_live_artist_reaction_recognizes_autumn_without_opening_the_language_gate(text, allowed):
+    assert cg.validate(text, kind="reply")[0] is allowed

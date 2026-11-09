@@ -6,6 +6,13 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-09, live artist-language repair — The restarted artist turn produced a
+short affectionate Reply that the English guard falsely refused because its
+closed vocabulary omitted `autumn`. Add that observed English word only; the
+eighty-character bound, English cues, complete-vocabulary check, mixed/French
+refusals and other content gates remain. The existing authorized restart applies
+this repair after tests, without resetting history or manually retrying a send.
+
 2026-11-09, warmer conversation and a turn for other artists — The Operator
 finds the Replies too robotic and asks for affectionate, funny, knowledgeable
 conversation, occasional hearts and comments on other artists. Both Voice files,

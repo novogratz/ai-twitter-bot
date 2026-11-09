@@ -1,5 +1,20 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-09 — Live artist turn reveals one short-English false refusal
+
+PR #405 passed all 3,114 isolated tests and GitHub CI, merged as `4568b1d7`, and
+the requested restart began at 08:30:54 Toronto. The new allocation logged four
+major-author, two creator, six Top and four general Latest searches. At 08:34:11
+the artist turn drafted “Such a lovely autumn idea. 🩷”; final admission correctly
+made no publication claim, but falsely classified its language as unknown.
+`autumn` was the only word missing from the closed short-Reply vocabulary.
+The repair adds that word and regressions for the observed phrase, an unknown
+French alternative, mixed prose and the unchanged eighty-character boundary.
+No publication, source, history or broader language requirement is loosened.
+All 291 targeted content, admission and Reply-pipeline checks passed. The running
+artist turn also confirmed two other Replies by 08:35:49, with own-X receipts;
+those live sends establish operation, not engagement improvement.
+
 ## 2026-11-09 — Restore warmth and give artists a bounded discovery turn
 
 The Operator says Replies feel robotic, misses the hearts without wanting heart
