@@ -58,7 +58,8 @@ sources; ordinary retention still prefers major authors, then newer sources.
 The same 400-source limit, expiry, source checks and permanent history apply.
 
 Short affectionate and technical English Replies also avoid more false language
-refusals. The narrow vocabulary check still rejects unclear or mixed-language
+refusals, including the live artist turn's ordinary word `autumn`. The narrow
+vocabulary check still rejects unclear or mixed-language
 text. These code and configuration changes load at the next manual bot restart.
 
 Preparation stops before rendering a source whose reviewed scores cannot qualify
