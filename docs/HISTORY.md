@@ -1,5 +1,42 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-09 — Restore warmth and give artists a bounded discovery turn
+
+The Operator says Replies feel robotic, misses the hearts without wanting heart
+spam, and requests knowledgeable, funny, affectionate conversation plus comments
+on other artists. Read-only confirmed log cohorts show 894 Replies on November 7
+with median length 98.5 characters and 230 hearts; after the November 8 restart,
+653 Replies had median 156 and 66 hearts; November 9 before pause had 162,
+median 149.5 and 13 hearts. Different source mixes and periods prevent a causal
+comparison, and these counts are not desired emoji targets. The text inspection
+found many correct but detached mini explanations and fewer warm reactions.
+
+Both Voice files and shared/Relation/structured prompts now prefer warmth before
+analysis, encourage artists' first attempts and progress, and explicitly permit
+hearts without quotas. Technical questions retain useful depth. Repetition memory
+must not turn the recent dry output into a style example. Media, current-feature
+and identity evidence rules remain. The new artist lane rotates two first-hour
+Latest searches, replacing two Top reads in the sixteen-read allocation. It gets
+at most four generation attempts within the direct budget before an ordinary
+major-account buffer can spend the cycle. Temporary retention fits the same
+400-source buffer and preserves expiry and all admission checks. No authors
+are classified as human from search wording and no follow rules change.
+
+The bot had finished the earlier requested shutdown before implementation.
+During development the Operator explicitly requests restart once ready and a
+stronger day of engagement. Validation precedes the normal restart; the current
+capacity and publication quality rules remain, without a volume increase.
+
+Eight fresh draft-only previews used the configured Codex Reply route without
+browser actions or publication. The drafts expressed affection for an artist's
+concept, encouragement for a first attempt, humor for a coding-agent joke and a
+substantive batching answer. The reserved artist prompt declined an aggregator's
+tool roundup. Warm previews passed the existing language/content guard; no new
+language exception or forced emoji rule was needed. This is a tone review,
+not evidence of audience response. All 3,114 isolated tests passed, along with
+the configuration-document check and current-configuration dry run; the latter
+confirmed news and automatic startup publications remain off.
+
 ## 2026-11-08 — Reply audit: natural delivery and observed refusal repairs
 
 The audit covered direct/search, feed, watched and structured Reply routes,

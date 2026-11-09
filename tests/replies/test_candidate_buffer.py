@@ -79,6 +79,27 @@ def test_quota_stop_keeps_unprocessed_sources_without_claiming(llm, chokepoint):
     assert replied_store.load_replied() == set() and chokepoint.sent == []
 
 
+def test_selected_turn_does_not_claim_other_sources_or_extend_selected_expiry(monkeypatch, llm, chokepoint):
+    from dataclasses import replace
+
+    now = [time.time()]
+    monkeypatch.setattr(buffers.time, "time", lambda: now[0])
+    buffer = buffers.Buffer()
+    first, second = candidate(1), candidate(2)
+    buffer.offer([first, second], max_age=timedelta(hours=1))
+    expires = buffer.pending()[0].expires_at
+    now[0] += 10
+    alias = first.url.replace("x.com/builder", "twitter.com/BUILDER") + "?s=20"
+    buffer.offer([replace(first, url=alias)], max_age=timedelta(days=3), preferred_urls=[alias])
+    assert next(c.expires_at for c in buffer.pending() if c.url == first.url) == expires
+    assert buffer.run(job(), pipeline.Cycle(), only_urls=[], max_generations=1) == 0
+    assert buffer.run(job(), pipeline.Cycle(), only_urls=[alias], max_generations=1) == 1
+    assert chokepoint.sent == [first.url]
+    assert [c.url for c in buffer.pending()] == [second.url]
+    now[0] = expires + 1
+    assert buffer.run(job(), pipeline.Cycle(), only_urls=[second.url], max_generations=1) == 0
+
+
 def test_source_expiry_is_checked_after_generation_and_after_spacing(monkeypatch, llm, chokepoint):
     now = [time.time()]
     monkeypatch.setattr(buffers.time, "time", lambda: now[0])

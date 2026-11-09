@@ -176,7 +176,7 @@ def test_direct_reply_search_keeps_fresh_on_niche_posts(direct):
 
     assert chokepoint.sent == [ok]
     assert [r.url for r in logged()] == [ok]
-    assert logged()[0].source.split("/")[0] in {"SEARCH-HOT", "SEARCH-FRESH"}
+    assert logged()[0].source.split("/")[0] in {"SEARCH-HOT", "SEARCH-FRESH", "SEARCH-CREATOR"}
     assert set_aside("direct_reply") == {ok}
 
 
@@ -251,7 +251,8 @@ def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
 
 
 @pytest.mark.parametrize("boosted", [False, True])
-def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted):
+@pytest.mark.parametrize("creator_queries", [0, 2])
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted, creator_queries):
     """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
     outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
     The cycle stops at its budget and yields Safari."""
@@ -267,17 +268,22 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, b
 
     monkeypatch.setattr(dr, "scrape_x_search", fresh_posts)
     settings_override(DIRECT_REPLY_MAX_PER_CYCLE=3,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=creator_queries,
                       REPLY_VOLUME_BOOST_DATE=active_hours.today_iso() if boosted else "")
 
     dr.run_direct_reply_cycle()
     assert len(chokepoint.sent) == (6 if boosted else 3)
-    assert len(lanes["queries"]) == (2 if boosted else 1)
+    # Enabled artist discovery finishes before drafting. A boosted read budget
+    # can backfill the short ordinary pools with the remaining creator queries.
+    expected_reads = (6 if boosted else 2) if creator_queries else (2 if boosted else 1)
+    assert len(lanes["queries"]) == expected_reads
 
     chokepoint.calls.clear()
     lanes["queries"].clear()
     dr.run_direct_reply_cycle(max_replies=12)
     # Buffered posts save browser work; an explicit manual budget stays exact.
-    assert len(chokepoint.sent) == 12 and len(lanes["queries"]) == 2
+    assert len(chokepoint.sent) == 12
+    assert len(lanes["queries"]) == (6 if creator_queries and boosted else 2)
 
 
 # --- feed_sweep -------------------------------------------------------------------

@@ -167,11 +167,12 @@ REPLY_JITTER_SECONDS = 4
 REPLY_DAILY_TARGET_MIN = 1500
 REPLY_PREFERRED_MIN_LIKES = 3
 REPLY_DAILY_TARGET_MAX = 1800
-# Operator, 2026-11-07: major AI accounts first, broader discovery for everyone.
-# Total: four priority-author Latest, eight Top, four first-hour Latest searches.
+# Operator, 2026-11-09: warmer Replies and a bounded turn for other artists.
+# Total: four priority-author Latest, two creator Latest, six Top, four general Latest.
 # Three observed likes remain a preference within each author-priority group.
 DIRECT_REPLY_QUERIES_PER_CYCLE = 16
 DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 4
+DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE = 2
 DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE = 4
 REPLY_PRIORITIZE_LARGE_ACCOUNTS = true
 DIRECT_REPLY_MAX_PER_CYCLE = 80
@@ -281,6 +282,16 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # X search queries. Both vocabularies are discovery aliases, including
 # Artificial Intelligence and Super Intelligence; exact product names stay literal.
 [searches]
+# Artists' own work/progress: search hints, never proof of authorship or humanity.
+# Two rotate per direct cycle; no view/like floor and no new profile visits.
+creators = [
+    '(AI OR SI) ("my art" OR "my film" OR "my animation" OR "I made" OR "I created") (art OR film OR animation OR video) lang:en -filter:replies -filter:retweets',
+    '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) ("made with" OR "created with" OR "my short" OR "my latest") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney OR "Grok Imagine") ("my artwork" OR "my illustration" OR "my character" OR "my creation") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Seedance OR "Grok Imagine") ("first attempt" OR "work in progress" OR "my process" OR "behind the scenes") (art OR film OR video OR animation) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) ("my music video" OR "my short film" OR "my animated" OR "my parody") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney OR Kling) ("my latest" OR "my experiment" OR "I tried") (art OR cinematic OR animation OR filmmaking) lang:en -filter:replies -filter:retweets',
+]
 # First-hour discoveries: no min_faves floor; root posts only, still niche checked.
 latest = [
     '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (video OR animation OR filmmaking OR image) lang:en -filter:replies -filter:retweets',

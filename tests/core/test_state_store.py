@@ -334,14 +334,16 @@ def test_importing_personality_store_leaves_the_respect_list_unread(monkeypatch,
 
 
 @pytest.mark.parametrize("priority_queries", [0, 4])
+@pytest.mark.parametrize("creator_queries", [0, 2])
 def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(
-        monkeypatch, operator_folder, caplog, settings_override, priority_queries):
+        monkeypatch, operator_folder, caplog, settings_override, priority_queries, creator_queries):
     """The Reply prompt carries the respect list: no prompt, no Reply. The
     cycle stops at the first candidate instead of trying the next ones."""
     from src.core import health
     from src.replies import direct_reply as dr
     from tests.helpers import fresh, scheduled_job
-    settings_override(DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=priority_queries)
+    settings_override(DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=priority_queries,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=creator_queries)
     path = _corrupt(operator_folder, "respect_list.json")
     scraped = []
     monkeypatch.setattr(dr, "_run_vip_scan", lambda *a, **k: 0)
@@ -357,9 +359,10 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(
     scheduled_job("direct_reply_job")()
 
     # @someone is not in a priority-author group: those bounded discovery reads
-    # produce no eligible candidate. The first ordinary query reaches the prompt
-    # failure and must still halt the cycle before any further ordinary search.
-    assert len(scraped) == priority_queries + 1
+    # produce no eligible candidate. Creator reads, when enabled, finish before
+    # drafting. The prompt failure then halts before any ordinary search. Without
+    # the creator lane, the first ordinary query encounters that same failure.
+    assert len(scraped) == priority_queries + (creator_queries or 1)
     assert "respect_list.json is unreadable" in caplog.text
     assert "direct_reply halted" in caplog.text
     assert path.read_text() == CORRUPT

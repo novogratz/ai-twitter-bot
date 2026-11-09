@@ -112,7 +112,8 @@ not know.
 The Account's optional `editorial.use_reply_route` selects REPLY rather than
 ORIGINAL for both Original draft and review (default false). The live Account
 sets it true. Optional `searches.latest` adds first-hour Latest discoveries to
-the existing rotating search budget. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
+the existing rotating search budget. Optional `searches.creators` supplies
+artist-work/progress queries for the bounded creator turn. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
 report values only; the live Account and local `.env` set 1500/1800. They change neither admission,
 spacing, generation budgets nor the uncapped daily Reply policy.
 
@@ -127,8 +128,14 @@ of `network.big_ai_hype` before ordinary buffered drafting. Returned authors mus
 match the queried group by status URL, be standalone AI/SI originals and be at
 most 24 hours old (or the tighter configured source limit). These groups name
 operator-designated major accounts, not observed follower counts.
-`DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4` reserves four ordinary first-hour Latest
-searches; the remaining eight go to Top. Each pool rotates separately, missing
+The November 9 `DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2` reserves two first-hour
+artist Latest searches after those reads; up to four admitted generation attempts
+get a turn before ordinary drafting, within the direct-cycle budget even when
+declined. The default is zero. This is a search intent, not verified authorship
+or human identity, and no volume floor follows. Current creator URLs can be
+retained for that turn within the same 400-source buffer, without extending expiry.
+`DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4` reserves four general first-hour Latest
+searches; the remaining six go to Top. Each pool rotates separately, missing
 pool capacity can backfill from another pool, and the total stays bounded. A
 cycle may finish its Reply budget before every ordinary query runs.
 `REPLY_PRIORITIZE_LARGE_ACCOUNTS=1` places the configured group first in ordinary
@@ -361,7 +368,8 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DIRECT_REPLY_MAX_PER_CYCLE` | int | `3` | floor `0` | Replies one direct_reply cycle may ship; zero disables its scheduled generation. |
 | `DIRECT_REPLY_QUERIES_PER_CYCLE` | int | `8` | floor `1` | Search queries one direct_reply cycle scrapes. |
 | `DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE` | int | `0` | floor `0`, ceiling `16` | Rotating Latest searches of the Account's big_ai_hype authors within the total search budget; zero disables this lane. |
-| `DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE` | int | `4` | floor `0` | First-hour Latest searches reserved within the total search budget after priority-author searches; remaining capacity goes to Top, with bounded backfill. |
+| `DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE` | int | `0` | floor `0`, ceiling `16` | Rotating first-hour artist searches within the total read budget, after priority-author reads. Up to four generation attempts get an early turn within the cycle budget; zero disables this lane. |
+| `DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE` | int | `4` | floor `0` | First-hour Latest searches reserved within the total search budget after priority-author and creator searches; remaining capacity goes to Top, with bounded backfill. |
 | `REPLY_PRIORITIZE_LARGE_ACCOUNTS` | 0 or 1 | `0` | floor `0` | Prefer the Account's configured big_ai_hype authors in ordinary buffered Replies, then like tiers, author variety and observed post views; no follower-count or eligibility claim. |
 | `REPLY_VOLUME_BOOST_DATE` | YYYY-MM-DD date or blank | blank |  | Toronto date (YYYY-MM-DD) on which search, direct-cycle and per-feed Reply budgets double; blank disables it. Automatically expires at midnight; never changes pacing or admission. |
 | `REPLY_DAILY_TARGET_MIN` | int | `0` | floor `0` | Advisory daily Reply target; never changes admission or pacing. |
