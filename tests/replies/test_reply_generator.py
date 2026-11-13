@@ -61,12 +61,14 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
         assert result.text == llm.default and result.language == "en"
     prompt = llm.prompts[-1]
     assert "A creator sharing a finished SI artwork" in prompt
-    assert "usually 2–6 words with an optional heart" in prompt
+    assert "grounded in the described idea or occasion, with an optional heart" in prompt
     assert "Follow the Voice's post-specific style first" in prompt
     assert "Where the Voice permits brief appreciation, that is enough" in prompt
     assert json.dumps(recent, ensure_ascii=False) in prompt
     assert "HARD RULES" in prompt and "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt
     assert "never generic applause" not in prompt
+    assert "follower goals never require filler" in prompt
+    assert "Could the remaining line" in prompt and "pasted under unrelated posts" in prompt
 
 
 @pytest.mark.parametrize("text", [

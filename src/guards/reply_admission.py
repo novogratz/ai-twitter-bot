@@ -37,6 +37,7 @@ from ..core.logger import log
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
+    REPLY_EXCLUDED = "author excluded from Replies"
     OWN_POST = "own post"
     CONVERSATION = "conversation follow-up or nested reply"
     ALREADY_REPLIED = "already Replied"
@@ -57,7 +58,7 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.REPLY_EXCLUDED, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
 
@@ -87,6 +88,8 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
+    if author in account.current().reply_excluded_handles:
+        return Verdict(Refusal.REPLY_EXCLUDED, f"@{author} has a Reply-only exclusion", author)
     if author in account.own_handles():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if account.current().standalone_replies_only and (debate_turn or is_reply):
@@ -140,7 +143,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
         return Verdict(Refusal.TEXT, why, author)
     try:
         if engagement_log.repeated_reply(text):
-            return Verdict(Refusal.TEXT, "same wording as a recent confirmed Reply", author)
+            return Verdict(Refusal.TEXT, "recycled wording from a recent confirmed Reply", author)
     except (OSError, ValueError, csv.Error):
         return Verdict(Refusal.TEXT, "recent Reply text unavailable", author)
     _, why = respect_list.scrub_text_or_skip(text, addressee=author)

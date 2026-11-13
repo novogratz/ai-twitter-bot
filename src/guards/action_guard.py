@@ -163,6 +163,17 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
+def watched_repost_wait_seconds() -> float:
+    """Remaining watched spacing, including uncertain sends; never a sleep."""
+    from . import repost_store
+    latest = max((at for at in (repost_store.independent_last(), _ledger().last_write(WATCH_REPOST)) if at),
+                 default=None)
+    if latest is None:
+        return 0.0
+    elapsed = (now_local() - latest).total_seconds()
+    return max(0.0, settings.get("PRIORITY_REPOST_MIN_SECONDS") - elapsed)
+
+
 def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
     from . import repost_store
@@ -203,8 +214,7 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
         age = x_urls.age(target)
         if age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS")):
             return False, "watched source missing a fresh timestamp"
-        latest = max((at for at in (repost_store.independent_last(), _ledger().last_write(WATCH_REPOST)) if at), default=None)
-        if latest and (now_local() - latest).total_seconds() < settings.get("PRIORITY_REPOST_MIN_SECONDS"):
+        if watched_repost_wait_seconds():
             return False, "watched repost spacing"
         return True, ""
     if action == RETWEET:

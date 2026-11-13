@@ -4,8 +4,10 @@ November 12 restores incremental sixteen-query search drafting and the combined
 8-minute feed cycle (20 scrolls / 160 posts per feed). Local `REPLY_MIN_LIKES=0`
 restores the three-like preference; budgets remain 80 generations per cycle/feed.
 `REPLY_DAILY_TARGET_MIN=1400` and `REPLY_DAILY_TARGET_MAX=1800` are advisory only.
-The watch polls every 60 seconds with `PRIORITY_WATCH_NOTIFICATIONS=1`; ready
-watched Replies retain highest priority. Automatic quote and own-repost Account
+The watch polls every 20 seconds with `PRIORITY_WATCH_NOTIFICATIONS=1`.
+November 13 adds `reply_excluded_handles=["elonmusk"]`: an exact-author Reply-only
+exclusion before generation and final sending. His independent likes/reposts retain
+highest priority; the otherwise unused watched Reply dispatcher is not scheduled. Automatic quote and own-repost Account
 switches are now off. `watched_reposts_independent=true` keeps new Elon like/repost
 attempts independent of Reply generation and the Original/video budget, with
 at least sixty seconds between watched reposts, including uncertain attempts.
@@ -58,12 +60,16 @@ lists and their `.env` overrides are empty; the Account's blocklist prevents
 retired targets from being rediscovered or promoted.
 
 The optional `auto_engage_handles` Account list defaults to empty. The live
-Account sets only `elonmusk`, authorizing the priority watch's like, repost and
-Reply attempts on new AI/SI standalone originals. Handles are validated, lowercased
-and deduplicated. Polling defaults to 20 seconds (floor 20), a 24-hour
+Account sets only `elonmusk`, authorizing priority likes/reposts on his verified
+new standalone originals across topics. The optional `reply_excluded_handles`
+list also contains `elonmusk`, so no Reply job may answer him. Both lists validate,
+lowercase and deduplicate handles; exclusions default to empty for other Accounts
+and do not affect independent likes/reposts. Polling defaults to 20 seconds (floor 20), a 24-hour
 lookback (never longer), and 20 posts from the first viewport (maximum 40).
-Separate action and Reply dispatchers check every two seconds (floor two), with
-four like/repost attempts and one Reply generation per dispatch by default.
+The action dispatcher checks every two seconds (floor two), with four like/repost
+attempts per dispatch by default. A watched Reply dispatcher with one generation
+per turn is registered only when a watched author permits Replies. Normal watched
+repost spacing is rechecked on the next dispatch rather than failure-backed-off.
 `PRIORITY_WATCH_QUEUE_LIMIT` bounds each disposable handoff/dispatch queue to 80
 newest originals by default. A slow model call cannot block the polling worker.
 First-enable timestamps survive restarts. Browser and send turns prioritize
@@ -417,7 +423,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `SKIP_SLEEP_NIGHT_DATE` | YYYY-MM-DD date or blank | blank |  | Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win. |
 | `AWAKE_72H_START` | ISO timestamp with timezone or blank | blank |  | Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables. |
 | `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `20` | floor `20` | Poll watched authors independently of generation; running browser transactions may delay a poll. |
-| `PRIORITY_WATCH_NOTIFICATIONS` | 0 or 1 | `0` | floor `0` | Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies. |
+| `PRIORITY_WATCH_NOTIFICATIONS` | 0 or 1 | `0` | floor `0` | Read watched-author status links from X notifications on each watch poll, then verify new exact originals for independent likes/reposts and any permitted Replies. |
 | `MEME_REPOST_ENABLED` | 0 or 1 | `0` | floor `0` | Allow visually reviewed funny AI video reposts discovered by existing scans. |
 | `MEME_REPOST_DAILY_CAP` | int | `2` | floor `0`, ceiling `20` | Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts. |
 | `MEME_REPOST_MIN_LIKES` | int | `0` | floor `0` | Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement. |

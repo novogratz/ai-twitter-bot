@@ -1,5 +1,26 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-13 — Withdraw Elon Replies and tighten reply quality
+
+The Operator reported that some readers called the responses automated filler and
+blocked the account. The read-only review of the latest forty confirmed Replies
+found stock praise/interest openings, caption restatement and unnecessary follow-up
+sentences; it did not establish which readers blocked the account or why.
+The new Voice and shared prompts call for a specific supported contribution or SKIP.
+The final text check expands from twenty exact replies to the configured memory
+(default one hundred), including long copies with small wording changes.
+
+Elon changes from three independent actions to likes/reposts only. A Reply-only
+Account exclusion is enforced centrally without denying those other actions.
+Notification discovery previously asked Reply admission before verifying a new
+source, which would suppress the likes/reposts after that exclusion; it now checks
+watched-author eligibility independently. Normal repost spacing also used to turn
+into a five-minute failure cooldown; the dispatcher now rechecks the shared spacing
+rule on its two-second tick. Actual failures still back off. Implementation uses
+no start/restart commands or public actions for validation; lifecycle control stays
+with the Operator. A bot process appeared during preparation, so a later manual
+restart is needed to load the complete merged change.
+
 ## 2026-11-12 — Repost funny AI videos before they go viral
 
 The final pre-pause Reply at 21:40 answered @dripbitsnft status

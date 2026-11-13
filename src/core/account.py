@@ -89,6 +89,7 @@ class Account:
     english_only: bool = False
     publication_si_wording: bool = False
     auto_engage_handles: tuple[str, ...] = ()
+    reply_excluded_handles: tuple[str, ...] = ()  # Reply-only; independent likes/reposts remain eligible
     engagement_niche_only: bool = False
     auto_engage_all_topics: bool = False
     watched_reposts_independent: bool = False
@@ -167,7 +168,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
                            "english_only": bool, "publication_si_wording": bool,
-                           "auto_engage_handles": list, "engagement_niche_only": bool,
+                           "auto_engage_handles": list, "reply_excluded_handles": list,
+                           "engagement_niche_only": bool,
                            "auto_engage_all_topics": bool, "watched_reposts_independent": bool,
                            "priority_quotes_enabled": bool, "self_reposts_enabled": bool})
     if top["language"] not in LANGUAGES:
@@ -182,6 +184,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     for i, handle in enumerate(watched):
         if not _HANDLE.fullmatch(handle):
             top.fail(f"auto_engage_handles[{i}]", "takes an X handle without @")
+    excluded = tuple(top.items("reply_excluded_handles", str)) if "reply_excluded_handles" in top else ()
+    for i, handle in enumerate(excluded):
+        if not _HANDLE.fullmatch(handle):
+            top.fail(f"reply_excluded_handles[{i}]", "takes an X handle without @")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list},
@@ -200,6 +206,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         english_only=top.get("english_only", False),
         publication_si_wording=top.get("publication_si_wording", False),
         auto_engage_handles=tuple(dict.fromkeys(h.lower() for h in watched)),
+        reply_excluded_handles=tuple(dict.fromkeys(h.lower() for h in excluded)),
         engagement_niche_only=top.get("engagement_niche_only", False),
         auto_engage_all_topics=top.get("auto_engage_all_topics", False),
         watched_reposts_independent=top.get("watched_reposts_independent", False),

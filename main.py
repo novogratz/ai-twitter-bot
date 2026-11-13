@@ -112,9 +112,10 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
             add(health.wrap_job(run_priority_actions_cycle, "priority_actions"),
                 settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
                 "priority_actions_job", executor="watch_actions", first_seconds=2)
-            add(health.wrap_job(run_priority_reply_cycle, "priority_reply"),
-                settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
-                "priority_reply_job", executor="watch_reply", first_seconds=2)
+            if set(account.current().auto_engage_handles) - set(account.current().reply_excluded_handles):
+                add(health.wrap_job(run_priority_reply_cycle, "priority_reply"),
+                    settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
+                    "priority_reply_job", executor="watch_reply", first_seconds=2)
             if account.current().priority_quotes_enabled:
                 from src.replies.priority_quotes import run_priority_quote_cycle
                 add(health.wrap_job(run_priority_quote_cycle, "priority_quote", safari_health=False), 30,
@@ -236,6 +237,7 @@ def main():
                                            "initial_delay_seconds": 3600, "repeat_seconds": 1800,
                                            "repeat_views_strictly_above": 50000},
                           "auto_engage_handles": list(account.current().auto_engage_handles),
+                          "reply_excluded_handles": list(account.current().reply_excluded_handles),
                           "slots": _main_slots(),
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),
                           "startup_post": (("automatic video request on start; at most one extra per Toronto day"
