@@ -1,5 +1,25 @@
 # Configuration
 
+November 12 restores incremental sixteen-query search drafting and the combined
+8-minute feed cycle (20 scrolls / 160 posts per feed). Local `REPLY_MIN_LIKES=0`
+restores the three-like preference; budgets remain 80 generations per cycle/feed.
+`REPLY_DAILY_TARGET_MIN=1400` and `REPLY_DAILY_TARGET_MAX=1800` are advisory only.
+The watch polls every 60 seconds with `PRIORITY_WATCH_NOTIFICATIONS=1`; ready
+watched Replies retain highest priority. Automatic quote and own-repost Account
+switches are now off. `watched_reposts_independent=true` keeps new Elon like/repost
+attempts independent of Reply generation and the Original/video budget, with
+at least sixty seconds between watched reposts, including uncertain attempts.
+
+`SKIP_SLEEP_NIGHT_DATE=2026-11-12` is a local one-night exception, not a permanent
+24-hour schedule. It permits November 13 00:00–04:30 Toronto; ordinary daytime
+hours follow, then November 14 00:00 sleeps normally. Stop requests still refuse.
+Blank is the default; invalid dates fail startup.
+
+`MEME_REPOST_ENABLED=1` opts this Account into at most two reviewed AI humor
+reposts/day, four hours apart, with at least 500 likes and 100,000 exact-status
+views. The fifteen-minute worker reuses existing discovery, never adds search
+reads, and holds unknown counters and jokes requiring unseen-media interpretation.
+
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
 `.env.example` is the starting point for @thesimaximalist; its bounded settings
@@ -383,9 +403,18 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `DEBATE_MAX_AGE_HOURS` | finite float | `24.0` |  | Oldest mention the debate job answers. |
 | `BABYSIT_WINDOW_MINUTES` | finite float | `60.0` |  | Age of the latest post under which the babysitter sweeps replybacks. |
 | `FEED_SWEEP_SCAN_LIMIT` | int | `80` | floor `1` | Posts the feed sweep scrapes per feed. |
+| `REPLY_MIN_LIKES` | int | `0` | floor `0` | Required observed parent likes before generation and again before submission; missing counts refuse when enabled. |
+| `FEED_SWEEP_INTERVAL_MINUTES` | int | `8` | floor `2` | Interval between combined Home/Following discovery and Reply cycles; overlapping cycles coalesce. |
 | `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
 | `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length every three waking hours; 0 disables breaks. |
+| `SKIP_SLEEP_NIGHT_DATE` | YYYY-MM-DD date or blank | blank |  | Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win. |
 | `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `20` | floor `20` | Poll watched authors independently of generation; running browser transactions may delay a poll. |
+| `PRIORITY_WATCH_NOTIFICATIONS` | 0 or 1 | `0` | floor `0` | Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies. |
+| `MEME_REPOST_ENABLED` | 0 or 1 | `0` | floor `0` | Allow reviewed high-engagement AI humor reposts discovered by existing scans. |
+| `MEME_REPOST_DAILY_CAP` | int | `2` | floor `0`, ceiling `4` | Maximum reviewed meme reposts per Toronto day; uncertain sends hold further reposts. |
+| `MEME_REPOST_MIN_LIKES` | int | `500` | floor `500` | Minimum freshly verified exact-parent likes for an AI meme repost. |
+| `MEME_REPOST_MIN_VIEWS` | int | `100000` | floor `100000` | Minimum freshly verified exact-parent views for an AI meme repost. |
+| `MEME_REPOST_INTERVAL_MINUTES` | int | `240` | floor `240` | Minimum spacing between confirmed AI meme reposts. |
 | `PRIORITY_WATCH_DISPATCH_SECONDS` | int | `2` | floor `2` | Check discovered watched posts for independent action and Reply work. |
 | `PRIORITY_WATCH_QUEUE_LIMIT` | int | `80` | floor `1`, ceiling `200` | Maximum discovered watched originals retained in process memory, newest first. |
 | `PRIORITY_WATCH_ACTIONS_PER_CYCLE` | int | `4` | floor `1`, ceiling `8` | Maximum independent like/repost attempts per watch action dispatch. |
@@ -394,6 +423,10 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
 | `PRIORITY_WATCH_MAX_REPLIES` | int | `1` | floor `1`, ceiling `2` | Maximum Reply generations per dispatch; one selects the newest parent again after each generation. |
+| `PRIORITY_WATCH_CATCHUP_SCROLLS` | int | `3` | floor `0`, ceiling `5` | Collect each search viewport on the first poll and every fifteen minutes; zero disables bounded catch-up. |
+| `PRIORITY_REPOST_MIN_SECONDS` | int | `60` | floor `60` | Minimum gap for independently authorized watched reposts, including uncertain attempts. |
+| `PRIORITY_QUOTE_DAILY_CAP` | int | `2` | floor `0`, ceiling `3` | Maximum selective watched quote posts per Toronto day when the Account opts in; pending sends count. |
+| `PRIORITY_QUOTE_INTERVAL_MINUTES` | int | `240` | floor `240` | Minimum interval between selective watched quotes, including uncertain sends. |
 | `FEED_SWEEP_MAX_REPLIES_PER_CYCLE` | int | `8` | floor `0` | Reply generations one feed sweep may run per feed; zero disables generation. |
 | `FEED_SWEEP_HARVEST_MIN_LIKES` | int | `100` |  | Likes that add a feed post's author to dynamic_accounts.json. |
 | `PINNED_TRACKED_HANDLES` | str | blank |  | Comma-separated handles the curator always tracks first (account_curator); the Account's network.pinned_tracked unless set. |
@@ -455,3 +488,16 @@ Not read by the engine: these scripts read them after sourcing `.env`.
 | `ROAST_MODEL` | `operator_cycle.sh`, `bot_watchdog.sh` |
 
 <!-- END settings reference -->
+
+## November 10 Account opt-ins
+
+`auto_engage_all_topics`, `watched_reposts_independent`, `priority_quotes_enabled`
+and `self_reposts_enabled` are optional top-level Account booleans, default false.
+The live Account now enables `auto_engage_all_topics` and `watched_reposts_independent`;
+quotes and self-reposts were disabled in the November 12 rollback. Watched exceptions are restricted to exact
+status URLs of `auto_engage_handles`. They do not change who can be followed.
+An optional `REPLY_MIN_LIKES=3` requires observed counts before generation and
+again at the write chokepoint; the live value is now zero, with three preferred.
+The live combined feed cycle runs every eight minutes, twenty scrolls and 160
+posts per feed. If explicitly re-enabled, self-repost delays remain fixed at
+3600 seconds initially and 1800 seconds for posts strictly above 50,000 observed views.

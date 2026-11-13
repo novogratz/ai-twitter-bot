@@ -77,7 +77,7 @@ _overrides: dict = {}
 
 
 def _kind(setting: Setting) -> str:
-    if setting.name == "REPLY_VOLUME_BOOST_DATE":
+    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"}:
         return "YYYY-MM-DD date or blank"
     if setting.type is bool:
         return "0 or 1"
@@ -274,9 +274,18 @@ _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may sh
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
 _declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.", floor=1)
+_declare("REPLY_MIN_LIKES", int, 0, "Required observed parent likes before generation and again before submission; missing counts refuse when enabled.", floor=0)
+_declare("FEED_SWEEP_INTERVAL_MINUTES", int, 8, "Interval between combined Home/Following discovery and Reply cycles; overlapping cycles coalesce.", floor=2)
 _declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
 _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length every three waking hours; 0 disables breaks.", floor=0, ceiling=10)
+_declare("SKIP_SLEEP_NIGHT_DATE", str, "", "Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win.")
 _declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; running browser transactions may delay a poll.", floor=20)
+_declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies.", floor=False)
+_declare("MEME_REPOST_ENABLED", bool, False, "Allow reviewed high-engagement AI humor reposts discovered by existing scans.", floor=False)
+_declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed meme reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=4)
+_declare("MEME_REPOST_MIN_LIKES", int, 500, "Minimum freshly verified exact-parent likes for an AI meme repost.", floor=500)
+_declare("MEME_REPOST_MIN_VIEWS", int, 100000, "Minimum freshly verified exact-parent views for an AI meme repost.", floor=100000)
+_declare("MEME_REPOST_INTERVAL_MINUTES", int, 240, "Minimum spacing between confirmed AI meme reposts.", floor=240)
 _declare("PRIORITY_WATCH_DISPATCH_SECONDS", int, 2, "Check discovered watched posts for independent action and Reply work.", floor=2)
 _declare("PRIORITY_WATCH_QUEUE_LIMIT", int, 80, "Maximum discovered watched originals retained in process memory, newest first.", floor=1, ceiling=200)
 _declare("PRIORITY_WATCH_ACTIONS_PER_CYCLE", int, 4, "Maximum independent like/repost attempts per watch action dispatch.", floor=1, ceiling=8)
@@ -285,6 +294,10 @@ _declare("PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS", int, 900, "Maximum repeated w
 _declare("PRIORITY_WATCH_MAX_AGE_HOURS", int, 24, "Maximum age of new watched originals; never before the watch was first enabled.", floor=1, ceiling=24)
 _declare("PRIORITY_WATCH_SCAN_LIMIT", int, 20, "Recent standalone originals collected per watched handle.", floor=1, ceiling=40)
 _declare("PRIORITY_WATCH_MAX_REPLIES", int, 1, "Maximum Reply generations per dispatch; one selects the newest parent again after each generation.", floor=1, ceiling=2)
+_declare("PRIORITY_WATCH_CATCHUP_SCROLLS", int, 3, "Collect each search viewport on the first poll and every fifteen minutes; zero disables bounded catch-up.", floor=0, ceiling=5)
+_declare("PRIORITY_REPOST_MIN_SECONDS", int, 60, "Minimum gap for independently authorized watched reposts, including uncertain attempts.", floor=60)
+_declare("PRIORITY_QUOTE_DAILY_CAP", int, 2, "Maximum selective watched quote posts per Toronto day when the Account opts in; pending sends count.", floor=0, ceiling=3)
+_declare("PRIORITY_QUOTE_INTERVAL_MINUTES", int, 240, "Minimum interval between selective watched quotes, including uncertain sends.", floor=240)
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed; zero disables generation.", floor=0)
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
@@ -508,7 +521,7 @@ def _parse(setting: Setting, raw: str):
             raise ValueError(raw)
         return raw == "1"
     value = setting.type(raw)
-    if setting.name == "REPLY_VOLUME_BOOST_DATE" and value:
+    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"} and value:
         if date.fromisoformat(value).isoformat() != value:
             raise ValueError(raw)
     if setting.type is float and not math.isfinite(value):

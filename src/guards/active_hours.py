@@ -53,7 +53,14 @@ def break_until(now: datetime | None = None) -> datetime | None:
 
 
 def window_label() -> str:
-    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    label = f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
+    return label + (f"; sleep skipped for the night of {night} only" if night else "")
+
+
+def _skipped_sleep_day():
+    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
+    return date.fromisoformat(night) + timedelta(days=1) if night else None
 
 
 def now_local() -> datetime:
@@ -80,6 +87,8 @@ def is_past_day(stamped) -> bool:
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     clock = local.time().replace(tzinfo=None)
+    if local.date() == _skipped_sleep_day() and clock < WAKE:
+        return True
     if BEDTIME <= WAKE:
         return clock >= WAKE or clock < BEDTIME
     return WAKE <= clock < BEDTIME
@@ -128,11 +137,14 @@ def awake_job(fn):
 
 
 def bedtime(now: datetime) -> datetime:
-    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
-    end = now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
-    if BEDTIME <= WAKE and now.time().replace(tzinfo=None) >= WAKE:
+    """Next policy bedtime, including one explicitly skipped Toronto night."""
+    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    end = local.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    if BEDTIME <= WAKE and local.time().replace(tzinfo=None) >= WAKE:
         end += timedelta(days=1)
-    return end
+    if end.date() == _skipped_sleep_day():
+        end += timedelta(days=1)
+    return end.astimezone(now.tzinfo)
 
 
 def seconds_until_bedtime() -> float:

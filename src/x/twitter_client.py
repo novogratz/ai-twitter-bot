@@ -7,12 +7,12 @@ import time
 import urllib.parse
 from contextvars import ContextVar
 from enum import Enum
-from ..core import settings
+from ..core import config, settings
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
 from ..guards.active_hours import require_active
 from ..guards import follow_policy
-from . import confirmed_write, safari, scraper
+from . import confirmed_write, safari, scraper, x_urls
 from .confirmed_write import WriteOutcome
 
 _SUBMIT_KEYSTROKE = 'tell application "System Events" to keystroke return using command down'
@@ -296,6 +296,7 @@ def post_news(store, cfg, ident: str) -> WriteOutcome:
             if not url:
                 return WriteOutcome.UNCONFIRMED
             publisher.confirmed(store, ident, url, time.time())
+            _register_own_original(url)
             return WriteOutcome.SHIPPED
         except Exception as exc:
             log.warning("[NEWS] Publication step failed (%s); recorded send state retained.", type(exc).__name__)
@@ -421,6 +422,7 @@ def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:
         from ..guards import content_guard
         content_guard.note_posted(reservation["caption"])
         _record_posted(reservation["caption"])
+        _register_own_original(store.rows("SELECT post_url FROM reservations WHERE id=?", (ident,))[0]["post_url"])
 
     # 2026-11-01: due videos share ready-Reply FIFO priority so ordinary Reply
     # arrivals cannot starve a reserved slot. Watched work remains first and an
@@ -432,6 +434,14 @@ def post_video(store, cfg, ident: str, token: str) -> WriteOutcome:
             rows=lambda: [("video_post", store.rows("SELECT post_url FROM reservations WHERE id=?", (ident,))[0]["post_url"])],
             before_lock=(admit, confirmed_write.DRY_RUN_EXIT, owner), under_lock=(admit,),
             steps=steps, after_record=record_text, close_tab=False)
+
+
+def _register_own_original(url):
+    from ..guards import self_repost_store
+    try:
+        self_repost_store.observe(url)
+    except Exception:
+        log.exception("[SELF-REPOST] Could not register confirmed original; discovery must recover its timer.")
 
 
 def _record_posted(text: str):
@@ -571,14 +581,20 @@ _POSTS_JS = r"""
     if (!statusId(url)) return JSON.stringify({url: '', result: 'failed'});
     var text = Array.from(art.querySelectorAll('[data-testid="tweetText"]'))
         .map(function(el) { return el.innerText || ''; }).join('\n');
+    var counters = own(art, '[data-testid="like"]').concat(own(art, '[data-testid="unlike"]'));
+    var label = counters.length === 1 ? (counters[0].getAttribute('aria-label') || counters[0].textContent || '') : '';
+    var number = label.trim().match(/^((?:\d{1,3}(?:[, \u00a0\u202f]\d{3})+|\d+)(?:\.\d+)?)\s*([kKmMbB]?)(?:\s+[A-Za-zÀ-ÿ].*)?$/);
+    var value = number ? Number(number[1].replace(/[, \u00a0\u202f]/g,'')) : null;
+    var likes = number && (number[2] || Number.isInteger(value)) ? Math.round(value * ({k:1000,m:1000000,b:1000000000}[number[2].toLowerCase()] || 1)) : null;
+    if (!Number.isSafeInteger(likes) || likes < 0) likes = null;
     if (own(art, '[data-testid="unlike"]').length === 1) {
-        return JSON.stringify({url: url, text: text, result: 'already_liked'});
+        return JSON.stringify({url: url, text: text, ...(likes === null ? {} : {likes: likes}), result: 'already_liked'});
     }
     var buttons = own(art, '[data-testid="like"]');
     if (buttons.length !== 1 || buttons[0].disabled || buttons[0].getAttribute('aria-disabled') === 'true')
         return JSON.stringify({url: url, result: 'failed'});
     var button = buttons[0];
-    if (mode !== 'press') return JSON.stringify({url: url, text: text, result: 'not_liked'});
+    if (mode !== 'press') return JSON.stringify({url: url, text: text, ...(likes === null ? {} : {likes: likes}), result: 'not_liked'});
     button.click();
     return JSON.stringify({url: url, result: 'clicked'});
 })("__MODE__", "__TARGET_ID__")
@@ -653,7 +669,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
             page = _page_posts("read", target)
             if (x_urls.canonical_status_url(page.get("url") or "") !=
                     x_urls.canonical_status_url(tweet_url)
-                    or not account.engagement_allowed(page.get("text") or "")):
+                    or not account.engagement_allowed(page.get("text") or "", url=tweet_url)):
                 log.info("[LIKE] Source outside the Account's engagement niche; nothing clicked.")
                 return LikeOutcome.REFUSED
         pressed = _page_posts("press", target)
@@ -686,7 +702,7 @@ def _priority_source_ok(page: dict) -> bool:
     from ..core import account
     from ..guards import content_guard, respect_list
     text = page.get("text") or ""
-    if not account.engagement_allowed(text):
+    if not account.engagement_allowed(text, url=page.get("url", "")):
         log.info("[PRIORITY] Source outside the Account's engagement niche: %s", page.get("url", ""))
         return False
     ok, why = content_guard.validate(text, kind="source", source_language=page.get("language") or "")
@@ -705,7 +721,12 @@ def like_priority_post(tweet_url: str) -> LikeOutcome:
     from ..guards.active_hours import OutsideActiveHours
     from . import repost_page
     url = repost_store.allowed_url(tweet_url)
-    if not url or not action_guard.can_post(action_guard.LIKE)[0]:
+    if repost_store.independent(url):
+        from datetime import timedelta
+        age = x_urls.age(url)
+        if age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS")):
+            return LikeOutcome.REFUSED
+    if not url or not action_guard.can_post(action_guard.LIKE, reply_parent=repost_store.independent(url))[0]:
         return LikeOutcome.REFUSED
     if _already_liked(url):
         return LikeOutcome.ALREADY_LIKED
@@ -720,7 +741,12 @@ def like_priority_post(tweet_url: str) -> LikeOutcome:
             page = repost_page.read(url)
             if not page or not _priority_source_ok(page):
                 return LikeOutcome.REFUSED
-            outcome = like_tweet(url)
+            token = _REPLY_LIKE_PARENT.set(url) if repost_store.independent(url) else None
+            try:
+                outcome = like_tweet(url)
+            finally:
+                if token is not None:
+                    _REPLY_LIKE_PARENT.reset(token)
             return outcome
         finally:
             try:
@@ -730,16 +756,28 @@ def like_priority_post(tweet_url: str) -> LikeOutcome:
                     raise
 
 
-def repost_tweet(tweet_url: str) -> WriteOutcome:
+def repost_tweet(tweet_url: str, *, _meme=False) -> WriteOutcome:
     """Repost a watched original once, retaining ambiguous claims across restarts."""
-    from ..guards import action_guard, repost_store
+    from ..guards import action_guard, repost_store, meme_repost_store
     from . import repost_page
-    url = repost_store.allowed_url(tweet_url)
+    url = (x_urls.canonical_status_url(tweet_url) if _meme else repost_store.allowed_url(tweet_url))
+    kind = "meme" if _meme else "watched"
+    action = action_guard.MEME_REPOST if _meme else action_guard.RETWEET
+
+    def page_read(mode="read"):
+        return repost_page.read(url, "meme_" + mode) if _meme else repost_page.read(url, mode)
+
+    def reviewed(page):
+        if not _meme:
+            return True
+        row = meme_repost_store.entries().get(x_urls.status_id(url), {})
+        return (meme_repost_store.qualifies(page)
+                and row.get("source_hash") == meme_repost_store.digest(page.get("text", "")))
 
     def admit():
         if not url or repost_store.contains(url):
             return WriteOutcome.REFUSED
-        ok, why = action_guard.can_post(action_guard.RETWEET, target=url)
+        ok, why = action_guard.can_post(action, target=url)
         if not ok:
             log.info("[REPOST] policy skip (%s).", why)
             return WriteOutcome.REFUSED
@@ -751,33 +789,35 @@ def repost_tweet(tweet_url: str) -> WriteOutcome:
             if not _open_or_abort(url, "REPOST"):
                 return WriteOutcome.FAILED
             time.sleep(6)
-            page = repost_page.read(url)
+            page = page_read()
             if page.get("state") == "reposted":
-                repost_store.remember(url, "observed")
+                repost_store.remember(url, "observed", kind=kind)
                 return WriteOutcome.REFUSED
-            if not page or not _priority_source_ok(page):
+            if not page or not _priority_source_ok(page) or not reviewed(page):
                 return WriteOutcome.REFUSED
             if page.get("state") != "ready" or admit() is not None:
                 return WriteOutcome.REFUSED
-            if not repost_store.claim(url):
+            if not (repost_store.claim(url, kind="meme") if _meme else repost_store.claim(url)):
                 return WriteOutcome.REFUSED
             claimed = True
-            if repost_page.read(url, "open").get("state") != "menu_opened":
+            if page_read("open").get("state") != "menu_opened":
                 return WriteOutcome.FAILED
             time.sleep(1)
             require_active()
+            if _meme and not reviewed(page_read()):
+                return WriteOutcome.REFUSED
             submitted = True
-            result = repost_page.read(url, "confirm")
+            result = page_read("confirm")
             if result.get("state") in {"ready", "unavailable", "reposted"}:
                 # A complete page response proves no confirmation was clicked.
                 submitted = False
                 if result["state"] == "reposted":
-                    repost_store.remember(url, "observed")
+                    repost_store.remember(url, "observed", kind=kind)
                 return WriteOutcome.REFUSED
             if result.get("state") != "submitted":
                 return WriteOutcome.UNCONFIRMED
             time.sleep(2)
-            if repost_page.read(url).get("state") != "reposted":
+            if page_read().get("state") != "reposted":
                 return WriteOutcome.UNCONFIRMED
             return WriteOutcome.SHIPPED
         finally:
@@ -786,9 +826,196 @@ def repost_tweet(tweet_url: str) -> WriteOutcome:
 
     return confirmed_write.run(
         "REPOST", WriteOutcome, would=lambda: f"repost {url or tweet_url}.",
-        rows=lambda: [(action_guard.RETWEET, url)],
+        rows=lambda: [(action_guard.MEME_REPOST if _meme else action_guard.WATCH_REPOST if repost_store.independent(url) else action_guard.RETWEET, url)],
         before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(admit,),
-        steps=steps, after_record=lambda: repost_store.remember(url, "shipped"))
+        steps=steps, after_record=lambda: repost_store.remember(url, "shipped", kind=kind))
+
+
+def repost_meme(tweet_url: str) -> WriteOutcome:
+    """Only an exact reviewed AI meme may use the bounded meme repost allowance."""
+    return repost_tweet(tweet_url, _meme=True)
+
+
+def read_meme_post(tweet_url: str) -> dict:
+    from ..guards import meme_repost_store
+    from . import repost_page
+    url = x_urls.canonical_status_url(tweet_url)
+    if config.dry_run() or not settings.get("MEME_REPOST_ENABLED") or not meme_repost_store.eligible(url):
+        return {}
+    with safari._safari_lock:
+        try:
+            if not _open_or_abort(url, "MEME-REPOST"):
+                return {}
+            time.sleep(4)
+            return repost_page.read(url, "meme_read")
+        finally:
+            safari.close_front_tab()
+
+
+def read_priority_post(tweet_url: str) -> dict:
+    """Read exact watched source evidence without claiming or composing anything."""
+    from ..guards import repost_store
+    from . import repost_page
+    url = repost_store.allowed_url(tweet_url)
+    if not url or config.dry_run():
+        return {}
+    with safari._safari_lock:
+        try:
+            if not _open_or_abort(url, "PRIORITY"):
+                return {}
+            time.sleep(4)
+            page = repost_page.read(url)
+            return page if page and _priority_source_ok(page) else {}
+        finally:
+            safari.close_front_tab()
+
+
+def quote_priority_post(tweet_url: str) -> WriteOutcome:
+    """Only reviewed native quotes; uncertain sends never resubmit automatically."""
+    from ..guards import action_guard, quote_store
+    from . import quote_page, repost_page
+    url = x_urls.canonical_status_url(tweet_url)
+    row = {}
+
+    def admit():
+        nonlocal row
+        row = quote_store.entries().get(x_urls.status_id(url), {})
+        if (not action_guard.can_post(action_guard.QUOTE, target=url)[0]
+                or row.get("state") != "approved" or not quote_store.valid_text(row.get("text"))):
+            return WriteOutcome.REFUSED
+        return None
+
+    def steps():
+        claimed = submitted = False
+        try:
+            if not _open_or_abort(url, "QUOTE"):
+                return WriteOutcome.FAILED
+            time.sleep(4)
+            page = repost_page.read(url)
+            if (not page or not _priority_source_ok(page)
+                    or quote_store.digest(page["text"]) != row["source_hash"]):
+                return WriteOutcome.REFUSED
+            if not quote_page.prepare(url, row["text"]) or admit() is not None:
+                return WriteOutcome.REFUSED
+            if not quote_store.claim(url):
+                return WriteOutcome.REFUSED
+            claimed = True
+            require_active()
+            since = time.time()
+            submitted = True
+            result = quote_page.composer(url, row["text"], "submit")
+            if result.get("ready") is False:
+                submitted = False
+                return WriteOutcome.FAILED
+            if result.get("ready") is not True:
+                return WriteOutcome.UNCONFIRMED
+            receipt = quote_page.receipt(url, row["text"], since)
+            if not receipt:
+                return WriteOutcome.UNCONFIRMED
+            quote_store.confirm(url, receipt)
+            _register_own_original(receipt)
+            log.info("[QUOTE] Confirmed %s", receipt)
+            return WriteOutcome.SHIPPED
+        finally:
+            if claimed and not submitted:
+                quote_store.release(url)
+
+    return confirmed_write.run("QUOTE", WriteOutcome, would=lambda: f"quote {url}",
+        rows=lambda: [(action_guard.QUOTE, url)], before_lock=(admit, confirmed_write.DRY_RUN_EXIT),
+        under_lock=(admit,), steps=steps, after_record=lambda: _record_posted(row["text"]))
+
+
+def _reply_engagement_ok(url: str) -> bool:
+    minimum = settings.get("REPLY_MIN_LIKES")
+    if not minimum:
+        return True
+    page = _page_posts("read", x_urls.status_id(url))
+    likes = page.get("likes")
+    return (x_urls.canonical_status_url(page.get("url", "")) == x_urls.canonical_status_url(url)
+            and type(likes) is int and likes >= minimum)
+
+
+def repost_own_post(tweet_url: str) -> WriteOutcome:
+    """Explicitly authorized own-post refresh; each toggle is verified and journaled."""
+    from ..core import account
+    from ..guards import active_hours, self_repost_store as store
+    from ..guards.ledger import SELF_REPOST
+    from . import repost_page
+    url = x_urls.canonical_status_url(tweet_url)
+
+    def admit():
+        if (not account.current().self_reposts_enabled or not active_hours.may_act()
+                or not url or x_urls.author(url) not in account.own_handles()):
+            return WriteOutcome.REFUSED
+        row = store.read()["posts"].get(x_urls.status_id(url))
+        if not row or not store.due(row, active_hours.now_local().timestamp()):
+            return WriteOutcome.REFUSED
+        return None
+
+    def steps():
+        with store.locked():
+            if admit() is not None:
+                return WriteOutcome.REFUSED
+            row = store.read()["posts"][x_urls.status_id(url)]
+            now = active_hours.now_local().timestamp()
+            if not _open_or_abort(url, "SELF-REPOST"):
+                store.defer(url, now)
+                return WriteOutcome.FAILED
+            time.sleep(4)
+            page = repost_page.read(url, "self_read")
+            if page.get("state") not in {"ready", "reposted"}:
+                store.defer(url, now)
+                return WriteOutcome.REFUSED
+            if row["phase"] == "repost_pending":
+                if page["state"] == "reposted":
+                    store.complete(url, now)
+                    return WriteOutcome.SHIPPED  # positive reconciliation, never another click
+                store.defer(url, now)
+                return WriteOutcome.UNCONFIRMED
+            if row["phase"] == "undo_pending":
+                if page["state"] != "ready":
+                    store.defer(url, now)
+                    return WriteOutcome.UNCONFIRMED
+                # The observed undone state permits finishing the same operation.
+            elif not row["initial_done"] and page["state"] == "reposted":
+                store.complete(url, now)
+                return WriteOutcome.REFUSED  # already satisfied; no invented shipped write
+            elif row["initial_done"]:
+                views = page.get("views")
+                if type(views) is not int or views <= store.VIEW_THRESHOLD:
+                    store.update(url, views=views if type(views) is int else None, next_due=now + 300)
+                    return WriteOutcome.REFUSED
+                if page["state"] == "reposted":
+                    if repost_page.read(url, "self_undo_open").get("state") != "menu_opened":
+                        store.defer(url, now)
+                        return WriteOutcome.FAILED
+                    time.sleep(1)
+                    require_active()
+                    store.update(url, phase="undo_pending", attempted=now, next_due=now + 300)
+                    result = repost_page.read(url, "self_undo_confirm")
+                    if result.get("state") != "undo_submitted":
+                        return WriteOutcome.UNCONFIRMED
+                    time.sleep(2)
+                    if repost_page.read(url, "self_read").get("state") != "ready":
+                        return WriteOutcome.UNCONFIRMED
+            if repost_page.read(url, "self_open").get("state") != "menu_opened":
+                store.defer(url, now)
+                return WriteOutcome.FAILED
+            time.sleep(1)
+            require_active()
+            store.update(url, phase="repost_pending", attempted=now, next_due=now + 300)
+            result = repost_page.read(url, "self_confirm")
+            if result.get("state") != "submitted":
+                return WriteOutcome.UNCONFIRMED
+            time.sleep(2)
+            if repost_page.read(url, "self_read").get("state") != "reposted":
+                return WriteOutcome.UNCONFIRMED
+            store.complete(url, active_hours.now_local().timestamp())
+            return WriteOutcome.SHIPPED
+
+    return confirmed_write.run("SELF-REPOST", WriteOutcome, would=lambda: f"repost own original {url}",
+        rows=lambda: [(SELF_REPOST, url)], before_lock=(admit, confirmed_write.DRY_RUN_EXIT),
+        under_lock=(admit,), steps=steps)
 
 
 def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
@@ -855,7 +1082,8 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
         if on_answered is not None:
             on_answered()
         return False
-    return opened.get("clicked") is click and account.engagement_allowed(opened.get("text") or "")
+    return (opened.get("clicked") is click and account.engagement_allowed(opened.get("text") or "", url=url)
+            and _reply_engagement_ok(url))
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
@@ -987,6 +1215,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 log.info("[REPLY] Startup video is not confirmed; leaving the prepared Reply unsent.")
                 if on_refused is not None:
                     on_refused(startup.refusal)
+                return WriteOutcome.REFUSED
+            if not _reply_engagement_ok(tweet_url):
+                log.info("[REPLY] Parent no longer has the required observed likes; leaving draft unsent.")
                 return WriteOutcome.REFUSED
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.

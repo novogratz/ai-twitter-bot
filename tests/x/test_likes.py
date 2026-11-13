@@ -501,6 +501,17 @@ def test_js_read_mode_clicks_nothing():
     assert _run_posts_js(articles, "read", POST_ID) == ({"url": POST, "text": "", "result": "not_liked"}, [])
 
 
+@pytest.mark.parametrize("button", ["like", "unlike"])
+@pytest.mark.parametrize("label,expected", [("3 Likes. Like", 3), ("2 Likes. Unlike", 2),
+    ("1.2K Likes. Like", 1200), ("1,234 Likes. Like", 1234), ("1,2 Likes. Like", None),
+    ("-3 Likes", None), ("3.5 Likes", None), ("Likes unavailable", None)])
+def test_parent_like_counter_is_observed_even_after_liking(button, label, expected):
+    article = _article(POST, button, "parent")
+    article["children"][-1]["children"][0]["attrs"]["aria-label"] = label
+    out, clicks = _run_posts_js([article], "read", POST_ID)
+    assert out.get("likes") == expected and clicks == []
+
+
 @pytest.mark.parametrize("articles, target, path", [
     ([_article(POST, "like", "a")], "", "/home"),                 # no target
     ([_article(POST, "like", "a")], "", f"/friendlyvip/status/{POST_ID}"),  # not even the status page's post

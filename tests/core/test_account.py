@@ -101,8 +101,11 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.engagement_niche_only
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
+                             "FEED_SWEEP_INTERVAL_MINUTES": 8, "REPLY_MIN_LIKES": 0,
+                             "PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_NOTIFICATIONS": True,
+                             "MEME_REPOST_ENABLED": True,
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
-                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1500,
+                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1400,
                              "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 3,
                              "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
                              "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
@@ -548,12 +551,15 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert ",".join(net.vip_scan) == NETWORK["VIP_SCAN_HANDLES"]
     assert ",".join(net.pinned_tracked) == NETWORK["PINNED_TRACKED_HANDLES"]
     assert list(net.vip_reply) == NETWORK["VIP_REPLY_ACCOUNTS"]
-    assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"]
+    assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"] + ["tszzl", "signulll", "nearcyan"]
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
     expected = ["elonmusk", "xai", "grok"]
     expected += [h for h in NETWORK["ALWAYS_REPLY_ACCOUNTS"] if h.lower() not in {x.lower() for x in expected}]
+    expected.remove("nearcyan")
+    insertion = expected.index("sytelus") + 1
+    expected[insertion:insertion] = ["tszzl", "signulll", "nearcyan"]
     assert list(net.always_reply) == expected
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
@@ -928,6 +934,9 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
 ])
 def test_research_keeps_vocabularies_and_floors_only_for_high_traction_lanes(name, previous):
     queries = getattr(account.current().searches, name)
+    if name == "replies":
+        assert len(queries) == len(previous) + 7
+        queries = queries[7:]
     assert len(queries) == len(previous)
     for before, after in zip(previous, queries):
         if name == "replies":

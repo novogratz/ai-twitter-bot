@@ -9,6 +9,32 @@ empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
 Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
 `NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
 
+November 12 restores Reply throughput: **1,400+ daily Replies is the target**,
+with no daily Reply cap or filler quota. Three likes are a preference again.
+Search drafts run between reads within the November 9 sixteen-query budget;
+both Home feeds share an eight-minute scan-and-draft cycle, twenty overlapping
+viewport scrolls and 160 posts per feed. The bot retains expanded art/film/video
+queries and adds AI memes, humor, coding mishaps and creator progress.
+
+New Elon originals get independent like, repost and highest-priority Reply attempts
+across topics, with minute notification/Latest polling and exact-original verification.
+His Replies favor sharp, specific wording and humor suited to the post. Completed
+actions are remembered; each original still permits only one admitted Reply.
+New tszzl/signulll/nearcyan searches join the existing AISafetyMemes sources.
+These are search targets, not new follows or verified follower-size claims.
+
+Automatic quotes and timed own-post reposts are disabled to free browser capacity.
+Watched Elon reposts have their own paced allowance; existing histories remain intact.
+Selective AI meme reposts reuse discovered sources: >=500 likes, >=100,000 views,
+>=9/10 humor review, at most two/day and four hours apart. Only self-contained
+text-supported jokes qualify; unseen image/audio-dependent humor is held.
+Actual source/account/counters and confirmed repost state must match.
+
+The locally requested **November 12–13 night stays awake** after the Operator's
+manual restart. This one-date override expires automatically; normal midnight
+sleep resumes tomorrow night (November 14 at 00:00 Toronto). The bot stays
+paused until the Operator restarts it. Reply volume and follower gains are not guaranteed.
+
 The November 9 refinement restores warmth as the default: delight, encouragement,
 affection and shared humor can be a whole Reply. Hearts are welcome without an
 emoji quota, rotation or repeated sign-off. Technical knowledge stays sharp for
@@ -46,11 +72,11 @@ searches. Major-author reads come first, then fresh artist sources get up to fou
 generation attempts before ordinary buffered drafting. Those attempts count
 within the cycle budget even when declined; they are not a posting quota.
 Artist queries rotate through shared work, first attempts and creative progress,
-with the same first-hour source limit and no popularity floor. They are discovery
+with the same first-hour source limit and three-like preference. They are discovery
 hints, never proof that an author is human or created the work.
 Routine Top searches no longer require thirty or fifty likes, so
 smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
-major authors, then three-plus observed likes, with author variety and actual
+major authors, then posts with at least three observed likes, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
 At the existing buffer limit, the current artist turn temporarily retains its
@@ -349,13 +375,14 @@ start; Voice files are read for each generation.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Discovery and engagement cover AI/SI only**: `[niche]`, `[searches]` and `[network]`
+- **Ordinary discovery and engagement cover AI/SI**; the explicitly watched
+  author has the November 10 all-topic exception: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
-- **One Startup post each time the bot starts in waking hours**, restarts included,
-  within the daily ceiling and the twenty-minute spacing. A submission with an
-  ambiguous outcome counts toward both until the operator clears it.
-- **No automatic quote tweets, self-recycling, or burst threads.** Reposts are
-  restricted to `auto_engage_handles`, currently only `elonmusk`.
+- **Automatic startup and news posts are disabled.** Qualified original videos
+  keep their scheduled opportunities and existing quality/receipt checks.
+- **No burst threads.** The November 10 exceptions authorize selective watched
+  quotes and scheduled own-post reposts. Other-author reposts remain restricted
+  to `auto_engage_handles`, currently only `elonmusk`.
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -503,7 +530,8 @@ remain removed (issue #111). The October 23 operator request adds only the
 guarded watched-author `repost_tweet` path in `src/x/twitter_client.py`.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
-`.env` or strategy values cannot lift the eight-post ceiling or restore quotes.
+`.env` or strategy values cannot enable unrestricted posting; the Account owns
+the narrowly scoped watched-quote and self-repost opt-ins.
 The configured reply provider and browser pacing still apply.
 
 ## License

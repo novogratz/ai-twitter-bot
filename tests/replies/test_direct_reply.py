@@ -352,7 +352,9 @@ def test_priority_groups_are_discovered_before_a_full_ordinary_buffer_is_drafted
     def scrape(query, **kwargs):
         reads.append(query)
         trace.append("read")
-        authors = groups[query]  # No ordinary search fits after the first confirmed Reply.
+        if query not in groups:
+            return []
+        authors = groups[query]
         url = fresh(authors[0], minutes=23 * 60, n=len(reads))
         expected.append(url)
         return [{"url": url, "text": "New SI model project", "likes": 0, "views": len(reads) * 1000}]
@@ -364,7 +366,7 @@ def test_priority_groups_are_discovered_before_a_full_ordinary_buffer_is_drafted
     monkeypatch.setattr(dr, "scrape_x_search", scrape)
     llm.default = draft
     dr.run_direct_reply_cycle(max_replies=1)
-    assert len(reads) == 4 and trace[:4] == ["read"] * 4
+    assert len(reads) == 4 and trace[:5] == ["read"] * 4 + ["draft"]
     assert chokepoint.sent == [expected[-1]]
     assert any(item.url.startswith("https://x.com/small/") for item in candidate_buffer.SEARCH.pending())
 

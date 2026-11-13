@@ -73,13 +73,13 @@ def test_stale_targets_cannot_be_harvested_promoted_or_scanned(monkeypatch, sett
     assert direct_reply._run_vip_scan(reply_pipeline.Cycle()) == 0
 
 
-def test_a_privileged_source_declaration_still_needs_ai_evidence():
+def test_explicit_watched_author_exception_allows_other_topics():
     handle = account.current().auto_engage_handles[0]
     declaration = reply_source.Declaration(max_age=timedelta(hours=1), author=handle)
     rejected = {"url": fresh(handle, n=1), "text": "Starship launch today"}
     accepted = {"url": fresh(handle, n=2), "text": "Grok Imagine made this film"}
     candidates = reply_source.select([rejected, accepted], declaration, "WATCH")
-    assert [c.url for c in candidates] == [accepted["url"]]
+    assert [c.url for c in candidates] == [rejected["url"], accepted["url"]]
 
 
 @pytest.mark.parametrize("pipelined", [False, True])

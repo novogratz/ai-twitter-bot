@@ -51,6 +51,49 @@ def _fake_osascript(monkeypatch, run):
         TimeoutExpired=subprocess.TimeoutExpired))
 
 
+@pytest.mark.parametrize("host, path, dialog, height, expected", [
+    ("x.com", "/home", False, 1000, 850),
+    ("twitter.com", "/search", False, 600, 510),
+    ("x.com", "/home/", False, 800, 680),
+    ("elsewhere.test", "/home", False, 1000, 0),
+    ("x.com", "/compose/post", False, 1000, 0),
+    ("x.com", "/home", True, 1000, 0),
+    ("x.com", "/home", False, 0, 0),
+])
+def test_timeline_scroll_advances_overlapping_viewport_only_on_timeline(monkeypatch, host, path, dialog,
+                                                                       height, expected):
+    import json
+    import shutil
+    import subprocess
+    from src.x import safari
+    if not shutil.which("node"):
+        pytest.skip("node is needed to run the page script")
+    scripts = []
+    monkeypatch.setattr(safari, "_run_js", lambda script, *a, **k: scripts.append(script) or "SCROLLED")
+    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
+    assert safari._scroll_timeline()
+    harness = f"""
+    const location = {{hostname: {json.dumps(host)}, pathname: {json.dumps(path)}}};
+    const page = {{scrollTop: 500, clientHeight: {height}}};
+    const window = {{innerHeight: {height}}};
+    const document = {{scrollingElement: page, querySelector: () => {str(dialog).lower()}}};
+    const result = {scripts[0]};
+    console.log(JSON.stringify([result, page.scrollTop - 500]));
+    """
+    output = subprocess.run(["node", "-e", harness], capture_output=True, text=True, check=True)
+    assert json.loads(output.stdout) == ["SCROLLED" if expected else "UNAVAILABLE", expected]
+
+
+@pytest.mark.parametrize("answer, expected", [("SCROLLED", True), ("STALLED", True), ("", False),
+                                              ("UNAVAILABLE", False)])
+def test_timeline_scroll_failure_does_not_send_keys_elsewhere(monkeypatch, answer, expected):
+    from src.x import safari
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: answer)
+    monkeypatch.setattr(safari, "_scroll_page", lambda: pytest.fail("unsafe keyboard fallback"))
+    monkeypatch.setattr(safari.time, "sleep", lambda *_: None)
+    assert safari._scroll_timeline() is expected
+
+
 @pytest.mark.parametrize("outcome, expected", [
     (SimpleNamespace(returncode=0, stdout="CLICKED\n", stderr=""), "CLICKED"),
     (SimpleNamespace(returncode=1, stdout="", stderr="execution error"), ""),

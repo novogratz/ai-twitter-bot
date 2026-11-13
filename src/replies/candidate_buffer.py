@@ -54,6 +54,10 @@ class Buffer:
                 if expires <= now:
                     continue
                 sid = x_urls.status_id(url)
+                minimum = settings.get("REPLY_MIN_LIKES")
+                if minimum and (type(candidate.likes) is not int or candidate.likes < minimum):
+                    self.entries.pop(sid, None)
+                    continue
                 if sid in self.entries:
                     # Keep the earliest source horizon even when rediscovery
                     # supplies no counters. A wider lane can never extend TTL.

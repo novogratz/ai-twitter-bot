@@ -90,6 +90,10 @@ class Account:
     publication_si_wording: bool = False
     auto_engage_handles: tuple[str, ...] = ()
     engagement_niche_only: bool = False
+    auto_engage_all_topics: bool = False
+    watched_reposts_independent: bool = False
+    priority_quotes_enabled: bool = False
+    self_reposts_enabled: bool = False
 
 
 def current() -> Account:
@@ -112,8 +116,20 @@ def matches_niche(text: str, *, profile: bool = False) -> bool:
         loaded.engagement_niche_only and loaded.relevance.off_topic.search(text)))
 
 
-def engagement_allowed(text: str, *, profile: bool = False) -> bool:
-    """Strict Accounts require topic evidence even on privileged routes."""
+def watched_url(url: str) -> bool:
+    """The operator's exact-author exception never comes from a display name."""
+    from ..x import x_urls
+    from ..guards.reply_admission import is_blocked_account
+    url = x_urls.canonical_status_url(url)
+    author = x_urls.author(url)
+    return bool(url and author in current().auto_engage_handles
+                and author not in own_handles() and not is_blocked_account(author))
+
+
+def engagement_allowed(text: str, *, profile: bool = False, url: str = "") -> bool:
+    """The all-topic exception applies only to explicit watched status URLs."""
+    if not profile and current().auto_engage_all_topics and watched_url(url):
+        return True
     return not current().engagement_niche_only or matches_niche(text, profile=profile)
 
 
@@ -151,7 +167,9 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
                            "english_only": bool, "publication_si_wording": bool,
-                           "auto_engage_handles": list, "engagement_niche_only": bool})
+                           "auto_engage_handles": list, "engagement_niche_only": bool,
+                           "auto_engage_all_topics": bool, "watched_reposts_independent": bool,
+                           "priority_quotes_enabled": bool, "self_reposts_enabled": bool})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -183,6 +201,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         publication_si_wording=top.get("publication_si_wording", False),
         auto_engage_handles=tuple(dict.fromkeys(h.lower() for h in watched)),
         engagement_niche_only=top.get("engagement_niche_only", False),
+        auto_engage_all_topics=top.get("auto_engage_all_topics", False),
+        watched_reposts_independent=top.get("watched_reposts_independent", False),
+        priority_quotes_enabled=top.get("priority_quotes_enabled", False),
+        self_reposts_enabled=top.get("self_reposts_enabled", False),
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))

@@ -164,7 +164,10 @@ def _history(now):
 
 def _active_seconds(now):
     wake = now.replace(hour=active_hours.WAKE.hour, minute=active_hours.WAKE.minute, second=0, microsecond=0)
-    end = active_hours.bedtime(wake)
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    if active_hours.is_active(midnight):
+        wake = midnight
+    end = min(active_hours.bedtime(wake), midnight + timedelta(days=1))
     elapsed_end = min(max(now, wake), end)
     total, elapsed = (end - wake).total_seconds(), (elapsed_end - wake).total_seconds()
     for hour in range(24):

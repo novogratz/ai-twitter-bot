@@ -30,7 +30,7 @@ from ..core import config, settings
 from .active_hours import break_until, is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
-from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW
+from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW, WATCH_REPOST, MEME_REPOST
 
 # --- ledger ----------------------------------------------------------------
 
@@ -165,7 +165,9 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
-    if action in (POST, RETWEET):
+    from . import repost_store
+    independent = action == RETWEET and repost_store.independent(target)
+    if action in (POST, RETWEET) and not independent:
         from ..video.config import owns_profile, legacy_usage
         news = news and action == POST and settings.get("NEWS_ENABLED") and settings.get("NEWS_AUTO_PUBLISH")
         if owns_profile() and not news:
@@ -184,8 +186,27 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
     pause_end = break_until()
     if pause_end is not None:
         return False, f"scheduled break until {pause_end.isoformat(timespec='minutes')}"
+    if action == MEME_REPOST:
+        from . import meme_repost_store
+        if not target:
+            return False, "meme repost requires an exact reviewed source URL"
+        why = meme_repost_store.refusal(target)
+        return (False, why) if why else (True, "")
     if action == QUOTE:
-        return False, "automatic quote cap is 0"
+        from . import quote_store
+        if not quote_store.eligible_source(target):
+            return False, "quote requires an enabled exact watched source URL"
+        why = quote_store.refusal(target)
+        return (False, why) if why else (True, "")
+    if independent:
+        from ..x import x_urls
+        age = x_urls.age(target)
+        if age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS")):
+            return False, "watched source missing a fresh timestamp"
+        latest = max((at for at in (repost_store.independent_last(), _ledger().last_write(WATCH_REPOST)) if at), default=None)
+        if latest and (now_local() - latest).total_seconds() < settings.get("PRIORITY_REPOST_MIN_SECONDS"):
+            return False, "watched repost spacing"
+        return True, ""
     if action == RETWEET:
         from . import repost_store
         if not repost_store.allowed_url(target):

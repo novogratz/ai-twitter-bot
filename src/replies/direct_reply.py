@@ -251,6 +251,9 @@ def _query_plan():
 
 def _discover_query(query, tab, authors, *, creator=False, preferred_urls=()):
     label = "SEARCH-PRIORITY" if authors else "SEARCH-CREATOR" if creator else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
+    minimum = settings.get("REPLY_MIN_LIKES")
+    if minimum and "min_faves:" not in query:
+        query += f" min_faves:{minimum}"
     tweets = reply_pipeline.scrape(label, repr(query), scrape_x_search, query,
                                    max_tweets=25, tab=tab, text_limit=1200)
     max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
@@ -274,6 +277,8 @@ def run_direct_reply_cycle(max_replies=None):
     jobs, not one cycle holding Safari long enough for APScheduler to skip
     runs.
     """
+    from ..guards import respect_list
+    respect_list.load()  # refuse before spending browser reads
     if max_replies is None:
         max_replies = settings.reply_budget("DIRECT_REPLY_MAX_PER_CYCLE")
     elif max_replies <= 0:
@@ -316,27 +321,22 @@ def run_direct_reply_cycle(max_replies=None):
             # allowance is created for finding a publishable artist Reply.
             remaining -= len(cycle.tried) - attempted_before
 
-    # Spend unused, still-fresh sources before paying for another browser scan.
-    n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
-    total += n
-    if remaining is not None:
-        remaining -= n
+    # Restore the incremental search lane: use live sources before another
+    # Safari read can leave them waiting until their freshness window expires.
+    def draft_buffer():
+        nonlocal total, remaining
+        if cycle.rate_limited or (remaining is not None and remaining <= 0):
+            return
+        attempted_before = len(cycle.tried)
+        total += candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
+        if remaining is not None:
+            remaining -= len(cycle.tried) - attempted_before
 
-    # 2. SEARCH — primary reply engine for direct_reply.
-    #    Feed sweeper owns For You / Following; this cycle owns search so
-    #    the two engines don't waste time deduping the same feed tweets.
-    #    Rotating Top and ordinary Latest pools share the remainder of the
-    #    same read budget. Source and generation budgets still stop this pass.
+    draft_buffer()
     for query, tab, authors in cycle_queries:
-        if cycle.rate_limited:
-            break
-        if remaining is not None and remaining <= 0:
-            log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
+        if cycle.rate_limited or (remaining is not None and remaining <= 0):
             break
         _discover_query(query, tab, authors)
-        n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
-        total += n
-        if remaining is not None:
-            remaining -= n
+        draft_buffer()
 
     log.info(f"[DIRECT] Posted {total} replies this cycle.")

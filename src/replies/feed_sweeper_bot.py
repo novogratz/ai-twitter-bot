@@ -63,6 +63,12 @@ def _harvest_active_authors(tweets: list) -> None:
 
 def run_feed_sweep_cycle():
     """Finish both bounded feed reads before spending any model budget."""
+    run_feed_discovery_cycle()
+    run_feed_reply_cycle()
+
+
+def run_feed_discovery_cycle():
+    """Refresh both feeds before the combined cycle starts drafting."""
     from ..x.scraper import scrape_home_feed, scrape_following_feed
     feeds = []
     for source, scraper in (("FEED", scrape_home_feed), ("FOLLOWING", scrape_following_feed)):
@@ -74,8 +80,11 @@ def run_feed_sweep_cycle():
     # Retain both discoveries even if drafting the first feed hits a quota.
     for source, tweets in feeds:
         _buffer_one_feed(source, tweets)
+
+
+def run_feed_reply_cycle():
     cycle = reply_pipeline.Cycle()
-    for source, _ in feeds:
+    for source in ("FEED", "FOLLOWING"):
         _sweep_one_feed(source, cycle)
         if cycle.rate_limited:
             break

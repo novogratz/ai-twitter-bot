@@ -50,7 +50,8 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         executors={"default": ThreadPoolExecutor(12), "editorial": ThreadPoolExecutor(1), "news": ThreadPoolExecutor(1),
                    "video": ThreadPoolExecutor(1),
                    "watch": ThreadPoolExecutor(1), "watch_actions": ThreadPoolExecutor(1),
-                   "watch_reply": ThreadPoolExecutor(1)},
+                   "watch_reply": ThreadPoolExecutor(1), "quotes": ThreadPoolExecutor(1),
+                   "self_reposts": ThreadPoolExecutor(1), "memes": ThreadPoolExecutor(1)},
         job_defaults={"misfire_grace_time": 60, "coalesce": True, "max_instances": 1},
     )
 
@@ -99,7 +100,8 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         from src.core.reply_feedback import run_reply_report
 
         add(health.wrap_job(run_direct_reply_cycle, "direct_reply"), 2, "direct_reply_job", first_seconds=2)
-        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), 8, "feed_sweep_job")
+        add(health.wrap_job(run_feed_sweep_cycle, "feed_sweep"), settings.get("FEED_SWEEP_INTERVAL_MINUTES"),
+            "feed_sweep_job", first_seconds=10)
         add(health.wrap_job(run_reply_report, "reply_report", safari_health=False), 20, "reply_report_job")
         if account.current().auto_engage_handles:
             from src.replies.priority_watch import (
@@ -113,6 +115,10 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
             add(health.wrap_job(run_priority_reply_cycle, "priority_reply"),
                 settings.get("PRIORITY_WATCH_DISPATCH_SECONDS") / 60,
                 "priority_reply_job", executor="watch_reply", first_seconds=2)
+            if account.current().priority_quotes_enabled:
+                from src.replies.priority_quotes import run_priority_quote_cycle
+                add(health.wrap_job(run_priority_quote_cycle, "priority_quote", safari_health=False), 30,
+                    "priority_quote_job", executor="quotes", first_seconds=90)
         add(health.wrap_job(run_early_bird_cycle, "early_bird"), 5, "early_bird_job")
         if not account.current().standalone_replies_only:
             add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
@@ -124,6 +130,18 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         if settings.get("ENABLE_REPLY_SEARCH"):
             from src.replies.reply_bot import run_reply_cycle
             add(health.wrap_job(run_reply_cycle, "reply"), 3, "reply_job")
+
+    if not reply_only and settings.get("MEME_REPOST_ENABLED"):
+        from src.account.meme_repost_bot import run_meme_repost_cycle
+        add(health.wrap_job(run_meme_repost_cycle, "meme_repost", safari_health=False), 15,
+            "meme_repost_job", executor="memes", first_seconds=300)
+
+    if not reply_only and account.current().self_reposts_enabled:
+        from src.account.self_repost_bot import run_self_repost_cycle, run_self_repost_discovery
+        add(health.wrap_job(run_self_repost_cycle, "self_repost"), 2 / 60,
+            "self_repost_job", executor="self_reposts", first_seconds=2)
+        add(health.wrap_job(run_self_repost_discovery, "self_repost_discovery"), 10,
+            "self_repost_discovery_job", first_seconds=30)
 
     if not post_only and not reply_only:
         from src.account.engage_bot import safe_run_engage_cycle
@@ -188,10 +206,14 @@ def main():
         video_cfg = video_config() if settings.get("VIDEO_ENABLED") else None
         video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
+                          "skip_sleep_night_date": settings.get("SKIP_SLEEP_NIGHT_DATE"),
                           "min_target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
                           "target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
-                          "max_profile_posts": (video_slots + 1 + (config.posts_ceiling() if settings.get("NEWS_ENABLED") else 0)
-                                                if settings.get("VIDEO_ENABLED") else config.posts_ceiling()),
+                          "max_profile_posts": (None if account.current().watched_reposts_independent or account.current().self_reposts_enabled else
+                                                (video_slots + 1 + (config.posts_ceiling() if settings.get("NEWS_ENABLED") else 0)
+                                                 if settings.get("VIDEO_ENABLED") else config.posts_ceiling())
+                                                + (settings.get("MEME_REPOST_DAILY_CAP") if settings.get("MEME_REPOST_ENABLED") else 0)),
+                          "profile_budget_note": "Meme reposts have a separate bounded allowance; optional paced watched and own reposts have no daily count cap",
                           "replies": "unlimited",
                           "reply_volume_boost_date": settings.get("REPLY_VOLUME_BOOST_DATE"),
                           "reply_discovery_generation_budgets": {
@@ -202,8 +224,16 @@ def main():
                           "news": {"enabled": settings.get("NEWS_ENABLED"), "hourly": True,
                                    "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False},
                           "startup_publications": args.startup_publications and not args.reply_only,
-                          "quotes": 0,
-                          "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,
+                          "quotes": settings.get("PRIORITY_QUOTE_DAILY_CAP") if account.current().priority_quotes_enabled else 0,
+                          "reposts": "watched authors only" if account.current().auto_engage_handles and (not settings.get("VIDEO_ENABLED") or account.current().watched_reposts_independent) else 0,
+                          "reply_min_likes": settings.get("REPLY_MIN_LIKES"),
+                          "meme_reposts": {"enabled": settings.get("MEME_REPOST_ENABLED"),
+                                           "daily_cap": settings.get("MEME_REPOST_DAILY_CAP"),
+                                           "min_likes": settings.get("MEME_REPOST_MIN_LIKES"),
+                                           "min_views": settings.get("MEME_REPOST_MIN_VIEWS")},
+                          "self_reposts": {"enabled": account.current().self_reposts_enabled,
+                                           "initial_delay_seconds": 3600, "repeat_seconds": 1800,
+                                           "repeat_views_strictly_above": 50000},
                           "auto_engage_handles": list(account.current().auto_engage_handles),
                           "slots": _main_slots(),
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),

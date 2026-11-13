@@ -124,3 +124,6 @@ def test_pending_originals_also_reserve_repost_slots(monkeypatch, memory_ledger,
 
 def test_quotes_stay_disabled_even_for_watched_authors():
     assert not ag.can_post(ag.QUOTE, target=URL)[0]
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account")
