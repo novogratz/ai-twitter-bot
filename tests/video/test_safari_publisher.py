@@ -158,7 +158,8 @@ const video={error:null,readyState:1,duration:4,currentTime:0,dataset:{},muted:f
   scrollIntoView(){},
   play(){this.plays++;this.readyState=2;this.paused=false;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
-const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const article={querySelectorAll:s=>s==='video'?[video]:[stamp],querySelector:()=>video};
+video.closest=s=>s==='article'?article:null;
 const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
 const location={hostname:'x.com',pathname:'/example/status/123'};
 const document={querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],querySelector:()=>null};
@@ -233,7 +234,8 @@ const video={error:null,readyState:1,duration:4,_at:.5,dataset:{},muted:false,pa
     if(this.plays===1){this.paused=true;return Promise.resolve();}
     this.paused=false;this.readyState=4;this.seeking=false;this._at=.75;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
-const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const article={querySelectorAll:s=>s==='video'?[video]:[stamp],querySelector:()=>video};
+video.closest=s=>s==='article'?article:null;
 const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
 const location={hostname:'x.com',pathname:'/example/status/123'};
 const document={visibilityState:'visible',querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],

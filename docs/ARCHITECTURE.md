@@ -130,7 +130,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `feed_sweep_job` | 8 min | Collects both For You and Following, up to 160 posts/20 scrolls each, then drafts from both buffers with three likes preferred and existing generation budgets. |
 | `priority_watch_job` | 60 sec locally; 20 sec default | Checks watched notification links and verifies up to two new exact originals, then Latest discovery; first viewport normally, bounded catch-up on startup/every fifteen minutes. |
 | `priority_actions_job` | 2 sec, configurable slower | Dedicated `watch_actions` executor; bounded like/repost attempts on discovered watched originals, newest first. |
-| `meme_repost_job` | 15 min, opt-in | Reviews already discovered AI humor; at most two native reposts/day, four hours apart. |
+| `meme_repost_job` | 5 min, opt-in | Visually reviews one discovered AI video, preferring recent confirmed Reply parents; live maximum twenty/day, thirty minutes apart. |
 | `priority_quote_job` | 30 min, opt-in | Dedicated quote executor compares a bounded shortlist and independently reviews a maximum of two native quotes/day. |
 | `self_repost_discovery_job` | 10 min, opt-in | Bounded own Latest/Top search finds new originals and older high-view posts. |
 | `self_repost_job` | 2 sec, opt-in | Due one-hour reposts and half-hour high-view refreshes, exact own-page verification and durable toggle reconciliation. |
@@ -1069,10 +1069,24 @@ with exact-source verification and highest Reply priority. Fulfilled watched
 actions wait out source expiry; repeated failures back off up to an hour.
 
 Automatic quote/self-repost jobs are disabled by the live Account switches.
-`meme_repost_job` runs every fifteen minutes on a separate executor at background
+`meme_repost_job` runs every five minutes on a separate executor at background
 browser priority. `meme_repost_store.offer` receives existing scraped viewports,
 retains at most forty fresh qualifying candidates, and selects one per review.
-The model must find self-contained AI humor; reviewed source bytes and counters
-are rechecked by `twitter_client.repost_meme`. The shared native repost flow
+The model inspects timestamped video samples for relevant, enjoyable visual humor;
+source text and native video identity are rechecked by `twitter_client.repost_meme`. The shared native repost flow
 records permanent `kind=meme` claims in `reposted_tweets.json` and shipped
 `meme_repost` ledger rows. No second Safari publisher or search worker is added.
+
+### Funny AI video repost clarification
+
+The existing `meme_repost_job` now reviews native videos, not text-only memes.
+`video.repost_review` samples 6–16 real frames under the shared Safari owner/lock
+with a 25-second turn, then releases Safari before a shared-budget, image-aware
+Codex review. Images stay in temporary local files. Source hash, native media ID,
+sample hashes/times and the review are persisted in the existing guarded review
+store; old text approvals remain readable but cannot authorize video reposts.
+Confirmed Reply bookkeeping only prioritizes an existing discovered video; it
+performs no additional browser/model work. The first video-repost turn seeds at
+most ten recent parents from the existing engagement log. A five-minute job checks
+one candidate at a time; deferrals leave other candidates eligible. The live
+allowance is twenty/day, thirty minutes apart, without a popularity floor.

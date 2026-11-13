@@ -169,6 +169,10 @@ REPLY_MIN_LIKES = 0
 PRIORITY_WATCH_INTERVAL_SECONDS = 60
 PRIORITY_WATCH_NOTIFICATIONS = true
 MEME_REPOST_ENABLED = true
+MEME_REPOST_DAILY_CAP = 20
+MEME_REPOST_INTERVAL_MINUTES = 30
+MEME_REPOST_MIN_LIKES = 0
+MEME_REPOST_MIN_VIEWS = 0
 # Operator, 2026-11-01: no daytime breaks; sleep midnight–04:30 Toronto.
 HOURLY_BREAK_MINUTES = 0
 # Operator, 2026-11-02: pursue 1,500+ distinct Replies at the existing spacing floor.
@@ -308,6 +312,7 @@ creators = [
 ]
 # First-hour discoveries: no min_faves floor; root posts only, still niche checked.
 latest = [
+    '(AI OR SI OR Grok OR Kling OR Veo OR Sora OR Seedance) (funny OR comedy OR parody OR dance OR meme) filter:videos lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR AGI OR LLM OR ChatGPT OR Claude OR Grok) (meme OR memes OR funny OR parody OR satire OR brainrot) lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR LLM OR "Claude Code" OR Codex) ("vibe coding" OR "prompt failed" OR "agent failed" OR "my workflow" OR "I built") lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR LLM) (science OR education OR accessibility OR healthcare OR research OR learning) lang:en -filter:replies -filter:retweets',
@@ -331,6 +336,7 @@ latest = [
 # direct_reply rotates through `replies` then `hot_tab` within its Top budget;
 # a result must be on the niche. Routine searches have no popularity floor.
 replies = [
+    '(AI OR SI OR Grok OR Kling OR Veo OR Sora OR Seedance) (funny OR comedy OR parody OR dance OR meme) filter:videos lang:en -filter:replies -filter:retweets',
     '(from:AISafetyMemes OR from:tszzl OR from:signulll OR from:nearcyan) (AI OR SI OR AGI OR LLM OR Claude OR Grok OR ChatGPT OR superintelligence) lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR AGI OR LLM OR ChatGPT OR Claude OR Grok) (meme OR memes OR funny OR parody OR satire OR brainrot) lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR "Grok Imagine" OR Seedance OR Kling OR Veo) ("short film" OR "music video" OR "my animation" OR "first attempt" OR "behind the scenes") lang:en -filter:replies -filter:retweets',

@@ -77,6 +77,8 @@ _overrides: dict = {}
 
 
 def _kind(setting: Setting) -> str:
+    if setting.name == "AWAKE_72H_START":
+        return "ISO timestamp with timezone or blank"
     if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"}:
         return "YYYY-MM-DD date or blank"
     if setting.type is bool:
@@ -279,13 +281,14 @@ _declare("FEED_SWEEP_INTERVAL_MINUTES", int, 8, "Interval between combined Home/
 _declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
 _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length every three waking hours; 0 disables breaks.", floor=0, ceiling=10)
 _declare("SKIP_SLEEP_NIGHT_DATE", str, "", "Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win.")
+_declare("AWAKE_72H_START", str, "", "Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables.")
 _declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; running browser transactions may delay a poll.", floor=20)
 _declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies.", floor=False)
-_declare("MEME_REPOST_ENABLED", bool, False, "Allow reviewed high-engagement AI humor reposts discovered by existing scans.", floor=False)
-_declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed meme reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=4)
-_declare("MEME_REPOST_MIN_LIKES", int, 500, "Minimum freshly verified exact-parent likes for an AI meme repost.", floor=500)
-_declare("MEME_REPOST_MIN_VIEWS", int, 100000, "Minimum freshly verified exact-parent views for an AI meme repost.", floor=100000)
-_declare("MEME_REPOST_INTERVAL_MINUTES", int, 240, "Minimum spacing between confirmed AI meme reposts.", floor=240)
+_declare("MEME_REPOST_ENABLED", bool, False, "Allow visually reviewed funny AI video reposts discovered by existing scans.", floor=False)
+_declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=20)
+_declare("MEME_REPOST_MIN_LIKES", int, 0, "Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
+_declare("MEME_REPOST_MIN_VIEWS", int, 0, "Optional exact-parent view floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
+_declare("MEME_REPOST_INTERVAL_MINUTES", int, 30, "Minimum spacing between confirmed AI video reposts.", floor=30)
 _declare("PRIORITY_WATCH_DISPATCH_SECONDS", int, 2, "Check discovered watched posts for independent action and Reply work.", floor=2)
 _declare("PRIORITY_WATCH_QUEUE_LIMIT", int, 80, "Maximum discovered watched originals retained in process memory, newest first.", floor=1, ceiling=200)
 _declare("PRIORITY_WATCH_ACTIONS_PER_CYCLE", int, 4, "Maximum independent like/repost attempts per watch action dispatch.", floor=1, ceiling=8)
@@ -521,6 +524,11 @@ def _parse(setting: Setting, raw: str):
             raise ValueError(raw)
         return raw == "1"
     value = setting.type(raw)
+    if setting.name == "AWAKE_72H_START" and value:
+        from datetime import datetime
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo is None or parsed.utcoffset() is None:
+            raise ValueError(raw)
     if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"} and value:
         if date.fromisoformat(value).isoformat() != value:
             raise ValueError(raw)

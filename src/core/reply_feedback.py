@@ -165,17 +165,25 @@ def _history(now):
 def _active_seconds(now):
     wake = now.replace(hour=active_hours.WAKE.hour, minute=active_hours.WAKE.minute, second=0, microsecond=0)
     midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    if active_hours.is_active(midnight):
-        wake = midnight
-    end = min(active_hours.bedtime(wake), midnight + timedelta(days=1))
-    elapsed_end = min(max(now, wake), end)
-    total, elapsed = (end - wake).total_seconds(), (elapsed_end - wake).total_seconds()
-    for hour in range(24):
-        window = active_hours.break_window(wake.replace(hour=hour))
-        if window:
-            start, stop = window
-            total -= max(0, (min(stop, end) - max(start, wake)).total_seconds())
-            elapsed -= max(0, (min(stop, elapsed_end) - max(start, wake)).total_seconds())
+    end = midnight + timedelta(days=1)
+    points = {midnight, wake, end}
+    for at in active_hours.awake_window() or ():
+        if midnight < at < end:
+            points.add(at)
+    points = sorted(points)
+    total = elapsed = 0
+    for begin, finish in zip(points, points[1:]):
+        if not active_hours.is_active(begin + (finish - begin) / 2):
+            continue
+        elapsed_end = min(max(now, begin), finish)
+        total += (finish - begin).total_seconds()
+        elapsed += (elapsed_end - begin).total_seconds()
+        for hour in range(24):
+            window = active_hours.break_window(midnight.replace(hour=hour))
+            if window:
+                start, stop = window
+                total -= max(0, (min(stop, finish) - max(start, begin)).total_seconds())
+                elapsed -= max(0, (min(stop, elapsed_end) - max(start, begin)).total_seconds())
     return total, elapsed
 
 

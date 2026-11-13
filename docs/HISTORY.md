@@ -1,5 +1,18 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-12 — Repost funny AI videos before they go viral
+
+The final pre-pause Reply at 21:40 answered @dripbitsnft status
+2121026915452801413 with “You said ‘Mr. Huang’ like that might get you forgiven”.
+The exact parent read showed eleven likes, 929 views and a 61.421-second native
+video. The old 500-like/100,000-view text-meme allowance never admitted it.
+The Operator clarifies that ordinary enjoyable AI videos should qualify, with
+up to twenty native reposts/day, no popularity threshold, and 72 hours awake.
+The repair samples actual video frames (thirteen in the read-only source check),
+reviews visual humor and preserves exact source/media/account and permanent
+publication claims. No X publication is made during implementation; the Operator
+retains manual restart. See the current policy for the fixed awake-window deadline.
+
 ## 2026-11-12 — Restore Reply throughput and prioritize watched conversations
 
 Confirmed ledger/CSV counts were 926 Replies November 9, 951 November 10,

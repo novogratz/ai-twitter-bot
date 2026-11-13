@@ -598,7 +598,7 @@ root:
 | `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |
 | `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
-| `meme_repost_reviews.json` | `meme_repost_store` | Source-hash-bound AI humor approvals/refusals; actual permanent send claims remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
+| `meme_repost_reviews.json` | `meme_repost_store` | Source/media-bound video sample evidence and reviews; legacy text reviews stay readable; permanent sends remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
 | `priority_quotes.json` | `quote_store` | Source-bound editorial reviews, permanent confirmed/uncertain native quote receipts and daily reservations | guarded, process lock; never clear an uncertain send without checking X |
 | `self_reposts.json` | `self_repost_store` | Activation, own status IDs, one-hour due times, observed views, next half-hour turn and ambiguous undo/repost phases | guarded, process lock; preserve on restart |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
@@ -934,7 +934,7 @@ not elapsed scheduler time, establish success. The ordinary restart workflow
 preserves these files and all existing production histories.
 
 November 12: the Operator will restart manually. Preserve `.bot_disabled` until
-that start. The local one-night sleep exception expires without another restart;
-quotes and timed self-reposts stay disabled until explicitly changed. Native meme
+that start. The local `AWAKE_72H_START` window expires without another restart;
+quotes and timed self-reposts stay disabled until explicitly changed. Native AI video
 reposts use permanent repost claims; an unconfirmed click cannot be retried by
 clearing the review record. Read-only diagnostics do not publish.

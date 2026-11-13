@@ -104,6 +104,8 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
                              "FEED_SWEEP_INTERVAL_MINUTES": 8, "REPLY_MIN_LIKES": 0,
                              "PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_NOTIFICATIONS": True,
                              "MEME_REPOST_ENABLED": True,
+                             "MEME_REPOST_DAILY_CAP": 20, "MEME_REPOST_INTERVAL_MINUTES": 30,
+                             "MEME_REPOST_MIN_LIKES": 0, "MEME_REPOST_MIN_VIEWS": 0,
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
                              "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1400,
                              "REPLY_DAILY_TARGET_MAX": 1800, "REPLY_PREFERRED_MIN_LIKES": 3,
@@ -935,8 +937,8 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
 def test_research_keeps_vocabularies_and_floors_only_for_high_traction_lanes(name, previous):
     queries = getattr(account.current().searches, name)
     if name == "replies":
-        assert len(queries) == len(previous) + 7
-        queries = queries[7:]
+        assert len(queries) == len(previous) + 8
+        queries = queries[8:]
     assert len(queries) == len(previous)
     for before, after in zip(previous, queries):
         if name == "replies":

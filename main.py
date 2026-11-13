@@ -133,8 +133,8 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
 
     if not reply_only and settings.get("MEME_REPOST_ENABLED"):
         from src.account.meme_repost_bot import run_meme_repost_cycle
-        add(health.wrap_job(run_meme_repost_cycle, "meme_repost", safari_health=False), 15,
-            "meme_repost_job", executor="memes", first_seconds=300)
+        add(health.wrap_job(run_meme_repost_cycle, "meme_repost", safari_health=False), 5,
+            "meme_repost_job", executor="memes", first_seconds=30)
 
     if not reply_only and account.current().self_reposts_enabled:
         from src.account.self_repost_bot import run_self_repost_cycle, run_self_repost_discovery
@@ -207,6 +207,7 @@ def main():
         video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "skip_sleep_night_date": settings.get("SKIP_SLEEP_NIGHT_DATE"),
+                          "awake_72h_start": settings.get("AWAKE_72H_START"),
                           "min_target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
                           "target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
                           "max_profile_posts": (None if account.current().watched_reposts_independent or account.current().self_reposts_enabled else

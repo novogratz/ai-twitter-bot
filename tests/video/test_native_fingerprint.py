@@ -103,7 +103,8 @@ const video={poster:'https://pbs.twimg.com/ext_tw_video_thumb/456/pu/img/a.jpg',
   scrollIntoView(){},play(){if(!this.muted)throw Error('unmuted playback');
     this.plays++;this.paused=false;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
-const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const article={querySelectorAll:s=>s==='video'?[video]:[stamp],querySelector:()=>video};
+video.closest=s=>s==='article'?article:null;
 const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
 const location={origin:'https://x.com',hostname:'x.com',pathname:'/example/status/123'};
 const document={visibilityState:'visible',querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],

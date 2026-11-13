@@ -30,6 +30,9 @@ SCRIPT = r"""(() => {
   const text = textEl?.innerText || '';
   if (!text.trim() || text.trim().startsWith('@') || /Replying to|En réponse à/i.test(article.innerText)) return '{}';
   const result = {url: link.href, text, language:textEl?.getAttribute('lang') || '', state: 'unavailable'};
+  const videos = own(article, 'video');
+  result.has_video = videos.length === 1;
+  result.media_id = result.has_video ? (videos[0].poster || '').match(/\/(?:ext_tw_video_thumb|amplify_video_thumb)\/(\d+)\//)?.[1] || '' : '';
   const viewEls = own(article, 'a[href$="/status/'+id+'/analytics"]');
   const label = viewEls.length === 1 ? (viewEls[0].getAttribute('aria-label') || viewEls[0].textContent || '') : '';
   const number = label.trim().match(/^((?:\d{1,3}(?:[, \u00a0\u202f]\d{3})+|\d+)(?:\.\d+)?)\s*([kKmMbB]?)(?:\s+(?:views?|vues?)(?:[.\s].*)?)?$/i);
