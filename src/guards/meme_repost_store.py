@@ -1,7 +1,10 @@
-"""Reviewed AI humor from existing discovery; permanent sends use repost_store."""
+"""Reviewed funny AI videos; legacy meme history and permanent claims survive."""
+from collections import deque
+import csv
 from datetime import datetime, timedelta
 import hashlib
 import threading
+import time
 
 from ..core import account, config, settings
 from ..core.state_errors import StateUnreadable
@@ -12,6 +15,9 @@ from . import active_hours, content_guard, respect_list
 STATE = StateFile("meme_repost_reviews.json", {}, GUARDED)
 _lock = threading.RLock()
 _candidates = {}
+_recent = {}
+_seeded = False
+_retry_after = {}
 
 
 def digest(text):
@@ -29,10 +35,11 @@ def eligible(url):
 def qualifies(page):
     profile, text = account.current(), page.get("text", "")
     return (isinstance(text, str) and bool(profile.niche.post.search(text))
+            and page.get("has_video") is True
             and not profile.relevance.off_topic.search(text)
             and eligible(page.get("url", "")) and not x_urls.is_reply_like_tweet(page)
-            and type(page.get("likes")) is int and page["likes"] >= settings.get("MEME_REPOST_MIN_LIKES")
-            and type(page.get("views")) is int and page["views"] >= settings.get("MEME_REPOST_MIN_VIEWS")
+            and all(not settings.get(name) or (type(page.get(key)) is int and page[key] >= settings.get(name))
+                    for key, name in (("likes", "MEME_REPOST_MIN_LIKES"), ("views", "MEME_REPOST_MIN_VIEWS")))
             and content_guard.validate(text, kind="source", source_language=page.get("language", ""))[0]
             and not respect_list.scrub_text_or_skip(text)[1])
 
@@ -46,9 +53,47 @@ def offer(tweets):
                 url = x_urls.canonical_status_url(tweet["url"])
                 _candidates[url] = {**tweet, "url": url}
         ranked = sorted((r for r in _candidates.values() if eligible(r["url"])),
-                        key=lambda r: (r["likes"], r["views"]), reverse=True)[:40]
+                        key=lambda r: (_recent.get(r["url"], 0), r.get("likes") or 0, r.get("views") or 0), reverse=True)[:40]
         _candidates.clear()
         _candidates.update((r["url"], r) for r in ranked)
+
+
+def note_reply(url):
+    """No browser/model work on the Reply path; prefer an already discovered video."""
+    if not settings.get("MEME_REPOST_ENABLED") or config.dry_run():
+        return
+    with _lock:
+        if url in _candidates:
+            _recent[url] = time.time()
+        for old in sorted(_recent, key=_recent.get)[:-40]:
+            del _recent[old]
+
+
+def _seed_recent():
+    """At most ten recent confirmed parents survive restart via existing history."""
+    global _seeded
+    if _seeded:
+        return
+    _seeded = True
+    try:
+        with open(config.ENGAGEMENT_LOG_FILE, newline="") as handle:
+            rows = deque(csv.reader(handle), maxlen=100)
+    except (OSError, csv.Error):
+        return
+    for row in reversed(rows):
+        if len(_recent) >= 10:
+            break
+        if len(row) >= 4 and row[1] == "reply" and eligible(row[3]):
+            url = x_urls.canonical_status_url(row[3])
+            _recent.setdefault(url, time.time() - len(_recent))
+
+
+def defer(url):
+    with _lock:
+        _retry_after[url] = time.monotonic() + 900
+        for old in list(_retry_after):
+            if _retry_after[old] <= time.monotonic():
+                del _retry_after[old]
 
 
 def entries():
@@ -59,8 +104,12 @@ def entries():
                     or type(r["approved"]) is not bool or not datetime.fromisoformat(r["at"]).tzinfo
                     or not isinstance(r["source_text"], str) or r["source_hash"] != digest(r["source_text"])
                     or (r["approved"] and (type(r.get("humor_score")) not in (int, float)
-                                            or not 9 <= r["humor_score"] <= 10))):
+                                            or not (0 if r.get("kind") == "video" else 9) <= r["humor_score"] <= 10))):
                 raise ValueError("invalid review")
+            if r.get("kind") == "video" and r["approved"]:
+                from ..video.repost_review import valid
+                if not valid(r.get("video_evidence"), r["url"], r["source_text"], r.get("media_id")):
+                    raise ValueError("invalid video review")
     except (TypeError, ValueError, KeyError, AttributeError) as exc:
         raise StateUnreadable("Meme repost reviews malformed; preserve and repair history") from exc
     return data
@@ -70,27 +119,38 @@ def next_candidate():
     from . import repost_store
     reviews = entries()
     with _lock:
-        rows = [r for r in _candidates.values() if eligible(r["url"])
-                and x_urls.status_id(r["url"]) not in reviews and not repost_store.contains(r["url"])]
-    return max(rows, key=lambda r: (r["likes"], r["views"]), default=None)
+        _seed_recent()
+        pool = {url: dict(url=url, text="") for url in _recent}
+        pool.update(_candidates)
+        rows = [r for r in pool.values() if eligible(r["url"])
+                and reviews.get(x_urls.status_id(r["url"]), {}).get("kind") != "video"
+                and _retry_after.get(r["url"], 0) <= time.monotonic() and not repost_store.contains(r["url"])]
+        return max(rows, key=lambda r: (_recent.get(r["url"], 0), r.get("likes") or 0, r.get("views") or 0), default=None)
 
 
-def review(url, text, approved, reason, humor_score=0):
+def review(url, text, approved, reason, humor_score=0, *, video_evidence=None):
     if config.dry_run():
         return
     now = active_hours.now_local()
     with STATE._lock:
         data = entries()
-        data[x_urls.status_id(url)] = dict(url=url, source_text=text, source_hash=digest(text),
+        row = dict(url=url, source_text=text, source_hash=digest(text),
                                           approved=bool(approved), humor_score=humor_score,
-                                          at=now.isoformat(), reason=reason[:600])
+                                          at=now.isoformat(), reason=reason[:600], kind="video",
+                                          video_evidence=video_evidence, media_id=(video_evidence or {}).get("media_id", ""))
+        if approved:
+            from ..video.repost_review import valid
+            if not valid(video_evidence, url, text, row["media_id"]):
+                raise ValueError("cannot approve an uninspected video")
+        data[x_urls.status_id(url)] = row
         data = {sid: r for sid, r in data.items() if eligible(r["url"])}
         STATE.write(data)
 
 
 def approved(url):
     row = entries().get(x_urls.status_id(url), {})
-    return settings.get("MEME_REPOST_ENABLED") and eligible(url) and row.get("approved") is True
+    return (settings.get("MEME_REPOST_ENABLED") and eligible(url) and row.get("approved") is True
+            and row.get("kind") == "video")
 
 
 def refusal(url=""):

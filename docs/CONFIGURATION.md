@@ -10,15 +10,22 @@ switches are now off. `watched_reposts_independent=true` keeps new Elon like/rep
 attempts independent of Reply generation and the Original/video budget, with
 at least sixty seconds between watched reposts, including uncertain attempts.
 
-`SKIP_SLEEP_NIGHT_DATE=2026-11-12` is a local one-night exception, not a permanent
-24-hour schedule. It permits November 13 00:00–04:30 Toronto; ordinary daytime
-hours follow, then November 14 00:00 sleeps normally. Stop requests still refuse.
-Blank is the default; invalid dates fail startup.
+`AWAKE_72H_START=2026-11-12T21:48:10-05:00` is a local 72-hour awake window ending
+November 15 at 21:48:10 Toronto. It measures elapsed hours even across DST and
+survives restarts without extending the deadline. Normal scheduling resumes after
+expiry; stop requests still refuse. Blank is the default, timezone-free or invalid
+timestamps fail startup. The earlier `SKIP_SLEEP_NIGHT_DATE` is now blank locally.
 
-`MEME_REPOST_ENABLED=1` opts this Account into at most two reviewed AI humor
-reposts/day, four hours apart, with at least 500 likes and 100,000 exact-status
-views. The fifteen-minute worker reuses existing discovery, never adds search
-reads, and holds unknown counters and jokes requiring unseen-media interpretation.
+`MEME_REPOST_ENABLED=1` now means funny AI video reposts (the key/history names
+remain compatible). The live cap is twenty/day, thirty minutes apart, with
+`MEME_REPOST_MIN_LIKES=0` and `MEME_REPOST_MIN_VIEWS=0`: no popularity threshold.
+The five-minute worker reviews one video from existing discoveries, preferring
+confirmed Reply parents. On restart, at most ten recent confirmed parents can be
+checked, one per turn. Actual 6–16 temporal frames and a grounded, enjoyable visual
+joke are required; the humor score is descriptive, with no exceptional-comedy floor.
+Missing sound/dialogue needed to understand
+the joke holds the source. Source and native video identity are checked again before
+reposting; unchanged permanent claims retain dedup, caps and uncertainty holds.
 
 Every engine setting is declared once in `src/core/settings.py`, with its
 type, default and bounds, and set in `.env`, which git does not track.
@@ -408,13 +415,14 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `FEED_SCROLL_PASSES` | int | `8` | floor `1`, ceiling `40` | Maximum scrolls per verified Home feed; collect each viewport before scrolling. |
 | `HOURLY_BREAK_MINUTES` | int | `0` | floor `0`, ceiling `10` | Scheduled break length every three waking hours; 0 disables breaks. |
 | `SKIP_SLEEP_NIGHT_DATE` | YYYY-MM-DD date or blank | blank |  | Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win. |
+| `AWAKE_72H_START` | ISO timestamp with timezone or blank | blank |  | Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables. |
 | `PRIORITY_WATCH_INTERVAL_SECONDS` | int | `20` | floor `20` | Poll watched authors independently of generation; running browser transactions may delay a poll. |
 | `PRIORITY_WATCH_NOTIFICATIONS` | 0 or 1 | `0` | floor `0` | Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies. |
-| `MEME_REPOST_ENABLED` | 0 or 1 | `0` | floor `0` | Allow reviewed high-engagement AI humor reposts discovered by existing scans. |
-| `MEME_REPOST_DAILY_CAP` | int | `2` | floor `0`, ceiling `4` | Maximum reviewed meme reposts per Toronto day; uncertain sends hold further reposts. |
-| `MEME_REPOST_MIN_LIKES` | int | `500` | floor `500` | Minimum freshly verified exact-parent likes for an AI meme repost. |
-| `MEME_REPOST_MIN_VIEWS` | int | `100000` | floor `100000` | Minimum freshly verified exact-parent views for an AI meme repost. |
-| `MEME_REPOST_INTERVAL_MINUTES` | int | `240` | floor `240` | Minimum spacing between confirmed AI meme reposts. |
+| `MEME_REPOST_ENABLED` | 0 or 1 | `0` | floor `0` | Allow visually reviewed funny AI video reposts discovered by existing scans. |
+| `MEME_REPOST_DAILY_CAP` | int | `2` | floor `0`, ceiling `20` | Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts. |
+| `MEME_REPOST_MIN_LIKES` | int | `0` | floor `0` | Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement. |
+| `MEME_REPOST_MIN_VIEWS` | int | `0` | floor `0` | Optional exact-parent view floor for AI video reposts; zero imposes no popularity requirement. |
+| `MEME_REPOST_INTERVAL_MINUTES` | int | `30` | floor `30` | Minimum spacing between confirmed AI video reposts. |
 | `PRIORITY_WATCH_DISPATCH_SECONDS` | int | `2` | floor `2` | Check discovered watched posts for independent action and Reply work. |
 | `PRIORITY_WATCH_QUEUE_LIMIT` | int | `80` | floor `1`, ceiling `200` | Maximum discovered watched originals retained in process memory, newest first. |
 | `PRIORITY_WATCH_ACTIONS_PER_CYCLE` | int | `4` | floor `1`, ceiling `8` | Maximum independent like/repost attempts per watch action dispatch. |

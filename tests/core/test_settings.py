@@ -73,6 +73,17 @@ def test_date_overrides_accept_blank_or_a_calendar_date(fresh, value, name):
     assert settings.get(name) == value
 
 
+@pytest.mark.parametrize("value", ["today", "2026-11-13", "2026-11-13T02:00:00", "2026-02-30T02:00:00Z"])
+def test_awake_window_requires_a_timezone_aware_timestamp(fresh, value):
+    with pytest.raises(settings.SettingsError, match="AWAKE_72H_START"):
+        fresh(f"AWAKE_72H_START={value}\n")
+
+
+def test_awake_window_accepts_explicit_offset(fresh):
+    fresh("AWAKE_72H_START=2026-11-12T21:48:10-05:00\n")
+    assert settings.get("AWAKE_72H_START") == "2026-11-12T21:48:10-05:00"
+
+
 def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_override, monkeypatch):
     from datetime import datetime
     from zoneinfo import ZoneInfo

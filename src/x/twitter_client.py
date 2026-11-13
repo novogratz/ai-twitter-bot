@@ -772,7 +772,8 @@ def repost_tweet(tweet_url: str, *, _meme=False) -> WriteOutcome:
             return True
         row = meme_repost_store.entries().get(x_urls.status_id(url), {})
         return (meme_repost_store.qualifies(page)
-                and row.get("source_hash") == meme_repost_store.digest(page.get("text", "")))
+                and row.get("source_hash") == meme_repost_store.digest(page.get("text", ""))
+                and row.get("media_id") == page.get("media_id") and bool(page.get("media_id")))
 
     def admit():
         if not url or repost_store.contains(url):
@@ -1248,6 +1249,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             log.info("[REPLY-FEEDBACK] Published URL not visible for %s", tweet_url)
         try:
             reply_feedback.record_confirmed(tweet_url, admitted_text, own_url, now=submitted_at)
+            from ..guards import meme_repost_store
+            meme_repost_store.note_reply(x_urls.canonical_status_url(tweet_url))
         except Exception:
             log.exception("[REPLY-FEEDBACK] Could not save shipped Reply %s", tweet_url)
 

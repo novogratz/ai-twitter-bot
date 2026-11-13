@@ -6,6 +6,36 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-12, later video repost and 72-hour clarification — The Operator replaces
+"big memes" with funny AI videos relevant to the Account: no like/view floor,
+at most twenty distinct native reposts per Toronto day, thirty minutes apart.
+The existing meme flag, ledger action and history names remain for compatibility;
+old text-only approvals cannot authorize a video. Automatic quotes and timed
+self-reposts remain off; all-topic priority Elon likes/reposts/Replies remain.
+
+Existing feed/search discovery now retains outer-video evidence, with explicit
+funny-video queries inside the same sixteen-read budget. The five-minute background
+worker prefers already-discovered videos whose parents received a confirmed Reply.
+After restart it may check at most ten recent confirmed parents, one per turn,
+so a just-answered video is not lost. A Reply itself never authorizes a repost.
+An exact source/account/video check precedes a bounded 25-second Safari sampling
+turn: 6–16 actual frames across a clip up to 120 seconds. Review inspects all
+samples and records concrete observations across the sequence. Light visual
+humor qualifies; the score describes taste, with no exceptional-comedy floor.
+Creator names are attribution, never face identification. Missing audio/dialogue
+needed to understand the joke, unsafe content and unsupported claims still hold.
+No source download, original re-upload or automatic repeat is added. The shared
+model/read budgets and background priority preserve Reply capacity. Exact source
+text and native media ID are checked before sending; permanent claims, uncertain
+holds, duplicate protection and the daily ceiling survive restarts.
+
+The Operator requests 72 hours awake and retains manual restart. Local
+`AWAKE_72H_START=2026-11-12T21:48:10-05:00` ends November 15 at 21:48:10 Toronto,
+using elapsed hours across DST. The previous one-night override is cleared.
+The normal schedule resumes after expiry, with the next sleep November 16 at
+00:00 Toronto. Restart cannot extend the deadline; stop requests still win.
+No minimum reply/repost volume or engagement outcome is guaranteed.
+
 2026-11-12, restore Reply throughput, one awake night and selective AI humor —
 The Operator requests a rollback of the Reply slowdown, capacity for 1,400+
 Replies/day, broader AI/SI and meme discovery, sharper/funnier priority Elon

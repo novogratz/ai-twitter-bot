@@ -25,14 +25,18 @@ These are search targets, not new follows or verified follower-size claims.
 
 Automatic quotes and timed own-post reposts are disabled to free browser capacity.
 Watched Elon reposts have their own paced allowance; existing histories remain intact.
-Selective AI meme reposts reuse discovered sources: >=500 likes, >=100,000 views,
->=9/10 humor review, at most two/day and four hours apart. Only self-contained
-text-supported jokes qualify; unseen image/audio-dependent humor is held.
-Actual source/account/counters and confirmed repost state must match.
+Funny AI video reposts reuse discovered sources, with **no popularity floor**:
+up to **20 distinct reposts per Toronto day**, at least thirty minutes apart.
+The five-minute worker samples the actual video, checks its humor and relevance,
+and prefers videos we just replied to. Each review uses 6–16 timestamped frames
+across clips up to two minutes; missing dialogue/audio needed for the joke holds
+the source. Exact source text, video identity, account and repost state must match.
+Twenty is a ceiling, not a target; ordinary text memes no longer use this allowance.
 
-The locally requested **November 12–13 night stays awake** after the Operator's
-manual restart. This one-date override expires automatically; normal midnight
-sleep resumes tomorrow night (November 14 at 00:00 Toronto). The bot stays
+The locally requested **72-hour awake window** runs November 12 at 21:48:10
+through November 15 at 21:48:10 Toronto. Restarts never extend this deadline;
+afterward the normal schedule applies, with the next sleep at November 16 midnight.
+The bot stays
 paused until the Operator restarts it. Reply volume and follower gains are not guaranteed.
 
 The November 9 refinement restores warmth as the default: delight, encouragement,

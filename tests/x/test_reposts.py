@@ -122,10 +122,10 @@ def test_like_cap_is_enforced_at_the_shared_chokepoint(browser, settings_overrid
 
 def _page_js(mode, *, author="elonmusk", page_author="elonmusk", nested=False,
              reposted=False, quote=False, menu=True, undo_menu=False, self_mode=False, owner="elonmusk",
-             likes="", views="", quoted_counts=False):
+             likes="", views="", quoted_counts=False, video=False, quoted_video=False):
     options = dict(mode=mode, author=author, page_author=page_author, nested=nested,
                    reposted=reposted, quote=quote, menu=menu, undo_menu=undo_menu, self_mode=self_mode, owner=owner,
-                   likes=likes, views=views, quoted_counts=quoted_counts)
+                   likes=likes, views=views, quoted_counts=quoted_counts, video=video, quoted_video=quoted_video)
     setup = r"""
       const opt = __OPTIONS__, counts = {open: 0, confirm: 0, undo: 0};
       const location = {hostname: 'x.com', pathname: '/' + opt.page_author + '/status/2063500000000000101'};
@@ -142,12 +142,14 @@ def _page_js(mode, *, author="elonmusk", page_author="elonmusk", nested=False,
       const confirm = element({click: () => counts.confirm++});
       const likeCount = element({getAttribute: () => opt.likes}, opt.quoted_counts);
       const viewCount = element({getAttribute: () => opt.views}, opt.quoted_counts);
+      const player = element({poster: 'https://pbs.twimg.com/amplify_video_thumb/123456/img/a.jpg'}, opt.quoted_video);
       article.querySelectorAll = sel => ({
         'a[href]': [link], '[data-testid="tweetText"]': [element({innerText: article.innerText})],
         '[data-testid="retweet"]': opt.reposted ? [] : [button],
         '[data-testid="unretweet"]': opt.reposted ? [undo] : [],
         '[data-testid="like"], [data-testid="unlike"]': [likeCount],
-        'a[href$="/status/2063500000000000101/analytics"]': [viewCount]
+        'a[href$="/status/2063500000000000101/analytics"]': [viewCount],
+        'video': opt.video ? [player] : []
       }[sel] || []);
       const parent = {querySelectorAll: () => [], innerText: ''};
       const document = {
@@ -204,6 +206,13 @@ def test_meme_exact_outer_counters_and_unknowns(label, expected):
     assert page["likes"] == expected and page["views"] == 100000
     quoted = _page_js("meme_read", owner="ownbot", likes=label, views="100K Views", quoted_counts=True)["page"]
     assert quoted["likes"] is None and quoted["views"] is None
+
+
+@pytest.mark.parametrize("has_video,quoted,expected", [(True, False, True), (True, True, False), (False, False, False)])
+def test_repost_video_identity_excludes_quoted_card_players(has_video, quoted, expected):
+    page = _page_js("meme_read", owner="ownbot", video=has_video, quoted_video=quoted)["page"]
+    assert page["has_video"] is expected
+    assert page["media_id"] == ("123456" if expected else "")
 
 
 @pytest.mark.parametrize("text", ["So beautiful", "Yes", "Wow"])

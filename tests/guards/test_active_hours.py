@@ -72,6 +72,29 @@ def test_skipped_night_keeps_model_time_and_stop_still_wins(settings_override, m
         hours.require_active()
 
 
+def test_72_hour_window_survives_dates_and_expires_without_restart(settings_override, monkeypatch):
+    from src.core.reply_feedback import _active_seconds
+    settings_override(AWAKE_72H_START="2026-11-12T02:00:00-05:00", HOURLY_BREAK_MINUTES=0)
+    for day in (12, 13, 14):
+        now = datetime(2026, 11, day, 3, tzinfo=TORONTO)
+        assert hours.is_active(now)
+        assert hours.bedtime(now) == datetime(2026, 11, 15, 2, tzinfo=TORONTO)
+    assert not hours.is_active(datetime(2026, 11, 12, 1, tzinfo=TORONTO))
+    assert not hours.is_active(datetime(2026, 11, 15, 2, tzinfo=TORONTO))
+    assert _active_seconds(datetime(2026, 11, 15, 3, tzinfo=TORONTO)) == (21.5 * 3600, 2 * 3600)
+    assert _active_seconds(datetime(2026, 11, 13, 3, tzinfo=TORONTO)) == (24 * 3600, 3 * 3600)
+    clock(monkeypatch, datetime(2026, 11, 13, 3, tzinfo=TORONTO))
+    stop_requested(monkeypatch)
+    assert not hours.may_act()
+
+
+def test_72_hours_are_elapsed_hours_across_dst(settings_override):
+    settings_override(AWAKE_72H_START="2026-10-30T22:00:00-04:00")
+    start, end = hours.awake_window()
+    assert end.timestamp() - start.timestamp() == 72 * 3600
+    assert end == datetime(2026, 11, 2, 21, tzinfo=TORONTO)
+
+
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 23, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 3600

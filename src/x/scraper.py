@@ -249,7 +249,9 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
                 var an = analytics[0];
                 views = extractFromLabel(an.getAttribute('aria-label') || an.textContent || '');
             }
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            var hasVideo = Array.from(a.querySelectorAll('video, [data-testid="videoPlayer"]')).some(el =>
+                el.closest('article') === a && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, hv: hasVideo, tl: tl, ir: isReply, ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -311,6 +313,7 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             # feed/search candidates ("No viable candidates this cycle").
             "timestamp": t.get("ts") or "",
             "views": t["v"] if type(t.get("v")) is int and t["v"] >= 0 else None,
+            "has_video": t.get("hv") is True,
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")

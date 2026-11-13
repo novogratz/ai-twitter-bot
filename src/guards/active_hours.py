@@ -1,5 +1,5 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
-from datetime import date, datetime, time, timedelta
+from datetime import date, datetime, time, timedelta, timezone
 from functools import wraps
 import hashlib
 import threading
@@ -54,6 +54,8 @@ def break_until(now: datetime | None = None) -> datetime | None:
 
 def window_label() -> str:
     label = f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    if window := awake_window():
+        label += f"; awake from {window[0].isoformat()} until {window[1].isoformat()}"
     night = settings.get("SKIP_SLEEP_NIGHT_DATE")
     return label + (f"; sleep skipped for the night of {night} only" if night else "")
 
@@ -61,6 +63,15 @@ def window_label() -> str:
 def _skipped_sleep_day():
     night = settings.get("SKIP_SLEEP_NIGHT_DATE")
     return date.fromisoformat(night) + timedelta(days=1) if night else None
+
+
+def awake_window():
+    start = settings.get("AWAKE_72H_START")
+    if not start:
+        return None
+    start = datetime.fromisoformat(start).astimezone(timezone.utc)
+    zone = ZoneInfo(config.BOT_TIMEZONE)
+    return start.astimezone(zone), (start + timedelta(hours=72)).astimezone(zone)
 
 
 def now_local() -> datetime:
@@ -86,6 +97,9 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    window = awake_window()
+    if window and window[0] <= local < window[1]:
+        return True
     clock = local.time().replace(tzinfo=None)
     if local.date() == _skipped_sleep_day() and clock < WAKE:
         return True
@@ -107,7 +121,9 @@ def may_act(now: datetime | None = None) -> bool:
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    return wake if local < wake else wake + timedelta(days=1)
+    wake = wake if local < wake else wake + timedelta(days=1)
+    window = awake_window()
+    return min(wake, window[0]) if window and local < window[0] else wake
 
 
 def require_active() -> None:
@@ -144,6 +160,11 @@ def bedtime(now: datetime) -> datetime:
         end += timedelta(days=1)
     if end.date() == _skipped_sleep_day():
         end += timedelta(days=1)
+    window = awake_window()
+    if window and (window[0] <= end < window[1] or window[0] <= local < window[1]):
+        end = window[1]
+        if is_active(end):
+            end = end.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0) + timedelta(days=1)
     return end.astimezone(now.tzinfo)
 
 

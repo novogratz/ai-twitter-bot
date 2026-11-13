@@ -276,16 +276,19 @@ if(Math.abs(v.currentTime-sample.target)>.08 || !insideCell || !insideRange){
   v.pause();v.currentTime=sample.target;return status();
 }
 v.pause();
-try{const c=document.createElement('canvas');c.width=64;c.height=64;c.getContext('2d').drawImage(v,0,0,64,64);
+try{const c=document.createElement('canvas');c.width=__FRAME_WIDTH__;c.height=__FRAME_HEIGHT__;c.getContext('2d').drawImage(v,0,0,c.width,c.height);
   return JSON.stringify({at:v.currentTime,requested_at:requested,sample_target:sample.target,
     cell:[cellStart,cellEnd],gap:sample.gap,png:c.toDataURL('image/png')});}
 catch(e){return JSON.stringify({error:'frame access denied'});}
 """
 
 
-def _sample_frame_script(select, at, cell_start, cell_end):
+def _sample_frame_script(select, at, cell_start, cell_end, *, width=64, height=64):
+    if any(type(v) is not int or not 32 <= v <= 1024 for v in (width, height)):
+        raise ValueError("invalid sample dimensions")
+    sample = _FRAME_SAMPLE.replace("__FRAME_WIDTH__", str(width)).replace("__FRAME_HEIGHT__", str(height))
     return ("(()=>{" + select + _FRAME_LOADING +
-            f"const requested={at},cellStart={cell_start},cellEnd={cell_end};" + _FRAME_SAMPLE + "})()")
+            f"const requested={at},cellStart={cell_start},cellEnd={cell_end};" + sample + "})()")
 
 
 def _sample_evidence(observed, requested, cell_start, cell_end):
@@ -318,7 +321,8 @@ def _video_selector(post_id):
         "[...a.querySelectorAll('a[href*=\"/status/\"] time')].some(t=>t.closest('article')===a"
         " && !t.closest('[data-testid=\"quoteTweet\"], div[role=\"link\"]')"
         " && t.closest('a')?.getAttribute('href')?.split('?')[0]?.endsWith('/status/" + post_id + "')));"
-        "const v=a?.querySelector('video');")
+        "const vs=[...(a?.querySelectorAll('video') || [])].filter(v=>v.closest('article')===a"
+        " && !v.closest('[data-testid=\"quoteTweet\"], div[role=\"link\"]'));const v=vs.length===1?vs[0]:null;")
 
 
 def _video_metadata_script(post_id):
