@@ -137,7 +137,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
     if store.meta("publish_retry_after", 0) > now.timestamp():
         return None
     from ..news.publisher import video_hold
-    if video_hold(now.timestamp()):
+    from ..guards import quote_store
+    if video_hold(now.timestamp()) or quote_store.video_hold(now.timestamp()):
         return None
     stamp, day = now.timestamp(), schedule.local(now).date().isoformat()
     with store.transaction() as db:
@@ -287,7 +288,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
 
 def guard(store, ident, token, now, cfg, *, submitting=False):
     from ..news.publisher import video_hold
-    news_reason = video_hold(now)
+    from ..guards import quote_store
+    news_reason = video_hold(now) or quote_store.video_hold(now)
     if news_reason:
         raise ValueError(news_reason)
     if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc)):

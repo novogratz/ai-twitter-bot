@@ -60,15 +60,17 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
 
 
 @pytest.mark.parametrize("value", ["today", "2026-11-31", "20261104", "2026-W45-3"])
-def test_reply_boost_requires_an_exact_calendar_date(fresh, value):
-    with pytest.raises(settings.SettingsError, match="REPLY_VOLUME_BOOST_DATE"):
-        fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
+@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"])
+def test_date_overrides_require_an_exact_calendar_date(fresh, value, name):
+    with pytest.raises(settings.SettingsError, match=name):
+        fresh(f"{name}={value}\n")
 
 
 @pytest.mark.parametrize("value", ["", "2026-11-04"])
-def test_reply_boost_accepts_blank_or_a_calendar_date(fresh, value):
-    fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
-    assert settings.get("REPLY_VOLUME_BOOST_DATE") == value
+@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"])
+def test_date_overrides_accept_blank_or_a_calendar_date(fresh, value, name):
+    fresh(f"{name}={value}\n")
+    assert settings.get(name) == value
 
 
 def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_override, monkeypatch):

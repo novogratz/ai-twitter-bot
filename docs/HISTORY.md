@@ -1,5 +1,27 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-12 — Restore Reply throughput and prioritize watched conversations
+
+Confirmed ledger/CSV counts were 926 Replies November 9, 951 November 10,
+492 November 11, and 193 November 12 before the 20:39 operator pause. Search
+sources supplied 540 November 9 Replies and only six November 12 Replies.
+The retained latest log segment contained 806 own-repost attempts (798 refused)
+and 1,096 watched repost attempts (1,095 refused). The saved pipeline report
+included a discovery call lasting 2,405 seconds; concurrent worker totals overlap.
+These observations support browser contention and batch discovery as bottlenecks,
+not a promise that reverting any one setting produces a specified volume.
+
+The Operator requested restoration, 1,400+ daily capacity, one awake night,
+broader AI humor/art sources, priority witty Elon Replies, selective AI meme
+reposts, PR/merge/push, and manual restart. The implementation restores incremental
+search drafting and bounded scan sizes, backs off repeated watched failures,
+disables automatic quotes/own repost loops, and adds reviewed meme reposts only
+from already-discovered sources. Permanent histories are preserved.
+The later clarification keeps independent Elon likes/reposts enabled alongside
+priority Replies. Friendly encouragement and sharp SI insight remain the voice;
+1,000+ daily Replies is the requested minimum goal, with a 1,400–1,800 advisory
+target. Counts and audience reactions still require observed live results.
+
 ## 2026-11-09 — Live artist turn reveals one short-English false refusal
 
 PR #405 passed all 3,114 isolated tests and GitHub CI, merged as `4568b1d7`, and

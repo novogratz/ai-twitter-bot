@@ -253,8 +253,11 @@ def _parent_verdict(job: Job, candidate: Candidate):
     verdict = judge_parent(candidate.url, debate_turn=job.debate_turn,
                            is_reply=candidate.is_reply or bool(candidate.context)
                            or candidate.text.lstrip().startswith("@"))
-    if verdict and not account.engagement_allowed(candidate.text):
+    if verdict and not account.engagement_allowed(candidate.text, url=candidate.url):
         return Verdict(Refusal.TOPIC, "source is outside the Account's engagement niche", verdict.author)
+    minimum = settings.get("REPLY_MIN_LIKES")
+    if verdict and minimum and (type(candidate.likes) is not int or candidate.likes < minimum):
+        return Verdict(Refusal.ENGAGEMENT, "at least the configured observed parent likes required", verdict.author)
     return verdict
 
 

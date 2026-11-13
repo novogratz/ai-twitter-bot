@@ -273,17 +273,16 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, b
 
     dr.run_direct_reply_cycle()
     assert len(chokepoint.sent) == (6 if boosted else 3)
-    # Enabled artist discovery finishes before drafting. A boosted read budget
-    # can backfill the short ordinary pools with the remaining creator queries.
-    expected_reads = (6 if boosted else 2) if creator_queries else (2 if boosted else 1)
-    assert len(lanes["queries"]) == expected_reads
+    # Finish only the reserved artist reads, then draft incrementally and stop
+    # reading as soon as the generation budget is spent.
+    assert len(lanes["queries"]) == (creator_queries or (2 if boosted else 1))
 
     chokepoint.calls.clear()
     lanes["queries"].clear()
     dr.run_direct_reply_cycle(max_replies=12)
     # Buffered posts save browser work; an explicit manual budget stays exact.
     assert len(chokepoint.sent) == 12
-    assert len(lanes["queries"]) == (6 if creator_queries and boosted else 2)
+    assert len(lanes["queries"]) == 2
 
 
 # --- feed_sweep -------------------------------------------------------------------

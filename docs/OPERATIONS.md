@@ -419,6 +419,9 @@ Safari restart, and nothing writes over the file:
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `priority_watch_state.json` | `priority_watch_job` before search or any action |
+| `meme_repost_reviews.json` | Selective AI meme review and native repost admission |
+| `priority_quotes.json` | Watched quote delivery and video admission that reads quote spacing |
+| `self_reposts.json` | Own-post discovery and timed repost/undo dispatch |
 | `reposted_tweets.json` | Repost writes and Original publication admission, which need its pending reservations |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
@@ -595,6 +598,9 @@ root:
 | `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |
 | `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
+| `meme_repost_reviews.json` | `meme_repost_store` | Source-hash-bound AI humor approvals/refusals; actual permanent send claims remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
+| `priority_quotes.json` | `quote_store` | Source-bound editorial reviews, permanent confirmed/uncertain native quote receipts and daily reservations | guarded, process lock; never clear an uncertain send without checking X |
+| `self_reposts.json` | `self_repost_store` | Activation, own status IDs, one-hour due times, observed views, next half-hour turn and ambiguous undo/repost phases | guarded, process lock; preserve on restart |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `reply_feedback.json` | `reply_feedback` | Three-day deterministic one-in-five Reply sample; exact own URL, actual observation ages, nullable counters and source/model/topic | disposable; never an admission history |
@@ -916,3 +922,19 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+### Scheduled promotion recovery (November 10)
+
+Quotes in `pending` never automatically resubmit. Inspect the exact own post and
+source card before reconciling. An own-repost `undo_pending` can continue only
+after observing the exact original no longer reposted; `repost_pending` confirms
+only after the exact original is visibly reposted. Otherwise it stays held.
+Do not delete these stores or reset next-due timestamps. Post/repost receipts,
+not elapsed scheduler time, establish success. The ordinary restart workflow
+preserves these files and all existing production histories.
+
+November 12: the Operator will restart manually. Preserve `.bot_disabled` until
+that start. The local one-night sleep exception expires without another restart;
+quotes and timed self-reposts stay disabled until explicitly changed. Native meme
+reposts use permanent repost claims; an unconfirmed click cannot be retried by
+clearing the review record. Read-only diagnostics do not publish.

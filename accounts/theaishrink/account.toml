@@ -16,8 +16,14 @@ standalone_replies_only = true
 engagement_niche_only = true
 # Keep the old identity and state folder so historical own posts stay protected.
 previous_handles = ["TheAIShrink"]
-# Operator, 2026-11-01: watch AI/SI standalone originals only; no author exemption.
+# Operator, 2026-11-10: all new standalone originals by this exact author.
 auto_engage_handles = ["elonmusk"]
+auto_engage_all_topics = true
+# November 12: new Elon originals get independent like/repost/Reply priority.
+watched_reposts_independent = true
+# Keep the slower promotion jobs disabled while restoring Reply capacity.
+priority_quotes_enabled = false
+self_reposts_enabled = false
 
 [editorial]
 # Operator, 2026-10-26: use the working Codex Reply route for originals too.
@@ -136,7 +142,7 @@ publisher = "Hugging Face docs"
 # and a Trending post must match `topic`; a Trending post that matches
 # `off_topic` is dropped.
 [relevance]
-topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo(?:\s*\d)?|midjourney|kling|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|seedance|flux\s*(?:\d|kontext)|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|ml|codex|copilot|cursor|windsurf|replit|grok(?:\s+imagine)?|xai)\b'
+topic = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo(?:\s*\d)?|midjourney|kling|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|seedance|comfyui|generative\s+(?:video|art|film|images?)|flux\s*(?:\d|kontext)|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|ml|codex|copilot|cursor|windsurf|replit|grok(?:\s+imagine)?|xai)\b'
 off_topic = '\$[A-Za-z]{2,6}\b|\b(crypto\w*|bitcoin|btc|ethereum|eth|solana|altcoins?|memecoins?|airdrop|giveaway|presale|forex|stocks|stock\s+(market|price|picks)|share\s+price|price\s+target|earnings|dividends?|etfs?|finance|financial|trading|traders?|investors?|investing|bullish|bearish|bourse)\b'
 
 # Relations: how the Replies treat particular accounts, keyed by handle (case
@@ -158,18 +164,22 @@ default = "relations/buddy.md"
 # Operator, 2026-10-23: deeper discovery.
 FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
+FEED_SWEEP_INTERVAL_MINUTES = 8
+REPLY_MIN_LIKES = 0
+PRIORITY_WATCH_INTERVAL_SECONDS = 60
+PRIORITY_WATCH_NOTIFICATIONS = true
+MEME_REPOST_ENABLED = true
 # Operator, 2026-11-01: no daytime breaks; sleep midnight–04:30 Toronto.
 HOURLY_BREAK_MINUTES = 0
 # Operator, 2026-11-02: pursue 1,500+ distinct Replies at the existing spacing floor.
 MIN_SECONDS_BETWEEN_REPLIES = 8
 REPLY_JITTER_SECONDS = 4
 # Advisory goals only: never override quality, sleep or spacing; no daily cap.
-REPLY_DAILY_TARGET_MIN = 1500
+REPLY_DAILY_TARGET_MIN = 1400
 REPLY_PREFERRED_MIN_LIKES = 3
 REPLY_DAILY_TARGET_MAX = 1800
-# Operator, 2026-11-09: warmer Replies and a bounded turn for other artists.
-# Total: four priority-author Latest, two creator Latest, six Top, four general Latest.
-# Three observed likes remain a preference within each author-priority group.
+# Operator, 2026-11-12: restore incremental drafting and the November 9 read budget.
+# Three likes are a preference again; extra topics rotate within the same budget.
 DIRECT_REPLY_QUERIES_PER_CYCLE = 16
 DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 4
 DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE = 2
@@ -226,7 +236,7 @@ big_ai_hype = [
     "rowancheung", "TheRundownAI", "minchoi", "kimmonismus", "slow_developer", "mreflow",
     "bentossell", "venturetwins", "heybarsee", "alexandr_wang", "emollick", "swyx",
     "_akhaliq", "GaryMarcus", "testingcatalog", "btibor91", "AISafetyMemes", "amasad",
-    "OfficialLoganK", "DrJimFan", "sytelus",
+    "OfficialLoganK", "DrJimFan", "sytelus", "tszzl", "signulll", "nearcyan",
 ]
 mid_size_ai = [
     "hwchase17", "jerryjliu0", "yoheinakajima", "mckaywrigley", "rasbt", "Teknium1",
@@ -270,9 +280,9 @@ follow_engagers_skip = [
 # other casing skips the French verb: j'ai, J’ai, vous ai, ai-je.
 # Standalone SI stays uppercase so the French conjunction "si" is not a topic.
 [niche]
-# AI/SI evidence is required on every Reply, like and watched repost.
+# AI/SI evidence is required except the exact watched-author all-topic opt-in.
 # A match for relevance.off_topic refuses even when an AI term also appears.
-post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo(?:\s*\d)?|midjourney|kling|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|seedance|flux\s*(?:\d|kontext)|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|ml|codex|copilot|cursor|windsurf|replit|grok(?:\s+imagine)?|xai)\b'
+post = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\bles\s)(?<!\blui\s)(?<!vous\s)(?<!nous\s)(?<!leur\s)ai(?!-je\b)|a\.i|i\.a|ia|agi|(?-i:SI)|asi|super\s*intelligence|genai|llms?|gpt\w*|chatgpt|chatbots?|claude|openai|anthropic(?:ai)?|mistral(?:ai)?|gemini|grok|xai|deepseek|llama\d*|qwen\d*|sora|veo(?:\s*\d)?|midjourney|kling|runway(?:ml|\s+(?:gen[ -]?\d|video|model))|luma\s+(?:dream|ray)|pika\s+(?:labs|video)|wan\s*\d|hunyuan\s*video|seedance|comfyui|generative\s+(?:video|art|film|images?)|flux\s*(?:\d|kontext)|apple\s+intelligence|huggingface|(?:google)?deepmind|artificial\s+intelligence|intelligence\s+artificielle|machine\s*learning|deep\s*learning|neural|computer\s+vision|transformers?|reasoning\s+models?|context\s+windows?|open[\s-]*weights?|vibe\s*coding|agentic|(?:coding|autonomous)\s+agents?|cuda|gpus?|tpus?|data\s*centers?|robots?|robotics|humanoids?|humano[iï]des?|ml|codex|copilot|cursor|windsurf|replit|grok(?:\s+imagine)?|xai)\b'
 # Every follow, including a seed or Engager, needs an on-topic name/bio
 # with no relevance.off_topic match. The AI terms of `post`, less the model
 # and tool names that are also first names or common words (Claude, Sora,
@@ -285,6 +295,10 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # Artists' own work/progress: search hints, never proof of authorship or humanity.
 # Two rotate per direct cycle; no view/like floor and no new profile visits.
 creators = [
+    '(AI OR SI OR "Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) ("short film" OR "AI movie" OR cinematography OR storyboard OR "music video") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney OR "Flux Kontext" OR ComfyUI) (illustration OR animation OR "character design" OR "concept art" OR "digital art") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "generative video") (filmmaker OR filmmaking OR director OR VFX OR "visual effects" OR "animated film") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Kling OR Veo OR Seedance) ("my film" OR "my video" OR "behind the scenes" OR "shot breakdown" OR "camera movement") lang:en -filter:replies -filter:retweets',
     '(AI OR SI) ("my art" OR "my film" OR "my animation" OR "I made" OR "I created") (art OR film OR animation OR video) lang:en -filter:replies -filter:retweets',
     '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) ("made with" OR "created with" OR "my short" OR "my latest") lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR Midjourney OR "Grok Imagine") ("my artwork" OR "my illustration" OR "my character" OR "my creation") lang:en -filter:replies -filter:retweets',
@@ -294,6 +308,11 @@ creators = [
 ]
 # First-hour discoveries: no min_faves floor; root posts only, still niche checked.
 latest = [
+    '(AI OR SI OR AGI OR LLM OR ChatGPT OR Claude OR Grok) (meme OR memes OR funny OR parody OR satire OR brainrot) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM OR "Claude Code" OR Codex) ("vibe coding" OR "prompt failed" OR "agent failed" OR "my workflow" OR "I built") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (science OR education OR accessibility OR healthcare OR research OR learning) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("open weights" OR "local model" OR "small model" OR "fine tuning" OR multimodal OR reasoning) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (agents OR automation OR "voice agent" OR evaluation OR safety OR alignment) lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (video OR animation OR filmmaking OR image) lang:en -filter:replies -filter:retweets',
     '("Grok Imagine" OR Sora OR Veo OR Kling OR Seedance OR "Runway video") lang:en -filter:replies -filter:retweets',
     '("Luma Dream Machine" OR "Pika Labs" OR "HunyuanVideo" OR "Wan 2" OR Midjourney) lang:en -filter:replies -filter:retweets',
@@ -312,6 +331,13 @@ latest = [
 # direct_reply rotates through `replies` then `hot_tab` within its Top budget;
 # a result must be on the niche. Routine searches have no popularity floor.
 replies = [
+    '(from:AISafetyMemes OR from:tszzl OR from:signulll OR from:nearcyan) (AI OR SI OR AGI OR LLM OR Claude OR Grok OR ChatGPT OR superintelligence) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR AGI OR LLM OR ChatGPT OR Claude OR Grok) (meme OR memes OR funny OR parody OR satire OR brainrot) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine" OR Seedance OR Kling OR Veo) ("short film" OR "music video" OR "my animation" OR "first attempt" OR "behind the scenes") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) (art OR movie OR filmmaking OR animation OR "music video" OR "short film") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney OR "Flux Kontext" OR ComfyUI) (artist OR illustration OR cinematic OR "concept art" OR workflow) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (science OR education OR accessibility OR medicine OR research OR robotics) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("open source" OR "local models" OR agents OR "voice agents" OR safety OR alignment) lang:en -filter:replies -filter:retweets',
     '("why would" OR "why is" OR "what am I missing") (GPU OR (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) lang:en',
     '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en',
     '(ChatGPT OR Claude OR Gemini OR Grok OR Llama OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) assistant)) lang:en',

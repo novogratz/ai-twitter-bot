@@ -44,6 +44,34 @@ def test_the_window_label_follows_the_constants():
     assert hours.window_label() == "04:30–00:00 America/Toronto"
 
 
+@pytest.mark.parametrize("when,awake", [
+    ("2026-11-12T00:01:00-05:00", False),
+    ("2026-11-12T23:59:59-05:00", True),
+    ("2026-11-13T00:00:00-05:00", True),
+    ("2026-11-13T04:29:59-05:00", True),
+    ("2026-11-13T04:30:00-05:00", True),
+    ("2026-11-14T00:00:00-05:00", False),
+])
+def test_skip_sleep_applies_to_one_explicit_toronto_night(settings_override, when, awake):
+    settings_override(SKIP_SLEEP_NIGHT_DATE="2026-11-12")
+    assert hours.is_active(datetime.fromisoformat(when)) is awake
+
+
+def test_skipped_night_keeps_model_time_and_stop_still_wins(settings_override, monkeypatch):
+    from src.core.reply_feedback import _active_seconds
+    settings_override(SKIP_SLEEP_NIGHT_DATE="2026-11-12", HOURLY_BREAK_MINUTES=0)
+    now = datetime(2026, 11, 13, 1, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+    assert hours.bedtime(now) == datetime(2026, 11, 14, tzinfo=TORONTO)
+    assert hours.seconds_until_pause() == 23 * 3600
+    assert _active_seconds(now) == (24 * 3600, 3600)
+    assert _active_seconds(now - timedelta(days=1))[0] == 19.5 * 3600
+    stop_requested(monkeypatch)
+    assert not hours.may_act()
+    with pytest.raises(hours.OutsideActiveHours):
+        hours.require_active()
+
+
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
     clock(monkeypatch, datetime(2026, 9, 20, 23, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 3600

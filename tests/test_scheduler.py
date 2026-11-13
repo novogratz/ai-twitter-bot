@@ -30,7 +30,9 @@ def test_scheduler_build_runs_no_editorial_cycle(monkeypatch):
     monkeypatch.setattr(main, "run_editorial_cycle", forbidden)
     scheduler = main.build_scheduler()
     assert inspect.unwrap(scheduler.get_job("editorial_job").func) is forbidden
-    assert not any("quote" in j.id or "boost" in j.id or "thread" in j.id for j in scheduler.get_jobs())
+    assert scheduler.get_job("priority_quote_job") is None
+    assert scheduler.get_job("self_repost_job") is None
+    assert not any("thread" in j.id for j in scheduler.get_jobs())
 
 
 @pytest.mark.parametrize("flags, opened", [(["--reply-only"], False), ([], True), (["--post-only"], True)])

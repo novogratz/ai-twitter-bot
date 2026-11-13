@@ -68,13 +68,17 @@ PRE_187_BOUNDED = {
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
             "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news",
-            "startup_publications"}
-WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
+            "startup_publications", "reply_min_likes", "self_reposts", "profile_budget_note", "skip_sleep_night_date", "meme_reposts"}
+WATCH_BOUNDS = {"PRIORITY_WATCH_NOTIFICATIONS": False, "MEME_REPOST_ENABLED": False,
+                "MEME_REPOST_DAILY_CAP": 2, "MEME_REPOST_MIN_LIKES": 500, "MEME_REPOST_MIN_VIEWS": 100000,
+                "MEME_REPOST_INTERVAL_MINUTES": 240, "PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
                 "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60,
-                "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
-REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
+                "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900, "PRIORITY_WATCH_CATCHUP_SCROLLS": 3,
+                "PRIORITY_REPOST_MIN_SECONDS": 60, "PRIORITY_QUOTE_DAILY_CAP": 2,
+                "PRIORITY_QUOTE_INTERVAL_MINUTES": 240}
+REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "REPLY_MIN_LIKES": 0, "FEED_SWEEP_INTERVAL_MINUTES": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
                       "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
                       "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2,
                       "DIRECT_REPLY_QUERIES_PER_CYCLE": 8, "DIRECT_REPLY_MAX_PER_CYCLE": 3,
@@ -91,7 +95,7 @@ def test_watch_jobs_have_independent_workers_and_short_dispatch_intervals():
     assert jobs["priority_watch_job"].executor == "watch"
     assert jobs["priority_actions_job"].executor == "watch_actions"
     assert jobs["priority_reply_job"].executor == "watch_reply"
-    assert jobs["priority_watch_job"].trigger.interval.total_seconds() == 20
+    assert jobs["priority_watch_job"].trigger.interval.total_seconds() == 60
     assert jobs["priority_actions_job"].trigger.interval.total_seconds() == 2
     assert jobs["priority_reply_job"].trigger.interval.total_seconds() == 2
 
@@ -143,6 +147,10 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
     expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
+    i = expected["jobs"].index("engage_job")
+    expected["jobs"][i:i] = ["meme_repost_job"]
+    expected["quotes"] = 0
+    expected["max_profile_posts"] = None
     expected["reposts"] = "watched authors only"
     assert shown["auto_engage_handles"] == ["elonmusk"]
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
@@ -151,8 +159,10 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
+        "FEED_SWEEP_INTERVAL_MINUTES": 8, "REPLY_MIN_LIKES": 0,
+        "PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_NOTIFICATIONS": True, "MEME_REPOST_ENABLED": True,
         "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
-        "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800,
+        "REPLY_DAILY_TARGET_MIN": 1400, "REPLY_DAILY_TARGET_MAX": 1800,
         "REPLY_PREFERRED_MIN_LIKES": 3, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
         "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
         "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,

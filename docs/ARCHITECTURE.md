@@ -127,9 +127,13 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns thirteen Toronto slots, 05:00–23:00 every 90 minutes, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
-| `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |
+| `feed_sweep_job` | 8 min | Collects both For You and Following, up to 160 posts/20 scrolls each, then drafts from both buffers with three likes preferred and existing generation budgets. |
+| `priority_watch_job` | 60 sec locally; 20 sec default | Checks watched notification links and verifies up to two new exact originals, then Latest discovery; first viewport normally, bounded catch-up on startup/every fifteen minutes. |
 | `priority_actions_job` | 2 sec, configurable slower | Dedicated `watch_actions` executor; bounded like/repost attempts on discovered watched originals, newest first. |
+| `meme_repost_job` | 15 min, opt-in | Reviews already discovered AI humor; at most two native reposts/day, four hours apart. |
+| `priority_quote_job` | 30 min, opt-in | Dedicated quote executor compares a bounded shortlist and independently reviews a maximum of two native quotes/day. |
+| `self_repost_discovery_job` | 10 min, opt-in | Bounded own Latest/Top search finds new originals and older high-view posts. |
+| `self_repost_job` | 2 sec, opt-in | Due one-hour reposts and half-hour high-view refreshes, exact own-page verification and durable toggle reconciliation. |
 | `priority_reply_job` | 2 sec, configurable slower | Dedicated `watch_reply` executor; generate and send one newest eligible watched Reply per dispatch by default. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
@@ -1044,3 +1048,31 @@ ordering; only an idle spacing wait yields, and recomputes the remaining ledger
 gap after another sender. Required parent likes, browser verification and final
 admission stay in the write chokepoints. No queue holds the browser during a
 model call. A long browser transaction or provider stall can still delay action.
+
+## November 10 scoped promotion writes
+
+`quote_priority_post` accepts only durable reviewed approvals from `quote_store`;
+`quote_page` verifies a native source card and an exact own receipt.
+`repost_own_post` uses `self_repost_store` and explicit self modes in `repost_page`.
+Every action remains inside `confirmed_write` and the shared Safari lock.
+Unknown quote sends and self-repost toggles retain their claims across restarts.
+`watch_repost` and `self_repost` ledger rows keep their separate allowances.
+The general quote, repost and thread surfaces remain absent.
+
+### November 12 Reply recovery
+
+The feed sweep is one combined eight-minute discovery/drafting job again. Direct
+search drafts existing sources and after each ordinary query, so a slow last
+search cannot expire every earlier candidate. Sixteen rotating reads and eighty
+generations remain bounded. Notification leads join the existing watched queue,
+with exact-source verification and highest Reply priority. Fulfilled watched
+actions wait out source expiry; repeated failures back off up to an hour.
+
+Automatic quote/self-repost jobs are disabled by the live Account switches.
+`meme_repost_job` runs every fifteen minutes on a separate executor at background
+browser priority. `meme_repost_store.offer` receives existing scraped viewports,
+retains at most forty fresh qualifying candidates, and selects one per review.
+The model must find self-contained AI humor; reviewed source bytes and counters
+are rechecked by `twitter_client.repost_meme`. The shared native repost flow
+records permanent `kind=meme` claims in `reposted_tweets.json` and shipped
+`meme_repost` ledger rows. No second Safari publisher or search worker is added.

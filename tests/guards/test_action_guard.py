@@ -193,7 +193,7 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch, settings_override)
     assert ag.can_post(ag.POST) == (True, "")
 
 
-def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, settings_override):
+def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, settings_override, open_topic_account):
     from src.core import account
     now = datetime(2026, 10, 26, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)

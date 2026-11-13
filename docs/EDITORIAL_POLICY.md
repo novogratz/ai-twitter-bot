@@ -1,4 +1,117 @@
-# Editorial policy — November 9, 2026
+# Editorial policy — November 12, 2026
+
+## November 12 operator amendments
+
+2026-11-12, restore Reply throughput, one awake night and selective AI humor —
+The Operator requests a rollback of the Reply slowdown, capacity for 1,400+
+Replies/day, broader AI/SI and meme discovery, sharper/funnier priority Elon
+responses, PR creation/merge/push, and explicitly retains manual restart control.
+The bot stays stopped while this change is prepared. Counts are goals, never
+publication quotas, guarantees or evidence of follower gains.
+The later clarification seeks at least 1,000 daily Replies, friendly appreciation
+and sharp SI takes, with smart humor for Elon. The advisory target stays above
+that at 1,400–1,800; actual volume and reactions must be measured after restart.
+
+Restore incremental search drafting: four major-author and two creator Latest
+reads precede the bounded artist turn, then existing sources and each ordinary
+query can draft immediately. Six Top and four general Latest queries rotate
+within sixteen reads, with eighty generation attempts per cycle. Declines count
+against that budget. Both Home feeds return to a combined eight-minute cycle,
+up to twenty viewport scrolls and 160 posts each. Keep the corrected overlapping
+viewport scroll and the larger AI art/film/video query bank. Three observed likes
+are a preference again (`REPLY_MIN_LIKES=0`); permanent original history, English/SI,
+source/content checks, Sol/xhigh and eight-second spacing plus 0–4 jitter remain.
+
+New AI meme/humor, coding mishap and creative-progress queries rotate within
+those budgets. The configured major-author pool adds tszzl, signulll and nearcyan
+alongside existing AISafetyMemes. This designates search priorities, not measured
+follower size or a new follow rule. Searches and exact returned parents still
+need AI/SI relevance, except the existing exact watched-author all-topic exception.
+
+Elon remains the sole immediate watched author. Every observed eligible original
+gets highest queue priority; active browser transactions finish before that turn.
+Notification links are read once per minute alongside Latest, restricted to exact
+watched status URLs, then at most two unseen originals are verified before handoff.
+A notification alone never proves root status, text, freshness or publication.
+Fulfilled likes/reposts are not reopened hourly; failures back off up to one hour.
+Already answered parents avoid repeated dispatch. Replies favor a specific sharp
+first line and fresh humor when appropriate, with no forced jokes or fabricated facts.
+
+Automatic quotes and timed own-post reposts are disabled for this Account to
+restore Reply capacity. The Operator's latest instruction keeps independent Elon
+likes, reposts and Replies enabled: all three get priority as soon as a new verified
+standalone original is observed. Watched reposts retain at least sixty-second
+spacing including uncertain attempts; verified watched likes retain their required-
+parent quota exception. Completed actions are remembered and failures back off.
+All histories, uncertain claims and code remain intact. A separate AI meme repost allowance
+uses only existing feed/search discoveries: fresh standalone AI humor, at least
+500 verified likes and 100,000 verified exact-post views, plus a separate >=9/10
+humor review. The joke must be supported by the supplied text; unseen-media-dependent
+jokes, ordinary news, bait and unsupported consequential claims do not qualify.
+At most two native meme reposts per Toronto day, four hours apart, through the
+same Safari publisher at background priority. No extra searches or repeated
+undo/repost cycle. Exact source hash, account identity and fresh counts are checked
+before submission; confirmed/uncertain claims stay in permanent repost history.
+An ambiguous send holds the meme allowance, never automatically resubmits.
+News/startup remain off and ultra-video quality, spacing and reservations remain.
+
+The local `SKIP_SLEEP_NIGHT_DATE=2026-11-12` skips only the following Toronto
+midnight–04:30 sleep window. Normal midnight sleep resumes November 14, after
+November 13's normal daytime hours. The date expires automatically; stop requests,
+active browser admission, guarded histories and all quotas still apply. Other
+Accounts default to no override. Reports count each calendar day's active hours.
+
+## November 10 operator amendments
+
+2026-11-10, watched engagement, selective quotes, self-reposts and discovery —
+The Operator explicitly requests implementation and restart. New standalone Elon
+originals receive independent like, repost and one Reply attempts across topics;
+only exact URLs from `auto_engage_handles` get the Account's all-topic exception.
+Replies require at least three observed parent likes before generation and again
+on the verified page before sending, including watched authors. Unknown counts
+refuse. Permanent one-Reply-per-original history, English/SI, content rules,
+active hours and Reply pacing remain. Other engagement and follows stay AI/SI-only.
+
+`watched_reposts_independent` opts watched reposts out of video-only ownership and
+the Original budget, at least sixty seconds apart, including uncertain attempts.
+Their ledger action is `watch_repost`; prior claims/reservations are preserved.
+Verified watched likes share the required-parent quota exception. Catch-up reads
+collect each search viewport on startup and every fifteen minutes within the
+existing scan bound; immediate polls remain shallow. No old history is reset.
+
+`priority_quotes_enabled` allows up to two selective native watched quotes per
+Toronto day, four hours apart, with no minimum. A separate thirty-minute job
+compares at most six sources, requires >=8/10 impact and independent grounded,
+useful, natural-language review. Exact reviewed source/text/card, own account and
+own receipt must match. Missing or uncertain receipts retain permanent claims.
+Quotes and videos keep the configured profile spacing after confirmed/uncertain
+submissions (at least twenty minutes; the local setting is one hour).
+News and ordinary Originals remain disabled; ultra-video quality stays intact.
+
+`self_reposts_enabled` schedules own standalone profile posts, including videos
+and quotes but excluding Replies, for publication time plus one hour. Posts with
+strictly more than 50,000 freshly observed exact-status views can subsequently be
+undone and reposted every thirty minutes, measured from the last confirmed repost.
+A two-second dispatcher uses the shared Safari queue; contention, outages and
+sleep can delay actual delivery. Overnight-due work waits for waking hours.
+Existing older high-view posts can enter through bounded own Latest/Top searches.
+No unverified count or quoted card qualifies a post. Every explicit undo and
+repost is journaled before its click; ambiguous outcomes reconcile from the
+observed state or hold, never blindly repeat. `self_repost` is a separate ledger
+action and does not consume Original/video/quote quotas. Histories survive restart.
+
+Discovery now budgets twenty-four searches: four priority-author Latest, four
+creator Latest, ten Top and six general first-hour Latest. Added topics include
+SI art, movies, videos, animation, ComfyUI, science, accessibility, education,
+local/open models, agents, robotics and safety. Reply searches add min_faves:3
+unless they already have a higher floor. Search collection preserves every
+viewport. Both feeds have an independent four-minute discovery worker, up to
+thirty scrolls and 240 posts each; drafting cannot hold that worker. Feed/search
+scrolling advances by an overlapping viewport, independent of keyboard focus,
+so tall cards do not cause an early stall after tiny arrow-key movements. All ordinary
+search reads finish before bulk drafting. The same 80-generation budgets and
+source freshness remain; volume and reach are never promised.
+
 
 ## Warmth and artist discovery — November 9
 

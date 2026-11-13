@@ -13,10 +13,13 @@ from tests.helpers import fresh
 
 
 @pytest.fixture
-def watched(monkeypatch):
+def watched(monkeypatch, settings_override):
+    settings_override(PRIORITY_WATCH_NOTIFICATIONS=False)
     monkeypatch.setattr(watch, "_retry_after", {})
     monkeypatch.setattr(watch, "_reply_retry_delays", {})
+    monkeypatch.setattr(watch, "_action_retry_delays", {})
     monkeypatch.setattr(watch, "_pending", {})
+    monkeypatch.setattr(watch, "_catchup_after", {})
     monkeypatch.setattr(watch.watch_discovery, "_tweets", {})
     profile = replace(account.current(), auto_engage_handles=("builder",))
     monkeypatch.setattr(account, "current", lambda: profile)
@@ -44,7 +47,7 @@ def test_watch_reads_latest_and_acts_only_on_new_originals(watched, monkeypatch)
     monkeypatch.setattr(scraper, "scrape_x_search", search)
     tick()
     assert queries[0][0] == "from:builder -filter:replies -filter:retweets"
-    assert queries[0][1] == {"tab": "live", "max_tweets": 20, "text_limit": 1200, "scroll_passes": 0}
+    assert queries[0][1] == {"tab": "live", "max_tweets": 20, "text_limit": 1200, "scroll_passes": 3}
     assert watched == [("like", original), ("repost", original),
                        ("replies", [original], {"max_generations": 1})]
 
@@ -101,7 +104,7 @@ def test_break_stops_watch_before_discovery(watched, monkeypatch):
         tick()
 
 
-def test_refused_actions_back_off_without_hiding_replies(watched, monkeypatch):
+def test_fulfilled_actions_are_not_reopened_each_hour(watched, monkeypatch):
     url = fresh("builder")
     monkeypatch.setattr(scraper, "scrape_x_search", lambda *a, **kw: [{"url": url, "text": "Yes"}])
     monkeypatch.setattr(watch.time, "monotonic", lambda: 1000)
@@ -112,7 +115,7 @@ def test_refused_actions_back_off_without_hiding_replies(watched, monkeypatch):
     monkeypatch.setattr(watch.time, "monotonic", lambda: 5000)
     watched.clear()
     tick()
-    assert [e[0] for e in watched] == ["like", "repost", "replies"]
+    assert [e[0] for e in watched] == ["replies"]
 
 
 def test_many_posts_do_not_delay_replies_behind_forty_page_visits(watched, monkeypatch):
@@ -127,6 +130,42 @@ def tick():
     watch.run_priority_watch_cycle()
     watch.run_priority_actions_cycle()
     watch.run_priority_reply_cycle()
+
+
+def test_new_notification_is_verified_and_handed_off_before_regular_search(watched, settings_override, monkeypatch):
+    settings_override(PRIORITY_WATCH_NOTIFICATIONS=True)
+    url, other = fresh("builder"), fresh("other", n=2)
+    monkeypatch.setattr(scraper, "scrape_priority_notifications", lambda *a: [other, url])
+    reads = []
+    monkeypatch.setattr(tc, "read_priority_post", lambda target: reads.append(target) or
+                        dict(url=target, text="The new SI model is here", likes=4, views=500))
+    def search(*args, **kwargs):
+        assert url in watch._pending
+        return []
+    monkeypatch.setattr(scraper, "scrape_x_search", search)
+    watch.run_priority_watch_cycle()
+    watch.run_priority_reply_cycle()
+    watch.run_priority_watch_cycle()
+    assert reads == [url]
+    assert watched[-1][1] == [url]
+
+
+def test_refused_actions_back_off_exponentially_without_delaying_new_posts(watched, monkeypatch):
+    url = fresh("builder")
+    watch.observe([dict(url=url, text="New SI tools")])
+    stamp, calls = [1000], []
+    monkeypatch.setattr(watch.time, "monotonic", lambda: stamp[0])
+    monkeypatch.setattr(tc, "like_priority_post", lambda url: calls.append(url) or tc.LikeOutcome.REFUSED)
+    monkeypatch.setattr(tc, "repost_tweet", lambda url: tc.WriteOutcome.REFUSED)
+    watch.run_priority_actions_cycle()
+    assert watch._retry_after[(url, "like")] == 1300
+    stamp[0] = 1300
+    watch.run_priority_actions_cycle()
+    assert watch._retry_after[(url, "like")] == 1900
+    fresh_url = fresh("builder", n=1)
+    watch.observe([dict(url=fresh_url, text="A new SI video model")])
+    watch.run_priority_actions_cycle()
+    assert calls == [url, url, fresh_url]
 
 
 def test_discovery_does_not_wait_for_a_model_or_actions(watched, monkeypatch):

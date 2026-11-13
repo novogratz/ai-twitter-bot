@@ -11,6 +11,7 @@ def feed_browser(monkeypatch, settings_override):
     monkeypatch.setattr(safari, "open_url", lambda url: trace.opened.append(url) or True)
     monkeypatch.setattr(safari, "close_front_tab", lambda: trace.closed.append(True))
     monkeypatch.setattr(safari, "_scroll_page", lambda: trace.scrolls.append(True))
+    monkeypatch.setattr(safari, "_scroll_timeline", lambda: trace.scrolls.append(True) or True)
     monkeypatch.setattr(scraper.time, "sleep", lambda *_: None)
     monkeypatch.setattr(scraper, "_feed_tab", lambda labels, click:
                         trace.tabs.append((labels, click)) or "SELECTED")
@@ -22,6 +23,26 @@ def feed_browser(monkeypatch, settings_override):
 def _post(number, host="x.com"):
     return {"url": f"https://{host}/builder/status/{2063500000000000000 + number}",
             "text": f"SI post {number}"}
+
+
+def test_notifications_keep_only_exact_watched_status_links(feed_browser, monkeypatch):
+    import json
+    from src.x import scraper, safari
+    links = ["https://x.com/elonmusk/status/123", "https://twitter.com/elonmusk/status/123",
+             "https://x.com/elonmusk/status/124", "https://x.com/other/status/125",
+             "https://example.com/elonmusk/status/126", "https://x.com/elonmusk", None]
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: json.dumps(links))
+    assert scraper.scrape_priority_notifications(["elonmusk"]) == [
+        "https://x.com/elonmusk/status/124", "https://x.com/elonmusk/status/123"]
+    assert feed_browser.opened == ["https://x.com/notifications"] and feed_browser.closed == [True]
+
+
+@pytest.mark.parametrize("raw", ["not json", "{}", "null"])
+def test_unavailable_notifications_never_invent_posts(feed_browser, monkeypatch, raw):
+    from src.x import scraper, safari
+    monkeypatch.setattr(safari, "_run_js", lambda *a, **k: raw)
+    assert scraper.scrape_priority_notifications(["elonmusk"]) == []
+    assert feed_browser.closed == [True]
 
 
 @pytest.mark.parametrize("name, label", [("scrape_home_feed", "for you"),
@@ -94,6 +115,13 @@ def test_feed_exception_closes_tab_and_releases_lock(feed_browser, monkeypatch):
     with pytest.raises(RuntimeError, match="scrape failed"):
         scraper.scrape_home_feed(160)
     assert feed_browser.closed == [True]
+
+
+def test_search_collects_first_and_later_viewports_without_losing_posts(feed_browser):
+    from src.x import scraper
+    feed_browser.pages = [[_post(1), _post(2)], [_post(2), _post(3)], [_post(4)]]
+    assert [p["text"] for p in scraper.scrape_x_search("SI art", max_tweets=4)] == [f"SI post {i}" for i in range(1, 5)]
+    assert len(feed_browser.scrolls) == 2 and feed_browser.closed == [True]
 
 
 @pytest.mark.parametrize("selected, click, expected, clicks", [
