@@ -283,7 +283,7 @@ _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length every three wak
 _declare("SKIP_SLEEP_NIGHT_DATE", str, "", "Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win.")
 _declare("AWAKE_72H_START", str, "", "Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables.")
 _declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; running browser transactions may delay a poll.", floor=20)
-_declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals before handing off to priority Replies.", floor=False)
+_declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals for independent likes/reposts and any permitted Replies.", floor=False)
 _declare("MEME_REPOST_ENABLED", bool, False, "Allow visually reviewed funny AI video reposts discovered by existing scans.", floor=False)
 _declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=20)
 _declare("MEME_REPOST_MIN_LIKES", int, 0, "Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement.", floor=0)

@@ -16,10 +16,13 @@ both Home feeds share an eight-minute scan-and-draft cycle, twenty overlapping
 viewport scrolls and 160 posts per feed. The bot retains expanded art/film/video
 queries and adds AI memes, humor, coding mishaps and creator progress.
 
-New Elon originals get independent like, repost and highest-priority Reply attempts
-across topics, with minute notification/Latest polling and exact-original verification.
-His Replies favor sharp, specific wording and humor suited to the post. Completed
-actions are remembered; each original still permits only one admitted Reply.
+November 13: **never reply to Elon Musk**. His new eligible originals receive only
+priority likes and native reposts across topics. Notification/Latest polling runs
+every twenty seconds, with independent action dispatch every two seconds and
+exact-original verification. Active browser work finishes first; reposts keep
+at least sixty-second spacing, without a five-minute retry penalty for that wait.
+The Reply-only exclusion applies before drafting and at the final write on every
+surface. Completed and uncertain actions remain remembered across restarts.
 New tszzl/signulll/nearcyan searches join the existing AISafetyMemes sources.
 These are search targets, not new follows or verified follower-size claims.
 
@@ -46,8 +49,12 @@ real questions; a technical topic alone does not require a mini explainer.
 Artists sharing work, progress and first attempts get a dedicated discovery turn.
 The parent's intent determines length. Current product claims and unseen media
 stay grounded in supplied evidence. Short English false refusals are fixed, and
-final admission checks the last twenty confirmed logged Replies for recycled
-wording even when the emoji changes. Search budgets, follow policy, pacing and
+final admission now checks the configured confirmed Reply memory (100 locally)
+for exact repeats and lightly rewritten long copies, even when the emoji changes.
+Drafts must earn their place with a supported reaction, answer or joke. Stock
+agreement, empty praise, caption recaps and invented plans to try things are
+removed; drafts with only filler left should SKIP. Short, grounded appreciation
+remains welcome. This changes selection and wording, not a promise of fewer blocks. Search budgets, follow policy, pacing and
 permanent one-Reply-per-original history remain. Engagement reports measure
 observed outcomes; they cannot promise likes or attribute follower gains.
 
@@ -335,14 +342,13 @@ start; Voice files are read for each generation.
   appear. Both reads finish before ordinary feed Reply generation starts, so an exhausted
   model quota cannot skip Following. Generation budgets and publication limits
   still apply; overnight sleep can interrupt feed discovery.
-- **Prioritize new Elon Musk originals.** A dedicated Latest search polls every
-  20 seconds; separate action and Reply workers check discoveries every two seconds.
-  Feed discoveries join the same queue. First enable starts with
-  new posts; later passes inspect up to 20 posts from the past 24 hours.
-  Existing content checks, Reply dedup and overnight sleep apply. Reposts consume
-  the same daily publication budget and spacing as Originals; uncertain
-  repost submissions remain reserved across restarts. Browser contention can
-  delay a poll, and policy limits may defer or skip an action.
+- **Like and repost new Elon Musk originals; never reply to him.** Notifications
+  and Latest are checked every 20 seconds; the action worker dispatches every two
+  seconds. Feed discoveries join the same queue. First enable starts with new
+  posts; later passes inspect up to 20 posts from the past 24 hours. Watched
+  reposts have their separate allowance and at least sixty-second spacing,
+  including uncertain attempts. Browser contention can delay delivery; source
+  checks, active hours, permanent claims and stop requests still apply.
 - **One Reply per original, ever.** Never answer our own posts or replies,
   comments or ongoing debates. Debate, replyback and babysitter jobs are
   disabled. The browser verifies the actual parent and clicks its own Reply
@@ -380,13 +386,13 @@ start; Voice files are read for each generation.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
 - **Ordinary discovery and engagement cover AI/SI**; the explicitly watched
-  author has the November 10 all-topic exception: `[niche]`, `[searches]` and `[network]`
+  author has an all-topic exception only for likes/reposts: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
 - **Automatic startup and news posts are disabled.** Qualified original videos
   keep their scheduled opportunities and existing quality/receipt checks.
-- **No burst threads.** The November 10 exceptions authorize selective watched
-  quotes and scheduled own-post reposts. Other-author reposts remain restricted
-  to `auto_engage_handles`, currently only `elonmusk`.
+- **No burst threads.** Automatic quotes and scheduled own-post reposts are off.
+  Other-author native reposts require an exact watched author (currently only
+  `elonmusk`) or the separate reviewed funny-AI-video allowance.
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.

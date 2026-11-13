@@ -94,6 +94,16 @@ def test_timeout_is_measured_without_a_send_and_telemetry_failure_cannot_hide_su
 
 
 @pytest.mark.parametrize("pipelined", MODES)
+@pytest.mark.parametrize("prepared", [False, True])
+def test_excluded_parent_never_generates_or_sends_even_a_prepared_reply(llm, chokepoint, pipelined, prepared):
+    parent = fresh("ElonMusk")
+    item = rp.Candidate(parent, "A new SI model", "feed", reply="A prepared answer." if prepared else None)
+    assert run(job(pipelined=pipelined), [item]) == 0
+    assert llm.calls == [] and chokepoint.sent == []
+    assert parent in set_aside() and not replied_store.load_replied()
+
+
+@pytest.mark.parametrize("pipelined", MODES)
 def test_admission_comes_before_the_generation(llm, chokepoint, blocked_pgm_pm, pipelined):
     answered = fresh("someone", n=1)
     replied_store.claim(answered)

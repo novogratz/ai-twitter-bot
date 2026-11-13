@@ -19,7 +19,8 @@ previous_handles = ["TheAIShrink"]
 # Operator, 2026-11-10: all new standalone originals by this exact author.
 auto_engage_handles = ["elonmusk"]
 auto_engage_all_topics = true
-# November 12: new Elon originals get independent like/repost/Reply priority.
+# Operator, November 13: never reply to Elon; fastest priority likes/reposts only.
+reply_excluded_handles = ["elonmusk"]
 watched_reposts_independent = true
 # Keep the slower promotion jobs disabled while restoring Reply capacity.
 priority_quotes_enabled = false
@@ -166,7 +167,7 @@ FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
 FEED_SWEEP_INTERVAL_MINUTES = 8
 REPLY_MIN_LIKES = 0
-PRIORITY_WATCH_INTERVAL_SECONDS = 60
+PRIORITY_WATCH_INTERVAL_SECONDS = 20
 PRIORITY_WATCH_NOTIFICATIONS = true
 MEME_REPOST_ENABLED = true
 MEME_REPOST_DAILY_CAP = 20

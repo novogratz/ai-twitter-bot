@@ -522,3 +522,13 @@ def test_extended_short_vocabulary_keeps_unknown_and_mixed_language_closed(text)
 ])
 def test_live_artist_reaction_recognizes_autumn_without_opening_the_language_gate(text, allowed):
     assert cg.validate(text, kind="reply")[0] is allowed
+
+
+@pytest.mark.parametrize("text", [
+    "Thanks for sharing! ❤️", "Thank you for sharing", "Interesting take!",
+    "Great insights 💜", "This changes everything!", "This is the future.",
+    "Couldn't agree more.", "Game changer!", "Thanks   for sharing!",
+])
+def test_empty_courtesy_and_hype_are_not_replies(text):
+    ok, why = cg.validate(text, kind="reply")
+    assert not ok and "low-effort" in why

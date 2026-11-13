@@ -18,6 +18,22 @@ TEXT = "Batching is where inference margins are won or lost."
 
 @pytest.mark.parametrize("dry_run", ["0", "1"])
 @pytest.mark.parametrize("turn", [False, True])
+@pytest.mark.parametrize("host", ["x.com", "twitter.com"])
+def test_excluded_author_cannot_receive_any_reply_or_parent_like(monkeypatch, memory_ledger, dry_run, turn, host):
+    monkeypatch.setenv("DRY_RUN", dry_run)
+    monkeypatch.setattr(tc, "_open_or_abort", lambda *a: pytest.fail("opened excluded Reply target"))
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: pytest.fail("liked via excluded Reply"))
+    parent = numbered_url(801, "ElonMusk").replace("x.com", host)
+    refusals = []
+    assert tc.reply_to_tweet(parent, TEXT, debate_turn=turn,
+                            on_refused=refusals.append) is WriteOutcome.REFUSED
+    # Legacy non-canonical URLs already refuse before any account can be answered.
+    assert refusals == [Refusal.REPLY_EXCLUDED if host == "x.com" else Refusal.NO_AUTHOR]
+    assert not replied_store.load_replied() and not memory_ledger.rows
+
+
+@pytest.mark.parametrize("dry_run", ["0", "1"])
+@pytest.mark.parametrize("turn", [False, True])
 @pytest.mark.parametrize("handle", ["TheAIShrink", "thesimaximalist", "RuntimeBot"])
 def test_all_own_identities_stop_before_browser_or_claim(
         monkeypatch, settings_override, memory_ledger, dry_run, turn, handle):

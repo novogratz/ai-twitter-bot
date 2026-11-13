@@ -150,6 +150,72 @@ def test_new_notification_is_verified_and_handed_off_before_regular_search(watch
     assert watched[-1][1] == [url]
 
 
+@pytest.mark.parametrize("answered", [False, True])
+def test_reply_exclusion_or_prior_reply_does_not_suppress_notification_actions(
+        watched, settings_override, monkeypatch, answered):
+    from src.guards import replied_store
+    settings_override(PRIORITY_WATCH_NOTIFICATIONS=True)
+    profile = replace(account.current(), reply_excluded_handles=("builder",))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    url = fresh("builder")
+    if answered:
+        replied_store.claim(url)
+    reads = []
+    monkeypatch.setattr(scraper, "scrape_priority_notifications", lambda *a: [url])
+    monkeypatch.setattr(tc, "read_priority_post", lambda target: reads.append(target) or
+                        dict(url=target, text="New SI tools"))
+    tick()
+    tick()
+    assert reads == [url]
+    assert watched == [("like", url), ("repost", url)]
+    assert bool(replied_store.load_replied()) is answered
+
+
+def test_notification_discovery_still_refuses_blocked_accounts(watched, settings_override, monkeypatch):
+    settings_override(PRIORITY_WATCH_NOTIFICATIONS=True)
+    profile = account.current()
+    profile = replace(profile, network=replace(profile.network, blocked_accounts=("builder",)))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    monkeypatch.setattr(scraper, "scrape_priority_notifications", lambda *a: [fresh("builder")])
+    monkeypatch.setattr(tc, "read_priority_post", lambda *a: pytest.fail("read blocked account"))
+    tick()
+    assert watched == []
+
+
+@pytest.mark.parametrize("uncertain", [False, True])
+def test_repost_spacing_waits_without_failure_backoff_or_blocking_likes(watched, monkeypatch, uncertain):
+    from src.guards import action_guard, repost_store
+    from tests.helpers import clock
+    profile = replace(account.current(), watched_reposts_independent=True)
+    monkeypatch.setattr(account, "current", lambda: profile)
+    now = active_hours.now_local()
+    clock(monkeypatch, now)
+    first, second = fresh("builder", n=1), fresh("builder", n=2)
+    if uncertain:
+        assert repost_store.claim(first)
+    else:
+        action_guard.record(action_guard.WATCH_REPOST, first)
+    watch.observe([dict(url=second, text="New SI tools")])
+    watch.run_priority_actions_cycle()
+    assert watched == [("like", second)]
+    assert (second, "repost") not in watch._action_retry_delays
+    clock(monkeypatch, now + timedelta(seconds=59))
+    watch.run_priority_actions_cycle()
+    assert watched == [("like", second)]
+    clock(monkeypatch, now + timedelta(seconds=60))
+    watch.run_priority_actions_cycle()
+    assert watched == [("like", second), ("repost", second)]
+
+
+def test_remembered_repost_is_not_dispatched_again_after_restart(watched):
+    from src.guards import repost_store
+    url = fresh("builder")
+    repost_store.remember(url, "observed")
+    watch.observe([dict(url=url, text="New SI tools")])
+    watch.run_priority_actions_cycle()
+    assert watched == [("like", url)]
+
+
 def test_refused_actions_back_off_exponentially_without_delaying_new_posts(watched, monkeypatch):
     url = fresh("builder")
     watch.observe([dict(url=url, text="New SI tools")])

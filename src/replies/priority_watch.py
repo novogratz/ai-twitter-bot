@@ -8,7 +8,7 @@ from ..core import account, config, settings, work_priority, watch_discovery
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import GUARDED, StateFile
-from ..guards import active_hours, reply_admission
+from ..guards import action_guard, active_hours, reply_admission, repost_store
 from ..guards.active_hours import OutsideActiveHours, require_active
 from ..x import scraper, twitter_client, x_urls
 from . import reply_pipeline, reply_source
@@ -146,7 +146,7 @@ def run_priority_watch_cycle():
                 known = url in _pending
             if (known or handle not in started or posted is None or posted < started[handle]
                     or age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))
-                    or not _ready(url, "notification") or not reply_admission.judge_parent(url)):
+                    or not _ready(url, "notification") or not account.watched_url(url)):
                 continue
             if reads >= 2:
                 break
@@ -208,6 +208,14 @@ def run_priority_actions_cycle():
             if (attempts >= settings.get("PRIORITY_WATCH_ACTIONS_PER_CYCLE")
                     or not _ready(candidate.url, action_id)):
                 continue
+            if action_id == "repost":
+                if repost_store.contains(candidate.url):
+                    _backoff(candidate.url, action_id, 86400)
+                    continue
+                if repost_store.independent(candidate.url) and action_guard.watched_repost_wait_seconds():
+                    # A normal spacing wait is not a failed attempt. Check again
+                    # on the next dispatch, without Safari or failure backoff.
+                    continue
             attempts += 1
             try:
                 with work_priority.scope(work_priority.WATCH):
@@ -220,6 +228,11 @@ def run_priority_actions_cycle():
                     if outcome or outcome.value == "already_liked":
                         delay = 86400
                         _action_retry_delays.pop(key, None)
+                    elif (action_id == "repost" and outcome.value == "refused"
+                          and repost_store.independent(candidate.url)
+                          and action_guard.watched_repost_wait_seconds()):
+                        # Another sender may have used the gap after our preflight.
+                        delay = settings.get("PRIORITY_WATCH_DISPATCH_SECONDS")
                     else:
                         base = 120 if outcome.value in {"failed", "unconfirmed"} else 300
                         delay = min(3600, max(base, _action_retry_delays.get(key, 0) * 2))
@@ -241,8 +254,7 @@ def run_priority_reply_cycle():
         verdict = reply_admission.judge_parent(candidate.url)
         if verdict:
             candidates.append(candidate)
-        elif verdict.refusal in {reply_admission.Refusal.ALREADY_REPLIED, reply_admission.Refusal.BLOCKED_ACCOUNT,
-                                 reply_admission.Refusal.OWN_POST, reply_admission.Refusal.CONVERSATION}:
+        elif verdict.refusal.definitive:
             _backoff(candidate.url, "reply", 86400)
     if not candidates:
         return

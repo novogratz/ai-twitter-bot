@@ -6,6 +6,35 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-13, no Elon Replies and less generic writing — The Operator withdraws
+all Replies to Elon Musk, retaining only fastest eligible priority likes and native
+reposts across topics, and requests better responses after reports of automated
+filler and blocks. `reply_excluded_handles=["elonmusk"]` is an exact-author,
+Reply-only Account policy enforced before generation and at the final write,
+including prepared Replies and alternate jobs. It never authorizes a Reply claim,
+and does not add him to the engagement blocklist. Notification discovery no longer
+uses Reply admission; verified likes/reposts remain independent of prior Replies.
+With no permitted watched Reply author, the scheduler omits `priority_reply_job`.
+
+Notification/Latest polling is twenty seconds locally, with two-second action
+dispatch at existing highest browser priority. Active transactions finish first;
+source checks, first-enable boundary, sixty-second repost spacing (including
+uncertain sends), permanent claims and actual-failure backoff remain. A normal
+spacing wait no longer becomes a five-minute failure cooldown. Already claimed
+reposts are skipped without reopening Safari. Fast polling is not a delivery SLA.
+
+Both Voice files and shared drafting now require a supported, specific contribution,
+remove stock agreement/praise and caption recaps, avoid invented interest or plans,
+and SKIP when only filler remains or supplied context asks bots not to reply.
+Short grounded appreciation, useful technical answers and humor remain eligible.
+Final admission checks the configured confirmed-text memory (100 locally) for exact
+repeats and lightly rewritten long copies: at least twelve matched words and 80%
+ordered similarity, retaining distinctions in numerical facts. Generic standalone
+courtesy/hype also refuses. No new model calls or publishing quotas are introduced;
+quality and refusals can reduce volume. No improvement in blocks or engagement has
+yet been measured. The 72-hour deadline, video rules and histories remain intact.
+The Operator retains manual restart; prepare, test and merge without starting it.
+
 2026-11-12, later video repost and 72-hour clarification — The Operator replaces
 "big memes" with funny AI videos relevant to the Account: no like/view floor,
 at most twenty distinct native reposts per Toronto day, thirty minutes apart.

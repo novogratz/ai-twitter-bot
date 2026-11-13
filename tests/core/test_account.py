@@ -102,7 +102,7 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
                              "FEED_SWEEP_INTERVAL_MINUTES": 8, "REPLY_MIN_LIKES": 0,
-                             "PRIORITY_WATCH_INTERVAL_SECONDS": 60, "PRIORITY_WATCH_NOTIFICATIONS": True,
+                             "PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_NOTIFICATIONS": True,
                              "MEME_REPOST_ENABLED": True,
                              "MEME_REPOST_DAILY_CAP": 20, "MEME_REPOST_INTERVAL_MINUTES": 30,
                              "MEME_REPOST_MIN_LIKES": 0, "MEME_REPOST_MIN_VIEWS": 0,
@@ -121,6 +121,23 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.publication_si_wording is True
     assert loaded.previous_handles == ("TheAIShrink",)
     assert loaded.auto_engage_handles == ("elonmusk",)
+    assert loaded.reply_excluded_handles == ("elonmusk",)
+
+
+@pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', '[42]', '"Alias"'])
+def test_reply_exclusions_validate_handles(accounts, fresh, value):
+    accounts("theaishrink", THEAISHRINK.replace('reply_excluded_handles = ["elonmusk"]',
+                                               f"reply_excluded_handles = {value}"))
+    with pytest.raises(settings.SettingsError, match="reply_excluded_handles"):
+        account.load("theaishrink")
+
+
+def test_reply_exclusions_are_optional_case_insensitive_and_unique(accounts, fresh):
+    accounts("other", THEAISHRINK.replace('reply_excluded_handles = ["elonmusk"]\n', ''))
+    assert account.load("other").reply_excluded_handles == ()
+    accounts("theaishrink", THEAISHRINK.replace('reply_excluded_handles = ["elonmusk"]',
+                                               'reply_excluded_handles = ["Builder", "BUILDER", "other"]'))
+    assert account.load("theaishrink").reply_excluded_handles == ("builder", "other")
 
 
 @pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', '[42]', '"Alias"'])

@@ -403,6 +403,9 @@ def detect_language(text: str) -> Tuple[str, float]:
 _LAZY_REPLIES = {
     "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
     "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
+    "thanks for sharing", "thank you for sharing", "interesting take", "great insight",
+    "great insights", "well put", "this is the future", "game changer", "this changes everything",
+    "couldnt agree more", "could not agree more",
     "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
     "mdr", "enorme", "énorme", "ouais", "clairement", "evidemment", "évidemment",
@@ -413,7 +416,7 @@ def _is_lazy_reply(text: str) -> bool:
     stripped = (text or "").strip()
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
-    norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
+    norm = " ".join(re.sub(r"[^\w\s]", "", stripped.lower()).split())
     return norm in _LAZY_REPLIES
 
 

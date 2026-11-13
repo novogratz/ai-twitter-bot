@@ -1,4 +1,5 @@
 from datetime import timedelta
+from dataclasses import replace
 
 import pytest
 
@@ -10,9 +11,11 @@ from tests.helpers import fresh
 
 
 @pytest.mark.parametrize("likes,allowed", [(None, False), (0, False), (2, False), (3, True), (30, True), (True, False)])
-@pytest.mark.parametrize("handle", ["newartist", "elonmusk"])
-def test_three_like_rule_includes_watched_authors_before_generation(settings_override, likes, allowed, handle):
+@pytest.mark.parametrize("handle", ["newartist", "watchedartist"])
+def test_three_like_rule_includes_permitted_watched_authors_before_generation(monkeypatch, settings_override, likes, allowed, handle):
     settings_override(REPLY_MIN_LIKES=3)
+    profile = replace(account.current(), auto_engage_handles=("watchedartist",))
+    monkeypatch.setattr(account, "current", lambda: profile)
     candidate = reply_pipeline.Candidate(fresh(handle), "My new SI short film", "FEED", likes=likes)
     job = reply_pipeline.Job("floor", "FLOOR", reply_call=lambda author: None)
     verdict = reply_pipeline._parent_verdict(job, candidate)
