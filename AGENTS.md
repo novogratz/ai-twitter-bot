@@ -6,6 +6,30 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-14, loving and SI specialist Reply modes — The Operator asks for
+an affectionate voice with hearts and an exceptionally knowledgeable SI specialist,
+naturally mixed as a fictional 45-year-old woman working in tech. Both Voice files,
+the shared delivery prompt, direct/creator and structured search routes, and the
+Relation prompt now choose from the parent's intent in the existing model call.
+There is no random split, fixed quota, rotation or mandatory two-part answer.
+Mode labels are never published. Loving reactions to shared art, ideas, effort,
+jokes and wins can stand alone without repeating a detail or adding analysis.
+This clarifies November 13's specificity rule; it does not authorize repeated
+stock compliments or claims about unseen media. Specialist Replies can directly
+challenge an assumption, explain a mechanism or supply a useful counterexample,
+with kindness toward the author and evidence for the reasoning. They need not
+agree to be liked or invent contrarian objections. Expertise is shown through
+accuracy, not a claim to omniscience or fabricated employment/experience.
+
+The observed English phrase "Really cool video" failed the short Reply language
+fallback. Add only `cool` and `video` to its closed vocabulary, using `video` as
+an English cue; its eighty-character bound, complete-vocabulary and French/mixed
+refusals remain. Permanent one-Reply-per-original history, recent-text repetition
+checks, English/SI wording, source/media checks, opt-outs, budgets and pacing stay.
+Elon still receives no Replies, only independently admitted priority likes/reposts.
+The 72-hour awake deadline remains fixed. No follower or engagement outcome is
+promised. The Operator retains manual restart after implementation and validation.
+
 2026-11-13, no Elon Replies and less generic writing — The Operator withdraws
 all Replies to Elon Musk, retaining only fastest eligible priority likes and native
 reposts across topics, and requests better responses after reports of automated

@@ -61,6 +61,7 @@ def test_persona_is_woman_mom_in_the_one_voice():
     spine = " ".join(VOICE_FR.read_text().lower().split())
     assert "woman" in spine and "mom" in spine and "45-year-old" in spine
     assert "fictional 45-year-old woman and mom of one" in spine
+    assert "working in tech is character context" in spine
     assert "sharp technical judgment with warmth and curiosity" in spine
     assert "never announce that you know everything" in spine
     assert "answer identity questions honestly as a bot" in spine

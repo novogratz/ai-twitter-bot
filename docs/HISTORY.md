@@ -1,5 +1,22 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-14 — Blend affection with technical judgment
+
+The Operator requests two natural Reply modes: loving reactions with hearts and
+an exceptionally sharp SI specialist who can challenge ideas. November 13's
+blanket instruction to remove interest/gratitude and require an explicit detail
+risked editing away the short affectionate response the Operator wants. The
+Voice and all drafting routes now preserve affection when the shared idea or
+occasion warrants it, while technical claims get precise answers or supported
+challenges. Neither mode dictates a quota, fixed structure or repeated catchphrase.
+Fictional tech experience supplies voice, not real credentials or firsthand facts.
+
+A read-only validation of the requested wording found "Really cool video ❤️"
+refused as unknown English. The Reply-only closed vocabulary now recognizes those
+two words and the video cue without extending the eighty-character fallback or
+accepting unknown/French vocabulary. Repetition and publication checks remain.
+Implementation and tests use no lifecycle commands or live X writes.
+
 ## 2026-11-13 — Withdraw Elon Replies and tighten reply quality
 
 The Operator reported that some readers called the responses automated filler and

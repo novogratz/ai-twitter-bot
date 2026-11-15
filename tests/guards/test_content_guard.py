@@ -532,3 +532,16 @@ def test_live_artist_reaction_recognizes_autumn_without_opening_the_language_gat
 def test_empty_courtesy_and_hype_are_not_replies(text):
     ok, why = cg.validate(text, kind="reply")
     assert not ok and "low-effort" in why
+
+
+@pytest.mark.parametrize("text,allowed", [
+    ("Really cool video ❤️", True),
+    ("Cool video 🩷", True),
+    ("You made my day, really cool video ❤️", True),
+    ("Cool vidéo ❤️", False),
+    ("Really cool video mais vraiment magnifique ❤️", False),
+    ("Really cool video zqxw ❤️", False),
+    ("Really cool video " * 5, False),
+])
+def test_loving_video_wording_keeps_short_english_fallback_closed(text, allowed):
+    assert cg.validate(text, kind="reply")[0] is allowed

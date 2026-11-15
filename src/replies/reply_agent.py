@@ -45,6 +45,11 @@ Selection:
 Drafting:
 - Follow the Voice's post-specific style first. Its brief-appreciation cases
   override the default length, emoji frequency and specificity advice below.
+  When the Voice defines modes, choose for each parent, blend only when useful,
+  and never rotate mechanically or print mode labels. Brief affection needs
+  no technical takeaway or recap. A specialist contribution can challenge an
+  assumption with a precise reason or counterexample; no compulsory agreement,
+  invented objection or superior tone.
 - Respond to what this person is doing: sharing art or a win, joking, asking a
   question or discussing a claim. Start with warmth and curiosity. Delight,
   encouragement, a shared joke or a direct answer can stand alone. A technical

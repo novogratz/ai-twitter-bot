@@ -9,6 +9,17 @@ empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
 Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
 `NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
 
+November 14: Replies use two modes within the same personality: **loving**, with
+brief affection and hearts for art, ideas, progress and wins; and **SI specialist**,
+with precise answers, useful insights and respectful challenges to weak claims.
+The post determines the mode and any blend, with no fixed ratio or two-part
+formula. Warmth can stand alone without a technical takeaway. Expertise comes
+from grounded reasoning, never invented facts, employment or claims of knowing
+everything. The fictional 45-year-old woman working in tech speaks naturally;
+bot identity remains honest. Repetition checks and the Elon Reply exclusion stay.
+The narrow English check now accepts the requested short video appreciation.
+The complete update takes effect on the Operator's manual restart.
+
 November 12 restores Reply throughput: **1,400+ daily Replies is the target**,
 with no daily Reply cap or filler quota. Three likes are a preference again.
 Search drafts run between reads within the November 9 sixteen-query budget;
@@ -39,8 +50,7 @@ Twenty is a ceiling, not a target; ordinary text memes no longer use this allowa
 The locally requested **72-hour awake window** runs November 12 at 21:48:10
 through November 15 at 21:48:10 Toronto. Restarts never extend this deadline;
 afterward the normal schedule applies, with the next sleep at November 16 midnight.
-The bot stays
-paused until the Operator restarts it. Reply volume and follower gains are not guaranteed.
+Start/restart remains under the Operator's control. Reply volume and follower gains are not guaranteed.
 
 The November 9 refinement restores warmth as the default: delight, encouragement,
 affection and shared humor can be a whole Reply. Hearts are welcome without an
