@@ -62,6 +62,9 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
     prompt = llm.prompts[-1]
     assert "A creator sharing a finished SI artwork" in prompt
     assert "grounded in the described idea or occasion, with an optional heart" in prompt
+    assert "LOVING:" in prompt and "SI SPECIALIST:" in prompt
+    assert "No random split, fixed ratio, alternating schedule or required two-part format" in prompt
+    assert "Never print the mode labels" in prompt
     assert "Follow the Voice's post-specific style first" in prompt
     assert "Where the Voice permits brief appreciation, that is enough" in prompt
     assert json.dumps(recent, ensure_ascii=False) in prompt
@@ -74,6 +77,7 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
 @pytest.mark.parametrize("text", [
     "Oh, I love this ❤️", "Love it 🩷", "This is beautiful 💖",
     "So lovely 💜", "I love this one 💕", "You made something special 🫶",
+    "You made my day ❤️", "Really cool video ❤️",
 ])
 def test_short_artist_reactions_pass_generation_and_existing_final_admission(monkeypatch, llm, text):
     from src.core import humanizer
