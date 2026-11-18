@@ -107,8 +107,7 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
             continue
         if author and x_urls.author(url) not in ("", author):
             continue
-        if ((declaration.niche and not is_on_niche(text.strip()))
-                or not account.engagement_allowed(text.strip(), url=url)):
+        if (declaration.niche or account.current().engagement_niche_only) and not is_on_niche(text.strip()):
             continue
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:

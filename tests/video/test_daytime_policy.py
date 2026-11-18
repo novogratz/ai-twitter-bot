@@ -99,3 +99,8 @@ def test_preparation_recovers_age_expired_lead_but_not_permanent_claim(video_sto
     assert video_store.candidate("claimed")["state"] == "expired"
     assert video_store.rows("SELECT state FROM jobs WHERE item='old'")[0]["state"] == "pending"
     assert video_store.rows("SELECT state FROM jobs WHERE item='claimed'")[0]["state"] == "dead"
+
+
+# These fixtures exercise historical/custom schedules, independently of live hours.
+import pytest
+pytestmark = pytest.mark.usefixtures("legacy_hours")

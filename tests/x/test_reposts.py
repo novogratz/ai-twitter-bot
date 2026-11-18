@@ -2,10 +2,12 @@
 import json
 import shutil
 import subprocess
+from dataclasses import replace
 
 import pytest
 
 from src.guards import action_guard as ag, repost_store
+from src.core import account
 from src.x import repost_page, safari, twitter_client as tc
 from src.x.confirmed_write import WriteOutcome as W
 
@@ -96,6 +98,21 @@ def test_repost_dry_run_has_no_claim_or_browser(browser, monkeypatch, memory_led
     assert len(memory_ledger.rows) == 1 and memory_ledger.rows[0]["dry_run"]
 
 
+@pytest.mark.parametrize("handle", ["CurrentBot", "RuntimeBot", "PreviousBot"])
+@pytest.mark.parametrize("dry_run", [False, True])
+def test_own_reposts_are_refused_even_when_explicitly_watched(
+        browser, monkeypatch, memory_ledger, settings_override, handle, dry_run):
+    profile = replace(account.current(), handle="CurrentBot", previous_handles=("PreviousBot",),
+                      auto_engage_handles=("currentbot", "runtimebot", "previousbot"))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    settings_override(BOT_HANDLE="RuntimeBot", DRY_RUN=dry_run)
+    url = f"https://twitter.com/{handle.upper()}/status/2063500000000000101?s=20"
+
+    assert tc.repost_tweet(url) is W.REFUSED
+    assert browser["opens"] == [] and browser["modes"] == []
+    assert not memory_ledger.rows and not repost_store.entries()
+
+
 def test_repost_refuses_source_content_before_clicking(browser, memory_ledger):
     browser["content"] = "Bonjour, cette nouvelle technologie est vraiment très intéressante."
     assert tc.repost_tweet(URL) is W.REFUSED
@@ -120,12 +137,11 @@ def test_like_cap_is_enforced_at_the_shared_chokepoint(browser, settings_overrid
     assert browser["opens"] == []
 
 
-def _page_js(mode, *, author="elonmusk", page_author="elonmusk", nested=False,
-             reposted=False, quote=False, menu=True, undo_menu=False, self_mode=False, owner="elonmusk",
-             likes="", views="", quoted_counts=False, video=False, quoted_video=False):
+def _page_js(mode, *, author="elonmusk", page_author="elonmusk", expected_author="elonmusk",
+             self_handles=("ownbot",), nested=False,
+             reposted=False, quote=False, menu=True, undo_menu=False):
     options = dict(mode=mode, author=author, page_author=page_author, nested=nested,
-                   reposted=reposted, quote=quote, menu=menu, undo_menu=undo_menu, self_mode=self_mode, owner=owner,
-                   likes=likes, views=views, quoted_counts=quoted_counts, video=video, quoted_video=quoted_video)
+                   reposted=reposted, quote=quote, menu=menu, undo_menu=undo_menu)
     setup = r"""
       const opt = __OPTIONS__, counts = {open: 0, confirm: 0, undo: 0};
       const location = {hostname: 'x.com', pathname: '/' + opt.page_author + '/status/2063500000000000101'};
@@ -140,28 +156,21 @@ def _page_js(mode, *, author="elonmusk", page_author="elonmusk", nested=False,
       const button = element({click: () => counts.open++}, opt.quote);
       const undo = element({click: () => counts.undo++});
       const confirm = element({click: () => counts.confirm++});
-      const likeCount = element({getAttribute: () => opt.likes}, opt.quoted_counts);
-      const viewCount = element({getAttribute: () => opt.views}, opt.quoted_counts);
-      const player = element({poster: 'https://pbs.twimg.com/amplify_video_thumb/123456/img/a.jpg'}, opt.quoted_video);
       article.querySelectorAll = sel => ({
         'a[href]': [link], '[data-testid="tweetText"]': [element({innerText: article.innerText})],
         '[data-testid="retweet"]': opt.reposted ? [] : [button],
-        '[data-testid="unretweet"]': opt.reposted ? [undo] : [],
-        '[data-testid="like"], [data-testid="unlike"]': [likeCount],
-        'a[href$="/status/2063500000000000101/analytics"]': [viewCount],
-        'video': opt.video ? [player] : []
+        '[data-testid="unretweet"]': opt.reposted ? [undo] : []
       }[sel] || []);
       const parent = {querySelectorAll: () => [], innerText: ''};
       const document = {
         querySelectorAll: sel => sel === 'article' ? (opt.nested ? [parent, article] : [article]) :
-          sel === '[data-testid="retweetConfirm"]' && opt.menu ? [confirm] :
-          sel === '[data-testid="unretweetConfirm"]' && opt.undo_menu ? [confirm] : [],
-        querySelector: sel => sel.includes('AppTabBar_Profile_Link') ? {getAttribute:()=>'/'+opt.owner} :
-          sel.includes('unretweetConfirm') && opt.undo_menu ? {} : null
+          sel === '[data-testid="retweetConfirm"]' && opt.menu ? [confirm] : [],
+        querySelector: sel => sel.includes('unretweetConfirm') && opt.undo_menu ? {} : null
       };
     """.replace("__OPTIONS__", json.dumps(options))
     script = repost_page.SCRIPT.replace("__ID__", '"2063500000000000101"')
-    script = script.replace("__AUTHOR__", '"elonmusk"').replace("__SELF__", json.dumps(["elonmusk"] if self_mode else ["ownbot"]))
+    script = script.replace("__AUTHOR__", json.dumps(expected_author))
+    script = script.replace("__SELF__", json.dumps(self_handles))
     script = script.replace("__MODE__", json.dumps(mode))
     node = shutil.which("node")
     if not node:
@@ -180,6 +189,15 @@ def test_page_never_clicks_wrong_nested_quoted_or_existing_repost(mode, wrong):
     assert result["counts"] == {"open": 0, "confirm": 0, "undo": 0}
 
 
+@pytest.mark.parametrize("mode", ["read", "open", "confirm"])
+@pytest.mark.parametrize("handle", ["currentbot", "runtimebot", "previousbot"])
+def test_page_never_opens_or_confirms_a_repost_of_any_own_identity(mode, handle):
+    result = _page_js(mode, author=handle, page_author=handle, expected_author=handle,
+                      self_handles=("currentbot", "runtimebot", "previousbot"))
+    assert result["page"] == {}
+    assert result["counts"] == {"open": 0, "confirm": 0, "undo": 0}
+
+
 def test_page_clicks_only_verified_repost_and_confirmation_controls():
     opened = _page_js("open")
     assert opened["page"]["state"] == "menu_opened"
@@ -189,30 +207,6 @@ def test_page_clicks_only_verified_repost_and_confirmation_controls():
     assert confirmed["counts"] == {"open": 0, "confirm": 1, "undo": 0}
     assert _page_js("confirm", menu=False)["counts"]["confirm"] == 0
     assert _page_js("confirm", undo_menu=True)["counts"]["confirm"] == 0
-
-
-@pytest.mark.parametrize("mode", ["meme_read", "meme_open", "meme_confirm"])
-def test_meme_modes_require_verified_own_account(mode):
-    wrong = _page_js(mode, owner="other")
-    assert wrong["page"] == {} and wrong["counts"] == {"open": 0, "confirm": 0, "undo": 0}
-    assert _page_js(mode, owner="ownbot")["page"]["url"].startswith("https://x.com/elonmusk/status/")
-
-
-@pytest.mark.parametrize("label,expected", [("500 Likes. Like", 500), ("1.2K Likes. Liked", 1200),
-                                           ("1,234 Likes", 1234), ("Likes unavailable", None),
-                                           ("-500 Likes", None), ("5,00 Likes", None)])
-def test_meme_exact_outer_counters_and_unknowns(label, expected):
-    page = _page_js("meme_read", owner="ownbot", likes=label, views="100K Views")["page"]
-    assert page["likes"] == expected and page["views"] == 100000
-    quoted = _page_js("meme_read", owner="ownbot", likes=label, views="100K Views", quoted_counts=True)["page"]
-    assert quoted["likes"] is None and quoted["views"] is None
-
-
-@pytest.mark.parametrize("has_video,quoted,expected", [(True, False, True), (True, True, False), (False, False, False)])
-def test_repost_video_identity_excludes_quoted_card_players(has_video, quoted, expected):
-    page = _page_js("meme_read", owner="ownbot", video=has_video, quoted_video=quoted)["page"]
-    assert page["has_video"] is expected
-    assert page["media_id"] == ("123456" if expected else "")
 
 
 @pytest.mark.parametrize("text", ["So beautiful", "Yes", "Wow"])
@@ -230,19 +224,3 @@ def test_existing_repost_is_remembered_before_its_source_language_is_checked(bro
 
 
 pytestmark = pytest.mark.usefixtures("open_topic_account")
-
-
-@pytest.mark.parametrize("mode", ["self_open", "self_confirm", "self_undo_open", "self_undo_confirm"])
-@pytest.mark.parametrize("wrong", [{"owner": "other"}, {"author": "other"}, {"page_author": "other"}, {"nested": True}, {"quote": True}])
-def test_self_repost_modes_reject_wrong_owner_target_or_quoted_controls(mode, wrong):
-    result = _page_js(mode, self_mode=True, **wrong)
-    assert result["counts"] == {"open": 0, "confirm": 0, "undo": 0}
-
-
-def test_explicit_self_undo_uses_only_undo_confirmation():
-    result = _page_js("self_undo_confirm", self_mode=True, reposted=True, menu=False, undo_menu=True)
-    assert result["page"]["state"] == "undo_submitted"
-    assert result["counts"]["confirm"] == 1
-    result = _page_js("self_confirm", self_mode=True, reposted=False, menu=True)
-    assert result["page"]["state"] == "submitted"
-    assert result["counts"]["confirm"] == 1

@@ -164,6 +164,9 @@ def prioritize(candidates, *, diversify_authors=False, ordinary=False):
     """
     threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
     large = priority_authors() if ordinary else set()
+    new_authors = ordinary and settings.get("REPLY_PREFER_NEW_AUTHORS")
+    answered = ({x_urls.author(url) for url in action_guard._ledger().targets(action_guard.REPLY)}
+                if new_authors else set())
     seen = Counter()
 
     def reach(candidate):
@@ -178,6 +181,8 @@ def prioritize(candidates, *, diversify_authors=False, ordinary=False):
         preference = bool(threshold and (candidate.likes is None or candidate.likes < threshold))
         author = x_urls.author(candidate.url) or candidate.url
         leading = (author not in large, preference) if large else (preference,)
+        if new_authors:
+            leading = (author in answered, *leading)
         if not diversify_authors:
             return (*leading, *(reach(candidate) if ordinary else ()), 0)
         group = (*leading, author)
@@ -253,11 +258,13 @@ def _parent_verdict(job: Job, candidate: Candidate):
     verdict = judge_parent(candidate.url, debate_turn=job.debate_turn,
                            is_reply=candidate.is_reply or bool(candidate.context)
                            or candidate.text.lstrip().startswith("@"))
-    if verdict and not account.engagement_allowed(candidate.text, url=candidate.url):
+    if verdict and not account.engagement_allowed(candidate.text):
         return Verdict(Refusal.TOPIC, "source is outside the Account's engagement niche", verdict.author)
-    minimum = settings.get("REPLY_MIN_LIKES")
-    if verdict and minimum and (type(candidate.likes) is not int or candidate.likes < minimum):
-        return Verdict(Refusal.ENGAGEMENT, "at least the configured observed parent likes required", verdict.author)
+    if verdict:
+        from ..guards.reply_focus import parent_refusal
+        why = parent_refusal(candidate.text)
+        if why:
+            return Verdict(Refusal.DISCUSSION, why, verdict.author)
     return verdict
 
 

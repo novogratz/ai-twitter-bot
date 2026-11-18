@@ -1,10 +1,11 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# 2026-11-08: exceptional video finds only. News off; clocks are opportunities, not targets.
+# 2026-11-18: four daily videos, using the best eligible fallback below the quality target.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["05:00", "06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30", "20:00", "21:30", "23:00"]
+windows = ["09:00", "12:00", "17:00", "20:00"]
 paired_windows = []
-scheduled_daily_cap = 13
+scheduled_daily_cap = 4
+daily_target_min = 4 # source, technical, history and publication checks still apply
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -12,13 +13,15 @@ edit_max_seconds = 120
 min_hook_score = 9
 bangers_only = true
 ultra_bangers_only = true
-one_line_caption = true
+best_available_fallback = true # ultra scores are preferred; strongest valid lower score can publish
+one_line_caption = false
+playful_caption = true
 discovery_prompt_file = "video_discovery_prompt.md"
 discovery_memory_file = "video_memory.json"
 query_bank_file = "video_query_bank.txt"
 adaptive_discovery = true
 discovery_calls_per_hour = 3
-ready_reserve_min = 1
+ready_reserve_min = 5
 banger_min_score = 88.0
 x_max_views = 50000
 x_reach_max_age_seconds = 21600
@@ -35,7 +38,7 @@ min_spacing_seconds = 900
 startup_seconds = 3600
 day_poll_seconds = 1200
 night_poll_seconds = 600
-buffer_target = 3
+buffer_target = 10
 queue_limit = 500
 score_threshold = 80.0 # preserved raw ranking; banger_min_score controls the new editorial rubric
 confidence_min = 0.9
@@ -91,7 +94,7 @@ sam = "@sama"
 # No guessed X handles for cast members without a configured verified handle.
 
 [platforms.instagram]
-weight = 40
+weight = 70
 enabled = true
 safari_player = true
 public_search = true

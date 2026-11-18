@@ -3,6 +3,15 @@
   "coverage": "Partial owner seed plus bounded own-status observations; never complete account history.",
   "records": [
     {
+      "id": "own-2122692661232447843",
+      "state": "posted",
+      "urls": [
+        "https://x.com/thesimaximalist/status/2122692661232447843"
+      ],
+      "title": "Owner reference: Jensen joined the call; playful tech-cast parody. Absolute BANGER.",
+      "evidence": "Operator supplied own published status URL on 2026-11-17 as a reference, not permission to repeat. Full media/audio and public counters have not been independently inspected in this change."
+    },
+    {
       "id": "own-2118431727886684202",
       "state": "posted",
       "urls": [

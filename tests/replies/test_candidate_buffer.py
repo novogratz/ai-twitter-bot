@@ -261,3 +261,8 @@ def test_full_buffer_retains_older_priority_source_only_when_enabled(monkeypatch
     assert replied_store.load_replied() == set()
     now[0] += 31 * 60
     assert buffer.pending() == []  # Priority never extends the source's TTL.
+
+
+@pytest.fixture(autouse=True)
+def _like_preference(settings_override):
+    settings_override(REPLY_PREFERRED_MIN_LIKES=3)

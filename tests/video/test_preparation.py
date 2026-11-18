@@ -58,6 +58,20 @@ def test_cast_attribution_needs_actual_source_provenance_and_does_not_prove_perf
     assert 'confidence' not in context and 'performance' not in context
 
 
+def test_cast_attribution_accepts_han_adjacent_english_credit_without_partial_names(video_cfg):
+    cfg = replace(video_cfg, targets={'jensen': ['Jensen Huang', 'Jensen']})
+    doc = {'title': '爱唱歌的大男孩jensen huang演唱', 'creator': 'creator',
+           'canonical_url': 'https://www.instagram.com/reel/exact',
+           'publication_evidence': 'observed exact source caption'}
+    context = inspection.cast_context(doc, cfg)
+    assert context['cast'] == {'jensen': 'Jensen Huang'}
+    assert context['title'] == doc['title']
+    assert inspection.cast_context(dict(doc, title='Made with Genjutsu #jensenhuang'), cfg)['cast'] == context['cast']
+    for title in ('SuperJensen Huang', 'Jensené', 'JensenHuang', '#jensenhuangstyle', '#notjensenhuang'):
+        assert not inspection.cast_context(dict(doc, title=title), cfg)
+    assert not inspection.cast_context(dict(doc, publication_evidence=''), cfg)
+
+
 def test_ready_imminent_slot_does_not_start_a_routine_browser_read(video_store, video_cfg, ready, at, monkeypatch):
     from src.video import workers, schedule
     now = at(6, 58)

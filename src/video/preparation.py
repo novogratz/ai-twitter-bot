@@ -53,7 +53,7 @@ def maintain_reserve(store, cfg, now):
                 db.execute("INSERT INTO jobs(kind,item,due) VALUES('discovery',?,?) ON CONFLICT(kind,item) "
                            "DO UPDATE SET due=MIN(due,excluded.due),state='pending' "
                            "WHERE jobs.state IN ('done','pending')", (platform, now))
-        store.event(now, "reserve_shortfall", "video", f"{ready}/{cfg.ready_reserve_min} eligible; discovery continues without lowering quality")
+        store.event(now, "reserve_shortfall", "video", f"{ready}/{cfg.ready_reserve_min} eligible; bounded discovery continues under configured selection policy")
 
 
 def recover_supply(db, cfg, now):

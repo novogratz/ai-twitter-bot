@@ -290,7 +290,7 @@ _EN_MARKERS = (
     " they ", " we ", " will ", " just ", " market", " growth", " company ",
     " here ", " there ", " about ", " than ", " because ",
     " my ", " our ", " i ", " can ", " could ", " would ", " should ", " might ", " must ",
-    " has ", " have ", " does ", " did ", " how ", " why ", " what ", " which ",
+    " has ", " have ", " does ", " did ", " needs ", " how ", " why ", " what ", " which ",
     " without ", " through ", " into ", " across ", " between ", " before ", " after ",
     " when ", " where ", " while ", " then ",
     " i'm ", " you're ", " we're ", " they're ", " i've ", " you've ", " we've ", " they've ",
@@ -310,7 +310,7 @@ _SHORT_ENGLISH_CUES = re.compile(
     r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
     r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
     r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds|"
-    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists|building|fake|only|sound|unexpected|quite|makes|video)\b", re.IGNORECASE)
+    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists|building|fake|only|sound|unexpected|quite|makes)\b", re.IGNORECASE)
 _FRENCH_REPLY_CUES = re.compile(
     r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
     r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
@@ -355,7 +355,7 @@ go build robot technicians robots building rockets oh fake keys bills fifty tool
 real two hands swordswoman lead pastel paper collage cities sound inviting heroes
 rebuilding skeletons apartments unexpected plot twist brains grok smarts per
 mecha apple intelligence support holding onto m ipad appealing api switching
-sweeter quite gas behind autumn cool video
+sweeter quite gas behind autumn
 """.split())
 
 
@@ -403,9 +403,6 @@ def detect_language(text: str) -> Tuple[str, float]:
 _LAZY_REPLIES = {
     "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
     "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
-    "thanks for sharing", "thank you for sharing", "interesting take", "great insight",
-    "great insights", "well put", "this is the future", "game changer", "this changes everything",
-    "couldnt agree more", "could not agree more",
     "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
     "mdr", "enorme", "énorme", "ouais", "clairement", "evidemment", "évidemment",
@@ -416,7 +413,7 @@ def _is_lazy_reply(text: str) -> bool:
     stripped = (text or "").strip()
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
-    norm = " ".join(re.sub(r"[^\w\s]", "", stripped.lower()).split())
+    norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
     return norm in _LAZY_REPLIES
 
 

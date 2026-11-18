@@ -186,3 +186,8 @@ def test_all_eight_slots_plus_one_startup_daily_max(video_store, video_cfg, read
     assert len(video_store.rows("SELECT * FROM reservations WHERE state='confirmed'")) == 9
     ready("extra", at(23))
     assert p.reserve(video_store, at(23), video_cfg) is None
+
+
+# These fixtures exercise historical/custom schedules, independently of live hours.
+import pytest
+pytestmark = pytest.mark.usefixtures("legacy_hours")

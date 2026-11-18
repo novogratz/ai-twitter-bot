@@ -20,8 +20,17 @@ from .store import DATABASE, Store, dumps, identity
 def deliver(store, cfg, adapter, now, limit=2):
     delivered = []
     store.execute("UPDATE outbox SET state='expired',error='draft expired before delivery' WHERE state='pending' AND expires<=?", (now,))
-    rows = store.rows("""SELECT * FROM outbox WHERE state='pending' AND due<=?
-        ORDER BY due, CASE json_extract(payload,'$.role') WHEN 'main' THEN 0 ELSE 1 END, id LIMIT ?""", (now, limit))
+    rows = store.rows("""SELECT o.*,s.document FROM outbox o LEFT JOIN stories s ON s.id=o.story
+        WHERE o.state='pending' AND o.due<=?
+        ORDER BY o.due, CASE json_extract(o.payload,'$.role') WHEN 'main' THEN 0 ELSE 1 END, o.id""", (now,))
+    if cfg.publish_windows:
+        def priority(row):
+            story, payload = json.loads(row["document"]), json.loads(row["payload"])
+            scores = story.get("scores", {})
+            return (payload["role"] != "main", story.get("post_kind") == "discussion",
+                    -scores.get("significance", 0), -sum(scores.values()), -story.get("verified_at", 0))
+        rows.sort(key=priority)
+    rows = rows[:limit]
     for row in rows:
         payload = json.loads(row["payload"])
         store.execute("UPDATE outbox SET attempts=attempts+1 WHERE id=?", (row["id"],))
@@ -39,8 +48,11 @@ def deliver(store, cfg, adapter, now, limit=2):
             if current in ("published", "submitting", "publish_unknown"):
                 continue
             if isinstance(exc, Deferred):
+                # A global window/video hold must not put the best story behind
+                # a weaker pick when the next scheduled tick becomes eligible.
+                retry_due = now if cfg.publish_windows else now + 60
                 store.execute("UPDATE outbox SET attempts=MAX(0,attempts-1),due=?,error=? WHERE id=?",
-                              (now + 60, str(exc), row["id"]))
+                              (retry_due, str(exc), row["id"]))
                 continue
             # A destination may already have accepted it: preserve ID and exact bytes.
             state = "held" if row["attempts"] + 1 >= cfg.delivery_attempts else "pending"
@@ -131,16 +143,17 @@ def _run(cfg, store, http, model, delivery, now, import_history):
                 start = extended
                 store.set_meta("first_window", start)
                 store.execute("UPDATE runs SET window_start=? WHERE id=?", (start, run_id))
-        # Retry delivery without suppressing hourly discovery. A retrying run
-        # creates no additional picks, so it cannot send two main stories.
+        # Scheduled publishing builds a reviewed pool throughout the day;
+        # the publisher admits only one candidate per window. Legacy immediate
+        # delivery keeps its single pending main/backup pair.
         pending = store.rows("SELECT id FROM outbox WHERE state='pending'")
-        allow_new = not pending and not store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')")
-        if pending:
+        allow_new = (not pending or bool(cfg.publish_windows)) and not store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')")
+        if pending and not cfg.publish_windows:
             results = deliver(store, cfg, delivery, now)
         # Startup delivery and research share one worker. Keep that worker free
         # for the next admission retry while an approved main story is waiting.
         # Do not advance coverage: this pass has not researched any sources.
-        if (store.meta("startup_news", {}).get("state") == "pending"
+        if (not cfg.publish_windows and store.meta("startup_news", {}).get("state") == "pending"
                 and store.rows("""SELECT id FROM outbox WHERE state IN ('pending','submitting','publish_unknown')
                     AND json_extract(payload,'$.role')='main' LIMIT 1""")):
             store.execute("UPDATE runs SET finished=?,status='startup_delivery_wait' WHERE id=?", (now, run_id))
@@ -221,7 +234,8 @@ def _run(cfg, store, http, model, delivery, now, import_history):
             except Exception as exc:
                 errors.append("candidate: " + type(exc).__name__)
                 store.execute("UPDATE leads SET checked=? WHERE url=?", (now, lead["url"]))
-        verified.sort(key=lambda v: sum(v[0]["scores"].values()), reverse=True)
+        verified.sort(key=lambda v: ((v[0]["scores"].get("significance", 0) if cfg.publish_windows else 0),
+                                     sum(v[0]["scores"].values())), reverse=True)
         selected_events = set()
         for story, key, related in verified:
             if not allow_new or len(selected_events) >= 2:
@@ -238,7 +252,7 @@ def _run(cfg, store, http, model, delivery, now, import_history):
                     store.remember(story, "held", now)
                     continue
                 recommendation = editor.recommendation(story, now, occupied, cfg.video_gap_minutes)
-                payload = {"id": key, "role": "backup" if selected_events else "main", "tweet": text,
+                payload = {"id": key, "role": "backup" if selected_events and not cfg.publish_windows else "main", "tweet": text,
                     "weighted_characters": length, "recommendation": recommendation,
                     "display": text + "\n\n" + recommendation, "created_at": datetime.fromtimestamp(now, timezone.utc).isoformat()}
                 story["final_review"] = reviewed
@@ -251,7 +265,7 @@ def _run(cfg, store, http, model, delivery, now, import_history):
                 story["final_error"] = str(exc)[:240]
                 store.remember(story, "held", now)
                 errors.append("final review: " + type(exc).__name__)
-        if selected_events:
+        if selected_events or (pending and cfg.publish_windows):
             results += deliver(store, cfg, delivery, now, limit=2 - len(results))
         if not errors:
             store.set_meta("last_complete", now)

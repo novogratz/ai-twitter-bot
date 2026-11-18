@@ -5,6 +5,12 @@ import pytest
 from src.guards import content_guard as cg
 
 
+def test_observed_english_video_caption_with_needs_is_recognized():
+    assert cg.validate("AI-parody Elon’s high kick needs its own backup dancers. 🕺😂", kind="original") == (True, "")
+    assert not cg.validate("Elon needs des danseurs pour cette scène.", kind="original")[0]
+    assert cg.detect_language("needsmore") == ("unknown", 0.0)
+
+
 @pytest.mark.parametrize("text", [
     "Offline wins.", "Less lag. 🙂", "Worth the wait.", "Tiny model, big win.",
     "Cheap tokens, expensive mistakes.", "That's a useful distinction.",
@@ -521,27 +527,4 @@ def test_extended_short_vocabulary_keeps_unknown_and_mixed_language_closed(text)
     ("Such a lovely autumn idea. " * 4, False),
 ])
 def test_live_artist_reaction_recognizes_autumn_without_opening_the_language_gate(text, allowed):
-    assert cg.validate(text, kind="reply")[0] is allowed
-
-
-@pytest.mark.parametrize("text", [
-    "Thanks for sharing! ❤️", "Thank you for sharing", "Interesting take!",
-    "Great insights 💜", "This changes everything!", "This is the future.",
-    "Couldn't agree more.", "Game changer!", "Thanks   for sharing!",
-])
-def test_empty_courtesy_and_hype_are_not_replies(text):
-    ok, why = cg.validate(text, kind="reply")
-    assert not ok and "low-effort" in why
-
-
-@pytest.mark.parametrize("text,allowed", [
-    ("Really cool video ❤️", True),
-    ("Cool video 🩷", True),
-    ("You made my day, really cool video ❤️", True),
-    ("Cool vidéo ❤️", False),
-    ("Really cool video mais vraiment magnifique ❤️", False),
-    ("Really cool video zqxw ❤️", False),
-    ("Really cool video " * 5, False),
-])
-def test_loving_video_wording_keeps_short_english_fallback_closed(text, allowed):
     assert cg.validate(text, kind="reply")[0] is allowed

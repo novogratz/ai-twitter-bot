@@ -1,0 +1,21 @@
+{
+  "coverage": "Posts explicitly reported by the operator on November 17, 2026; no inferred X receipt or complete account-history claim.",
+  "records": [
+    {
+      "event_key": "nvidia-fiscal-2027-third-quarter-results",
+      "development": "initial-results-announcement",
+      "state": "historical",
+      "timestamp": "2026-11-17",
+      "source_url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027",
+      "text": "Nvidia just reported $115.8B in quarterly revenue, up 103% from a year ago. Data centers brought in $107.6B. The SI boom has a very expensive shopping cart."
+    },
+    {
+      "event_key": "discussion:model-choice-owner-november-17",
+      "development": "owner-reported-publication",
+      "post_kind": "discussion",
+      "state": "historical",
+      "timestamp": "2026-11-17",
+      "text": "Which AI model is your favorite right now, and WHY?\n\n• Grok 4.7\n• Claude Fable 5.2 / Opus 5.5\n• GPT-6 Astra\n• Gemini 4 Carbon\n• DeepSeek\n• Qwen\n• Kimi"
+    }
+  ]
+}

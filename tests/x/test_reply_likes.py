@@ -177,3 +177,37 @@ def test_analytics_failure_never_hides_a_shipped_reply_or_releases_its_claim(par
 
 
 pytestmark = pytest.mark.usefixtures("open_topic_account")
+
+
+def test_unknown_reply_consumes_budget_but_preserves_parent_claim(parent, monkeypatch, memory_ledger):
+    from src.guards import reply_budget
+    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **kw: False)
+    assert tc.reply_to_tweet(URL, TEXT) is W.UNCONFIRMED
+    assert reply_budget.used_today() == 1 and ag.count_today(ag.REPLY) == 0
+    assert URL in replied_store.load_replied()
+
+
+def test_paste_failure_does_not_spend_reply_budget(parent, monkeypatch):
+    from src.guards import reply_budget
+    monkeypatch.setattr(tc, "_paste_or_abort", lambda *a: False)
+    assert tc.reply_to_tweet(URL, TEXT) is W.FAILED
+    assert reply_budget.used_today() == 0
+    assert URL not in replied_store.load_replied()
+
+
+def test_parent_aging_during_composition_cannot_reach_submit(parent, monkeypatch, settings_override):
+    from datetime import timedelta
+    from src.guards import active_hours, reply_budget
+    from tests.guards.test_reply_budget import NOW, fresh_url
+    from tests.helpers import clock
+    clock(monkeypatch, NOW)
+    settings_override(REPLY_MAX_AGE_SECONDS=1800)
+    url = fresh_url(seconds=1790)
+    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: True)
+    def paste(*args):
+        clock(monkeypatch, NOW + timedelta(seconds=15))
+        return True
+    monkeypatch.setattr(tc, "_paste_or_abort", paste)
+    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("stale parent submitted"))
+    assert tc.reply_to_tweet(url, TEXT) is W.REFUSED
+    assert not reply_budget.entries() and url not in replied_store.load_replied()

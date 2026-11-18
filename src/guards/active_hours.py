@@ -1,5 +1,5 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, time, timedelta
 from functools import wraps
 import hashlib
 import threading
@@ -9,10 +9,10 @@ from ..core import config, settings
 from ..core.logger import log
 
 
-WAKE = time(4, 30)
-BEDTIME = time(0, 0)
+WAKE = time(7, 0)
+BEDTIME = time(23, 0)
 _BREAK_INTERVAL_HOURS = 3
-_FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.
+_FIRST_BREAK_HOUR = 7  # Optional breaks start only after three waking hours.
 
 _STOP = threading.Event()
 
@@ -53,25 +53,7 @@ def break_until(now: datetime | None = None) -> datetime | None:
 
 
 def window_label() -> str:
-    label = f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
-    if window := awake_window():
-        label += f"; awake from {window[0].isoformat()} until {window[1].isoformat()}"
-    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
-    return label + (f"; sleep skipped for the night of {night} only" if night else "")
-
-
-def _skipped_sleep_day():
-    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
-    return date.fromisoformat(night) + timedelta(days=1) if night else None
-
-
-def awake_window():
-    start = settings.get("AWAKE_72H_START")
-    if not start:
-        return None
-    start = datetime.fromisoformat(start).astimezone(timezone.utc)
-    zone = ZoneInfo(config.BOT_TIMEZONE)
-    return start.astimezone(zone), (start + timedelta(hours=72)).astimezone(zone)
+    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
 
 
 def now_local() -> datetime:
@@ -97,12 +79,7 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    window = awake_window()
-    if window and window[0] <= local < window[1]:
-        return True
     clock = local.time().replace(tzinfo=None)
-    if local.date() == _skipped_sleep_day() and clock < WAKE:
-        return True
     if BEDTIME <= WAKE:
         return clock >= WAKE or clock < BEDTIME
     return WAKE <= clock < BEDTIME
@@ -121,9 +98,7 @@ def may_act(now: datetime | None = None) -> bool:
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    wake = wake if local < wake else wake + timedelta(days=1)
-    window = awake_window()
-    return min(wake, window[0]) if window and local < window[0] else wake
+    return wake if local < wake else wake + timedelta(days=1)
 
 
 def require_active() -> None:
@@ -153,23 +128,17 @@ def awake_job(fn):
 
 
 def bedtime(now: datetime) -> datetime:
-    """Next policy bedtime, including one explicitly skipped Toronto night."""
-    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    end = local.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
-    if BEDTIME <= WAKE and local.time().replace(tzinfo=None) >= WAKE:
+    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
+    end = now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    if BEDTIME <= WAKE and now.time().replace(tzinfo=None) >= WAKE:
         end += timedelta(days=1)
-    if end.date() == _skipped_sleep_day():
-        end += timedelta(days=1)
-    window = awake_window()
-    if window and (window[0] <= end < window[1] or window[0] <= local < window[1]):
-        end = window[1]
-        if is_active(end):
-            end = end.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0) + timedelta(days=1)
-    return end.astimezone(now.tzinfo)
+    return end
 
 
 def seconds_until_bedtime() -> float:
     now = now_local()
+    if not is_active(now):
+        return 0.0
     return max(0.0, (bedtime(now) - now).total_seconds())
 
 

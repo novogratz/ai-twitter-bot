@@ -1,5 +1,12 @@
 # Operations
 
+Current runtime policy (2026-11-18): sleep is **23:00–07:00 Toronto** for
+interactions, news research/delivery and independent video preparation. The
+scheduler stays alive; worker heartbeats can report sleeping. Earlier dated
+runbooks describing 04:30 wake or overnight research are superseded. Apply code
+and local settings through the normal explicitly requested restart; preserve
+all publication, Reply and uncertain-submission histories.
+
 Running, watching and recovering the bot under the 2026-09-20 policy. The
 design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
@@ -361,6 +368,11 @@ not live, delete the slot entry. Either way, delete its entry (keyed
 source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
+**Reply submission recovery.** `reply_submissions.json` complements the permanent
+parent history. Missing receipts never release a submission or its daily budget.
+Do not delete it on deployment or reset it after an unknown send. Corrupt data
+stops Reply admission; repair from evidence while the bot is stopped.
+
 **Priority-watch state and uncertain reposts.** `priority_watch_state.json`
 stores each watched handle's first-enable timestamp; preserve it on deploy and
 restart. The first enable skips older posts, and later passes read at most the
@@ -419,9 +431,6 @@ Safari restart, and nothing writes over the file:
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `priority_watch_state.json` | `priority_watch_job` before search or any action |
-| `meme_repost_reviews.json` | Selective AI meme review and native repost admission |
-| `priority_quotes.json` | Watched quote delivery and video admission that reads quote spacing |
-| `self_reposts.json` | Own-post discovery and timed repost/undo dispatch |
 | `reposted_tweets.json` | Repost writes and Original publication admission, which need its pending reservations |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
@@ -598,9 +607,6 @@ root:
 | `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |
 | `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
-| `meme_repost_reviews.json` | `meme_repost_store` | Source/media-bound video sample evidence and reviews; legacy text reviews stay readable; permanent sends remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
-| `priority_quotes.json` | `quote_store` | Source-bound editorial reviews, permanent confirmed/uncertain native quote receipts and daily reservations | guarded, process lock; never clear an uncertain send without checking X |
-| `self_reposts.json` | `self_repost_store` | Activation, own status IDs, one-hour due times, observed views, next half-hour turn and ambiguous undo/repost phases | guarded, process lock; preserve on restart |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `reply_feedback.json` | `reply_feedback` | Three-day deterministic one-in-five Reply sample; exact own URL, actual observation ages, nullable counters and source/model/topic | disposable; never an admission history |
@@ -609,6 +615,8 @@ root:
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Permanent status-ID history of Replies and uncertain submissions; never evicted | own, fails closed |
+| `reply_submissions.json` | `reply_budget` immediately before submitting | Permanent timestamped Reply attempts; daily forty ceiling, watched-author caps and spacing include uncertain sends; confirmed ledger rows counted once | guarded |
+| `reply_submissions.json.lock` | `reply_budget` | OS process lock serializes final budget reservations | never delete while a writer may hold it |
 | `replied_tweets.json.lock` | `replied_store` | OS process lock for claims and every history update; held together with a thread lock | lock file; never delete while a writer may hold it |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -922,19 +930,3 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
-
-### Scheduled promotion recovery (November 10)
-
-Quotes in `pending` never automatically resubmit. Inspect the exact own post and
-source card before reconciling. An own-repost `undo_pending` can continue only
-after observing the exact original no longer reposted; `repost_pending` confirms
-only after the exact original is visibly reposted. Otherwise it stays held.
-Do not delete these stores or reset next-due timestamps. Post/repost receipts,
-not elapsed scheduler time, establish success. The ordinary restart workflow
-preserves these files and all existing production histories.
-
-November 12: the Operator will restart manually. Preserve `.bot_disabled` until
-that start. The local `AWAKE_72H_START` window expires without another restart;
-quotes and timed self-reposts stay disabled until explicitly changed. Native AI video
-reposts use permanent repost claims; an unconfirmed click cannot be retried by
-clearing the review record. Read-only diagnostics do not publish.

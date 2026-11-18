@@ -8,7 +8,9 @@ def policy_revision(cfg):
     return hashlib.sha256(json.dumps({"version": 2, "targets": cfg.targets, "watermark": cfg.watermark,
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
-        "caption": cfg.one_line_caption, "ultra_bangers": cfg.ultra_bangers_only}, sort_keys=True).encode()).hexdigest()
+        "caption": cfg.one_line_caption, "playful_caption": cfg.playful_caption,
+        "ultra_bangers": cfg.ultra_bangers_only,
+        "best_available_fallback": cfg.best_available_fallback}, sort_keys=True).encode()).hexdigest()
 
 
 def plan(evidence, info, cfg, digest):
@@ -32,9 +34,11 @@ def plan(evidence, info, cfg, digest):
             or not set(cast) <= set(cfg.targets)):
         raise ValueError("editorial cut lacks attributed visible target cast")
     hook = value.get("hook_score")
-    if (type(hook) not in (int, float) or not math.isfinite(hook) or not cfg.min_hook_score <= hook <= 10
-            or value.get("cast_visible_first_second") is not True
-            or value.get("action_first_second") is not True or not value.get("reason")):
+    minimum = 0 if cfg.best_available_fallback else cfg.min_hook_score
+    opening = (value.get("cast_visible_first_second"), value.get("action_first_second"))
+    if (type(hook) not in (int, float) or not math.isfinite(hook) or not minimum <= hook <= 10
+            or any(type(flag) is not bool for flag in opening)
+            or (not cfg.best_available_fallback and not all(opening)) or not value.get("reason")):
         raise ValueError("editorial cut lacks a strong immediate opening")
     return {**value, "source_sha256": digest, "duration": round(end - start, 6), "revision": 1}
 
@@ -43,13 +47,15 @@ def banger_refusal(review, cfg, *, output=False):
     if not cfg.bangers_only:
         return ""
     from .bangers import review_refusal
-    if reason := review_refusal(review):
+    if reason := review_refusal(review, best_available=cfg.best_available_fallback):
         return reason
-    if cfg.ultra_bangers_only:
+    if cfg.ultra_bangers_only and not cfg.best_available_fallback:
         from .bangers import ultra_refusal
         if reason := ultra_refusal(review):
             return reason
     floors = (19, 19, 14) if cfg.ultra_bangers_only else (18, 17, 12)
+    if cfg.best_available_fallback:
+        floors = (0, 0, 0)
     for field, minimum, maximum in zip(("fit_score", "entertainment_score", "quality_score"), floors, (20, 20, 15)):
         value = review.get(field)
         if type(value) not in (int, float) or not math.isfinite(value) or not minimum <= value <= maximum:
@@ -63,10 +69,11 @@ def banger_refusal(review, cfg, *, output=False):
             return "rendered performance verification incomplete"
         opening = review.get("opening", {})
         score = opening.get("hook_score")
-        if (type(score) not in (int, float) or not math.isfinite(score) or not cfg.min_hook_score <= score <= 10
-                or opening.get("cast_visible_first_second") is not True
-                or opening.get("action_first_second") is not True
-                or opening.get("no_dead_intro") is not True
+        minimum = 0 if cfg.best_available_fallback else cfg.min_hook_score
+        observed = tuple(opening.get(key) for key in ("cast_visible_first_second", "action_first_second", "no_dead_intro"))
+        if (type(score) not in (int, float) or not math.isfinite(score) or not minimum <= score <= 10
+                or any(type(flag) is not bool for flag in observed)
+                or (not cfg.best_available_fallback and not all(observed))
                 or review.get("opening_samples_reviewed") is not True
                 or review.get("opening_sample_times") != [0, .2, .4, .6, .8]):
             return "rendered first second is not a verified banger opening"

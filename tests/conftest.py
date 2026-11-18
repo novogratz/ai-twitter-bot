@@ -74,18 +74,6 @@ _UNWALLED = {}
 
 
 @_pytest.fixture
-def promotion_account(monkeypatch):
-    """Exercise optional promotion features independently of the live rollback."""
-    from dataclasses import replace
-    from src.core import account
-    profile = replace(account.current(), auto_engage_all_topics=True,
-                      watched_reposts_independent=True, priority_quotes_enabled=True,
-                      self_reposts_enabled=True)
-    monkeypatch.setattr(account, "current", lambda: profile)
-    return profile
-
-
-@_pytest.fixture
 def open_topic_account(monkeypatch):
     """Generic engine tests opt out of the live Account's stricter topic rule.
 
@@ -94,9 +82,7 @@ def open_topic_account(monkeypatch):
     """
     from dataclasses import replace
     from src.core import account
-    profile = replace(account.current(), engagement_niche_only=False, auto_engage_all_topics=False,
-                      watched_reposts_independent=False, priority_quotes_enabled=False,
-                      self_reposts_enabled=False)
+    profile = replace(account.current(), engagement_niche_only=False)
     monkeypatch.setattr(account, "current", lambda: profile)
     return profile
 
@@ -257,6 +243,21 @@ def respected(operator_folder):
 
 
 @_pytest.fixture(autouse=True)
+def _engine_reply_defaults(monkeypatch):
+    """Generic contracts use engine defaults; policy tests opt into live settings.
+
+    Explicit settings.load() tests still read the real Account's limits, and
+    settings_override always takes precedence over these isolated initial values.
+    """
+    from src.core import settings
+    names = ("REPLY_DISCUSSIONS_ONLY", "REPLY_PREFER_NEW_AUTHORS", "REPLY_MAX_AGE_SECONDS",
+             "REPLY_WATCHED_MAX_AGE_SECONDS", "WATCH_ENGAGEMENT_REQUIRES_REPLY",
+             "MIN_SECONDS_BETWEEN_REPLIES", "DIRECT_REPLY_MAX_AGE_MINUTES")
+    monkeypatch.setattr(settings, "_values", dict(settings._values or {},
+        **{name: settings.DECLARED[name].default for name in names}))
+
+
+@_pytest.fixture(autouse=True)
 def _daylight_default(monkeypatch):
     """Legacy tests run during daytime independent of the CI host's clock.
 
@@ -267,7 +268,7 @@ def _daylight_default(monkeypatch):
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     with settings.overriding() as override:
-        override(HOURLY_BREAK_MINUTES=0, REPLY_MIN_LIKES=0)
+        override(HOURLY_BREAK_MINUTES=0)
         yield
 
 
@@ -384,3 +385,16 @@ def like_job(monkeypatch, memory_ledger, settings_override):
         state["closed"] += 1
     monkeypatch.setattr(safari, "close_front_tab", close_front_tab)
     return state
+
+
+@_pytest.fixture
+def legacy_hours(monkeypatch):
+    """Generic scheduling algorithms under their explicit historical test clock.
+
+    The current 07:00–23:00 policy has its own boundary/DST and live-profile tests.
+    This fixture never changes the live process or any production state.
+    """
+    from datetime import time
+    from src.guards import active_hours
+    monkeypatch.setattr(active_hours, "WAKE", time(4, 30))
+    monkeypatch.setattr(active_hours, "BEDTIME", time(0, 0))

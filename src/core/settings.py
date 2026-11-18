@@ -77,9 +77,7 @@ _overrides: dict = {}
 
 
 def _kind(setting: Setting) -> str:
-    if setting.name == "AWAKE_72H_START":
-        return "ISO timestamp with timezone or blank"
-    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"}:
+    if setting.name == "REPLY_VOLUME_BOOST_DATE":
         return "YYYY-MM-DD date or blank"
     if setting.type is bool:
         return "0 or 1"
@@ -165,11 +163,19 @@ _declare("NEWS_WEBHOOK_URL", str, "", "Optional HTTPS draft destination, used on
 _declare("NEWS_WEBHOOK_TOKEN", str, "", "Optional bearer credential for the configured news draft webhook; never an X/email credential.")
 _declare("NEWS_ENABLED", bool, False, "Run hourly verified news discovery with the normal bot; independent of video mode.")
 _declare("NEWS_AUTO_PUBLISH", bool, False, "Explicit operator opt-in to publish verified main news picks through Safari. Backups remain drafts.")
+_declare("DISCUSSION_POSTS_ENABLED", bool, False, "Prepare occasional reviewed SI discussion questions in the news outbox; shares text limits and requires automatic news publishing to send.")
 _declare("NEWS_MIN_SECONDS_BETWEEN_POSTS", int, 7200, "Minimum gap between news publications, including uncertain attempts.", floor=1200)
 _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", floor=0, ceiling=8)
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)
 _declare("POST_JITTER_SECONDS", int, 0, "Random delay added to the post spacing.", floor=0)
 _declare("MIN_SECONDS_BETWEEN_REPLIES", int, 8, "Minimum gap between two Replies.", floor=8)
+_declare("MAX_REPLIES_PER_DAY", int, 40, "Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies.", floor=0, ceiling=40)
+_declare("REPLY_MAX_AGE_SECONDS", int, 0, "Final Reply parent age ceiling; zero uses existing source limits.", floor=0)
+_declare("REPLY_WATCHED_MAX_AGE_SECONDS", int, 0, "Tighter final age ceiling for watched authors; zero uses the ordinary ceiling.", floor=0)
+_declare("REPLY_WATCHED_DAILY_CAP", int, 2, "Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies.", floor=0, ceiling=2)
+_declare("WATCH_ENGAGEMENT_REQUIRES_REPLY", bool, False, "Watched posts may be liked or reposted only after a confirmed Reply; the verified parent like during Reply composition is allowed.", floor=False)
+_declare("REPLY_DISCUSSIONS_ONLY", bool, False, "Only substantive technical discussions qualify; require a supported, useful contribution rather than praise or hype.", floor=False)
+_declare("REPLY_PREFER_NEW_AUTHORS", bool, False, "Prefer ordinary candidates whose authors have no confirmed Reply in the retained 90-day ledger.", floor=False)
 _declare("REPLY_JITTER_SECONDS", int, 7, "Random delay added to the Reply spacing.", floor=0)
 _declare("FOLLOW_WHITELIST_ONLY", bool, True, "Follow only whitelisted accounts.")
 _declare("FOLLOWBACK_BYPASS_WHITELIST", bool, True, "Let Follow-backs past the whitelist.")
@@ -276,19 +282,9 @@ _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may sh
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
 _declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.", floor=1)
-_declare("REPLY_MIN_LIKES", int, 0, "Required observed parent likes before generation and again before submission; missing counts refuse when enabled.", floor=0)
-_declare("FEED_SWEEP_INTERVAL_MINUTES", int, 8, "Interval between combined Home/Following discovery and Reply cycles; overlapping cycles coalesce.", floor=2)
 _declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
 _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length every three waking hours; 0 disables breaks.", floor=0, ceiling=10)
-_declare("SKIP_SLEEP_NIGHT_DATE", str, "", "Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win.")
-_declare("AWAKE_72H_START", str, "", "Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables.")
 _declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; running browser transactions may delay a poll.", floor=20)
-_declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals for independent likes/reposts and any permitted Replies.", floor=False)
-_declare("MEME_REPOST_ENABLED", bool, False, "Allow visually reviewed funny AI video reposts discovered by existing scans.", floor=False)
-_declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=20)
-_declare("MEME_REPOST_MIN_LIKES", int, 0, "Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
-_declare("MEME_REPOST_MIN_VIEWS", int, 0, "Optional exact-parent view floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
-_declare("MEME_REPOST_INTERVAL_MINUTES", int, 30, "Minimum spacing between confirmed AI video reposts.", floor=30)
 _declare("PRIORITY_WATCH_DISPATCH_SECONDS", int, 2, "Check discovered watched posts for independent action and Reply work.", floor=2)
 _declare("PRIORITY_WATCH_QUEUE_LIMIT", int, 80, "Maximum discovered watched originals retained in process memory, newest first.", floor=1, ceiling=200)
 _declare("PRIORITY_WATCH_ACTIONS_PER_CYCLE", int, 4, "Maximum independent like/repost attempts per watch action dispatch.", floor=1, ceiling=8)
@@ -297,10 +293,6 @@ _declare("PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS", int, 900, "Maximum repeated w
 _declare("PRIORITY_WATCH_MAX_AGE_HOURS", int, 24, "Maximum age of new watched originals; never before the watch was first enabled.", floor=1, ceiling=24)
 _declare("PRIORITY_WATCH_SCAN_LIMIT", int, 20, "Recent standalone originals collected per watched handle.", floor=1, ceiling=40)
 _declare("PRIORITY_WATCH_MAX_REPLIES", int, 1, "Maximum Reply generations per dispatch; one selects the newest parent again after each generation.", floor=1, ceiling=2)
-_declare("PRIORITY_WATCH_CATCHUP_SCROLLS", int, 3, "Collect each search viewport on the first poll and every fifteen minutes; zero disables bounded catch-up.", floor=0, ceiling=5)
-_declare("PRIORITY_REPOST_MIN_SECONDS", int, 60, "Minimum gap for independently authorized watched reposts, including uncertain attempts.", floor=60)
-_declare("PRIORITY_QUOTE_DAILY_CAP", int, 2, "Maximum selective watched quote posts per Toronto day when the Account opts in; pending sends count.", floor=0, ceiling=3)
-_declare("PRIORITY_QUOTE_INTERVAL_MINUTES", int, 240, "Minimum interval between selective watched quotes, including uncertain sends.", floor=240)
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed; zero disables generation.", floor=0)
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
@@ -524,12 +516,7 @@ def _parse(setting: Setting, raw: str):
             raise ValueError(raw)
         return raw == "1"
     value = setting.type(raw)
-    if setting.name == "AWAKE_72H_START" and value:
-        from datetime import datetime
-        parsed = datetime.fromisoformat(value)
-        if parsed.tzinfo is None or parsed.utcoffset() is None:
-            raise ValueError(raw)
-    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"} and value:
+    if setting.name == "REPLY_VOLUME_BOOST_DATE" and value:
         if date.fromisoformat(value).isoformat() != value:
             raise ValueError(raw)
     if setting.type is float and not math.isfinite(value):

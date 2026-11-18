@@ -37,17 +37,17 @@ from ..core.logger import log
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
-    REPLY_EXCLUDED = "author excluded from Replies"
     OWN_POST = "own post"
     CONVERSATION = "conversation follow-up or nested reply"
     ALREADY_REPLIED = "already Replied"
     OVERNIGHT = "Overnight or stop requested"
     STARTUP_VIDEO = "startup video must be confirmed before Replies"
     DEBATE_TURN_CAP = "Debate turn cap reached"
+    DAILY_CAP = "daily Reply cap reached"
+    DISCUSSION = "source lacks a substantive technical discussion"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     TOPIC = "source outside engagement niche"
-    ENGAGEMENT = "source below required observed likes"
     STALE_CANDIDATE = "buffered source expired"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
@@ -58,7 +58,7 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.REPLY_EXCLUDED, Refusal.OWN_POST,
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
 
@@ -88,8 +88,6 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
-    if author in account.current().reply_excluded_handles:
-        return Verdict(Refusal.REPLY_EXCLUDED, f"@{author} has a Reply-only exclusion", author)
     if author in account.own_handles():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
     if account.current().standalone_replies_only and (debate_turn or is_reply):
@@ -105,6 +103,14 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         ok, why = action_guard.can_debate_turn(author)
         if not ok:
             return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
+    from . import reply_budget
+    why = reply_budget.refusal(url)
+    if why:
+        return Verdict(Refusal.DAILY_CAP, why, author)
+    from .reply_focus import freshness_refusal
+    why = freshness_refusal(url)
+    if why:
+        return Verdict(Refusal.STALE_CANDIDATE, why, author)
     return Verdict(None, author=author)
 
 
@@ -116,7 +122,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not verdict:
         return verdict
     author = verdict.author
-    ok, why = action_guard.can_post(action_guard.REPLY)
+    ok, why = action_guard.can_post(action_guard.REPLY, target=url)
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
@@ -141,9 +147,13 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
         return Verdict(Refusal.TEXT, why, author)
+    from .reply_focus import draft_refusal
+    why = draft_refusal(text)
+    if why:
+        return Verdict(Refusal.TEXT, why, author)
     try:
         if engagement_log.repeated_reply(text):
-            return Verdict(Refusal.TEXT, "recycled wording from a recent confirmed Reply", author)
+            return Verdict(Refusal.TEXT, "same wording as a recent confirmed Reply", author)
     except (OSError, ValueError, csv.Error):
         return Verdict(Refusal.TEXT, "recent Reply text unavailable", author)
     _, why = respect_list.scrub_text_or_skip(text, addressee=author)

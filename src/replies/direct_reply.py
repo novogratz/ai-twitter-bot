@@ -27,9 +27,7 @@ def always_reply_accounts() -> tuple:
 
 REPLY_PROMPT = """Respond to the actual person and point in the tweet below. First notice what
 they are doing: sharing a win, making a joke, asking for help or discussing a
-claim. Meet that intent. Follow any reply modes in the Voice: choose from this post,
-blend naturally when useful, and never alternate mechanically or print mode labels.
-Be warm without a compulsory compliment or agreement. A little
+claim. Meet that intent. Start from warmth and curiosity, not analysis. A little
 delight, encouragement, shared joke or direct answer can each stand alone.
 Talk to the author; do not recap their headline or explain their own point back
 to them. A technical topic is not automatically a request for a technical lesson.
@@ -37,8 +35,7 @@ If they ask a question, answer it directly.
 Let an exciting development be exciting; do not automatically append a warning
 or a technical lesson. Correct only a material mistake. Avoid exaggerated hype,
 empty flattery and catchphrases. Follow the Voice's post-specific style first;
-brief affection can stand alone where the Voice permits it, without a detail recap
-or technical takeaway. Avoid canned applause with only the product name swapped. A simple sincere
+outside its brief-appreciation cases, avoid generic applause. A simple sincere
 line is welcome; do not force every reply into an analogy or punchline. When a
 creator shares art, a first attempt or progress, meet them with genuine interest
 or affection. A heart can fit that moment; it is neither required nor discouraged.
@@ -46,15 +43,11 @@ or affection. A heart can fit that moment; it is neither required nor discourage
 Use factual details from the supplied tweet or reliable, stable {domain} knowledge.
 Do not invent current figures, product capabilities, benchmark scores or tests.
 Make an inference clear as an inference. You may ask a specific question when
-the missing detail would change an actual answer, not merely to announce curiosity.
-Never claim firsthand experience not supplied
+it would help the conversation. Never claim firsthand experience not supplied
 in the context. A tool name or caption is not evidence of unseen video/audio
 quality, a current feature or a benchmark result. Attribute the author's report
 when it matters; do not endorse an uncertain claim as independently verified.
 
-For a substantive claim, challenge a weak assumption or offer a useful mechanism,
-counterexample or tradeoff when supported. Be direct, fair and kind; neither
-automatic agreement nor contrarian performance. Show expertise through the reasoning.
 For a serious technical question or debate, use two or three complete sentences
 when needed to explain the answer. Do not force every post into that structure. Follow the
 Voice's emoji guidance for every reply.
@@ -258,9 +251,6 @@ def _query_plan():
 
 def _discover_query(query, tab, authors, *, creator=False, preferred_urls=()):
     label = "SEARCH-PRIORITY" if authors else "SEARCH-CREATOR" if creator else "SEARCH-FRESH" if tab == "latest" else "SEARCH-HOT"
-    minimum = settings.get("REPLY_MIN_LIKES")
-    if minimum and "min_faves:" not in query:
-        query += f" min_faves:{minimum}"
     tweets = reply_pipeline.scrape(label, repr(query), scrape_x_search, query,
                                    max_tweets=25, tab=tab, text_limit=1200)
     max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
@@ -284,8 +274,6 @@ def run_direct_reply_cycle(max_replies=None):
     jobs, not one cycle holding Safari long enough for APScheduler to skip
     runs.
     """
-    from ..guards import respect_list
-    respect_list.load()  # refuse before spending browser reads
     if max_replies is None:
         max_replies = settings.reply_budget("DIRECT_REPLY_MAX_PER_CYCLE")
     elif max_replies <= 0:
@@ -328,22 +316,27 @@ def run_direct_reply_cycle(max_replies=None):
             # allowance is created for finding a publishable artist Reply.
             remaining -= len(cycle.tried) - attempted_before
 
-    # Restore the incremental search lane: use live sources before another
-    # Safari read can leave them waiting until their freshness window expires.
-    def draft_buffer():
-        nonlocal total, remaining
-        if cycle.rate_limited or (remaining is not None and remaining <= 0):
-            return
-        attempted_before = len(cycle.tried)
-        total += candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
-        if remaining is not None:
-            remaining -= len(cycle.tried) - attempted_before
+    # Spend unused, still-fresh sources before paying for another browser scan.
+    n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
+    total += n
+    if remaining is not None:
+        remaining -= n
 
-    draft_buffer()
+    # 2. SEARCH — primary reply engine for direct_reply.
+    #    Feed sweeper owns For You / Following; this cycle owns search so
+    #    the two engines don't waste time deduping the same feed tweets.
+    #    Rotating Top and ordinary Latest pools share the remainder of the
+    #    same read budget. Source and generation budgets still stop this pass.
     for query, tab, authors in cycle_queries:
-        if cycle.rate_limited or (remaining is not None and remaining <= 0):
+        if cycle.rate_limited:
+            break
+        if remaining is not None and remaining <= 0:
+            log.info(f"[DIRECT] Cycle budget reached ({max_replies}) — yielding Safari.")
             break
         _discover_query(query, tab, authors)
-        draft_buffer()
+        n = candidate_buffer.SEARCH.run(SEARCH_JOB, cycle, max_generations=remaining)
+        total += n
+        if remaining is not None:
+            remaining -= n
 
     log.info(f"[DIRECT] Posted {total} replies this cycle.")

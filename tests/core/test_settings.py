@@ -60,28 +60,15 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
 
 
 @pytest.mark.parametrize("value", ["today", "2026-11-31", "20261104", "2026-W45-3"])
-@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"])
-def test_date_overrides_require_an_exact_calendar_date(fresh, value, name):
-    with pytest.raises(settings.SettingsError, match=name):
-        fresh(f"{name}={value}\n")
+def test_reply_boost_requires_an_exact_calendar_date(fresh, value):
+    with pytest.raises(settings.SettingsError, match="REPLY_VOLUME_BOOST_DATE"):
+        fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
 
 
 @pytest.mark.parametrize("value", ["", "2026-11-04"])
-@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE"])
-def test_date_overrides_accept_blank_or_a_calendar_date(fresh, value, name):
-    fresh(f"{name}={value}\n")
-    assert settings.get(name) == value
-
-
-@pytest.mark.parametrize("value", ["today", "2026-11-13", "2026-11-13T02:00:00", "2026-02-30T02:00:00Z"])
-def test_awake_window_requires_a_timezone_aware_timestamp(fresh, value):
-    with pytest.raises(settings.SettingsError, match="AWAKE_72H_START"):
-        fresh(f"AWAKE_72H_START={value}\n")
-
-
-def test_awake_window_accepts_explicit_offset(fresh):
-    fresh("AWAKE_72H_START=2026-11-12T21:48:10-05:00\n")
-    assert settings.get("AWAKE_72H_START") == "2026-11-12T21:48:10-05:00"
+def test_reply_boost_accepts_blank_or_a_calendar_date(fresh, value):
+    fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
+    assert settings.get("REPLY_VOLUME_BOOST_DATE") == value
 
 
 def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_override, monkeypatch):
@@ -102,7 +89,7 @@ def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_overrid
         settings.reply_budget("MIN_SECONDS_BETWEEN_REPLIES")
 
 
-def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
+def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch):
     from datetime import datetime
     from zoneinfo import ZoneInfo
     from src.guards import active_hours
@@ -112,11 +99,11 @@ def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
     for day in (7, 8, 9):
         local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
         monkeypatch.setattr(active_hours, "now_local", lambda: local)
-        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 80, 80]
-        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 4
-        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 4
-        assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is True
-        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 3
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 1, 1]
+        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 0
+        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 8
+        assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is False
+        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 0
 
 
 FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)

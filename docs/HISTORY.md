@@ -1,77 +1,209 @@
 # History — mandates and incidents, June to November 2026
 
-## 2026-11-14 — Blend affection with technical judgment
+## 2026-11-18 — Focused daily schedule and selective conversation
 
-The Operator requests two natural Reply modes: loving reactions with hearts and
-an exceptionally sharp SI specialist who can challenge ideas. November 13's
-blanket instruction to remove interest/gratitude and require an explicit detail
-risked editing away the short affectionate response the Operator wants. The
-Voice and all drafting routes now preserve affection when the shared idea or
-occasion warrants it, while technical claims get precise answers or supported
-challenges. Neither mode dictates a quota, fixed structure or repeated catchphrase.
-Fictional tech experience supplies voice, not real credentials or firsthand facts.
+2026-11-18, final publishing and selective Reply policy — The Operator requests
+four Toronto video opportunities: 09:00, 12:00, 17:00 and 20:00. Choose the best
+fully eligible reviewed clip, retaining the best-available fallback, permanent
+deduplication, source/output/audio/rights checks and uncertain-send holds. Every
+video must include at least one source-attributed fictional Elon Musk, Jensen
+Huang, Dario Amodei, Sam Altman or Donald Trump. Bill Gates, Mark Zuckerberg and
+other guests may accompany them but never qualify a clip alone. Viral reach is
+an aim, not a guaranteed outcome. No automatic startup publication is added.
 
-A read-only validation of the requested wording found "Really cool video ❤️"
-refused as unknown English. The Reply-only closed vocabulary now recognizes those
-two words and the video cue without extending the eighty-character fallback or
-accepting unknown/French vocabulary. Repetition and publication checks remain.
-Implementation and tests use no lifecycle commands or live X writes.
+News has two Toronto opportunities, 10:30 and 15:00, with a thirty-minute delivery
+window and at most one text publication per window, two per day. Hourly discovery
+can prepare multiple independently reviewed main candidates; delivery chooses
+industry impact first, then total news value and freshness. The news score floor
+is 90/100. Pending picks do not freeze later research. Old backup-only drafts are
+never promoted automatically. Verified evidence, event/URL history, seven-text
+shared outer ceiling, two-hour spacing and video protection remain; the new
+Account cap of two is stricter. Occasional questions still need 48 elapsed hours
+and share these two text slots, with news first. No filler or late catch-up burst.
 
-## 2026-11-13 — Withdraw Elon Replies and tighten reply quality
+Replies have a hard maximum of forty per Toronto day, including uncertain sends,
+and no daily minimum. The live Account spaces submissions by at least 1,440
+seconds (about 24 minutes), distributing opportunities across 07:00–23:00 rather
+than exhausting the allowance early. The earlier ten-minute minimum is therefore
+also respected. Other parents must still be at most thirty minutes old at final
+submission; watched Elon parents at most five minutes, preferably discovered and
+answered within the first minute when actual pacing and generation permit. Elon
+gets at most two Replies per day, only on important AI/SI discussions. A missed
+freshness window skips; it never bypasses spacing or quality to meet a target.
 
-The Operator reported that some readers called the responses automated filler and
-blocked the account. The read-only review of the latest forty confirmed Replies
-found stock praise/interest openings, caption restatement and unnecessary follow-up
-sentences; it did not establish which readers blocked the account or why.
-The new Voice and shared prompts call for a specific supported contribution or SKIP.
-The final text check expands from twenty exact replies to the configured memory
-(default one hundred), including long copies with small wording changes.
+All Reply paths use the same durable submission journal and final budget/age
+checks. Uncertain sends retain their parent and their budget; confirmed ledger
+rows are not double-counted. Ordinary discovery uses eight Top and eight Latest
+reads, with no popularity floor, and prefers authors absent from confirmed Reply
+history over the retained ninety days. Both Voice files and shared generation
+require one supported useful angle, expressed warmly and precisely; no generic
+praise, omniscience, fake biography, fake typos or unseen-media claims. Watched
+likes/reposts require a confirmed Reply to that exact parent; the required like
+during an admitted Reply remains allowed. No broad Elon engagement loop remains.
 
-Elon changes from three independent actions to likes/reposts only. A Reply-only
-Account exclusion is enforced centrally without denying those other actions.
-Notification discovery previously asked Reply admission before verifying a new
-source, which would suppress the likes/reposts after that exclusion; it now checks
-watched-author eligibility independently. Normal repost spacing also used to turn
-into a five-minute failure cooldown; the dispatcher now rechecks the shared spacing
-rule on its two-second tick. Actual failures still back off. Implementation uses
-no start/restart commands or public actions for validation; lifecycle control stays
-with the Operator. A bot process appeared during preparation, so a later manual
-restart is needed to load the complete merged change.
+The entire automatic schedule sleeps 23:00–07:00 Toronto, including news research
+and independent video preparation; durable jobs and histories survive sleep.
+This supersedes all earlier cadence, volume, age, voice and hours settings below.
+The Operator requests PR creation, merge, push and a new release. Starting or
+restarting the main bot remains an explicitly requested lifecycle action.
 
-## 2026-11-12 — Repost funny AI videos before they go viral
+## 2026-11-18 — Confirmed live fallback publication and authorized daily start
 
-The final pre-pause Reply at 21:40 answered @dripbitsnft status
-2121026915452801413 with “You said ‘Mr. Huang’ like that might get you forgiven”.
-The exact parent read showed eleven likes, 929 views and a 61.421-second native
-video. The old 500-like/100,000-view text-meme allowance never admitted it.
-The Operator clarifies that ordinary enjoyable AI videos should qualify, with
-up to twenty native reposts/day, no popularity threshold, and 72 hours awake.
-The repair samples actual video frames (thirteen in the read-only source check),
-reviews visual humor and preserves exact source/media/account and permanent
-publication claims. No X publication is made during implementation; the Operator
-retains manual restart. See the current policy for the fixed awake-window deadline.
+The Operator approves the reviewed clip, a one-time after-hours test and starting
+the daily bot afterward. The isolated publisher uses a fifteen-minute local hours
+exception while retaining real timestamps and all source, inspection, history and
+publication checks. Fresh bounded X searches return `checked_no_match`. The normal
+Safari publisher submits the 13.895-second watermarked Elon concert parody and
+confirms the exact own-status receipt at
+`https://x.com/i/status/2122920458366693860`. Candidate
+`62154ae862de0038f396092141fa8d00` becomes posted; its permanent content claim,
+caption and original/output fingerprints are retained. No active or uncertain
+reservation remains. The process restores ordinary hours before the daily start.
 
-## 2026-11-12 — Restore Reply throughput and prioritize watched conversations
+The normal launcher then starts main PID 86093. The supervisor verifies and
+replaces the old discovery/media processes with PIDs 86110/86111, which record
+the same new code/config generation. Startup logs confirm five video slots,
+automatic startup disabled, news enabled and normal 04:30–00:00 hours. The main
+process owns the account lock and logs its next wake at 04:30 on November 18;
+the next scheduled video opportunity is 05:00. Overnight discovery/media remain
+active. This receipt verifies the one test post, not future slot coverage.
 
-Confirmed ledger/CSV counts were 926 Replies November 9, 951 November 10,
-492 November 11, and 193 November 12 before the 20:39 operator pause. Search
-sources supplied 540 November 9 Replies and only six November 12 Replies.
-The retained latest log segment contained 806 own-repost attempts (798 refused)
-and 1,096 watched repost attempts (1,095 refused). The saved pipeline report
-included a discovery call lasting 2,405 seconds; concurrent worker totals overlap.
-These observations support browser contention and batch discovery as bottlenecks,
-not a promise that reverting any one setting produces a specified volume.
+## 2026-11-17 — Five daily best-available videos
 
-The Operator requested restoration, 1,400+ daily capacity, one awake night,
-broader AI humor/art sources, priority witty Elon Replies, selective AI meme
-reposts, PR/merge/push, and manual restart. The implementation restores incremental
-search drafting and bounded scan sizes, backs off repeated watched failures,
-disables automatic quotes/own repost loops, and adds reviewed meme reposts only
-from already-discovered sources. Permanent histories are preserved.
-The later clarification keeps independent Elon likes/reposts enabled alongside
-priority Replies. Friendly encouragement and sharp SI insight remain the voice;
-1,000+ daily Replies is the requested minimum goal, with a 1,400–1,800 advisory
-target. Counts and audience reactions still require observed live results.
+2026-11-17, five daily best-available videos — The Operator requests posts every
+Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00, then one live post after
+implementation. This supersedes the earlier three/four-slot cadence and hard
+editorial score refusals. Keep ultra-quality scores as preferences: choose a
+fully eligible target-clearing clip first; otherwise choose the best actually
+reviewed source/output quality available, without inflating scores or inventing
+popularity. The scheduled cap and target are five, reserve target ten, warning
+below five. Quality alone must not leave a supplied slot empty.
+
+The best_available_fallback setting defaults off for other Accounts and requires
+full banger review and editorial cutting. Numeric editorial/opening floors yield;
+actual source/output and opening inspection, attributed cast,
+content suitability, verified language-dependent jokes, audio, technical output,
+exact watermark, usage permission, source dates, X-copy limits, active hours and
+permanent duplicate/uncertain-send claims remain mandatory. Ranking uses the
+weaker of source/output editorial quality, then output quality; popularity cannot
+promote weaker fallback footage. Changed policy invalidates inspection/edit
+caches and allows existing unclaimed held sources to be prepared again. Existing
+posted/reserved content can never become new supply. No source or platform outage
+is reported as a successful post. News, questions, Replies and self-retweet
+refusals remain unchanged. Main-process start/restart still requires an explicit
+Operator request; the requested one-shot publication uses the existing publisher.
+
+Live validation also finds an English caption without a known function-word marker.
+The observed English verb `needs` now supplies ordinary English evidence; mixed
+French and unknown prose still refuse. Retained-overlay output review receives
+hash-bound original reference frames aligned to the exact excerpt, so unreadable
+source OCR can be checked against actual pixels. Every returned timestamp must
+still describe the output, and uncertain/new overlays remain held.
+
+Validation passes the 3,199-test full suite, followed by 282 focused tests after
+the live output/English fixes, including real FFmpeg source/output subsecond
+alignment. The final scheduler dry run and configuration-document check pass.
+The live fallback preparation preserves `ai_xiaomu`'s Elon concert original and
+produces a 13.895-second watermarked excerpt. Actual source/output editorial
+quality is 79.35/77.65; independent output review and caption admission pass.
+Candidate `62154ae862de0038f396092141fa8d00` is saved held for its fresh X-copy
+check, with a novelty job and no publication reservation or send. Preparation
+finishes after midnight Toronto, outside the existing Safari hours. The main
+bot remains stopped pending the requested explicit start decision; an immediate
+after-hours test likewise needs the Operator's one-time hours exception.
+
+## 2026-11-17 — Live Instagram capture and cast-credit repairs
+
+The Operator requests one actual Instagram-to-X publication after implementation.
+Normal-page research finds new creator clips, but Safari redirects their `/reel/`
+tabs to `/reels/` while the canonical link stays singular. The exact-tab reader
+correctly refuses the vanished original URL. Capture now tries the known route
+aliases for the same case-sensitive shortcode within its existing eight reads,
+retaining final canonical validation and never using an unrelated front tab.
+A regression reproduces the redirected tab separately from its canonical link.
+
+The live caption `爱唱歌的大男孩jensen huang` also exposed a word-boundary false
+refusal: Python treats the adjacent Han character as part of the English word.
+The attribution reader now separates Han characters only for ASCII-name matching,
+retains the original caption as evidence, and still refuses partial Latin names
+and missing source provenance. Newly observed `#jensenhuang` captions also qualify
+as exact compact hashtags derived from configured full names, never substrings
+of a longer tag. The inspection cache already includes the resulting cast context.
+All 3,171 isolated tests and the scheduler dry run pass. The changes do not start
+or restart the main bot, and the quality/history/publication gates remain intact.
+
+The live scan completes source inspections for six distinct Instagram clips,
+including one repeated inspection after repairing its observed cast-credit bug.
+Every candidate remains held before rendering: the strongest observed editorial
+quality is 77.65/100 for `ai_xiaomu`'s Elon concert parody, below the retained
+95/100 rule, with a 7.5/10 opening below nine. The other complete reviews likewise
+miss the opening and editorial floors. Original files and reports are retained
+in the local preview folder. No candidate is queued, no publication is reserved
+or submitted, and no history or quality threshold is reset by this test.
+
+## 2026-11-17 — Restore news, add discussion posts and prioritize Instagram bangers
+
+After the checkpoint rollback, the Operator requests worthwhile original SI
+news, occasional model/workflow questions and three to four exceptional
+Instagram videos per day. Verified news resumes with material releases, company
+leadership, earnings and actual IPO milestones eligible. Drafts use plain facts,
+optional grounded wit and one fetched source; the mandatory BANGER slogan is
+removed. Evidence, independent review, event history and uncertain claims remain.
+The Operator's supplied NVIDIA post is historical memory, not a new candidate.
+
+Discussion preparation joins the news executor and durable text outbox. Its
+separate draft/review tasks allow subjective questions and configured unversioned
+model families, reject copied questions and unsupported claims, and wait at least
+forty-eight hours between confirmed questions. Pending news has priority. Text
+posts retain the seven-per-day ceiling, two-hour spacing and protected video
+windows. A discussion receipt cannot satisfy startup news. The supplied model
+question is imported as owner-reported history, without inventing an X receipt.
+
+Video opportunities become 08:30, 12:30, 17:30 and 21:30 Toronto, with an advisory
+three-to-four target, six-clip reserve and stronger Instagram discovery weight.
+Natural scene jokes and optional blank-line BANGER sign-offs replace the forced
+one-line prefix. Source-supported aliases for the existing cast, Bill Gates and
+Mark Zuckerberg are allowed. The ultra-quality bar and all source, inspection,
+usage, dedup and publication checks remain. No minimum actual output is promised.
+The supplied own-X video joins permanent memory; it is not an inspected new find.
+
+A real Instagram preview exposed two reader issues: `/p/` redirected to `/reel/`
+with the same shortcode, and the exact video's date/media lived in page-owned
+JSON rather than JSON-LD. Capture now permits exact case-sensitive route aliases
+and bounded matching video objects in normal-page JSON. Other post objects never
+authorize the source. The new preview command uses existing budgets, preserves
+the original and never queues, claims or publishes a post.
+
+The live import downloaded a 32.32-second `tigercircle.hk` rap-parody montage and
+reviewed 32 temporal frames plus local audio classifications. Its opening and
+editorial scores fell short, so preparation held before rendering. This proves
+actual Instagram capture and inspection, not publication readiness. A real
+discussion-generation check also caught the model API's refusal of JSON Schema
+`uniqueItems`; uniqueness now runs in local admission while the model receives a
+supported schema. No bot start/restart or X write accompanies implementation.
+The corrected live draft/review path prepared “When reviewing code from an SI
+agent, what do you check first, and why?” in an isolated preview outbox. Model use
+was charged to the existing budget; the production outbox was not populated.
+All 3,169 isolated tests pass. The configuration reference check and scheduler
+dry run pass with news/discussions enabled, four video slots, the existing text
+limits and no self-repost job. Local switches await the Operator's manual restart.
+
+## 2026-11-17 — Restore the November 10 checkpoint and forbid own reposts
+
+The Operator requests a full code rollback to November 10, then specifies that
+our own posts must never be retweeted. Git contains no November 10 commit; the
+last saved revision by that date is `4ad829ac` from November 9 at 08:39:05 Toronto.
+Production code, Account configuration and Voice return to that revision. The
+later local settings are removed, and the advisory Reply target returns to its
+checkpoint value. Permanent histories and uncertain claims remain untouched.
+
+The restored repost admission and browser checks already reject our current,
+runtime and former handles. Added regressions verify all three identities are
+refused even when watched, before browser access in live and dry-run modes and
+before either native repost click. The later self-repost job and undo/repost
+surface are removed by the rollback. A backup branch and private local backup
+preserve the previous code, uncommitted documentation and environment. No bot
+start, restart or public write accompanies this change.
 
 ## 2026-11-09 — Live artist turn reveals one short-English false refusal
 

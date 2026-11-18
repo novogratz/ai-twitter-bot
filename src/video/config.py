@@ -26,7 +26,10 @@ class VideoConfig:
     min_hook_score: int = 8
     bangers_only: bool = False
     ultra_bangers_only: bool = False
+    best_available_fallback: bool = False
     one_line_caption: bool = False
+    playful_caption: bool = False
+    daily_target_min: int = 0
     audience_examples: tuple = ()
     discovery_prompt_file: str = ""
     discovery_memory_file: str = ""
@@ -117,11 +120,17 @@ class VideoConfig:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.startup_on_boot) is not bool:
             raise ValueError("startup_on_boot must be a boolean")
-        if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 13:
-            raise ValueError("scheduled_daily_cap must be 5..13")
-        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "adaptive_discovery"):
+        if type(self.scheduled_daily_cap) is not int or not 1 <= self.scheduled_daily_cap <= 13:
+            raise ValueError("scheduled_daily_cap must be 1..13")
+        if type(self.daily_target_min) is not int or not 0 <= self.daily_target_min <= self.scheduled_daily_cap:
+            raise ValueError("daily_target_min must be within the video daily ceiling")
+        if self.one_line_caption and self.playful_caption:
+            raise ValueError("choose either one-line or playful captions")
+        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "best_available_fallback", "one_line_caption", "playful_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
+        if self.best_available_fallback and not (self.bangers_only and self.auto_edit):
+            raise ValueError("best available fallback requires full banger review and editorial cutting")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
             if not isinstance(getattr(self, name), str):
                 raise ValueError(f"{name} must be a local operator file")

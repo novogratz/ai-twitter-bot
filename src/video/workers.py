@@ -1,4 +1,4 @@
-"""Independent processes; overnight discovery/media never enter Safari or Reply queues."""
+"""Independent processes; discovery/media sleep with the Account overnight."""
 from contextlib import contextmanager
 from dataclasses import asdict
 import fcntl
@@ -159,9 +159,12 @@ def seed_jobs(store, cfg, now):
 
 
 def run_once(role, store, cfg, owner, *, now=None):
+    from ..guards import active_hours
     now = now if now is not None else time.time()
     if store.meta("shutdown", False):
         return "shutdown"
+    if not active_hours.may_act():
+        return "sleeping"
     store.heartbeat(role, owner, now)
     if role in ("publisher", "discovery"):
         from .preparation import maintain_reserve
