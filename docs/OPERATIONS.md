@@ -1,5 +1,12 @@
 # Operations
 
+Current runtime policy (2026-11-18): sleep is **23:00–07:00 Toronto** for
+interactions, news research/delivery and independent video preparation. The
+scheduler stays alive; worker heartbeats can report sleeping. Earlier dated
+runbooks describing 04:30 wake or overnight research are superseded. Apply code
+and local settings through the normal explicitly requested restart; preserve
+all publication, Reply and uncertain-submission histories.
+
 Running, watching and recovering the bot under the 2026-09-20 policy. The
 design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
 [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md).
@@ -361,6 +368,11 @@ not live, delete the slot entry. Either way, delete its entry (keyed
 source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
+**Reply submission recovery.** `reply_submissions.json` complements the permanent
+parent history. Missing receipts never release a submission or its daily budget.
+Do not delete it on deployment or reset it after an unknown send. Corrupt data
+stops Reply admission; repair from evidence while the bot is stopped.
+
 **Priority-watch state and uncertain reposts.** `priority_watch_state.json`
 stores each watched handle's first-enable timestamp; preserve it on deploy and
 restart. The first enable skips older posts, and later passes read at most the
@@ -603,6 +615,8 @@ root:
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Permanent status-ID history of Replies and uncertain submissions; never evicted | own, fails closed |
+| `reply_submissions.json` | `reply_budget` immediately before submitting | Permanent timestamped Reply attempts; daily forty ceiling, watched-author caps and spacing include uncertain sends; confirmed ledger rows counted once | guarded |
+| `reply_submissions.json.lock` | `reply_budget` | OS process lock serializes final budget reservations | never delete while a writer may hold it |
 | `replied_tweets.json.lock` | `replied_store` | OS process lock for claims and every history update; held together with a thread lock | lock file; never delete while a writer may hold it |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |

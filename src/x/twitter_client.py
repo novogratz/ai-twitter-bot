@@ -627,7 +627,7 @@ def like_tweet(tweet_url: str) -> LikeOutcome:
     def admit():
         parent = x_urls.canonical_status_url(_REPLY_LIKE_PARENT.get())
         required = bool(parent and parent == x_urls.canonical_status_url(tweet_url))
-        ok, why = action_guard.can_post(action_guard.LIKE, reply_parent=required)
+        ok, why = action_guard.can_post(action_guard.LIKE, target=tweet_url, reply_parent=required)
         if not ok:
             log.info("[LIKE] policy skip (%s).", why)
             return LikeOutcome.REFUSED
@@ -855,7 +855,10 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
         if on_answered is not None:
             on_answered()
         return False
-    return opened.get("clicked") is click and account.engagement_allowed(opened.get("text") or "")
+    from ..guards.reply_focus import parent_refusal, freshness_refusal
+    text = opened.get("text") or ""
+    return (opened.get("clicked") is click and account.engagement_allowed(text)
+            and not parent_refusal(text) and not freshness_refusal(url))
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
@@ -889,7 +892,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     bot.log 'Reply posted!' said 140). The claim happens here, right before
     the Safari write; a dry run never claims, so the store only ever holds
     Replies that shipped, were visibly pre-existing, or whose submission was uncertain."""
-    from ..guards import action_guard, active_hours, replied_store, reply_admission
+    from ..guards import action_guard, active_hours, replied_store, reply_admission, reply_budget
     # Set by an admitting verdict: the exact text to send, and its author.
     admitted_text = author = ""
     submitted_at = None
@@ -990,6 +993,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.REFUSED
             # From here X may hold the reply: a failed submit keeps the claim
             # so the tweet never gets a second one.
+            why = reply_budget.begin(tweet_url)
+            if why:
+                log.info("[REPLY] Final submission budget refused: %s", why)
+                return WriteOutcome.REFUSED
             sent = True
             submitted_at = active_hours.now_local()
             if not _submit_or_abort("REPLY", target=tweet_url):
@@ -1010,6 +1017,10 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         # missing URL nor a failed analytics write can undo a shipped outcome.
         from ..core import reply_feedback
         from . import reply_metrics
+        try:
+            reply_budget.confirmed(tweet_url)
+        except Exception:
+            log.exception("[REPLY] Confirmed receipt saved; submission remains conservatively pending")
         own_url = ""
         try:
             own_url = reply_metrics.capture(admitted_text, since=submitted_at, parent=tweet_url)

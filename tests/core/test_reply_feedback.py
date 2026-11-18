@@ -61,7 +61,7 @@ def test_unknown_counters_are_not_zero_or_another_posts_metrics():
     assert observation["likes_per_1000_views"] is None
 
 
-@pytest.mark.parametrize("break_minutes,hours,rates", [(0, 19.5, [35.9, 71.8]), (10, 18.5, [37.8, 75.7])])
+@pytest.mark.parametrize("break_minutes,hours,rates", [(0, 16.0, [43.8, 87.5]), (10, 15.17, [46.2, 92.3])])
 def test_report_uses_weighted_rates_and_never_attributes_followers(settings_override, break_minutes, hours, rates):
     settings_override(REPLY_DAILY_TARGET_MIN=700, REPLY_DAILY_TARGET_MAX=1400, HOURLY_BREAK_MINUTES=break_minutes)
     base = dict(sent_at=(NOW - timedelta(hours=2)).isoformat(), parent_age_minutes=20,

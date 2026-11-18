@@ -79,6 +79,10 @@ def _seconds_since_last(action: str) -> float:
 
 
 def _last_write(action: str):
+    if action == REPLY:
+        from . import reply_budget
+        last = _ledger().last_write(REPLY)
+        return max(([last] if last else []) + reply_budget.submission_times(), default=None)
     if action not in (POST, RETWEET):
         return _ledger().last_write(action)
     from . import repost_store
@@ -165,6 +169,13 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
+    if action in (LIKE, RETWEET) and not reply_parent and settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"):
+        from ..core import account
+        from ..x import x_urls
+        if x_urls.author(target) in account.current().auto_engage_handles:
+            sid = x_urls.status_id(target)
+            if not any(x_urls.status_id(url) == sid for url in _ledger().targets(REPLY)):
+                return False, "watched engagement requires a confirmed Reply to this exact post"
     if action in (POST, RETWEET):
         from ..video.config import owns_profile, legacy_usage
         news = news and action == POST and settings.get("NEWS_ENABLED") and settings.get("NEWS_AUTO_PUBLISH")
@@ -218,6 +229,10 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
         return True, ""
     elif action != REPLY:
         return True, ""
-    # No daily reply limit; replies retain spacing and per-tweet dedup.
+    if action == REPLY:
+        from . import reply_budget
+        why = reply_budget.refusal(target)
+        if why:
+            return False, why
     why = too_soon(action)
     return (False, why) if why else (True, "")

@@ -1,10 +1,10 @@
 # THESIMAXIMALIST — continuous banger discovery
 
-Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-17.
+Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-18.
 
 Find the strongest existing synthetic music, singing, dance, cinematic and comedy
-parodies, aiming for the owner's four exceptional benchmarks below. Supply five
-distinct posts each Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00. Keep a
+parodies, aiming for the owner's four exceptional benchmarks below. Supply four
+distinct posts each Toronto day at 09:00, 12:00, 17:00 and 20:00. Keep a
 reserve of ten eligible clips, warning below five. Prefer target-clearing clips;
 when none qualifies on numeric quality, retain the best reviewed alternatives.
 Never inflate ratings, reuse footage, invent evidence or waive source, safety,
@@ -25,11 +25,10 @@ polished karaoke, and Power Rangers-style transformations or fast team reveals
 with strong music, a clear escalation and a payoff. A solo performance can beat
 an ensemble. Do not reward cast size or force variety over a clearly better clip.
 
-At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman, Dario Amodei,
-Bill Gates or Mark Zuckerberg
+At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman, or Dario Amodei
 must visibly participate as a source-attributed fictional role. Preserve the
 configured qualifying cast. Optimus, JD Vance, Melania,
-Lisa Su and other guests can accompany them; they do not qualify a clip alone.
+Bill Gates, Mark Zuckerberg, Lisa Su and other guests can accompany them; they do not qualify a clip alone.
 There is no creator exemption. Do not identify people from faces or invent a
 background performer's identity. Dario is the attributed Anthropic figure, not
 an arbitrary bearded character. A robot is not automatically Optimus.

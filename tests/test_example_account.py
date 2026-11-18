@@ -68,13 +68,16 @@ PRE_187_BOUNDED = {
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
             "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news",
-            "startup_publications"}
+            "startup_publications", "reply_min_gap_seconds"}
 WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
                 "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60,
                 "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
-REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
+REPLY_STYLE_BOUNDS = {"MAX_REPLIES_PER_DAY": 40, "REPLY_MAX_AGE_SECONDS": 0,
+                      "REPLY_WATCHED_MAX_AGE_SECONDS": 0, "REPLY_WATCHED_DAILY_CAP": 2,
+                      "WATCH_ENGAGEMENT_REQUIRES_REPLY": False, "REPLY_DISCUSSIONS_ONLY": False,
+                      "REPLY_PREFER_NEW_AUTHORS": False, "REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
                       "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
                       "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2,
                       "DIRECT_REPLY_QUERIES_PER_CYCLE": 8, "DIRECT_REPLY_MAX_PER_CYCLE": 3,
@@ -140,12 +143,14 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert shown["reply_volume_boost_date"] == ""
     assert shown["reply_discovery_generation_budgets"] == {
         "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
-        "DIRECT_REPLY_MAX_PER_CYCLE": 80,
-        "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
+        "DIRECT_REPLY_MAX_PER_CYCLE": 1,
+        "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 1,
     }
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
     expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
+    expected["replies"] = 40
+    expected["active"] = "07:00–23:00"
     expected["reposts"] = "watched authors only"
     assert shown["auto_engage_handles"] == ["elonmusk"]
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
@@ -154,14 +159,18 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4,
-        "REPLY_DAILY_TARGET_MIN": 1500, "REPLY_DAILY_TARGET_MAX": 1800,
-        "REPLY_PREFERRED_MIN_LIKES": 3, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
-        "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
-        "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,
-        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 4,
-        "REPLY_PRIORITIZE_LARGE_ACCOUNTS": True,
-        "DIRECT_REPLY_MAX_PER_CYCLE": 80, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
+        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4, "MIN_SECONDS_BETWEEN_REPLIES": 1440,
+        "REPLY_DAILY_TARGET_MIN": 0, "REPLY_DAILY_TARGET_MAX": 0,
+        "REPLY_PREFERRED_MIN_LIKES": 0, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
+        "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
+        "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 0,
+        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 8,
+        "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
+        "DIRECT_REPLY_MAX_PER_CYCLE": 1, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 1,
+        "MAX_REPLIES_PER_DAY": 40, "REPLY_MAX_AGE_SECONDS": 1800,
+        "REPLY_WATCHED_MAX_AGE_SECONDS": 300, "REPLY_WATCHED_DAILY_CAP": 2,
+        "WATCH_ENGAGEMENT_REQUIRES_REPLY": True, "REPLY_DISCUSSIONS_ONLY": True,
+        "REPLY_PREFER_NEW_AUTHORS": True}
     assert shown["settings_warnings"] == []
 
 

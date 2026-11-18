@@ -89,7 +89,7 @@ def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_overrid
         settings.reply_budget("MIN_SECONDS_BETWEEN_REPLIES")
 
 
-def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
+def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch):
     from datetime import datetime
     from zoneinfo import ZoneInfo
     from src.guards import active_hours
@@ -99,11 +99,11 @@ def test_account_reply_capacity_stays_high_after_midnight(fresh, monkeypatch):
     for day in (7, 8, 9):
         local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
         monkeypatch.setattr(active_hours, "now_local", lambda: local)
-        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 80, 80]
-        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 4
-        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 4
-        assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is True
-        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 3
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 1, 1]
+        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 0
+        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 8
+        assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is False
+        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 0
 
 
 FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)

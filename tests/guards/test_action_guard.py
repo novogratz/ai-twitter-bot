@@ -32,13 +32,13 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_uncapped_but_still_paced(monkeypatch, memory_ledger):
+def test_replies_daily_cap_includes_existing_history(monkeypatch, memory_ledger):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(500):
+    for n in range(40):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
                              now - timedelta(hours=6, seconds=n))
-    assert ag.can_post(ag.REPLY)[0]
+    assert not ag.can_post(ag.REPLY)[0]
     ag.record(ag.REPLY, "https://x.com/a/status/500")
     assert not ag.can_post(ag.REPLY)[0]
 

@@ -80,6 +80,8 @@ def _prune():
     """Bound disposable discoveries; the permanent action histories stay untouched."""
     handles = account.current().auto_engage_handles
     maximum = timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))
+    if settings.get("REPLY_WATCHED_MAX_AGE_SECONDS"):
+        maximum = min(maximum, timedelta(seconds=settings.get("REPLY_WATCHED_MAX_AGE_SECONDS")))
     valid = [c for c in _pending.values() if x_urls.author(c.url) in handles
              and (age := x_urls.age(c.url)) is not None and timedelta(0) <= age <= maximum]
     valid.sort(key=lambda c: int(x_urls.status_id(c.url)), reverse=True)
@@ -152,6 +154,11 @@ def run_priority_actions_cycle():
     attempts = 0
     for candidate in _discovered():
         require_active()
+        if settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"):
+            from ..guards import action_guard
+            if not any(x_urls.status_id(url) == x_urls.status_id(candidate.url)
+                       for url in action_guard._ledger().targets(action_guard.REPLY)):
+                continue
         # One failed or rate-limited action must not hide the other action types.
         for action_id, action in (("like", twitter_client.like_priority_post),
                                   ("repost", twitter_client.repost_tweet)):

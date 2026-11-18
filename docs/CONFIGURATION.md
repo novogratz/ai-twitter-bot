@@ -109,69 +109,39 @@ fails while it is stale, and on any key this page names that the engine does
 not know.
 
 
-The Account's optional `editorial.use_reply_route` selects REPLY rather than
-ORIGINAL for both Original draft and review (default false). The live Account
-sets it true. Optional `searches.latest` adds first-hour Latest discoveries to
-the existing rotating search budget. Optional `searches.creators` supplies
-artist-work/progress queries for the bounded creator turn. `REPLY_DAILY_TARGET_MIN/MAX` are advisory
-report values only; the live Account and local `.env` set 1500/1800. They change neither admission,
-spacing, generation budgets nor the uncapped daily Reply policy.
+The live Account sets `MAX_REPLIES_PER_DAY=40`,
+`MIN_SECONDS_BETWEEN_REPLIES=1440`, `REPLY_JITTER_SECONDS=4`, and both advisory
+Reply targets to zero. `reply_submissions.json` persists attempted submissions;
+unknown sends consume daily budget and spacing across restarts. The engine caps
+Replies at forty; zero disables them. The Account's twenty-four-minute minimum
+spreads its opportunities over the 07:00–23:00 Toronto day.
 
-The November 7 volume request retains
-`MIN_SECONDS_BETWEEN_REPLIES=8` and `REPLY_JITTER_SECONDS=4` in the Account and
-local `.env`, replacing the local 20/10 override. The engine floor stays eight.
-Account and local `DIRECT_REPLY_MAX_PER_CYCLE=80` and
-`FEED_SWEEP_MAX_REPLIES_PER_CYCLE=80` replace 40/40, and
-`DIRECT_REPLY_QUERIES_PER_CYCLE=16` replaces twelve. These values persist every day.
-`DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4` reserves four grouped Latest searches
-of `network.big_ai_hype` before ordinary buffered drafting. Returned authors must
-match the queried group by status URL, be standalone AI/SI originals and be at
-most 24 hours old (or the tighter configured source limit). These groups name
-operator-designated major accounts, not observed follower counts.
-The November 9 `DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2` reserves two first-hour
-artist Latest searches after those reads; up to four admitted generation attempts
-get a turn before ordinary drafting, within the direct-cycle budget even when
-declined. The default is zero. This is a search intent, not verified authorship
-or human identity, and no volume floor follows. Current creator URLs can be
-retained for that turn within the same 400-source buffer, without extending expiry.
-`DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=4` reserves four general first-hour Latest
-searches; the remaining six go to Top. Each pool rotates separately, missing
-pool capacity can backfill from another pool, and the total stays bounded. A
-cycle may finish its Reply budget before every ordinary query runs.
-`REPLY_PRIORITIZE_LARGE_ACCOUNTS=1` places the configured group first in ordinary
-buffered Reply ordering. Like preference then applies within each group, with
-author variety and observed parent views ordering comparable candidates.
-At the existing buffer limit, configured major authors are retained first, then
-the newest source IDs within each group; the disabled default retains newest
-sources alone. Rediscovery can tighten an earlier source expiry, never extend it.
-Unknown views are not zero; only the exact parent's analytics can provide them.
-Other Accounts default to no major-author searches or ordering preference.
-`REPLY_PREFERRED_MIN_LIKES=3` prefers strictly more than two observed likes,
-without excluding otherwise eligible lower-liked or unknown-count sources.
-Routine Top queries and first-hour Latest queries have no popularity floors;
-the separate high-traction Top queries retain their floors.
-Discovery budgets and admission checks still apply. Browser and
-model work add time beyond the required gap, so settings cannot promise volume.
-Repeated watched-parent Reply attempts double `PRIORITY_WATCH_REPLY_RETRY_SECONDS`
-up to `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` (default and ceiling 900 seconds,
-floor 20), or the configured initial delay if longer. Rediscovery does
-not reset this process-local backoff; pruning the parent removes it. New watched
-parents and independent like/repost retries are unaffected.
+`REPLY_MAX_AGE_SECONDS=1800` and `REPLY_WATCHED_MAX_AGE_SECONDS=300` recheck source
+age before generation and at final submission. `REPLY_WATCHED_DAILY_CAP=2` applies
+to each watched author, currently Elon. `WATCH_ENGAGEMENT_REQUIRES_REPLY=1`
+restricts watched likes/reposts to the exact confirmed Reply parent, with the
+required parent like during an admitted Reply allowed. Preferred first-minute
+response is best effort, never a freshness or pacing exemption.
 
-`REPLY_VOLUME_BOOST_DATE` optionally doubles those three discovery/generation
-budgets on one Toronto date, written as `YYYY-MM-DD`; blank disables it and an
-invalid date refuses startup. The local setting is blank now that 16/80/80 is
-the persistent Account baseline, avoiding a second doubling.
-An explicitly configured date still expires at midnight without reloading
-settings or changing the file.
-Explicit manual `max_replies` arguments remain exact. This changes neither
-spacing, admission, scheduler concurrency nor the advisory daily targets.
-`main.py --dry-run` and the startup log expose the effective budgets. Loading
-a newly selected date still requires the Operator's next explicit restart.
+`REPLY_DISCUSSIONS_ONLY=1` enables cheap technical-source screening and strict
+shared generation guidance. `REPLY_PREFER_NEW_AUTHORS=1` prefers ordinary authors
+absent from the retained ninety-day confirmed Reply ledger. It does not certify
+human identity. `REPLY_PREFERRED_MIN_LIKES=0` and
+`REPLY_PRIORITIZE_LARGE_ACCOUNTS=0` remove popularity/major-author preferences.
+The sixteen-read discovery allocation is eight Top and eight general Latest;
+priority and creator allocations are zero. Direct and per-feed generation budgets
+are one per pass. Watched discovery retains its independent twenty-second poll.
+Final source freshness, deduplication and shared budgets govern every path.
+
+`REPLY_VOLUME_BOOST_DATE` remains blank. Its optional discovery/generation boost
+never changes the hard forty-Reply cap, source age, active hours or spacing.
+`main.py --dry-run` exposes the actual cap and gap. The Account's optional
+`editorial.use_reply_route` still selects the Reply model for original drafts and
+review. Other Accounts can retain their ordinary source and voice rules.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
-Account uses five slots at 05:00, 09:00, 12:00, 17:00 and 21:00 Toronto,
-`scheduled_daily_cap=5`, `daily_target_min=5`, `startup_on_boot=false`, `preferred_age_hours=72` and
+Account uses four slots at 09:00, 12:00, 17:00 and 20:00 Toronto,
+`scheduled_daily_cap=4`, `daily_target_min=4`, `startup_on_boot=false`, `preferred_age_hours=72` and
 `max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
 TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
 Ordinary starts create no startup request. Publication still uses durable claims,
@@ -207,8 +177,11 @@ retain the tighter one-hour check. These settings create no extra publisher.
 
 The November 17 local configuration enables `NEWS_ENABLED=1`,
 `NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1`. Code and settings take
-effect on the next explicitly requested restart. The text ceiling remains seven
-per Toronto day and the text gap remains two hours, with protected video windows.
+effect on the next explicitly requested restart. Account news.toml sets `daily_cap=2`, `publish_windows=["10:30", "15:00"]`,
+`publish_window_minutes=30` and `score_min=90`. At most one text post ships per
+window, with no catch-up. News ranks significance before total score and freshness.
+The shared outer text ceiling remains seven; the stricter two-post Account limit
+and two-hour spacing apply alongside protected video windows.
 Account `news.toml` sets `discussion_interval_hours=48` (minimum allowed 24),
 `discussion_topics` and exact unversioned `discussion_models`. Questions use the
 same durable outbox, independent review and publisher as news; pending news goes
@@ -328,6 +301,13 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
 | `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
+| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `40` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
+| `REPLY_MAX_AGE_SECONDS` | int | `0` | floor `0` | Final Reply parent age ceiling; zero uses existing source limits. |
+| `REPLY_WATCHED_MAX_AGE_SECONDS` | int | `0` | floor `0` | Tighter final age ceiling for watched authors; zero uses the ordinary ceiling. |
+| `REPLY_WATCHED_DAILY_CAP` | int | `2` | floor `0`, ceiling `2` | Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies. |
+| `WATCH_ENGAGEMENT_REQUIRES_REPLY` | 0 or 1 | `0` | floor `0` | Watched posts may be liked or reposted only after a confirmed Reply; the verified parent like during Reply composition is allowed. |
+| `REPLY_DISCUSSIONS_ONLY` | 0 or 1 | `0` | floor `0` | Only substantive technical discussions qualify; require a supported, useful contribution rather than praise or hype. |
+| `REPLY_PREFER_NEW_AUTHORS` | 0 or 1 | `0` | floor `0` | Prefer ordinary candidates whose authors have no confirmed Reply in the retained 90-day ledger. |
 | `REPLY_JITTER_SECONDS` | int | `7` | floor `0` | Random delay added to the Reply spacing. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
 | `FOLLOWBACK_BYPASS_WHITELIST` | 0 or 1 | `1` |  | Let Follow-backs past the whitelist. |

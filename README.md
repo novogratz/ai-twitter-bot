@@ -1,5 +1,22 @@
 # The SI Maximalist · @thesimaximalist
 
+Current policy (November 18): **four daily videos at 09:00, 12:00, 17:00 and
+20:00 Toronto; at most two news/text posts at 10:30 and 15:00; at most forty
+Replies, spread across 07:00–23:00.** The bot sleeps 23:00–07:00, including
+background research/preparation. These rules supersede older dated notes below.
+
+Every video needs source-attributed Elon Musk, Jensen Huang, Dario Amodei,
+Sam Altman or Donald Trump. Choose the strongest eligible inspected clip;
+permanent content history prevents duplicates. News selects the highest-impact
+verified candidates, with a 90/100 floor and no obligation to fill a quiet slot.
+
+Replies are at least 24 minutes apart, on substantive AI/SI discussions, with a
+sharp, kind and supported contribution. Other posts must be under thirty minutes
+old at send; Elon gets at most two Replies daily, within five minutes (first minute
+when feasible). His likes/reposts are restricted to answered posts, with the
+verified parent like allowed during Reply composition. Unknown sends consume the
+same durable caps. Unfamiliar authors receive preference; no quota forces filler.
+
 November 17: restored the last saved code available on November 10 (`4ad829ac`,
 committed November 9). **Never retweet our own posts**, including posts under any
 previous account handle. Shared admission and browser confirmation enforce this
@@ -15,10 +32,10 @@ News covers meaningful model releases, CEO/company developments, reported result
 and verified IPO milestones, with a direct source link and no forced BANGER slogan.
 Discussion questions run at most once every 48 hours through the same reviewed
 text outbox. They invite useful opinions and use model families rather than stale
-version numbers. News and questions share the existing seven-text daily ceiling,
-two-hour text spacing and video protections.
+version numbers. News and questions share the two-text daily ceiling and the 10:30/15:00 windows,
+two-hour text spacing and video protections; news goes first.
 
-The video schedule is **five posts daily at 05:00, 09:00, 12:00, 17:00 and 21:00
+The video schedule is **four posts daily at 09:00, 12:00, 17:00 and 20:00
 Toronto time**. Prefer exceptional clips; if none reaches the quality target,
 choose the strongest eligible reviewed clip. Instagram discovery has priority,
 with a ten-clip reserve and a warning below five. Permanent source/hash/video
@@ -131,12 +148,11 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos have **five daily Toronto slots: 05:00, 09:00, 12:00, 17:00 and 21:00**,
+Videos have **four daily Toronto slots: 09:00, 12:00, 17:00 and 20:00**,
 with best-available fallback below the editorial target. The Account disables
 automatic startup requests. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
-featuring Elon Musk, Sam Altman, Dario Amodei, Trump, Jensen Huang, Bill Gates or
-Mark Zuckerberg, with fallback
+featuring at least one of Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
 up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
 X clips require a known view count of at most 50,000. Matching copies use the
 highest observed view count, with fresh evidence required. Captions use a grounded
@@ -547,13 +563,13 @@ held; they never silently switch to replying. Ordinary worker starts do not
 create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
-The live Account uses five video windows at 05:00, 09:00, 12:00, 17:00 and 21:00
+The live Account uses four video windows at 09:00, 12:00, 17:00 and 20:00
 Toronto, selecting the best eligible finds alongside verified news
 and occasional discussion posts. Automatic startup requests remain disabled.
 Replies retain their existing engine; interactions pause from midnight to 04:30,
 while independent video discovery/media workers can continue overnight.
 
-All five windows have inventory priority. The engine can protect each main
+All four windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
 `video.py status` reports coverage and shortages. The ten-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.

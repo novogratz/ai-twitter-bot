@@ -11,7 +11,7 @@ from tests.helpers import TORONTO, clock
 
 def test_browser_wait_rechecks_bedtime(monkeypatch):
     from src.x.safari import _AwakeSafariLock
-    clock(monkeypatch, datetime(2026, 9, 20, 23, 59, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 22, 59, tzinfo=TORONTO))
     browser = _AwakeSafariLock()
     released = []
 

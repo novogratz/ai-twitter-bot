@@ -2,8 +2,8 @@
 
 ## Current Account: exceptional Instagram videos alongside news
 
-The November 17 Account schedules five videos daily at 05:00, 09:00, 12:00,
-17:00 and 21:00 Toronto. Verified news and occasional discussion questions share
+The November 18 Account schedules four videos daily at 09:00, 12:00,
+17:00 and 20:00 Toronto. Verified news and occasional discussion questions share
 the existing publisher; automatic startup requests remain disabled.
 `best_available_fallback=true` makes editorial scores preferences: target-clearing
 clips rank first, then the best available fully inspected source/output quality.
@@ -25,8 +25,7 @@ still holds the output.
 
 Captions use a short supported scene joke and optional blank-line sign-off such
 as `Absolute BANGER 🔥`. Familiar cast aliases are allowed when supported by
-creator attribution. Jensen, Elon, Sam, Dario, Trump, Bill Gates and Mark
-Zuckerberg may qualify; facial appearance alone never supplies identity.
+creator attribution. Jensen, Elon, Sam, Dario and Trump may qualify; facial appearance alone never supplies identity.
 
 Codex chooses one 8–120 second contiguous excerpt from a source up to five minutes.
 Prefer 15–30 seconds when a complete joke/chorus fits; preserve a strong full
@@ -133,7 +132,7 @@ valid candidates. Unsupported links remain leads, not verified media.
 
 The prior November 5 policy used ten two-hour slots and a two-line POV/slogan
 caption. November 7 changed both to thirteen 90-minute slots and one grounded
-caption; November 17 replaces that cadence and format with the five windows and
+caption; November 17 replaces that cadence and format with the four windows and
 playful captions described above. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
@@ -305,22 +304,21 @@ The current Account selects `publishing_transport = "safari"`, following the
 Operator's later request. Video posts reuse that same composer, write wrapper
 and Safari lock; X API credentials are unnecessary. The optional API adapter is
 retained for compatibility and refuses calls while Safari is selected.
-The latest interaction cooldown is midnight–04:30 Toronto, with no daytime
+The latest interaction cooldown is 23:00–07:00 Toronto, with no daytime
 breaks for this Account. Video publishing and startup eligible-time accounting
-read the same interaction clock. Discovery and media are independent of the
-scheduler's overnight pause.
+read the same interaction clock. Discovery and media also pause overnight, retaining their durable queue and heartbeat.
 
 ## Schedule and delivery semantics
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 05:00, 09:00 |
+| Morning | 09:00 |
 | Afternoon | 12:00, 17:00 |
-| Evening | 21:00 |
+| Evening | 20:00 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. One to thirteen distinct slots are configurable; this Account uses five
-and `scheduled_daily_cap=5`. Other Accounts retain the default ceiling of eight.
+rules. One to thirteen distinct slots are configurable; this Account uses four
+and `scheduled_daily_cap=4`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -329,10 +327,10 @@ deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
 `protect_primary_windows = true` prioritizes one video at each configured main
-window. This Account has five main windows and no paired slots. If a different
+window. This Account has four main windows and no paired slots. If a different
 configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
-for the next five main windows, including tomorrow morning. Coverage accounts
+for the next four main windows, including tomorrow morning. Coverage accounts
 for source/permission expiry and known freshness-score decay through each slot's
 grace. A high-scoring long-lived clip is retained when it is the only one that
 can cover a later window. The check and content reservation share one database
@@ -340,10 +338,10 @@ transaction. If new clips become ready within grace, the extra slot can proceed;
 otherwise its skip records the inventory shortage. A second slot may still
 provide the window's first post after a missed first slot.
 
-`video.py status` and the daily report include `window_coverage`: the five future
+`video.py status` and the daily report include `window_coverage`: the four future
 slots, provisional candidate allocations and shortfall. Final eligibility,
 novelty, score and file checks still run before publication. The target buffer
-remains sixteen; current coverage is not a guarantee of future delivery or
+remains ten; current coverage is not a guarantee of future delivery or
 future discovery. The explicit startup post keeps its requested best-ready-clip
 priority, including its normal fifteen-minute slot collision rule. Setting
 `protect_primary_windows = false` restores selection without inventory protection
@@ -357,7 +355,7 @@ attempt a ready eligible clip. It creates no Reply hold and never overrides
 video pause/shutdown or ambiguous publication. Reply-only, disabled and dry-run
 starts create none. Repeated starts reuse the day's request; an expired pending
 request from an earlier day is closed before creating today's request. The startup
-request receives sixty minutes of eligible time, excluding midnight–04:30 and
+request receives sixty minutes of eligible time, excluding 23:00–07:00 and
 any explicitly configured interaction breaks (disabled for this Account),
 including both DST transitions correctly. A request within fifteen minutes of
 the next slot waits for that slot; a single confirmed post atomically fulfills
@@ -870,8 +868,8 @@ publication.
    uv run --with-requirements requirements-video.txt python bin/video.py preview CANDIDATE_ID
    ```
 
-   Check `window_coverage.shortfall` and its five allocations. Provision at least
-   five distinct eligible clips for the main windows and a surplus for the
+   Check `window_coverage.shortfall` and its four allocations. Provision at least
+   four distinct eligible clips for the main windows and a surplus for the
    explicit startup/paired extras; the normal buffer target is sixteen. A held,
    unlicensed, stale or duplicate clip cannot fill the shortage. Coverage must
    be refreshed at publication and cannot guarantee X delivery.
@@ -937,7 +935,7 @@ restore an older video database. Check unresolved submissions and today's
 profile activity before returning to the older editorial policy. Its shared
 guard includes today's confirmed video count and latest success when applying
 the legacy ceiling/spacing, even though the video journal is separate from the
-historical JSON ledger. The 04:30 interaction wake and disabled daytime breaks
+historical JSON ledger. The 07:00 interaction wake and disabled daytime breaks
 remain when the video feature is disabled.
 
 ## Download allowance and source pixel aspect

@@ -155,28 +155,32 @@ default = "relations/buddy.md"
 # set stricter for this Account: a value past the engine's bound is brought
 # back to it, with a [SETTINGS] warning at start. .env still wins over it.
 [limits]
+WATCH_ENGAGEMENT_REQUIRES_REPLY = true
+REPLY_WATCHED_DAILY_CAP = 2
+REPLY_WATCHED_MAX_AGE_SECONDS = 300
+REPLY_MAX_AGE_SECONDS = 1800
 # Operator, 2026-10-23: deeper discovery.
 FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
-# Operator, 2026-11-01: no daytime breaks; sleep midnight–04:30 Toronto.
+# Operator, 2026-11-18: no daytime breaks; sleep 23:00–07:00 Toronto.
 HOURLY_BREAK_MINUTES = 0
-# Operator, 2026-11-02: pursue 1,500+ distinct Replies at the existing spacing floor.
-MIN_SECONDS_BETWEEN_REPLIES = 8
+# Operator, 2026-11-18: selective discussions; no Reply quota to fill.
+# Eight Top and eight general Latest reads; new authors precede familiar ones.
+MIN_SECONDS_BETWEEN_REPLIES = 1440
 REPLY_JITTER_SECONDS = 4
-# Advisory goals only: never override quality, sleep or spacing; no daily cap.
-REPLY_DAILY_TARGET_MIN = 1500
-REPLY_PREFERRED_MIN_LIKES = 3
-REPLY_DAILY_TARGET_MAX = 1800
-# Operator, 2026-11-09: warmer Replies and a bounded turn for other artists.
-# Total: four priority-author Latest, two creator Latest, six Top, four general Latest.
-# Three observed likes remain a preference within each author-priority group.
+MAX_REPLIES_PER_DAY = 40
+REPLY_DAILY_TARGET_MIN = 0
+REPLY_DAILY_TARGET_MAX = 0
+REPLY_PREFERRED_MIN_LIKES = 0
+REPLY_DISCUSSIONS_ONLY = true
+REPLY_PREFER_NEW_AUTHORS = true
 DIRECT_REPLY_QUERIES_PER_CYCLE = 16
-DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 4
-DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE = 2
-DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE = 4
-REPLY_PRIORITIZE_LARGE_ACCOUNTS = true
-DIRECT_REPLY_MAX_PER_CYCLE = 80
-FEED_SWEEP_MAX_REPLIES_PER_CYCLE = 80
+DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 0
+DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE = 0
+DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE = 8
+REPLY_PRIORITIZE_LARGE_ACCOUNTS = false
+DIRECT_REPLY_MAX_PER_CYCLE = 1
+FEED_SWEEP_MAX_REPLIES_PER_CYCLE = 1
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────
 # A handle here is compared with the handle read from a status URL, never with
@@ -312,23 +316,15 @@ latest = [
 # direct_reply rotates through `replies` then `hot_tab` within its Top budget;
 # a result must be on the niche. Routine searches have no popularity floor.
 replies = [
-    '("why would" OR "why is" OR "what am I missing") (GPU OR (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) lang:en',
-    '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en',
-    '(ChatGPT OR Claude OR Gemini OR Grok OR Llama OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) assistant)) lang:en',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (agents OR agentic)) OR "reasoning model" OR AGI) lang:en',
-    '("Claude Code" OR Cursor OR Copilot OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) coding)) lang:en',
-    '(((Meta OR Amazon OR Tesla) (AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI)) OR "Apple Intelligence" OR "Microsoft Copilot") lang:en',
-    '(GPU OR TPU OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (datacenter OR inference))) lang:en',
-    '(AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (TSMC OR AMD OR Broadcom OR chips OR power OR energy) lang:en',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (CoreWeave OR Nebius OR "Applied Digital" OR electricity)) OR "data center") lang:en',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (startup OR workflow OR release OR "open source")) OR DeepSeek) lang:en',
+    '(AI OR SI OR LLM OR Grok OR Claude OR GPT) (evaluation OR benchmark OR failure OR reasoning) lang:en -filter:replies -filter:retweets',
+    '(GPU OR CUDA OR LLM) (inference OR latency OR memory OR quantization) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM OR "coding agent") (retrieval OR testing OR reliability OR "tool use") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("why does" OR "how do" OR tradeoff OR compared) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine" OR Seedance) (workflow OR consistency OR control OR limitation) lang:en -filter:replies -filter:retweets',
+    '(robotics OR "robot learning" OR transformer) (research OR evaluation OR training OR generalization) lang:en -filter:replies -filter:retweets',
 ]
-hot_tab = [
-    '("Grok Imagine" OR Grok OR xAI OR OpenAI OR Anthropic OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (model OR launch))) lang:en min_faves:500',
-    '(GPU OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) (datacenter OR inference))) lang:en min_faves:300',
-    '(((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) agents) OR "reasoning model" OR AGI) lang:en min_faves:300',
-    '("Grok Imagine" OR Grok OR ChatGPT OR Claude OR "humanoid robot" OR ((AI OR SI OR "artificial intelligence" OR "super intelligence" OR superintelligence OR ASI) assistant)) lang:en min_faves:500',
-]
+# Discovery has no popularity floor.
+hot_tab = []
 # like_job picks one per cycle, on the Top or the Latest tab.
 # The shared like chokepoint verifies topic evidence on the actual post.
 likes = [

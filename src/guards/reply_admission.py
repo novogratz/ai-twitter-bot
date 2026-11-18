@@ -43,6 +43,8 @@ class Refusal(Enum):
     OVERNIGHT = "Overnight or stop requested"
     STARTUP_VIDEO = "startup video must be confirmed before Replies"
     DEBATE_TURN_CAP = "Debate turn cap reached"
+    DAILY_CAP = "daily Reply cap reached"
+    DISCUSSION = "source lacks a substantive technical discussion"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     TOPIC = "source outside engagement niche"
@@ -101,6 +103,14 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         ok, why = action_guard.can_debate_turn(author)
         if not ok:
             return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
+    from . import reply_budget
+    why = reply_budget.refusal(url)
+    if why:
+        return Verdict(Refusal.DAILY_CAP, why, author)
+    from .reply_focus import freshness_refusal
+    why = freshness_refusal(url)
+    if why:
+        return Verdict(Refusal.STALE_CANDIDATE, why, author)
     return Verdict(None, author=author)
 
 
@@ -112,7 +122,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not verdict:
         return verdict
     author = verdict.author
-    ok, why = action_guard.can_post(action_guard.REPLY)
+    ok, why = action_guard.can_post(action_guard.REPLY, target=url)
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
@@ -136,6 +146,10 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:
+        return Verdict(Refusal.TEXT, why, author)
+    from .reply_focus import draft_refusal
+    why = draft_refusal(text)
+    if why:
         return Verdict(Refusal.TEXT, why, author)
     try:
         if engagement_log.repeated_reply(text):

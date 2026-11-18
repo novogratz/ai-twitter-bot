@@ -78,13 +78,12 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
 
     if not reply_only and settings.get("NEWS_ENABLED"):
         from src.news.pipeline import retry_pending, run as run_news
-        # Public discovery may run overnight. Its Safari write chokepoint owns
-        # waking hours and the video-first hold, just like every other write.
-        scheduler.add_job(run_news, trigger=IntervalTrigger(hours=1, timezone=config.BOT_TIMEZONE),
+        # Sleep applies to research and delivery as well as social writes.
+        scheduler.add_job(awake_job(run_news), trigger=IntervalTrigger(hours=1, timezone=config.BOT_TIMEZONE),
                           id="news_job", executor="news", next_run_time=datetime.now(timezone.utc) + timedelta(seconds=15))
         # Delivery deferrals need not wait another hour. The same one-thread
         # executor and durable run lock serialize this with discovery.
-        scheduler.add_job(retry_pending, trigger=IntervalTrigger(minutes=1, timezone=config.BOT_TIMEZONE),
+        scheduler.add_job(awake_job(retry_pending), trigger=IntervalTrigger(minutes=1, timezone=config.BOT_TIMEZONE),
                           id="news_delivery_job", executor="news", **({"next_run_time": datetime.now(timezone.utc) + timedelta(seconds=1)}
                               if startup_publications else {}))
         if settings.get("DISCUSSION_POSTS_ENABLED"):
@@ -191,12 +190,17 @@ def main():
         from src.video.schedule import clocks as video_clocks
         video_cfg = video_config() if settings.get("VIDEO_ENABLED") else None
         video_slots = len(video_clocks(video_cfg)) if video_cfg else 0
+        from src.news.config import load as news_config
+        news_cfg = news_config() if settings.get("NEWS_ENABLED") else None
+        text_cap = min(config.posts_ceiling(), news_cfg.daily_cap) if news_cfg else config.posts_ceiling()
+        startup_extra = int(bool(video_cfg and (video_cfg.startup_on_boot or args.startup_publications)))
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
-                          "min_target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
-                          "target_posts": (0 if video_cfg.ultra_bangers_only else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
-                          "max_profile_posts": (video_slots + 1 + (config.posts_ceiling() if settings.get("NEWS_ENABLED") else 0)
-                                                if settings.get("VIDEO_ENABLED") else config.posts_ceiling()),
-                          "replies": "unlimited",
+                          "min_target_posts": (0 if video_cfg.ultra_bangers_only and not video_cfg.best_available_fallback else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
+                          "target_posts": (0 if video_cfg.ultra_bangers_only and not video_cfg.best_available_fallback else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
+                          "max_profile_posts": (video_slots + startup_extra + (text_cap if news_cfg else 0)
+                                                if settings.get("VIDEO_ENABLED") else text_cap),
+                          "replies": settings.get("MAX_REPLIES_PER_DAY"),
+                          "reply_min_gap_seconds": settings.get("MIN_SECONDS_BETWEEN_REPLIES"),
                           "reply_volume_boost_date": settings.get("REPLY_VOLUME_BOOST_DATE"),
                           "reply_discovery_generation_budgets": {
                               name: settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES},
@@ -204,7 +208,9 @@ def main():
                                                      settings.get("REPLY_DAILY_TARGET_MAX")],
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
                           "news": {"enabled": settings.get("NEWS_ENABLED"), "hourly": True,
-                                   "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False},
+                                   "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False,
+                                   "daily_cap": text_cap if news_cfg else 0,
+                                   "windows": news_cfg.publish_windows if news_cfg else []},
                           "discussion_posts": settings.get("NEWS_ENABLED") and settings.get("DISCUSSION_POSTS_ENABLED"),
                           "advisory_video_targets": [video_cfg.daily_target_min, video_cfg.scheduled_daily_cap] if video_cfg else [],
                           "startup_publications": args.startup_publications and not args.reply_only,
@@ -253,7 +259,7 @@ def main():
         from src.video.config import load as video_config
         from src.video.schedule import clocks as video_clocks
         cfg = video_config()
-        log.info("Bot started: %s video opportunities; ultra-only=%s; automatic startup=%s; news=%s; transport=%s; replies unlimited; active %s.",
+        log.info("Bot started: %s video opportunities; ultra-only=%s; automatic startup=%s; news=%s; transport=%s; replies capped; active %s.",
                  len(video_clocks(cfg)), cfg.ultra_bangers_only, cfg.startup_on_boot,
                  settings.get("NEWS_ENABLED"), cfg.publishing_transport, window_label())
     elif settings.get("NEWS_ENABLED") and not args.reply_only:
@@ -261,7 +267,10 @@ def main():
                  settings.get("NEWS_AUTO_PUBLISH"), window_label())
     else:
         log.info(f"Bot started: at least {min_target} useful {account.current().domain} originals targeted "
-                 f"(max {config.posts_ceiling()}); replies unlimited; active {window_label()}.")
+                 f"(max {config.posts_ceiling()}); replies capped; active {window_label()}.")
+    log.info("[REPLY] Maximum %s/day, minimum %ss between submissions; discussions-only=%s; prefer new authors=%s.",
+             settings.get("MAX_REPLIES_PER_DAY"), settings.get("MIN_SECONDS_BETWEEN_REPLIES"),
+             settings.get("REPLY_DISCUSSIONS_ONLY"), settings.get("REPLY_PREFER_NEW_AUTHORS"))
     log.info("[REPLY] Discovery/generation budgets: %s; boost date: %s (Toronto).",
              {name: settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES},
              settings.get("REPLY_VOLUME_BOOST_DATE") or "disabled")

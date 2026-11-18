@@ -1,11 +1,11 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# 2026-11-17: five daily videos, using the best eligible fallback below the quality target.
+# 2026-11-18: four daily videos, using the best eligible fallback below the quality target.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["05:00", "09:00", "12:00", "17:00", "21:00"]
+windows = ["09:00", "12:00", "17:00", "20:00"]
 paired_windows = []
-scheduled_daily_cap = 5
-daily_target_min = 5 # source, technical, history and publication checks still apply
+scheduled_daily_cap = 4
+daily_target_min = 4 # source, technical, history and publication checks still apply
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -86,8 +86,6 @@ trump = ["Donald Trump", "Trump", "特朗普", "川普"]
 dario = ["Dario Amodei", "Dario", "达里奥", "阿莫迪"]
 sam = ["Sam Altman", "Altman", "山姆·奥特曼", "奥特曼"]
 jensen = ["Jensen Huang", "Jensen", "黄仁勋", "老黄"]
-bill = ["Bill Gates", "Bill"]
-mark = ["Mark Zuckerberg", "Zuckerberg", "Zuck", "Zucky"]
 
 [target_handles]
 elon = "@elonmusk"

@@ -31,14 +31,15 @@ def main(argv=None):
             "news_email": False, "max_picks": 2, "empty_runs": "silent", "prompt": cfg.prompt_file}, indent=2))
         return
     if args.command == "serve":
+        from ..guards.active_hours import awake_job
         from apscheduler.schedulers.blocking import BlockingScheduler
         from apscheduler.executors.pool import ThreadPoolExecutor
         from apscheduler.triggers.interval import IntervalTrigger
         scheduler = BlockingScheduler(timezone=TZ, executors={"default": ThreadPoolExecutor(1)})
-        scheduler.add_job(run, IntervalTrigger(hours=1, timezone=TZ), kwargs={"cfg": cfg},
+        scheduler.add_job(awake_job(run), IntervalTrigger(hours=1, timezone=TZ), kwargs={"cfg": cfg},
                           id="news_discovery", max_instances=1, coalesce=True, misfire_grace_time=3600,
                           next_run_time=datetime.now(TZ))
-        scheduler.add_job(retry_pending, IntervalTrigger(minutes=1, timezone=TZ), kwargs={"cfg": cfg},
+        scheduler.add_job(awake_job(retry_pending), IntervalTrigger(minutes=1, timezone=TZ), kwargs={"cfg": cfg},
                           id="news_delivery", max_instances=1, coalesce=True, misfire_grace_time=60)
         scheduler.start()
         return

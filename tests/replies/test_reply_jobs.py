@@ -360,7 +360,8 @@ def test_feed_sources_survive_a_quota_stop_and_disappear_after_confirmation(feed
     assert feeds["read"] == ["FEED", "FOLLOWING"] * 3
 
 
-def test_feed_prefers_more_than_two_likes_but_still_answers_lower_and_unknown_counts(feed):
+def test_feed_prefers_more_than_two_likes_but_still_answers_lower_and_unknown_counts(feed, settings_override):
+    settings_override(REPLY_PREFERRED_MIN_LIKES=3, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=8, DIRECT_REPLY_MAX_AGE_MINUTES=7200)
     fs, feeds, llm, chokepoint = feed
     posts = [post("builder", f"SI model project {i}", minutes=minutes, n=i, likes=likes)
              for i, (minutes, likes) in enumerate(((1, None), (2, 2), (90, 3)))]
@@ -600,7 +601,8 @@ def test_author_search_never_trusts_search_query_as_author_verification(profile_
     assert llm.calls == [] and chokepoint.sent == []
 
 
-def test_author_search_prefers_more_than_two_likes_before_spending_its_budget(profile_job):
+def test_author_search_prefers_more_than_two_likes_before_spending_its_budget(profile_job, settings_override):
+    settings_override(REPLY_PREFERRED_MIN_LIKES=3)
     _, run, profiles, llm, chokepoint = profile_job
     low, preferred = post("builder", "SI model one", n=1, likes=2), post("builder", "SI model two", n=2, likes=3)
     profiles["builder"] = [low, preferred]

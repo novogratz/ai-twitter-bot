@@ -70,7 +70,7 @@ def test_waiting_startup_main_keeps_worker_free_for_delivery(news_startup):
     startup.request(news_startup, "boot", 1000)
     news_startup.execute("""INSERT INTO outbox(id,story,payload,state,due,expires)
         VALUES('story','story','{"role":"main"}','pending',1000,2000)""")
-    result = pipeline.run(SimpleNamespace(delivery_attempts=3), store=news_startup,
+    result = pipeline.run(SimpleNamespace(delivery_attempts=3, publish_windows=[]), store=news_startup,
                           delivery=DeferredDelivery(), http=NoResearch(), model=NoResearch(),
                           now=1010, import_history=False)
     assert result == []

@@ -7,9 +7,13 @@ model_calls_per_run = 8
 model_calls_per_day = 144
 requests_per_run = 80
 requests_per_day = 1200
-score_min = 80
+score_min = 90
 backup_score_min = 90
 video_gap_minutes = 30
+# Toronto opportunities; at most one text post per window, no catch-up bursts.
+daily_cap = 2
+publish_windows = ["10:30", "15:00"]
+publish_window_minutes = 30
 discussion_interval_hours = 48
 discussion_topics = ["model_choice", "coding_agents", "creative_workflows", "local_models", "video_making", "human_judgment"]
 discussion_models = ["Grok", "Claude", "GPT", "Gemini", "DeepSeek", "Qwen", "Kimi"]

@@ -172,7 +172,7 @@ def test_post_dry_run(trace, monkeypatch):
 # --- reply_to_tweet -------------------------------------------------------------
 
 REPLY = "Batching is where inference margins are won or lost."
-REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "confirm_like", "reply_button", "paste", "submit"]
+REPLY_STEPS = ["activate", "open", "activate", "verify_parent", "confirm_like", "reply_button", "paste", "guard:can_post", "submit"]
 
 
 def test_reply_ships_then_records_then_closes(trace):

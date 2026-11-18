@@ -2,6 +2,7 @@
 from dataclasses import dataclass, field, fields
 from pathlib import Path
 import tomllib
+import re
 from urllib.parse import urlsplit
 
 from ..core import account, settings
@@ -27,6 +28,9 @@ class NewsConfig:
     score_min: int = 85
     backup_score_min: int = 90
     video_gap_minutes: int = 30
+    daily_cap: int = 8
+    publish_windows: list = field(default_factory=list)
+    publish_window_minutes: int = 30
     discussion_interval_hours: int = 48
     discussion_topics: list = field(default_factory=list)
     discussion_models: list = field(default_factory=list)
@@ -52,6 +56,14 @@ class NewsConfig:
             raise ValueError("news time, retry, candidate or quality bounds exceeded")
         if self.discussion_interval_hours < 24:
             raise ValueError("discussion posts must be at least 24 hours apart")
+        if not 1 <= self.daily_cap <= 8 or not 1 <= self.publish_window_minutes <= 60:
+            raise ValueError("invalid news daily cap or publication window")
+        if (any(not isinstance(v, str) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", v)
+                for v in self.publish_windows) or len(set(self.publish_windows)) != len(self.publish_windows)):
+            raise ValueError("news publish_windows must be unique HH:MM Toronto clocks")
+        minutes = sorted(int(v[:2]) * 60 + int(v[3:]) for v in self.publish_windows)
+        if any(b - a < self.publish_window_minutes for a, b in zip(minutes, minutes[1:])):
+            raise ValueError("news publication windows overlap")
         if any(not isinstance(v, str) or not v.strip() for v in self.discussion_topics + self.discussion_models):
             raise ValueError("discussion topics and model families must be nonempty text")
         for source in self.sources:

@@ -112,7 +112,7 @@ def test_english_only_rejects_french_and_accepts_english_for_a_former_french_vip
 def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
     """A Reply that just shipped must not refuse every candidate before
     generation: only judge_reply applies the spacing."""
-    monkeypatch.setattr(action_guard, "can_post", lambda action: (False, "too soon"))
+    monkeypatch.setattr(action_guard, "can_post", lambda action, **kwargs: (False, "too soon"))
     assert judge_parent(url("someone"))
     verdict = judge_reply(url("someone"), TEXT)
     assert verdict.refusal is Refusal.SPACING and not verdict.refusal.definitive

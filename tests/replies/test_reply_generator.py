@@ -41,7 +41,7 @@ def test_reply_prompt_keeps_context_beyond_the_old_200_character_cutoff(llm):
 
 
 @pytest.mark.parametrize("structured", [False, True])
-def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatch, llm, structured):
+def test_selective_voice_reaches_text_and_search(monkeypatch, llm, structured):
     from src.replies import direct_reply, reply_agent, reply_generator
 
     recent = ["Love this ❤️"]
@@ -60,13 +60,12 @@ def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatc
                                           text="Mon nouveau court métrage réalisé avec Grok Imagine.")
         assert result.text == llm.default and result.language == "en"
     prompt = llm.prompts[-1]
-    assert "A creator sharing a finished SI artwork" in prompt
-    assert "usually 2–6 words with an optional heart" in prompt
+    assert "Replies are selective contributions" in prompt
+    assert "one supported angle" in prompt.lower()
     assert "Follow the Voice's post-specific style first" in prompt
     assert "Where the Voice permits brief appreciation, that is enough" in prompt
     assert json.dumps(recent, ensure_ascii=False) in prompt
     assert "HARD RULES" in prompt and "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt
-    assert "never generic applause" not in prompt
 
 
 @pytest.mark.parametrize("text", [

@@ -9,10 +9,10 @@ from ..core import config, settings
 from ..core.logger import log
 
 
-WAKE = time(4, 30)
-BEDTIME = time(0, 0)
+WAKE = time(7, 0)
+BEDTIME = time(23, 0)
 _BREAK_INTERVAL_HOURS = 3
-_FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.
+_FIRST_BREAK_HOUR = 7  # Optional breaks start only after three waking hours.
 
 _STOP = threading.Event()
 
@@ -137,6 +137,8 @@ def bedtime(now: datetime) -> datetime:
 
 def seconds_until_bedtime() -> float:
     now = now_local()
+    if not is_active(now):
+        return 0.0
     return max(0.0, (bedtime(now) - now).total_seconds())
 
 

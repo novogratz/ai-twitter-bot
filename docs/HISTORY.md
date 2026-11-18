@@ -1,5 +1,52 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-18 — Focused daily schedule and selective conversation
+
+2026-11-18, final publishing and selective Reply policy — The Operator requests
+four Toronto video opportunities: 09:00, 12:00, 17:00 and 20:00. Choose the best
+fully eligible reviewed clip, retaining the best-available fallback, permanent
+deduplication, source/output/audio/rights checks and uncertain-send holds. Every
+video must include at least one source-attributed fictional Elon Musk, Jensen
+Huang, Dario Amodei, Sam Altman or Donald Trump. Bill Gates, Mark Zuckerberg and
+other guests may accompany them but never qualify a clip alone. Viral reach is
+an aim, not a guaranteed outcome. No automatic startup publication is added.
+
+News has two Toronto opportunities, 10:30 and 15:00, with a thirty-minute delivery
+window and at most one text publication per window, two per day. Hourly discovery
+can prepare multiple independently reviewed main candidates; delivery chooses
+industry impact first, then total news value and freshness. The news score floor
+is 90/100. Pending picks do not freeze later research. Old backup-only drafts are
+never promoted automatically. Verified evidence, event/URL history, seven-text
+shared outer ceiling, two-hour spacing and video protection remain; the new
+Account cap of two is stricter. Occasional questions still need 48 elapsed hours
+and share these two text slots, with news first. No filler or late catch-up burst.
+
+Replies have a hard maximum of forty per Toronto day, including uncertain sends,
+and no daily minimum. The live Account spaces submissions by at least 1,440
+seconds (about 24 minutes), distributing opportunities across 07:00–23:00 rather
+than exhausting the allowance early. The earlier ten-minute minimum is therefore
+also respected. Other parents must still be at most thirty minutes old at final
+submission; watched Elon parents at most five minutes, preferably discovered and
+answered within the first minute when actual pacing and generation permit. Elon
+gets at most two Replies per day, only on important AI/SI discussions. A missed
+freshness window skips; it never bypasses spacing or quality to meet a target.
+
+All Reply paths use the same durable submission journal and final budget/age
+checks. Uncertain sends retain their parent and their budget; confirmed ledger
+rows are not double-counted. Ordinary discovery uses eight Top and eight Latest
+reads, with no popularity floor, and prefers authors absent from confirmed Reply
+history over the retained ninety days. Both Voice files and shared generation
+require one supported useful angle, expressed warmly and precisely; no generic
+praise, omniscience, fake biography, fake typos or unseen-media claims. Watched
+likes/reposts require a confirmed Reply to that exact parent; the required like
+during an admitted Reply remains allowed. No broad Elon engagement loop remains.
+
+The entire automatic schedule sleeps 23:00–07:00 Toronto, including news research
+and independent video preparation; durable jobs and histories survive sleep.
+This supersedes all earlier cadence, volume, age, voice and hours settings below.
+The Operator requests PR creation, merge, push and a new release. Starting or
+restarting the main bot remains an explicitly requested lifecycle action.
+
 ## 2026-11-18 — Confirmed live fallback publication and authorized daily start
 
 The Operator approves the reviewed clip, a one-time after-hours test and starting

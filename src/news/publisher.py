@@ -77,8 +77,17 @@ def admit(store, cfg, ident, now):
     local = datetime.fromtimestamp(now, editor.TZ)
     midnight = local.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
     used = store.rows("SELECT COUNT(*) AS n FROM outbox WHERE state='published' AND acknowledged>=?", (midnight,))[0]["n"]
-    if used >= config.posts_ceiling():
+    used = max(used, action_guard.count_today(action_guard.POST))
+    if used >= min(config.posts_ceiling(), cfg.daily_cap):
         raise Deferred("text daily ceiling reached")
+    if cfg.publish_windows:
+        due = publication_window(cfg, now)
+        if due is None:
+            raise Deferred("outside scheduled news window")
+        if store.rows("""SELECT id FROM outbox WHERE state IN ('published','submitting','publish_unknown')
+                         AND acknowledged>=? AND acknowledged<? LIMIT 1""",
+                      (due, due + cfg.publish_window_minutes * 60)):
+            raise Deferred("scheduled news window already used")
     last = store.rows("SELECT MAX(acknowledged) AS at FROM outbox WHERE state='published'")[0]["at"]
     if last and now - last < settings.get("NEWS_MIN_SECONDS_BETWEEN_POSTS"):
         raise Deferred("text publication spacing")
@@ -93,6 +102,17 @@ def admit(store, cfg, ident, now):
     if why:
         raise Deferred(why)
     return payload
+
+
+def publication_window(cfg, now):
+    """Current Toronto opportunity; missed windows never become a catch-up burst."""
+    local = datetime.fromtimestamp(now, editor.TZ)
+    for clock in cfg.publish_windows:
+        hour, minute = map(int, clock.split(":"))
+        due = local.replace(hour=hour, minute=minute, second=0, microsecond=0).timestamp()
+        if 0 <= now - due < cfg.publish_window_minutes * 60:
+            return due
+    return None
 
 
 def _news_review(story, payload, now, cfg):
@@ -118,6 +138,8 @@ class SafariDelivery:
     def send(self, ident, payload):
         if payload["role"] != "main":
             return self.drafts.send(ident, payload)
+        # Cheap preflight before taking Safari; final admission repeats it.
+        admit(self.store, self.cfg, ident, time.time())
         from ..x.twitter_client import post_news
         from ..x.confirmed_write import WriteOutcome
         result = post_news(self.store, self.cfg, ident)

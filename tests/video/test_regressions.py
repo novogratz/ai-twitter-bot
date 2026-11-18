@@ -111,3 +111,8 @@ def test_config_rejects_unbounded_resources(video_cfg):
         replace(video_cfg, max_media_memory_mb=0)
     with pytest.raises(ValueError):
         replace(video_cfg, lease_seconds=300)
+
+
+# These fixtures exercise historical/custom schedules, independently of live hours.
+import pytest
+pytestmark = pytest.mark.usefixtures("legacy_hours")

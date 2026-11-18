@@ -4,11 +4,11 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_targets_five_best_available_videos_with_supported_tech_cast():
+def test_live_account_targets_four_best_available_videos_with_supported_tech_cast():
     cfg = config.load()
-    assert schedule.clocks(cfg) == ("05:00", "09:00", "12:00", "17:00", "21:00")
-    assert cfg.daily_target_min == cfg.scheduled_daily_cap == 5
-    assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario", "bill", "mark"}
+    assert schedule.clocks(cfg) == ("09:00", "12:00", "17:00", "20:00")
+    assert cfg.daily_target_min == cfg.scheduled_daily_cap == 4
+    assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario"}
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file
     assert cfg.ultra_bangers_only and cfg.min_hook_score == 9 and cfg.best_available_fallback
@@ -58,3 +58,24 @@ def test_stronger_reviewed_archive_banger_beats_a_weaker_recent_clip(video_store
         doc = ranking.refresh(video_store, video_store.candidate(ident) | {"document": doc}, at().timestamp(), cfg)
         video_store.save_candidate(ident, doc, at().timestamp(), state="ready", score=doc["ranking"]["total"])
     assert publisher.reserve(video_store, at(), cfg)["candidate"] == "archive"
+
+
+def test_guests_alone_cannot_qualify_a_clip(video_cfg, ready, at):
+    from src.video import ranking
+    live = config.load()
+    cfg = replace(video_cfg, targets=live.targets)
+    doc = ready()
+    doc["inspection"]["cast"] = ["bill", "mark"]
+    assert "performance verification" in ranking.gate(doc, cfg, at().timestamp(), final=True)
+    for required in ("elon", "jensen", "dario", "sam", "trump"):
+        doc["inspection"]["cast"] = ["bill", required]
+        assert ranking.gate(doc, cfg, at().timestamp(), final=True) == ""
+
+
+def test_video_preparation_sleeps_without_claiming_jobs(video_store, video_cfg, at, monkeypatch):
+    from src.video import workers
+    clock(monkeypatch, at(23))
+    monkeypatch.setattr(workers, "seed_jobs", lambda *a: (_ for _ in ()).throw(AssertionError("seeded overnight")))
+    for role in ("discovery", "media"):
+        assert workers.run_once(role, video_store, video_cfg, "test", now=at(23).timestamp()) == "sleeping"
+    assert not video_store.rows("SELECT id FROM jobs")
