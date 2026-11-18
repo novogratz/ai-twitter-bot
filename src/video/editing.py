@@ -5,10 +5,12 @@ import json
 
 
 def policy_revision(cfg):
+    from .captions import POLICY
     return hashlib.sha256(json.dumps({"version": 2, "targets": cfg.targets, "watermark": cfg.watermark,
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
         "caption": cfg.one_line_caption, "playful_caption": cfg.playful_caption,
+        "meme_caption_policy": POLICY if cfg.meme_caption else None,
         "ultra_bangers": cfg.ultra_bangers_only,
         "best_available_fallback": cfg.best_available_fallback}, sort_keys=True).encode()).hexdigest()
 

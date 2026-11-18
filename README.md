@@ -1,9 +1,10 @@
 # The SI Maximalist · @thesimaximalist
 
-Current policy (November 18): **four daily videos at 09:00, 12:00, 17:00 and
-20:00 Toronto; at most two news/text posts at 10:30 and 15:00; a target of 100–120
-Replies with a hard maximum of 120, spread across 07:00–23:00.** The bot sleeps 23:00–07:00, including
-background research/preparation. These rules supersede older dated notes below.
+Current policy (November 18): **five Instagram video slots at 06:00, 09:00,
+12:00, 17:00 and 21:00 Toronto; at most two news/text posts at 10:30 and 15:00;
+at most 100 Replies across 07:00–23:00.** The 06:00 video has a bounded
+05:55–06:05 exception. All other activity sleeps 23:00–07:00. These rules
+supersede older dated notes below.
 
 Content must earn its place. Discovery favors research methods, evaluations,
 agent reliability, inference/deployment tradeoffs and practical workflow problems,
@@ -13,7 +14,7 @@ technical vocabulary, generic praise and a paraphrase are insufficient. The fina
 text and actual parent must match that approval. Failed or unavailable review
 means no send. News must explain a supported change or consequence; occasional
 questions must elicit a practical lesson rather than a generic favorite-model poll.
-The 120-Reply and two-text limits are ceilings, never quotas. These changes load
+The 100-Reply and two-text limits are ceilings, never quotas. These changes load
 on the next explicitly requested restart.
 
 Every video needs source-attributed Elon Musk, Jensen Huang, Dario Amodei,
@@ -21,7 +22,7 @@ Sam Altman or Donald Trump. Choose the strongest eligible inspected clip;
 permanent content history prevents duplicates. News selects the highest-impact
 verified candidates, with a 90/100 floor and no obligation to fill a quiet slot.
 
-Replies are at least eight minutes apart, on substantive AI/SI discussions or
+Replies are at least ten minutes apart, on substantive AI/SI discussions or
 strong AI art/memes, with a sharp, kind and supported contribution. No invented
 visual details or generic applause; skip when the response requires uninspected
 media. Other posts must be under thirty minutes
@@ -53,13 +54,17 @@ text outbox. They invite useful opinions and use model families rather than stal
 version numbers. News and questions share the two-text daily ceiling and the 10:30/15:00 windows,
 two-hour text spacing and video protections; news goes first.
 
-The video schedule is **four posts daily at 09:00, 12:00, 17:00 and 20:00
+The video schedule is **five slots daily at 06:00, 09:00, 12:00, 17:00 and 21:00
 Toronto time**. Prefer exceptional clips; if none reaches the quality target,
-choose the strongest eligible reviewed clip. Instagram discovery has priority,
+choose the strongest eligible reviewed unseen clip. Only Instagram sources publish,
 with a ten-clip reserve and a warning below five. Permanent source/hash/video
 history prevents reposting the same footage under another link. Actual source,
 audio, output, permission and X-copy checks remain required. Missing valid supply
 or a failed platform send is reported honestly, never counted as publication.
+Captions use short, grounded meme hooks with varied openings and punchlines,
+without repeated BANGER sign-offs. Recent confirmed captions guide variety;
+source and output review approve the style and actual scene details. A changed
+caption policy requires fresh review, not reuse of an older approval.
 
 The four owner-selected references guide discovery and are saved as already posted.
 Each new source and edited output receives actual editorial review, with

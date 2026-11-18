@@ -53,6 +53,14 @@ def test_publisher_picks_best_actual_quality_over_popularity_or_discovery_order(
     assert publisher.reserve(video_store, at(), fallback) is None
 
 
+def test_best_clip_beyond_eighty_popular_candidates_still_competes(
+        reviewed, video_store, fallback, at):
+    for i in range(80):
+        reviewed(f"popular{i}", grade=6, raw_score=100)
+    reviewed("best", grade=8, raw_score=50)
+    assert publisher.reserve(video_store, at(), fallback)["candidate"] == "best"
+
+
 def test_quality_target_takes_precedence_over_fallback(reviewed, video_store, fallback, at):
     reviewed("fallback", grade=8.9, raw_score=100)
     reviewed("target", grade=10, raw_score=50)

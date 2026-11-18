@@ -18,7 +18,7 @@ def replace_deleted(store, post_id, request_id, now, cfg, *, operator_reports_de
     An operator report is recorded as such, never as browser proof of deletion.
     Workers never call this function. The original claim/history are retained.
     """
-    if not operator_reports_deleted or not request_id or not config.live() or not schedule.eligible(now):
+    if not operator_reports_deleted or not request_id or not config.live() or not schedule.eligible(now, cfg):
         raise ValueError("explicit live replacement request and deletion report required")
     stamp = now.timestamp()
     with store.transaction() as db:
@@ -111,9 +111,10 @@ def tick_calendar(store, now, cfg):
         for row in db.execute("SELECT id FROM slots WHERE state='pending'").fetchall():
             if row["id"].startswith(str(schedule.local(now).date()) + "/") and row["id"] not in expected:
                 db.execute("UPDATE slots SET state='skipped',reason='schedule reconciled' WHERE id=?", (row["id"],))
-        db.execute("UPDATE slots SET state='skipped',reason=CASE WHEN reason='' THEN 'grace expired; no catch-up' "
-                   "ELSE reason || '; grace expired; no catch-up' END WHERE state='pending' AND due+?<?",
-                   (cfg.grace_seconds, stamp))
+        for row in db.execute("SELECT id,due FROM slots WHERE state='pending'").fetchall():
+            if schedule.slot_bounds(row["due"], cfg)[1] < stamp:
+                db.execute("UPDATE slots SET state='skipped',reason=CASE WHEN reason='' THEN 'grace expired; no catch-up' "
+                           "ELSE reason || '; grace expired; no catch-up' END WHERE id=?", (row["id"],))
         for request in db.execute("SELECT * FROM startup WHERE state='pending'").fetchall():
             requested = datetime.fromtimestamp(request["requested"], timezone.utc)
             if schedule.eligible_seconds(requested, now) >= cfg.startup_seconds:
@@ -125,7 +126,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
     tick_calendar(store, now, cfg)
     from . import memory
     memory.import_seed(store, cfg, now.timestamp())
-    if not config.live() or not schedule.eligible(now):
+    if not config.live() or not schedule.eligible(now, cfg):
         return None
     if store.meta("paused", True) or store.meta("shutdown", False):
         return None
@@ -143,8 +144,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
     with store.transaction() as db:
         if db.execute("SELECT 1 FROM reservations WHERE state IN ('reserved','uploading','submitting','publish_unknown')").fetchone():
             return None
-        slot = db.execute("SELECT * FROM slots WHERE state='pending' AND due<=? AND due+?>=? ORDER BY due LIMIT 1",
-                          (stamp, cfg.grace_seconds, stamp)).fetchone()
+        slot = next((row for row in db.execute("SELECT * FROM slots WHERE state='pending' ORDER BY due")
+                     if schedule.slot_bounds(row["due"], cfg)[0] <= stamp <= schedule.slot_bounds(row["due"], cfg)[1]), None)
         # Changing the slot configuration midday cannot create a second daily grid.
         consumed = db.execute("SELECT COUNT(*) FROM slots WHERE id LIKE ? AND state IN ('posted','reserved')", (day + "/%",)).fetchone()[0]
         if slot and consumed >= cfg.scheduled_daily_cap:
@@ -168,7 +169,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
             return None
         last = db.execute("SELECT MAX(confirmed) FROM reservations WHERE state='confirmed'").fetchone()[0]
         ready_at = (last + cfg.min_spacing_seconds) if last is not None else stamp
-        if slot and ready_at > slot["due"] + cfg.grace_seconds:
+        if slot and ready_at > schedule.slot_bounds(slot["due"], cfg)[1]:
             db.execute("UPDATE slots SET state='skipped',reason='actual spacing exceeds grace' WHERE id=?", (slot["id"],))
             slot = None
         if ready_at > stamp or (not slot and not startup):
@@ -190,7 +191,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         else:
             choice = None
             rows = db.execute("SELECT * FROM candidates WHERE state='ready' AND id NOT IN (SELECT candidate FROM content_claims) "
-                              "ORDER BY score DESC,discovered LIMIT 80").fetchall()
+                              "ORDER BY score DESC,discovered LIMIT ?", (cfg.queue_limit,)).fetchall()
         valid = []
         claimed = db.execute("SELECT c.document,c.fingerprint FROM candidates c JOIN content_claims p ON c.id=p.candidate").fetchall()
         history = [json.loads(row["payload"]) for row in db.execute("SELECT payload FROM history")]
@@ -267,7 +268,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         row, doc = min(comparable, key=tie_break)
         ident, token = uuid.uuid4().hex, uuid.uuid4().hex
         remaining = cfg.startup_seconds - schedule.eligible_seconds(datetime.fromtimestamp(startup["requested"], timezone.utc), now) if startup else 0
-        deadline = slot["due"] + cfg.grace_seconds if slot else stamp + remaining
+        deadline = schedule.slot_bounds(slot["due"], cfg)[1] if slot else stamp + remaining
         if startup:
             deadline = min(deadline, stamp + remaining)
         midnight = datetime.combine(schedule.local(now).date() + timedelta(days=1), datetime.min.time(), schedule.ZONE).timestamp()
@@ -295,7 +296,7 @@ def guard(store, ident, token, now, cfg, *, submitting=False):
     news_reason = video_hold(now)
     if news_reason:
         raise ValueError(news_reason)
-    if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc)):
+    if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc), cfg):
         raise ValueError("video publishing disabled or overnight")
     if store.meta("paused", True) or store.meta("shutdown", False):
         raise ValueError("video publishing paused")

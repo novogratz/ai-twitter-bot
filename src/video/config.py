@@ -29,6 +29,9 @@ class VideoConfig:
     best_available_fallback: bool = False
     one_line_caption: bool = False
     playful_caption: bool = False
+    meme_caption: bool = False
+    early_video_window: bool = False
+    publish_platforms: tuple = ()
     daily_target_min: int = 0
     audience_examples: tuple = ()
     discovery_prompt_file: str = ""
@@ -126,9 +129,16 @@ class VideoConfig:
             raise ValueError("daily_target_min must be within the video daily ceiling")
         if self.one_line_caption and self.playful_caption:
             raise ValueError("choose either one-line or playful captions")
-        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "best_available_fallback", "one_line_caption", "playful_caption", "adaptive_discovery"):
+        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "best_available_fallback", "one_line_caption", "playful_caption", "meme_caption", "early_video_window", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
+        if self.meme_caption and not self.playful_caption:
+            raise ValueError("meme captions require inspected playful captions")
+        if self.early_video_window and ("06:00" not in self.windows or "06:00" in self.paired_windows):
+            raise ValueError("early video window requires one unpaired 06:00 slot")
+        if (not isinstance(self.publish_platforms, (list, tuple))
+                or not all(isinstance(p, str) and p in PLATFORMS for p in self.publish_platforms)):
+            raise ValueError("publish_platforms must list known source platforms")
         if self.best_available_fallback and not (self.bangers_only and self.auto_edit):
             raise ValueError("best available fallback requires full banger review and editorial cutting")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):

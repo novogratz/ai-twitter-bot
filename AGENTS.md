@@ -6,6 +6,39 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-18, five Instagram videos and one hundred thoughtful Replies — The
+Operator replaces the prior schedule with 06:00, 09:00, 12:00, 17:00 and 21:00
+Toronto, at most five scheduled videos. The 06:00 opportunity opens at 05:55
+and closes at 06:05. Only video workers receive this expiring, context-local I/O
+exception; ordinary news, Replies, likes and reposts still sleep 23:00–07:00.
+No late catch-up or extra startup post. Actual admission rechecks the deadline.
+
+Only Instagram sources may publish. Keep the best-available selection policy:
+prefer ultra-quality clips, otherwise choose the strongest actually inspected,
+fully eligible unseen clip at that slot. The bounded ready pool competes on
+source/output quality, never fabricated momentum. Every clip needs attributed
+Elon Musk, Jensen Huang, Dario Amodei, Sam Altman or Donald Trump. Source/output
+inspection, audio, permissions, watermark, X-copy checks and permanent content
+claims remain mandatory; no duplicate link, alternate cut or renamed file resets
+history. Other platform discovery is disabled, while X novelty checks remain.
+
+New captions use a compact scene-specific meme hook, naturally varying a dry
+one-liner, setup/punchline, specific POV or cute understatement against recent
+confirmed captions. No recurring BANGER sign-off, generic hype, engagement bait
+or invented scene detail. Source and output review must approve the new style;
+policy changes invalidate cached caption/edit approvals. Viral reach is an aim.
+
+Replies have a hard cap of 100 per Toronto day, with at least 600 seconds plus
+0–4 seconds jitter between submissions, 07:00–23:00 only. No daily minimum.
+Both substantive AI discussions and specific warm/funny/cute reactions to strong
+AI creative work qualify through independent value review. No unseen-media
+claims, filler or weaker review to fill the cap. Freshness, two-Elon Reply limit,
+dedup and uncertain-send accounting remain. News keeps its 10:30/15:00 windows,
+two-text cap and 90/100 floor: factual hook, useful verified details, optional
+sharp observation, blank line and one fetched source link. Elon-only reposts
+remain at most two per day after confirmed Replies. The Operator requests PR,
+merge, push and release. Main-process start/restart still requires explicit request.
+
 2026-11-18, 100–120 thoughtful Replies across the waking day — The Operator
 explicitly replaces the forty-Reply ceiling with a hard maximum of 120 per
 Toronto day and an advisory target of 100–120. Minimum submission spacing is

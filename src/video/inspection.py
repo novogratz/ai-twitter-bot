@@ -13,7 +13,7 @@ import time
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from ..core import settings, state_store
-from . import codex_session, media
+from . import captions, codex_session, media
 from .security import AccessError, sha256
 
 TOOLS = state_store.StatePath("video_tools")
@@ -120,6 +120,8 @@ def schema(cfg, stage):
             properties["opening_samples_reviewed"] = boolean
         if cfg.one_line_caption or cfg.playful_caption:
             properties["caption_accurate"] = boolean
+    if cfg.meme_caption:
+        properties["caption_style_ok"] = boolean
     return object_schema(properties)
 
 
@@ -264,6 +266,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "best_available_fallback": cfg.best_available_fallback,
         "one_line_caption": cfg.one_line_caption,
         "playful_caption": cfg.playful_caption,
+        "meme_caption_policy": captions.POLICY if cfg.meme_caption else None,
         "caption": source_review.get("caption")}, sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
@@ -332,6 +335,8 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         if cfg.audience_examples:
             supplied["audience_examples"] = cfg.audience_examples
             supplied["audience_scope"] = "Own published captions/counters: style context only, unequal observation ages, not causal evidence. Do not copy text or fabricate source details to match these examples."
+        if cfg.meme_caption:
+            supplied["recent_captions"] = captions.recent(store)
         if retained:
             supplied["source_ocr"] = source_review["ocr_evidence"]
             supplied["source_sha256"] = source_review["sha256"]
@@ -441,6 +446,8 @@ source attribution and actual excerpt. Do not invent what unseen characters did.
 Keep the synthetic-parody context; never present it as a real event. Output review
 must independently mark caption_accurate only when the final excerpt supports it.
 """
+        if cfg.meme_caption:
+            prompt += captions.PROMPT
         if source_sheet_count:
             prompt += (f"\nThe LAST {source_sheet_count} sheets show the preserved ORIGINAL SOURCE, "
                        "trimmed to the same excerpt and labeled with aligned OUTPUT-relative times. "
@@ -459,6 +466,8 @@ must independently mark caption_accurate only when the final excerpt supports it
     if not set(result["cast"]) <= set(context.get("cast", {})):
         raise ValueError("inspection cast lacks creator attribution")
     result["cast_context"] = context
+    if cfg.meme_caption:
+        result["caption_policy"] = captions.POLICY
     times = [f["at"] for f in frames]
     if any(e["at"] > info["duration"] or min(abs(e["at"] - t) for t in times) > 1 / rate for e in result["evidence"]):
         raise ValueError("inspection refers to unsupported timestamps")

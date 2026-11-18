@@ -4,10 +4,13 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_targets_four_best_available_videos_with_supported_tech_cast():
+def test_live_account_targets_five_instagram_videos_with_supported_tech_cast():
     cfg = config.load()
-    assert schedule.clocks(cfg) == ("09:00", "12:00", "17:00", "20:00")
-    assert cfg.daily_target_min == cfg.scheduled_daily_cap == 4
+    assert schedule.clocks(cfg) == ("06:00", "09:00", "12:00", "17:00", "21:00")
+    assert cfg.daily_target_min == cfg.scheduled_daily_cap == 5
+    assert cfg.early_video_window and cfg.meme_caption
+    assert cfg.publish_platforms == ["instagram"]
+    assert [p for p, options in cfg.platforms.items() if options.get("enabled")] == ["instagram"]
     assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario"}
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file

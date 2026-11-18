@@ -16,9 +16,9 @@ _SUBSTANCE = re.compile(
     r"reproduc\w*|trade[ -]?offs?|compared?|limitation\w*|"
     r"workflow\w*|consistency|control|tool[ -]?use|reward|dataset\w*|"
     r"generaliz\w*|overfit\w*|calibrat\w*|precision|recall|alignment|"
-    r"safety|robust\w*|experiment\w*|tested|testing)\b", re.I)
+    r"safety|robust\w*|experiment\w*|tested|testing|tests?|debugg\w*|sandbox|permissions?|measure\w*)\b", re.I)
 _BAIT = re.compile(r"\b(follow (?:me|for)|like and (?:repost|share)|comment .{0,20}(?:get|send)|giveaway)\b", re.I)
-_CREATIVE = re.compile(r"\b(art|artwork|illustration|animation|cinematic|filmmaking|film|parody|satire|meme|storyboard)\b", re.I)
+_CREATIVE = re.compile(r"\b(art|artwork|illustration|animation|cinematic|filmmaking|film|parody|satire|memes?|storyboard|video|dance|singing|music|comedy|scene)\b", re.I)
 
 
 def parent_refusal(text: str) -> str:

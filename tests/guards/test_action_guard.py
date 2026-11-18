@@ -35,8 +35,8 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
 def test_replies_daily_cap_includes_existing_history(monkeypatch, memory_ledger, settings_override):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    settings_override(MAX_REPLIES_PER_DAY=120)
-    for n in range(120):
+    settings_override(MAX_REPLIES_PER_DAY=100)
+    for n in range(100):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
                              now - timedelta(hours=6, seconds=n))
     assert not ag.can_post(ag.REPLY)[0]

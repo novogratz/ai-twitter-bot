@@ -109,11 +109,11 @@ fails while it is stale, and on any key this page names that the engine does
 not know.
 
 
-The live Account sets `MAX_REPLIES_PER_DAY=120`,
-`MIN_SECONDS_BETWEEN_REPLIES=480`, `REPLY_JITTER_SECONDS=4`, and advisory
-Reply targets to 100–120. `reply_submissions.json` persists attempted submissions;
+The live Account sets `MAX_REPLIES_PER_DAY=100`,
+`MIN_SECONDS_BETWEEN_REPLIES=600`, `REPLY_JITTER_SECONDS=4`, no advisory
+minimum and an advisory ceiling of 100. `reply_submissions.json` persists attempted submissions;
 unknown sends consume daily budget and spacing across restarts. The engine caps
-Replies at 120; zero disables them. The Account's eight-minute minimum
+Replies at 100; zero disables them. The Account's ten-minute minimum
 spreads its opportunities over the 07:00–23:00 Toronto day.
 
 `REPLY_MAX_AGE_SECONDS=1800` and `REPLY_WATCHED_MAX_AGE_SECONDS=300` recheck source
@@ -137,7 +137,7 @@ are one per pass. Watched discovery retains its independent twenty-second poll.
 Final source freshness, deduplication and shared budgets govern every path.
 
 `REPLY_VOLUME_BOOST_DATE` remains blank. Its optional discovery/generation boost
-never changes the hard 120-Reply cap, source age, active hours or spacing.
+never changes the hard 100-Reply cap, source age, active hours or spacing.
 `main.py --dry-run` exposes the actual cap and gap. The Account's optional
 `editorial.use_reply_route` still selects the Reply model for original drafts and
 review. Other Accounts can retain their ordinary source and voice rules.
@@ -148,18 +148,23 @@ Account also requires a confirmed Reply to the same parent. Durable repost
 reservations and receipts share this cap, alongside ordinary publication limits.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
-Account uses four slots at 09:00, 12:00, 17:00 and 20:00 Toronto,
-`scheduled_daily_cap=4`, `daily_target_min=4`, `startup_on_boot=false`, `preferred_age_hours=72` and
-`max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
-TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
+Account uses five slots at 06:00, 09:00, 12:00, 17:00 and 21:00 Toronto,
+`scheduled_daily_cap=5`, `daily_target_min=5`, `startup_on_boot=false`, `preferred_age_hours=72` and
+`max_age_hours=17520` (730 days). `publish_platforms=["instagram"]` enforces
+Instagram-only publication and other source discovery is disabled. X-copy checks
+remain required. `early_video_window=true` permits only the unpaired 06:00 slot
+between 05:55 and 06:05; general news/Reply hours remain 07:00–23:00. The video
+I/O context expires at 06:05, and missed slots never catch up.
 Ordinary starts create no startup request. Publication still uses durable claims,
 inspection, dedup and existing spacing. The [README](../README.md) links the
 video pipeline guide and operating commands.
 
 The live video configuration enables `auto_edit`, `bangers_only`, `ultra_bangers_only`,
-`best_available_fallback`, `playful_caption` and `adaptive_discovery`; `one_line_caption=false`. Playful
-captions allow one grounded scene sentence and an optional separate sign-off,
-with source-supported cast aliases. The two caption modes are mutually exclusive.
+`best_available_fallback`, `playful_caption`, `meme_caption` and `adaptive_discovery`;
+`one_line_caption=false`. Meme captions use a short scene-specific hook/punchline
+and source-supported cast aliases, with recent confirmed captions as repetition
+memory. Source and output reviews must approve the current style; BANGER sign-offs
+are refused and policy changes invalidate prior caption/edit review caches. The two caption modes are mutually exclusive.
 It reads the account-local
 `discovery_prompt_file`, `query_bank_file` and `discovery_memory_file` on research
 passes; paths must resolve inside the Account folder. Source duration is bounded
@@ -309,7 +314,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
 | `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
-| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `120` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
+| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `100` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
 | `REPLY_MAX_AGE_SECONDS` | int | `0` | floor `0` | Final Reply parent age ceiling; zero uses existing source limits. |
 | `REPLY_WATCHED_MAX_AGE_SECONDS` | int | `0` | floor `0` | Tighter final age ceiling for watched authors; zero uses the ordinary ceiling. |
 | `REPLY_WATCHED_DAILY_CAP` | int | `2` | floor `0`, ceiling `2` | Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies. |

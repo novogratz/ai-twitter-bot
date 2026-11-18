@@ -108,6 +108,8 @@ def source_score_gate(doc, cfg, now):
 
 def publication_gate(doc, cfg, now):
     """Share the verified-date/age rule before preparation and final selection."""
+    if cfg.publish_platforms and doc.get("platform") not in cfg.publish_platforms:
+        return "source platform is outside the publishing allowlist"
     published = doc.get("published_at")
     if (type(published) not in (int, float) or not 0 < published <= now
             or not math.isfinite(published)):
@@ -122,6 +124,9 @@ def output_gate(doc, cfg):
     if doc.get("brand") != cfg.watermark:
         return "rendered branding does not match current operator configuration"
     qc = doc.get("qc", {})
+    from .captions import refusal as caption_refusal
+    if reason := caption_refusal(doc, cfg):
+        return reason
     from .editing import banger_refusal, plan
     if reason := banger_refusal(qc, cfg, output=True):
         return reason
@@ -267,6 +272,9 @@ def best_available_order(doc, cfg, now):
 
 def caption(doc, cfg, now):
     """Use verified cast/performance only; title, transcript and OCR are never instructions."""
+    from .captions import refusal as caption_refusal
+    if reason := caption_refusal(doc, cfg):
+        raise ValueError(reason)
     if cfg.one_line_caption or cfg.playful_caption:
         text = doc["inspection"].get("caption", "")
         if not isinstance(text, str):
