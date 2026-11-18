@@ -26,10 +26,12 @@ CREATE TABLE IF NOT EXISTS jobs(
  error TEXT NOT NULL DEFAULT '', UNIQUE(kind,item));
 CREATE TABLE IF NOT EXISTS workers(role TEXT PRIMARY KEY, owner TEXT, heartbeat REAL, detail TEXT);
 CREATE TABLE IF NOT EXISTS startup(
- id TEXT PRIMARY KEY, requested_day TEXT NOT NULL UNIQUE, requested REAL NOT NULL,
- state TEXT NOT NULL DEFAULT 'pending', reservation TEXT, reason TEXT NOT NULL DEFAULT '', attempts INTEGER NOT NULL DEFAULT 0);
+ id TEXT PRIMARY KEY, requested_day TEXT NOT NULL, requested REAL NOT NULL,
+ state TEXT NOT NULL DEFAULT 'pending', reservation TEXT, reason TEXT NOT NULL DEFAULT '', attempts INTEGER NOT NULL DEFAULT 0,
+ allowance TEXT NOT NULL DEFAULT '');
 CREATE UNIQUE INDEX IF NOT EXISTS one_pending_startup ON startup((1)) WHERE state IN ('pending','reserved');
-CREATE TABLE IF NOT EXISTS startup_days(day TEXT PRIMARY KEY, request TEXT UNIQUE, reservation TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS startup_days(day TEXT NOT NULL, request TEXT UNIQUE, reservation TEXT UNIQUE,
+ allowance TEXT NOT NULL DEFAULT '', PRIMARY KEY(day,allowance));
 CREATE TABLE IF NOT EXISTS slots(
  id TEXT PRIMARY KEY, due REAL NOT NULL, state TEXT NOT NULL DEFAULT 'pending',
  reservation TEXT, reason TEXT NOT NULL DEFAULT '', attempts INTEGER NOT NULL DEFAULT 0);
@@ -70,7 +72,7 @@ class Store:
         db = self.connect()
         try:
             version = db.execute("PRAGMA user_version").fetchone()[0]
-            if version not in (0, 1, 2):
+            if version not in (0, 1, 2, 3):
                 raise ValueError("unsupported video database version; do not reset posting history")
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
@@ -83,13 +85,36 @@ class Store:
                     db.execute("ALTER TABLE reservations ADD COLUMN transport TEXT NOT NULL DEFAULT 'api'")
                 if "browser_evidence" not in columns:
                     db.execute("ALTER TABLE reservations ADD COLUMN browser_evidence TEXT NOT NULL DEFAULT '{}'")
-                db.execute("PRAGMA user_version=2")
+                self._migrate_startup(db)
+                db.execute("PRAGMA user_version=3")
                 db.commit()
             except BaseException:
                 db.rollback()
                 raise
         finally:
             db.close()
+
+    @staticmethod
+    def _migrate_startup(db):
+        """Retain every old request and claim while admitting a named one-time grant."""
+        columns = {r[1] for r in db.execute("PRAGMA table_info(startup)")}
+        if "allowance" not in columns:
+            db.execute("CREATE TABLE startup_v3(id TEXT PRIMARY KEY, requested_day TEXT NOT NULL, requested REAL NOT NULL, "
+                       "state TEXT NOT NULL DEFAULT 'pending', reservation TEXT, reason TEXT NOT NULL DEFAULT '', "
+                       "attempts INTEGER NOT NULL DEFAULT 0, allowance TEXT NOT NULL DEFAULT '')")
+            db.execute("INSERT INTO startup_v3(id,requested_day,requested,state,reservation,reason,attempts) "
+                       "SELECT id,requested_day,requested,state,reservation,reason,attempts FROM startup")
+            db.execute("DROP TABLE startup")
+            db.execute("ALTER TABLE startup_v3 RENAME TO startup")
+            db.execute("CREATE TABLE startup_days_v3(day TEXT NOT NULL, request TEXT UNIQUE, reservation TEXT UNIQUE, "
+                       "allowance TEXT NOT NULL DEFAULT '', PRIMARY KEY(day,allowance))")
+            db.execute("INSERT INTO startup_days_v3(day,request,reservation) SELECT day,request,reservation FROM startup_days")
+            db.execute("DROP TABLE startup_days")
+            db.execute("ALTER TABLE startup_days_v3 RENAME TO startup_days")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS one_pending_startup ON startup((1)) WHERE state IN ('pending','reserved')")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS one_daily_startup ON startup(requested_day) WHERE allowance=''")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS one_authorized_startup ON startup(allowance) WHERE allowance!=''")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS one_authorized_startup_claim ON startup_days(allowance) WHERE allowance!=''")
 
     def connect(self):
         db = sqlite3.connect(self.path, timeout=self.timeout, isolation_level=None)

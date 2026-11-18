@@ -198,7 +198,18 @@ def main():
         from src.news.config import load as news_config
         news_cfg = news_config() if settings.get("NEWS_ENABLED") else None
         text_cap = min(config.posts_ceiling(), news_cfg.daily_cap) if news_cfg else config.posts_ceiling()
-        startup_extra = int(bool(video_cfg and (video_cfg.startup_on_boot or args.startup_publications)))
+        startup_extra = int(bool(video_cfg and video_cfg.startup_on_boot and not args.reply_only))
+        # A named grant can add one lifetime post after an already-consumed daily
+        # startup. This is a configured upper bound, never a remaining quota.
+        startup_extra += int(bool(startup_extra and video_cfg.startup_once))
+        startup_description = "none; hourly news discovery" if news_cfg else "every start in waking hours, restarts included"
+        if video_cfg:
+            startup_description = ("automatic video request on start; at most one extra per Toronto day"
+                                   if video_cfg.startup_on_boot else "explicit persistent video activation only")
+            if video_cfg.startup_on_boot and video_cfg.startup_once:
+                startup_description += f"; single additional grant {video_cfg.startup_once} (durable history decides availability)"
+        if args.reply_only:
+            startup_description = "none; reply-only run"
         print(json.dumps({"timezone": config.BOT_TIMEZONE, "active": f"{WAKE:%H:%M}–{BEDTIME:%H:%M}",
                           "min_target_posts": (0 if video_cfg.ultra_bangers_only and not video_cfg.best_available_fallback else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else min_target),
                           "target_posts": (0 if video_cfg.ultra_bangers_only and not video_cfg.best_available_fallback else video_slots) if video_cfg else (0 if settings.get("NEWS_ENABLED") else target),
@@ -229,10 +240,7 @@ def main():
                           "slots": _main_slots(),
                           "early_video_window": ["05:55", "06:05"] if video_cfg and video_cfg.early_video_window else [],
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),
-                          "startup_post": (("automatic video request on start; at most one extra per Toronto day"
-                                            if video_cfg.startup_on_boot else "explicit persistent video activation only")
-                                           if video_cfg else ("none; hourly news discovery" if settings.get("NEWS_ENABLED")
-                                                              else "every start in waking hours, restarts included")),
+                          "startup_post": startup_description,
                           "startup_interactions_held": bool(waiting_reason()),
                           "unknown_llm_providers": unknown,
                           "ignored_llm_fallbacks": ignored,
@@ -363,7 +371,12 @@ def _request_startup_video(*, retry_expired=False):
         # reserved/uncertain sends remain claimed by their original request.
         publisher.tick_calendar(store, now, cfg)
         request_id = "boot:" + schedule.local(now).date().isoformat()
-        request = publisher.request_startup(store, request_id, now, cfg, explicit_live=True, retry_expired=retry_expired)
+        allowance = ""
+        if cfg.startup_once and not store.rows("SELECT 1 FROM startup WHERE allowance=?", (cfg.startup_once,)):
+            allowance = cfg.startup_once
+            request_id = "boot-once:" + allowance
+        request = publisher.request_startup(store, request_id, now, cfg, explicit_live=True,
+                                            retry_expired=retry_expired, allowance=allowance)
         if request:
             log.info("[VIDEO] Startup request %s: %s; Reply workers continue independently.",
                      request["id"], request["state"])

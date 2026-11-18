@@ -266,3 +266,34 @@ def test_full_buffer_retains_older_priority_source_only_when_enabled(monkeypatch
 @pytest.fixture(autouse=True)
 def _like_preference(settings_override):
     settings_override(REPLY_PREFERRED_MIN_LIKES=3)
+
+
+def test_selective_context_precedes_popularity_and_survives_pipeline_sort(settings_override):
+    settings_override(REPLY_DISCUSSIONS_ONLY=True, REPLY_PREFERRED_MIN_LIKES=0,
+                      REPLY_PREFER_NEW_AUTHORS=False, REPLY_PRIORITIZE_LARGE_ACCOUNTS=False)
+    generic = pipeline.Candidate(fresh("popular"),
+        "New AI inference benchmark results from the latest model release today.", "SEARCH-HOT", views=1_000_000)
+    specific = pipeline.Candidate(fresh("builder", n=1),
+        "Why does our LLM retrieval miss exact document names after chunking?", "SEARCH-FRESH")
+    creative = pipeline.Candidate(fresh("artist", n=2),
+        "My SI short film concept: a robot librarian lends people the memories they forgot.", "SEARCH-CREATOR", views=50)
+    buffer = buffers.Buffer()
+    buffer.offer([generic, specific, creative], max_age=timedelta(minutes=30))
+    ordered = buffer.pending()
+    assert [item.url for item in ordered] == [creative.url, specific.url, generic.url]
+    assert pipeline.prioritize(ordered, ordinary=True, diversify_authors=True) == ordered
+    assert pipeline.prioritize([generic, specific, creative]) == [generic, specific, creative]
+
+
+def test_full_selective_buffer_keeps_contextual_lead_without_extending_expiry(settings_override):
+    settings_override(REPLY_DISCUSSIONS_ONLY=True, REPLY_CANDIDATE_BUFFER_LIMIT=1)
+    buffer = buffers.Buffer()
+    specific = pipeline.Candidate(fresh("builder", minutes=5),
+        "We measured LLM inference latency with batching on and off under the same load.", "SEARCH-FRESH")
+    generic = pipeline.Candidate(fresh("popular", n=1),
+        "New AI inference benchmark results from the latest model release today.", "SEARCH-HOT", views=1_000_000)
+    buffer.offer([specific], max_age=timedelta(minutes=30))
+    expiry = buffer.pending()[0].expires_at
+    buffer.offer([generic], max_age=timedelta(minutes=30))
+    assert [item.url for item in buffer.pending()] == [specific.url]
+    assert buffer.pending()[0].expires_at == expiry

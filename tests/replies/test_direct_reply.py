@@ -26,7 +26,7 @@ def test_queries_stay_in_si_and_the_named_musk_ecosystem():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ")
+                "cursor", "copilot", "humanoid", "robotics", " ia ", "llm", "transformer", "si ")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
@@ -99,6 +99,29 @@ def test_every_reply_and_like_query_finds_posts_on_the_niche():
         for and_first in (True, False):
             for clause in _query_clauses(query, and_first):
                 assert is_on_niche(" ".join(clause)), f"{clause} of {query!r}"
+
+
+def test_live_query_bank_delivers_eight_top_six_latest_and_two_creators(monkeypatch, settings_override):
+    from src.core import account
+    from src.replies import direct_reply as dr
+
+    loaded = account.load("theaishrink")
+    monkeypatch.setattr(account, "current", lambda: loaded)
+    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=0,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2, DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=6,
+                      REPLY_VOLUME_BOOST_DATE="")
+    dr._QUERY_ROTATION_OFFSETS.clear()
+    plans = [dr._query_plan() for _ in range(4)]
+    for priority, creators, ordinary in plans:
+        assert priority == [] and len(creators) == 2
+        assert sum(tab == "top" for _, tab, _ in ordinary) == 8
+        assert sum(tab == "latest" for _, tab, _ in ordinary) == 6
+        assert len(set(creators + ordinary)) == 16
+        for query, _, _ in creators + ordinary:
+            assert all(token in query for token in ("lang:en", "-filter:replies", "-filter:retweets"))
+            assert "min_faves:" not in query
+    assert len({q for _, _, ordinary in plans for q, tab, _ in ordinary if tab == "top"}) == 16
+    assert len({q for _, creators, _ in plans for q, _, _ in creators}) == 8
 
 
 def test_the_query_reader_splits_alternatives_both_ways():

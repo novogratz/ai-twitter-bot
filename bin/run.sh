@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# 2026-11-08: no automatic startup post. News is off; only ultra-qualified videos.
-# The existing video publisher can post exceptional finds after all checks pass.
-# Startup requests are an explicit opt-in and cannot enable disabled features.
+# The Account's video policy requests one reviewed startup video on a normal start.
+# This separate opt-in additionally requests startup news; disabled features stay off.
 STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-0}"
 # Run the configured Account's bot in the FOREGROUND of this terminal.
 #

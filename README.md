@@ -7,6 +7,16 @@ aim for up to 1,400 thoughtful Replies across 07:00–23:00.** The hard cap is
 05:55–06:05 exception. All other activity sleeps 23:00–07:00. These rules
 supersede older dated notes below.
 
+A normal start now also requests **one reviewed Instagram startup video**, while
+Replies continue independently. It publishes when an eligible clip is ready and
+timing checks permit, within sixty eligible minutes. A nearby scheduled slot can
+fulfill the same request. The normal allowance is one per Toronto day. Today's
+earlier confirmed test remains recorded; the new request adds one lifetime grant
+(`startup_once="operator-extra-2026-11-18"`) so the next start can still request an
+extra video. Repeated restarts cannot reset that grant or an uncertain send. It
+does not add a startup news post. These settings take effect on the Operator's
+next restart; implementation does not start the bot.
+
 Content must earn its place. Discovery favors research methods, evaluations,
 agent reliability, inference/deployment tradeoffs and practical workflow problems,
 plus standout AI videos and high-quality art/memes with evidence of an inventive
@@ -16,7 +26,9 @@ An independent review must find one useful, supported contribution in every Repl
 technical vocabulary, generic praise and a paraphrase are insufficient. The final
 text and actual parent must match that approval. Failed or unavailable review
 means no send. Review also rejects boilerplate that could fit unrelated posts with
-only a model name changed. The feminine voice stays sharp, kind, playfully cute and
+only a model name changed, generic closing questions and caveats, and suggestions
+the parent already tested. A specific opening cannot excuse a padded ending.
+The feminine voice stays sharp, kind, playfully cute and
 honest about bot identity. News must explain a supported change or consequence; occasional
 questions must elicit a practical lesson rather than a generic favorite-model poll.
 The 1,400-Reply goal is advisory, never a daily minimum or a reason for filler;
@@ -81,8 +93,9 @@ caption policy requires fresh review, not reuse of an older approval.
 The four owner-selected references guide discovery and are saved as already posted.
 Each new source and edited output receives actual editorial review, with
 an immediate opening, usable audio, the exact watermark and permanent dedup.
-The best eligible finds publish through the existing video pipeline. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
-Account disables automatic startup videos. Local `NEWS_ENABLED=1`,
+The best eligible finds publish through the existing video pipeline. The launcher
+defaults `STARTUP_PUBLICATIONS=0`; the Account's own `startup_on_boot=true` requests
+the startup video without adding a startup news post. Local `NEWS_ENABLED=1`,
 `NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1` enable the reviewed text
 routes on the next explicitly requested restart. Replies remain enabled.
 
@@ -118,19 +131,23 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 ## Current publishing policy
 
 Up to **16 searches per cycle** cover eight Top, six general Latest and two
-creator Latest searches. Fresh creator sources get up to four
+creator Latest searches, rotating through banks of sixteen, sixteen and eight
+queries respectively. Fresh creator sources get up to four
 generation attempts before ordinary buffered drafting. Those attempts count
 within the cycle budget even when declined; they are not a posting quota.
 Creator queries rotate through distinctive concepts, filmmaking choices and memes,
 with the same first-hour source limit and no popularity floor. They are discovery
 hints, never proof that an author is human or created the work.
 Routine Top searches no longer require thirty or fifty likes, so
-smaller accounts can enter discovery. Ordinary buffered Replies prefer unfamiliar
-authors, with author variety and actual
+smaller accounts can enter discovery. Ordinary buffered Replies first favor
+concrete technical questions, reported experiments and distinctive creative
+premises, then unfamiliar authors, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
-At the existing buffer limit, the current artist turn temporarily retains its
-sources; ordinary retention still prefers major authors, then newer sources.
+These text signals guide discovery only; quoted context cannot qualify a thin
+outer caption. At the existing buffer limit, the current artist turn temporarily
+retains its sources; ordinary retention favors contextual leads, then newer
+sources (the optional major-author preference remains off for this Account).
 The same 400-source limit, expiry, source checks and permanent history apply.
 
 Short affectionate and technical English Replies also avoid more false language
@@ -182,15 +199,14 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos have **four daily Toronto slots: 09:00, 12:00, 17:00 and 20:00**,
-with best-available fallback below the editorial target. The Account disables
-automatic startup requests. Independent
+Videos have **five daily Toronto slots: 06:00, 09:00, 12:00, 17:00 and 21:00**,
+with best-available fallback below the editorial target and the bounded startup
+request described above. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
 featuring at least one of Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
-up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
-X clips require a known view count of at most 50,000. Matching copies use the
+up to two years old. Only Instagram sources may publish. Matching X copies use the
 highest observed view count, with fresh evidence required. Captions use a grounded
-scene joke and optional BANGER sign-off, with supported names or familiar aliases.
+scene-specific meme hook, with supported names or familiar aliases and no recurring sign-off.
 Actual inspection and audio evidence, permanent
 posting memory and confirmed receipts remain required. An empty or inaccessible
 queue is reported as a missed slot, never a successful post.
@@ -597,13 +613,12 @@ held; they never silently switch to replying. Ordinary worker starts do not
 create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
-The live Account uses four video windows at 09:00, 12:00, 17:00 and 20:00
+The live Account uses five video windows at 06:00, 09:00, 12:00, 17:00 and 21:00
 Toronto, selecting the best eligible finds alongside verified news
-and occasional discussion posts. Automatic startup requests remain disabled.
-Replies retain their existing engine; interactions pause from midnight to 04:30,
-while independent video discovery/media workers can continue overnight.
+and occasional discussion posts, plus the bounded startup video request above.
+Activity sleeps 23:00–07:00; only the 05:55–06:05 video opportunity has an exception.
 
-All four windows have inventory priority. The engine can protect each main
+All five windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
 `video.py status` reports coverage and shortages. The ten-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.

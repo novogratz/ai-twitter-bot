@@ -6,6 +6,36 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-18, sharper discovery and a startup video — The Operator requests an
+extra startup post, superseding the startup-off rule below. Ordinary live starts
+request one reviewed Instagram video independently of Replies. Keep one startup
+per Toronto day and the existing sixty eligible minutes, fifteen-minute spacing,
+near-slot coalescing, source/output/audio/rights/novelty checks and permanent claims.
+Readiness is required; starting cannot guarantee an immediate publication. News
+keeps its two scheduled windows; the launcher does not request extra startup news.
+
+Today's earlier confirmed test already consumed the daily startup allowance.
+The explicit new request supplies one additional lifetime grant, configured as
+`startup_once="operator-extra-2026-11-18"`. The next normal start can consume it
+without resetting that test or any history. Never rotate this ID on restart.
+Afterward normal daily limits apply; the grant itself counts as that day's startup
+when no earlier startup was consumed. Pending and uncertain sends remain held,
+and successful/attempted requests cannot be rearmed. The version-three migration
+preserves every existing startup request/day claim; only a proven pre-submit
+failure can release a reservation for bounded retry. Five scheduled videos remain
+the ceiling. Dry-run and Reply-only starts create no request.
+
+Discovery rotates sixteen Top queries, sixteen general Latest and eight creator
+queries within the same eight/six/two reads per cycle. Concrete technical questions,
+reported experiments and distinctive creative premises lead ordinary ranking and
+buffer retention before popularity; these are hints, never certification. Author
+variety, freshness and the independent exact-text review remain mandatory. Quoted
+text cannot turn a thin outer caption into a useful parent. Review the whole Reply:
+a specific opening cannot excuse a generic closing question, stock caveat, invented
+test or criticism the parent already answered. Older value approvals invalidate.
+The 1,400/day cap and warm, knowledgeable feminine Voice remain. The Operator will
+restart after implementation; this task does not start or restart the live bot.
+
 2026-11-18, 1,400 sharp and warm Replies — The Operator replaces the 100/day
 policy and the interim 400 request with an advisory target and hard ceiling of
 1,400 Replies per Toronto day, including uncertain submissions. Restore at least
