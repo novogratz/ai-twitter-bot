@@ -247,6 +247,24 @@ def test_repetition_check_keeps_distinct_numbers_and_contributions(monkeypatch):
     assert judge_reply(url("artist"), "Love the idea of a paper-collage city ❤️")
 
 
+def test_full_target_day_wording_still_refuses_after_a_memory_reload(settings_override, monkeypatch):
+    import csv
+    from src.core import config, engagement_log
+
+    settings_override(REPLY_RECENT_MEMORY_COUNT=1400)
+    repeated = "A held-out set would catch that leakage before the benchmark."
+    with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["2026-11-18T07:00:00", "reply", repeated, url("old")])
+        for n in range(1399):
+            writer.writerow(["2026-11-18T08:00:00", "reply", f"Unique observation {n}", url("other")])
+    monkeypatch.setattr(engagement_log, "_memory_key", None)
+    assert repeated not in engagement_log.recent_replies(20)
+    verdict = judge_reply(url("builder"), repeated.upper() + " ❤️")
+    assert verdict.refusal is Refusal.TEXT and "recent confirmed" in verdict.reason
+    assert judge_parent(url("builder")), "rejection must not claim a new parent"
+
+
 def test_unreadable_recent_text_does_not_create_a_send_or_parent_claim(monkeypatch):
     from src.core import engagement_log
     def unreadable(*a):

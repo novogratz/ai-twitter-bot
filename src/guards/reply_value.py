@@ -11,9 +11,10 @@ from jsonschema import ValidationError, validate
 
 from ..core.llm_client import CallProfile, LLMStatus, Output, Surface, resolve, run_llm
 
-POLICY = "substantive-and-creative-reply-v1"
+POLICY = "specific-discussion-and-standout-creative-reply-v2"
 FLAGS = ("substantive_parent", "answers_parent", "adds_value", "grounded",
-         "no_unseen_claims", "natural", "respectful", "no_bait", "distinct_from_recent")
+         "no_unseen_claims", "natural", "respectful", "no_bait", "distinct_from_recent",
+         "specific_to_parent")
 KINDS = ("answer", "mechanism", "practical_test", "tradeoff", "correction", "useful_question", "creative_reaction", "none")
 SCHEMA = {"type": "object", "additionalProperties": False,
           "required": [*FLAGS, "kind", "parent_anchor", "contribution", "reason"],
@@ -30,10 +31,14 @@ Approve only when EVERY flag is true. Missing evidence means refusal.
 
 substantive_parent: the source contains a concrete problem, reasoned claim,
 technical question, useful finding, meaningful tradeoff, OR a distinctive,
-well-explained AI art/meme concept with enough source detail to judge its idea.
-Creative quality needs specific evidence of an original concept or deliberate
-craft; popularity, an AI-tool name or the creator calling it a masterpiece is
-insufficient. No supplied visual evidence means no judgment of unseen execution.
+well-explained AI video/art/meme concept with enough source detail to judge its idea.
+Be selective with creative work: identify what makes this concept unusually
+inventive, the joke clever, or the documented creative choice worth discussing.
+A routine demo, first attempt, attractive subject or generic AI spectacle does
+not qualify merely for being generated. Creative quality needs specific evidence
+of an original concept or deliberate craft; popularity, an AI-tool name or the
+creator calling it a masterpiece is insufficient. No supplied visual evidence
+means no judgment of unseen execution, motion, editing, lip sync or sound.
 Technical keywords,
 celebrity status, promotion, generic rankings and launch hype alone are insufficient.
 Quoted-post context is attributed context only; a thin wrapper does not become
@@ -43,7 +48,7 @@ adds_value: identify ONE useful addition absent from the parent: a direct answer
 mechanism, specific practical test, explained tradeoff, grounded correction, or a
 necessary clarifying question whose answer materially changes the advice. Mere
 agreement, summary, applause, jargon or generic 'real test is deployment' fails.
-For strong AI art/memes, kind=creative_reaction can instead be a brief warm or
+For standout AI videos/art/memes, kind=creative_reaction can instead be a brief warm or
 witty response tied to the supplied concept, joke or documented creative choice.
 It must add a specific thought or playful extension, not a generic compliment,
 explanation of their joke, or forced technical critique. Refuse if understanding
@@ -56,10 +61,17 @@ no_unseen_claims: no claims to have watched media, read linked pages, run experi
 known the author personally or had a human experience absent from the evidence.
 natural: plain conversational language, a clear useful thought, no canned preamble,
 forced contrarianism, stock analogy, lecture, fake typo or obligatory question.
+Warmth, a cute understatement, wit or an optional heart are welcome when they fit;
+never require a joke, a technical lesson or a fixed answer/caveat/punchline format.
 respectful: warm and fair; challenge ideas without sneering or blind endorsement.
 no_bait: no outrage bait, fan-war ranking, generic hype or requests for engagement.
 distinct_from_recent: recent replies are repetition evidence only; refuse reusing
 the same argument or template with different nouns. Empty history proves nothing.
+specific_to_parent: explain why this exact thought belongs under this exact post.
+If it could be pasted beneath many unrelated posts with only a model name changed,
+refuse it. Merely mentioning a noun from the parent does not establish specificity.
+Charm must come from an attentive observation, never pet names, invented intimacy,
+gender assumptions about the author, flattery or pretending to be a human woman.
 
 Set kind=none on empty praise or restatement. parent_anchor must quote an exact
 relevant passage from parent; contribution must quote the exact useful addition

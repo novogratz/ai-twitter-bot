@@ -2,34 +2,46 @@
 
 Current policy (November 18): **five Instagram video slots at 06:00, 09:00,
 12:00, 17:00 and 21:00 Toronto; at most two news/text posts at 10:30 and 15:00;
-at most 100 Replies across 07:00–23:00.** The 06:00 video has a bounded
+aim for up to 1,400 thoughtful Replies across 07:00–23:00.** The hard cap is
+1,400 including uncertain submissions. The 06:00 video has a bounded
 05:55–06:05 exception. All other activity sleeps 23:00–07:00. These rules
 supersede older dated notes below.
 
 Content must earn its place. Discovery favors research methods, evaluations,
 agent reliability, inference/deployment tradeoffs and practical workflow problems,
-plus distinctive AI art and memes with enough source context for a specific reaction.
+plus standout AI videos and high-quality art/memes with evidence of an inventive
+concept, clever premise or deliberate creative choice. Routine demos, hype captions,
+tool names and popularity alone do not establish creative quality.
 An independent review must find one useful, supported contribution in every Reply;
 technical vocabulary, generic praise and a paraphrase are insufficient. The final
 text and actual parent must match that approval. Failed or unavailable review
-means no send. News must explain a supported change or consequence; occasional
+means no send. Review also rejects boilerplate that could fit unrelated posts with
+only a model name changed. The feminine voice stays sharp, kind, playfully cute and
+honest about bot identity. News must explain a supported change or consequence; occasional
 questions must elicit a practical lesson rather than a generic favorite-model poll.
-The 100-Reply and two-text limits are ceilings, never quotas. These changes load
-on the next explicitly requested restart.
+The 1,400-Reply goal is advisory, never a daily minimum or a reason for filler;
+the two-text limit remains. The Operator will restart after implementation and
+validation. Views, likes and follows depend on actual audience response.
 
 Every video needs source-attributed Elon Musk, Jensen Huang, Dario Amodei,
 Sam Altman or Donald Trump. Choose the strongest eligible inspected clip;
 permanent content history prevents duplicates. News selects the highest-impact
 verified candidates, with a 90/100 floor and no obligation to fill a quiet slot.
 
-Replies are at least ten minutes apart, on substantive AI/SI discussions or
-strong AI art/memes, with a sharp, kind and supported contribution. No invented
+Replies are at least eight seconds plus 0–4 seconds jitter apart, on substantive
+AI/SI discussions or standout AI videos/art/memes, with a sharp, kind and supported
+contribution. An eighty-Reply direct-cycle allowance and eighty draft attempts
+per feed restore capacity;
+review and browser time still limit actual throughput. No invented
 visual details or generic applause; skip when the response requires uninspected
 media. Other posts must be under thirty minutes
 old at send; Elon gets at most two Replies daily, within five minutes (first minute
 when feasible). His likes/reposts are restricted to answered posts, with the
 verified parent like allowed during Reply composition. Unknown sends consume the
 same durable caps. Unfamiliar authors receive preference; no quota forces filler.
+Generation summarizes patterns across the last 1,400 confirmed Replies, and final
+admission refuses repeated wording across that history even when punctuation or
+emoji changes. Independent review compares the latest twenty for recycled ideas.
 
 Automatic reposts are limited to **at most two Elon Musk originals per Toronto
 day**, only after a confirmed Reply to the same AI-relevant post. Never repost
@@ -81,7 +93,7 @@ real questions; a technical topic alone does not require a mini explainer.
 Artists sharing work, progress and first attempts get a dedicated discovery turn.
 The parent's intent determines length. Current product claims and unseen media
 stay grounded in supplied evidence. Short English false refusals are fixed, and
-final admission checks the last twenty confirmed logged Replies for recycled
+final admission now checks the last 1,400 confirmed logged Replies for recycled
 wording even when the emoji changes. Search budgets, follow policy, pacing and
 permanent one-Reply-per-original history remain. Engagement reports measure
 observed outcomes; they cannot promise likes or attribute follower gains.
@@ -105,17 +117,16 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
-Up to **16 searches per cycle** cover four grouped major-author Latest searches,
-two artist Latest searches, six Top searches and four general first-hour Latest
-searches. Major-author reads come first, then fresh artist sources get up to four
+Up to **16 searches per cycle** cover eight Top, six general Latest and two
+creator Latest searches. Fresh creator sources get up to four
 generation attempts before ordinary buffered drafting. Those attempts count
 within the cycle budget even when declined; they are not a posting quota.
-Artist queries rotate through shared work, first attempts and creative progress,
+Creator queries rotate through distinctive concepts, filmmaking choices and memes,
 with the same first-hour source limit and no popularity floor. They are discovery
 hints, never proof that an author is human or created the work.
 Routine Top searches no longer require thirty or fifty likes, so
-smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
-major authors, then three-plus observed likes, with author variety and actual
+smaller accounts can enter discovery. Ordinary buffered Replies prefer unfamiliar
+authors, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
 At the existing buffer limit, the current artist turn temporarily retains its

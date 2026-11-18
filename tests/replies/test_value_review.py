@@ -48,7 +48,7 @@ def test_review_binds_exact_reply_and_actual_parent(reviewer):
 
 @pytest.mark.parametrize("change", [
     {"adds_value": False}, {"substantive_parent": False}, {"grounded": False},
-    {"distinct_from_recent": False}, {"natural": False}, {"adds_value": "true"},
+    {"distinct_from_recent": False}, {"specific_to_parent": False}, {"natural": False}, {"adds_value": "true"},
     {"kind": "none"}, {"parent_anchor": "fabricated source evidence"},
     {"contribution": "I ran this experiment myself"}, {"parent_anchor": "   "},
 ])
@@ -113,6 +113,20 @@ def test_final_admission_rejects_changed_wording(settings_override, reviewer):
     assert not reply_admission.judge_reply(url, REPLY + " Amazing!", value_review=approval)
 
 
+def test_previous_policy_approval_and_missing_specificity_check_cannot_publish(settings_override, reviewer, monkeypatch):
+    from dataclasses import replace
+    settings_override(REPLY_DISCUSSIONS_ONLY=True, MAX_REPLIES_PER_DAY=1400)
+    url = fresh("researcher")
+    approval, _ = reply_value.review(url, PARENT, REPLY)
+    old = replace(approval, policy="substantive-and-creative-reply-v1")
+    assert not old.matches_parent(PARENT)
+    assert not reply_admission.judge_reply(url, REPLY, value_review=old)
+    old_decision = decision()
+    del old_decision["specific_to_parent"]
+    monkeypatch.setattr(reply_value, "run_llm", lambda *a, **kw: LLMResult(0, json.dumps(old_decision), ""))
+    assert reply_value.review(url, PARENT, REPLY)[0] is None
+
+
 def test_live_parent_must_match_review_before_like_or_composition(settings_override, reviewer, monkeypatch):
     settings_override(REPLY_DISCUSSIONS_ONLY=True)
     url = fresh("researcher")
@@ -135,15 +149,23 @@ def test_generation_retains_qualifying_context_after_short_preview(settings_over
     assert "Our held-out set was also used during tuning." in llm.prompts[0]
 
 
-def test_specific_creative_reaction_can_pass_but_unseen_claims_cannot(settings_override, monkeypatch, chokepoint):
-    settings_override(REPLY_DISCUSSIONS_ONLY=True)
-    parent = "My AI satire: two robots promise to replace the writer, then argue about who owns the deadline."
-    reply = "They automated the writing and kept the office politics."
-    result = decision(kind="creative_reaction", parent_anchor="argue about who owns the deadline",
+@pytest.mark.parametrize("parent,reply,anchor", [
+    ("My AI satire: two robots promise to replace the writer, then argue about who owns the deadline.",
+     "They automated the writing and kept the office politics.", "argue about who owns the deadline"),
+    ("My AI short film concept: a city runs on borrowed time; every clock stops when the courier finally sleeps.",
+     "Even the clocks need her to take a nap. That's a wonderfully unfair job.",
+     "every clock stops when the courier finally sleeps"),
+])
+@pytest.mark.parametrize("failed_flag", ["substantive_parent", "no_unseen_claims", "specific_to_parent"])
+def test_standout_creative_reaction_still_needs_quality_evidence_and_specificity(
+        settings_override, monkeypatch, chokepoint, parent, reply, anchor, failed_flag):
+    settings_override(REPLY_DISCUSSIONS_ONLY=True, MAX_REPLIES_PER_DAY=1400,
+                      REPLY_DAILY_TARGET_MIN=1400, REPLY_DAILY_TARGET_MAX=1400)
+    result = decision(kind="creative_reaction", parent_anchor=anchor,
                       contribution=reply, reason="A playful extension of the supplied satire concept.")
     monkeypatch.setattr(reply_value, "run_llm", lambda *a, **kw: LLMResult(0, json.dumps(result), ""))
     assert run(job(), [rp.Candidate(fresh("artist"), parent, "test", reply=reply)]) == 1
-    result["no_unseen_claims"] = False
+    result[failed_flag] = False
     assert run(job(), [rp.Candidate(fresh("artist", n=1), parent, "test", reply=reply)]) == 0
     assert len(chokepoint.calls) == 1
 

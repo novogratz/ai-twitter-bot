@@ -96,19 +96,20 @@ def test_legacy_csv_and_multiline_replies_feed_memory_and_history():
     assert len(engagement_log.recent_replies()) == 2
 
 
-def test_longer_confirmed_memory_is_cached_beyond_the_old_forty_reply_limit(monkeypatch, settings_override):
-    settings_override(REPLY_RECENT_MEMORY_COUNT=100)
+@pytest.mark.parametrize("capacity", [100, 1400])
+def test_longer_confirmed_memory_is_cached_beyond_the_old_forty_reply_limit(monkeypatch, settings_override, capacity):
+    settings_override(REPLY_RECENT_MEMORY_COUNT=capacity)
     with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as handle:
         writer = csv.writer(handle)
-        for n in range(120):
+        for n in range(capacity + 20):
             writer.writerow([NOW.isoformat(), "reply", f"Confirmed SI observation {n} 🙂", url(extra=n)])
         writer.writerow([NOW.isoformat(), "like", "Not a confirmed reply", url()])
-    recent = engagement_log.recent_replies(100)
-    assert len(recent) == 100 and recent[0] == "Confirmed SI observation 20 🙂"
+    recent = engagement_log.recent_replies(capacity)
+    assert len(recent) == capacity and recent[0] == "Confirmed SI observation 20 🙂"
     def no_reread(*args, **kw):
         raise AssertionError("unchanged reply history must use the cache")
     monkeypatch.setattr(engagement_log, "open", no_reread, raising=False)
-    assert engagement_log.recent_replies(100) == recent
+    assert engagement_log.recent_replies(capacity) == recent
     assert engagement_log.recent_replies(20) == recent[-20:]
 
 

@@ -19,13 +19,13 @@ def fresh_url(author="someone", seconds=0, now=NOW):
     return f"https://x.com/{author}/status/{(millis - x_urls._TWITTER_EPOCH_MS) << 22}"
 
 
-@pytest.mark.parametrize("cap", [40, 100])
+@pytest.mark.parametrize("cap", [40, 100, 1400])
 def test_last_daily_slot_is_atomic_and_confirmation_is_not_double_counted(monkeypatch, memory_ledger, settings_override, cap):
     clock(monkeypatch, NOW)
     settings_override(MAX_REPLIES_PER_DAY=cap, REPLY_JITTER_SECONDS=0)
     for n in range(cap - 1):
         memory_ledger.append(guard.REPLY, numbered_url(n), False, NOW - timedelta(hours=2))
-    urls = [numbered_url(1000), numbered_url(1001)]
+    urls = [numbered_url(cap + 1000), numbered_url(cap + 1001)]
     with ThreadPoolExecutor(2) as pool:
         refusals = list(pool.map(reply_budget.begin, urls))
     assert refusals.count("") == 1
@@ -37,36 +37,38 @@ def test_last_daily_slot_is_atomic_and_confirmation_is_not_double_counted(monkey
     assert not guard.can_post(guard.REPLY)[0]
 
 
-def test_uncertain_send_survives_restart_and_keeps_spacing(monkeypatch, memory_ledger, settings_override):
+@pytest.mark.parametrize("gap", [8, 600, 1440])
+def test_uncertain_send_survives_restart_and_keeps_spacing(monkeypatch, memory_ledger, settings_override, gap):
     clock(monkeypatch, NOW)
-    settings_override(MIN_SECONDS_BETWEEN_REPLIES=1440, REPLY_JITTER_SECONDS=0)
+    settings_override(MAX_REPLIES_PER_DAY=1400, MIN_SECONDS_BETWEEN_REPLIES=gap, REPLY_JITTER_SECONDS=0)
     assert reply_budget.begin(numbered_url(20)) == ""
     monkeypatch.setattr(reply_budget, "STATE", StateFile("reply_submissions.json", {}, GUARDED))
     assert guard.count_today(guard.REPLY) == 0
     assert reply_budget.used_today() == 1
-    clock(monkeypatch, NOW + timedelta(seconds=1439))
+    clock(monkeypatch, NOW + timedelta(seconds=gap - 1))
     assert not guard.can_post(guard.REPLY)[0]
-    clock(monkeypatch, NOW + timedelta(seconds=1440))
+    clock(monkeypatch, NOW + timedelta(seconds=gap))
     assert guard.can_post(guard.REPLY)[0]
     assert reply_budget.begin(numbered_url(20)) == "Reply already submitted"
 
 
-def test_ten_minute_spacing_cannot_burst_or_cross_bedtime_to_fill_cap(monkeypatch, memory_ledger, settings_override):
-    settings_override(MAX_REPLIES_PER_DAY=100, MIN_SECONDS_BETWEEN_REPLIES=600, REPLY_JITTER_SECONDS=0)
+def test_1400_goal_cannot_override_spacing_or_waking_hours(monkeypatch, memory_ledger, settings_override):
+    settings_override(MAX_REPLIES_PER_DAY=1400, REPLY_DAILY_TARGET_MIN=1400, REPLY_DAILY_TARGET_MAX=1400,
+                      MIN_SECONDS_BETWEEN_REPLIES=8, REPLY_JITTER_SECONDS=4)
     start = NOW.replace(hour=7)
     clock(monkeypatch, start - timedelta(seconds=1))
     assert not guard.can_post(guard.REPLY)[0]
-    for n in range(96):
-        at = start + timedelta(seconds=n * 600)
-        clock(monkeypatch, at)
-        url = numbered_url(10000 + n)
-        assert reply_budget.begin(url) == ""
-        guard.record(guard.REPLY, url)
-        reply_budget.confirmed(url)
-        clock(monkeypatch, at + timedelta(seconds=599))
-        assert not guard.can_post(guard.REPLY)[0]
-    assert at.hour == 22 and at.minute == 50
-    assert reply_budget.used_today() == 96
+    clock(monkeypatch, start)
+    assert reply_budget.begin(numbered_url(10000)) == ""
+    gap = guard.seconds_until_allowed(guard.REPLY)
+    assert 8 <= gap <= 12
+    clock(monkeypatch, start + timedelta(seconds=gap - 0.01))
+    assert not guard.can_post(guard.REPLY)[0]
+    clock(monkeypatch, start + timedelta(seconds=gap + 0.01))
+    assert guard.can_post(guard.REPLY)[0]
+    clock(monkeypatch, start.replace(hour=22, minute=59, second=58))
+    assert reply_budget.begin(numbered_url(10001)) == ""
+    assert reply_budget.used_today() == 2
     clock(monkeypatch, start.replace(hour=23))
     assert not guard.can_post(guard.REPLY)[0]
 

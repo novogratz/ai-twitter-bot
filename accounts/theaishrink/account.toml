@@ -164,13 +164,14 @@ FEED_SWEEP_SCAN_LIMIT = 160
 FEED_SCROLL_PASSES = 20
 # Operator, 2026-11-18: no daytime breaks; sleep 23:00–07:00 Toronto.
 HOURLY_BREAK_MINUTES = 0
-# Operator, 2026-11-18: selective discussions; no Reply quota to fill.
+# Operator, 2026-11-18: aim for 1,400 sharp, warm Replies; quality before volume.
 # Eight Top, six general Latest and two creator reads; new authors get preference.
-MIN_SECONDS_BETWEEN_REPLIES = 600
+MIN_SECONDS_BETWEEN_REPLIES = 8
 REPLY_JITTER_SECONDS = 4
-MAX_REPLIES_PER_DAY = 100
-REPLY_DAILY_TARGET_MIN = 0
-REPLY_DAILY_TARGET_MAX = 100
+MAX_REPLIES_PER_DAY = 1400
+REPLY_DAILY_TARGET_MIN = 1400
+REPLY_DAILY_TARGET_MAX = 1400
+REPLY_RECENT_MEMORY_COUNT = 1400
 REPLY_PREFERRED_MIN_LIKES = 0
 REPLY_DISCUSSIONS_ONLY = true
 REPLY_PREFER_NEW_AUTHORS = true
@@ -179,8 +180,8 @@ DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE = 0
 DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE = 2
 DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE = 6
 REPLY_PRIORITIZE_LARGE_ACCOUNTS = false
-DIRECT_REPLY_MAX_PER_CYCLE = 1
-FEED_SWEEP_MAX_REPLIES_PER_CYCLE = 1
+DIRECT_REPLY_MAX_PER_CYCLE = 80
+FEED_SWEEP_MAX_REPLIES_PER_CYCLE = 80
 
 # ── Network and niche: the accounts, searches and patterns the jobs use ──────
 # A handle here is compared with the handle read from a status URL, never with
@@ -286,13 +287,13 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # X search queries. Both vocabularies are discovery aliases, including
 # Artificial Intelligence and Super Intelligence; exact product names stay literal.
 [searches]
-# Artists' own work/progress: search hints, never proof of authorship or humanity.
+# Standout creative concepts: search hints, never proof of quality or authorship.
 # Two rotate per direct cycle; no view/like floor and no new profile visits.
 creators = [
     '(AI OR SI) ("my art" OR "my film" OR "my animation") (concept OR process OR story OR experiment) lang:en -filter:replies -filter:retweets',
     '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) ("made with" OR "created with" OR "my short" OR "my latest") lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR "Grok Imagine") (meme OR parody OR satire) ("I made" OR "I created" OR concept) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR Seedance OR "Grok Imagine") ("first attempt" OR "work in progress" OR "my process" OR "behind the scenes") (art OR film OR video OR animation) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Seedance OR "Grok Imagine") (storyboard OR "visual metaphor" OR "scene transition" OR "character consistency") (film OR video OR animation) lang:en -filter:replies -filter:retweets',
     '(AI OR SI) ("my music video" OR "my short film" OR "my animated" OR "my parody") lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR Midjourney OR Kling) ("my latest" OR "my experiment" OR "I tried") (art OR cinematic OR animation OR filmmaking) lang:en -filter:replies -filter:retweets',
 ]
