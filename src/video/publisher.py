@@ -70,35 +70,50 @@ def replace_deleted(store, post_id, request_id, now, cfg, *, operator_reports_de
         return dict(db.execute("SELECT * FROM reservations WHERE id=?", (ident,)).fetchone())
 
 
-def request_startup(store, request_id, now, cfg, *, explicit_live=False, retry_expired=False):
+def _startup_claimed(db, day, allowance=""):
+    if allowance:
+        return db.execute("SELECT 1 FROM startup_days WHERE allowance=?", (allowance,)).fetchone() is not None
+    return db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone() is not None
+
+
+def request_startup(store, request_id, now, cfg, *, explicit_live=False, retry_expired=False, allowance=""):
     if not explicit_live or not config.live():
         return None
+    if allowance and allowance != cfg.startup_once:
+        raise ValueError("startup allowance must match the configured one-time authorization")
     day = schedule.local(now).date().isoformat()
     with store.transaction() as db:
-        old = db.execute("SELECT * FROM startup WHERE id=? OR requested_day=? OR state IN ('pending','reserved')",
-                         (request_id, day)).fetchone()
+        old = db.execute("SELECT * FROM startup WHERE state IN ('pending','reserved')").fetchone()
+        if not old:
+            if allowance:
+                old = db.execute("SELECT * FROM startup WHERE id=? OR allowance=?", (request_id, allowance)).fetchone()
+            else:
+                old = db.execute("SELECT * FROM startup WHERE id=? OR requested_day=? ORDER BY requested DESC LIMIT 1",
+                                 (request_id, day)).fetchone()
         if old:
             # An explicit new script start can renew only an expired request
             # that NEVER attempted a send. Preserve the same identity/day cap,
             # every reservation, and the old expiry as an immutable event.
             eligible = (retry_expired and old["requested_day"] == day and old["state"] == "skipped"
                         and old["reason"] == "eligible-time expiry" and old["reservation"] is None and old["attempts"] == 0)
-            if (not eligible or db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone()
+            if (not eligible or _startup_claimed(db, day, old["allowance"])
                     or db.execute("SELECT 1 FROM reservations WHERE startup=?", (old["id"],)).fetchone()):
                 return dict(old)
             db.execute("INSERT INTO events(at,kind,item,detail) VALUES(?,?,?,?)",
                        (now.timestamp(), "startup_unattempted_expiry_rearmed", old["id"], dumps(dict(old))))
             request_id = old["id"]
+            allowance = old["allowance"]
             db.execute("UPDATE startup SET state='pending',requested=?,reason='' WHERE id=?", (now.timestamp(), request_id))
         else:
-            db.execute("INSERT INTO startup(id,requested_day,requested) VALUES(?,?,?)", (request_id, day, now.timestamp()))
+            db.execute("INSERT INTO startup(id,requested_day,requested,allowance) VALUES(?,?,?,?)",
+                       (request_id, day, now.timestamp(), allowance))
         from .preparation import recover_supply
         recover_supply(db, cfg, now.timestamp())
         for platform in config.PLATFORMS:
             db.execute("INSERT INTO jobs(kind,item,due) VALUES('discovery',?,?) ON CONFLICT(kind,item) "
                        "DO UPDATE SET due=excluded.due,state=CASE WHEN jobs.state='running' THEN jobs.state ELSE 'pending' END,attempts=0",
                        (platform, now.timestamp()))
-        return {"id": request_id, "requested_day": day, "state": "pending"}
+        return {"id": request_id, "requested_day": day, "state": "pending", "allowance": allowance}
 
 
 def tick_calendar(store, now, cfg):
@@ -158,7 +173,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         if startup and startup["attempts"] >= cfg.max_attempts:
             db.execute("UPDATE startup SET state='skipped',reason='bounded publishing retries exhausted' WHERE id=?", (startup["id"],))
             startup = None
-        if startup and db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone():
+        if startup and _startup_claimed(db, day, startup["allowance"]):
             db.execute("UPDATE startup SET state='skipped',reason='startup calendar-day cap' WHERE id=?", (startup["id"],))
             startup = None
         if not slot and startup:
@@ -287,7 +302,8 @@ def reserve(store, now, cfg, *, operator_direct=False):
             db.execute("UPDATE slots SET state='reserved',reservation=?,attempts=attempts+1,reason='' WHERE id=?", (ident, slot["id"]))
         if startup:
             db.execute("UPDATE startup SET state='reserved',reservation=?,attempts=attempts+1 WHERE id=?", (ident, startup["id"]))
-            db.execute("INSERT INTO startup_days VALUES(?,?,?)", (day, startup["id"], ident))
+            db.execute("INSERT INTO startup_days(day,request,reservation,allowance) VALUES(?,?,?,?)",
+                       (day, startup["id"], ident, startup["allowance"]))
         return dict(db.execute("SELECT * FROM reservations WHERE id=?", (ident,)).fetchone())
 
 

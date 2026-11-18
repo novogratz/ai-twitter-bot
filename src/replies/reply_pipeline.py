@@ -154,14 +154,13 @@ def priority_authors():
 
 
 def prioritize(candidates, *, diversify_authors=False, ordinary=False):
-    """Ordinary buffers prefer configured authors, then likes and observed views.
+    """Selective ordinary buffers prefer source context before observed reach.
 
-    The author group is operator-selected, never an inferred follower count.
-    Each author offers their highest-view post first; authors rotate within
-    comparable author/like tiers, then observed reach and source order break ties.
-    Every candidate remains available. Default/watched jobs keep their existing
-    stable like preference; only ordinary buffered work opts into reach ranking.
+    Context hints are for further review, not quality approval. Within comparable
+    context/author/like groups, authors rotate and actual views break ties.
+    Other Accounts and watched jobs retain their existing ordering.
     """
+    from ..guards.reply_focus import discovery_priority
     threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
     large = priority_authors() if ordinary else set()
     new_authors = ordinary and settings.get("REPLY_PREFER_NEW_AUTHORS")
@@ -169,13 +168,16 @@ def prioritize(candidates, *, diversify_authors=False, ordinary=False):
                 if new_authors else set())
     seen = Counter()
 
+    def context(candidate):
+        return (discovery_priority(candidate.text),) if ordinary and settings.get("REPLY_DISCUSSIONS_ONLY") else ()
+
     def reach(candidate):
         views = candidate.views if type(candidate.views) is int and candidate.views >= 0 else None
         return (views is None, -(views if views is not None else 0))
 
     if ordinary:
-        # Assign each author's first round to their strongest observed post.
-        candidates = sorted(candidates, key=reach)
+        # Assign each author's first round to their best contextual lead.
+        candidates = sorted(candidates, key=lambda candidate: (*context(candidate), *reach(candidate)))
 
     def key(candidate):
         preference = bool(threshold and (candidate.likes is None or candidate.likes < threshold))
@@ -183,6 +185,7 @@ def prioritize(candidates, *, diversify_authors=False, ordinary=False):
         leading = (author not in large, preference) if large else (preference,)
         if new_authors:
             leading = (author in answered, *leading)
+        leading = (*context(candidate), *leading)
         if not diversify_authors:
             return (*leading, *(reach(candidate) if ordinary else ()), 0)
         group = (*leading, author)

@@ -113,12 +113,14 @@ def test_final_admission_rejects_changed_wording(settings_override, reviewer):
     assert not reply_admission.judge_reply(url, REPLY + " Amazing!", value_review=approval)
 
 
-def test_previous_policy_approval_and_missing_specificity_check_cannot_publish(settings_override, reviewer, monkeypatch):
+@pytest.mark.parametrize("old_policy", ["substantive-and-creative-reply-v1",
+                                       "specific-discussion-and-standout-creative-reply-v2"])
+def test_previous_policy_approval_and_missing_specificity_check_cannot_publish(settings_override, reviewer, monkeypatch, old_policy):
     from dataclasses import replace
     settings_override(REPLY_DISCUSSIONS_ONLY=True, MAX_REPLIES_PER_DAY=1400)
     url = fresh("researcher")
     approval, _ = reply_value.review(url, PARENT, REPLY)
-    old = replace(approval, policy="substantive-and-creative-reply-v1")
+    old = replace(approval, policy=old_policy)
     assert not old.matches_parent(PARENT)
     assert not reply_admission.judge_reply(url, REPLY, value_review=old)
     old_decision = decision()

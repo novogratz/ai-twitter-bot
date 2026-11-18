@@ -28,7 +28,9 @@ ready_reserve_min = 5
 banger_min_score = 88.0
 x_max_views = 50000
 x_reach_max_age_seconds = 21600
-startup_on_boot = false
+startup_on_boot = true
+# One additional request after today's earlier live test; this ID is never rotated on restart.
+startup_once = "operator-extra-2026-11-18"
 pair_minutes = 15
 protect_primary_windows = true # spend extra-slot clips only above the next main windows' needs
 preparation_lead_seconds = 1800

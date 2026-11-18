@@ -75,7 +75,7 @@ def test_script_restart_cannot_reset_any_consumed_or_attempted_startup(boot, vid
         if change == "attempted":
             db.execute("UPDATE startup SET attempts=1")
         elif change == "claimed_day":
-            db.execute("INSERT INTO startup_days VALUES(?,?,?)", (str(at().date()), "morning", "claimed"))
+            db.execute("INSERT INTO startup_days(day,request,reservation) VALUES(?,?,?)", (str(at().date()), "morning", "claimed"))
         elif change == "posted":
             db.execute("UPDATE startup SET state='posted'")
         else:

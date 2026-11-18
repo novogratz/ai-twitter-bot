@@ -290,39 +290,55 @@ bio = '\b((?<![Jj][\x27’])(?-i:AIs?)|(?<![\x27’])(?<!\by\s)(?<!\ben\s)(?<!\b
 # Standout creative concepts: search hints, never proof of quality or authorship.
 # Two rotate per direct cycle; no view/like floor and no new profile visits.
 creators = [
-    '(AI OR SI) ("my art" OR "my film" OR "my animation") (concept OR process OR story OR experiment) lang:en -filter:replies -filter:retweets',
-    '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) ("made with" OR "created with" OR "my short" OR "my latest") lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR "Grok Imagine") (meme OR parody OR satire) ("I made" OR "I created" OR concept) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR Seedance OR "Grok Imagine") (storyboard OR "visual metaphor" OR "scene transition" OR "character consistency") (film OR video OR animation) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI) ("my music video" OR "my short film" OR "my animated" OR "my parody") lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR Midjourney OR Kling) ("my latest" OR "my experiment" OR "I tried") (art OR cinematic OR animation OR filmmaking) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) ("my short film" OR "my animation" OR "my music video") (concept OR story OR premise) lang:en -filter:replies -filter:retweets',
+    '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) (film OR animation) (storyboard OR concept OR "behind the scenes") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (meme OR parody OR satire) (premise OR joke OR "I made" OR "I created") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (film OR animation OR video) ("visual metaphor" OR "scene transition" OR "character consistency") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney) (art OR illustration) (concept OR composition OR "creative process") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine") (comedy OR parody OR satire) (story OR concept OR "my film") lang:en -filter:replies -filter:retweets',
+    '(Seedance OR Kling OR Sora OR Veo) (video OR film) (experiment OR workflow OR "shot breakdown") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (animation OR film OR music) ("my process" OR "how I made" OR "creative choice") lang:en -filter:replies -filter:retweets',
 ]
 # Concrete problems and evidence; no min_faves floor, root posts only.
 latest = [
     '(AI OR SI OR LLM) (evaluation OR benchmark) (methodology OR leakage OR replication OR dataset) lang:en -filter:replies -filter:retweets',
-    '(LLM OR "reasoning model") (ablation OR experiment OR limitations OR reproducibility) lang:en -filter:replies -filter:retweets',
-    '(Codex OR "Claude Code" OR "coding agent") (tests OR reliability OR debugging OR failure) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM) (agent OR agents) (permissions OR sandbox OR recovery OR evaluation) lang:en -filter:replies -filter:retweets',
-    '(LLM OR transformer) (retrieval OR context OR memory) (accuracy OR failure OR tradeoff) lang:en -filter:replies -filter:retweets',
-    '(GPU OR CUDA OR LLM) (inference OR quantization) (latency OR throughput OR memory OR quality) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM) (deployment OR production) (reliability OR latency OR cost OR measurement) lang:en -filter:replies -filter:retweets',
-    '(robotics OR "robot learning") (control OR evaluation OR generalization OR failure) lang:en -filter:replies -filter:retweets',
-    '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) (workflow OR consistency OR control OR limitations) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM) ("how do" OR "why does") (testing OR retrieval OR inference OR training) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM) (paper OR research) (results OR ablation OR evidence OR limitations) lang:en -filter:replies -filter:retweets',
+    '(LLM OR "reasoning model") ("we tested" OR "I tested" OR ablation OR reproducibility) lang:en -filter:replies -filter:retweets',
+    '(Codex OR "Claude Code" OR "coding agent") (debugging OR tests) (failure OR reliability OR "what worked") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (agent OR agents) (permissions OR sandbox OR rollback OR recovery) lang:en -filter:replies -filter:retweets',
+    '(LLM OR transformer) (retrieval OR context) (accuracy OR failure OR comparison) lang:en -filter:replies -filter:retweets',
+    '(GPU OR CUDA OR LLM) (inference OR quantization) (latency OR throughput OR memory OR measurement) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (deployment OR serving) ("we found" OR "we measured" OR tradeoff OR failure) lang:en -filter:replies -filter:retweets',
+    '(robotics OR "robot learning") (control OR generalization) (experiment OR evaluation OR failure) lang:en -filter:replies -filter:retweets',
+    '("Grok Imagine" OR Seedance OR Kling OR Sora OR Veo) (workflow OR consistency) ("how do" OR "how I" OR comparison) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("how do" OR "why does" OR "what causes") (testing OR retrieval OR inference OR training) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (paper OR research) (replication OR ablation OR evidence OR limitations) lang:en -filter:replies -filter:retweets',
     '(AI OR SI OR LLM) (safety OR alignment) (evaluation OR measurement OR evidence OR robustness) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("tool use" OR agents) (idempotency OR retries OR timeout OR recovery) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (distillation OR quantization) ("we tested" OR "I tested" OR tradeoff) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (film OR animation OR video) (storyboard OR "visual metaphor" OR "how I made") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (meme OR parody OR satire) (concept OR premise OR "I made") lang:en -filter:replies -filter:retweets',
 ]
 # Every alternative of a query, read with AND before OR or OR before AND,
 # finds posts `post` keeps: a company or energy word goes with AI.
 # direct_reply rotates through `replies` then `hot_tab` within its Top budget;
 # a result must be on the niche. Routine searches have no popularity floor.
 replies = [
-    '(AI OR SI OR LLM OR Grok OR Claude OR GPT) (evaluation OR benchmark OR failure OR reasoning) lang:en -filter:replies -filter:retweets',
-    '(GPU OR CUDA OR LLM) (inference OR latency OR memory OR quantization) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM OR "coding agent") (retrieval OR testing OR reliability OR "tool use") lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR LLM) ("why does" OR "how do" OR tradeoff OR compared) lang:en -filter:replies -filter:retweets',
-    '(AI OR SI OR "Grok Imagine" OR Seedance) (workflow OR consistency OR control OR limitation) lang:en -filter:replies -filter:retweets',
-    '(robotics OR "robot learning" OR transformer) (research OR evaluation OR training OR generalization) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (evaluation OR benchmark) (dataset OR ablation OR methodology OR contamination) lang:en -filter:replies -filter:retweets',
+    '(LLM OR "reasoning model") (experiment OR replication) (results OR code OR limitations) lang:en -filter:replies -filter:retweets',
+    '("coding agent" OR Codex OR "Claude Code") (debugging OR tests OR reliability OR failure) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (agent OR agents) (permissions OR sandbox OR "tool use" OR rollback) lang:en -filter:replies -filter:retweets',
+    '(LLM OR transformer) (retrieval OR context OR memory) (failure OR comparison OR accuracy) lang:en -filter:replies -filter:retweets',
+    '(GPU OR CUDA OR LLM) (inference OR latency) (batching OR throughput OR caching OR measurement) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (quantization OR distillation) (quality OR memory OR tradeoff) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) ("how do" OR "why does") (training OR inference OR retrieval OR evaluation) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (paper OR research) (dataset OR code OR reproduction) lang:en -filter:replies -filter:retweets',
+    '(robotics OR "robot learning") (control OR generalization) (failure OR evaluation OR experiment) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (safety OR alignment) (measurement OR evidence OR experiment) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR LLM) (deployment OR serving) (latency OR reliability OR cost) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine" OR Seedance OR Kling) (film OR video OR animation) (concept OR storyboard OR "behind the scenes") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI) (meme OR parody OR satire) (premise OR joke OR story) lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR Midjourney) (art OR illustration) (composition OR concept OR "creative choice") lang:en -filter:replies -filter:retweets',
+    '(AI OR SI OR "Grok Imagine" OR Seedance) (workflow OR consistency OR control) (comparison OR process OR experiment) lang:en -filter:replies -filter:retweets',
 ]
 # Discovery has no popularity floor.
 hot_tab = []

@@ -15,6 +15,7 @@ class Buffer:
         self.entries = {}
 
     def _prune(self, now, *, preferred_ids=()):
+        from ..guards.reply_focus import discovery_priority
         expired = [sid for sid, candidate in self.entries.items() if candidate.expires_at <= now]
         for sid in expired:
             self.entries.pop(sid)
@@ -28,7 +29,8 @@ class Buffer:
         # until drafting, even when major authors fill the ordinary buffer.
         # This preference belongs to this offer only, never a durable claim.
         oldest = sorted(self.entries, key=lambda sid: (
-            sid in preferred_ids, x_urls.author(self.entries[sid].url) in large,
+            sid in preferred_ids, -discovery_priority(self.entries[sid].text),
+            x_urls.author(self.entries[sid].url) in large,
             int(sid)))[:max(0, len(self.entries) - limit)]
         for sid in oldest:
             self.entries.pop(sid)

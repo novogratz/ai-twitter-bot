@@ -844,7 +844,7 @@ def test_v1_migration_keeps_unknown_api_claim(tmp_path):
     row = upgraded.rows("SELECT * FROM reservations")[0]
     assert row["state"] == "publish_unknown" and row["media_id"] == "777" and row["transport"] == "api"
     assert upgraded.rows("SELECT * FROM content_claims")
-    assert upgraded.rows("PRAGMA user_version")[0]["user_version"] == 2
+    assert upgraded.rows("PRAGMA user_version")[0]["user_version"] == 3
 
 
 @pytest.mark.parametrize("field,value", [("nonce", "other"), ("media_ready", False), ("post_enabled", False),

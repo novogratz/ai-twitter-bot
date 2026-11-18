@@ -155,13 +155,18 @@ reservations and receipts share this cap, alongside ordinary publication limits.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
 Account uses five slots at 06:00, 09:00, 12:00, 17:00 and 21:00 Toronto,
-`scheduled_daily_cap=5`, `daily_target_min=5`, `startup_on_boot=false`, `preferred_age_hours=72` and
+`scheduled_daily_cap=5`, `daily_target_min=5`, `startup_on_boot=true`, `preferred_age_hours=72` and
 `max_age_hours=17520` (730 days). `publish_platforms=["instagram"]` enforces
 Instagram-only publication and other source discovery is disabled. X-copy checks
 remain required. `early_video_window=true` permits only the unpaired 06:00 slot
 between 05:55 and 06:05; general news/Reply hours remain 07:00–23:00. The video
 I/O context expires at 06:05, and missed slots never catch up.
-Ordinary starts create no startup request. Publication still uses durable claims,
+Ordinary live starts request one reviewed startup video per Toronto day. The
+operator-owned `startup_once="operator-extra-2026-11-18"` supplies one additional
+lifetime request after the already-confirmed test; never rotate this stable ID
+on restart. Both settings default off/empty for other Accounts. Dry-run and
+Reply-only runs create none. The one-hour eligible window, near-slot coalescing
+and uncertain-send holds remain. Publication still uses durable claims,
 inspection, dedup and existing spacing. The [README](../README.md) links the
 video pipeline guide and operating commands.
 

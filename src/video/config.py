@@ -44,6 +44,7 @@ class VideoConfig:
     x_max_views: int = 50000
     x_reach_max_age_seconds: int = 21600
     startup_on_boot: bool = False
+    startup_once: str = ""
     pair_minutes: int = 15
     protect_primary_windows: bool = True
     preparation_lead_seconds: int = 1800
@@ -123,6 +124,8 @@ class VideoConfig:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.startup_on_boot) is not bool:
             raise ValueError("startup_on_boot must be a boolean")
+        if not isinstance(self.startup_once, str) or (self.startup_once and not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,95}", self.startup_once)):
+            raise ValueError("startup_once must be empty or a stable operator authorization ID")
         if type(self.scheduled_daily_cap) is not int or not 1 <= self.scheduled_daily_cap <= 13:
             raise ValueError("scheduled_daily_cap must be 1..13")
         if type(self.daily_target_min) is not int or not 0 <= self.daily_target_min <= self.scheduled_daily_cap:

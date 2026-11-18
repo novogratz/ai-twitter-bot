@@ -348,7 +348,7 @@ priority, including its normal fifteen-minute slot collision rule. Setting
 on the next worker restart; all other gates remain.
 
 Explicit live activation creates a persistent request, unique by request ID and
-local request day. The live Account's `startup_on_boot=true` also records a
+local request day for the ordinary allowance. The live Account's `startup_on_boot=true` also records a
 request on ordinary `main.py` starts, after singleton ownership and before
 resuming jobs. It queues discovery immediately and lets the dedicated publisher
 attempt a ready eligible clip. It creates no Reply hold and never overrides
@@ -359,8 +359,18 @@ request receives sixty minutes of eligible time, excluding 23:00–07:00 and
 any explicitly configured interaction breaks (disabled for this Account),
 including both DST transitions correctly. A request within fifteen minutes of
 the next slot waits for that slot; a single confirmed post atomically fulfills
-both records. A unique fulfillment-day record prevents two startup posts on one
-Montreal calendar day, including requests deferred across midnight.
+both records. A unique fulfillment-day record enforces the ordinary once-per-day
+allowance, including requests deferred across midnight.
+
+The November 18 request also configures the stable one-time authorization
+`startup_once="operator-extra-2026-11-18"`, since the earlier confirmed test already
+used today's allowance. This can add one new startup request without changing
+the old receipt. It is unique for its lifetime, never per process or restart;
+without an earlier startup that day it occupies the daily allowance too. The
+version-three schema migration retains all old requests and claims and adds the
+named allowance to those journals. Uncertain sends retain both content and
+startup claims. Removing/readding the config cannot erase consumption. Only an
+explicit new operator request can authorize another ID; code never rotates it.
 
 Slots, startup requests and content are atomically reserved under `BEGIN
 IMMEDIATE`. One publisher reservation can be active at a time. The successful
@@ -795,6 +805,8 @@ An explicitly requested `./bin/run.sh` starts Reply work and queues one durable
 video request independently. It does not hold Replies while the clip is prepared.
 Preparation cannot guarantee an immediate send without an already eligible ready
 clip. Repeated starts keep the same daily allowance and unknown sends stay held.
+The single November 18 grant above can supplement an already-consumed allowance;
+it does not authorize a post on every restart or extra startup news.
 
 **Optional video first, then interactions:** only when the Operator explicitly
 requests that different order, while the bot is stopped, use the following

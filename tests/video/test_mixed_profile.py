@@ -15,7 +15,8 @@ def test_live_account_targets_five_instagram_videos_with_supported_tech_cast():
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file
     assert cfg.ultra_bangers_only and cfg.min_hook_score == 9 and cfg.best_available_fallback
-    assert not cfg.startup_on_boot and cfg.buffer_target == 10 and cfg.ready_reserve_min == 5
+    assert cfg.startup_on_boot and cfg.startup_once == "operator-extra-2026-11-18"
+    assert cfg.buffer_target == 10 and cfg.ready_reserve_min == 5
     assert cfg.playful_caption and not cfg.one_line_caption
 
 

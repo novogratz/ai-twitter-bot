@@ -1,5 +1,38 @@
 # Editorial policy — November 18, 2026
 
+Latest startup and discovery mandate: a normal live start now requests one
+reviewed Instagram video, independently of Reply work. This supersedes the
+startup-off instructions below. Publication needs an eligible unseen clip and
+all normal source/output/audio/rights/novelty checks, active hours and spacing.
+The request expires after sixty eligible minutes; within fifteen minutes of an
+upcoming slot it waits and one post can fulfill both. No immediate-send guarantee,
+second publisher, startup news request or relaxed quality follows from startup.
+
+Ordinary startup capacity remains one per Toronto day. Because today's earlier
+confirmed test already used it, the new explicit request also authorizes one
+lifetime extra via `startup_once="operator-extra-2026-11-18"`. Repeated boots reuse
+the durable request; this ID must never rotate automatically. Without an earlier
+startup that day, this grant also occupies the ordinary daily allowance. A used,
+attempted or uncertain request is never reset. Proven pre-submit failures retain
+the same request and retry bounds. The schema migration preserves all previous
+requests, receipts and day claims, including the confirmed test. Five scheduled
+videos and two scheduled news/text posts remain unchanged. The configured profile
+upper bound can therefore be nine on a day with both the earlier daily startup
+and this one-time grant, and eight on ordinary days with an extra startup video;
+coalesced slots count only once. The Operator will restart when ready.
+
+The refreshed query bank contains sixteen Top, sixteen general Latest and eight
+creator searches, rotating through the existing eight/six/two reads. The prior
+six-query Top bank could not supply its intended eight reads; the new bank does.
+Concrete questions, reported experiments and distinctive creative premises lead
+ordinary ranking and buffer retention before popularity. These remain discovery
+hints: no keyword or metric supplies independent quality or factual verification.
+Quoted context cannot qualify a thin outer caption. Final review judges the whole
+Reply, refusing generic closing questions, stock caveats, padding and suggestions
+the parent already tested. A specific opening alone cannot justify approval. The
+policy change invalidates older approvals; source age, author variety, dedup and
+uncertainty handling are retained.
+
 Latest Reply mandate: aim for **1,400 thoughtful Replies per Toronto day**, with
 a hard ceiling of 1,400 including uncertain submissions. This replaces both the
 100/day policy and the interim 400 request. Minimum submission spacing is eight

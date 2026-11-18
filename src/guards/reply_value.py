@@ -11,7 +11,7 @@ from jsonschema import ValidationError, validate
 
 from ..core.llm_client import CallProfile, LLMStatus, Output, Surface, resolve, run_llm
 
-POLICY = "specific-discussion-and-standout-creative-reply-v2"
+POLICY = "contextual-contribution-and-standout-creative-reply-v3"
 FLAGS = ("substantive_parent", "answers_parent", "adds_value", "grounded",
          "no_unseen_claims", "natural", "respectful", "no_bait", "distinct_from_recent",
          "specific_to_parent")
@@ -48,6 +48,10 @@ adds_value: identify ONE useful addition absent from the parent: a direct answer
 mechanism, specific practical test, explained tradeoff, grounded correction, or a
 necessary clarifying question whose answer materially changes the advice. Mere
 agreement, summary, applause, jargon or generic 'real test is deployment' fails.
+Judge the entire reply. A specific opening cannot excuse a stock caveat or
+question tacked onto the end. Do not approve proposing a test or control the
+author already performed, or correcting a claim they did not make. Technical
+advice must state a useful distinction for this case, not a generic checklist.
 For standout AI videos/art/memes, kind=creative_reaction can instead be a brief warm or
 witty response tied to the supplied concept, joke or documented creative choice.
 It must add a specific thought or playful extension, not a generic compliment,
@@ -63,6 +67,8 @@ natural: plain conversational language, a clear useful thought, no canned preamb
 forced contrarianism, stock analogy, lecture, fake typo or obligatory question.
 Warmth, a cute understatement, wit or an optional heart are welcome when they fit;
 never require a joke, a technical lesson or a fixed answer/caveat/punchline format.
+Remove no text yourself: refuse a draft padded with a generic closing sentence,
+fake profundity, a forced analogy or a question that merely solicits a response.
 respectful: warm and fair; challenge ideas without sneering or blind endorsement.
 no_bait: no outrage bait, fan-war ranking, generic hype or requests for engagement.
 distinct_from_recent: recent replies are repetition evidence only; refuse reusing

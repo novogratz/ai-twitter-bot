@@ -252,15 +252,27 @@ def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
 
 @pytest.mark.parametrize("boosted", [False, True])
 @pytest.mark.parametrize("creator_queries", [0, 2])
-def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted, creator_queries):
+@pytest.mark.parametrize("short_pools", [False, True])
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted, creator_queries, short_pools):
     """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
     outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
     The cycle stops at its budget and yields Safari."""
     import itertools
+    from dataclasses import replace
+    from src.core import account
     from src.guards import active_hours
 
     dr, lanes, llm, chokepoint = direct
     numbers = itertools.count()
+    # Pin both pool sizes here: the live Account's evolving search bank must
+    # not silently change what this scheduling regression exercises.
+    profile = account.current()
+    top, latest, creators = (6, 12, 6) if short_pools else (16, 16, 8)
+    profile = replace(profile, searches=replace(profile.searches,
+        replies=tuple(f"LLM research{i}" for i in range(top)), hot_tab=(),
+        latest=tuple(f"LLM experiment{i}" for i in range(latest)),
+        creators=tuple(f"AI concept{i}" for i in range(creators))))
+    monkeypatch.setattr(account, "current", lambda: profile)
 
     def fresh_posts(query, **k):
         lanes["queries"].append(query)
@@ -275,7 +287,8 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, b
     assert len(chokepoint.sent) == (6 if boosted else 3)
     # Enabled artist discovery finishes before drafting. A boosted read budget
     # can backfill the short ordinary pools with the remaining creator queries.
-    expected_reads = (6 if boosted else 2) if creator_queries else (2 if boosted else 1)
+    creator_reads = 6 if boosted and short_pools else 2
+    expected_reads = creator_reads if creator_queries else (2 if boosted else 1)
     assert len(lanes["queries"]) == expected_reads
 
     chokepoint.calls.clear()
@@ -283,7 +296,7 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, b
     dr.run_direct_reply_cycle(max_replies=12)
     # Buffered posts save browser work; an explicit manual budget stays exact.
     assert len(chokepoint.sent) == 12
-    assert len(lanes["queries"]) == (6 if creator_queries and boosted else 2)
+    assert len(lanes["queries"]) == (creator_reads if creator_queries else 2)
 
 
 # --- feed_sweep -------------------------------------------------------------------

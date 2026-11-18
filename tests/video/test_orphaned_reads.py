@@ -163,7 +163,7 @@ def test_recovery_preserves_uncertain_sends_claims_and_permanent_history(video_s
         db.execute("INSERT INTO slots(id,due,state,reservation) VALUES('slot',10,'reserved','uncertain')")
         db.execute("INSERT INTO startup(id,requested_day,requested,state,reservation) "
                    "VALUES('startup','2026-11-05',10,'reserved','uncertain')")
-        db.execute("INSERT INTO startup_days VALUES('2026-11-05','startup','uncertain')")
+        db.execute("INSERT INTO startup_days(day,request,reservation) VALUES('2026-11-05','startup','uncertain')")
         db.execute("INSERT INTO costs VALUES('2026-11-05','x','requests',9)")
     tables = ("reservations", "content_claims", "history", "slots", "startup", "startup_days", "costs", "meta")
     before = {table: video_store.rows(f"SELECT * FROM {table}") for table in tables}
