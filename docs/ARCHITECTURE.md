@@ -1,9 +1,11 @@
 # Architecture
 
-Current Account overlay (2026-11-08): news jobs are disabled by both news flags;
-ordinary editorial/repost publishing remains excluded by video ownership. The
-existing video workers and shared Safari publisher admit only ultra-qualified
-finds, with no automatic startup request or minimum post target. Reply jobs keep
+Current Account overlay (2026-11-17): verified news and occasional discussion
+questions share the existing news outbox, single-thread executor and Safari
+publisher. Questions receive separate draft/review calls, exact-text binding,
+permanent repeat checks and a forty-eight-hour interval; pending news goes first.
+The existing video workers aim for three to four ultra-qualified finds across
+four Toronto windows, with no automatic startup request. Reply jobs keep
 their current search budgets, executor structure and pacing. Final Reply admission
 checks recent confirmed wording; historical dossiers cannot override the Voice.
 
@@ -27,6 +29,12 @@ chokepoint enforces active hours and startup holds. News replaces legacy
 editorial slots, coexists with videos and uses a separate SQLite journal.
 `main.py --news` and `bin/news.py` expose the same worker. Ordinary starts create
 no second scheduler. Standalone `serve` is an alternative without the main bot.
+`DISCUSSION_POSTS_ENABLED` adds an hourly `discussion_post_job` to that same news
+executor. It prepares only; the minute delivery job owns all writes. Its
+source-free question schema allows configured model families, not invented
+version names or factual claims. Discussions share text caps, spacing, video
+holds, own-receipt verification and uncertain-send claims. Their receipts cannot
+fulfill startup news. `bin/news.py prepare-discussion` exposes preparation only.
 
 One Python process drives Safari through AppleScript and injected JavaScript.
 There is no X API client.
@@ -125,7 +133,8 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `news_job` (`NEWS_ENABLED=1`) | 1 hour | Fetch, verify, persist event dedup, rank and independently review one main pick and optional backup. Main picks may publish through Safari with `NEWS_AUTO_PUBLISH`; backups remain drafts. No email. |
 | `news_delivery_job` (`NEWS_ENABLED=1`) | 1 minute; first turn after one second with `--startup-publications` | Retry the same durable approved outbox through the news executor and run lock, before startup research. No model/search call, new draft or second Safari owner. An actual confirmed receipt fulfills the durable startup-news intent. |
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns thirteen Toronto slots, 05:00–23:00 every 90 minutes, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
+| `discussion_post_job` (`NEWS_ENABLED=1`, `DISCUSSION_POSTS_ENABLED=1`) | 1 hour, first turn after two minutes | Prepare an independently reviewed question when the shared outbox is free and the discussion interval permits. No direct browser write; uses the news executor and delivery job. |
+| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns four Toronto slots, 08:30, 12:30, 17:30 and 21:30, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
 | `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |

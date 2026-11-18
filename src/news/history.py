@@ -99,6 +99,8 @@ def import_file(store, path, now, *, queue=False):
                    "title": str(row.get("title") or content[:300]), "text": content[:6000],
                    "summary": str(row.get("summary", ""))[:2000], "origin": name,
                    "historical_date": row.get("timestamp") or row.get("ts") or ""}
+            if row.get("post_kind") == "discussion":
+                doc["post_kind"] = "discussion"
             state = str(row.get("state") or row.get("status") or ("queued" if queue else "historical"))
             store.remember(doc, state, now)
             count += 1

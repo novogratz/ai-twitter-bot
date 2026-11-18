@@ -19,7 +19,7 @@ def main(argv=None):
     parser.add_argument("--config", help="Account news TOML override")
     parser.add_argument("--dry-run", action="store_true", help="Show configuration only; no reads/models/delivery")
     parser.add_argument("--prepare-only", action="store_true", help="Run discovery/review and leave approved picks pending for the bot's delivery worker")
-    parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack"))
+    parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack", "prepare-discussion"))
     parser.add_argument("delivery_id", nargs="?")
     args = parser.parse_args(argv)
     cfg = load(args.config)
@@ -43,7 +43,12 @@ def main(argv=None):
         scheduler.start()
         return
     store = Store()
-    if args.command == "run":
+    if args.command == "prepare-discussion":
+        from .discussion import prepare
+        payload = prepare(cfg, store=store)
+        if payload:
+            print(payload["display"])
+    elif args.command == "run":
         # Empty or held runs produce no stdout and no destination message.
         delivery = None
         if args.prepare_only:

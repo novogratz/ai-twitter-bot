@@ -87,6 +87,10 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         scheduler.add_job(retry_pending, trigger=IntervalTrigger(minutes=1, timezone=config.BOT_TIMEZONE),
                           id="news_delivery_job", executor="news", **({"next_run_time": datetime.now(timezone.utc) + timedelta(seconds=1)}
                               if startup_publications else {}))
+        if settings.get("DISCUSSION_POSTS_ENABLED"):
+            from src.news.discussion import prepare as prepare_discussion
+            add(health.wrap_job(prepare_discussion, "discussion", safari_health=False), 60,
+                "discussion_post_job", executor="news", first_seconds=120)
 
     if not post_only:
         from src.replies.direct_reply import run_direct_reply_cycle
@@ -201,6 +205,8 @@ def main():
                           "editorial_route": "reply" if account.current().editorial.use_reply_route else "original",
                           "news": {"enabled": settings.get("NEWS_ENABLED"), "hourly": True,
                                    "automatic_safari": settings.get("NEWS_AUTO_PUBLISH"), "email": False},
+                          "discussion_posts": settings.get("NEWS_ENABLED") and settings.get("DISCUSSION_POSTS_ENABLED"),
+                          "advisory_video_targets": [video_cfg.daily_target_min, video_cfg.scheduled_daily_cap] if video_cfg else [],
                           "startup_publications": args.startup_publications and not args.reply_only,
                           "quotes": 0,
                           "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,

@@ -1,5 +1,52 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-17 — Restore news, add discussion posts and prioritize Instagram bangers
+
+After the checkpoint rollback, the Operator requests worthwhile original SI
+news, occasional model/workflow questions and three to four exceptional
+Instagram videos per day. Verified news resumes with material releases, company
+leadership, earnings and actual IPO milestones eligible. Drafts use plain facts,
+optional grounded wit and one fetched source; the mandatory BANGER slogan is
+removed. Evidence, independent review, event history and uncertain claims remain.
+The Operator's supplied NVIDIA post is historical memory, not a new candidate.
+
+Discussion preparation joins the news executor and durable text outbox. Its
+separate draft/review tasks allow subjective questions and configured unversioned
+model families, reject copied questions and unsupported claims, and wait at least
+forty-eight hours between confirmed questions. Pending news has priority. Text
+posts retain the seven-per-day ceiling, two-hour spacing and protected video
+windows. A discussion receipt cannot satisfy startup news. The supplied model
+question is imported as owner-reported history, without inventing an X receipt.
+
+Video opportunities become 08:30, 12:30, 17:30 and 21:30 Toronto, with an advisory
+three-to-four target, six-clip reserve and stronger Instagram discovery weight.
+Natural scene jokes and optional blank-line BANGER sign-offs replace the forced
+one-line prefix. Source-supported aliases for the existing cast, Bill Gates and
+Mark Zuckerberg are allowed. The ultra-quality bar and all source, inspection,
+usage, dedup and publication checks remain. No minimum actual output is promised.
+The supplied own-X video joins permanent memory; it is not an inspected new find.
+
+A real Instagram preview exposed two reader issues: `/p/` redirected to `/reel/`
+with the same shortcode, and the exact video's date/media lived in page-owned
+JSON rather than JSON-LD. Capture now permits exact case-sensitive route aliases
+and bounded matching video objects in normal-page JSON. Other post objects never
+authorize the source. The new preview command uses existing budgets, preserves
+the original and never queues, claims or publishes a post.
+
+The live import downloaded a 32.32-second `tigercircle.hk` rap-parody montage and
+reviewed 32 temporal frames plus local audio classifications. Its opening and
+editorial scores fell short, so preparation held before rendering. This proves
+actual Instagram capture and inspection, not publication readiness. A real
+discussion-generation check also caught the model API's refusal of JSON Schema
+`uniqueItems`; uniqueness now runs in local admission while the model receives a
+supported schema. No bot start/restart or X write accompanies implementation.
+The corrected live draft/review path prepared “When reviewing code from an SI
+agent, what do you check first, and why?” in an isolated preview outbox. Model use
+was charged to the existing budget; the production outbox was not populated.
+All 3,169 isolated tests pass. The configuration reference check and scheduler
+dry run pass with news/discussions enabled, four video slots, the existing text
+limits and no self-repost job. Local switches await the Operator's manual restart.
+
 ## 2026-11-17 — Restore the November 10 checkpoint and forbid own reposts
 
 The Operator requests a full code rollback to November 10, then specifies that

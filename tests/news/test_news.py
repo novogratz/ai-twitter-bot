@@ -87,6 +87,16 @@ def test_verified_story_and_format(story, doc, cfg):
     assert text.endswith(URL) and length < 280
 
 
+def test_natural_news_does_not_require_a_banger_slogan(story, doc, cfg):
+    story["paragraphs"] = ["The lab says its model solved 80% of tasks in a controlled test."]
+    assert editor.gate(story, [doc], [], NOW - 86400, NOW, cfg)[0] == "verified"
+    text, _ = editor.tweet(story)
+    assert "BANGER" not in text and text.endswith("\n\n" + URL)
+    story["paragraphs"] = ["A new model arrived."]
+    with pytest.raises(ValueError, match="qualifier"):
+        editor.tweet(story)
+
+
 @pytest.mark.parametrize("change", ["old_event", "old_development", "invented_date", "no_quote", "no_corroboration"])
 def test_stale_and_unsupported_stories_hold(story, doc, cfg, change):
     if change == "old_event":

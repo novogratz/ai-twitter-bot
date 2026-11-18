@@ -6,6 +6,41 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-17, verified news, occasional questions and Instagram bangers — The
+Operator restores original publishing alongside Replies: useful verified AI/SI
+news, occasional discussion questions, and an advisory three to four outstanding
+Instagram-led videos per Toronto day. This supersedes the news-off and single-line
+caption rules below. News covers releases, meaningful availability, CEO changes,
+reported results and evidenced IPO milestones. Source verification, dates,
+attribution, permanent event history and uncertain-send holds remain. A plain
+factual hook plus an optional witty observation replaces compulsory BANGER slogans.
+The Account's news-value floor is 80/100; unsupported or routine filler still holds.
+
+Discussion posts use the same durable text outbox, independent review, Safari
+publisher and text budget. At most one automatic question per 48 elapsed hours;
+news/pending work goes first. Choices use configured model families, never stale
+version numbers from examples. Exact questions remain permanently deduplicated,
+and close recent paraphrases refuse. Owner-reported examples are history, not a
+fresh claim or an inferred publication receipt. The one-minute delivery worker
+handles both kinds without adding a second publisher.
+
+Four Toronto video opportunities are 08:30, 12:30, 17:30 and 21:30, with a ceiling
+of four scheduled videos and an advisory minimum of three. Instagram research
+has highest source weight; the reserve aims for six and warns below three.
+Bill Gates and Mark Zuckerberg join the attributed fictional cast. Actual
+source/output inspection, ultra-quality thresholds, audio evidence, permissions,
+watermark, source/X checks and permanent dedup still decide whether a clip ships.
+Captions are a grounded short scene joke, optionally a blank line and a BANGER
+sign-off; supported first names/aliases are allowed. No made-up unseen actions.
+These targets cannot force a weak or unverified clip to publish. The supplied
+own-video reference is already-posted memory, never a fresh candidate.
+
+Self-retweets remain forbidden across current/runtime/former identities. The
+existing seven-text daily limit, two-hour text spacing, protected video windows,
+Reply settings and permanent histories remain. Implement and validate first;
+start/restart still needs an explicit Operator request. An Instagram preparation
+test does not authorize bypassing source, inspection or publication checks.
+
 2026-11-17, November 10 rollback and no self-reposts — The Operator requests
 the code as of November 10, superseding the later changes. There is no November 10
 commit; the last saved revision by that date is `4ad829ac`, November 9 at 08:39:05

@@ -163,6 +163,7 @@ _declare("NEWS_WEBHOOK_URL", str, "", "Optional HTTPS draft destination, used on
 _declare("NEWS_WEBHOOK_TOKEN", str, "", "Optional bearer credential for the configured news draft webhook; never an X/email credential.")
 _declare("NEWS_ENABLED", bool, False, "Run hourly verified news discovery with the normal bot; independent of video mode.")
 _declare("NEWS_AUTO_PUBLISH", bool, False, "Explicit operator opt-in to publish verified main news picks through Safari. Backups remain drafts.")
+_declare("DISCUSSION_POSTS_ENABLED", bool, False, "Prepare occasional reviewed SI discussion questions in the news outbox; shares text limits and requires automatic news publishing to send.")
 _declare("NEWS_MIN_SECONDS_BETWEEN_POSTS", int, 7200, "Minimum gap between news publications, including uncertain attempts.", floor=1200)
 _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", floor=0, ceiling=8)
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)

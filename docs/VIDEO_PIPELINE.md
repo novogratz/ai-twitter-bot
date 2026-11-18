@@ -1,15 +1,23 @@
 # Existing-video pipeline
 
-## Current Account: ultra bangers only
+## Current Account: exceptional Instagram videos alongside news
 
-The 2026-11-08 Account keeps thirteen 90-minute video opportunities, with no
-minimum publication target. News and automatic startup requests are disabled.
-Only exceptional inspected finds may publish automatically through the existing
+The November 17 Account targets three to four videos per day at four Toronto
+opportunities: 08:30, 12:30, 17:30 and 21:30. Verified news and occasional
+discussion questions share the existing publisher; automatic startup requests
+remain disabled. Only exceptional inspected finds may publish through the existing
 publisher. Source and output each need every editorial component at least 9/10
 and normalized editorial quality at least 95/100, excluding age and engagement.
 The full rubric still requires 88/100; fit/entertainment need 19/20, quality 14/15
 and the first-second hook 9/10. Empty windows stay empty. Four owner-selected
 benchmarks guide taste and remain permanent posted memory, never new finds.
+The November 17 owner-supplied X reference is also permanent posted memory;
+its media and public counters were not independently inspected.
+
+Captions use a short supported scene joke and optional blank-line sign-off such
+as `Absolute BANGER 🔥`. Familiar cast aliases are allowed when supported by
+creator attribution. Jensen, Elon, Sam, Dario, Trump, Bill Gates and Mark
+Zuckerberg may qualify; facial appearance alone never supplies identity.
 
 Codex chooses one 8–120 second contiguous excerpt from a source up to five minutes.
 Prefer 15–30 seconds when a complete joke/chorus fits; preserve a strong full
@@ -27,7 +35,7 @@ The operator-owned [brief](../accounts/theaishrink/video_discovery_prompt.md),
 [partial memory seed](../accounts/theaishrink/video_memory.json) feed the existing
 discovery worker. Persistent turns rotate fresh/archive/new-creator searches
 60/30/10, with concept, creator and source-chain lanes. Provider weights favor
-Instagram/Bilibili 40/30; remaining effort uses TikTok 10, RedNote 4, X 5,
+Instagram/Bilibili 70/30; remaining relative weights are TikTok 10, RedNote 4, X 5,
 YouTube 7 and Douyin 4. Cooling/blocked sources yield their turn. Three shared
 research calls per hour and existing daily budgets bound work. One archive pass
 per Toronto day can request up to 120 leads/six queries; ordinary passes use
@@ -35,11 +43,27 @@ per Toronto day can request up to 120 leads/six queries; ordinary passes use
 records bounded search passes, not fabricated exhaustive profile crawling.
 
 Five-minute reserve maintenance refreshes expiring X checks and brings source
-polls forward below one eligible distinct clip. Target inventory is three. Completed negative reviews and exhausted media retries are not reset by
+polls forward below three eligible distinct clips. Target inventory is six. Completed negative reviews and exhausted media retries are not reset by
 maintenance. New editing policy can re-inspect a saved unclaimed source once.
 Owner `shown`/`delivered`/`rejected` memory is permanent; use
 `bin/video.py remember CANDIDATE delivered` only after actual owner delivery.
 Preparation alone does not create a delivery or publication record.
+
+### Instagram preview and normal-page capture
+
+`bin/video.py prepare-preview INSTAGRAM_URL --output /tmp/si-previews` uses the
+normal request/download/model budgets and source/permission/quality gates. It
+preserves the original, inspects actual temporal samples and audio evidence, and
+renders a branded preview only when source review passes. Its local report and
+caption identify any remaining final publication checks. It never queues,
+reserves or publishes a post. Already posted/claimed sources are refused.
+
+Instagram `/p/`, `/reel/` and `/reels/` aliases must preserve the same
+case-sensitive shortcode. A bounded read of the opened normal page's JSON
+scripts can supply the exact video's date, creator, caption and media versions.
+Only matching `code` plus video type and media versions qualify; recommendations
+from other posts do not. Existing CDN, size, date and download validation remain.
+No private endpoint, cookie extraction or invented media URL is used.
 
 The discovery adapter keeps existing candidate field names and adds `handoff`
 inside the same `candidates.document`: version/candidate/cluster/status, public
@@ -100,8 +124,9 @@ unsupported legacy `av…` lead must never cause an early return that blocks lat
 valid candidates. Unsupported links remain leads, not verified media.
 
 The prior November 5 policy used ten two-hour slots and a two-line POV/slogan
-caption. November 7 supersedes both: thirteen 90-minute slots and one grounded,
-output-verified caption naming at least one of the five permitted cast roles. Optional
+caption. November 7 changed both to thirteen 90-minute slots and one grounded
+caption; November 17 replaces that cadence and format with the four windows and
+playful captions described above. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
 five platforms, including X, until revoked. Source subtitles, logos and credits may remain;
@@ -281,13 +306,13 @@ scheduler's overnight pause.
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 05:00, 06:30, 08:00, 09:30, 11:00 |
-| Afternoon | 12:30, 14:00, 15:30, 17:00 |
-| Evening | 18:30, 20:00, 21:30, 23:00 |
+| Morning | 08:30 |
+| Afternoon | 12:30, 17:30 |
+| Evening | 21:30 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. Five to thirteen distinct slots are configurable; this Account uses thirteen
-and `scheduled_daily_cap=13`. Other Accounts retain the default ceiling of eight.
+rules. One to thirteen distinct slots are configurable; this Account uses four
+and `scheduled_daily_cap=4`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -296,7 +321,7 @@ deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
 `protect_primary_windows = true` prioritizes one video at each configured main
-window. This Account has thirteen main windows and no paired slots. If a different
+window. This Account has four main windows and no paired slots. If a different
 configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
 for the next five main windows, including tomorrow morning. Coverage accounts
@@ -467,19 +492,19 @@ artifact transfer. Safari publishing stays on the Reply Mac; do not share
 SQLite over NFS. Automated cross-host telemetry/artifact transport is not
 implemented; same-host telemetry is implemented.
 
-## Connector capability check (2026-11-01)
+## Connector capabilities (updated 2026-11-17)
 
-Inspection of environment/config **names only** found no Instagram, TikTok,
+The November 1 inspection of environment/config **names only** found no Instagram, TikTok,
 Bilibili, RedNote, licensed-provider, X API or video-inspection credentials. No
-live authenticated connector call or test post was made. FFmpeg/ffprobe are
+live authenticated connector call or test post was made during that initial audit. FFmpeg/ffprobe are
 installed; Tesseract and fpcalc are not. Branding uses a Pillow text overlay,
 so this FFmpeg build does not need `drawtext`.
 
 | Adapter | Current status | Exact prerequisite / scope |
 |---|---|---|
-| Instagram Reels | Limited discovery | Codex public-web search and configured creator monitoring (`ai_xiaomu`). Authorized original/feed, upload timestamp and video/music permission are still needed for selection. No Meta API access is assumed. |
+| Instagram Reels | Normal-page capture tested; discovery remains bounded | Codex public-web search and configured creator monitoring. Safari reads the exact shortcode's page-owned video metadata/media, including `/p/` to `/reel/` aliases. The November 17 preview downloaded and inspected a real source; it held on quality. Usage permission and source/final checks remain required. No Meta API access is assumed. |
 | TikTok | Limited discovery | Codex public-web search. Creator feed/original still required; Research Tools are not a commercial-creator workaround. |
-| Bilibili | Limited discovery | Codex public-web search; no private or invented Open Platform endpoints. Authorized original/feed still required. |
+| Bilibili | Normal-page capture implemented | Codex public-web search plus observed ordinary Safari player resources; no private or invented Open Platform endpoints. Usage permission and actual source/output checks remain required. |
 | RedNote/Xiaohongshu | Limited discovery | Codex public-web search. Login/CAPTCHA barriers remain blocked; no claimed public download endpoint. |
 | X publication/history/novelty | Safari | Existing signed-in account and automation access; no API token. Visible native-video frames can supply visual sequence fingerprints when a blob hides its URL. Unreadable/CORS-protected video remains held. |
 | Semantic video/audio/OCR inspection | Implemented | Fresh Codex session, timestamped frames, Apple Vision OCR and local SoundAnalysis. Requires existing Codex login and the one-time helper build below. |
@@ -496,9 +521,9 @@ is falsely labeled operational merely because its class or fixture test exists.
 The account additionally selects `public_search = true` per platform. This is
 permitted public discovery through Codex web search, not authenticated native
 platform access. Search-only results have **unknown upload dates and no download
-or permission assertion**. They are held without consuming media jobs until an
-authorized feed supplies the original and verified timestamp. The later feed
-updates that same candidate instead of creating a duplicate. Related creators
+or permission assertion**. A permitted feed or supported normal-page capture
+must establish original media and a verified timestamp before selection. Later
+evidence updates that same candidate instead of creating a duplicate. Related creators
 remain suggestions, never automatically licensed sources.
 
 Cheap configured feeds retain the 20/10-minute polling cadence. Public searches

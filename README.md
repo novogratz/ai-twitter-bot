@@ -6,14 +6,28 @@ previous account handle. Shared admission and browser confirmation enforce this
 rule; there is no self-repost scheduler. Posting histories remain intact, and the
 rollback does not start or restart the bot.
 
-**Only ultra-high-quality parody videos may publish as originals. No news.**
+**Verified SI news, occasional discussion questions and exceptional Instagram videos.**
+News covers meaningful model releases, CEO/company developments, reported results
+and verified IPO milestones, with a direct source link and no forced BANGER slogan.
+Discussion questions run at most once every 48 hours through the same reviewed
+text outbox. They invite useful opinions and use model families rather than stale
+version numbers. News and questions share the existing seven-text daily ceiling,
+two-hour text spacing and video protections.
+
+The video target is **3–4 distinct bangers/day**, with four Toronto opportunities:
+08:30, 12:30, 17:30 and 21:30. Instagram discovery has priority; the reserve targets
+six clips and warns below three. A short scene joke can end with a blank line and
+“Absolute BANGER 🔥”. Real source/output review and permanent dedup remain required;
+an empty queue cannot supply a guaranteed daily minimum. Self-retweets stay blocked.
+
 The four owner-selected references guide discovery and are saved as already posted.
 Each new source and edited output must clear exceptional editorial review, with
 an immediate opening, usable audio, the exact watermark and permanent dedup.
 Qualified finds still publish automatically through the existing video pipeline;
 empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
-Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
-`NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
+Account disables automatic startup videos. Local `NEWS_ENABLED=1`,
+`NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1` enable the reviewed text
+routes on the next explicitly requested restart. Replies remain enabled.
 
 The November 9 refinement restores warmth as the default: delight, encouragement,
 affection and shared humor can be a whole Reply. Hearts are welcome without an
@@ -112,15 +126,16 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos now have **thirteen daily Toronto slots, every 90 minutes from 05:00 through
-23:00**, as opportunities rather than targets. The Account disables automatic
+Videos now have **four daily Toronto slots, 08:30, 12:30, 17:30 and 21:30**,
+with an advisory target of three to four. The Account disables automatic
 startup requests and reports no minimum original-post target. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
-featuring Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
+featuring Elon Musk, Sam Altman, Dario Amodei, Trump, Jensen Huang, Bill Gates or
+Mark Zuckerberg, with fallback
 up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
 X clips require a known view count of at most 50,000. Matching copies use the
-highest observed view count, with fresh evidence required. Captions use one
-grounded `ANOTHER BANGER 🔥` line with full performer names and a visual joke.
+highest observed view count, with fresh evidence required. Captions use a grounded
+scene joke and optional BANGER sign-off, with supported names or familiar aliases.
 Actual inspection and audio evidence, permanent
 posting memory and confirmed receipts remain required. An empty or inaccessible
 queue is reported as a missed slot, never a successful post.
@@ -132,8 +147,8 @@ toward Instagram and Bilibili. The full rubric retains its 88/100 floor. Ultra m
 and a 9/10 first-second opening in both source selection and output review. Power Rangers-style reveals and complete musical
 performances are supported. Codex selects an 8–120 second excerpt; FFmpeg applies
 the exact cut and watermark, followed by independent opening/audio/output checks.
-The reserve targets three exceptional eligible clips and reports shortages below
-one. YouTube/Douyin discovery supplies leads; media access remains limited.
+The reserve targets six exceptional eligible clips and reports shortages below
+three. YouTube/Douyin discovery supplies leads; media access remains limited.
 
 On startup, the supervisor also replaces verified discovery/media workers left
 running older code or configuration, waiting for their role locks to release.
@@ -527,22 +542,24 @@ held; they never silently switch to replying. Ordinary worker starts do not
 create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
-The live Account opts into thirteen video windows at 90-minute intervals from
-05:00 through 23:00 for exceptional finds, with news and automatic startup
-requests disabled. Replies retain their existing engine; interactions now pause from midnight to 04:30,
+The live Account uses four video windows at 08:30, 12:30, 17:30 and 21:30 Toronto,
+with a target of three to four exceptional finds per day alongside verified news
+and occasional discussion posts. Automatic startup requests remain disabled.
+Replies retain their existing engine; interactions pause from midnight to 04:30,
 while independent video discovery/media workers can continue overnight.
 
-All thirteen windows have inventory priority. The engine can protect each main
+All four windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
-`video.py status` reports coverage and shortages. The three-clip buffer is
+`video.py status` reports coverage and shortages. The six-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.
 
 Video posts use the existing **Safari/AppleScript** composer and shared Reply
 browser lock. Discovery and media processing remain separate processes; the
 publishing job runs in `main.py`'s dedicated executor. No X API token is needed.
 
-This Account's captions use one punchy English **ANOTHER BANGER 🔥** line with
-full verified performer names, without optional source/disclosure footers. The
+This Account's captions use a short, grounded English scene joke, optionally
+followed by a blank line and **Absolute BANGER 🔥**. Source-supported familiar
+names and aliases are allowed, without optional source/disclosure footers. The
 operator's standing permission covers these platforms and their music until
 revoked; provenance and synthetic-parody evidence stay in the private records.
 Source subtitles/credits may remain under the configured retention policy.
@@ -553,8 +570,18 @@ It reuses the existing Codex login/model. Build its local helper once with
 `uv run --with-requirements requirements-video.txt python bin/video.py prepare-inspector`.
 Public-web discovery can identify candidates on all four platforms. Bilibili's
 normal signed-in Safari player can supply verified timestamps and actual media
-URLs to the independent downloader. Other platforms still need permitted media
-access through a feed/provider; search results alone never qualify a video.
+URLs to the independent downloader. Instagram's normal page also supplies exact
+shortcode-bound video metadata and media, including `/p/` to `/reel/` redirects.
+Search results alone never qualify a video. To download, inspect and prepare one
+unpublished Instagram preview without adding a publication claim:
+
+```bash
+uv run --with-requirements requirements-video.txt python bin/video.py prepare-preview INSTAGRAM_URL --output /tmp/si-previews
+```
+
+The report distinguishes a prepared preview from a quality or access hold. It
+never publishes or queues a post; final exposure/history and publication checks
+still apply.
 See [setup, connector status, tests and exact
 activation/rollback commands](docs/VIDEO_PIPELINE.md). The explicit `probe-upload`
 command tests attachment and discards its draft without publishing.

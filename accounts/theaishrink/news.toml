@@ -7,17 +7,21 @@ model_calls_per_run = 8
 model_calls_per_day = 144
 requests_per_run = 80
 requests_per_day = 1200
-score_min = 85
+score_min = 80
 backup_score_min = 90
 video_gap_minutes = 30
+discussion_interval_hours = 48
+discussion_topics = ["model_choice", "coding_agents", "creative_workflows", "local_models", "video_making", "human_judgment"]
+discussion_models = ["Grok", "Claude", "GPT", "Gemini", "DeepSeek", "Qwen", "Kimi"]
 # Optional existing local recommendation/rejection and posting-queue records.
-history_files = ["../../growth/original_post_decisions.json"]
+history_files = ["news_owner_history.json", "../../growth/original_post_decisions.json"]
 queue_files = ["../../growth/opportunity_queue.json"]
 evidence_hosts = [
   "x.com", "www.x.com", "twitter.com", "github.com", "raw.githubusercontent.com",
   "arxiv.org", "export.arxiv.org", "www.reuters.com", "www.bloomberg.com",
   "news.ycombinator.com", "www.reddit.com", "reddit.com", "research.google",
   "research.nvidia.com", "developer.nvidia.com", "machinelearning.apple.com",
+  "nvidianews.nvidia.com", "investor.nvidia.com", "www.sec.gov", "www.nasdaq.com", "www.nyse.com",
   "www.microsoft.com", "blogs.microsoft.com", "www.amazon.science",
   "about.fb.com", "ai.meta.com", "openai.com", "www.anthropic.com",
   "docs.x.ai", "docs.anthropic.com", "platform.claude.com", "developers.openai.com",
@@ -28,6 +32,8 @@ evidence_hosts = [
 search_queries = [
   "Elon Musk xAI Grok major model release capabilities official announcement",
   "OpenAI Anthropic Google DeepMind major model release research agents",
+  "Anthropic OpenAI xAI IPO filing pricing starts trading official company announcement SEC",
+  "AI company CEO appointment departure leadership NVIDIA earnings results official announcement",
   "model agent security incident controlled evaluation attack original research corroboration",
   "Meta NVIDIA Microsoft Apple Amazon Hugging Face chips infrastructure coding image video audio breakthrough",
   "robotics Figure Boston Dynamics Unitree Agility extraordinary demonstration original",

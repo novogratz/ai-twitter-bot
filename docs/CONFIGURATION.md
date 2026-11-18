@@ -170,8 +170,8 @@ spacing, admission, scheduler concurrency nor the advisory daily targets.
 a newly selected date still requires the Operator's next explicit restart.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
-Account uses thirteen 90-minute slots from 05:00 through 23:00 Toronto,
-`scheduled_daily_cap=13`, `startup_on_boot=false`, `preferred_age_hours=72` and
+Account uses four slots at 08:30, 12:30, 17:30 and 21:30 Toronto,
+`scheduled_daily_cap=4`, advisory `daily_target_min=3`, `startup_on_boot=false`, `preferred_age_hours=72` and
 `max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
 TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
 Ordinary starts create no startup request. Publication still uses durable claims,
@@ -179,7 +179,10 @@ inspection, dedup and existing spacing. The [README](../README.md) links the
 video pipeline guide and operating commands.
 
 The live video configuration enables `auto_edit`, `bangers_only`, `ultra_bangers_only`,
-`one_line_caption` and `adaptive_discovery`. It reads the account-local
+`playful_caption` and `adaptive_discovery`; `one_line_caption=false`. Playful
+captions allow one grounded scene sentence and an optional separate sign-off,
+with source-supported cast aliases. The two caption modes are mutually exclusive.
+It reads the account-local
 `discovery_prompt_file`, `query_bank_file` and `discovery_memory_file` on research
 passes; paths must resolve inside the Account folder. Source duration is bounded
 by `source_max_duration_seconds=300`, the selected excerpt by `edit_max_seconds=120`.
@@ -190,16 +193,22 @@ at least 95/100, fit/entertainment 19/20, technical quality 14/15 and
 Ultra mode requires automatic editing and the ordinary banger gates. The original raw
 ranking retains its unknown components. `discovery_calls_per_hour=3` is shared
 across sources and still subject to daily Codex/request budgets. Platform weights
-are 40/30/10/4/5/7/4 for Instagram/Bilibili/TikTok/RedNote/X/YouTube/Douyin;
-unavailable/cooling providers are skipped. `ready_reserve_min=1` warns below the
-existing `buffer_target=3`; it never waives eligibility. Matching X copies use
+are 70/30/10/4/5/7/4 for Instagram/Bilibili/TikTok/RedNote/X/YouTube/Douyin
+(relative weights, not percentages); unavailable/cooling providers are skipped.
+`ready_reserve_min=3` warns below `buffer_target=6`; it never waives eligibility. Matching X copies use
 `x_max_views=50000` and `x_reach_max_age_seconds=21600`. Exact X source metrics
 retain the tighter one-hour check. These settings create no extra publisher.
 
 ## Policy ceilings
 
-The live Account disables news discovery and publication with `NEWS_ENABLED=0`
-and `NEWS_AUTO_PUBLISH=0`; existing news history and uncertain claims remain.
+The November 17 local configuration enables `NEWS_ENABLED=1`,
+`NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1`. Code and settings take
+effect on the next explicitly requested restart. The text ceiling remains seven
+per Toronto day and the text gap remains two hours, with protected video windows.
+Account `news.toml` sets `discussion_interval_hours=48` (minimum allowed 24),
+`discussion_topics` and exact unversioned `discussion_models`. Questions use the
+same durable outbox, independent review and publisher as news; pending news goes
+first. News and discussion history and uncertain claims remain permanent.
 
 `bin/run.sh` has a [launcher-only startup switch](OPERATIONS.md#start) (default
 `0`, allowed `0`/`1`), passed as `main.py --startup-publications`. It does not enable
@@ -309,6 +318,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `NEWS_WEBHOOK_TOKEN` | str | blank |  | Optional bearer credential for the configured news draft webhook; never an X/email credential. |
 | `NEWS_ENABLED` | 0 or 1 | `0` |  | Run hourly verified news discovery with the normal bot; independent of video mode. |
 | `NEWS_AUTO_PUBLISH` | 0 or 1 | `0` |  | Explicit operator opt-in to publish verified main news picks through Safari. Backups remain drafts. |
+| `DISCUSSION_POSTS_ENABLED` | 0 or 1 | `0` |  | Prepare occasional reviewed SI discussion questions in the news outbox; shares text limits and requires automatic news publishing to send. |
 | `NEWS_MIN_SECONDS_BETWEEN_POSTS` | int | `7200` | floor `1200` | Minimum gap between news publications, including uncertain attempts. |
 | `MAX_ORIGINALS_PER_DAY` | int | `8` | floor `0`, ceiling `8` | Originals per Toronto day. |
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |

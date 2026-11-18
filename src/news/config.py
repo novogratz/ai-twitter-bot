@@ -27,6 +27,9 @@ class NewsConfig:
     score_min: int = 85
     backup_score_min: int = 90
     video_gap_minutes: int = 30
+    discussion_interval_hours: int = 48
+    discussion_topics: list = field(default_factory=list)
+    discussion_models: list = field(default_factory=list)
     delivery_attempts: int = 5
     prompt_file: str = "news_prompt.md"
     history_files: list = field(default_factory=list)
@@ -47,6 +50,10 @@ class NewsConfig:
         if not (self.retries <= 3 and self.codex_timeout_seconds <= 300 and self.request_timeout <= 60
                 and self.candidates_per_run <= 12 and 80 <= self.score_min <= self.backup_score_min <= 100):
             raise ValueError("news time, retry, candidate or quality bounds exceeded")
+        if self.discussion_interval_hours < 24:
+            raise ValueError("discussion posts must be at least 24 hours apart")
+        if any(not isinstance(v, str) or not v.strip() for v in self.discussion_topics + self.discussion_models):
+            raise ValueError("discussion topics and model families must be nonempty text")
         for source in self.sources:
             if set(source) != {"name", "url", "kind", "role", "owner", "path_prefix"}:
                 raise ValueError("news sources need name/url/kind/role/owner/path_prefix")

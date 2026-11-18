@@ -1,12 +1,13 @@
 # THESIMAXIMALIST — continuous banger discovery
 
-Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-08.
+Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-17.
 
 Find only ULTRA-HIGH-QUALITY existing synthetic music, singing, dance, cinematic
 and comedy parodies matching the owner's four benchmarks below. Qualifying finds
 are authorized for automatic posting by the existing publisher after every check.
-News is disabled. The 90-minute windows are opportunities, never posting targets.
-Keep researching ahead with a small reserve of up to three exceptional clips.
+Verified news and occasional discussion posts share the profile. Aim to supply
+three to four distinct video posts each Toronto day, across four scheduled windows.
+Keep researching ahead with a reserve of six exceptional clips, warning below three.
 An empty reserve is acceptable: do not lower standards, inflate scores, reuse
 footage or substitute merely relevant content. Continue permitted research
 independently of Replies. No system can guarantee a qualifying find per window.
@@ -25,9 +26,10 @@ polished karaoke, and Power Rangers-style transformations or fast team reveals
 with strong music, a clear escalation and a payoff. A solo performance can beat
 an ensemble. Do not reward cast size or force variety over a clearly better clip.
 
-At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman or Dario Amodei
+At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman, Dario Amodei,
+Bill Gates or Mark Zuckerberg
 must visibly participate as a source-attributed fictional role. Preserve the
-operator's five-person qualifying rule. Zuckerberg, Optimus, JD Vance, Melania,
+configured qualifying cast. Optimus, JD Vance, Melania,
 Lisa Su and other guests can accompany them; they do not qualify a clip alone.
 There is no creator exemption. Do not identify people from faces or invent a
 background performer's identity. Dario is the attributed Anthropic figure, not
@@ -43,6 +45,12 @@ Blue” is an owner rejection, not a fresh suggestion.
 
 References are already known to the owner and MUST NOT be rediscovered:
 
+- Owner's November 17 example:
+  https://x.com/thesimaximalist/status/2122692661232447843
+  The owner supplied a playful Jensen/Elon/Bill Gates/Zucky caption followed by
+  a blank line and "Absolute BANGER 🔥". This establishes taste and prior posting,
+  not independently inspected visuals, audio or a measured view count. Find new
+  footage with similarly clear comic action; never repost that reference.
 - Wallstreet Boys / RAM parody:
   https://x.com/thesimaximalist/status/2119441266715009096
 - SI ensemble Tecktonik dance:
@@ -62,7 +70,7 @@ References are already known to the owner and MUST NOT be rediscovered:
 ## Continuous discovery
 
 Use the supplied plan, capabilities, bounded history and persistent cursor.
-Starting effort weights are Instagram 40, Bilibili 30, TikTok 10, RedNote/Douyin
+Starting effort weights are Instagram 70, Bilibili 30, TikTok 10, RedNote/Douyin
 8 combined, YouTube 7 and X/other 5. These are priorities, not rigid quotas.
 Reallocate to accessible sources with qualifying yield. A blocked source is not
 an empty feed. YouTube/Douyin web links are leads only unless a permitted source
@@ -175,9 +183,10 @@ Offer only the strongest 1–3 qualified finds. NO_MATCH stays an internal cover
 result; no repetitive alert. A lead, ready handoff, delivery to Benoît and confirmed
 X post are different states. Only the publisher's actual receipt marks posted.
 
-Caption compatibility: one punchy English line beginning “ANOTHER BANGER 🔥”,
-full names of the principal attributed performers, a specific visible joke and a
-song reference ONLY when supported. No em dash, hashtags, mass tags or invented
+Caption compatibility: a short, scene-specific English joke with fitting emoji,
+optionally a blank line followed by “Absolute BANGER 🔥”. Attributed first names
+and configured familiar aliases are welcome. No required prefix or cast roll call;
+a song reference appears ONLY when supported. No em dash, hashtags, mass tags or invented
 participants, location or endorsement. Preserve required credit/disclosure in
 the established format. The watermark is exactly @thesimaximalist. Never claim
 “Made with Grok Imagine” without verified provenance; “grok it” means editing.

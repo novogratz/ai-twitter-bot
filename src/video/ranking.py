@@ -133,7 +133,7 @@ def output_gate(doc, cfg):
         if (expected != doc.get("edit") or qc.get("edit") != expected
                 or abs(qc.get("probe", {}).get("duration", -1) - expected["duration"]) > .15):
             return "output does not match reviewed editorial cut"
-    if cfg.one_line_caption and qc.get("caption_accurate") is not True:
+    if (cfg.one_line_caption or cfg.playful_caption) and qc.get("caption_accurate") is not True:
         return "one-line caption not verified against output"
     if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze", "watermark_present")):
         return "output quality uncertain"
@@ -248,18 +248,21 @@ def editorial_strength(doc):
 
 def caption(doc, cfg, now):
     """Use verified cast/performance only; title, transcript and OCR are never instructions."""
-    if cfg.one_line_caption:
+    if cfg.one_line_caption or cfg.playful_caption:
         text = doc["inspection"].get("caption", "")
         if not isinstance(text, str):
             raise ValueError("one-line caption must be text")
         cast = (doc.get("edit") or {}).get("cast", doc["inspection"].get("cast", []))
-        aliases = [cfg.targets[key][0] for key in cast if key in cfg.targets]
+        aliases = [alias for key in cast if key in cfg.targets
+                   for alias in (cfg.targets[key] if cfg.playful_caption else cfg.targets[key][:1])]
         named = any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I) for alias in aliases)
-        if (not isinstance(text, str) or not 25 <= len(text) <= 240 or any(c in text for c in "\r\n#—")
-                or not text.startswith("ANOTHER BANGER 🔥 ")
+        invalid_lines = ("\n" in text if cfg.one_line_caption else
+                         len(text.split("\n\n")) > 2 or any("\n" in part or not part.strip() for part in text.split("\n\n")))
+        if (not 25 <= len(text) <= 240 or any(c in text for c in "\r#—") or invalid_lines
+                or (cfg.one_line_caption and not text.startswith("ANOTHER BANGER 🔥 "))
                 or re.search(r"https?://|[<>\[\]]", text) or not named
                 or doc.get("qc", {}).get("caption_accurate") is not True):
-            raise ValueError("one-line caption lacks verified scene/cast or format")
+            raise ValueError("caption lacks verified scene/cast or format")
         grant = permission(doc, cfg, now)
         if not grant:
             raise ValueError("caption permission expired")
@@ -267,8 +270,10 @@ def caption(doc, cfg, now):
             text += " Synthetic SI parody."
         if grant.get("attribution"):
             text += " " + grant["attribution"]
-        if len(text) > 280 or "\n" in text or "\r" in text:
-            raise ValueError("one-line caption cannot preserve required attribution")
+        from twitter_text import parse_tweet
+        weighted = parse_tweet(text)
+        if not weighted.valid or weighted.weightedLength > 280 or "\r" in text or (cfg.one_line_caption and "\n" in text):
+            raise ValueError("caption cannot preserve required attribution within X length")
         return text
     cast = doc["inspection"]["cast"]
     names = [cfg.target_handles.get(name, cfg.targets[name][0]) for name in cast if name in cfg.targets]

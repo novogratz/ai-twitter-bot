@@ -8,7 +8,8 @@ def policy_revision(cfg):
     return hashlib.sha256(json.dumps({"version": 2, "targets": cfg.targets, "watermark": cfg.watermark,
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
-        "caption": cfg.one_line_caption, "ultra_bangers": cfg.ultra_bangers_only}, sort_keys=True).encode()).hexdigest()
+        "caption": cfg.one_line_caption, "playful_caption": cfg.playful_caption,
+        "ultra_bangers": cfg.ultra_bangers_only}, sort_keys=True).encode()).hexdigest()
 
 
 def plan(evidence, info, cfg, digest):

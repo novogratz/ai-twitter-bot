@@ -67,6 +67,35 @@ def admit(store, cfg, ident, now):
     if payload["role"] != "main":
         raise ValueError("only the main pick is authorized for automatic publication")
     story = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (row["story"],))[0]["document"])
+    if story.get("post_kind") == "discussion":
+        from . import discussion
+        discussion.admit(store, cfg, story, ident, payload["tweet"], now)
+    else:
+        _news_review(story, payload, now, cfg)
+    if store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')"):
+        raise Deferred("previous news send unresolved")
+    local = datetime.fromtimestamp(now, editor.TZ)
+    midnight = local.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    used = store.rows("SELECT COUNT(*) AS n FROM outbox WHERE state='published' AND acknowledged>=?", (midnight,))[0]["n"]
+    if used >= config.posts_ceiling():
+        raise Deferred("text daily ceiling reached")
+    last = store.rows("SELECT MAX(acknowledged) AS at FROM outbox WHERE state='published'")[0]["at"]
+    if last and now - last < settings.get("NEWS_MIN_SECONDS_BETWEEN_POSTS"):
+        raise Deferred("text publication spacing")
+    why = video_refusal(cfg, now)
+    if why:
+        raise Deferred(why)
+    ok, why = action_guard.can_post(action_guard.POST, news=True)
+    if not ok:
+        raise Deferred(why)
+    from ..editorial.slot_journal import FileJournal
+    why = action_guard.profile_submission_refusal(FileJournal(), local)
+    if why:
+        raise Deferred(why)
+    return payload
+
+
+def _news_review(story, payload, now, cfg):
     if not all(story.get("final_review", {}).get(k) is True for k in editor.REVIEW_FLAGS):
         raise ValueError("missing independent final approval")
     if not 0 <= now - story.get("verified_at", 0) <= 86400:
@@ -79,27 +108,6 @@ def admit(store, cfg, ident, now):
         raise ValueError("reviewed evidence changed")
     if editor.gate(story, story["evidence"], [], story["window_start"], now, cfg)[0] != "verified":
         raise ValueError("news evidence no longer passes verification")
-    if store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')"):
-        raise Deferred("previous news send unresolved")
-    local = datetime.fromtimestamp(now, editor.TZ)
-    midnight = local.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
-    used = store.rows("SELECT COUNT(*) AS n FROM outbox WHERE state='published' AND acknowledged>=?", (midnight,))[0]["n"]
-    if used >= config.posts_ceiling():
-        raise Deferred("news daily ceiling reached")
-    last = store.rows("SELECT MAX(acknowledged) AS at FROM outbox WHERE state='published'")[0]["at"]
-    if last and now - last < settings.get("NEWS_MIN_SECONDS_BETWEEN_POSTS"):
-        raise Deferred("news publication spacing")
-    why = video_refusal(cfg, now)
-    if why:
-        raise Deferred(why)
-    ok, why = action_guard.can_post(action_guard.POST, news=True)
-    if not ok:
-        raise Deferred(why)
-    from ..editorial.slot_journal import FileJournal
-    why = action_guard.profile_submission_refusal(FileJournal(), local)
-    if why:
-        raise Deferred(why)
-    return payload
 
 
 class SafariDelivery:
@@ -140,6 +148,8 @@ def confirmed(store, ident, url, now, *, reconcile=False):
         if not changed:
             return None
         db.execute("UPDATE stories SET state='published' WHERE id=?", (ident,))
-        from .startup import confirmed as confirm_startup
-        confirm_startup(db, ident, url, now)
+        story = db.execute("SELECT document FROM stories WHERE id=?", (ident,)).fetchone()
+        if not story or json.loads(story["document"]).get("post_kind") != "discussion":
+            from .startup import confirmed as confirm_startup
+            confirm_startup(db, ident, url, now)
     return receipt

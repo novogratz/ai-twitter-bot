@@ -1,5 +1,40 @@
 # Editorial policy — November 17, 2026
 
+## Verified news, discussion questions and Instagram videos
+
+The Operator restores original publishing in three forms. Hourly news discovery
+covers meaningful model releases, availability, AI-company leadership changes,
+reported financial results and actual IPO milestones. The Account's news-value
+threshold is 80/100. Fetched evidence, dates, numbers, attribution, event dedup,
+independent review and uncertain-send holds remain mandatory. A filing, pricing
+and start of trading are different events. Write a clear factual hook with an
+optional witty observation and one source URL; BANGER is no longer compulsory.
+
+Occasional discussion posts ask one subjective, on-topic question and optionally
+list configured model families. They make no release/capability assertions or
+unverified model-version claims. Drafting and separate review share existing model
+budgets; permanent exact-question memory and recent-paraphrase checks prevent
+recycling. One automatic discussion is eligible per 48 elapsed hours. News and
+already pending work take precedence. These posts share the durable news outbox,
+seven-text daily ceiling, two-hour spacing, video protection, content checks,
+Safari ownership and receipt requirement. No second publisher is introduced.
+
+Video discovery prioritizes Instagram and aims for three to four distinct bangers
+per Toronto day. Four opportunities are 08:30, 12:30, 17:30 and 21:30; four is the
+scheduled ceiling. Reserve target six, warning below three. Bill Gates and Mark
+Zuckerberg join the source-attributed fictional cast. The existing ultra-quality
+review, real audio/temporal evidence, original preservation, watermark, usage
+permissions and permanent novelty checks remain. The target cannot guarantee
+eligible footage or waive a hold. Playful captions describe the actual scene in
+one short paragraph, optionally followed by a blank line and a BANGER sign-off.
+Supported first names/aliases are welcome; full-name roll calls are not required.
+Output review must validate the exact caption against the finished excerpt.
+
+The operator's supplied news, discussion and own-video examples become known
+history, not new candidates or fabricated X receipts. Our own posts must never
+be retweeted. This implementation enables configuration for the next explicitly
+requested restart; preparation/testing does not itself restart the bot or publish.
+
 ## November 10 rollback and permanent own-repost prohibition
 
 The Operator restores the code and policy available on November 10, superseding

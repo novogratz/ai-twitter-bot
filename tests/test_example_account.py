@@ -133,7 +133,10 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     shown = dry_run({})
     assert shown["startup_interactions_held"] is False
     assert set(shown) == set(PRE_187) | NEW_KEYS | {
-        "reply_volume_boost_date", "reply_discovery_generation_budgets"}
+        "reply_volume_boost_date", "reply_discovery_generation_budgets",
+        "discussion_posts", "advisory_video_targets"}
+    assert shown["discussion_posts"] is False
+    assert shown["advisory_video_targets"] == []
     assert shown["reply_volume_boost_date"] == ""
     assert shown["reply_discovery_generation_budgets"] == {
         "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,

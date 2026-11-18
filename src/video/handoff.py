@@ -12,7 +12,7 @@ def build(store, row, doc, cfg, now):
     if any(matches_history(doc, old) for old in history):
         personal = "already in confirmed account history"
     refusal = personal or ranking.gate(doc, cfg, now, final=True)
-    if cfg.one_line_caption and not refusal:
+    if (cfg.one_line_caption or cfg.playful_caption) and not refusal:
         try:
             ranking.caption(doc, cfg, now)
         except ValueError as exc:
