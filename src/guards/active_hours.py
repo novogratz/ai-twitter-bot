@@ -1,6 +1,8 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
 from datetime import date, datetime, time, timedelta
 from functools import wraps
+from contextlib import contextmanager
+from contextvars import ContextVar
 import hashlib
 import threading
 from zoneinfo import ZoneInfo
@@ -15,6 +17,37 @@ _BREAK_INTERVAL_HOURS = 3
 _FIRST_BREAK_HOUR = 7  # Optional breaks start only after three waking hours.
 
 _STOP = threading.Event()
+_VIDEO_IO = ContextVar("early_video_io", default=None)
+
+
+def early_video_bounds(now):
+    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    return (local.replace(hour=5, minute=55, second=0, microsecond=0),
+            local.replace(hour=6, minute=5, second=0, microsecond=0))
+
+
+@contextmanager
+def early_video_io(enabled=False):
+    """Video workers alone may use shared I/O in the bounded 06:00 window.
+
+    General activity/admission stays 07:00–23:00. The context expires in real
+    time, cannot survive into another day, and never overrides a stop request.
+    """
+    token = _VIDEO_IO.set(early_video_bounds(now_local()) if enabled else None)
+    try:
+        yield
+    finally:
+        _VIDEO_IO.reset(token)
+
+
+def _video_io_active(now):
+    bounds = _VIDEO_IO.get()
+    return bool(bounds and bounds[0] <= now < bounds[1])
+
+
+def may_video_act(now=None):
+    now = now or now_local()
+    return not stop_requested() and (is_active(now) or _video_io_active(now)) and break_until(now) is None
 
 
 def request_stop():
@@ -103,7 +136,7 @@ def next_wake(now: datetime | None = None) -> datetime:
 
 def require_active() -> None:
     now = now_local()
-    if stop_requested() or not is_active(now):
+    if stop_requested() or not (is_active(now) or _video_io_active(now)):
         raise OutsideActiveHours(f"Bot asleep: active {window_label()}")
     end = break_until(now)
     if end is not None:
@@ -137,6 +170,8 @@ def bedtime(now: datetime) -> datetime:
 
 def seconds_until_bedtime() -> float:
     now = now_local()
+    if _video_io_active(now):
+        return max(0.0, (_VIDEO_IO.get()[1] - now).total_seconds())
     if not is_active(now):
         return 0.0
     return max(0.0, (bedtime(now) - now).total_seconds())
@@ -145,6 +180,8 @@ def seconds_until_bedtime() -> float:
 def seconds_until_pause() -> float:
     """Model requests stop at the next break or bedtime, whichever comes first."""
     now = now_local()
+    if _video_io_active(now):
+        return max(0.0, (_VIDEO_IO.get()[1] - now).total_seconds())
     if not is_active(now) or break_until(now) is not None:
         return 0.0
     end = bedtime(now)

@@ -17,8 +17,19 @@ def local(now):
     return now.astimezone(ZONE)
 
 
-def eligible(now):
-    return active_hours.is_active(local(now))
+def eligible(now, cfg=None):
+    stamp = local(now)
+    start, end = active_hours.early_video_bounds(stamp)
+    return active_hours.is_active(stamp) or bool(cfg and cfg.early_video_window and start <= stamp < end)
+
+
+def slot_bounds(due, cfg):
+    """Real submission interval; the durable slot keeps its nominal clock/ID."""
+    at = datetime.fromtimestamp(due, ZONE)
+    if cfg.early_video_window and at.time().replace(tzinfo=None) == time(6):
+        start, end = active_hours.early_video_bounds(at)
+        return start.timestamp(), end.timestamp()
+    return due, due + cfg.grace_seconds
 
 
 def clocks(cfg):
@@ -27,7 +38,8 @@ def clocks(cfg):
         raise ValueError("one to the configured daily cap of unique video windows with paired windows drawn from them are required")
     for value in cfg.windows:
         parsed = time.fromisoformat(value)
-        if parsed.second or parsed.microsecond or parsed.tzinfo or parsed < active_hours.WAKE:
+        early = cfg.early_video_window and parsed == time(6)
+        if parsed.second or parsed.microsecond or parsed.tzinfo or (parsed < active_hours.WAKE and not early):
             raise ValueError("video slots must be minute precision during " + active_hours.window_label())
         minute = parsed.hour * 60 + parsed.minute
         minutes.append(minute)

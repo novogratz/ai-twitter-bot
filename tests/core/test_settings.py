@@ -103,8 +103,8 @@ def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch)
         assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 0
         assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 6
         assert settings.get("DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE") == 2
-        assert settings.get("MAX_REPLIES_PER_DAY") == 120
-        assert settings.get("MIN_SECONDS_BETWEEN_REPLIES") == 480
+        assert settings.get("MAX_REPLIES_PER_DAY") == 100
+        assert settings.get("MIN_SECONDS_BETWEEN_REPLIES") == 600
         assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is False
         assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 0
 

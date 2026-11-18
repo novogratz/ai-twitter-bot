@@ -1,5 +1,18 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-18 — Five Instagram slots and refreshed meme captions
+
+The Operator requests 06:00 ± five minutes, 09:00, 12:00, 17:00 and 21:00
+videos, Instagram-only sources, the strongest unseen eligible clip, and a new
+caption style. The 06:00 slot uses a bounded video-only activity context so
+ordinary Replies/news retain 07:00–23:00. Deadlines prevent a late morning
+catch-up. New source/output caption reviews replace recurring BANGER sign-offs
+with varied scene-specific jokes, preserving attribution and permanent history.
+The Reply ceiling becomes 100 with ten-minute spacing, retaining independent
+review for both technical and creative conversation. News format/windows and
+the Elon-only two-repost cap remain. PR, merge, push and release are authorized;
+starting/restarting the live main process remains a separate explicit request.
+
 ## 2026-11-18 — Substantive content review
 
 The Operator asks for sharper AI topics and useful contributions. Inspection

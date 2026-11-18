@@ -61,7 +61,12 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         options = {}
         if first_seconds is not None:
             options["next_run_time"] = datetime.now(timezone.utc) + timedelta(seconds=first_seconds)
-        scheduler.add_job(awake_job(fn), trigger=IntervalTrigger(minutes=minutes),
+        if job_id == "video_health_job":
+            from src.video.workers import awake_video_job
+            wrapped = awake_video_job(fn)
+        else:
+            wrapped = awake_job(fn)
+        scheduler.add_job(wrapped, trigger=IntervalTrigger(minutes=minutes),
                           id=job_id, executor=executor, **options)
 
     if not reply_only and settings.get("VIDEO_ENABLED"):
@@ -222,6 +227,7 @@ def main():
                                      and "elonmusk" not in account.own_handles() else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),
                           "slots": _main_slots(),
+                          "early_video_window": ["05:55", "06:05"] if video_cfg and video_cfg.early_video_window else [],
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),
                           "startup_post": (("automatic video request on start; at most one extra per Toronto day"
                                             if video_cfg.startup_on_boot else "explicit persistent video activation only")
@@ -309,9 +315,9 @@ def main():
                     else:
                         log.info("[HOURS] Awake. Editorial posts and conversations resumed.")
                 else:
-                    # All interaction jobs still have awake_job guards. Keep
-                    # only the public news reader running during the night.
-                    if settings.get("NEWS_ENABLED") and not args.reply_only:
+                    # Guards keep ordinary jobs asleep. The video worker has a
+                    # separate, bounded early window; the scheduler must tick.
+                    if (settings.get("NEWS_ENABLED") or settings.get("VIDEO_ENABLED")) and not args.reply_only:
                         scheduler.resume()
                     else:
                         scheduler.pause()

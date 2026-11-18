@@ -101,9 +101,9 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.engagement_niche_only
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
     assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
-                             "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 480,
-                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 100,
-                             "REPLY_DAILY_TARGET_MAX": 120, "REPLY_PREFERRED_MIN_LIKES": 0,
+                             "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 600,
+                             "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 0,
+                             "REPLY_DAILY_TARGET_MAX": 100, "REPLY_PREFERRED_MIN_LIKES": 0,
                              "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
                              "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
                              "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,
@@ -111,7 +111,7 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
                              "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
                              "DIRECT_REPLY_MAX_PER_CYCLE": 1,
                              "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 1,
-        "MAX_REPLIES_PER_DAY": 120, "REPLY_MAX_AGE_SECONDS": 1800,
+        "MAX_REPLIES_PER_DAY": 100, "REPLY_MAX_AGE_SECONDS": 1800,
         "REPLY_WATCHED_MAX_AGE_SECONDS": 300, "REPLY_WATCHED_DAILY_CAP": 2,
         "WATCH_ENGAGEMENT_REQUIRES_REPLY": True, "REPLY_DISCUSSIONS_ONLY": True,
         "REPLY_PREFER_NEW_AUTHORS": True}

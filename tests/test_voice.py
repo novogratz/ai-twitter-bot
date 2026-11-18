@@ -16,10 +16,10 @@ def test_selective_warm_voice_requires_evidence_and_honest_identity(name):
     assert "empty applause" in text and "unseen craft" in text
     assert all(word in text for word in ("inference", "evaluation", "gpus", "quantization"))
     assert "english only" in text and "substitute si for generic ai" in text
-    assert "100–120 replies" in text and "hard maximum of 120" in text
-    assert "at least eight minutes" in text and "art or memes" in text
+    assert "at most 100 replies" in text
+    assert "at least ten minutes" in text and "art or memes" in text
     assert "at most two replies" in text and "five minutes" in text
-    assert "09:00, 12:00, 17:00, 20:00" in text
+    assert "06:00, 09:00, 12:00, 17:00, 21:00" in text
     assert "news and automatic startup posts are disabled" not in text
 
 

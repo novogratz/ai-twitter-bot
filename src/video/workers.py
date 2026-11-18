@@ -160,10 +160,16 @@ def seed_jobs(store, cfg, now):
 
 def run_once(role, store, cfg, owner, *, now=None):
     from ..guards import active_hours
+    with active_hours.early_video_io(cfg.early_video_window):
+        return _run_once(role, store, cfg, owner, now=now)
+
+
+def _run_once(role, store, cfg, owner, *, now=None):
+    from ..guards import active_hours
     now = now if now is not None else time.time()
     if store.meta("shutdown", False):
         return "shutdown"
-    if not active_hours.may_act():
+    if not active_hours.may_video_act():
         return "sleeping"
     store.heartbeat(role, owner, now)
     if role in ("publisher", "discovery"):
@@ -184,8 +190,8 @@ def run_once(role, store, cfg, owner, *, now=None):
                 # Leave this scheduler free to reserve/upload when the clock
                 # turns. A routine archive read must not straddle a ready slot.
                 return result
-            from ..guards.active_hours import may_act
-            if may_act() and store.meta("next_browser_read", 0) <= now:
+            from ..guards.active_hours import may_video_act
+            if may_video_act() and store.meta("next_browser_read", 0) <= now:
                 from .startup import waiting_reason
                 # Explicit video-first startup already holds interactions. Finish
                 # its bounded reads promptly; ordinary running keeps Reply gaps.
@@ -207,7 +213,7 @@ def run_once(role, store, cfg, owner, *, now=None):
         job = store.claim("discovery", owner, now, cfg)
         if not job:
             return "idle"
-        interval = cfg.day_poll_seconds if schedule.eligible(schedule.utc_now()) else cfg.night_poll_seconds
+        interval = cfg.day_poll_seconds if schedule.eligible(schedule.utc_now(), cfg) else cfg.night_poll_seconds
         try:
             result = connectors.discover(store, job["item"], now, cfg)
             store.finish(job, time.time(), repeat=interval)
@@ -636,6 +642,24 @@ class Supervisor:
         if self.browser_role is not None:
             self.browser_role.__exit__(None, None, None)
             self.browser_role = None
+
+
+def awake_video_job(fn):
+    from functools import wraps
+    from ..guards import active_hours
+    @wraps(fn)
+    def run(*args, **kwargs):
+        if not config.enabled():
+            return None
+        with active_hours.early_video_io(config.load().early_video_window):
+            if not active_hours.may_video_act():
+                return None
+            try:
+                return fn(*args, **kwargs)
+            except active_hours.OutsideActiveHours:
+                log.info("[VIDEO] Activity window closed; publication checks remain active.")
+                return None
+    return run
 
 
 def health_job():

@@ -3,13 +3,25 @@
 Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-18.
 
 Find the strongest existing synthetic music, singing, dance, cinematic and comedy
-parodies, aiming for the owner's four exceptional benchmarks below. Supply four
-distinct posts each Toronto day at 09:00, 12:00, 17:00 and 20:00. Keep a
+parodies from Instagram, aiming for the owner's four exceptional benchmarks below.
+Supply five distinct posts each Toronto day at 06:00 (05:55–06:05), 09:00, 12:00,
+17:00 and 21:00. Keep a
 reserve of ten eligible clips, warning below five. Prefer target-clearing clips;
 when none qualifies on numeric quality, retain the best reviewed alternatives.
 Never inflate ratings, reuse footage, invent evidence or waive source, safety,
 audio, language, technical, rights or duplicate checks. Continue permitted
 research independently of Replies. Verified news and questions share the profile.
+Only Instagram sources qualify for publication. Other-platform references and
+X-copy checks establish context/history, never a substitute publishing source.
+At each slot choose the strongest currently eligible unseen clip, not simply the
+first prepared item or the one with the largest unverified counter. Preserve the
+same permanent deduplication across source URLs, cuts and files.
+
+Captions now use a short scene-specific meme hook: a dry one-liner, a compact
+setup/punchline, a specific POV or a cute understatement, varied naturally across
+recent captions. No recurring BANGER sign-off, generic hype or engagement bait.
+The actual inspected scene and attributed cast supply every detail. Caption style
+is independently checked against the finished clip; no promise of viral reach.
 
 This agent discovers and hands off through the existing video queue. It never
 posts, contacts creators, starts the bot, changes news/replies, or creates a second

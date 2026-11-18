@@ -1,5 +1,29 @@
 # Editorial policy — November 18, 2026
 
+Latest mandate: five Instagram-only video opportunities at 06:00, 09:00, 12:00,
+17:00 and 21:00 Toronto. The first permits submission only during 05:55–06:05;
+its reservation and shared browser/model I/O permission expire at the close.
+This is a video-worker-only exception to 23:00–07:00 sleep. Ordinary activity
+and source-age checks keep their existing hours; a missed slot never catches up.
+Keep the strongest fully eligible unseen clip at each slot, the best-available
+fallback, and at least one attributed Elon/Jensen/Dario/Sam/Trump role. Permanent
+history, technical/source/output/audio/rights and X-copy checks remain mandatory.
+
+Captions now prefer a concise, scene-grounded meme hook: a dry one-liner,
+setup/punchline, specific POV or cute understatement, varied against recent
+confirmed captions. No repeated BANGER sign-off, generic hype, engagement bait,
+invented cast/actions or guarantee of virality. Source and output reviews must
+approve the current caption policy; old cached approvals cannot authorize it.
+
+Replies are capped at 100/day, including uncertain sends, with at least ten
+minutes plus 0–4 seconds jitter between submissions during 07:00–23:00. No
+minimum or catch-up. Both useful AI discussion and specific warm/funny/cute
+creative reactions remain eligible through independent review; no unseen-media
+claims or filler. This replaces the 100–120 target and eight-minute spacing.
+Major verified news retains the 10:30/15:00 windows, two-text limit and factual
+hook/details/optional observation/direct-source format. Elon-only reposts remain
+at most two/day after confirmed Replies. Five video slots replace the four below.
+
 Latest Reply mandate: aim for 100–120 high-value Replies, with a hard cap of
 120 including uncertain submissions, at least 480 seconds plus 0–4 seconds of
 jitter apart, only 07:00–23:00 Toronto. This explicitly supersedes the former

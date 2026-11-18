@@ -1,11 +1,13 @@
 # Opt in with VIDEO_ENABLED=1. VIDEO_LIVE remains 0 throughout development.
-# 2026-11-18: four daily videos, using the best eligible fallback below the quality target.
+# 2026-11-18: five Instagram slots; the 06:00 window is video-only, 05:55–06:05.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["09:00", "12:00", "17:00", "20:00"]
+windows = ["06:00", "09:00", "12:00", "17:00", "21:00"]
 paired_windows = []
-scheduled_daily_cap = 4
-daily_target_min = 4 # source, technical, history and publication checks still apply
+scheduled_daily_cap = 5
+daily_target_min = 5 # source, technical, history and publication checks still apply
+early_video_window = true
+publish_platforms = ["instagram"]
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -16,6 +18,7 @@ ultra_bangers_only = true
 best_available_fallback = true # ultra scores are preferred; strongest valid lower score can publish
 one_line_caption = false
 playful_caption = true
+meme_caption = true
 discovery_prompt_file = "video_discovery_prompt.md"
 discovery_memory_file = "video_memory.json"
 query_bank_file = "video_query_bank.txt"
@@ -106,7 +109,7 @@ permission_reference = ""
 
 [platforms.bilibili]
 weight = 30
-enabled = true
+enabled = false
 safari_player = true
 public_search = true
 public_search_seconds = 3600
@@ -116,7 +119,7 @@ permission_reference = ""
 
 [platforms.rednote]
 weight = 4
-enabled = true
+enabled = false
 safari_player = true
 public_search = true
 public_search_seconds = 5400
@@ -125,7 +128,7 @@ permission_reference = ""
 
 [platforms.tiktok]
 weight = 10
-enabled = true
+enabled = false
 safari_player = true
 public_search = true
 public_search_seconds = 7200
@@ -134,7 +137,7 @@ permission_reference = ""
 
 [platforms.x]
 weight = 5
-enabled = true
+enabled = false
 safari_player = true
 public_search = true
 public_search_seconds = 7200
@@ -144,7 +147,7 @@ permission_reference = ""
 # Public leads only; no download or republication permission is implied.
 [platforms.youtube]
 weight = 7
-enabled = true
+enabled = false
 public_search = true
 public_search_seconds = 7200
 creators = []
@@ -152,7 +155,7 @@ permission_reference = ""
 
 [platforms.douyin]
 weight = 4
-enabled = true
+enabled = false
 public_search = true
 public_search_seconds = 7200
 creators = []

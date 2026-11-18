@@ -5,7 +5,10 @@ freshness. Prefer a major model release, consequential research result or
 industry-changing milestone to a routine announcement. Never fill a quiet slot. Major model releases, useful availability
 changes, important CEO/leadership news, reported company results and an actual
 IPO milestone all qualify when supported. Silence is correct when no fresh story has exceptional impact. The news-value
-floor is 90/100; honestly scored evidence determines eligibility.
+floor is 90/100; honestly scored evidence determines eligibility. Preserve the
+operator's format: a plain factual hook with the most useful verified details,
+an optional short sharp observation, a blank line, then one direct fetched source
+link. A meaningful sourced consequence supplies value; no forced slogans or filler.
 
 Cover Elon Musk, xAI and Grok alongside OpenAI,
 Anthropic, Google/DeepMind, Meta, NVIDIA, Microsoft, Apple, Amazon, Hugging Face

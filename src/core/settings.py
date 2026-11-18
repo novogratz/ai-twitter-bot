@@ -169,7 +169,7 @@ _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", floor=0,
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)
 _declare("POST_JITTER_SECONDS", int, 0, "Random delay added to the post spacing.", floor=0)
 _declare("MIN_SECONDS_BETWEEN_REPLIES", int, 8, "Minimum gap between two Replies.", floor=8)
-_declare("MAX_REPLIES_PER_DAY", int, 40, "Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies.", floor=0, ceiling=120)
+_declare("MAX_REPLIES_PER_DAY", int, 40, "Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies.", floor=0, ceiling=100)
 _declare("REPLY_MAX_AGE_SECONDS", int, 0, "Final Reply parent age ceiling; zero uses existing source limits.", floor=0)
 _declare("REPLY_WATCHED_MAX_AGE_SECONDS", int, 0, "Tighter final age ceiling for watched authors; zero uses the ordinary ceiling.", floor=0)
 _declare("REPLY_WATCHED_DAILY_CAP", int, 2, "Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies.", floor=0, ceiling=2)
