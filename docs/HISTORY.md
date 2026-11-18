@@ -1,5 +1,28 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-18 — Substantive content review
+
+The Operator asks for sharper AI topics and useful contributions. Inspection
+finds that the selective source filter recognizes technical words but cannot
+establish substance. The new independent Reply review judges the exact final
+wording against source context and recent confirmed Replies; final admission
+and live parent matching enforce its approval. Drafting retains up to 4,000
+source characters. Latest searches move toward concrete research and workflow
+problems. News and discussion reviews gain explicit reader-value requirements.
+Validation uses isolated models, histories and browser fixtures. No live test
+post or automatic restart is implied by this code change.
+
+The follow-up prohibits all automatic reposts except up to two Elon originals
+daily. Shared admission, permanent atomic reservations and browser confirmation
+enforce the independent allowlist and daily cap. Confirmed replies, relevance
+and ordinary publication limits still apply. No historical repost is undone.
+
+The next instruction explicitly raises Replies to an advisory 100–120 per day,
+with a hard maximum of 120 and eight-minute spacing during 07:00–23:00. It also
+admits high-quality AI art/memes when a specific response can be grounded in
+supplied details. Text-only discovery does not authorize claims about unseen
+visual execution. The independent review and all source/history checks remain.
+
 ## 2026-11-18 — Focused daily schedule and selective conversation
 
 2026-11-18, final publishing and selective Reply policy — The Operator requests

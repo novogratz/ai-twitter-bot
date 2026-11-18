@@ -1,4 +1,4 @@
-"""Cheap source screening; the generator must still find a useful contribution.
+"""Cheap source screening; independent value review decides actual substance.
 
 Signals are discussion leads, not factual verification or a quality score.
 """
@@ -13,11 +13,12 @@ _SUBSTANCE = re.compile(
     r"hallucinat\w*|quantiz\w*|inference|latency|throughput|training|fine[ -]?tun\w*|"
     r"post[ -]?training|distill\w*|attention|transformers?|tokens?|context|"
     r"memory|cache|batching|routing|deploy\w*|reliab\w*|failure\w*|fails?|"
-    r"reproduc\w*|trade[ -]?offs?|compared?|versus|because|limitation\w*|"
+    r"reproduc\w*|trade[ -]?offs?|compared?|limitation\w*|"
     r"workflow\w*|consistency|control|tool[ -]?use|reward|dataset\w*|"
     r"generaliz\w*|overfit\w*|calibrat\w*|precision|recall|alignment|"
     r"safety|robust\w*|experiment\w*|tested|testing)\b", re.I)
 _BAIT = re.compile(r"\b(follow (?:me|for)|like and (?:repost|share)|comment .{0,20}(?:get|send)|giveaway)\b", re.I)
+_CREATIVE = re.compile(r"\b(art|artwork|illustration|animation|cinematic|filmmaking|film|parody|satire|meme|storyboard)\b", re.I)
 
 
 def parent_refusal(text: str) -> str:
@@ -26,8 +27,8 @@ def parent_refusal(text: str) -> str:
     text = re.sub(r"https?://\S+", "", text or "")
     if _BAIT.search(text):
         return "promotional or engagement-bait source"
-    if len(re.findall(r"\b\w+\b", text)) < 6 or not _SUBSTANCE.search(text):
-        return "no concrete technical question, evidence, mechanism or tradeoff to discuss"
+    if len(re.findall(r"\b\w+\b", text)) < 6 or not (_SUBSTANCE.search(text) or _CREATIVE.search(text)):
+        return "no substantive discussion or specific creative context to review"
     return ""
 
 

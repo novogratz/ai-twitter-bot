@@ -540,19 +540,27 @@ def test_news_exception_does_not_unlock_ordinary_originals(monkeypatch,settings_
     assert action_guard.can_post(action_guard.RETWEET,news=True)[0] is False
 
 
-def test_final_review_can_refuse_misleading_mechanism(store,cfg,story,doc,tmp_path):
+@pytest.mark.parametrize("flag", ["mechanism_correct", "reader_value", "consequence_supported"])
+def test_final_review_can_refuse_misleading_or_empty_news(store,cfg,story,doc,tmp_path,flag):
     seed(store)
     class Skeptic(Model):
         def call(self,task,*args,**kwargs):
             result=super().call(task,*args,**kwargs)
             if task == "FINAL_REVIEW":
-                result["mechanism_correct"]=False
-                result["reason"]="Software executed a preset, not a model changing its mind."
+                result[flag]=False
+                result["reason"]="Unsupported implication or no useful consequence."
             return result
     assert pipeline.run(cfg,store=store,http=Sources(doc),model=Skeptic(story),
         delivery=Delivery(cfg,tmp_path/'inbox'),now=NOW,import_history=False) == []
     assert store.rows("SELECT * FROM outbox") == []
     assert store.rows("SELECT state FROM stories")[0]["state"] == "held"
+
+
+@pytest.mark.parametrize("flag", ["reader_value", "consequence_supported"])
+def test_legacy_pending_news_needs_new_value_approval(story, cfg, flag):
+    story["final_review"] = {key: True for key in editor.REVIEW_FLAGS if key != flag}
+    with pytest.raises(ValueError, match="independent final approval"):
+        publisher._news_review(story, {}, NOW, cfg)
 
 
 @pytest.mark.parametrize("backup_score,expected", [(17,1),(19,2)])

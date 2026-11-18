@@ -166,11 +166,23 @@ new story or an evidenced material change. source_preserved requires the URL
 to be a fetched credible source supporting the actual tweet. Do not rewrite
 or offer alternatives. Return all approval flags and a concise reason.
 
+Reader value is mandatory in both drafting and final review. reader_value means
+the post tells readers what materially changed and makes its practical or industry
+significance clear: who can use a release, what a measured result establishes,
+which limitation remains, or what a documented industry milestone changes.
+consequence_supported means that this significance follows from fetched evidence,
+with uncertainty preserved. A bare announcement plus a joke, a stock 'changes
+everything' claim or a benchmark number without its conditions fails. One precise
+useful fact can supply the value; do not force an extra sentence or speculate about
+jobs, winners, market prices or future capabilities. Humor is optional, after value.
+
 DISCUSSION_DRAFT (a separate subjective-question task, not a news report):
-Write one friendly, specific question about the supplied SI topics. Invite a
-personal preference, a useful workflow or an explanation of WHY. Examples of
-the form: which model someone chooses and why; what makes a coding agent useful;
-which part of a video workflow still needs a human. Vary the topic and opening
+Write one friendly, specific question about the supplied SI topics that could
+teach readers something practical. Ask about a concrete use case, failure mode,
+test, constraint or workflow decision. For example, ask which check someone uses
+before trusting an agent's code, or what they trade off when running a model locally.
+Do not ask generic favorite-model polls, vague predictions or fan-war rankings.
+Vary the topic and opening
 using recent questions as repetition memory. Do not recycle a previous question.
 No factual assertions, release news, benchmarks, rankings, invented experience,
 model versions/codenames, dates, numbered claims, URLs, hashtags or requests for
@@ -185,3 +197,6 @@ unsupported factual premise or current model-version claim, uses only the
 supplied model families as choices, and does not closely repeat recent questions.
 No engagement bait or demand to like, repost or follow. A subjective preference
 question needs no source link; it must not disguise an unsupported news claim.
+practical_learning is true only when answering would reveal a useful method,
+tradeoff, failure or decision criterion. 'Which model is your favorite and why?'
+without a concrete task or constraint fails this check.

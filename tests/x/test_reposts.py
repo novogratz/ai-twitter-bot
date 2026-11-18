@@ -119,6 +119,20 @@ def test_repost_refuses_source_content_before_clicking(browser, memory_ledger):
     assert browser["modes"] == ["read"] and not memory_ledger.rows
 
 
+def test_other_watched_author_never_opens_browser(browser, monkeypatch, memory_ledger):
+    profile = replace(account.current(), auto_engage_handles=("elonmusk", "sama"))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    assert tc.repost_tweet(URL.replace("elonmusk", "sama")) is W.REFUSED
+    assert not browser["opens"] and not memory_ledger.rows and not repost_store.entries()
+
+
+def test_third_repost_is_refused_before_browser(browser, memory_ledger):
+    ag.record(ag.RETWEET, URL.replace("0101", "0102"))
+    ag.record(ag.RETWEET, URL.replace("0101", "0103"))
+    assert tc.repost_tweet(URL) is W.REFUSED
+    assert not browser["opens"] and not repost_store.entries()
+
+
 def test_like_priority_post_verifies_target_and_uses_like_chokepoint(browser, monkeypatch):
     calls = []
     monkeypatch.setattr(tc, "like_tweet", lambda url: calls.append(url) or tc.LikeOutcome.LIKED)
@@ -196,6 +210,12 @@ def test_page_never_opens_or_confirms_a_repost_of_any_own_identity(mode, handle)
                       self_handles=("currentbot", "runtimebot", "previousbot"))
     assert result["page"] == {}
     assert result["counts"] == {"open": 0, "confirm": 0, "undo": 0}
+
+
+@pytest.mark.parametrize("mode", ["open", "confirm"])
+def test_page_never_clicks_other_authors_even_when_expected(mode):
+    result = _page_js(mode, author="sama", page_author="sama", expected_author="sama")
+    assert result["page"] == {} and result["counts"] == {"open": 0, "confirm": 0, "undo": 0}
 
 
 def test_page_clicks_only_verified_repost_and_confirmation_controls():

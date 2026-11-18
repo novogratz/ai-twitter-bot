@@ -38,7 +38,8 @@ STORY = obj({**{k: BOOL for k in FLAGS}, "reason": TEXT, "event_key": TEXT, "dev
     "paragraphs": array(TEXT, 3)})
 REVIEW_FLAGS = ("facts_supported", "dates_supported", "mechanism_correct", "attribution_complete",
                 "uncertainty_preserved", "exceptional", "duplicate_free", "material_update_proven",
-                "english", "branding_only", "source_preserved", "natural", "qualifiers_preserved")
+                "english", "branding_only", "source_preserved", "natural", "qualifiers_preserved",
+                "reader_value", "consequence_supported")
 REVIEW = obj({**{k: BOOL for k in REVIEW_FLAGS}, "reason": TEXT})
 
 

@@ -791,7 +791,7 @@ def repost_tweet(tweet_url: str) -> WriteOutcome:
         steps=steps, after_record=lambda: repost_store.remember(url, "shipped"))
 
 
-def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
+def _reply_target(url: str, *, click: bool = False, on_answered=None, value_review=None) -> bool:
     """Verify the actual parent and optionally click its own Reply button.
 
     The standalone Account policy also rejects comments and visible earlier
@@ -809,7 +809,7 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
     # Read the verified article before opening composition. Recheck the returned
     # text after the click too, so a changed page can never reach submission.
     if click and account.current().engagement_niche_only and not _reply_target(
-            url, on_answered=on_answered):
+            url, on_answered=on_answered, value_review=value_review):
         return False
     js = r"""(() => {
       const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__;
@@ -837,9 +837,13 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
       const buttons = own(article, '[data-testid="reply"]');
       if (buttons.length !== 1) return 'refused';
       if (click) buttons[0].click();
-      const source = [...article.querySelectorAll('[data-testid="tweetText"]')]
-        .map(el => el.innerText || '').join('\n');
-      return JSON.stringify({url: link.href, text: source, clicked: click});
+      const source = own(article, '[data-testid="tweetText"]')[0];
+      const quoted = [...article.querySelectorAll('[data-testid="tweetText"]')]
+        .filter(el => el !== source && el.closest('article') === article
+          && el.closest('[data-testid="quoteTweet"], div[role="link"]'))
+        .map(el => (el.textContent ?? el.innerText ?? '').trim()).filter(Boolean).join(' | ');
+      return JSON.stringify({url: link.href, text: source?.textContent ?? source?.innerText ?? '',
+        quoted_text: quoted, clicked: click});
     })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
     js = js.replace("__CLICK__", json.dumps(click)).replace("__SELF__", json.dumps(sorted(self_handles)))
     js = js.replace("__STANDALONE__", json.dumps(account.current().standalone_replies_only))
@@ -856,13 +860,20 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None) -> bool:
             on_answered()
         return False
     from ..guards.reply_focus import parent_refusal, freshness_refusal
-    text = opened.get("text") or ""
+    from ..core.reply_context import source_text
+    text = source_text(opened)
+    from ..core import settings
+    if settings.get("REPLY_DISCUSSIONS_ONLY"):
+        from ..guards.reply_value import Approval
+        if not isinstance(value_review, Approval) or not value_review.matches_parent(text):
+            log.info("[REPLY] Actual parent differs from independently reviewed source.")
+            return False
     return (opened.get("clicked") is click and account.engagement_allowed(text)
             and not parent_refusal(text) and not freshness_refusal(url))
 
 
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
-                   on_refused=None) -> WriteOutcome:
+                   on_refused=None, value_review=None) -> WriteOutcome:
     """Verify the parent, confirm its like, then compose and submit the Reply.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -908,7 +919,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
 
     def judge():
         nonlocal admitted_text, author
-        verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn)
+        review_options = {"value_review": value_review} if value_review is not None else {}
+        verdict = reply_admission.judge_reply(tweet_url, reply_text, debate_turn=debate_turn, **review_options)
         if not verdict:
             log.info(f"[REPLY] not admitted ({verdict.refusal.value}: {verdict.reason}): "
                      f"{tweet_url} {(reply_text or '')[:120]!r}")
@@ -956,7 +968,8 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
                 return WriteOutcome.FAILED
             time.sleep(0.5)
 
-            if not _reply_target(tweet_url, on_answered=remember_answered):
+            review_options = {"value_review": value_review} if value_review is not None else {}
+            if not _reply_target(tweet_url, on_answered=remember_answered, **review_options):
                 log.info("[REPLY] Opened target is self, nested, already answered or unverifiable: %s", tweet_url)
                 return WriteOutcome.REFUSED
             # Authorize only this parent's required like, after admission,
@@ -972,7 +985,7 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             time.sleep(1)
 
             log.info("Clicking reply...")
-            if not _reply_target(tweet_url, click=True, on_answered=remember_answered):
+            if not _reply_target(tweet_url, click=True, on_answered=remember_answered, **review_options):
                 log.info(f"[REPLY] Reply target changed or its button is unreadable: {tweet_url}")
                 return WriteOutcome.REFUSED
             time.sleep(3)  # Wait for reply box to open

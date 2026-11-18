@@ -215,7 +215,11 @@ def main():
                           "advisory_video_targets": [video_cfg.daily_target_min, video_cfg.scheduled_daily_cap] if video_cfg else [],
                           "startup_publications": args.startup_publications and not args.reply_only,
                           "quotes": 0,
-                          "reposts": "watched authors only" if account.current().auto_engage_handles and not settings.get("VIDEO_ENABLED") else 0,
+                          "reposts": {"allowed_author": "elonmusk", "daily_max": 2,
+                                      "requires_confirmed_reply": settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"),
+                                      "shared_publication_limits_apply": True, "own_posts": False}
+                                     if "elonmusk" in account.current().auto_engage_handles
+                                     and "elonmusk" not in account.own_handles() else 0,
                           "auto_engage_handles": list(account.current().auto_engage_handles),
                           "slots": _main_slots(),
                           "trend_slots": [] if settings.get("VIDEO_ENABLED") or settings.get("NEWS_ENABLED") else sorted(trend_slots()),

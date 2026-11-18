@@ -31,7 +31,6 @@ from . import (
 )
 from ..core import account, config, engagement_log, humanizer, reply_language, reply_wording, settings
 from ..x import x_urls
-from ..core.logger import log
 
 
 class Refusal(Enum):
@@ -114,10 +113,21 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
     return Verdict(None, author=author)
 
 
-def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
+def prepare_text(draft: str, author: str) -> str:
+    """Format once before independent review; selective Replies are deterministic."""
+    text = humanizer.strip_dashes(reply_wording.apply(draft))
+    if len(text) > content_guard.REPLY_MAX_CHARS:
+        text = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
+    # Substance supplies the voice. Do not manufacture random human mannerisms.
+    if not settings.get("REPLY_DISCUSSIONS_ONLY"):
+        text = humanizer.casualize(text)
+    return reply_wording.apply(text)
+
+
+def judge_reply(url: str, draft: str, *, debate_turn: bool = False, value_review=None) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
-    exact text to send. Casualize and the typo are random: call it once per
-    send and ship `verdict.text`, never the draft."""
+    exact text to send. Selective Replies require approval of deterministic
+    final text; other Accounts retain their legacy formatting."""
     verdict = judge_parent(url, debate_turn=debate_turn)
     if not verdict:
         return verdict
@@ -126,23 +136,15 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
-    # Every Reply loses its dashes here, including paths that skip humanize().
-    text = humanizer.strip_dashes(reply_wording.apply(draft))
-    if len(text) > content_guard.REPLY_MAX_CHARS:
-        # The generation is already paid for: trim on a sentence boundary
-        # rather than discard; validate below still rejects what can't be saved.
-        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
-        log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
-        text = trimmed
-    text = humanizer.casualize(text)
-    # The language is judged on the text as written, before the typo.
+    text = prepare_text(draft, author)
+    if settings.get("REPLY_DISCUSSIONS_ONLY"):
+        from .reply_value import Approval
+        if not isinstance(value_review, Approval) or not value_review.matches_reply(url, text):
+            return Verdict(Refusal.TEXT, "missing or changed independent value review", author)
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
-    if author in _handles("HUMAN_TYPO_HANDLES"):
-        text = humanizer.inject_human_typo(text)
-        log.info(f"[REPLY] human-typo injected for @{author}.")
-    # Keep the Account's wording authoritative after every formatting step.
-    text = reply_wording.apply(text)
+    if not settings.get("REPLY_DISCUSSIONS_ONLY") and author in _handles("HUMAN_TYPO_HANDLES"):
+        text = reply_wording.apply(humanizer.inject_human_typo(text))
     # Validate last, so the text that ships is the text that was checked.
     ok, why = content_guard.validate(text, kind="reply")
     if not ok:

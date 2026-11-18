@@ -1,4 +1,52 @@
-# Editorial policy — November 17, 2026
+# Editorial policy — November 18, 2026
+
+Latest Reply mandate: aim for 100–120 high-value Replies, with a hard cap of
+120 including uncertain submissions, at least 480 seconds plus 0–4 seconds of
+jitter apart, only 07:00–23:00 Toronto. This explicitly supersedes the former
+forty-Reply ceiling and ten-/twenty-four-minute spacing. Never lower quality,
+extend source age or create a catch-up burst to meet the advisory target.
+Elon still receives at most two Replies daily. Ordinary parents remain under
+thirty minutes and Elon parents under five minutes at submission.
+
+High-quality AI art and memes may receive a specific warm or witty reaction to
+an evidenced original idea or documented creative choice. Generic applause and
+invented visual/audio details fail. Text-only sources cannot establish unseen
+craft; skip when the contribution requires media that has not been inspected.
+The independent review supports this creative reaction alongside technical
+contributions. Discovery uses six general Latest, two creator Latest and eight
+Top reads within the unchanged sixteen-search budget.
+
+Automatic native reposts are forbidden except at most two Elon Musk originals
+per Toronto day. Own posts under every current/former identity remain forbidden.
+The exact Elon parent must have a confirmed Reply and pass AI/SI relevance,
+active hours, spacing and shared publication limits. This is a narrow exception
+to video profile ownership, never extra publication capacity or a daily minimum.
+The allowlist is independent of watch-list expansion. Atomic permanent claims
+count uncertain sends alongside confirmed receipts without double-counting;
+restarts and URL spelling variants cannot reset the cap. Browser confirmation
+also refuses non-Elon and own sources.
+
+The November 18 content-value update requires substantive topics and one useful
+addition per Reply. Discovery favors research/evaluation, agents and reliability,
+compute/deployment tradeoffs, robotics and practical creative-workflow problems.
+Every selective Reply receives a separate skeptical review of the full bounded
+source, exact final wording and twenty recent confirmed Replies, outside Safari.
+The review must identify a grounded answer, mechanism, concrete test, explained
+tradeoff, correction or necessary clarifying question. Keywords, praise, parent
+summaries, stock expert-sounding caveats, hype and recycled arguments fail.
+Malformed/unavailable review holds; no fallback sends unreviewed text. The
+approval binds the source and final text, and the live outer parent must match
+before a like or composition. Deterministic formatting preserves reviewed text.
+Age, hours, permanent history and daily/spacing admission still apply after review.
+
+Independent news review also requires reader value and an evidence-supported
+consequence. A headline plus a joke is insufficient; one useful, precise fact
+can establish why a development matters without speculation. Discussion questions
+must reveal a practical lesson, constraint or decision criterion. Generic model
+preference polls fail. Existing pending approvals missing these new flags hold.
+All publishing opportunities and ceilings below remain; a quiet slot is allowed.
+The video best-available policy remains specific to inspected eligible videos.
+Activation still requires an explicitly requested main-process restart.
 
 2026-11-18, final publishing and selective Reply policy — The Operator requests
 four Toronto video opportunities: 09:00, 12:00, 17:00 and 20:00. Choose the best

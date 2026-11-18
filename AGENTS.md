@@ -6,6 +6,62 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-18, 100–120 thoughtful Replies across the waking day — The Operator
+explicitly replaces the forty-Reply ceiling with a hard maximum of 120 per
+Toronto day and an advisory target of 100–120. Minimum submission spacing is
+480 seconds plus the existing 0–4-second jitter, across 07:00–23:00 only. This
+supersedes the earlier ten-minute and twenty-four-minute Reply spacing requests.
+Quality, source freshness, permanent history, uncertain sends and the two-Elon
+Reply allowance remain mandatory; the target never forces filler or catch-up.
+
+High-quality AI art and memes join substantive discussions. A specific warm or
+witty reaction to an evidenced original concept/creative choice may qualify;
+generic praise, explaining their joke, thin captions and invented visual/audio
+observations do not. Text-only discovery cannot certify unseen visual execution:
+if the contribution depends on uninspected media, skip. Independent review still
+requires source-grounded value, respectful natural language and no recycled idea.
+Six general Latest, two creator Latest and eight Top reads share the existing
+sixteen-search budget. News/video slots and the Elon-only repost rule remain.
+The Operator requests PR creation, merge and push. Lifecycle remains explicit.
+
+2026-11-18, Elon-only automatic reposts — The Operator forbids automatic reposts
+of our own content and every other author except Elon Musk. At most two native
+Elon reposts per Toronto day; one or two is an allowance, never a minimum.
+The exception still requires an exact confirmed Reply parent, important AI/SI
+content, active hours, spacing and shared publication capacity. The video-only
+ownership guard admits this narrow repost exception, without lifting any daily
+publication ceiling. A broader watch list never expands the repost allowlist.
+Permanent claims, uncertain sends and actual receipts share the two-repost cap;
+atomic reservation enforces it across workers and restarts. Source verification
+and browser confirmation both refuse other authors and all our identities.
+
+2026-11-18, useful AI discussions over keyword-shaped filler — The Operator asks
+for sharp topics and useful contributions. Latest discovery now targets research
+methods, evaluation, agent reliability, inference tradeoffs, deployment problems
+and practical creative workflows. Keywords remain cheap discovery hints only.
+With REPLY_DISCUSSIONS_ONLY enabled, every Reply path independently reviews the
+exact final text against its parent and twenty recent confirmed Replies. It must
+add a supported answer, mechanism, concrete test, explained tradeoff, correction
+or necessary clarifying question. Praise, restatement, generic expert-sounding
+caveats, hype, invented evidence and recycled arguments refuse. Review failures
+hold; there is no unreviewed fallback and no quota obligation.
+
+The bounded review runs outside Safari and binds the exact Reply and source.
+Final admission requires that approval; the actual outer parent must still match
+before liking/composition. Missing or partial source text cannot justify a send.
+Selective generation receives up to 4,000 source characters instead of a short
+preview. Deterministic formatting preserves reviewed wording; no random case,
+punctuation or manufactured typo pass supplies the persona. All existing final
+language, respect, freshness, pacing, budget, history and uncertainty rules remain.
+
+News final review additionally requires reader value and an evidence-supported
+consequence; a headline and joke alone are insufficient. Occasional questions
+must invite a practical lesson, tradeoff or decision criterion, rather than a
+generic favorite-model poll. Older pending text approvals lack these new checks
+and cannot publish without fresh review. The four video opportunities, cast,
+best-available rule, two text opportunities, forty-Reply maximum and 23:00–07:00
+sleep remain. Starting or restarting still needs an explicit Operator request.
+
 2026-11-18, final publishing and selective Reply policy — The Operator requests
 four Toronto video opportunities: 09:00, 12:00, 17:00 and 20:00. Choose the best
 fully eligible reviewed clip, retaining the best-available fallback, permanent

@@ -17,7 +17,7 @@ from .config import load
 from .store import Store, identity
 
 REVIEW_FLAGS = ("question_only", "no_unsupported_claims", "natural", "english", "on_topic",
-                "no_engagement_bait", "distinct_from_recent", "options_supported")
+                "no_engagement_bait", "distinct_from_recent", "options_supported", "practical_learning")
 REVIEW = editor.obj({**{name: editor.BOOL for name in REVIEW_FLAGS}, "reason": editor.TEXT})
 
 

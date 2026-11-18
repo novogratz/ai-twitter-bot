@@ -174,6 +174,8 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
 
 
 def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
+    # A short search preview can hide the condition that changes the answer.
+    limit = max(call.text_limit, 4000) if settings.get("REPLY_DISCUSSIONS_ONLY") else call.text_limit
     anchors = [personality_store.hard_rules_block()]
     if account.current().english_only:
         anchors.append(_LANGUAGE_OVERRIDE["en"] + "\nUse English even when the source is French or a template says to match its language.")
@@ -182,8 +184,8 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
     prompt = call.template.format(**{
         **fields,
         "author": author,
-        "tweet_text": text[:call.text_limit],
-        "original_tweet": context[:call.text_limit],
+        "tweet_text": text[:limit],
+        "original_tweet": context[:limit],
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
         "reply_max_chars": REPLY_MAX_CHARS,
@@ -265,10 +267,14 @@ def _delivery() -> str:
     if settings.get("REPLY_DISCUSSIONS_ONLY"):
         return ("SELECTIVE DISCUSSION RULES (override generic praise/artist-reaction instructions):\n"
                 f"First decide whether this standalone {account.current().domain} post has a substantial technical question, "
-                "supported finding, mechanism, deployment tradeoff or practical problem. If not, SKIP. "
+                "supported finding, mechanism, deployment tradeoff or practical problem, or a strong AI art/meme "
+                "concept with specific supplied details. Thin captions and unseen-media-dependent jokes mean SKIP. "
                 "Then find ONE useful angle the parent has not already stated: answer the actual question, "
                 "explain a mechanism, distinguish evidence from a claim, or suggest a concrete test. "
                 "If you cannot add that using supplied evidence and stable knowledge, SKIP. "
+                "For art or memes, a specific warm or witty response to the documented idea also qualifies; "
+                "add a playful thought without explaining their joke or forcing technical criticism. "
+                "Never infer visual quality or actions from an uninspected image or video. "
                 "Popularity and a free posting slot never justify a reply. No generic praise, launch hype, "
                 "paraphrase, forced contrarian caveat, unsolicited lecture or question just to get a response. "
                 "Sound like a warm, sharp, knowledgeable woman chatting with a peer: plain words, natural "

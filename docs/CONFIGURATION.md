@@ -12,7 +12,7 @@ feeds, trusted hosts, relevance filter, network, niche and searches) lives in
 The Account keeps `BOT_ACCOUNT=theaishrink` for its state namespace while its
 handle is `thesimaximalist`; `previous_handles` includes `TheAIShrink`.
 Its `[limits]` selects `FEED_SCROLL_PASSES=20`, `FEED_SWEEP_SCAN_LIMIT=160` and
-`HOURLY_BREAK_MINUTES=0`: no daytime breaks, with sleep from midnight to 04:30
+`HOURLY_BREAK_MINUTES=0`: no daytime breaks, with sleep from 23:00 to 07:00
 Toronto. The local `.env` also sets zero so its override cannot restore the old
 ten-minute pauses. Other Accounts default to eight scrolls and no breaks.
 Feed reads collect every viewport and stop after three with no new posts.
@@ -109,11 +109,11 @@ fails while it is stale, and on any key this page names that the engine does
 not know.
 
 
-The live Account sets `MAX_REPLIES_PER_DAY=40`,
-`MIN_SECONDS_BETWEEN_REPLIES=1440`, `REPLY_JITTER_SECONDS=4`, and both advisory
-Reply targets to zero. `reply_submissions.json` persists attempted submissions;
+The live Account sets `MAX_REPLIES_PER_DAY=120`,
+`MIN_SECONDS_BETWEEN_REPLIES=480`, `REPLY_JITTER_SECONDS=4`, and advisory
+Reply targets to 100–120. `reply_submissions.json` persists attempted submissions;
 unknown sends consume daily budget and spacing across restarts. The engine caps
-Replies at forty; zero disables them. The Account's twenty-four-minute minimum
+Replies at 120; zero disables them. The Account's eight-minute minimum
 spreads its opportunities over the 07:00–23:00 Toronto day.
 
 `REPLY_MAX_AGE_SECONDS=1800` and `REPLY_WATCHED_MAX_AGE_SECONDS=300` recheck source
@@ -123,21 +123,29 @@ restricts watched likes/reposts to the exact confirmed Reply parent, with the
 required parent like during an admitted Reply allowed. Preferred first-minute
 response is best effort, never a freshness or pacing exemption.
 
-`REPLY_DISCUSSIONS_ONLY=1` enables cheap technical-source screening and strict
-shared generation guidance. `REPLY_PREFER_NEW_AUTHORS=1` prefers ordinary authors
+`REPLY_DISCUSSIONS_ONLY=1` enables cheap source screening and independent review
+of the exact Reply and source for substantive discussion or strong AI art/memes.
+Uninspected media never supplies evidence of visual craft. A specific grounded
+contribution is mandatory; generic praise and unavailable review hold.
+`REPLY_PREFER_NEW_AUTHORS=1` prefers ordinary authors
 absent from the retained ninety-day confirmed Reply ledger. It does not certify
 human identity. `REPLY_PREFERRED_MIN_LIKES=0` and
 `REPLY_PRIORITIZE_LARGE_ACCOUNTS=0` remove popularity/major-author preferences.
-The sixteen-read discovery allocation is eight Top and eight general Latest;
-priority and creator allocations are zero. Direct and per-feed generation budgets
+The sixteen-read discovery allocation is eight Top, six general Latest and two
+creator Latest; priority-author allocation is zero. Direct and per-feed generation budgets
 are one per pass. Watched discovery retains its independent twenty-second poll.
 Final source freshness, deduplication and shared budgets govern every path.
 
 `REPLY_VOLUME_BOOST_DATE` remains blank. Its optional discovery/generation boost
-never changes the hard forty-Reply cap, source age, active hours or spacing.
+never changes the hard 120-Reply cap, source age, active hours or spacing.
 `main.py --dry-run` exposes the actual cap and gap. The Account's optional
 `editorial.use_reply_route` still selects the Reply model for original drafts and
 review. Other Accounts can retain their ordinary source and voice rules.
+
+Automatic reposts have a separate hard ceiling of two per Toronto day, restricted
+to Elon Musk even if the watch list grows. Own content never qualifies. The live
+Account also requires a confirmed Reply to the same parent. Durable repost
+reservations and receipts share this cap, alongside ordinary publication limits.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
 Account uses four slots at 09:00, 12:00, 17:00 and 20:00 Toronto,
@@ -301,12 +309,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
 | `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
-| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `40` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
+| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `120` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
 | `REPLY_MAX_AGE_SECONDS` | int | `0` | floor `0` | Final Reply parent age ceiling; zero uses existing source limits. |
 | `REPLY_WATCHED_MAX_AGE_SECONDS` | int | `0` | floor `0` | Tighter final age ceiling for watched authors; zero uses the ordinary ceiling. |
 | `REPLY_WATCHED_DAILY_CAP` | int | `2` | floor `0`, ceiling `2` | Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies. |
 | `WATCH_ENGAGEMENT_REQUIRES_REPLY` | 0 or 1 | `0` | floor `0` | Watched posts may be liked or reposted only after a confirmed Reply; the verified parent like during Reply composition is allowed. |
-| `REPLY_DISCUSSIONS_ONLY` | 0 or 1 | `0` | floor `0` | Only substantive technical discussions qualify; require a supported, useful contribution rather than praise or hype. |
+| `REPLY_DISCUSSIONS_ONLY` | 0 or 1 | `0` | floor `0` | Require independent review of exact Reply/source for substantive discussion or a specific grounded reaction to strong AI art/memes; no generic praise or hype. |
 | `REPLY_PREFER_NEW_AUTHORS` | 0 or 1 | `0` | floor `0` | Prefer ordinary candidates whose authors have no confirmed Reply in the retained 90-day ledger. |
 | `REPLY_JITTER_SECONDS` | int | `7` | floor `0` | Random delay added to the Reply spacing. |
 | `FOLLOW_WHITELIST_ONLY` | 0 or 1 | `1` |  | Follow only whitelisted accounts. |
