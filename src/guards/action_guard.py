@@ -169,6 +169,12 @@ def too_soon(action: str) -> str:
 
 def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
+    if action == RETWEET:
+        from . import repost_store
+        if not repost_store.allowed_url(target):
+            return False, "automatic reposts are limited to watched Elon originals; never our own"
+        if why := repost_store.budget_refusal():
+            return False, why
     if action in (LIKE, RETWEET) and not reply_parent and settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"):
         from ..core import account
         from ..x import x_urls
@@ -179,7 +185,7 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
     if action in (POST, RETWEET):
         from ..video.config import owns_profile, legacy_usage
         news = news and action == POST and settings.get("NEWS_ENABLED") and settings.get("NEWS_AUTO_PUBLISH")
-        if owns_profile() and not news:
+        if owns_profile() and not news and action != RETWEET:
             return False, "main profile publications reserved for the video scheduler"
         video_count, video_last = legacy_usage(now_local())
         # 2026-11-07: verified news has a bounded text budget alongside videos.
@@ -199,8 +205,6 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
         return False, "automatic quote cap is 0"
     if action == RETWEET:
         from . import repost_store
-        if not repost_store.allowed_url(target):
-            return False, "reposts require an explicitly watched author and exact status URL"
         from ..editorial.slot_journal import FileJournal
         journal = FileJournal()
         why = profile_submission_refusal(journal, now_local())

@@ -321,11 +321,26 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
             if not verdict:
                 reply_diagnostics.record("send", "parent_no_longer_admitted")
                 return 0
+            review_options = {}
+            if settings.get("REPLY_DISCUSSIONS_ONLY"):
+                from ..guards import reply_admission, reply_value
+                reply = reply_admission.prepare_text(reply, author)
+                with reply_diagnostics.measure("value_review"):
+                    approval, reason = reply_value.review(
+                        url, candidate.text, reply, recent=engagement_log.recent_replies(20))
+                if approval is None:
+                    reply_diagnostics.record("send", "value_refused")
+                    log.info("[%s] Reply value hold: %s", job.label, reason)
+                    return 0
+                # Review can outlast the short freshness window or waking hours.
+                if not _parent_verdict(job, candidate):
+                    return 0
+                review_options["value_review"] = approval
             log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
             start = time.monotonic()
             try:
                 shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
-                                                        on_refused=refusals.append)
+                                                        on_refused=refusals.append, **review_options)
             except (OutsideActiveHours, StateUnreadable):
                 reply_diagnostics.record("send", "interrupted", time.monotonic() - start)
                 raise

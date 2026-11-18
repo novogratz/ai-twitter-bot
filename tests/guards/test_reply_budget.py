@@ -19,20 +19,21 @@ def fresh_url(author="someone", seconds=0, now=NOW):
     return f"https://x.com/{author}/status/{(millis - x_urls._TWITTER_EPOCH_MS) << 22}"
 
 
-def test_last_daily_slot_is_atomic_and_confirmation_is_not_double_counted(monkeypatch, memory_ledger, settings_override):
+@pytest.mark.parametrize("cap", [40, 120])
+def test_last_daily_slot_is_atomic_and_confirmation_is_not_double_counted(monkeypatch, memory_ledger, settings_override, cap):
     clock(monkeypatch, NOW)
-    settings_override(MAX_REPLIES_PER_DAY=40, REPLY_JITTER_SECONDS=0)
-    for n in range(39):
+    settings_override(MAX_REPLIES_PER_DAY=cap, REPLY_JITTER_SECONDS=0)
+    for n in range(cap - 1):
         memory_ledger.append(guard.REPLY, numbered_url(n), False, NOW - timedelta(hours=2))
-    urls = [numbered_url(100), numbered_url(101)]
+    urls = [numbered_url(1000), numbered_url(1001)]
     with ThreadPoolExecutor(2) as pool:
         refusals = list(pool.map(reply_budget.begin, urls))
     assert refusals.count("") == 1
-    assert reply_budget.used_today() == 40
+    assert reply_budget.used_today() == cap
     winner = urls[refusals.index("")]
     guard.record(guard.REPLY, winner)
     reply_budget.confirmed(winner)
-    assert reply_budget.used_today() == 40
+    assert reply_budget.used_today() == cap
     assert not guard.can_post(guard.REPLY)[0]
 
 
@@ -48,6 +49,26 @@ def test_uncertain_send_survives_restart_and_keeps_spacing(monkeypatch, memory_l
     clock(monkeypatch, NOW + timedelta(seconds=1440))
     assert guard.can_post(guard.REPLY)[0]
     assert reply_budget.begin(numbered_url(20)) == "Reply already submitted"
+
+
+def test_120_spaced_replies_fit_waking_day_without_burst_or_overnight(monkeypatch, memory_ledger, settings_override):
+    settings_override(MAX_REPLIES_PER_DAY=120, MIN_SECONDS_BETWEEN_REPLIES=480, REPLY_JITTER_SECONDS=0)
+    start = NOW.replace(hour=7)
+    clock(monkeypatch, start - timedelta(seconds=1))
+    assert not guard.can_post(guard.REPLY)[0]
+    for n in range(120):
+        at = start + timedelta(seconds=n * 480)
+        clock(monkeypatch, at)
+        url = numbered_url(10000 + n)
+        assert reply_budget.begin(url) == ""
+        guard.record(guard.REPLY, url)
+        reply_budget.confirmed(url)
+        clock(monkeypatch, at + timedelta(seconds=479))
+        assert not guard.can_post(guard.REPLY)[0]
+    assert at.hour == 22 and at.minute == 52
+    assert reply_budget.used_today() == 120
+    clock(monkeypatch, start.replace(hour=23))
+    assert not guard.can_post(guard.REPLY)[0]
 
 
 def test_toronto_day_changes_budget_but_never_releases_parent(monkeypatch, memory_ledger):

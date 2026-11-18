@@ -11,13 +11,16 @@ from ..x import x_urls
 from . import active_hours
 
 STATE = StateFile("reposted_tweets.json", {}, GUARDED)
+# Operator ceiling, independent of the broader discovery/watch list.
+ALLOWED_AUTHOR = "elonmusk"
+DAILY_CAP = 2
 
 
 def allowed_url(url: str) -> str:
     from .reply_admission import is_blocked_account
     url = x_urls.canonical_status_url(url)
     author = x_urls.author(url)
-    if (author not in account.current().auto_engage_handles or author in account.own_handles()
+    if (author != ALLOWED_AUTHOR or author not in account.current().auto_engage_handles or author in account.own_handles()
             or is_blocked_account(author)):
         return ""
     return url
@@ -62,6 +65,26 @@ def contains(url: str) -> bool:
     return x_urls.status_id(url) in entries()
 
 
+def used_today(data=None) -> int:
+    """Count receipts plus unreceipted reservations; never count a send twice."""
+    from . import action_guard as guard
+    now, ledger = active_hours.now_local(), guard._ledger()
+    used = ledger.count(guard.RETWEET, now.date())
+    receipted = {x_urls.status_id(url) for url in ledger.targets(guard.RETWEET)
+                 if ledger.count(guard.RETWEET, now.date(), url)}
+    for sid, entry in (entries() if data is None else data).items():
+        if entry == "confirmed":
+            continue  # Legacy undated IDs remain deduplication evidence only.
+        at = datetime.fromisoformat(entry["ts"]).astimezone(now.tzinfo)
+        if at.date() >= now.date() and sid not in receipted:
+            used += 1
+    return used
+
+
+def budget_refusal() -> str:
+    return "daily repost cap reached, including uncertain sends (2)" if used_today() >= DAILY_CAP else ""
+
+
 def claim(url: str) -> bool:
     url = allowed_url(url)
     if not url:
@@ -69,7 +92,7 @@ def claim(url: str) -> bool:
     with _locked():
         data = entries()
         sid = x_urls.status_id(url)
-        if sid in data:
+        if sid in data or used_today(data) >= DAILY_CAP:
             return False
         data[sid] = dict(url=url, status="pending", ts=active_hours.now_local().isoformat())
         STATE.write(data)

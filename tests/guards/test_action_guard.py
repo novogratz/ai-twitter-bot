@@ -32,10 +32,11 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_daily_cap_includes_existing_history(monkeypatch, memory_ledger):
+def test_replies_daily_cap_includes_existing_history(monkeypatch, memory_ledger, settings_override):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    for n in range(40):
+    settings_override(MAX_REPLIES_PER_DAY=120)
+    for n in range(120):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
                              now - timedelta(hours=6, seconds=n))
     assert not ag.can_post(ag.REPLY)[0]
@@ -197,9 +198,9 @@ def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, sett
     from src.core import account
     now = datetime(2026, 10, 26, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    settings_override(MAX_ORIGINALS_PER_DAY=7, POST_JITTER_SECONDS=0)
+    settings_override(MAX_ORIGINALS_PER_DAY=4, POST_JITTER_SECONDS=0)
     target = f"https://x.com/{account.current().auto_engage_handles[0]}/status/2114612551787147343"
-    for n in range(4):
+    for n in range(1):
         memory_ledger.append(ag.RETWEET, str(n), False, now - timedelta(hours=2))
     allowed, why = ag.can_post(ag.RETWEET, target=target)
     assert not allowed and "reserved" in why

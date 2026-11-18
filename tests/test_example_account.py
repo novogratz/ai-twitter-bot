@@ -149,9 +149,11 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
                                     if job not in {"replyback_job", "debate_job", "babysit_job"}])
     expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
-    expected["replies"] = 40
+    expected["replies"] = 120
     expected["active"] = "07:00–23:00"
-    expected["reposts"] = "watched authors only"
+    expected["reposts"] = {"allowed_author": "elonmusk", "daily_max": 2,
+                           "requires_confirmed_reply": True,
+                           "shared_publication_limits_apply": True, "own_posts": False}
     assert shown["auto_engage_handles"] == ["elonmusk"]
     expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
     expected["slots"][1][1] = "A useful SI video or image workflow: concrete first step, output and limitation"
@@ -159,15 +161,15 @@ def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
     assert {key: shown[key] for key in PRE_187} == expected
     assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
         **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4, "MIN_SECONDS_BETWEEN_REPLIES": 1440,
-        "REPLY_DAILY_TARGET_MIN": 0, "REPLY_DAILY_TARGET_MAX": 0,
+        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4, "MIN_SECONDS_BETWEEN_REPLIES": 480,
+        "REPLY_DAILY_TARGET_MIN": 100, "REPLY_DAILY_TARGET_MAX": 120,
         "REPLY_PREFERRED_MIN_LIKES": 0, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
         "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
-        "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 0,
-        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 8,
+        "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,
+        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 6,
         "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
         "DIRECT_REPLY_MAX_PER_CYCLE": 1, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 1,
-        "MAX_REPLIES_PER_DAY": 40, "REPLY_MAX_AGE_SECONDS": 1800,
+        "MAX_REPLIES_PER_DAY": 120, "REPLY_MAX_AGE_SECONDS": 1800,
         "REPLY_WATCHED_MAX_AGE_SECONDS": 300, "REPLY_WATCHED_DAILY_CAP": 2,
         "WATCH_ENGAGEMENT_REQUIRES_REPLY": True, "REPLY_DISCUSSIONS_ONLY": True,
         "REPLY_PREFER_NEW_AUTHORS": True}

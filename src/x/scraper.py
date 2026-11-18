@@ -158,6 +158,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
     """Run JS on the current Safari page to extract tweets. Returns list of
     dicts; each `text` is cut to `text_limit` characters."""
     import json as _json
+    if settings.get("REPLY_DISCUSSIONS_ONLY"):
+        text_limit = max(text_limit, 4000)
 
     js_code = """
     (function() {

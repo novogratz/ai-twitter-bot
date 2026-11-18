@@ -1,21 +1,39 @@
 # The SI Maximalist · @thesimaximalist
 
 Current policy (November 18): **four daily videos at 09:00, 12:00, 17:00 and
-20:00 Toronto; at most two news/text posts at 10:30 and 15:00; at most forty
-Replies, spread across 07:00–23:00.** The bot sleeps 23:00–07:00, including
+20:00 Toronto; at most two news/text posts at 10:30 and 15:00; a target of 100–120
+Replies with a hard maximum of 120, spread across 07:00–23:00.** The bot sleeps 23:00–07:00, including
 background research/preparation. These rules supersede older dated notes below.
+
+Content must earn its place. Discovery favors research methods, evaluations,
+agent reliability, inference/deployment tradeoffs and practical workflow problems,
+plus distinctive AI art and memes with enough source context for a specific reaction.
+An independent review must find one useful, supported contribution in every Reply;
+technical vocabulary, generic praise and a paraphrase are insufficient. The final
+text and actual parent must match that approval. Failed or unavailable review
+means no send. News must explain a supported change or consequence; occasional
+questions must elicit a practical lesson rather than a generic favorite-model poll.
+The 120-Reply and two-text limits are ceilings, never quotas. These changes load
+on the next explicitly requested restart.
 
 Every video needs source-attributed Elon Musk, Jensen Huang, Dario Amodei,
 Sam Altman or Donald Trump. Choose the strongest eligible inspected clip;
 permanent content history prevents duplicates. News selects the highest-impact
 verified candidates, with a 90/100 floor and no obligation to fill a quiet slot.
 
-Replies are at least 24 minutes apart, on substantive AI/SI discussions, with a
-sharp, kind and supported contribution. Other posts must be under thirty minutes
+Replies are at least eight minutes apart, on substantive AI/SI discussions or
+strong AI art/memes, with a sharp, kind and supported contribution. No invented
+visual details or generic applause; skip when the response requires uninspected
+media. Other posts must be under thirty minutes
 old at send; Elon gets at most two Replies daily, within five minutes (first minute
 when feasible). His likes/reposts are restricted to answered posts, with the
 verified parent like allowed during Reply composition. Unknown sends consume the
 same durable caps. Unfamiliar authors receive preference; no quota forces filler.
+
+Automatic reposts are limited to **at most two Elon Musk originals per Toronto
+day**, only after a confirmed Reply to the same AI-relevant post. Never repost
+our own content or any other author, even if added to the watch list. Uncertain
+sends consume the same durable cap; spacing and shared publication limits apply.
 
 November 17: restored the last saved code available on November 10 (`4ad829ac`,
 committed November 9). **Never retweet our own posts**, including posts under any

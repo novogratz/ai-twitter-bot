@@ -12,7 +12,7 @@ from src.news.store import Store
 from src.video.security import Deferred
 
 NOW = datetime(2026, 11, 17, 17, tzinfo=timezone.utc).timestamp()
-DRAFT = {"topic": "model_choice", "question": "Which SI model is your favorite right now, and WHY?",
+DRAFT = {"topic": "model_choice", "question": "Which SI model do you trust for code review, and what check earns that trust?",
          "options": ["Grok", "Claude", "GPT", "Gemini", "DeepSeek", "Qwen", "Kimi"]}
 
 
@@ -96,6 +96,22 @@ def test_final_admission_binds_review_bytes_and_opt_in(store, cfg, settings_over
     settings_override(DISCUSSION_POSTS_ENABLED=False)
     with pytest.raises(Deferred, match="disabled"):
         discussion.admit(store, cfg, story, payload["id"], payload["tweet"], NOW + 1)
+
+
+def test_discussion_without_practical_learning_never_queues_or_publishes(store, cfg):
+    class Skeptic(Model):
+        def call(self, task, data, schema):
+            result = super().call(task, data, schema)
+            if task == "DISCUSSION_REVIEW":
+                result["practical_learning"] = False
+            return result
+    assert discussion.prepare(cfg, store=store, model=Skeptic(), now=NOW) is None
+    assert not store.rows("SELECT id FROM outbox")
+    payload = discussion.prepare(cfg, store=store, model=Model(), now=NOW + 7200)
+    story = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (payload["id"],))[0]["document"])
+    del story["final_review"]["practical_learning"]
+    with pytest.raises(ValueError, match="approval"):
+        discussion.admit(store, cfg, story, payload["id"], payload["tweet"], NOW + 7201)
 
 
 @pytest.mark.parametrize("state", ["published", "submitting", "publish_unknown"])

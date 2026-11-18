@@ -7,6 +7,7 @@ from . import safari, x_urls
 
 SCRIPT = r"""(() => {
   const id = __ID__, author = __AUTHOR__, self = __SELF__, mode = __MODE__;
+  if (mode !== 'read' && author !== 'elonmusk') return '{}';
   if (!['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'].includes(location.hostname)) return '{}';
   const page = location.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d+)\/?$/);
   if (!page || page[2] !== id || page[1].toLowerCase() !== author || self.includes(author)) return '{}';
@@ -54,6 +55,10 @@ def read(url: str, mode: str = "read") -> dict:
     url = x_urls.canonical_status_url(url)
     if not url:
         return {}
+    if mode != "read":
+        from ..guards import repost_store
+        if not repost_store.allowed_url(url):
+            return {}
     script = SCRIPT.replace("__ID__", json.dumps(x_urls.status_id(url)))
     script = script.replace("__AUTHOR__", json.dumps(x_urls.author(url)))
     script = script.replace("__SELF__", json.dumps(sorted(account.own_handles())))
