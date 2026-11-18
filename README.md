@@ -6,6 +6,10 @@ previous account handle. Shared admission and browser confirmation enforce this
 rule; there is no self-repost scheduler. Posting histories remain intact, and the
 rollback does not start or restart the bot.
 
+November 18: the best-available live test produced a [confirmed video post](https://x.com/i/status/2122920458366693860).
+The Operator authorized the daily bot to start afterward; the one-time test hours
+exception does not change normal daily hours or create another startup request.
+
 **Verified SI news, occasional discussion questions and exceptional Instagram videos.**
 News covers meaningful model releases, CEO/company developments, reported results
 and verified IPO milestones, with a direct source link and no forced BANGER slogan.

@@ -6,6 +6,16 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-18, approved live test and daily start — After reviewing the prepared
+clip and the hours/start questions, the Operator explicitly approves posting it
+now and starting the daily bot afterward. One isolated publisher process receives
+a bounded fifteen-minute hours exception for this test only. Actual timestamps,
+source/output checks, fresh X exposure, permanent history, spacing and uncertain
+send holds remain. The process restores normal hours on exit; no scheduler or
+persistent hours setting is changed. The normal start workflow applies the five
+Toronto slots after the live result. This authorization does not permit another
+startup publication or a repeat of the confirmed test clip.
+
 2026-11-17, five daily best-available videos — The Operator requests posts every
 Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00, then one live post after
 implementation. This supersedes the earlier three/four-slot cadence and hard

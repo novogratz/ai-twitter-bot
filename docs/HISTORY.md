@@ -1,5 +1,26 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-18 — Confirmed live fallback publication and authorized daily start
+
+The Operator approves the reviewed clip, a one-time after-hours test and starting
+the daily bot afterward. The isolated publisher uses a fifteen-minute local hours
+exception while retaining real timestamps and all source, inspection, history and
+publication checks. Fresh bounded X searches return `checked_no_match`. The normal
+Safari publisher submits the 13.895-second watermarked Elon concert parody and
+confirms the exact own-status receipt at
+`https://x.com/i/status/2122920458366693860`. Candidate
+`62154ae862de0038f396092141fa8d00` becomes posted; its permanent content claim,
+caption and original/output fingerprints are retained. No active or uncertain
+reservation remains. The process restores ordinary hours before the daily start.
+
+The normal launcher then starts main PID 86093. The supervisor verifies and
+replaces the old discovery/media processes with PIDs 86110/86111, which record
+the same new code/config generation. Startup logs confirm five video slots,
+automatic startup disabled, news enabled and normal 04:30–00:00 hours. The main
+process owns the account lock and logs its next wake at 04:30 on November 18;
+the next scheduled video opportunity is 05:00. Overnight discovery/media remain
+active. This receipt verifies the one test post, not future slot coverage.
+
 ## 2026-11-17 — Five daily best-available videos
 
 2026-11-17, five daily best-available videos — The Operator requests posts every
