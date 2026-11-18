@@ -571,7 +571,10 @@ It reuses the existing Codex login/model. Build its local helper once with
 Public-web discovery can identify candidates on all four platforms. Bilibili's
 normal signed-in Safari player can supply verified timestamps and actual media
 URLs to the independent downloader. Instagram's normal page also supplies exact
-shortcode-bound video metadata and media, including `/p/` to `/reel/` redirects.
+shortcode-bound video metadata and media, including `/p/`, `/reel/` and `/reels/`
+redirects. Browser reads stay scoped to those exact-source aliases.
+Creator cast credits recognize English names beside Han text and exact full-name
+hashtags. They supply fictional-role context only; actual inspection is required.
 Search results alone never qualify a video. To download, inspect and prepare one
 unpublished Instagram preview without adding a publication claim:
 

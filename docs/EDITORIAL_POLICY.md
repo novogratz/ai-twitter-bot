@@ -1,5 +1,14 @@
 # Editorial policy — November 17, 2026
 
+The Operator subsequently authorizes finding, preparing and publishing one
+Instagram video immediately through the normal source, quality and publication
+checks. Capture may read known route aliases for that exact shortcode; unrelated
+tabs cannot supply its evidence.
+Source-attributed English names may adjoin Han text without whitespace or appear
+as exact full-name hashtags; embedded names inside Latin words remain ineligible.
+This parsing rule supplies fictional cast context only, never visual identity
+or performance proof.
+
 ## Verified news, discussion questions and Instagram videos
 
 The Operator restores original publishing in three forms. Hourly news discovery

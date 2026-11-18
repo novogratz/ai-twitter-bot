@@ -57,3 +57,23 @@ const document={
         assert observed["media"] == [media["video_versions"][0]["url"]]
     else:
         assert not observed["media"] and not observed["published"]
+
+
+def test_redirected_instagram_tab_remains_scoped_to_exact_source(video_cfg, at, monkeypatch):
+    url = "https://www.instagram.com/reel/ClipAbC"
+    row = {"document": {"platform": "instagram", "source_id": "ClipAbC",
+                         "canonical_url": url, "creator": "creator"}}
+    payload = {"canonical_url": url, "published": at().timestamp()-60, "creator": "creator",
+               "title": "Example Star dance", "media": ["https://cdn.cdninstagram.com/exact.mp4"],
+               "user_agent": "fixture browser"}
+    targets = []
+    def read(js, *, target_url, **kwargs):
+        targets.append(target_url)
+        return json.dumps(payload) if target_url == url.replace("/reel/", "/reels/") else ""
+    monkeypatch.setattr(safari_video, "browser_session", nullcontext)
+    monkeypatch.setattr(safari, "open_url", lambda url: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(safari, "_run_js", read)
+    monkeypatch.setattr(native_source.time, "sleep", lambda _: None)
+    assert native_source.capture(row, video_cfg, at().timestamp())["source_download"]["source_id"] == "ClipAbC"
+    assert targets == [url, url.replace("/reel/", "/reels/")]

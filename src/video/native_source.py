@@ -230,13 +230,21 @@ def capture(row, cfg, now):
     from ..x.safari_video import browser_session
     doc = row["document"]
     platform, url = doc["platform"], doc["canonical_url"]
+    targets = [url]
+    if platform == "instagram":
+        # Instagram can redirect the tab to /reels while rel=canonical stays
+        # /reel. Keep every read scoped to this exact shortcode, never the front tab.
+        ident = video_id(platform, url)
+        targets = list(dict.fromkeys([url] + [
+            f"https://www.instagram.com/{route}/{ident}" for route in ("reels", "reel", "p")]))
     with browser_session():
         if not safari.open_url(url):
             raise AccessError("source page did not open")
         try:
             payload = {}
-            for _ in range(8):
-                raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5, target_url=url)
+            for attempt in range(8):
+                raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5,
+                                     target_url=targets[attempt % len(targets)])
                 if raw and len(raw) <= 100000:
                     payload = json.loads(raw)
                 if payload.get("published") and payload.get("media"):

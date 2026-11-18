@@ -1,5 +1,34 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-17 — Live Instagram capture and cast-credit repairs
+
+The Operator requests one actual Instagram-to-X publication after implementation.
+Normal-page research finds new creator clips, but Safari redirects their `/reel/`
+tabs to `/reels/` while the canonical link stays singular. The exact-tab reader
+correctly refuses the vanished original URL. Capture now tries the known route
+aliases for the same case-sensitive shortcode within its existing eight reads,
+retaining final canonical validation and never using an unrelated front tab.
+A regression reproduces the redirected tab separately from its canonical link.
+
+The live caption `爱唱歌的大男孩jensen huang` also exposed a word-boundary false
+refusal: Python treats the adjacent Han character as part of the English word.
+The attribution reader now separates Han characters only for ASCII-name matching,
+retains the original caption as evidence, and still refuses partial Latin names
+and missing source provenance. Newly observed `#jensenhuang` captions also qualify
+as exact compact hashtags derived from configured full names, never substrings
+of a longer tag. The inspection cache already includes the resulting cast context.
+All 3,171 isolated tests and the scheduler dry run pass. The changes do not start
+or restart the main bot, and the quality/history/publication gates remain intact.
+
+The live scan completes source inspections for six distinct Instagram clips,
+including one repeated inspection after repairing its observed cast-credit bug.
+Every candidate remains held before rendering: the strongest observed editorial
+quality is 77.65/100 for `ai_xiaomu`'s Elon concert parody, below the retained
+95/100 rule, with a 7.5/10 opening below nine. The other complete reviews likewise
+miss the opening and editorial floors. Original files and reports are retained
+in the local preview folder. No candidate is queued, no publication is reserved
+or submitted, and no history or quality threshold is reset by this test.
+
 ## 2026-11-17 — Restore news, add discussion posts and prioritize Instagram bangers
 
 After the checkpoint rollback, the Operator requests worthwhile original SI

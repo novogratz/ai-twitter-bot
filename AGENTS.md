@@ -6,6 +6,17 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-17, one requested live Instagram post — The Operator explicitly requests
+finding, branding and publishing one clip now. Normal quality, source, history
+and publication admission remain. Live capture found `/reel/` redirecting the
+Safari tab to `/reels/` while the canonical link stayed singular. Capture tries
+only the known route aliases for the exact same shortcode within its existing
+bounded read; it never falls back to an unrelated front tab.
+An observed Chinese caption joined an English cast name directly to Han text.
+Attribution accepts that script boundary and exact full-name hashtags while
+retaining complete-name matching, actual source provenance and the ban on
+identification from faces.
+
 2026-11-17, verified news, occasional questions and Instagram bangers — The
 Operator restores original publishing alongside Replies: useful verified AI/SI
 news, occasional discussion questions, and an advisory three to four outstanding

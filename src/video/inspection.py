@@ -25,9 +25,20 @@ def cast_context(document, cfg):
     if not proof or not document.get("canonical_url") or not document.get("creator"):
         return {}
     title = str(document.get("title", ""))[:500]
+    # Han text commonly touches an English name without a space. Preserve
+    # ordinary word boundaries (e.g. not "SuperElon") when reading that credit.
+    spaced_title = re.sub(r"([\u3400-\u4dbf\u4e00-\u9fff])", r" \1 ", title)
+
+    def credited(alias):
+        if not alias.isascii():
+            return alias in title
+        forms = [re.escape(alias)]
+        if " " in alias:
+            forms.append("#" + re.escape(alias.replace(" ", "")))
+        return re.search(r"(?<!\w)(?:" + "|".join(forms) + r")(?!\w)", spaced_title, re.I)
+
     names = {key: aliases[0] for key, aliases in cfg.targets.items()
-             if any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", title, re.I)
-                    if alias.isascii() else alias in title for alias in aliases)}
+             if any(credited(alias) for alias in aliases)}
     return {"basis": "creator attribution; not face identification", "cast": names,
             "title": title, "source_url": document["canonical_url"], "creator": document["creator"]} if names else {}
 
