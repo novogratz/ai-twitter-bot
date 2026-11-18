@@ -1,5 +1,11 @@
 # The SI Maximalist · @thesimaximalist
 
+November 17: restored the last saved code available on November 10 (`4ad829ac`,
+committed November 9). **Never retweet our own posts**, including posts under any
+previous account handle. Shared admission and browser confirmation enforce this
+rule; there is no self-repost scheduler. Posting histories remain intact, and the
+rollback does not start or restart the bot.
+
 **Only ultra-high-quality parody videos may publish as originals. No news.**
 The four owner-selected references guide discovery and are saved as already posted.
 Each new source and edited output must clear exceptional editorial review, with
@@ -9,49 +15,6 @@ empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
 Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
 `NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
 
-November 14: Replies use two modes within the same personality: **loving**, with
-brief affection and hearts for art, ideas, progress and wins; and **SI specialist**,
-with precise answers, useful insights and respectful challenges to weak claims.
-The post determines the mode and any blend, with no fixed ratio or two-part
-formula. Warmth can stand alone without a technical takeaway. Expertise comes
-from grounded reasoning, never invented facts, employment or claims of knowing
-everything. The fictional 45-year-old woman working in tech speaks naturally;
-bot identity remains honest. Repetition checks and the Elon Reply exclusion stay.
-The narrow English check now accepts the requested short video appreciation.
-The complete update takes effect on the Operator's manual restart.
-
-November 12 restores Reply throughput: **1,400+ daily Replies is the target**,
-with no daily Reply cap or filler quota. Three likes are a preference again.
-Search drafts run between reads within the November 9 sixteen-query budget;
-both Home feeds share an eight-minute scan-and-draft cycle, twenty overlapping
-viewport scrolls and 160 posts per feed. The bot retains expanded art/film/video
-queries and adds AI memes, humor, coding mishaps and creator progress.
-
-November 13: **never reply to Elon Musk**. His new eligible originals receive only
-priority likes and native reposts across topics. Notification/Latest polling runs
-every twenty seconds, with independent action dispatch every two seconds and
-exact-original verification. Active browser work finishes first; reposts keep
-at least sixty-second spacing, without a five-minute retry penalty for that wait.
-The Reply-only exclusion applies before drafting and at the final write on every
-surface. Completed and uncertain actions remain remembered across restarts.
-New tszzl/signulll/nearcyan searches join the existing AISafetyMemes sources.
-These are search targets, not new follows or verified follower-size claims.
-
-Automatic quotes and timed own-post reposts are disabled to free browser capacity.
-Watched Elon reposts have their own paced allowance; existing histories remain intact.
-Funny AI video reposts reuse discovered sources, with **no popularity floor**:
-up to **20 distinct reposts per Toronto day**, at least thirty minutes apart.
-The five-minute worker samples the actual video, checks its humor and relevance,
-and prefers videos we just replied to. Each review uses 6–16 timestamped frames
-across clips up to two minutes; missing dialogue/audio needed for the joke holds
-the source. Exact source text, video identity, account and repost state must match.
-Twenty is a ceiling, not a target; ordinary text memes no longer use this allowance.
-
-The locally requested **72-hour awake window** runs November 12 at 21:48:10
-through November 15 at 21:48:10 Toronto. Restarts never extend this deadline;
-afterward the normal schedule applies, with the next sleep at November 16 midnight.
-Start/restart remains under the Operator's control. Reply volume and follower gains are not guaranteed.
-
 The November 9 refinement restores warmth as the default: delight, encouragement,
 affection and shared humor can be a whole Reply. Hearts are welcome without an
 emoji quota, rotation or repeated sign-off. Technical knowledge stays sharp for
@@ -59,12 +22,8 @@ real questions; a technical topic alone does not require a mini explainer.
 Artists sharing work, progress and first attempts get a dedicated discovery turn.
 The parent's intent determines length. Current product claims and unseen media
 stay grounded in supplied evidence. Short English false refusals are fixed, and
-final admission now checks the configured confirmed Reply memory (100 locally)
-for exact repeats and lightly rewritten long copies, even when the emoji changes.
-Drafts must earn their place with a supported reaction, answer or joke. Stock
-agreement, empty praise, caption recaps and invented plans to try things are
-removed; drafts with only filler left should SKIP. Short, grounded appreciation
-remains welcome. This changes selection and wording, not a promise of fewer blocks. Search budgets, follow policy, pacing and
+final admission checks the last twenty confirmed logged Replies for recycled
+wording even when the emoji changes. Search budgets, follow policy, pacing and
 permanent one-Reply-per-original history remain. Engagement reports measure
 observed outcomes; they cannot promise likes or attribute follower gains.
 
@@ -93,11 +52,11 @@ searches. Major-author reads come first, then fresh artist sources get up to fou
 generation attempts before ordinary buffered drafting. Those attempts count
 within the cycle budget even when declined; they are not a posting quota.
 Artist queries rotate through shared work, first attempts and creative progress,
-with the same first-hour source limit and three-like preference. They are discovery
+with the same first-hour source limit and no popularity floor. They are discovery
 hints, never proof that an author is human or created the work.
 Routine Top searches no longer require thirty or fifty likes, so
 smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
-major authors, then posts with at least three observed likes, with author variety and actual
+major authors, then three-plus observed likes, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
 At the existing buffer limit, the current artist turn temporarily retains its
@@ -352,13 +311,14 @@ start; Voice files are read for each generation.
   appear. Both reads finish before ordinary feed Reply generation starts, so an exhausted
   model quota cannot skip Following. Generation budgets and publication limits
   still apply; overnight sleep can interrupt feed discovery.
-- **Like and repost new Elon Musk originals; never reply to him.** Notifications
-  and Latest are checked every 20 seconds; the action worker dispatches every two
-  seconds. Feed discoveries join the same queue. First enable starts with new
-  posts; later passes inspect up to 20 posts from the past 24 hours. Watched
-  reposts have their separate allowance and at least sixty-second spacing,
-  including uncertain attempts. Browser contention can delay delivery; source
-  checks, active hours, permanent claims and stop requests still apply.
+- **Prioritize new Elon Musk originals.** A dedicated Latest search polls every
+  20 seconds; separate action and Reply workers check discoveries every two seconds.
+  Feed discoveries join the same queue. First enable starts with
+  new posts; later passes inspect up to 20 posts from the past 24 hours.
+  Existing content checks, Reply dedup and overnight sleep apply. Reposts consume
+  the same daily publication budget and spacing as Originals; uncertain
+  repost submissions remain reserved across restarts. Browser contention can
+  delay a poll, and policy limits may defer or skip an action.
 - **One Reply per original, ever.** Never answer our own posts or replies,
   comments or ongoing debates. Debate, replyback and babysitter jobs are
   disabled. The browser verifies the actual parent and clicks its own Reply
@@ -395,14 +355,13 @@ start; Voice files are read for each generation.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Ordinary discovery and engagement cover AI/SI**; the explicitly watched
-  author has an all-topic exception only for likes/reposts: `[niche]`, `[searches]` and `[network]`
+- **Discovery and engagement cover AI/SI only**: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
-- **Automatic startup and news posts are disabled.** Qualified original videos
-  keep their scheduled opportunities and existing quality/receipt checks.
-- **No burst threads.** Automatic quotes and scheduled own-post reposts are off.
-  Other-author native reposts require an exact watched author (currently only
-  `elonmusk`) or the separate reviewed funny-AI-video allowance.
+- **One Startup post each time the bot starts in waking hours**, restarts included,
+  within the daily ceiling and the twenty-minute spacing. A submission with an
+  ambiguous outcome counts toward both until the operator clears it.
+- **No automatic quote tweets, self-recycling, or burst threads.** Reposts are
+  restricted to `auto_engage_handles`, currently only `elonmusk`.
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -550,8 +509,7 @@ remain removed (issue #111). The October 23 operator request adds only the
 guarded watched-author `repost_tweet` path in `src/x/twitter_client.py`.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
-`.env` or strategy values cannot enable unrestricted posting; the Account owns
-the narrowly scoped watched-quote and self-repost opt-ins.
+`.env` or strategy values cannot lift the eight-post ceiling or restore quotes.
 The configured reply provider and browser pacing still apply.
 
 ## License

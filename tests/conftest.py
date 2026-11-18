@@ -74,18 +74,6 @@ _UNWALLED = {}
 
 
 @_pytest.fixture
-def promotion_account(monkeypatch):
-    """Exercise optional promotion features independently of the live rollback."""
-    from dataclasses import replace
-    from src.core import account
-    profile = replace(account.current(), auto_engage_all_topics=True,
-                      watched_reposts_independent=True, priority_quotes_enabled=True,
-                      self_reposts_enabled=True)
-    monkeypatch.setattr(account, "current", lambda: profile)
-    return profile
-
-
-@_pytest.fixture
 def open_topic_account(monkeypatch):
     """Generic engine tests opt out of the live Account's stricter topic rule.
 
@@ -94,9 +82,7 @@ def open_topic_account(monkeypatch):
     """
     from dataclasses import replace
     from src.core import account
-    profile = replace(account.current(), engagement_niche_only=False, auto_engage_all_topics=False,
-                      watched_reposts_independent=False, priority_quotes_enabled=False,
-                      self_reposts_enabled=False)
+    profile = replace(account.current(), engagement_niche_only=False)
     monkeypatch.setattr(account, "current", lambda: profile)
     return profile
 
@@ -267,7 +253,7 @@ def _daylight_default(monkeypatch):
     real_now = active_hours.now_local
     monkeypatch.setattr(active_hours, "now_local", lambda: real_now().replace(hour=12, minute=0))
     with settings.overriding() as override:
-        override(HOURLY_BREAK_MINUTES=0, REPLY_MIN_LIKES=0)
+        override(HOURLY_BREAK_MINUTES=0)
         yield
 
 

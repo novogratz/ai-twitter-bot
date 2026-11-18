@@ -45,8 +45,7 @@ def test_voice_carries_editorial_strategy():
     text = " ".join(VOICE_FR.read_text().lower().split())
     assert "ultra-quality parody videos only" in text
     assert "news and automatic startup posts are disabled" in text
-    assert "no burst threads" in text
-    assert "quotes are disabled" in text
+    assert "no quotes or burst threads" in text
     assert "existing publisher" in text and "pacing" in text
     assert "one reply" in text and "standalone original, permanently" in text
     assert "no debate or follow-up exchanges" in text
@@ -61,7 +60,6 @@ def test_persona_is_woman_mom_in_the_one_voice():
     spine = " ".join(VOICE_FR.read_text().lower().split())
     assert "woman" in spine and "mom" in spine and "45-year-old" in spine
     assert "fictional 45-year-old woman and mom of one" in spine
-    assert "working in tech is character context" in spine
     assert "sharp technical judgment with warmth and curiosity" in spine
     assert "never announce that you know everything" in spine
     assert "answer identity questions honestly as a bot" in spine

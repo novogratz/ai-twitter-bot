@@ -23,10 +23,6 @@ def allowed_url(url: str) -> str:
     return url
 
 
-def independent(url: str) -> bool:
-    return account.current().watched_reposts_independent and bool(allowed_url(url))
-
-
 def entries() -> dict:
     data = STATE.read()
     try:
@@ -39,8 +35,6 @@ def entries() -> dict:
                 continue
             if (not isinstance(entry, dict)
                     or entry.get("status") not in {"pending", "shipped", "observed"}
-                    or entry.get("kind", "watched") not in {"watched", "meme"}
-                    or type(entry.get("independent", False)) is not bool
                     or x_urls.status_id(x_urls.canonical_status_url(entry.get("url"))) != sid
                     or not datetime.fromisoformat(entry.get("ts", "")).tzinfo):
                 raise ValueError("invalid repost entry")
@@ -68,14 +62,8 @@ def contains(url: str) -> bool:
     return x_urls.status_id(url) in entries()
 
 
-def claim(url: str, *, kind="watched") -> bool:
-    if kind not in {"watched", "meme"}:
-        raise ValueError(kind)
-    if kind == "meme":
-        from . import meme_repost_store
-        url = x_urls.canonical_status_url(url) if meme_repost_store.approved(url) else ""
-    else:
-        url = allowed_url(url)
+def claim(url: str) -> bool:
+    url = allowed_url(url)
     if not url:
         return False
     with _locked():
@@ -83,17 +71,12 @@ def claim(url: str, *, kind="watched") -> bool:
         sid = x_urls.status_id(url)
         if sid in data:
             return False
-        if kind == "meme" and meme_repost_store.refusal(url):
-            return False
-        data[sid] = dict(url=url, status="pending", ts=active_hours.now_local().isoformat(),
-                         independent=kind == "meme" or independent(url))
-        if kind == "meme":
-            data[sid]["kind"] = kind
+        data[sid] = dict(url=url, status="pending", ts=active_hours.now_local().isoformat())
         STATE.write(data)
         return True
 
 
-def remember(url: str, status: str, *, kind="watched") -> None:
+def remember(url: str, status: str) -> None:
     if status not in {"shipped", "observed"}:
         raise ValueError(status)
     url = x_urls.canonical_status_url(url)
@@ -104,11 +87,7 @@ def remember(url: str, status: str, *, kind="watched") -> None:
         sid = x_urls.status_id(url)
         if data.get(sid) == "confirmed":
             return
-        prior = data.get(sid, {})
-        data[sid] = dict(url=url, status=status, ts=prior.get("ts", active_hours.now_local().isoformat()),
-                         independent=prior.get("independent", kind == "meme" or independent(url)))
-        if kind == "meme" or prior.get("kind") == "meme":
-            data[sid]["kind"] = "meme"
+        data[sid] = dict(url=url, status=status, ts=data.get(sid, {}).get("ts", active_hours.now_local().isoformat()))
         STATE.write(data)
 
 
@@ -125,13 +104,7 @@ def release(url: str) -> None:
 
 def pending_times() -> list[datetime]:
     return [datetime.fromisoformat(e["ts"]) for e in entries().values()
-            if isinstance(e, dict) and e["status"] == "pending" and not e.get("independent", False)]
-
-
-def independent_last():
-    return max((datetime.fromisoformat(e["ts"]) for e in entries().values()
-                if isinstance(e, dict) and e.get("independent", False) and e.get("kind") != "meme"
-                and e["status"] in {"pending", "shipped"}), default=None)
+            if isinstance(e, dict) and e["status"] == "pending"]
 
 
 def pending_today() -> int:

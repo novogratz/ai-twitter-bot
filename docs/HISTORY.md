@@ -1,77 +1,21 @@
 # History — mandates and incidents, June to November 2026
 
-## 2026-11-14 — Blend affection with technical judgment
+## 2026-11-17 — Restore the November 10 checkpoint and forbid own reposts
 
-The Operator requests two natural Reply modes: loving reactions with hearts and
-an exceptionally sharp SI specialist who can challenge ideas. November 13's
-blanket instruction to remove interest/gratitude and require an explicit detail
-risked editing away the short affectionate response the Operator wants. The
-Voice and all drafting routes now preserve affection when the shared idea or
-occasion warrants it, while technical claims get precise answers or supported
-challenges. Neither mode dictates a quota, fixed structure or repeated catchphrase.
-Fictional tech experience supplies voice, not real credentials or firsthand facts.
+The Operator requests a full code rollback to November 10, then specifies that
+our own posts must never be retweeted. Git contains no November 10 commit; the
+last saved revision by that date is `4ad829ac` from November 9 at 08:39:05 Toronto.
+Production code, Account configuration and Voice return to that revision. The
+later local settings are removed, and the advisory Reply target returns to its
+checkpoint value. Permanent histories and uncertain claims remain untouched.
 
-A read-only validation of the requested wording found "Really cool video ❤️"
-refused as unknown English. The Reply-only closed vocabulary now recognizes those
-two words and the video cue without extending the eighty-character fallback or
-accepting unknown/French vocabulary. Repetition and publication checks remain.
-Implementation and tests use no lifecycle commands or live X writes.
-
-## 2026-11-13 — Withdraw Elon Replies and tighten reply quality
-
-The Operator reported that some readers called the responses automated filler and
-blocked the account. The read-only review of the latest forty confirmed Replies
-found stock praise/interest openings, caption restatement and unnecessary follow-up
-sentences; it did not establish which readers blocked the account or why.
-The new Voice and shared prompts call for a specific supported contribution or SKIP.
-The final text check expands from twenty exact replies to the configured memory
-(default one hundred), including long copies with small wording changes.
-
-Elon changes from three independent actions to likes/reposts only. A Reply-only
-Account exclusion is enforced centrally without denying those other actions.
-Notification discovery previously asked Reply admission before verifying a new
-source, which would suppress the likes/reposts after that exclusion; it now checks
-watched-author eligibility independently. Normal repost spacing also used to turn
-into a five-minute failure cooldown; the dispatcher now rechecks the shared spacing
-rule on its two-second tick. Actual failures still back off. Implementation uses
-no start/restart commands or public actions for validation; lifecycle control stays
-with the Operator. A bot process appeared during preparation, so a later manual
-restart is needed to load the complete merged change.
-
-## 2026-11-12 — Repost funny AI videos before they go viral
-
-The final pre-pause Reply at 21:40 answered @dripbitsnft status
-2121026915452801413 with “You said ‘Mr. Huang’ like that might get you forgiven”.
-The exact parent read showed eleven likes, 929 views and a 61.421-second native
-video. The old 500-like/100,000-view text-meme allowance never admitted it.
-The Operator clarifies that ordinary enjoyable AI videos should qualify, with
-up to twenty native reposts/day, no popularity threshold, and 72 hours awake.
-The repair samples actual video frames (thirteen in the read-only source check),
-reviews visual humor and preserves exact source/media/account and permanent
-publication claims. No X publication is made during implementation; the Operator
-retains manual restart. See the current policy for the fixed awake-window deadline.
-
-## 2026-11-12 — Restore Reply throughput and prioritize watched conversations
-
-Confirmed ledger/CSV counts were 926 Replies November 9, 951 November 10,
-492 November 11, and 193 November 12 before the 20:39 operator pause. Search
-sources supplied 540 November 9 Replies and only six November 12 Replies.
-The retained latest log segment contained 806 own-repost attempts (798 refused)
-and 1,096 watched repost attempts (1,095 refused). The saved pipeline report
-included a discovery call lasting 2,405 seconds; concurrent worker totals overlap.
-These observations support browser contention and batch discovery as bottlenecks,
-not a promise that reverting any one setting produces a specified volume.
-
-The Operator requested restoration, 1,400+ daily capacity, one awake night,
-broader AI humor/art sources, priority witty Elon Replies, selective AI meme
-reposts, PR/merge/push, and manual restart. The implementation restores incremental
-search drafting and bounded scan sizes, backs off repeated watched failures,
-disables automatic quotes/own repost loops, and adds reviewed meme reposts only
-from already-discovered sources. Permanent histories are preserved.
-The later clarification keeps independent Elon likes/reposts enabled alongside
-priority Replies. Friendly encouragement and sharp SI insight remain the voice;
-1,000+ daily Replies is the requested minimum goal, with a 1,400–1,800 advisory
-target. Counts and audience reactions still require observed live results.
+The restored repost admission and browser checks already reject our current,
+runtime and former handles. Added regressions verify all three identities are
+refused even when watched, before browser access in live and dry-run modes and
+before either native repost click. The later self-repost job and undo/repost
+surface are removed by the rollback. A backup branch and private local backup
+preserve the previous code, uncommitted documentation and environment. No bot
+start, restart or public write accompanies this change.
 
 ## 2026-11-09 — Live artist turn reveals one short-English false refusal
 
