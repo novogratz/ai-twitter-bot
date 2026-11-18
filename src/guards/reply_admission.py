@@ -154,7 +154,7 @@ def judge_reply(url: str, draft: str, *, debate_turn: bool = False, value_review
     if why:
         return Verdict(Refusal.TEXT, why, author)
     try:
-        if engagement_log.repeated_reply(text):
+        if engagement_log.repeated_reply(text, limit=settings.get("REPLY_RECENT_MEMORY_COUNT")):
             return Verdict(Refusal.TEXT, "same wording as a recent confirmed Reply", author)
     except (OSError, ValueError, csv.Error):
         return Verdict(Refusal.TEXT, "recent Reply text unavailable", author)

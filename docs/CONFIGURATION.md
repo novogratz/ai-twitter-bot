@@ -109,12 +109,17 @@ fails while it is stale, and on any key this page names that the engine does
 not know.
 
 
-The live Account sets `MAX_REPLIES_PER_DAY=100`,
-`MIN_SECONDS_BETWEEN_REPLIES=600`, `REPLY_JITTER_SECONDS=4`, no advisory
-minimum and an advisory ceiling of 100. `reply_submissions.json` persists attempted submissions;
+The live Account sets `MAX_REPLIES_PER_DAY=1400`,
+`MIN_SECONDS_BETWEEN_REPLIES=8`, `REPLY_JITTER_SECONDS=4` and both
+`REPLY_DAILY_TARGET_MIN=1400` and `REPLY_DAILY_TARGET_MAX=1400`. This is a single
+advisory goal, never a daily minimum or catch-up obligation.
+`reply_submissions.json` persists attempted submissions;
 unknown sends consume daily budget and spacing across restarts. The engine caps
-Replies at 100; zero disables them. The Account's ten-minute minimum
-spreads its opportunities over the 07:00–23:00 Toronto day.
+Replies at 1,400; zero disables them and other Accounts still default to forty.
+Review and browser latency add to the minimum gap during 07:00–23:00 Toronto.
+The live `REPLY_RECENT_MEMORY_COUNT=1400` keeps normalized exact repetition checks
+across a full target day; generation sees a compact pattern summary and the latest
+twenty exact texts. Independent review compares twenty recent confirmed Replies.
 
 `REPLY_MAX_AGE_SECONDS=1800` and `REPLY_WATCHED_MAX_AGE_SECONDS=300` recheck source
 age before generation and at final submission. `REPLY_WATCHED_DAILY_CAP=2` applies
@@ -124,20 +129,21 @@ required parent like during an admitted Reply allowed. Preferred first-minute
 response is best effort, never a freshness or pacing exemption.
 
 `REPLY_DISCUSSIONS_ONLY=1` enables cheap source screening and independent review
-of the exact Reply and source for substantive discussion or strong AI art/memes.
+of the exact Reply and source for substantive discussion or standout AI videos/art/memes.
 Uninspected media never supplies evidence of visual craft. A specific grounded
-contribution is mandatory; generic praise and unavailable review hold.
+contribution is mandatory; generic praise, transplantable boilerplate, routine
+creative concepts without evidence of quality and unavailable review hold.
 `REPLY_PREFER_NEW_AUTHORS=1` prefers ordinary authors
 absent from the retained ninety-day confirmed Reply ledger. It does not certify
 human identity. `REPLY_PREFERRED_MIN_LIKES=0` and
 `REPLY_PRIORITIZE_LARGE_ACCOUNTS=0` remove popularity/major-author preferences.
 The sixteen-read discovery allocation is eight Top, six general Latest and two
-creator Latest; priority-author allocation is zero. Direct and per-feed generation budgets
-are one per pass. Watched discovery retains its independent twenty-second poll.
+creator Latest; priority-author allocation is zero. Direct cycles allow up to
+eighty Replies and each feed up to eighty draft attempts. Watched discovery retains its independent twenty-second poll.
 Final source freshness, deduplication and shared budgets govern every path.
 
 `REPLY_VOLUME_BOOST_DATE` remains blank. Its optional discovery/generation boost
-never changes the hard 100-Reply cap, source age, active hours or spacing.
+never changes the hard 1,400-Reply cap, source age, active hours or spacing.
 `main.py --dry-run` exposes the actual cap and gap. The Account's optional
 `editorial.use_reply_route` still selects the Reply model for original drafts and
 review. Other Accounts can retain their ordinary source and voice rules.
@@ -219,7 +225,7 @@ hold whatever `.env` says:
 | `POST_JITTER_SECONDS` | Floor 0: a negative jitter cannot shorten the spacing |
 | Quotes | 0: `action_guard.can_post` refuses them |
 | Reposts | Only exact standalone originals by `auto_engage_handles`; share the Originals' combined ceiling and spacing, including pending submissions |
-| Replies per day | Unlimited: no setting caps them; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
+| Replies per day | `MAX_REPLIES_PER_DAY` caps confirmed and uncertain submissions at 1,400 or lower; `MIN_SECONDS_BETWEEN_REPLIES` (floor 8) plus `REPLY_JITTER_SECONDS` (floor 0) space them |
 | `BLOCKLIST` | Constant in `src/core/config.py`, operator-managed |
 
 The Debate turn, Reply spacing, like, follow, price-target and duplicate
@@ -314,7 +320,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `MIN_SECONDS_BETWEEN_POSTS` | int | `1200` | floor `1200` | Minimum gap between two Profile publications. |
 | `POST_JITTER_SECONDS` | int | `0` | floor `0` | Random delay added to the post spacing. |
 | `MIN_SECONDS_BETWEEN_REPLIES` | int | `8` | floor `8` | Minimum gap between two Replies. |
-| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `100` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
+| `MAX_REPLIES_PER_DAY` | int | `40` | floor `0`, ceiling `1400` | Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies. |
 | `REPLY_MAX_AGE_SECONDS` | int | `0` | floor `0` | Final Reply parent age ceiling; zero uses existing source limits. |
 | `REPLY_WATCHED_MAX_AGE_SECONDS` | int | `0` | floor `0` | Tighter final age ceiling for watched authors; zero uses the ordinary ceiling. |
 | `REPLY_WATCHED_DAILY_CAP` | int | `2` | floor `0`, ceiling `2` | Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies. |
@@ -383,7 +389,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `REPLY_DAILY_TARGET_MAX` | int | `0` | floor `0` | Upper advisory daily Reply target; neither a cap nor a quota to fill. |
 | `REPLY_CANDIDATE_BUFFER_LIMIT` | int | `400` | floor `1`, ceiling `1000` | Unprocessed source posts retained per search/feed lane in memory; no posting claims. |
 | `REPLY_CANDIDATE_BUFFER_TTL_SECONDS` | int | `1800` | floor `60`, ceiling `3600` | Maximum time an unused source stays buffered; source freshness may expire sooner. |
-| `REPLY_RECENT_MEMORY_COUNT` | int | `100` | floor `20`, ceiling `200` | Confirmed Replies checked for repeated wording; prompt includes a compact older-pattern summary. |
+| `REPLY_RECENT_MEMORY_COUNT` | int | `100` | floor `20`, ceiling `1400` | Confirmed Replies checked for repeated wording at admission; generation includes a compact older-pattern summary. |
 | `REPLY_PREFERRED_MIN_LIKES` | int | `2` | floor `0`, ceiling `1000` | Prefer candidates with at least this many observed likes; never an eligibility floor. Zero disables the preference. |
 | `ENABLE_DEBATES` | 0 or 1 | `1` |  | Let the debate job answer mentions; read at each cycle. |
 | `DEBATE_MAX_PER_CYCLE` | int | `3` |  | Debate Replies one debate cycle may ship. |

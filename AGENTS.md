@@ -6,6 +6,34 @@ real account. Setup and run commands live in [`README.md`](README.md).
 
 ## Current policy — the ceiling you never lift
 
+2026-11-18, 1,400 sharp and warm Replies — The Operator replaces the 100/day
+policy and the interim 400 request with an advisory target and hard ceiling of
+1,400 Replies per Toronto day, including uncertain submissions. Restore at least
+eight seconds plus 0–4 seconds jitter between submissions, 07:00–23:00 only,
+an eighty-Reply allowance per direct cycle and eighty draft attempts per feed. Six general Latest, two creator Latest
+and eight Top reads keep the sixteen-search budget. No daily minimum, catch-up
+burst, weaker review or source-age exception follows from the target.
+
+The feminine Voice is knowledgeable, kind, playfully cute and occasionally witty.
+Earn interest with a specific supported thought, never fake human identity,
+biography, intimacy, gender assumptions or generic flattery. Independent review
+must also reject transplantable boilerplate: swapping a model name is not a new
+contribution. Generation summarizes patterns across the last 1,400 confirmed
+Replies; final admission checks their exact normalized wording. Independent value
+review still compares the latest twenty and binds the exact source and final text;
+the new policy invalidates older approvals.
+
+Standout AI videos and high-quality memes remain eligible for a brief warm or
+playful reaction. Review needs evidence of an unusually inventive concept, clever
+premise or deliberate creative choice; a routine demo, first attempt, tool name,
+hype caption or popularity alone does not establish quality. No invented playback,
+visual execution, sound or other unseen details. Skip when judging the work or
+contribution requires uninspected media. Technical criticism is not compulsory.
+Freshness, permanent history, uncertain-send accounting, two-Elon Reply allowance,
+news/video slots and repost rules remain. Views, likes and follows are aims, never
+promised results. The Operator will restart after implementation and validation;
+do not start or restart the bot as part of this change.
+
 2026-11-18, five Instagram videos and one hundred thoughtful Replies — The
 Operator replaces the prior schedule with 06:00, 09:00, 12:00, 17:00 and 21:00
 Toronto, at most five scheduled videos. The 06:00 opportunity opens at 05:55

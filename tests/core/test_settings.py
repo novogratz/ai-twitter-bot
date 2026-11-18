@@ -99,12 +99,12 @@ def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch)
     for day in (7, 8, 9):
         local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
         monkeypatch.setattr(active_hours, "now_local", lambda: local)
-        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 1, 1]
+        assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 80, 80]
         assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 0
         assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 6
         assert settings.get("DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE") == 2
-        assert settings.get("MAX_REPLIES_PER_DAY") == 100
-        assert settings.get("MIN_SECONDS_BETWEEN_REPLIES") == 600
+        assert settings.get("MAX_REPLIES_PER_DAY") == 1400
+        assert settings.get("MIN_SECONDS_BETWEEN_REPLIES") == 8
         assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is False
         assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 0
 
@@ -219,6 +219,8 @@ def test_a_stricter_value_is_kept_without_warning(fresh):
 OPERATOR_BOUNDS = [
     ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "9", 4, 2),
     ("MIN_SECONDS_BETWEEN_REPLIES", "0", 8, 30),
+    ("MAX_REPLIES_PER_DAY", "1401", 1400, 100),
+    ("REPLY_RECENT_MEMORY_COUNT", "1401", 1400, 200),
     ("REPLY_JITTER_SECONDS", "-5", 0, 3),
     ("LIKE_BOT_PER_CYCLE", "22", 10, 5),
     ("LIKE_BOT_DAILY_CAP", "1800", 500, 200),
