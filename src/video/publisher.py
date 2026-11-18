@@ -215,7 +215,9 @@ def reserve(store, now, cfg, *, operator_direct=False):
             if slot:
                 db.execute("UPDATE slots SET reason='no eligible ready video' WHERE id=?", (slot["id"],))
             return None  # keep the slot open until grace; report final skip
-        if cfg.bangers_only:
+        if cfg.best_available_fallback:
+            valid.sort(key=lambda pair: ranking.best_available_order(pair[1], cfg, stamp), reverse=True)
+        elif cfg.bangers_only:
             valid.sort(key=lambda pair: ranking.editorial_strength(pair[1]), reverse=True)
         valid = inventory.distinct(valid)
         if cfg.protect_primary_windows and slot and not startup:
@@ -239,7 +241,10 @@ def reserve(store, now, cfg, *, operator_direct=False):
                     break
         recent = [json.loads(r[0]) for r in db.execute("SELECT c.document FROM candidates c JOIN reservations r "
                   "ON r.candidate=c.id WHERE r.state='confirmed' ORDER BY r.confirmed DESC LIMIT 4")]
-        if cfg.bangers_only and not choice:
+        if cfg.best_available_fallback and not choice:
+            best = ranking.best_available_order(valid[0][1], cfg, stamp)
+            comparable = [(r, d) for r, d in valid if ranking.best_available_order(d, cfg, stamp) == best]
+        elif cfg.bangers_only and not choice:
             valid.sort(key=lambda pair: (ranking.editorial_strength(pair[1]), pair[0]["score"] or 0), reverse=True)
             best = ranking.editorial_strength(valid[0][1])
             comparable = [(r, d) for r, d in valid if ranking.editorial_strength(d) >= best - 2]

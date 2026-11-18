@@ -14,17 +14,18 @@ text outbox. They invite useful opinions and use model families rather than stal
 version numbers. News and questions share the existing seven-text daily ceiling,
 two-hour text spacing and video protections.
 
-The video target is **3–4 distinct bangers/day**, with four Toronto opportunities:
-08:30, 12:30, 17:30 and 21:30. Instagram discovery has priority; the reserve targets
-six clips and warns below three. A short scene joke can end with a blank line and
-“Absolute BANGER 🔥”. Real source/output review and permanent dedup remain required;
-an empty queue cannot supply a guaranteed daily minimum. Self-retweets stay blocked.
+The video schedule is **five posts daily at 05:00, 09:00, 12:00, 17:00 and 21:00
+Toronto time**. Prefer exceptional clips; if none reaches the quality target,
+choose the strongest eligible reviewed clip. Instagram discovery has priority,
+with a ten-clip reserve and a warning below five. Permanent source/hash/video
+history prevents reposting the same footage under another link. Actual source,
+audio, output, permission and X-copy checks remain required. Missing valid supply
+or a failed platform send is reported honestly, never counted as publication.
 
 The four owner-selected references guide discovery and are saved as already posted.
-Each new source and edited output must clear exceptional editorial review, with
+Each new source and edited output receives actual editorial review, with
 an immediate opening, usable audio, the exact watermark and permanent dedup.
-Qualified finds still publish automatically through the existing video pipeline;
-empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
+The best eligible finds publish through the existing video pipeline. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
 Account disables automatic startup videos. Local `NEWS_ENABLED=1`,
 `NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1` enable the reviewed text
 routes on the next explicitly requested restart. Replies remain enabled.
@@ -126,9 +127,9 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos now have **four daily Toronto slots, 08:30, 12:30, 17:30 and 21:30**,
-with an advisory target of three to four. The Account disables automatic
-startup requests and reports no minimum original-post target. Independent
+Videos have **five daily Toronto slots: 05:00, 09:00, 12:00, 17:00 and 21:00**,
+with best-available fallback below the editorial target. The Account disables
+automatic startup requests. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
 featuring Elon Musk, Sam Altman, Dario Amodei, Trump, Jensen Huang, Bill Gates or
 Mark Zuckerberg, with fallback
@@ -142,13 +143,13 @@ queue is reported as a missed slot, never a successful post.
 
 The editable [discovery brief](accounts/theaishrink/video_discovery_prompt.md)
 drives fresh uploads, unseen back catalog and source-quality recovery, weighted
-toward Instagram and Bilibili. The full rubric retains its 88/100 floor. Ultra mode additionally requires
-95/100 normalized editorial quality, every editorial component at least 9/10,
-and a 9/10 first-second opening in both source selection and output review. Power Rangers-style reveals and complete musical
+toward Instagram and Bilibili. Preferred quality remains 88/100 overall,
+95/100 normalized editorial quality, every component at least 9/10, and a 9/10
+opening. With `best_available_fallback=true`, these are ranking preferences;
+weaker fully inspected clips remain eligible. Power Rangers-style reveals and complete musical
 performances are supported. Codex selects an 8–120 second excerpt; FFmpeg applies
 the exact cut and watermark, followed by independent opening/audio/output checks.
-The reserve targets six exceptional eligible clips and reports shortages below
-three. YouTube/Douyin discovery supplies leads; media access remains limited.
+The reserve targets ten eligible clips and reports shortages below five. YouTube/Douyin discovery supplies leads; media access remains limited.
 
 On startup, the supervisor also replaces verified discovery/media workers left
 running older code or configuration, waiting for their role locks to release.
@@ -542,15 +543,15 @@ held; they never silently switch to replying. Ordinary worker starts do not
 create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
-The live Account uses four video windows at 08:30, 12:30, 17:30 and 21:30 Toronto,
-with a target of three to four exceptional finds per day alongside verified news
+The live Account uses five video windows at 05:00, 09:00, 12:00, 17:00 and 21:00
+Toronto, selecting the best eligible finds alongside verified news
 and occasional discussion posts. Automatic startup requests remain disabled.
 Replies retain their existing engine; interactions pause from midnight to 04:30,
 while independent video discovery/media workers can continue overnight.
 
-All four windows have inventory priority. The engine can protect each main
+All five windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
-`video.py status` reports coverage and shortages. The six-clip buffer is
+`video.py status` reports coverage and shortages. The ten-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.
 
 Video posts use the existing **Safari/AppleScript** composer and shared Reply

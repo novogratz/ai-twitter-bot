@@ -1,5 +1,35 @@
 # Editorial policy — November 17, 2026
 
+2026-11-17, five daily best-available videos — The Operator requests posts every
+Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00, then one live post after
+implementation. This supersedes the earlier three/four-slot cadence and hard
+editorial score refusals. Keep ultra-quality scores as preferences: choose a
+fully eligible target-clearing clip first; otherwise choose the best actually
+reviewed source/output quality available, without inflating scores or inventing
+popularity. The scheduled cap and target are five, reserve target ten, warning
+below five. Quality alone must not leave a supplied slot empty.
+
+The best_available_fallback setting defaults off for other Accounts and requires
+full banger review and editorial cutting. Numeric editorial/opening floors yield;
+actual source/output and opening inspection, attributed cast,
+content suitability, verified language-dependent jokes, audio, technical output,
+exact watermark, usage permission, source dates, X-copy limits, active hours and
+permanent duplicate/uncertain-send claims remain mandatory. Ranking uses the
+weaker of source/output editorial quality, then output quality; popularity cannot
+promote weaker fallback footage. Changed policy invalidates inspection/edit
+caches and allows existing unclaimed held sources to be prepared again. Existing
+posted/reserved content can never become new supply. No source or platform outage
+is reported as a successful post. News, questions, Replies and self-retweet
+refusals remain unchanged. Main-process start/restart still requires an explicit
+Operator request; the requested one-shot publication uses the existing publisher.
+
+Live validation also finds an English caption without a known function-word marker.
+The observed English verb `needs` now supplies ordinary English evidence; mixed
+French and unknown prose still refuse. Retained-overlay output review receives
+hash-bound original reference frames aligned to the exact excerpt, so unreadable
+source OCR can be checked against actual pixels. Every returned timestamp must
+still describe the output, and uncertain/new overlays remain held.
+
 The Operator subsequently authorizes finding, preparing and publishing one
 Instagram video immediately through the normal source, quality and publication
 checks. Capture may read known route aliases for that exact shortcode; unrelated
@@ -28,13 +58,13 @@ already pending work take precedence. These posts share the durable news outbox,
 seven-text daily ceiling, two-hour spacing, video protection, content checks,
 Safari ownership and receipt requirement. No second publisher is introduced.
 
-Video discovery prioritizes Instagram and aims for three to four distinct bangers
-per Toronto day. Four opportunities are 08:30, 12:30, 17:30 and 21:30; four is the
-scheduled ceiling. Reserve target six, warning below three. Bill Gates and Mark
-Zuckerberg join the source-attributed fictional cast. The existing ultra-quality
-review, real audio/temporal evidence, original preservation, watermark, usage
+Video discovery prioritizes Instagram for five distinct videos per Toronto day
+at 05:00, 09:00, 12:00, 17:00 and 21:00, with a scheduled ceiling of five.
+Reserve target ten, warning below five. Bill Gates and Mark
+Zuckerberg join the source-attributed fictional cast. Ultra-quality scores are preferred; best-available fallback still requires
+real audio/temporal evidence, original preservation, watermark, usage
 permissions and permanent novelty checks remain. The target cannot guarantee
-eligible footage or waive a hold. Playful captions describe the actual scene in
+eligible footage or waive non-editorial holds. Playful captions describe the actual scene in
 one short paragraph, optionally followed by a blank line and a BANGER sign-off.
 Supported first names/aliases are welcome; full-name roll calls are not required.
 Output review must validate the exact caption against the finished excerpt.

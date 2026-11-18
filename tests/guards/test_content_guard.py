@@ -5,6 +5,12 @@ import pytest
 from src.guards import content_guard as cg
 
 
+def test_observed_english_video_caption_with_needs_is_recognized():
+    assert cg.validate("AI-parody Elon’s high kick needs its own backup dancers. 🕺😂", kind="original") == (True, "")
+    assert not cg.validate("Elon needs des danseurs pour cette scène.", kind="original")[0]
+    assert cg.detect_language("needsmore") == ("unknown", 0.0)
+
+
 @pytest.mark.parametrize("text", [
     "Offline wins.", "Less lag. 🙂", "Worth the wait.", "Tiny model, big win.",
     "Cheap tokens, expensive mistakes.", "That's a useful distinction.",

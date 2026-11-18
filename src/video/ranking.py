@@ -90,7 +90,7 @@ def source_score_gate(doc, cfg, now):
         return reason
     if cfg.bangers_only:
         from .bangers import possible
-        return "" if selected(doc, now) or possible(doc, now, cfg) else "source excerpt cannot reach banger threshold"
+        return "" if cfg.best_available_fallback or selected(doc, now) or possible(doc, now, cfg) else "source excerpt cannot reach banger threshold"
     observed = {key: evidence.get(key + "_score") for key in ("fit", "entertainment", "quality")}
     _validate_score_components(observed)
     if selected(doc, now):
@@ -190,8 +190,8 @@ def gate(doc, cfg, now, *, final=False):
         ranking = doc.get("ranking", {})
         if cfg.bangers_only:
             from .bangers import score as banger_score
-            reviewed = banger_score(doc, now)
-            if reviewed["total"] is None or (not selected(doc, now) and reviewed["total"] < cfg.banger_min_score):
+            reviewed = banger_score(doc, now, best_available=cfg.best_available_fallback)
+            if reviewed["total"] is None or (not cfg.best_available_fallback and not selected(doc, now) and reviewed["total"] < cfg.banger_min_score):
                 return "below banger editorial threshold"
             exposure = doc.get("novelty", {})
             if exposure.get("state") == "verified_low_reach_match":
@@ -244,6 +244,25 @@ def editorial_strength(doc):
         return graded
     review = doc.get("qc", {})
     return sum(review.get(key, 0) for key in ("fit_score", "entertainment_score", "quality_score")) + 2 * review.get("opening", {}).get("hook_score", 0)
+
+
+def best_available_order(doc, cfg, now):
+    """Prefer the quality target, then actual source/output quality, never views."""
+    from dataclasses import replace
+    from .bangers import editorial_total, score as banger_score
+    from .editing import banger_refusal, plan
+    strict = replace(cfg, best_available_fallback=False)
+    source, output = doc["inspection"], doc["qc"]
+    target_met = not banger_refusal(source, strict) and not banger_refusal(output, strict, output=True)
+    if target_met:
+        try:
+            plan(source, doc["probe"], strict, doc["original_sha256"])
+        except (ValueError, KeyError, TypeError):
+            target_met = False
+    graded = banger_score(doc, now, best_available=True)
+    target_met = target_met and graded["total"] is not None and graded["total"] >= cfg.banger_min_score
+    source_quality, output_quality = editorial_total(source), editorial_total(output)
+    return (bool(target_met), min(source_quality, output_quality), output_quality)
 
 
 def caption(doc, cfg, now):
@@ -351,6 +370,6 @@ def refresh(store, row, now, cfg):
     doc["ranking"]["observed_points_percent"] = round(doc["ranking"]["total"] / 75 * 100, 2) if fallback else None
     if cfg.bangers_only:
         from .bangers import score as banger_score
-        doc["ranking"]["banger"] = banger_score(doc, now)
-        doc["ranking"]["selection_rule"] = "inspected_banger_rubric"
+        doc["ranking"]["banger"] = banger_score(doc, now, best_available=cfg.best_available_fallback)
+        doc["ranking"]["selection_rule"] = "best_available_reviewed" if cfg.best_available_fallback else "inspected_banger_rubric"
     return doc

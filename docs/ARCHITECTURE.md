@@ -4,8 +4,8 @@ Current Account overlay (2026-11-17): verified news and occasional discussion
 questions share the existing news outbox, single-thread executor and Safari
 publisher. Questions receive separate draft/review calls, exact-text binding,
 permanent repeat checks and a forty-eight-hour interval; pending news goes first.
-The existing video workers aim for three to four ultra-qualified finds across
-four Toronto windows, with no automatic startup request. Reply jobs keep
+The existing video workers select the best eligible clips across five Toronto
+windows, with no automatic startup request. Reply jobs keep
 their current search budgets, executor structure and pacing. Final Reply admission
 checks recent confirmed wording; historical dossiers cannot override the Voice.
 
@@ -134,7 +134,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `news_delivery_job` (`NEWS_ENABLED=1`) | 1 minute; first turn after one second with `--startup-publications` | Retry the same durable approved outbox through the news executor and run lock, before startup research. No model/search call, new draft or second Safari owner. An actual confirmed receipt fulfills the durable startup-news intent. |
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
 | `discussion_post_job` (`NEWS_ENABLED=1`, `DISCUSSION_POSTS_ENABLED=1`) | 1 hour, first turn after two minutes | Prepare an independently reviewed question when the shared outbox is free and the discussion interval permits. No direct browser write; uses the news executor and delivery job. |
-| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns four Toronto slots, 08:30, 12:30, 17:30 and 21:30, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
+| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns five Toronto slots, 05:00, 09:00, 12:00, 17:00 and 21:00, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
 | `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
 | `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |

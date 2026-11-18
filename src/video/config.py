@@ -26,6 +26,7 @@ class VideoConfig:
     min_hook_score: int = 8
     bangers_only: bool = False
     ultra_bangers_only: bool = False
+    best_available_fallback: bool = False
     one_line_caption: bool = False
     playful_caption: bool = False
     daily_target_min: int = 0
@@ -125,9 +126,11 @@ class VideoConfig:
             raise ValueError("daily_target_min must be within the video daily ceiling")
         if self.one_line_caption and self.playful_caption:
             raise ValueError("choose either one-line or playful captions")
-        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "playful_caption", "adaptive_discovery"):
+        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "best_available_fallback", "one_line_caption", "playful_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
+        if self.best_available_fallback and not (self.bangers_only and self.auto_edit):
+            raise ValueError("best available fallback requires full banger review and editorial cutting")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
             if not isinstance(getattr(self, name), str):
                 raise ValueError(f"{name} must be a local operator file")

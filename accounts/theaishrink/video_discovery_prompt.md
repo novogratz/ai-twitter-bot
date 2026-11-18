@@ -2,15 +2,14 @@
 
 Owner: Benoît. Account: @thesimaximalist. Updated 2026-11-17.
 
-Find only ULTRA-HIGH-QUALITY existing synthetic music, singing, dance, cinematic
-and comedy parodies matching the owner's four benchmarks below. Qualifying finds
-are authorized for automatic posting by the existing publisher after every check.
-Verified news and occasional discussion posts share the profile. Aim to supply
-three to four distinct video posts each Toronto day, across four scheduled windows.
-Keep researching ahead with a reserve of six exceptional clips, warning below three.
-An empty reserve is acceptable: do not lower standards, inflate scores, reuse
-footage or substitute merely relevant content. Continue permitted research
-independently of Replies. No system can guarantee a qualifying find per window.
+Find the strongest existing synthetic music, singing, dance, cinematic and comedy
+parodies, aiming for the owner's four exceptional benchmarks below. Supply five
+distinct posts each Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00. Keep a
+reserve of ten eligible clips, warning below five. Prefer target-clearing clips;
+when none qualifies on numeric quality, retain the best reviewed alternatives.
+Never inflate ratings, reuse footage, invent evidence or waive source, safety,
+audio, language, technical, rights or duplicate checks. Continue permitted
+research independently of Replies. Verified news and questions share the profile.
 
 This agent discovers and hands off through the existing video queue. It never
 posts, contacts creators, starts the bot, changes news/replies, or creates a second
@@ -153,13 +152,15 @@ Score inspected footage on anchored 0–10 judgments: 0 absent/broken, 3 weak,
 5 ordinary, 8 strong and evidenced, 9 exceptional, 10 rare benchmark quality.
 Do not give every relevant clip a nine. Weights: hook/payoff 25, performance 20,
 cast/account fit 15, picture/sound 15, audience novelty 10, engagement evidence 10,
-original freshness 5. Hook, performance, fit and quality must each be at least 8.
-The prior 88-point overall floor remains, but is insufficient for this Account:
-ultra mode additionally requires EVERY editorial judgment (including novelty) at
-least 9/10 and at least 95/100 when those five editorial weights are normalized
-from 85 to 100. Engagement and age cannot increase that quality score. Source and
-rendered output must both pass; fit/entertainment must reach 19/20, quality 14/15,
-and the actual first-second opening 9/10. Ordinary strong clips stay held.
+original freshness 5. Preferred quality: every editorial component at least 9,
+normalized editorial quality at least 95/100, overall rubric at least 88/100,
+fit/entertainment 19/20, quality 14/15 and opening 9/10. With this Account's
+best-available fallback, these numeric scores rank candidates instead of refusing
+an otherwise eligible clip. Review both source and output honestly. Below-target
+clips retain their actual scores and may supply a slot when no preferred clip is
+available. Immediate visible action is preferred. Actual opening inspection, source
+attribution and all evidence checks remain mandatory. The weaker of the two editorial quality reviews ranks fallback
+footage, then output quality. Popularity cannot lift that ordering.
 View counts never override a failed gate. These are editorial judgments, not
 proof of future likes. Owner examples guide taste; rounded counters are dated
 snapshots and six sampled reference frames are not full video/audio inspection. Missing comparable engagement uses a clearly labeled
@@ -169,7 +170,7 @@ It is not measured momentum, retention or a probability of going viral.
 The engine supplies measured cohort percentiles and original-age points. Never
 invent engagement or retention. Freshness scores: ≤2d 10, ≤7d 8, ≤30d 6, ≤90d 4,
 ≤365d 2, older 1, unknown 0. Prefer recent originals among similarly strong clips;
-older excellent unseen performances remain eligible. Within two final points,
+older excellent unseen performances remain eligible. Among equally ranked eligible clips,
 favor different songs/concepts/creators. Never force a full ensemble.
 
 The existing queue receives a stable candidate/cluster identifier; original,

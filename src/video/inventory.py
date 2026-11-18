@@ -28,6 +28,8 @@ def usable_until(doc, cfg):
     choice = doc.get("operator_selection", {})
     if ranking.selected(doc, choice.get("selected_at", 0)):
         return min(choice["expires_at"], grant_expiry)
+    if cfg.best_available_fallback:
+        return expiry
     if cfg.bangers_only:
         from .bangers import score
         # Stepwise original-age points can change before a future window.

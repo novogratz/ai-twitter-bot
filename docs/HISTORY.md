@@ -1,5 +1,49 @@
 # History — mandates and incidents, June to November 2026
 
+## 2026-11-17 — Five daily best-available videos
+
+2026-11-17, five daily best-available videos — The Operator requests posts every
+Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00, then one live post after
+implementation. This supersedes the earlier three/four-slot cadence and hard
+editorial score refusals. Keep ultra-quality scores as preferences: choose a
+fully eligible target-clearing clip first; otherwise choose the best actually
+reviewed source/output quality available, without inflating scores or inventing
+popularity. The scheduled cap and target are five, reserve target ten, warning
+below five. Quality alone must not leave a supplied slot empty.
+
+The best_available_fallback setting defaults off for other Accounts and requires
+full banger review and editorial cutting. Numeric editorial/opening floors yield;
+actual source/output and opening inspection, attributed cast,
+content suitability, verified language-dependent jokes, audio, technical output,
+exact watermark, usage permission, source dates, X-copy limits, active hours and
+permanent duplicate/uncertain-send claims remain mandatory. Ranking uses the
+weaker of source/output editorial quality, then output quality; popularity cannot
+promote weaker fallback footage. Changed policy invalidates inspection/edit
+caches and allows existing unclaimed held sources to be prepared again. Existing
+posted/reserved content can never become new supply. No source or platform outage
+is reported as a successful post. News, questions, Replies and self-retweet
+refusals remain unchanged. Main-process start/restart still requires an explicit
+Operator request; the requested one-shot publication uses the existing publisher.
+
+Live validation also finds an English caption without a known function-word marker.
+The observed English verb `needs` now supplies ordinary English evidence; mixed
+French and unknown prose still refuse. Retained-overlay output review receives
+hash-bound original reference frames aligned to the exact excerpt, so unreadable
+source OCR can be checked against actual pixels. Every returned timestamp must
+still describe the output, and uncertain/new overlays remain held.
+
+Validation passes the 3,199-test full suite, followed by 282 focused tests after
+the live output/English fixes, including real FFmpeg source/output subsecond
+alignment. The final scheduler dry run and configuration-document check pass.
+The live fallback preparation preserves `ai_xiaomu`'s Elon concert original and
+produces a 13.895-second watermarked excerpt. Actual source/output editorial
+quality is 79.35/77.65; independent output review and caption admission pass.
+Candidate `62154ae862de0038f396092141fa8d00` is saved held for its fresh X-copy
+check, with a novelty job and no publication reservation or send. Preparation
+finishes after midnight Toronto, outside the existing Safari hours. The main
+bot remains stopped pending the requested explicit start decision; an immediate
+after-hours test likewise needs the Operator's one-time hours exception.
+
 ## 2026-11-17 — Live Instagram capture and cast-credit repairs
 
 The Operator requests one actual Instagram-to-X publication after implementation.

@@ -2,17 +2,26 @@
 
 ## Current Account: exceptional Instagram videos alongside news
 
-The November 17 Account targets three to four videos per day at four Toronto
-opportunities: 08:30, 12:30, 17:30 and 21:30. Verified news and occasional
-discussion questions share the existing publisher; automatic startup requests
-remain disabled. Only exceptional inspected finds may publish through the existing
-publisher. Source and output each need every editorial component at least 9/10
-and normalized editorial quality at least 95/100, excluding age and engagement.
-The full rubric still requires 88/100; fit/entertainment need 19/20, quality 14/15
-and the first-second hook 9/10. Empty windows stay empty. Four owner-selected
+The November 17 Account schedules five videos daily at 05:00, 09:00, 12:00,
+17:00 and 21:00 Toronto. Verified news and occasional discussion questions share
+the existing publisher; automatic startup requests remain disabled.
+`best_available_fallback=true` makes editorial scores preferences: target-clearing
+clips rank first, then the best available fully inspected source/output quality.
+The weaker of the two normalized editorial reviews ranks fallback candidates,
+with output quality breaking ties; popularity never compensates for weaker
+footage. Raw ratings and unknown metrics remain unchanged. Other Accounts keep
+strict floors by default. Source, technical, content, permission, X-copy and
+permanent duplicate checks remain mandatory, as do actual opening samples. Immediate action is preferred; observed slow openings
+reduce the score without refusing an otherwise eligible fallback. No eligible supply or a failed send is still a hold.
+Four owner-selected
 benchmarks guide taste and remain permanent posted memory, never new finds.
 The November 17 owner-supplied X reference is also permanent posted memory;
 its media and public counters were not independently inspected.
+
+Retained-overlay output review includes original frames trimmed to the same excerpt
+and labeled with output-relative timestamps. Actual source pixels can establish
+that an OCR-missed credit was already present; missing evidence or a model refusal
+still holds the output.
 
 Captions use a short supported scene joke and optional blank-line sign-off such
 as `Absolute BANGER 🔥`. Familiar cast aliases are allowed when supported by
@@ -27,8 +36,7 @@ checks actual edited content and the first second at 0/.2/.4/.6/.8 seconds. Audi
 is compared against the exact source interval, not the whole untrimmed audio.
 Retained source overlays are matched with the same timestamp offset. Technical
 quality, source permission, cast attribution, synthetic performance, freshness and
-permanent novelty remain required. Only source/output quality above the Account
-floors earns publication; no engagement prediction supplies score points.
+permanent novelty remain required. Only source/output quality ranks eligible clips; no engagement prediction supplies score points.
 
 The operator-owned [brief](../accounts/theaishrink/video_discovery_prompt.md),
 [query bank](../accounts/theaishrink/video_query_bank.txt) and
@@ -43,7 +51,7 @@ per Toronto day can request up to 120 leads/six queries; ordinary passes use
 records bounded search passes, not fabricated exhaustive profile crawling.
 
 Five-minute reserve maintenance refreshes expiring X checks and brings source
-polls forward below three eligible distinct clips. Target inventory is six. Completed negative reviews and exhausted media retries are not reset by
+polls forward below five eligible distinct clips. Target inventory is ten. Completed negative reviews and exhausted media retries are not reset by
 maintenance. New editing policy can re-inspect a saved unclaimed source once.
 Owner `shown`/`delivered`/`rejected` memory is permanent; use
 `bin/video.py remember CANDIDATE delivered` only after actual owner delivery.
@@ -125,7 +133,7 @@ valid candidates. Unsupported links remain leads, not verified media.
 
 The prior November 5 policy used ten two-hour slots and a two-line POV/slogan
 caption. November 7 changed both to thirteen 90-minute slots and one grounded
-caption; November 17 replaces that cadence and format with the four windows and
+caption; November 17 replaces that cadence and format with the five windows and
 playful captions described above. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
@@ -306,13 +314,13 @@ scheduler's overnight pause.
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 08:30 |
-| Afternoon | 12:30, 17:30 |
-| Evening | 21:30 |
+| Morning | 05:00, 09:00 |
+| Afternoon | 12:00, 17:00 |
+| Evening | 21:00 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. One to thirteen distinct slots are configurable; this Account uses four
-and `scheduled_daily_cap=4`. Other Accounts retain the default ceiling of eight.
+rules. One to thirteen distinct slots are configurable; this Account uses five
+and `scheduled_daily_cap=5`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -321,7 +329,7 @@ deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
 `protect_primary_windows = true` prioritizes one video at each configured main
-window. This Account has four main windows and no paired slots. If a different
+window. This Account has five main windows and no paired slots. If a different
 configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
 for the next five main windows, including tomorrow morning. Coverage accounts

@@ -170,8 +170,8 @@ spacing, admission, scheduler concurrency nor the advisory daily targets.
 a newly selected date still requires the Operator's next explicit restart.
 
 Video configuration lives in `accounts/<BOT_ACCOUNT>/video.toml`. The live
-Account uses four slots at 08:30, 12:30, 17:30 and 21:30 Toronto,
-`scheduled_daily_cap=4`, advisory `daily_target_min=3`, `startup_on_boot=false`, `preferred_age_hours=72` and
+Account uses five slots at 05:00, 09:00, 12:00, 17:00 and 21:00 Toronto,
+`scheduled_daily_cap=5`, `daily_target_min=5`, `startup_on_boot=false`, `preferred_age_hours=72` and
 `max_age_hours=17520` (730 days). X is an enabled source alongside Instagram,
 TikTok, RedNote and Bilibili, with observed source views limited to 50,000.
 Ordinary starts create no startup request. Publication still uses durable claims,
@@ -179,7 +179,7 @@ inspection, dedup and existing spacing. The [README](../README.md) links the
 video pipeline guide and operating commands.
 
 The live video configuration enables `auto_edit`, `bangers_only`, `ultra_bangers_only`,
-`playful_caption` and `adaptive_discovery`; `one_line_caption=false`. Playful
+`best_available_fallback`, `playful_caption` and `adaptive_discovery`; `one_line_caption=false`. Playful
 captions allow one grounded scene sentence and an optional separate sign-off,
 with source-supported cast aliases. The two caption modes are mutually exclusive.
 It reads the account-local
@@ -189,13 +189,17 @@ by `source_max_duration_seconds=300`, the selected excerpt by `edit_max_seconds=
 `banger_min_score=88` retains the full editorial rubric. Ultra mode additionally
 requires every editorial component at least 9/10, normalized editorial quality
 at least 95/100, fit/entertainment 19/20, technical quality 14/15 and
-`min_hook_score=9`. Engagement and freshness cannot raise the ultra quality score.
+`min_hook_score=9`. With `best_available_fallback=true`, these are preferences:
+fully eligible target-clearing clips rank first, then the strongest actual
+source/output quality. Weak observed openings reduce ranking; missing evidence
+still refuses. The flag defaults off and requires banger review plus automatic
+editing. Engagement and freshness cannot raise the ultra quality score.
 Ultra mode requires automatic editing and the ordinary banger gates. The original raw
 ranking retains its unknown components. `discovery_calls_per_hour=3` is shared
 across sources and still subject to daily Codex/request budgets. Platform weights
 are 70/30/10/4/5/7/4 for Instagram/Bilibili/TikTok/RedNote/X/YouTube/Douyin
 (relative weights, not percentages); unavailable/cooling providers are skipped.
-`ready_reserve_min=3` warns below `buffer_target=6`; it never waives eligibility. Matching X copies use
+`ready_reserve_min=5` warns below `buffer_target=10`; it never waives eligibility. Matching X copies use
 `x_max_views=50000` and `x_reach_max_age_seconds=21600`. Exact X source metrics
 retain the tighter one-hour check. These settings create no extra publisher.
 

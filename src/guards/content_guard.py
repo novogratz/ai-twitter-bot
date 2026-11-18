@@ -290,7 +290,7 @@ _EN_MARKERS = (
     " they ", " we ", " will ", " just ", " market", " growth", " company ",
     " here ", " there ", " about ", " than ", " because ",
     " my ", " our ", " i ", " can ", " could ", " would ", " should ", " might ", " must ",
-    " has ", " have ", " does ", " did ", " how ", " why ", " what ", " which ",
+    " has ", " have ", " does ", " did ", " needs ", " how ", " why ", " what ", " which ",
     " without ", " through ", " into ", " across ", " between ", " before ", " after ",
     " when ", " where ", " while ", " then ",
     " i'm ", " you're ", " we're ", " they're ", " i've ", " you've ", " we've ", " they've ",

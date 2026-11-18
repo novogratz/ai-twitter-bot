@@ -4,15 +4,15 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_targets_three_to_four_videos_with_supported_tech_cast():
+def test_live_account_targets_five_best_available_videos_with_supported_tech_cast():
     cfg = config.load()
-    assert schedule.clocks(cfg) == ("08:30", "12:30", "17:30", "21:30")
-    assert cfg.daily_target_min == 3 and cfg.scheduled_daily_cap == 4
+    assert schedule.clocks(cfg) == ("05:00", "09:00", "12:00", "17:00", "21:00")
+    assert cfg.daily_target_min == cfg.scheduled_daily_cap == 5
     assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario", "bill", "mark"}
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file
-    assert cfg.ultra_bangers_only and cfg.min_hook_score == 9
-    assert not cfg.startup_on_boot and cfg.buffer_target == 6 and cfg.ready_reserve_min == 3
+    assert cfg.ultra_bangers_only and cfg.min_hook_score == 9 and cfg.best_available_fallback
+    assert not cfg.startup_on_boot and cfg.buffer_target == 10 and cfg.ready_reserve_min == 5
     assert cfg.playful_caption and not cfg.one_line_caption
 
 
