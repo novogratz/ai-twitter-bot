@@ -38,8 +38,7 @@ STORY = obj({**{k: BOOL for k in FLAGS}, "reason": TEXT, "event_key": TEXT, "dev
     "paragraphs": array(TEXT, 3)})
 REVIEW_FLAGS = ("facts_supported", "dates_supported", "mechanism_correct", "attribution_complete",
                 "uncertainty_preserved", "exceptional", "duplicate_free", "material_update_proven",
-                "english", "branding_only", "source_preserved", "natural", "qualifiers_preserved",
-                "reader_value", "consequence_supported")
+                "english", "branding_only", "source_preserved", "natural", "qualifiers_preserved")
 REVIEW = obj({**{k: BOOL for k in REVIEW_FLAGS}, "reason": TEXT})
 
 
@@ -142,7 +141,7 @@ def tweet(story):
         raise ValueError("complete tweet exceeds X weighted character limit")
     if len(urls) != 1 or urls[0]["url"] != story["url"] or not text.endswith(story["url"]):
         raise ValueError("tweet needs exactly one direct source URL at the end")
-    if not paragraphs or "\u2014" in text or re.search(r"(?<!\w)#\w", text):
+    if not paragraphs or "BANGER" not in text or "\u2014" in text or re.search(r"(?<!\w)#\w", text):
         raise ValueError("tweet format/branding refused")
     if any(normalize(q) not in normalize(text) for q in story["qualifiers"] if q):
         raise ValueError("required qualifier missing from tweet")

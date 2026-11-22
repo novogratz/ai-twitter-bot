@@ -1,245 +1,660 @@
 # History — mandates and incidents, June to November 2026
 
-## 2026-11-18 — Five Instagram slots and refreshed meme captions
+2026-11-21, warmer emotional voice and repaired composing throughput — The
+Operator reports only 50–100 actual Replies against the 1,400 target, asks for
+at least 500 today, more emotion — hearts, blue hearts, a thumbs up — warmer
+feminine delivery, Grok responses, and accepts a plain "Love it!!" on an
+artistic slopcore post. They request fix, PR, merge, push, release, restart
+and monitoring. This explicit restart request lifts the 21:35 pause.
 
-The Operator requests 06:00 ± five minutes, 09:00, 12:00, 17:00 and 21:00
-videos, Instagram-only sources, the strongest unseen eligible clip, and a new
-caption style. The 06:00 slot uses a bounded video-only activity context so
-ordinary Replies/news retain 07:00–23:00. Deadlines prevent a late morning
-catch-up. New source/output caption reviews replace recurring BANGER sign-offs
-with varied scene-specific jokes, preserving attribution and permanent history.
-The Reply ceiling becomes 100 with ten-minute spacing, retaining independent
-review for both technical and creative conversation. News format/windows and
-the Elon-only two-repost cap remain. PR, merge, push and release are authorized;
-starting/restarting the live main process remains a separate explicit request.
+The day's audit found 250 shipped Replies from 655 attempts: 280 drafts died at
+the final composing check ("Invitation or exact source changed"), each wasting
+its full browser cycle. A live empty-composer reproduction showed X's compact
+parent copy appends alias display text the standalone source never renders in
+its own text: the quoted-status permalink, usually ellipsis-truncated
+("x.com/GiorgioPatrini…"), and a glued pic.x.com token for native media; short
+copies expose no Show more control. Exact equality could therefore never pass
+on a quote or short media parent. The composing comparison now strips only
+those trailing alias tokens before requiring exact equality; the standalone
+source behind the dialog is still exact-matched in the same read, Show more
+expansion remains, a bare prefix still refuses, and every composer DOM refusal
+now logs a labeled branch reason. Grok `grok-4.7-build-fast` at low effort
+remains the Reply route.
 
-## 2026-11-18 — Substantive content review
+Both Voice files put feeling first: hearts ❤️/💙/🩷 lead for affection (blue
+suits tech and SI art), one 👍 can carry simple agreement or support, and
+"Love it!!" with or without a heart can be a whole reply to artist slopcore.
+The heart gap drops to two heartless sends between hearts; hearts extend from
+artist reactions to warm share replies; a single thumbs up is allowed on
+ordinary lanes and never for watched authors. The artist short-reaction closed
+set adds "so good", "so cute", "love it so much" and "love everything about
+this". Unbound generic hype ("Beautiful", "Amazing") still refuses; no emoji
+quota, rotation or filler follows. All caps, pacing, parent likes, opt-outs,
+permanent histories and repetition checks remain unchanged.
 
-The Operator asks for sharper AI topics and useful contributions. Inspection
-finds that the selective source filter recognizes technical words but cannot
-establish substance. The new independent Reply review judges the exact final
-wording against source context and recent confirmed Replies; final admission
-and live parent matching enforce its approval. Drafting retains up to 4,000
-source characters. Latest searches move toward concrete research and workflow
-problems. News and discussion reviews gain explicit reader-value requirements.
-Validation uses isolated models, histories and browser fixtures. No live test
-post or automatic restart is implied by this code change.
+Validation also repaired a latent test-clock inconsistency: the suite froze the
+Toronto clock at noon while fixtures and buffer TTLs used the real clock, so
+afternoon runs falsely refused watch fixtures. Tests keep the real clock in
+daytime and clamp only the 23:00–05:00 edge; `x_urls.age` defaults to the
+shared Toronto clock, and numpy joins requirements for video fingerprints.
+4,003 tests and the dry-run schedule check passed. Restart through the normal
+launcher, verify an actual own-X Reply receipt, and monitor the composing
+refusal rate.
 
-The follow-up prohibits all automatic reposts except up to two Elon originals
-daily. Shared admission, permanent atomic reservations and browser confirmation
-enforce the independent allowlist and daily cap. Confirmed replies, relevance
-and ordinary publication limits still apply. No historical repost is undone.
+2026-11-21, Operator pause at 21:35 Toronto — Stop and keep the bot stopped
+until a new explicit start/restart request. This overrides the latest resume
+authorization. The worker stopped at 21:35:55; no main process or active supervisor
+remained, and `.bot_disabled` is armed. Preserve configuration, publication history,
+uncertain submissions, opt-outs and manual decisions unchanged.
 
-The next instruction explicitly raises Replies to an advisory 100–120 per day,
-with a hard maximum of 120 and eight-minute spacing during 07:00–23:00. It also
-admits high-quality AI art/memes when a specific response can be grounded in
-supplied details. Text-only discovery does not authorize claims about unseen
-visual execution. The independent review and all source/history checks remain.
+2026-11-21, like before every Reply and resume priority watched actions — The Operator
+requests a confirmed parent like before every Reply, automatic likes/native reposts
+for new Elon originals, faster relevant Replies and short natural wording, then
+says “go push harder.” This lifts the 08:14 pause and authorizes restart after
+validation. Keep the restored broad discovery routine and Grok at low effort.
 
-## 2026-11-18 — Focused daily schedule and selective conversation
+`REPLY_REQUIRE_PARENT_LIKE=true` requires an observed liked state on the exact
+admitted parent before opening its Reply composer. A short-lived source-bound
+Reply context authorizes this ordinary like; generic ordinary likes remain off.
+Failed, unreadable or uncertain likes refuse the Reply. Do not trust history alone
+as proof that the live parent is liked. Preserve exact source and own-receipt checks.
 
-2026-11-18, final publishing and selective Reply policy — The Operator requests
-four Toronto video opportunities: 09:00, 12:00, 17:00 and 20:00. Choose the best
-fully eligible reviewed clip, retaining the best-available fallback, permanent
-deduplication, source/output/audio/rights checks and uncertain-send holds. Every
-video must include at least one source-attributed fictional Elon Musk, Jensen
-Huang, Dario Amodei, Sam Altman or Donald Trump. Bill Gates, Mark Zuckerberg and
-other guests may accompany them but never qualify a clip alone. Viral reach is
-an aim, not a guaranteed outcome. No automatic startup publication is added.
+Elon remains the sole watched author. `auto_engage_all_topics=true` and independent
+watched reposts authorize likes/native reposts for verified new originals across
+topics, inside the existing first-enable boundary and maximum source age. These
+actions no longer wait for AI selection or the former three/day, six-hour limits.
+The configured watched Reply and repost ceilings are 1,400 each; watched Replies
+also consume the overall 1,400/day Reply ceiling. Reposts retain at least sixty
+seconds between confirmed or uncertain attempts. Watched Replies use the ordinary
+eight-second minimum plus jitter and still require the existing AI/SI, Grok,
+slopcore, Starlink or SpaceX topic filter, excluding politics and unclear/weird
+content. Only Replies retain the sixty-second source deadline. Prioritize them
+as soon as discovered; browser/model availability prevents a delivery guarantee.
 
-News has two Toronto opportunities, 10:30 and 15:00, with a thirty-minute delivery
-window and at most one text publication per window, two per day. Hourly discovery
-can prepare multiple independently reviewed main candidates; delivery chooses
-industry impact first, then total news value and freshness. The news score floor
-is 90/100. Pending picks do not freeze later research. Old backup-only drafts are
-never promoted automatically. Verified evidence, event/URL history, seven-text
-shared outer ceiling, two-hour spacing and video protection remain; the new
-Account cap of two is stricter. Occasional questions still need 48 elapsed hours
-and share these two text slots, with news first. No filler or late catch-up burst.
+Prefer a few words: agreement, a natural reaction, an understandable joke or a
+useful concrete question. “Facts” and “Agree” may fit supported statements; they
+are optional, source-bound and subject to recent-text repetition checks. Ordinary
+Replies have one sentence, at most 24 words/140 characters; watched Replies usually
+use one or two words, at most twelve words/ninety characters. Refuse overlong drafts
+rather than cutting them. No obscure added references, unsolicited lectures,
+invented experience, unseen-media claims or filler to meet the daily target.
 
-Replies have a hard maximum of forty per Toronto day, including uncertain sends,
-and no daily minimum. The live Account spaces submissions by at least 1,440
-seconds (about 24 minutes), distributing opportunities across 07:00–23:00 rather
-than exhausting the allowance early. The earlier ten-minute minimum is therefore
-also respected. Other parents must still be at most thirty minutes old at final
-submission; watched Elon parents at most five minutes, preferably discovered and
-answered within the first minute when actual pacing and generation permit. Elon
-gets at most two Replies per day, only on important AI/SI discussions. A missed
-freshness window skips; it never bypasses spacing or quality to meet a target.
+Keep five observed parent likes, ordinary one-author/day, permanent original
+claims, uncertain-send budgets, opt-outs and normal 04:30–00:00 Toronto hours.
+Other follows, likes, reposts, quotes and profile publications remain disabled.
+Preserve all runtime/publication/manual records. Validate, use the normal launcher,
+and verify an actual own-X Reply receipt plus the preceding confirmed parent like.
+Later stop/pause requests override this resume authorization.
 
-All Reply paths use the same durable submission journal and final budget/age
-checks. Uncertain sends retain their parent and their budget; confirmed ledger
-rows are not double-counted. Ordinary discovery uses eight Top and eight Latest
-reads, with no popularity floor, and prefers authors absent from confirmed Reply
-history over the retained ninety days. Both Voice files and shared generation
-require one supported useful angle, expressed warmly and precisely; no generic
-praise, omniscience, fake biography, fake typos or unseen-media claims. Watched
-likes/reposts require a confirmed Reply to that exact parent; the required like
-during an admitted Reply remains allowed. No broad Elon engagement loop remains.
+Validation: 3,994 tests passed, plus the generated configuration and nonpublishing
+schedule checks. Publication/history files matched their pre-change hashes before
+launch. The normal launcher started PID 18291 at 08:41:57 Toronto. Independent
+watched likes and native reposts were confirmed after launch. The parent at
+https://x.com/bobolv235824/status/2124053546828259606 was confirmed liked at
+08:50:37, before the Reply click at 08:50:38. X confirmed the short Grok question
+“When does the face start drifting?” at 08:50:48, with a permanent confirmed
+submission and own receipt: https://x.com/thesimaximalist/status/2124138453269164129.
+The worker remains running; all earlier publication/uncertainty records were preserved.
 
-The entire automatic schedule sleeps 23:00–07:00 Toronto, including news research
-and independent video preparation; durable jobs and histories survive sleep.
-This supersedes all earlier cadence, volume, age, voice and hours settings below.
-The Operator requests PR creation, merge, push and a new release. Starting or
-restarting the main bot remains an explicitly requested lifecycle action.
+2026-11-21, Operator pause at 08:14 Toronto — Stop and keep the bot stopped
+until a new explicit start/restart request. This overrides the latest broad-routine
+resume authorization. The worker stopped at 08:14:04; no main process or active
+supervisor remained, and `.bot_disabled` is armed. Preserve all configuration,
+publication history, uncertain submissions, opt-outs and manual decisions.
 
-## 2026-11-18 — Confirmed live fallback publication and authorized daily start
+2026-11-21, restore the earlier broad Reply routine and resume — The Operator
+asks to go ahead, push toward 1,400/day and do what the bot was doing before,
+keeping the new style of short reactions or useful questions. This replaces the
+For You first experiment and lifts the 07:15 pause. `REPLY_FOR_YOU_FIRST=false`.
+Restore the two-minute direct search cycle: sixteen reads split across four major
+author Latest queries, two creator Latest queries, six Top and four general Latest,
+with the earlier eighty-Reply cycle budget. Both Home feeds return to the combined
+eight-minute cycle, up to 160 posts/twenty scrolls and eighty generation attempts
+per feed. The one-confirmed-Reply-per-feed-turn restriction is off. Unused sources
+keep the earlier thirty-minute local TTL; the ordinary maximum source age returns
+to twenty-four hours. General Latest searches retain their existing one-hour limit.
 
-The Operator approves the reviewed clip, a one-time after-hours test and starting
-the daily bot afterward. The isolated publisher uses a fifteen-minute local hours
-exception while retaining real timestamps and all source, inspection, history and
-publication checks. Fresh bounded X searches return `checked_no_match`. The normal
-Safari publisher submits the 13.895-second watermarked Elon concert parody and
-confirms the exact own-status receipt at
-`https://x.com/i/status/2122920458366693860`. Candidate
-`62154ae862de0038f396092141fa8d00` becomes posted; its permanent content claim,
-caption and original/output fingerprints are retained. No active or uncertain
-reservation remains. The process restores ordinary hours before the daily start.
+Keep Grok `grok-4.7-build-fast` at low effort and the latest plain conversational
+Voice: short agreement, reaction, understandable joke or a relevant concrete
+question chosen from the full post. No forced questions, recycled filler or return
+to elaborate punchlines and unsolicited lessons. The 1,400/day target and ceiling
+include uncertain sends; actual output still depends on eligible sources. Keep
+eight seconds plus 0–4 jitter, existing hours, five observed parent likes, one
+ordinary author/day, permanent original claims, opt-outs and source/receipt checks.
+Preserve all runtime/publication/manual records and the selected watched limits.
+Validate, start through the normal launcher and confirm an actual own-X Reply.
+Later pause/stop requests override this resume authorization.
 
-The normal launcher then starts main PID 86093. The supervisor verifies and
-replaces the old discovery/media processes with PIDs 86110/86111, which record
-the same new code/config generation. Startup logs confirm five video slots,
-automatic startup disabled, news enabled and normal 04:30–00:00 hours. The main
-process owns the account lock and logs its next wake at 04:30 on November 18;
-the next scheduled video opportunity is 05:00. Overnight discovery/media remain
-active. This receipt verifies the one test post, not future slot coverage.
+Validated with 700 relevant tests and the configuration/schedule preview. The normal
+launcher started the restored worker at 07:56:35 Toronto, and X confirmed a new Grok
+Reply at 08:04:17: https://x.com/thesimaximalist/status/2124126748224913554.
+The worker remains running; earlier confirmed and uncertain records were preserved.
 
-## 2026-11-17 — Five daily best-available videos
+2026-11-21, For You first and first-hour Replies while paused — The Operator
+wants most discovery on For You, focused on hot, new posts instead of old ones.
+`REPLY_FOR_YOU_FIRST=true` keeps broad discovery but makes a verified For You scan
+the primary turn, every minute after restart: at most twenty posts/two scrolls
+and three generation attempts, with one confirmed Reply before refreshing the feed.
+The Operator clarifies that fast responses are the goal. End the scan after the
+first viewport containing an eligible first-half-hour parent, then read its full
+source and draft/send before preparing another source. Give that source read Reply
+priority over background discovery; active browser transactions still finish and
+watched deadlines retain priority. Following is read only every twentieth completed
+For You cycle, after its Reply turn. Secondary search waits thirty minutes after startup, then runs two
+rotating Latest queries every thirty minutes, with at most three confirmed Replies.
+No routine Top or major-author search sweep precedes For You. Watched jobs and the
+separate ten-minute opt-out read retain their existing scopes and checks.
 
-2026-11-17, five daily best-available videos — The Operator requests posts every
-Toronto day at 05:00, 09:00, 12:00, 17:00 and 21:00, then one live post after
-implementation. This supersedes the earlier three/four-slot cadence and hard
-editorial score refusals. Keep ultra-quality scores as preferences: choose a
-fully eligible target-clearing clip first; otherwise choose the best actually
-reviewed source/output quality available, without inflating scores or inventing
-popularity. The scheduled cap and target are five, reserve target ten, warning
-below five. Quality alone must not leave a supplied slot empty.
+Ordinary sources must be at most sixty minutes old; a tighter configured limit
+wins. Verify age from the exact status ID before generation and immediately before
+submission, including prepared/alternate paths. Unknown/future dates refuse; a
+queued draft crossing the deadline is not sent. Prefer sources in their first
+thirty minutes, then observed likes per minute, views per minute for ties and age;
+these snapshot ratios are ranking signals, not measured growth. Author diversity
+stays within freshness tiers. Old total views or designated authors cannot displace
+fresh work in the buffers. Keep at least five observed parent likes, ten-minute
+source-buffer TTL without extension on rediscovery, exact-source/media/receipt and
+all opt-out, language, repetition, author/day and permanent-original checks.
 
-The best_available_fallback setting defaults off for other Accounts and requires
-full banger review and editorial cutting. Numeric editorial/opening floors yield;
-actual source/output and opening inspection, attributed cast,
-content suitability, verified language-dependent jokes, audio, technical output,
-exact watermark, usage permission, source dates, X-copy limits, active hours and
-permanent duplicate/uncertain-send claims remain mandatory. Ranking uses the
-weaker of source/output editorial quality, then output quality; popularity cannot
-promote weaker fallback footage. Changed policy invalidates inspection/edit
-caches and allows existing unclaimed held sources to be prepared again. Existing
-posted/reserved content can never become new supply. No source or platform outage
-is reported as a successful post. News, questions, Replies and self-retweet
-refusals remain unchanged. Main-process start/restart still requires an explicit
-Operator request; the requested one-shot publication uses the existing publisher.
+Keep Grok, the plain short-reaction Voice, existing hours and the 1,400/day advisory
+target/ceiling unchanged. Preserve publication, uncertain-send and manual records.
+The 07:15 pause remains binding: implement and validate only; do not restart or
+publish without a new explicit start/restart request.
 
-Live validation also finds an English caption without a known function-word marker.
-The observed English verb `needs` now supplies ordinary English evidence; mixed
-French and unknown prose still refuse. Retained-overlay output review receives
-hash-bound original reference frames aligned to the exact excerpt, so unreadable
-source OCR can be checked against actual pixels. Every returned timestamp must
-still describe the output, and uncertain/new overlays remain held.
+Validated with 3,905 passing tests, the generated configuration reference and a
+nonpublishing schedule preview. A read-only For You sample found sixteen posts,
+three under an hour, and no fresh AI originals meeting the observed-like floor;
+it generated and published nothing. Bot remains stopped with `.bot_disabled` armed.
 
-Validation passes the 3,199-test full suite, followed by 282 focused tests after
-the live output/English fixes, including real FFmpeg source/output subsecond
-alignment. The final scheduler dry run and configuration-document check pass.
-The live fallback preparation preserves `ai_xiaomu`'s Elon concert original and
-produces a 13.895-second watermarked excerpt. Actual source/output editorial
-quality is 79.35/77.65; independent output review and caption admission pass.
-Candidate `62154ae862de0038f396092141fa8d00` is saved held for its fresh X-copy
-check, with a novelty job and no publication reservation or send. Preparation
-finishes after midnight Toronto, outside the existing Safari hours. The main
-bot remains stopped pending the requested explicit start decision; an immediate
-after-hours test likewise needs the Operator's one-time hours exception.
+2026-11-21, Operator pause at 07:15 Toronto — Stop the bot and keep it stopped
+until a new explicit start/restart request. This supersedes earlier restart
+instructions. The worker stopped at 07:15:05; no main process or active supervisor
+remained, and `.bot_disabled` is armed. Preserve configuration, publication history,
+uncertain submissions, opt-outs and manual decisions unchanged.
 
-## 2026-11-17 — Live Instagram capture and cast-credit repairs
+2026-11-21, resume the Grok reply worker — The Operator explicitly requests
+restart and automatic replying after reviewing the plain-response Grok previews.
+This lifts the prior pause. Start through the normal launcher with Grok
+`grok-4.7-build-fast`, low effort, the revised conversational Voice and the existing
+1,400/day advisory target/ceiling. Preserve all publication, uncertainty, opt-out
+and manual-review records. Confirm the running process and an actual own-X Reply
+receipt. Later stop/pause requests still override this authorization.
 
-The Operator requests one actual Instagram-to-X publication after implementation.
-Normal-page research finds new creator clips, but Safari redirects their `/reel/`
-tabs to `/reels/` while the canonical link stays singular. The exact-tab reader
-correctly refuses the vanished original URL. Capture now tries the known route
-aliases for the same case-sensitive shortcode within its existing eight reads,
-retaining final canonical validation and never using an unrelated front tab.
-A regression reproduces the redirected tab separately from its canonical link.
+The restart exposed a composer rendering mismatch: X replaces native media links
+with `pic.x.com` text in the compact parent. Verify the unchanged exact standalone
+source, then permit the sole author-verified copy's Show more control to expand.
+Require the complete original text again afterward; never accept a prefix or infer
+link equivalence. An empty-composer live reproduction confirmed exact text restored
+without submitting. Preserve all publication and uncertain-send history.
 
-The live caption `爱唱歌的大男孩jensen huang` also exposed a word-boundary false
-refusal: Python treats the adjacent Han character as part of the English word.
-The attribution reader now separates Han characters only for ASCII-name matching,
-retains the original caption as evidence, and still refuses partial Latin names
-and missing source provenance. Newly observed `#jensenhuang` captions also qualify
-as exact compact hashtags derived from configured full names, never substrings
-of a longer tag. The inspection cache already includes the resulting cast context.
-All 3,171 isolated tests and the scheduler dry run pass. The changes do not start
-or restart the main bot, and the quality/history/publication gates remain intact.
+Validation: 620 browser, Reply-target, curated-source and budget tests passed.
+The worker confirmed a Grok Reply at 06:49:01 Toronto:
+https://x.com/thesimaximalist/status/2124107805263094125 — "Coding is the one I'd grab."
+The normal launcher resumed at 06:49:54 after diagnosis, with history intact.
+Compact link cards with no expansion or exact destination proof still refuse;
+no URL stripping or guessed link equivalence is permitted.
 
-The live scan completes source inspections for six distinct Instagram clips,
-including one repeated inspection after repairing its observed cast-credit bug.
-Every candidate remains held before rendering: the strongest observed editorial
-quality is 77.65/100 for `ai_xiaomu`'s Elon concert parody, below the retained
-95/100 rule, with a 7.5/10 opening below nine. The other complete reviews likewise
-miss the opening and editorial floors. Original files and reports are retained
-in the local preview folder. No candidate is queued, no publication is reserved
-or submitted, and no history or quality threshold is reset by this test.
+2026-11-21, plain reactions and understandable humor while paused — The Operator
+rejects an elaborate latency quip, an unsolicited editor-workflow counterargument
+and a P-vs-NP joke. They want ordinary conversation: simple agreement about slowness,
+a playful tool preference and an obvious joke that follows the author's irony.
+They explicitly approve the concrete question asking which problems separated two
+models. Keep that curiosity; do not ban questions or make them mandatory endings.
 
-## 2026-11-17 — Restore news, add discussion posts and prioritize Instagram bangers
+Both Voice files, the broad/direct/structured drafting prompts, shared delivery and
+Relation now prefer a few words or one short line. Read the whole post, including
+an ironic ending; a source-lane label is only a hint. A rhetorical question inside
+a rant is not a help request. A real help request can still receive the explanation
+it needs. Remove the universal demand for a novel insight, detail recap or technical
+counterexample. No polished punchlines, obscure new references, elaborate metaphors,
+unsolicited debates, fake typos, fabricated experience or concealed bot identity.
+Plain agreement, fitting warmth, subjective taste and concrete questions are valid.
 
-After the checkpoint rollback, the Operator requests worthwhile original SI
-news, occasional model/workflow questions and three to four exceptional
-Instagram videos per day. Verified news resumes with material releases, company
-leadership, earnings and actual IPO milestones eligible. Drafts use plain facts,
-optional grounded wit and one fetched source; the mandatory BANGER slogan is
-removed. Evidence, independent review, event history and uncertain claims remain.
-The Operator's supplied NVIDIA post is historical memory, not a new candidate.
+The scoped ordinary short-reaction exception permits fresh source-bound artist
+warmth and resource thanks. Compact playful comparisons require a short named
+subject present in the original source and closed English wording/emoticon form;
+no global brand-as-English or generic-hype exemption. English/SI, exact-source,
+opt-out, recent confirmed/pending repetition, heart spacing and publication checks
+remain. Keep the 1,400/day advisory target/ceiling and existing schedule unchanged.
 
-Discussion preparation joins the news executor and durable text outbox. Its
-separate draft/review tasks allow subjective questions and configured unversioned
-model families, reject copied questions and unsupported claims, and wait at least
-forty-eight hours between confirmed questions. Pending news has priority. Text
-posts retain the seven-per-day ceiling, two-hour spacing and protected video
-windows. A discussion receipt cannot satisfy startup news. The supplied model
-question is imported as owner-reported history, without inventing an X receipt.
+Validate with local tests and isolated model drafts of the supplied examples plus
+new cases. Do not publish previews or change publication history. The Operator's
+pause remains in force: keep the bot stopped and do not restart until asked.
 
-Video opportunities become 08:30, 12:30, 17:30 and 21:30 Toronto, with an advisory
-three-to-four target, six-clip reserve and stronger Instagram discovery weight.
-Natural scene jokes and optional blank-line BANGER sign-offs replace the forced
-one-line prefix. Source-supported aliases for the existing cast, Bill Gates and
-Mark Zuckerberg are allowed. The ultra-quality bar and all source, inspection,
-usage, dedup and publication checks remain. No minimum actual output is promised.
-The supplied own-X video joins permanent memory; it is not an inspected new find.
+The Operator subsequently connects Grok and asks to retry. Reply drafting is
+configured with `REPLY_LLM_PROVIDER=grok`, both Reply models
+`grok-4.7-build-fast`, and `GROK_REASONING_EFFORT=low`. The signed-in Grok CLI
+runs one draft-only turn in an isolated temporary directory, with tools, web,
+subagents, memory, workflows and coding skill bundles disabled. Accept only a
+completed result for the requested model; errors, partial output and unexpected
+tool/context activity yield no draft. Fallback remains disabled. Ordinary text
+and watched structured selection both use this route. The pause is still binding.
 
-A real Instagram preview exposed two reader issues: `/p/` redirected to `/reel/`
-with the same shortcode, and the exact video's date/media lived in page-owned
-JSON rather than JSON-LD. Capture now permits exact case-sensitive route aliases
-and bounded matching video objects in normal-page JSON. Other post objects never
-authorize the source. The new preview command uses existing budgets, preserves
-the original and never queues, claims or publishes a post.
+Short-English validation treats a closed set of ASCII faces as punctuation, not
+language evidence; natural slow-day/slow-answer phrases retain known-word, length
+and French/mixed checks. Faces also cannot hide generic text or pad minimum length.
+A per-call drafting deadline now handles routes with no separate timeout value;
+the smaller limit wins when both exist. No publication or history changes.
 
-The live import downloaded a 32.32-second `tigercircle.hk` rap-parody montage and
-reviewed 32 temporal frames plus local audio classifications. Its opening and
-editorial scores fell short, so preparation held before rendering. This proves
-actual Instagram capture and inspection, not publication readiness. A real
-discussion-generation check also caught the model API's refusal of JSON Schema
-`uniqueItems`; uniqueness now runs in local admission while the model receives a
-supported schema. No bot start/restart or X write accompanies implementation.
-The corrected live draft/review path prepared “When reviewing code from an SI
-agent, what do you check first, and why?” in an isolated preview outbox. Model use
-was charged to the existing budget; the production outbox was not populated.
-All 3,169 isolated tests pass. The configuration reference check and scheduler
-dry run pass with news/discussions enabled, four video slots, the existing text
-limits and no self-repost job. Local switches await the Operator's manual restart.
+Final verification: 3,807 tests passed; dry-run resolves both Reply model settings
+to Grok with fallback disabled. Eight actual drafts through the registered Grok
+adapter produced seven replies passing final text admission and one correct SKIP
+for unseen lip-sync evaluation. Structured JSON generation also passed within the
+watched path's bounded timeout. Examples include "Agree, it's too slow.", "Just
+another boring day :D", and "What were the hardest problems it cleared?".
 
-## 2026-11-17 — Restore the November 10 checkpoint and forbid own reposts
+The first connector trials exposed actual native coding-skill injection despite
+compatibility switches. A private temporary `GROK_HOME` with `skills.ignore=["/"]`
+removes that catalog; `GROK_AUTH_PATH` references the existing login without copying
+credentials or altering global configuration. Strict empty-tool/skill checks stay.
+The CLI's system-prompt override did not remove native context by itself, so it is
+not relied on for isolation. The final text/JSON calls passed these checks. No
+preview was published, no bot process is running, and the Operator's pause remains.
 
-The Operator requests a full code rollback to November 10, then specifies that
-our own posts must never be retweeted. Git contains no November 10 commit; the
-last saved revision by that date is `4ad829ac` from November 9 at 08:39:05 Toronto.
-Production code, Account configuration and Voice return to that revision. The
-later local settings are removed, and the advisory Reply target returns to its
-checkpoint value. Permanent histories and uncertain claims remain untouched.
+2026-11-21, restore the live automatic worker and 1,400/day — The Operator
+reports no Replies, sets a 1,400/day target and explicitly authorizes the agent
+to restart the bot. The last launch (November 20 at 23:34:50 Toronto) still loaded
+manual ordinary mode, 200/day and 180-second spacing; later disk edits never
+reached that process. It was no longer running when diagnosed.
 
-The restored repost admission and browser checks already reject our current,
-runtime and former handles. Added regressions verify all three identities are
-refused even when watched, before browser access in live and dry-run modes and
-before either native repost click. The later self-repost job and undo/repost
-surface are removed by the rollback. A backup branch and private local backup
-preserve the previous code, uncommitted documentation and environment. No bot
-start, restart or public write accompanies this change.
+Set the Account and local daily target/ceiling to 1,400 including uncertain sends;
+keep ordinary manual/review flags off and the automatic direct/search and Home-feed
+jobs on. Keep eight seconds plus 0–4 seconds jitter, exact-source/receipt checks,
+five parent likes, one ordinary author/day, permanent original history, opt-outs,
+selected watched limits and existing hours. No filler or guaranteed daily delivery.
+Preserve all state, pending claims and manual decisions. Validate, restart through
+the normal launcher, confirm the loaded automatic schedule and verify an actual
+own-X Reply receipt. This explicit restart instruction supersedes manual-only
+restart directions below. The startup pacing message must describe loaded settings.
+
+The first restarted feed worker produced a real Reply receipt at 05:01:38 Toronto:
+https://x.com/thesimaximalist/status/2124080782264226190. Another draft exposed a
+short-English false refusal: "Family tech support now includes verifying reality."
+Add only family/tech/includes/verifying/reality to the existing closed short-Reply
+vocabulary and verifying as an English cue. Keep its 80-character bound, complete
+vocabulary check, Reply-only scope, French/mixed refusals and all content/repetition
+rules. Validate that exact final-admission case, then restart with the fix while
+preserving the newly confirmed publication and all earlier records.
+
+Final validation: 3,700 tests passed. The final launcher loaded the language fix
+at 05:02:42 Toronto (Python PID 95775); automatic direct/search and feed jobs
+resumed with the 1,400/day ceiling and eight-second plus 0–4-second pacing.
+The prior live Reply remains confirmed and counted after restart. No runtime,
+uncertain-send or manual-review history was reset.
+
+2026-11-20, restore automatic Replies at 1,500/day — The Operator explicitly
+requests going back to 1,500 replies/day and actual automatic replies before a
+manual restart. `REPLY_MANUAL_ORDINARY=0`, `REPLY_MANUAL_DISCOVERY=0` and
+`REPLY_REVIEW_ONLY=0` restore the broad direct/search and combined Home-feed
+Reply workers. `MAX_REPLIES_PER_DAY=1500` and both advisory targets are 1500.
+The broad-mode hard ceiling is 1,500, counting confirmed and uncertain sends;
+the normal minimum is eight seconds plus 0–4 seconds jitter. Targets are advisory,
+not a filler quota or a guarantee of delivery. Smaller configured limits still hold.
+
+Clear the temporary workload boost start date: there is no later return to 200,
+80 or 70. The optional manual inbox, its decisions and thread drafts remain
+separate and never become an automatic outbox. One Reply per exact standalone
+original permanently, one ordinary author/day, five observed parent likes,
+full source/recipient/media checks, opt-outs, English/SI, content and repetition
+rules, uncertainty claims and exact own-post receipts remain. Keep the latest
+specific ordinary writing style and the selected watched one- or two-word path;
+watched Reply/repost ceilings remain three each/day, six hours apart.
+
+Tonight's fixed `SKIP_SLEEP_NIGHT_DATE=2026-11-20` exception remains: skip the
+November 21 00:00–04:30 Toronto sleep window, then normal midnight sleep resumes
+November 22. No permanent all-day mode or history reset. Validate and report ready
+for the Operator's manual restart; do not start or restart the bot here.
+
+2026-11-20, temporary 200-message plan and one awake night — For four Toronto
+calendar days, November 20–23 inclusive, the advisory plan and planning ceiling
+are 200 messages/day. The plan returns to a 70 target, 60–80 range and 80 ceiling
+on November 24 without a restart. The fixed start date never advances on restart.
+Ordinary replies remain manual-review drafts; selected watched replies remain the
+automatic exception. Reserve the watched allowance inside the day's draft planning
+capacity: at most 197 ordinary drafts plus the three watched Reply slots during
+the boost (77 plus three afterward), reduced by other known automatic submissions.
+Four draft sessions allow up to 50 attempts/selections during the boost, then 20.
+Quality, genuine follow-up context and uncertainty/history checks still apply;
+200 is a target, not a guarantee or permission to publish filler.
+
+`SKIP_SLEEP_NIGHT_DATE=2026-11-20` skips only the November 21 00:00–04:30 Toronto
+sleep window. Normal midnight sleep resumes November 22 at 00:00, with the usual
+04:30 wake. Stop requests still win; no permanent all-day or 72-hour override.
+The Operator will restart manually after validation. Do not start the bot.
+
+2026-11-20, fast selective watched reactions and a 70-reply routine — The combined
+setup keeps Elon as the automatic exception and prepares ordinary replies for the
+Operator's review and manual posting. `REPLY_MANUAL_ORDINARY=1` blocks ordinary
+Reply submissions at shared admission, including alternate jobs;
+`REPLY_MANUAL_DISCOVERY=1` schedules read-only discovery and drafts at 05:00, 10:00,
+15:00 and 20:00 Toronto. `REPLY_REVIEW_ONLY=0` allows the scoped watched actions.
+The Operator retains manual restart. Prepare and validate; do not start the bot.
+
+Elon's selected standalone originals may cover AI/SI, slopcore, Grok/Grokbot,
+Starlink and SpaceX. Account-owned watched topics do not inherit ordinary gaming
+or film discovery. Politics, inflammatory/sexual material, unsupported bizarre
+claims and unclear context refuse. Likes, native reposts and Replies share one
+exact-source selection. A single shared model call produces the review and a
+one- or two-word Reply, at most 40 characters. FACTS is eligible only when supported
+and fresh, never a stock response to every post. Its short English exception is
+source-bound; other authors cannot borrow it. All repetition checks remain.
+
+Watch discovery polls every five seconds; selection, action and Reply workers
+check every two seconds. The first-minute deadline is measured from the original
+status timestamp, not discovery. Late work is discarded, including at submission.
+A scoped model deadline and priority browser turns reduce delay; active transactions,
+model latency, unavailable context and X can still prevent a timely response.
+The existing three Replies/day and three reposts/day, six-hour spacing per action,
+five observed parent likes, overall uncertainty accounting and active hours remain.
+No promise of views, growth or delivery within a minute is made.
+
+Ordinary work aims for 70 external replies, with an advisory 60–80 range and no
+minimum. At most 80 selected manual drafts/day including dismissals, at most 20
+attempts/selections per scheduled session; the automatic Reply ceiling is also 80.
+The illustrative 45 new/25 follow-up split is not a quota. Prefer people outside the
+recent circle and include both smaller and prominent authors. Topics now include
+AI/SI video, music and filmmaking; builders/technology; gaming, film and internet
+comedy. Ordinary drafts usually use one to three concise sentences, up to 278
+characters. Each needs a specific supported contribution, not interchangeable praise,
+caption recaps, unsolicited homework or a compulsory question. Actual media evidence
+or relevant linked-source text is required when the point depends on it; otherwise
+skip. No invented experience, technical fact, relationship or human identity.
+
+Manual follow-up drafts require a genuine incoming response, the external thread
+root and our prior reply with supplied context. Those snapshots and manually reported
+own-post URLs stay explicitly unverified; they never authorize automatic thread
+replies, publication ledger rows or confirmed receipts. Four sessions organize work;
+they do not claim ranking or restriction benefits. A fourteen-day report separates
+optional operator-reported responses, interactions, views, attributable visits/follows
+and time from captured confirmed receipts. Keep all publication, uncertain-send,
+opt-out and manual decision history intact. Other X writes remain disabled.
+
+2026-11-20, intent before technical expertise — After an unsolicited evaluation
+lesson on a shared learning roadmap, the Operator asks for natural appreciation
+instead. In broad mode, actual questions/help requests may get one concise technical
+answer. Shared roadmaps, tutorials, resources and announcements get a brief reaction
+or thanks: usually 2–6 words, at most eight words/60 characters. No unsolicited
+correction, tip, warning or manufactured technical takeaway. Artist reactions keep
+their existing short warmth and occasional heart. Source intent is recomputed from
+the full post; a caller's technical label cannot override it. A scoped short-reaction
+exception permits ordinary thanks without globally allowing generic technical
+answers. Common unsolicited imperative advice refuses on shares, and recent-text
+repetition checks still apply. All caps, likes, histories, receipts and restart
+controls remain unchanged. The posted roadmap Reply stays in permanent history;
+no automatic deletion, correction or second contact is authorized by this change.
+
+
+2026-11-20, restored broad discovery with short Replies — The Operator replaces the
+silent curated worker with the earlier rotating major-author, artist, Top/Latest
+and combined Home/Following discovery. `REPLY_BROAD_DISCOVERY=1` retains curated
+write restrictions and the exact-source/own-receipt transport. The advisory target
+is 250–300; the hard ceiling is 300 Replies per Toronto day including uncertain
+submissions. Never generate filler to reach it. At least five observed exact-parent
+likes are required before generation and again at submission; zero, lower and
+unreadable counts refuse. Prefer configured larger accounts without a mandatory
+5,000-follower profile lookup. One Reply per ordinary author/day and permanent
+one-Reply-per-original history remain. Three-minute minimum plus 0–60 seconds jitter;
+normal 04:30–00:00 Toronto hours remain.
+
+Artist discovery includes slopcore and the existing creator pool, with up to 24-hour
+creator originals. Replies are usually a few affectionate words or an occasional
+single heart, at most 12 words/90 characters. Technical Replies make one sharp
+point in one sentence, at most 24 words/140 characters. Simple appreciation does
+not require an eight-point video review, but no unseen visual/audio details or
+fabricated human experience are allowed. A source-bound closed set of brief artist
+reactions may pass the minimum-length/language gate; technical posts cannot borrow
+that exception. Hearts require five intervening Replies without hearts; existing
+confirmed and uncertain-text repetition checks remain. No forced rotation.
+
+The live silence exposed truncated search cards: every restricted pipeline reads
+the full exact original before drafting and rechecks its niche, opt-outs, history,
+likes and freshness. Prepared text cannot silently switch evidence. X also truncates
+the parent in its Reply composer. Only that verified parent's Show more control
+may be expanded, followed by a full exact source/recipient check; a matching prefix
+alone never authorizes sending. Missing or changed sources still refuse.
+
+Scoped watched-author likes, at most three selective AI reposts/day and three AI
+Replies/day inside the total retain their existing six-hour spacing and claims.
+Other writes remain off. A separate ten-minute mentions read honors objections even
+when Reply capacity is exhausted. Keep runtime state and publication memory intact.
+Implementation and validation prepare the next manual restart; do not start the bot.
+Validation: 3,556 tests passed. A live read/empty-composer check on a formerly
+rejected long original passed initial and final exact-source checks after expansion.
+No diagnostic Reply was submitted; seven publication/history files are unchanged.
+
+
+2026-11-20 curated validation: **3,534 tests passed**, with the existing dependency
+deprecation warning. The dry run exposes only curated Replies, watched discovery,
+watched likes and selective repost review. A read-only exact profile lookup verified
+@AstrablueAI; the first sampler preview exposed a four-minute music video exceeding
+the inherited two-minute bound. Artist review now accepts sources up to five minutes,
+still at most sixteen frames and one 25-second sampling turn. A 238.3-second reference
+passed with sixteen real samples and quality 8.8/10. Structured opening/middle/ending
+observations enforce evidence from all thirds; no missing audio is inferred. A seven-word
+artist draft and seventeen-word technical draft passed text admission. This older
+reference was a style preview, not an eligible fresh-source send or publication receipt.
+All seven checked publication/history files predate this task and remain unchanged.
+Today already has fifteen counted Reply submissions; the new hundred/day ceiling
+includes them. Bot and automatic restart remain stopped for the operator's next start.
+
+2026-11-20, curated slopcore pivot prepared while paused — The operator reports
+small audiences and long technical Replies, requests stronger artist/video selection,
+short affection and sharp one-sentence technical comments, a 100/day cap and scoped
+Elon actions. The paused process stopped at 09:21:51. Implementation adds exact
+profile evidence, sampled-video review, final brevity/heart limits and separately
+reviewed bounded reposts. The former question-only restriction is replaced in curated
+mode. Permanent Reply/repost/uncertain history is retained. Validation is read-only;
+no new-mode publication or engagement outcome is claimed before a future restart.
+
+2026-11-20 live verification: 3,492 tests passed. After the 07:33:17 Toronto
+restart, the normal scheduler published its first confirmed Reply at 07:34:55:
+https://x.com/thesimaximalist/status/2123756970683338992 (parent:
+https://x.com/divyansh_1729/status/2123696081640763708). The exact own-status receipt,
+confirmed submission journal and one-Reply cycle outcome agree. The bot remains
+running with the 250/day ceiling, four-minute spacing and other X actions disabled.
+
+2026-11-20, repair search starvation after the live restart — The bot ran from
+06:21 without a publication: its shallow searches typically returned five to nine
+sources and early model candidates were unrelated or promotional. One query was
+polluted by LLM law-degree assignment ads. The Operator again reports no activity.
+Public discovery now reads Latest and recent Top for each rotating request query,
+at most forty results and eight overlapping scrolls per tab. Every fourth turn
+remains the single twenty-result, one-scroll mentions/opt-out check. A coarse
+`since:` date bounds Top discovery; exact source age still cannot exceed 24 hours.
+Queries exclude quoted cards and the observed assignment/WhatsApp advertisements.
+
+Keep admitted but unused sources in a separate instance of the existing disposable
+candidate buffer, capped by its configured count and thirty-minute local TTL.
+Rediscovery cannot extend expiry. The buffer stores sources, never drafts or Reply
+claims, and reuses the shared pipeline and final source verification. Confirmed,
+declined and definitively refused work leaves the queue. Three generations and one
+confirmed Reply per cycle, the 250/day ceiling, one author/day and four-minute pacing
+remain. Accept ordinary request forms such as "I need help", "How are people... ?"
+and a standalone "Thoughts?" about a described creative work. Rhetorical promotion,
+missing evidence, opt-outs and all other source/content/history checks still refuse.
+
+The live model also declined an open model-evaluation discussion after its author
+shared an approach. Clarify the drafting rule: a genuine public technical question
+is eligible without the words "help me", and a partial view from the author does
+not disqualify a distinct useful contribution. Practical questions about using or
+learning SI tools may receive grounded guidance. Keep rejecting advertising headlines,
+rhetorical promotion, recaps, filler, invented personal experience and missing evidence.
+This clarifies generation; source admission, publishing caps and pacing do not loosen.
+
+The first live generated reply then exposed a final-check bug: X changes the URL
+to `/compose/post` when its Reply dialog opens. The pre-submit source read rejected
+that expected transition. In the final composing-only check, permit `/compose/post`
+or `/compose/tweet` only with one editor, one exact parent copy with the correct
+URL-derived author, and the unchanged standalone source behind the dialog. Initial
+reads/clicks still require the exact status route. Missing/changed sources, wrong
+recipients, ambiguous composers and unrelated routes refuse. An empty-composer live
+reproduction verifies the fix without submitting a diagnostic reply.
+
+In this requested-Reply mode, a successful submit keystroke no longer confirms a
+publication. Read the exact recent own-status receipt up to three times before
+recording success. Missing/failed receipt reads leave the submission pending and
+permanently claimed; they consume the budget and never trigger an automatic resend.
+Reuse the verified URL for feedback bookkeeping and log it for the Operator.
+
+Validate before applying the repair to the running bot through the normal restart
+workflow, under the Operator's earlier explicit restart instruction. Verify an actual
+own-X receipt, not only searches, tests or a local draft. Preserve publication and
+uncertain-send history. No likes, reposts, follows or profile posts are enabled.
+
+2026-11-20, repair public-request discovery — The live run searched only for the
+Account's handle and returned nineteen nested replies, with no eligible requests.
+That restriction missed the Operator's requested public technical questions. Enable
+`REPLY_PUBLIC_REQUESTS=true`: fresh standalone posts may ask their public audience
+or this Account for technical help or creative feedback. A mention is optional.
+A topic, ordinary announcement, quoted request, tutorial answering its own headline,
+rhetorical promotion or question addressed to another person is insufficient.
+The exact outer source is checked again before sending; no-bot/no-contact requests
+remain binding. Public requests remain subject to niche, language, content, source,
+permanent original-history, one-author/day, daily budget and uncertainty checks.
+
+Use the Account's `searches.help_requests` pool: three rotating public searches,
+then one mentions/opt-out turn, with a single bounded Latest read every three minutes.
+Keep twenty results, three generation attempts and one confirmed Reply per cycle,
+the advisory 250/day target and hard cap, and four minutes plus jitter between sends.
+Record discovery rejection reasons, generation attempts, admission refusals and
+confirmed outcomes separately. A search result or local draft is not publication proof.
+No likes, reposts, follows, profile posts or API discovery are enabled. Preserve state.
+Validate with local tests and actual read-only discovery; report ready for the Operator's
+manual restart. The bot was observed stopped at 06:04:58 Toronto during diagnosis.
+
+## 2026-11-20 — Natural technical value, creative reactions and 250/day target
+
+The Operator emphasizes sharp, useful SI answers without a robotic or generic voice,
+wants occasional short heart reactions to SI slopcore/video concepts, and names
+follower growth as the aim. Both Voice files, shared delivery, invited Reply prompt
+and Relation prompt now favor one clear insight in ordinary spoken English. Creative
+reactions can be brief; source intent chooses the style without mechanical alternation.
+No false human experience, follow requests, generic praise or invented media observations.
+
+Explicit creative-feedback invitations join technical-help requests under the same
+exact-source and permanent-history guards. The target and ceiling become 250/day,
+with four-minute minimum spacing plus jitter and a three-minute mention poll.
+Preparation may start within three minutes of spacing clearance; sending still waits.
+One author/day, opt-outs, uncertain submissions, sleep and disabled engagement remain.
+The requested examples are local previews, not publications or live growth evidence.
+The Operator asks to be told when ready to restart; the running process is retained.
+
+## 2026-11-20 — Raise the invited-help target to 50–100/day
+
+The Operator requests at least fifty to one hundred Replies/day and says they will
+start the bot themselves. Prepared settings raise the hard ceiling from twenty to
+one hundred and set advisory targets of fifty and one hundred. The invited-mode
+spacing floor becomes ten minutes plus jitter; the existing ten-minute polling
+cadence stays. Preparing within two minutes of the spacing boundary avoids skipping
+an entire poll for a small timing difference, while the publisher still waits and
+rechecks all guards. Direct requests, one author/day, opt-outs, histories and disabled
+engagement actions stay intact. Recent scans found zero eligible requests, so no
+minimum publication count is promised. Changes take effect on the operator’s restart.
+
+## 2026-11-20 — Automatic invited help and authorized restart
+
+The Operator supersedes the proposed manual workflow with “no manual just go”, then
+requests restart when ready. The automatic mode accepts explicit technical-help
+requests addressed to the Account, using the existing Safari transport and no API.
+One bounded mention job replaces feed/keyword broadcasts and all engagement workers.
+The cap is twenty/day, one per author/day, at least fifteen minutes apart including
+uncertain sends. Parent likes and all other X writes remain disabled. Sleep hours,
+permanent history, opt-outs, source/text checks and honest bot identity remain.
+The final browser checks bind the exact outer source before click and submit; quoted
+requests cannot authorize a send. The local review inbox is retained as optional state,
+with no automatic conversion of drafts or manual decisions into sends.
+
+## 2026-11-20 — Replace unsolicited Reply volume with manual review
+
+The Operator adopts a small review workload, prioritizes AI/SI technical questions,
+withdraws Elon likes/reposts and declines an X API connection. The publisher stays
+stopped. Local preparation uses pasted/imported source snapshots, with a twenty-draft
+Toronto-day ceiling and no minimum. It rejects stale October candidates, preserves
+confirmed/uncertain histories, persists opt-outs and keeps manual decisions separate
+from publication evidence. No fake biography, forced flirting or interchangeable praise.
+Review mode omits every live job and refuses browser writes and native video sends.
+No report reduction, engagement improvement or zero-report guarantee is claimed.
+
+2026-11-19 — Full code and Account restoration to `b7bc4199` at the Operator’s
+explicit request, after the partial restoration kept later admission rules and
+produced very few Replies. New explicit policy: 1,400/day including uncertain
+sends, and Reply work all day/night. The runtime state and operator JSON records
+are preserved. The only retained compatibility changes are the durable Reply
+budget, video database v3 reader/migration and full original-text retention.
+The complete pre-rollback tree, .env and state have a private local backup.
+
+## 2026-11-14 — Blend affection with technical judgment
+
+The Operator requests two natural Reply modes: loving reactions with hearts and
+an exceptionally sharp SI specialist who can challenge ideas. November 13's
+blanket instruction to remove interest/gratitude and require an explicit detail
+risked editing away the short affectionate response the Operator wants. The
+Voice and all drafting routes now preserve affection when the shared idea or
+occasion warrants it, while technical claims get precise answers or supported
+challenges. Neither mode dictates a quota, fixed structure or repeated catchphrase.
+Fictional tech experience supplies voice, not real credentials or firsthand facts.
+
+A read-only validation of the requested wording found "Really cool video ❤️"
+refused as unknown English. The Reply-only closed vocabulary now recognizes those
+two words and the video cue without extending the eighty-character fallback or
+accepting unknown/French vocabulary. Repetition and publication checks remain.
+Implementation and tests use no lifecycle commands or live X writes.
+
+## 2026-11-13 — Withdraw Elon Replies and tighten reply quality
+
+The Operator reported that some readers called the responses automated filler and
+blocked the account. The read-only review of the latest forty confirmed Replies
+found stock praise/interest openings, caption restatement and unnecessary follow-up
+sentences; it did not establish which readers blocked the account or why.
+The new Voice and shared prompts call for a specific supported contribution or SKIP.
+The final text check expands from twenty exact replies to the configured memory
+(default one hundred), including long copies with small wording changes.
+
+Elon changes from three independent actions to likes/reposts only. A Reply-only
+Account exclusion is enforced centrally without denying those other actions.
+Notification discovery previously asked Reply admission before verifying a new
+source, which would suppress the likes/reposts after that exclusion; it now checks
+watched-author eligibility independently. Normal repost spacing also used to turn
+into a five-minute failure cooldown; the dispatcher now rechecks the shared spacing
+rule on its two-second tick. Actual failures still back off. Implementation uses
+no start/restart commands or public actions for validation; lifecycle control stays
+with the Operator. A bot process appeared during preparation, so a later manual
+restart is needed to load the complete merged change.
+
+## 2026-11-12 — Repost funny AI videos before they go viral
+
+The final pre-pause Reply at 21:40 answered @dripbitsnft status
+2121026915452801413 with “You said ‘Mr. Huang’ like that might get you forgiven”.
+The exact parent read showed eleven likes, 929 views and a 61.421-second native
+video. The old 500-like/100,000-view text-meme allowance never admitted it.
+The Operator clarifies that ordinary enjoyable AI videos should qualify, with
+up to twenty native reposts/day, no popularity threshold, and 72 hours awake.
+The repair samples actual video frames (thirteen in the read-only source check),
+reviews visual humor and preserves exact source/media/account and permanent
+publication claims. No X publication is made during implementation; the Operator
+retains manual restart. See the current policy for the fixed awake-window deadline.
+
+## 2026-11-12 — Restore Reply throughput and prioritize watched conversations
+
+Confirmed ledger/CSV counts were 926 Replies November 9, 951 November 10,
+492 November 11, and 193 November 12 before the 20:39 operator pause. Search
+sources supplied 540 November 9 Replies and only six November 12 Replies.
+The retained latest log segment contained 806 own-repost attempts (798 refused)
+and 1,096 watched repost attempts (1,095 refused). The saved pipeline report
+included a discovery call lasting 2,405 seconds; concurrent worker totals overlap.
+These observations support browser contention and batch discovery as bottlenecks,
+not a promise that reverting any one setting produces a specified volume.
+
+The Operator requested restoration, 1,400+ daily capacity, one awake night,
+broader AI humor/art sources, priority witty Elon Replies, selective AI meme
+reposts, PR/merge/push, and manual restart. The implementation restores incremental
+search drafting and bounded scan sizes, backs off repeated watched failures,
+disables automatic quotes/own repost loops, and adds reviewed meme reposts only
+from already-discovered sources. Permanent histories are preserved.
+The later clarification keeps independent Elon likes/reposts enabled alongside
+priority Replies. Friendly encouragement and sharp SI insight remain the voice;
+1,000+ daily Replies is the requested minimum goal, with a 1,400–1,800 advisory
+target. Counts and audience reactions still require observed live results.
 
 ## 2026-11-09 — Live artist turn reveals one short-English false refusal
 

@@ -179,38 +179,6 @@ def script(platform, source_id):
             creator=item.author?.uniqueId||creator;views=item.stats?.playCount??null;boundPlayer=true;
             const address=item.video?.playAddr;if(typeof address==='string')urls.push(address);}
         }catch(e){}}
-        if(platform==='instagram'&&matches(canonical)){
-          // Instagram's normal page embeds Relay media data instead of JSON-LD.
-          // Read only the exact shortcode's video object; no private endpoint or fetch.
-          let visited=0,bytes=0,found=null;
-          const walk=(o,depth=0)=>{
-            if(found||depth>24||++visited>20000||!o)return;
-            if(typeof o==='string'){
-              if(o.length<=2000000&&o.includes(id)&&/^[\[{]/.test(o.trim())){
-                try{walk(JSON.parse(o),depth+1);}catch(e){}
-              }return;
-            }
-            if(typeof o!=='object')return;
-            if(o.code===id&&o.media_type===2&&Array.isArray(o.video_versions)&&o.video_versions.length){found=o;return;}
-            (Array.isArray(o)?o.slice(0,200):Object.values(o).slice(0,200)).forEach(v=>walk(v,depth+1));
-          };
-          for(const s of [...document.querySelectorAll('script[type="application/json"]')].slice(0,100)){
-            const text=s.textContent||'';
-            if(!text.includes(id)||text.length>2000000||bytes+text.length>4000000)continue;
-            bytes+=text.length;try{walk(JSON.parse(text));}catch(e){}
-            if(found)break;
-          }
-          if(found){
-            published=Number(found.taken_at)||published;creator=found.user?.username||creator;
-            title=found.caption?.text||title;boundPlayer=true;
-            // Exact embedded versions replace generic page/player resources,
-            // which can belong to a recommendation or an autoplayed next reel.
-            urls.length=0;video=null;
-            found.video_versions.slice(0,6).forEach(v=>{
-              if(v.width>0&&v.height>0&&typeof v.url==='string')urls.push(v.url);
-            });
-          }
-        }
       }
       if(video&&boundPlayer){video.muted=true;video.preload='metadata';
         if(video.currentSrc)urls.push(video.currentSrc);
@@ -225,26 +193,18 @@ def script(platform, source_id):
 
 
 def capture(row, cfg, now):
-    from .connectors import canonical, timestamp, video_id
+    from .connectors import canonical, timestamp
     from ..x import safari
     from ..x.safari_video import browser_session
     doc = row["document"]
     platform, url = doc["platform"], doc["canonical_url"]
-    targets = [url]
-    if platform == "instagram":
-        # Instagram can redirect the tab to /reels while rel=canonical stays
-        # /reel. Keep every read scoped to this exact shortcode, never the front tab.
-        ident = video_id(platform, url)
-        targets = list(dict.fromkeys([url] + [
-            f"https://www.instagram.com/{route}/{ident}" for route in ("reels", "reel", "p")]))
     with browser_session():
         if not safari.open_url(url):
             raise AccessError("source page did not open")
         try:
             payload = {}
-            for attempt in range(8):
-                raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5,
-                                     target_url=targets[attempt % len(targets)])
+            for _ in range(8):
+                raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5, target_url=url)
                 if raw and len(raw) <= 100000:
                     payload = json.loads(raw)
                 if payload.get("published") and payload.get("media"):
@@ -252,12 +212,7 @@ def capture(row, cfg, now):
                 time.sleep(.5)
         finally:
             safari.close_front_tab()
-    observed_url = canonical(platform, payload.get("canonical_url", ""))
-    # Instagram redirects /p and /reels links to /reel for the same shortcode.
-    # Compare the exact case-sensitive media ID after validating both hosts/paths.
-    same_instagram = (platform == "instagram"
-                      and video_id(platform, observed_url) == video_id(platform, url) == doc["source_id"])
-    if observed_url != url and not same_instagram:
+    if canonical(platform, payload.get("canonical_url", "")) != url:
         raise AccessError("source page canonical identity differs from candidate")
     published = timestamp(payload.get("published") or None)
     if published is None or not 0 < published <= now:

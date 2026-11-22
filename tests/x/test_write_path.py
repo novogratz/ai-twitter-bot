@@ -42,7 +42,7 @@ def test_reply_chokepoint_blocks_second_reply(monkeypatch, tmp_path):
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
     _fake_safari(monkeypatch)
-    monkeypatch.setattr(action_guard, "can_post", lambda action, **kwargs: (True, ""))
+    monkeypatch.setattr(action_guard, "can_post", lambda action: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append(a))
 
@@ -62,7 +62,7 @@ def test_reply_chokepoint_returns_its_outcome(monkeypatch, tmp_path):
     from src.guards import action_guard as ag
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    monkeypatch.setattr(ag, "can_post", lambda kind, **kwargs: (True, "ok"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     _fake_safari(monkeypatch)
 
@@ -78,7 +78,7 @@ def test_reply_pastes_si_wording_at_the_browser_boundary(monkeypatch):
     from src.x import safari, twitter_client as tc
 
     _fake_safari(monkeypatch)
-    monkeypatch.setattr(ag, "can_post", lambda kind, **kwargs: (True, "ok"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(humanizer, "casualize", lambda text: text)
     pasted = []
     monkeypatch.setattr(safari, "_paste_text", lambda text: pasted.append(text) or True)
@@ -91,7 +91,7 @@ def test_reply_chokepoint_refuses_on_corrupt_store(monkeypatch):
     from src.guards import action_guard as ag
     from src.x import twitter_client as tc
     recorded = []
-    monkeypatch.setattr(ag, "can_post", lambda kind, **kwargs: (True, ""))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, ""))
     monkeypatch.setattr(ag, "record", lambda *a, **k: recorded.append(a))
     monkeypatch.setenv("DRY_RUN", "1")
     with open(config.REPLIED_FILE, "w") as f:
@@ -109,7 +109,7 @@ def test_reply_chokepoint_strips_em_dashes(monkeypatch, tmp_path):
     from src.guards import action_guard as ag
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    monkeypatch.setattr(ag, "can_post", lambda kind, **kwargs: (True, "ok"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     recorded = {}
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setenv("DRY_RUN", "1")
@@ -144,7 +144,7 @@ def test_fr_forced_parent_rejects_english_reply(monkeypatch, tmp_path):
     from src.guards import content_guard as cg
 
     monkeypatch.setattr("src.core.config.REPLIED_FILE", str(tmp_path / "replied.json"))
-    monkeypatch.setattr(ag, "can_post", lambda kind, **kwargs: (True, "ok"))
+    monkeypatch.setattr(ag, "can_post", lambda kind: (True, "ok"))
     monkeypatch.setattr(ag, "record", lambda *a, **k: None)
     monkeypatch.setenv("DRY_RUN", "1")
 
@@ -604,7 +604,7 @@ def test_stale_review_mode_does_not_divert_post_to_a_queue(monkeypatch, tmp_path
     monkeypatch.setenv("REVIEW_MODE", "1")
     monkeypatch.setenv("DRY_RUN", "1")
     monkeypatch.setattr(config, "_PROJECT_ROOT", str(tmp_path))
-    monkeypatch.setattr(action_guard, "can_post", lambda a, **kwargs: (True, ""))
+    monkeypatch.setattr(action_guard, "can_post", lambda a: (True, ""))
     recorded = []
     monkeypatch.setattr(action_guard, "record", lambda *a, **k: recorded.append((a, k)))
     assert tc.post_tweet("a sponsor-clean original take about the market needing a therapist today") is W.DRY_RUN
@@ -631,7 +631,7 @@ def test_post_tweet_returns_bool_for_skip_vs_ship(monkeypatch):
     orig_isdup = cg.is_duplicate
     monkeypatch.setenv("DRY_RUN", "1")  # never touch Safari even if it didn't dedup
     try:
-        ag.can_post = lambda action, **kwargs: (True, "ok")
+        ag.can_post = lambda action: (True, "ok")
         cg.validate = lambda text, kind="original": (True, "")
         cg.is_duplicate = lambda text: True   # force dup
         assert tc.post_tweet("AI capex is the new rent again") is W.REFUSED, \

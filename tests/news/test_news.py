@@ -87,16 +87,6 @@ def test_verified_story_and_format(story, doc, cfg):
     assert text.endswith(URL) and length < 280
 
 
-def test_natural_news_does_not_require_a_banger_slogan(story, doc, cfg):
-    story["paragraphs"] = ["The lab says its model solved 80% of tasks in a controlled test."]
-    assert editor.gate(story, [doc], [], NOW - 86400, NOW, cfg)[0] == "verified"
-    text, _ = editor.tweet(story)
-    assert "BANGER" not in text and text.endswith("\n\n" + URL)
-    story["paragraphs"] = ["A new model arrived."]
-    with pytest.raises(ValueError, match="qualifier"):
-        editor.tweet(story)
-
-
 @pytest.mark.parametrize("change", ["old_event", "old_development", "invented_date", "no_quote", "no_corroboration"])
 def test_stale_and_unsupported_stories_hold(story, doc, cfg, change):
     if change == "old_event":
@@ -540,27 +530,19 @@ def test_news_exception_does_not_unlock_ordinary_originals(monkeypatch,settings_
     assert action_guard.can_post(action_guard.RETWEET,news=True)[0] is False
 
 
-@pytest.mark.parametrize("flag", ["mechanism_correct", "reader_value", "consequence_supported"])
-def test_final_review_can_refuse_misleading_or_empty_news(store,cfg,story,doc,tmp_path,flag):
+def test_final_review_can_refuse_misleading_mechanism(store,cfg,story,doc,tmp_path):
     seed(store)
     class Skeptic(Model):
         def call(self,task,*args,**kwargs):
             result=super().call(task,*args,**kwargs)
             if task == "FINAL_REVIEW":
-                result[flag]=False
-                result["reason"]="Unsupported implication or no useful consequence."
+                result["mechanism_correct"]=False
+                result["reason"]="Software executed a preset, not a model changing its mind."
             return result
     assert pipeline.run(cfg,store=store,http=Sources(doc),model=Skeptic(story),
         delivery=Delivery(cfg,tmp_path/'inbox'),now=NOW,import_history=False) == []
     assert store.rows("SELECT * FROM outbox") == []
     assert store.rows("SELECT state FROM stories")[0]["state"] == "held"
-
-
-@pytest.mark.parametrize("flag", ["reader_value", "consequence_supported"])
-def test_legacy_pending_news_needs_new_value_approval(story, cfg, flag):
-    story["final_review"] = {key: True for key in editor.REVIEW_FLAGS if key != flag}
-    with pytest.raises(ValueError, match="independent final approval"):
-        publisher._news_review(story, {}, NOW, cfg)
 
 
 @pytest.mark.parametrize("backup_score,expected", [(17,1),(19,2)])
@@ -594,75 +576,3 @@ def test_main_and_optional_backup_are_distinct_and_bounded(store,cfg,story,doc,t
 
 def test_breaking_recommendation_is_current_run(story):
     assert "Immediately: 2026-11-07 12:00 EST" in editor.recommendation(story,NOW,[],30)
-
-
-def test_scheduled_news_has_one_post_per_window_and_two_per_day(store, cfg, story, doc, monkeypatch, settings_override):
-    cfg = replace(cfg, daily_cap=2, publish_windows=["12:01", "15:00"], publish_window_minutes=30)
-    ident = pending(store, cfg, story, doc)
-    settings_override(NEWS_ENABLED=True, NEWS_AUTO_PUBLISH=True, VIDEO_ENABLED=False)
-    monkeypatch.setattr(publisher.action_guard, "can_post", lambda *a, **k: (True, ""))
-    with pytest.raises(Deferred, match="outside scheduled"):
-        publisher.admit(store, cfg, ident, NOW)
-    assert publisher.admit(store, cfg, ident, NOW+60)["id"] == ident
-    store.execute("INSERT INTO outbox(id,story,payload,state,acknowledged) VALUES('spent1','spent1','{}','published',?)", (NOW+60,))
-    # At the end of the same slot, spacing would also refuse; the slot is durable.
-    with pytest.raises(Deferred, match="window already used"):
-        publisher.admit(Store(store.path), cfg, ident, NOW+120)
-    with pytest.raises(Deferred, match="outside scheduled"):
-        publisher.admit(store, cfg, ident, NOW+3600)
-    assert publisher.admit(store, cfg, ident, NOW+3*3600)["id"] == ident
-    store.execute("INSERT INTO outbox(id,story,payload,state,acknowledged) VALUES('spent2','spent2','{}','published',?)", (NOW+3*3600,))
-    with pytest.raises(Deferred, match="daily ceiling"):
-        publisher.admit(store, cfg, ident, NOW+3*3600+60)
-
-
-def test_later_higher_impact_news_beats_oldest_pending_pick(store, cfg, story, doc):
-    cfg = replace(cfg, publish_windows=["12:00", "15:00"])
-    low = deepcopy(story)
-    low["scores"]["significance"] = 17
-    first = pending(store, cfg, low, doc)
-    high = deepcopy(story)
-    high["event_key"] = "different-major-release"
-    high["development"] = "new-major-release"
-    high["scores"].update(significance=20, freshness=15)
-    second = pending(store, cfg, high, doc)
-    class Capture:
-        def send(self, ident, payload):
-            return {"id": ident, "accepted": True}
-    rows = pipeline.deliver(store, cfg, Capture(), NOW, limit=1)
-    assert rows[0]["id"] == second and first != second
-    assert store.rows("SELECT state FROM outbox WHERE id=?", (first,))[0]["state"] == "pending"
-
-
-def test_live_news_schedule_and_quality_floor():
-    from src.news.config import load
-    cfg = load()
-    assert cfg.publish_windows == ["10:30", "15:00"]
-    assert cfg.daily_cap == 2 and cfg.score_min == 90
-    assert cfg.publish_window_minutes == 30
-
-
-def test_scheduled_pool_keeps_researching_while_a_main_pick_waits(store, cfg, story, doc):
-    cfg = replace(cfg, publish_windows=["12:00", "15:00"])
-    first = pending(store, cfg, deepcopy(story), doc)
-    next_url = URL + "-second"
-    story["url"] = next_url
-    story["event_key"] = "another-important-model-release"
-    story["date_evidence"]["url"] = next_url
-    story["claims"][0]["url"] = next_url
-    doc["url"] = next_url
-    seed(store, next_url)
-    pipeline.run(cfg, store=store, http=Sources(doc), model=Model(story),
-                 delivery=PendingDelivery(), now=NOW+120, import_history=False)
-    rows = store.rows("SELECT id,payload,state FROM outbox")
-    assert len(rows) == 2 and first in {row["id"] for row in rows}
-    assert all(row["state"] == "pending" and json.loads(row["payload"])["role"] == "main" for row in rows)
-
-
-def test_scheduled_deferral_does_not_make_a_weaker_pick_overtake(store, cfg, story, doc):
-    cfg = replace(cfg, publish_windows=["12:00", "15:00"])
-    ident = pending(store, cfg, story, doc)
-    pipeline.deliver(store, cfg, PendingDelivery(), NOW+10)
-    row = store.rows("SELECT due,attempts,state FROM outbox WHERE id=?", (ident,))[0]
-    assert row == {"due": NOW+10, "attempts": 0, "state": "pending"}
-    assert row["due"] <= NOW+11, "a slot opening now must still consider the best reviewed story"

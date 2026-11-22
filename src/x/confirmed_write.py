@@ -10,7 +10,7 @@ write is."""
 from enum import Enum
 from typing import Callable, Sequence, TypeVar
 
-from ..core import config
+from ..core import config, settings
 from ..core.logger import log
 from ..guards import action_guard
 from ..guards.active_hours import OutsideActiveHours
@@ -96,6 +96,21 @@ def run(tag: str, outcomes: type[O], *, would: Callable[[], str], rows: Rows,
 
 def _admit(tag: str, outcomes: type[O], would: Callable[[], str], rows: Rows,
            guards: Guards[O]) -> O | None:
+    # Checked before and under the browser lock, before even dry-run rows.
+    # Manual review never authorizes a browser send from any alternate job.
+    if settings.get("REPLY_REVIEW_ONLY"):
+        log.info("[%s] Manual Reply review: X writes disabled.", tag)
+        return outcomes["REFUSED"]
+    if settings.get("REPLY_INVITED_ONLY") and tag != "REPLY":
+        from ..guards import reply_selection, reply_parent_like
+        permitted_mode = reply_selection.enabled() or (tag == "LIKE" and reply_parent_like.active())
+        actions = rows() if permitted_mode and tag in {"LIKE", "REPOST"} else []
+        if (not actions
+                or not all((action == action_guard.LIKE and reply_parent_like.allowed(target or ""))
+                           or (reply_selection.enabled() and reply_selection.write_allowed(action, target or ""))
+                           for action, target in actions)):
+            log.info("[%s] Restricted Replies: this X action is disabled.", tag)
+            return outcomes["REFUSED"]
     for guard in guards:
         if isinstance(guard, _DryRunExit):
             if config.dry_run():

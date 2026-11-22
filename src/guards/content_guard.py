@@ -290,7 +290,7 @@ _EN_MARKERS = (
     " they ", " we ", " will ", " just ", " market", " growth", " company ",
     " here ", " there ", " about ", " than ", " because ",
     " my ", " our ", " i ", " can ", " could ", " would ", " should ", " might ", " must ",
-    " has ", " have ", " does ", " did ", " needs ", " how ", " why ", " what ", " which ",
+    " has ", " have ", " does ", " did ", " how ", " why ", " what ", " which ",
     " without ", " through ", " into ", " across ", " between ", " before ", " after ",
     " when ", " where ", " while ", " then ",
     " i'm ", " you're ", " we're ", " they're ", " i've ", " you've ", " we've ", " they've ",
@@ -300,17 +300,19 @@ _EN_MARKERS = (
     " hasn't ", " haven't ", " hadn't ", " that's ", " there's ", " let's ",
 )
 _FR_ACCENTS_RE = re.compile(r"[àâçéèêëîïôûùüÿœæ]")
+# These faces are punctuation, never language evidence or substantive words.
+_ASCII_FACE = re.compile(r"(?<!\w)[:;]-?[)dDpP](?!\w)")
 
 # Short English reactions often have no function-word markers. This narrow
 # fallback applies only to Replies of at most 80 characters, never Originals.
 _SHORT_ENGLISH_CUES = re.compile(
     r"\b(?:my|mine|your|yours|that's|it's|i'm|i'd|i'll|isn't|doesn't|can't|won't|"
     r"less|more|still|finally|worth|wait|love|lovely|please|thanks|ouch|yep|nope|"
-    r"tiny|cheap|cheaper|expensive|faster|slower|wins|hurts|hurt|works|working|"
+    r"tiny|cheap|cheaper|expensive|faster|slower|slow|boring|wins|hurts|hurt|works|working|"
     r"nicely|quietly|neatly|honestly|exactly|saved|saving|belongs|beats|"
     r"beautifully|delightfully|well|done|fair|enough|fewer|empty|tricks|"
     r"required|without|better|worse|good|neat|pay|rent|checking|shipped|such|sounds|"
-    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists|building|fake|only|sound|unexpected|quite|makes)\b", re.IGNORECASE)
+    r"happy|congrats|congratulations|deserve|deserves|give|keep|keeps|insists|building|fake|only|sound|unexpected|quite|makes|video|verifying)\b", re.IGNORECASE)
 _FRENCH_REPLY_CUES = re.compile(
     r"\b(?:bonjour|merci|oui|non|mais|avec|pour|très|tres|c'est|j'aime|"
     r"vraiment|beaucoup|toujours|jamais|bravo)\b", re.IGNORECASE)
@@ -323,7 +325,7 @@ _SHORT_ENGLISH_WORDS = set("""
 a an the and or but of to for with this that these those their you your yours
 they we i it is are was were be been my mine our ours its that's it's i'm i'd
 i'll isn't doesn't can't won't don't didn't you're you've there's who's let's
-less more still finally worth wait love lovely please thanks ouch yep nope tiny
+less more still finally worth wait love lovely please thanks ouch yep yeah nope tiny
 cheap cheaper expensive faster slower wins win hurts hurt works working nicely
 quietly neatly honestly exactly saved saving belongs beats beautifully
 delightfully well done fair enough offline online local model models big small
@@ -355,12 +357,14 @@ go build robot technicians robots building rockets oh fake keys bills fifty tool
 real two hands swordswoman lead pastel paper collage cities sound inviting heroes
 rebuilding skeletons apartments unexpected plot twist brains grok smarts per
 mecha apple intelligence support holding onto m ipad appealing api switching
-sweeter quite gas behind autumn
+sweeter quite gas behind autumn cool video
+family tech includes verifying reality
+slow day another boring just
 """.split())
 
 
 def _short_english_reply(prose: str) -> bool:
-    normalized = prose.replace("’", "'")
+    normalized = _ASCII_FACE.sub(" ", prose.replace("’", "'"))
     words = re.findall(r"[^\W\d_]+(?:'[^\W\d_]+)?", normalized.lower())
     return (len(prose.strip()) <= 80 and len(words) >= 2
             and all(word in _SHORT_ENGLISH_WORDS for word in words)
@@ -401,8 +405,11 @@ def detect_language(text: str) -> Tuple[str, float]:
 # post'"). Matched only when they're ~the WHOLE reply, so a longer substantive
 # reply that merely starts with "Exactement, mais…" still passes.
 _LAZY_REPLIES = {
-    "great post", "nice", "exactly", "this", "so true", "well said", "agreed",
+    "great post", "nice", "exactly", "this", "so true", "well said", "agree", "agreed", "i agree",
     "facts", "based", "real", "lol", "lmao", "amazing", "incredible", "wow",
+    "thanks for sharing", "thank you for sharing", "interesting take", "great insight",
+    "great insights", "well put", "this is the future", "game changer", "this changes everything",
+    "couldnt agree more", "could not agree more",
     "bien vu", "exactement", "tellement vrai", "trop vrai", "carrement",
     "carrément", "dac", "daccord", "d accord", "merci", "bravo", "gg",
     "mdr", "enorme", "énorme", "ouais", "clairement", "evidemment", "évidemment",
@@ -410,10 +417,10 @@ _LAZY_REPLIES = {
 
 
 def _is_lazy_reply(text: str) -> bool:
-    stripped = (text or "").strip()
+    stripped = _ASCII_FACE.sub(" ", text or "").strip()
     if len(stripped) < settings.get("REPLY_MIN_CHARS"):
         return True
-    norm = re.sub(r"[^\w\s]", "", stripped.lower()).strip()
+    norm = " ".join(re.sub(r"[^\w\s]", "", stripped.lower()).split())
     return norm in _LAZY_REPLIES
 
 
@@ -553,7 +560,7 @@ def is_model_refusal(text: str) -> bool:
     return bool(_MODEL_REFUSAL.match(normalized.lstrip(" \"'“”‘`*")))
 
 
-def validate(text: str, kind: str = "original", *, source_language: str = "") -> Tuple[bool, str]:
+def validate(text: str, kind: str = "original", *, source_language: str = "", source_url: str = "") -> Tuple[bool, str]:
     """Validate a draft or a watched source. kind ∈ {"original", "reply", "source"}.
 
     English-only Accounts require English on all surfaces. Otherwise
@@ -598,7 +605,9 @@ def validate(text: str, kind: str = "original", *, source_language: str = "") ->
             if lang != "unknown" and lang != primary:
                 return (False, f"wrong language: need {primary}, detected {lang} @ {conf:.0%}")
 
-    if kind == "reply" and _is_lazy_reply(text):
+    from . import reply_selection
+    simple_reaction = kind == "reply" and reply_selection.simple_reaction(source_url, text)
+    if kind == "reply" and not simple_reaction and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")
 
     if kind == "original":
@@ -631,7 +640,7 @@ def validate(text: str, kind: str = "original", *, source_language: str = "") ->
         lang, conf = detect_language(prose)
         # A closed English vocabulary can also resolve a lone shared "on"
         # marker. Unknown words, accents and explicit French still refuse.
-        short_english = kind == "reply" and lang != "en" and _short_english_reply(prose)
+        short_english = simple_reaction or (kind == "reply" and lang != "en" and _short_english_reply(prose))
         # A source is someone else's post, not our drafted Original. X's
         # English tag or an unambiguous short reaction can resolve an unknown
         # result. Neither relaxes the language/quality gate on our Reply.

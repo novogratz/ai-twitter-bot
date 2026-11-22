@@ -32,14 +32,13 @@ def test_toronto_day_budget_ignores_dry_runs_and_uses_all_profile_actions(monkey
     assert ag.can_post(ag.REPLY)[0]
 
 
-def test_replies_daily_cap_includes_existing_history(monkeypatch, memory_ledger, settings_override):
+def test_replies_below_daily_cap_are_still_paced(monkeypatch, memory_ledger):
     now = datetime(2026, 9, 20, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    settings_override(MAX_REPLIES_PER_DAY=100)
-    for n in range(100):
+    for n in range(500):
         memory_ledger.append(ag.REPLY, f"https://x.com/a/status/{n}", False,
                              now - timedelta(hours=6, seconds=n))
-    assert not ag.can_post(ag.REPLY)[0]
+    assert ag.can_post(ag.REPLY)[0]
     ag.record(ag.REPLY, "https://x.com/a/status/500")
     assert not ag.can_post(ag.REPLY)[0]
 
@@ -194,13 +193,16 @@ def test_original_gap_is_drawn_once_per_original(monkeypatch, settings_override)
     assert ag.can_post(ag.POST) == (True, "")
 
 
-def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, settings_override):
+def test_reposts_leave_room_for_three_originals(monkeypatch, memory_ledger, settings_override, open_topic_account):
     from src.core import account
+    from dataclasses import replace
+    profile = replace(account.current(), auto_engage_handles=("watched",))
+    monkeypatch.setattr(account, "current", lambda: profile)
     now = datetime(2026, 10, 26, 12, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    settings_override(MAX_ORIGINALS_PER_DAY=4, POST_JITTER_SECONDS=0)
+    settings_override(MAX_ORIGINALS_PER_DAY=7, POST_JITTER_SECONDS=0)
     target = f"https://x.com/{account.current().auto_engage_handles[0]}/status/2114612551787147343"
-    for n in range(1):
+    for n in range(4):
         memory_ledger.append(ag.RETWEET, str(n), False, now - timedelta(hours=2))
     allowed, why = ag.can_post(ag.RETWEET, target=target)
     assert not allowed and "reserved" in why

@@ -69,7 +69,7 @@ LEGACY_FILES = (
     "following_count.json", "like_bot_state.json", "liked_tweets.json",
     "mass_unfollow_results.json", "personality.json", "pin_daily_state.json",
     "pin_history.json", "pruned_accounts.json", "reinforced_accounts.json",
-    "replied_back.json", "replied_tweets.json", "safari_health.json",
+    "replied_back.json", "replied_tweets.json", "reply_submissions.json", "safari_health.json",
     "safari_hygiene_state.json", "tracked_accounts.json", "tweet_history.json",
     "whitelist_discovered.json",
 )

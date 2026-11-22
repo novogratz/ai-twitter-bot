@@ -22,13 +22,13 @@ def ultra_refusal(review):
     return ""
 
 
-def review_refusal(review, *, best_available=False):
+def review_refusal(review):
     scores = review.get("banger_scores", {})
     for key in JUDGMENTS:
         value = scores.get(key)
         if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 10:
             return "banger rubric evidence incomplete"
-        if not best_available and key != "novelty" and value < 8:
+        if key != "novelty" and value < 8:
             return "banger hook/performance/fit/quality must each reach 8/10"
     if review.get("brand_fit") is not True:
         return "brand fit or non-hostile parody unverified"
@@ -46,9 +46,9 @@ def freshness(published, now):
     return next((score for age, score in ((2, 10), (7, 8), (30, 6), (90, 4), (365, 2)) if days <= age), 1)
 
 
-def score(doc, now, *, source=False, best_available=False):
+def score(doc, now, *, source=False):
     review = doc.get("inspection" if source else "qc", {})
-    refusal = review_refusal(review, best_available=best_available)
+    refusal = review_refusal(review)
     if refusal:
         return {"status": "hold", "total": None, "reason": refusal}
     values = dict(review["banger_scores"])

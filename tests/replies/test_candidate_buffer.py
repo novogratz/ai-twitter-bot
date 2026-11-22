@@ -46,6 +46,18 @@ def test_buffer_is_bounded_and_keeps_freshest_sources(settings_override):
     assert [c.url for c in buffer.pending()] == [newest.url]
 
 
+def test_for_you_buffer_keeps_recent_attention_over_older_reach_or_reserved_search(settings_override):
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_FOR_YOU_FIRST=True,
+                      REPLY_CANDIDATE_BUFFER_LIMIT=2)
+    buffer = buffers.Buffer()
+    old = candidate(1, minutes=45, likes=50000, views=1000000)
+    fresh = candidate(2, minutes=10, likes=20, views=100)
+    hotter = candidate(3, minutes=2, likes=100, views=200)
+    buffer.offer([old, fresh, hotter], max_age=timedelta(hours=1), preferred_urls=[old.url])
+    assert [c.url for c in buffer.pending()] == [hotter.url, fresh.url]
+    assert replied_store.load_replied() == set()
+
+
 def test_buffer_rejects_nested_future_unknown_and_prepared_content():
     buffer = buffers.Buffer()
     items = [candidate(1, is_reply=True), candidate(2, context="Quoted as a conversation"),
@@ -261,39 +273,3 @@ def test_full_buffer_retains_older_priority_source_only_when_enabled(monkeypatch
     assert replied_store.load_replied() == set()
     now[0] += 31 * 60
     assert buffer.pending() == []  # Priority never extends the source's TTL.
-
-
-@pytest.fixture(autouse=True)
-def _like_preference(settings_override):
-    settings_override(REPLY_PREFERRED_MIN_LIKES=3)
-
-
-def test_selective_context_precedes_popularity_and_survives_pipeline_sort(settings_override):
-    settings_override(REPLY_DISCUSSIONS_ONLY=True, REPLY_PREFERRED_MIN_LIKES=0,
-                      REPLY_PREFER_NEW_AUTHORS=False, REPLY_PRIORITIZE_LARGE_ACCOUNTS=False)
-    generic = pipeline.Candidate(fresh("popular"),
-        "New AI inference benchmark results from the latest model release today.", "SEARCH-HOT", views=1_000_000)
-    specific = pipeline.Candidate(fresh("builder", n=1),
-        "Why does our LLM retrieval miss exact document names after chunking?", "SEARCH-FRESH")
-    creative = pipeline.Candidate(fresh("artist", n=2),
-        "My SI short film concept: a robot librarian lends people the memories they forgot.", "SEARCH-CREATOR", views=50)
-    buffer = buffers.Buffer()
-    buffer.offer([generic, specific, creative], max_age=timedelta(minutes=30))
-    ordered = buffer.pending()
-    assert [item.url for item in ordered] == [creative.url, specific.url, generic.url]
-    assert pipeline.prioritize(ordered, ordinary=True, diversify_authors=True) == ordered
-    assert pipeline.prioritize([generic, specific, creative]) == [generic, specific, creative]
-
-
-def test_full_selective_buffer_keeps_contextual_lead_without_extending_expiry(settings_override):
-    settings_override(REPLY_DISCUSSIONS_ONLY=True, REPLY_CANDIDATE_BUFFER_LIMIT=1)
-    buffer = buffers.Buffer()
-    specific = pipeline.Candidate(fresh("builder", minutes=5),
-        "We measured LLM inference latency with batching on and off under the same load.", "SEARCH-FRESH")
-    generic = pipeline.Candidate(fresh("popular", n=1),
-        "New AI inference benchmark results from the latest model release today.", "SEARCH-HOT", views=1_000_000)
-    buffer.offer([specific], max_age=timedelta(minutes=30))
-    expiry = buffer.pending()[0].expires_at
-    buffer.offer([generic], max_age=timedelta(minutes=30))
-    assert [item.url for item in buffer.pending()] == [specific.url]
-    assert buffer.pending()[0].expires_at == expiry

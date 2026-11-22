@@ -6,3 +6,5 @@ twitter-text-parser==3.0.0
 # twitter-text-parser loads its bundled emoji data with pkg_resources.
 setuptools>=70,<81
 pypdf>=6,<7
+# video fingerprints (src/video/media.py) import numpy at call time
+numpy>=1.26

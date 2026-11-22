@@ -252,27 +252,15 @@ def test_direct_reply_cycle_ends_on_an_error_from_either_lane(direct, error):
 
 @pytest.mark.parametrize("boosted", [False, True])
 @pytest.mark.parametrize("creator_queries", [0, 2])
-@pytest.mark.parametrize("short_pools", [False, True])
-def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted, creator_queries, short_pools):
+def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, boosted, creator_queries):
     """2026-09-23: APScheduler skipped direct_reply_job because a cycle could
     outlive its 2-minute interval; the startup warm-up once ran 20+ minutes.
     The cycle stops at its budget and yields Safari."""
     import itertools
-    from dataclasses import replace
-    from src.core import account
     from src.guards import active_hours
 
     dr, lanes, llm, chokepoint = direct
     numbers = itertools.count()
-    # Pin both pool sizes here: the live Account's evolving search bank must
-    # not silently change what this scheduling regression exercises.
-    profile = account.current()
-    top, latest, creators = (6, 12, 6) if short_pools else (16, 16, 8)
-    profile = replace(profile, searches=replace(profile.searches,
-        replies=tuple(f"LLM research{i}" for i in range(top)), hot_tab=(),
-        latest=tuple(f"LLM experiment{i}" for i in range(latest)),
-        creators=tuple(f"AI concept{i}" for i in range(creators))))
-    monkeypatch.setattr(account, "current", lambda: profile)
 
     def fresh_posts(query, **k):
         lanes["queries"].append(query)
@@ -285,18 +273,16 @@ def test_direct_reply_cycle_is_bounded(direct, monkeypatch, settings_override, b
 
     dr.run_direct_reply_cycle()
     assert len(chokepoint.sent) == (6 if boosted else 3)
-    # Enabled artist discovery finishes before drafting. A boosted read budget
-    # can backfill the short ordinary pools with the remaining creator queries.
-    creator_reads = 6 if boosted and short_pools else 2
-    expected_reads = creator_reads if creator_queries else (2 if boosted else 1)
-    assert len(lanes["queries"]) == expected_reads
+    # Finish only the reserved artist reads, then draft incrementally and stop
+    # reading as soon as the generation budget is spent.
+    assert len(lanes["queries"]) == (creator_queries or (2 if boosted else 1))
 
     chokepoint.calls.clear()
     lanes["queries"].clear()
     dr.run_direct_reply_cycle(max_replies=12)
     # Buffered posts save browser work; an explicit manual budget stays exact.
     assert len(chokepoint.sent) == 12
-    assert len(lanes["queries"]) == (creator_reads if creator_queries else 2)
+    assert len(lanes["queries"]) == 2
 
 
 # --- feed_sweep -------------------------------------------------------------------
@@ -373,8 +359,7 @@ def test_feed_sources_survive_a_quota_stop_and_disappear_after_confirmation(feed
     assert feeds["read"] == ["FEED", "FOLLOWING"] * 3
 
 
-def test_feed_prefers_more_than_two_likes_but_still_answers_lower_and_unknown_counts(feed, settings_override):
-    settings_override(REPLY_PREFERRED_MIN_LIKES=3, FEED_SWEEP_MAX_REPLIES_PER_CYCLE=8, DIRECT_REPLY_MAX_AGE_MINUTES=7200)
+def test_feed_prefers_more_than_two_likes_but_still_answers_lower_and_unknown_counts(feed):
     fs, feeds, llm, chokepoint = feed
     posts = [post("builder", f"SI model project {i}", minutes=minutes, n=i, likes=likes)
              for i, (minutes, likes) in enumerate(((1, None), (2, 2), (90, 3)))]
@@ -416,6 +401,87 @@ def test_failed_for_you_scan_still_reads_and_answers_following(feed, monkeypatch
     feeds["FOLLOWING"] = [{"url": url, "text": "SI models need useful tests"}]
     fs.run_feed_sweep_cycle()
     assert feeds["read"] == ["FOLLOWING"] and chokepoint.sent == [url]
+
+
+def test_for_you_drafts_before_secondary_discovery_and_checks_following_only_occasionally(
+        feed, monkeypatch, settings_override):
+    fs, _, _, _ = feed
+    from src.x import scraper
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_FOR_YOU_FIRST=True,
+                      FEED_FOLLOWING_EVERY_CYCLES=10, FEED_SWEEP_SCAN_LIMIT=60,
+                      DIRECT_REPLY_MAX_AGE_MINUTES=60)
+    events = []
+    home = {"url": fresh("builder", n=1), "text": "New SI model demo", "likes": 12}
+    following = {"url": fresh("artist", n=2), "text": "New SI film idea", "likes": 20}
+    monkeypatch.setattr(scraper, "scrape_home_feed", lambda **kw: events.append("for_you") or [home])
+    monkeypatch.setattr(scraper, "scrape_following_feed", lambda **kw: events.append("following") or [following])
+
+    def draft(job, candidates, cycle, **kwargs):
+        assert not job.pipelined, "a ready primary draft must not wait for the next source read"
+        assert kwargs["max_shipped"] == 1, "refresh For You after a confirmed reply"
+        events.append(job.label)
+        return 0
+
+    monkeypatch.setattr(reply_pipeline, "run", draft)
+    for _ in range(9):
+        fs.run_feed_sweep_cycle()
+    assert events == ["for_you", "FEED-SWEEP-FEED"] * 9
+    fs.run_feed_sweep_cycle()
+    assert events[-4:] == ["for_you", "FEED-SWEEP-FEED", "following", "FEED-SWEEP-FOLLOWING"]
+
+
+def test_for_you_rejects_old_viral_posts_before_drafting_or_author_harvest(
+        feed, monkeypatch, settings_override):
+    fs, feeds, _, _ = feed
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_FOR_YOU_FIRST=True,
+                      DIRECT_REPLY_MAX_AGE_MINUTES=1440)
+    old = {"url": fresh("big_author", minutes=61), "text": "New SI model demo", "likes": 100000}
+    recent = {"url": fresh("new_author", minutes=10), "text": "New SI film idea", "likes": 20}
+    feeds["FEED"] = [old, recent]
+    seen, harvested = [], []
+    monkeypatch.setattr(fs, "_harvest_active_authors", lambda tweets: harvested.extend(t["url"] for t in tweets))
+    monkeypatch.setattr(reply_pipeline, "run", lambda job, candidates, cycle, **kw: seen.extend(c.url for c in candidates) or 0)
+    fs.run_feed_sweep_cycle()
+    assert seen == harvested == [recent["url"]]
+    assert feeds["read"] == ["FEED"]
+
+
+def test_for_you_rate_limit_does_not_start_secondary_reads(feed, settings_override, monkeypatch):
+    fs, feeds, _, _ = feed
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_FOR_YOU_FIRST=True,
+                      FEED_FOLLOWING_EVERY_CYCLES=10)
+    monkeypatch.setattr(fs, "_for_you_cycles", 9)
+    feeds["FEED"] = [{"url": fresh("builder"), "text": "SI model workflow", "likes": 10}]
+
+    def limited(job, candidates, cycle, **kw):
+        cycle.rate_limited = True
+        return 0
+
+    monkeypatch.setattr(reply_pipeline, "run", limited)
+    fs.run_feed_sweep_cycle()
+    assert feeds["read"] == ["FEED"]
+
+
+def test_for_you_skim_only_stops_for_recent_sources_that_pass_parent_admission(
+        feed, monkeypatch, settings_override):
+    fs, _, _, _ = feed
+    from src.guards import reply_admission, reply_selection
+    settings_override(DIRECT_REPLY_MAX_AGE_MINUTES=60)
+    monkeypatch.setattr(reply_selection, "source_refusal", lambda url, text: "")
+    refused = fresh("answered", minutes=2)
+    judged = []
+    monkeypatch.setattr(reply_admission, "judge_parent", lambda url: judged.append(url) or url != refused)
+    ineligible = [
+        {"url": fresh("old", minutes=40), "text": "SI model", "likes": 100000},
+        {"url": fresh("low", minutes=3), "text": "SI model", "likes": 4},
+        {"url": fresh("unknown", minutes=4), "text": "SI model"},
+        {"url": refused, "text": "SI model", "likes": 100},
+    ]
+    assert not fs._fresh_candidate_ready(ineligible)
+    ready = {"url": fresh("builder", minutes=5), "text": "SI model", "likes": 10}
+    assert fs._fresh_candidate_ready(ineligible + [ready])
+    assert ready["url"] in judged
+    assert not any(item["url"] in judged for item in ineligible[:3])
 
 
 def test_feed_sweep_harvests_the_handle_from_the_status_url():
@@ -614,8 +680,7 @@ def test_author_search_never_trusts_search_query_as_author_verification(profile_
     assert llm.calls == [] and chokepoint.sent == []
 
 
-def test_author_search_prefers_more_than_two_likes_before_spending_its_budget(profile_job, settings_override):
-    settings_override(REPLY_PREFERRED_MIN_LIKES=3)
+def test_author_search_prefers_more_than_two_likes_before_spending_its_budget(profile_job):
     _, run, profiles, llm, chokepoint = profile_job
     low, preferred = post("builder", "SI model one", n=1, likes=2), post("builder", "SI model two", n=2, likes=3)
     profiles["builder"] = [low, preferred]

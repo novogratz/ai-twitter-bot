@@ -13,7 +13,7 @@ import time
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from ..core import settings, state_store
-from . import captions, codex_session, media
+from . import codex_session, media
 from .security import AccessError, sha256
 
 TOOLS = state_store.StatePath("video_tools")
@@ -25,20 +25,9 @@ def cast_context(document, cfg):
     if not proof or not document.get("canonical_url") or not document.get("creator"):
         return {}
     title = str(document.get("title", ""))[:500]
-    # Han text commonly touches an English name without a space. Preserve
-    # ordinary word boundaries (e.g. not "SuperElon") when reading that credit.
-    spaced_title = re.sub(r"([\u3400-\u4dbf\u4e00-\u9fff])", r" \1 ", title)
-
-    def credited(alias):
-        if not alias.isascii():
-            return alias in title
-        forms = [re.escape(alias)]
-        if " " in alias:
-            forms.append("#" + re.escape(alias.replace(" ", "")))
-        return re.search(r"(?<!\w)(?:" + "|".join(forms) + r")(?!\w)", spaced_title, re.I)
-
     names = {key: aliases[0] for key, aliases in cfg.targets.items()
-             if any(credited(alias) for alias in aliases)}
+             if any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", title, re.I)
+                    if alias.isascii() else alias in title for alias in aliases)}
     return {"basis": "creator attribution; not face identification", "cast": names,
             "title": title, "source_url": document["canonical_url"], "creator": document["creator"]} if names else {}
 
@@ -105,7 +94,7 @@ def schema(cfg, stage):
                 "cast_visible_first_second": boolean, "action_first_second": boolean,
                 "reason": {"type": "string", "maxLength": 600},
             })
-        if cfg.one_line_caption or cfg.playful_caption:
+        if cfg.one_line_caption:
             properties["caption"] = {"type": "string", "maxLength": 240}
     else:
         properties.update({"overlays_clean": boolean, "watermark_present": boolean,
@@ -118,10 +107,8 @@ def schema(cfg, stage):
                 "no_dead_intro": boolean,
             })
             properties["opening_samples_reviewed"] = boolean
-        if cfg.one_line_caption or cfg.playful_caption:
+        if cfg.one_line_caption:
             properties["caption_accurate"] = boolean
-    if cfg.meme_caption:
-        properties["caption_style_ok"] = boolean
     return object_schema(properties)
 
 
@@ -191,13 +178,12 @@ def audio_summary(evidence, duration):
             "limitations": "sound categories, not lyrics, song identity or proof of lip synchronization"}
 
 
-def frame_pack(path, folder, info, cfg, *, edit=None, label=""):
+def frame_pack(path, folder, info, cfg):
     rate = min(cfg.inspection_fps, info["fps"], 300 / info["duration"])
     frames_dir = folder / "frames"
     frames_dir.mkdir()
-    trim = f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS," if edit else ""
     media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), "-an", "-vf",
-                  trim + f"fps={rate},scale='min(960,iw)':-2", "-q:v", "2", str(frames_dir / "%04d.jpg")], cfg)
+                  f"fps={rate},scale='min(960,iw)':-2", "-q:v", "2", str(frames_dir / "%04d.jpg")], cfg)
     paths = sorted(frames_dir.glob("*.jpg"))
     if not 3 <= len(paths) <= 300 or abs(len(paths) / rate - info["duration"]) > 1 / rate + .1:
         raise ValueError("incomplete or oversized temporal frame sequence")
@@ -213,14 +199,14 @@ def frame_pack(path, folder, info, cfg, *, edit=None, label=""):
             with Image.open(path) as frame:
                 tile = ImageOps.contain(frame, (380, 386))
                 sheet.paste(tile, (x + (384 - tile.width) // 2, y + 26 + (386 - tile.height) // 2))
-            draw.text((x + 8, y + 3), f"{label}{frames[start + slot]['at']:.2f}s", font=font, fill="white")
+            draw.text((x + 8, y + 3), f"{frames[start + slot]['at']:.2f}s", font=font, fill="white")
         destination = folder / f"sequence-{start // 12:02d}.jpg"
         sheet.save(destination, quality=92)
         sheets.append(destination)
     return frames, sheets, rate
 
 
-def opening_pack(path, folder, cfg, *, start=0, label="OPEN"):
+def opening_pack(path, folder, cfg):
     """Inspect the actual rendered first second at five subsecond positions."""
     times = [0, .2, .4, .6, .8]
     sheet = Image.new("RGB", (5 * 384, 416), "#121212")
@@ -228,12 +214,12 @@ def opening_pack(path, folder, cfg, *, start=0, label="OPEN"):
     font = ImageFont.truetype(cfg.font_file, 18)
     for index, at in enumerate(times):
         target = folder / f"opening-{index}.jpg"
-        media.ffmpeg(["-ss", str(start + at), "-protocol_whitelist", "file,pipe", "-i", str(path),
+        media.ffmpeg(["-ss", str(at), "-protocol_whitelist", "file,pipe", "-i", str(path),
                       "-frames:v", "1", "-vf", "scale='min(960,iw)':-2", str(target)], cfg)
         with Image.open(target) as frame:
             tile = ImageOps.contain(frame, (380, 386))
             sheet.paste(tile, (index * 384 + (384 - tile.width) // 2, 26 + (386 - tile.height) // 2))
-        draw.text((index * 384 + 8, 3), f"{label} {at:.2f}s", font=font, fill="white")
+        draw.text((index * 384 + 8, 3), f"OPEN {at:.2f}s", font=font, fill="white")
     target = folder / "opening-sheet.jpg"
     sheet.save(target, quality=94)
     return target, times
@@ -257,16 +243,13 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
     if cap["status"] == "blocked":
         raise AccessError("; ".join(cap["missing"]))
     edit = extra.get("edit")
-    cache_key = hashlib.sha256(json.dumps({"revision": 11 if stage == "output" else 6, "hash": digest, "stage": stage,
+    cache_key = hashlib.sha256(json.dumps({"revision": 8 if stage == "output" else 6, "hash": digest, "stage": stage,
         "targets": cfg.targets, "watermark": cfg.watermark, "model": codex_session.model(cfg),
         "retained": retained, "source": source_review.get("sha256"),
         "fps": cfg.inspection_fps, "cast_context": context, "edit": edit,
         "auto_edit": cfg.auto_edit, "edit_bounds": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "bangers_only": cfg.bangers_only, "ultra_bangers_only": cfg.ultra_bangers_only,
-        "best_available_fallback": cfg.best_available_fallback,
         "one_line_caption": cfg.one_line_caption,
-        "playful_caption": cfg.playful_caption,
-        "meme_caption_policy": captions.POLICY if cfg.meme_caption else None,
         "caption": source_review.get("caption")}, sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
@@ -287,23 +270,6 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         if stage == "output" and cfg.bangers_only:
             opening_sheet, opening_times = opening_pack(path, folder, cfg)
             sheets = [opening_sheet, *sheets]
-        source_sheet_count = 0
-        if retained:
-            # OCR can miss a small original credit. Supply the actual hash-bound
-            # source pixels for independent comparison, never override a refusal.
-            reference = folder / "original-reference"
-            reference.mkdir()
-            source_info = media.probe(source_path, cfg, source=cfg.auto_edit)
-            if edit:
-                source_info = source_info | {"duration": edit["duration"]}
-            _, source_sheets, _ = frame_pack(source_path, reference, source_info, cfg,
-                                            edit=edit, label="ORIGINAL aligned ")
-            if cfg.bangers_only:
-                source_opening, _ = opening_pack(source_path, reference, cfg,
-                    start=edit["start_seconds"] if edit else 0, label="ORIGINAL OPEN")
-                source_sheets = [source_opening, *source_sheets]
-            source_sheet_count = len(source_sheets)
-            sheets = [*sheets, *source_sheets]
         audio_path = folder / "audio.wav"
         media.ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(path), "-vn", "-ac", "1", "-ar", "48000",
                       "-c:a", "pcm_s16le", str(audio_path)], cfg)
@@ -315,14 +281,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         if [f.get("at") for f in local.get("frames", [])] != [f["at"] for f in frames]:
             raise ValueError("OCR did not inspect the complete temporal sample sequence")
         supplied = {"sha256": digest, "stage": stage, "probe": info, "targets": cfg.targets,
-                    "quality_policy": ("BEST AVAILABLE: aim for every editorial component >=9/10 and normalized "
-                        "editorial quality >=95/100. These are preferences, not rejection floors. "
-                        "Score weaker performances honestly so they can be ranked as fallback. "
-                        "Prefer the strongest complete excerpt with visible action immediately. "
-                        "A weak or slow opening lowers the honest score; it does not refuse a fallback. "
-                        "Actual source/output inspection, attributed cast, suitability and audio/language evidence "
-                        "remain required. Never inflate scores to meet the posting schedule."
-                        if cfg.best_available_fallback else "ULTRA ONLY: compare with owner references; every editorial component >=9/10, "
+                    "quality_policy": ("ULTRA ONLY: compare with owner references; every editorial component >=9/10, "
                         "weighted editorial quality >=95/100, fit/entertainment >=19/20, quality >=14/15, "
                         "opening >=9/10. No posting quota. Reject ordinary relevant clips; never inflate scores."
                         if cfg.ultra_bangers_only else "Existing strict banger policy"),
@@ -330,13 +289,10 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
                     "watermark_allowlist": [cfg.watermark], "audio": audio,
                     "ocr": local["frames"], "frame_sampling_fps": rate,
                     "edit": edit, "proposed_caption": source_review.get("caption"),
-                    "opening_sample_times": opening_times,
-                    "original_reference_sheets": source_sheet_count}
+                    "opening_sample_times": opening_times}
         if cfg.audience_examples:
             supplied["audience_examples"] = cfg.audience_examples
             supplied["audience_scope"] = "Own published captions/counters: style context only, unequal observation ages, not causal evidence. Do not copy text or fabricate source details to match these examples."
-        if cfg.meme_caption:
-            supplied["recent_captions"] = captions.recent(store)
         if retained:
             supplied["source_ocr"] = source_review["ocr_evidence"]
             supplied["source_sha256"] = source_review["sha256"]
@@ -431,33 +387,7 @@ joke; without actual verified transcript/translation that is a HOLD. SoundAnalys
 does not identify a song or transcribe lyrics. Label credited songs as attribution,
 not independently heard/verified music. Never call an upscale native high resolution.
 
-""" + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}; playful caption = {cfg.playful_caption}.\n" + supplied["quality_policy"]
-        if cfg.playful_caption:
-            prompt += """
-For a playful caption, the one-line format above does not apply. Write a short,
-natural English joke about the actually inspected scene. Attributed first names
-and familiar aliases from the trusted cast list are allowed; do not identify faces.
-Prefer one scene-specific sentence with fitting emoji, optionally followed by a
-blank line and a brief 'Absolute BANGER 🔥' sign-off. At most two paragraphs,
-25–240 characters total before required attribution. No compulsory prefix, full
-name list, caption recap, forced stock joke, URL, hashtag or em dash. Any people,
-actions, relationship, song reference and comic premise must be supported by the
-source attribution and actual excerpt. Do not invent what unseen characters did.
-Keep the synthetic-parody context; never present it as a real event. Output review
-must independently mark caption_accurate only when the final excerpt supports it.
-"""
-        if cfg.meme_caption:
-            prompt += captions.PROMPT
-        if source_sheet_count:
-            prompt += (f"\nThe LAST {source_sheet_count} sheets show the preserved ORIGINAL SOURCE, "
-                       "trimmed to the same excerpt and labeled with aligned OUTPUT-relative times. "
-                       "Earlier sheets show OUTPUT. All returned evidence timestamps and scores MUST "
-                       "describe the OUTPUT excerpt, not original absolute times. "
-                       "Compare OPEN sheets at matching exact subsecond times; sequence-sheet labels "
-                       "denote frame-sampling cells and can differ within the first second of a fast cut. "
-                       "Source pixels may verify an unchanged original credit "
-                       "that OCR missed. New/moved/uncertain overlays still fail; do not approve from metadata.\n")
-        prompt += "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
+""" + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + supplied["quality_policy"] + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
     result["model_verdict"] = {k: result.get(k) for k in ("confidence", "watermark_present", "overlays_clean",
         "no_destructive_edit", "source_overlays_retained", "no_unapproved_new_overlays")}
@@ -466,8 +396,6 @@ must independently mark caption_accurate only when the final excerpt supports it
     if not set(result["cast"]) <= set(context.get("cast", {})):
         raise ValueError("inspection cast lacks creator attribution")
     result["cast_context"] = context
-    if cfg.meme_caption:
-        result["caption_policy"] = captions.POLICY
     times = [f["at"] for f in frames]
     if any(e["at"] > info["duration"] or min(abs(e["at"] - t) for t in times) > 1 / rate for e in result["evidence"]):
         raise ValueError("inspection refers to unsupported timestamps")

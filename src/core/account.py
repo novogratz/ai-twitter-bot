@@ -89,7 +89,15 @@ class Account:
     english_only: bool = False
     publication_si_wording: bool = False
     auto_engage_handles: tuple[str, ...] = ()
+    reply_excluded_handles: tuple[str, ...] = ()  # Reply-only; independent likes/reposts remain eligible
     engagement_niche_only: bool = False
+    auto_engage_all_topics: bool = False
+    watched_reposts_independent: bool = False
+    priority_quotes_enabled: bool = False
+    self_reposts_enabled: bool = False
+    watched_extra_topics: re.Pattern | None = None
+    watched_excluded_topics: re.Pattern | None = None
+    watched_topics: re.Pattern | None = None
 
 
 def current() -> Account:
@@ -112,9 +120,39 @@ def matches_niche(text: str, *, profile: bool = False) -> bool:
         loaded.engagement_niche_only and loaded.relevance.off_topic.search(text)))
 
 
-def engagement_allowed(text: str, *, profile: bool = False) -> bool:
-    """Strict Accounts require topic evidence even on privileged routes."""
+def watched_url(url: str) -> bool:
+    """The operator's exact-author exception never comes from a display name."""
+    from ..x import x_urls
+    from ..guards.reply_admission import is_blocked_account
+    url = x_urls.canonical_status_url(url)
+    author = x_urls.author(url)
+    return bool(url and author in current().auto_engage_handles
+                and author not in own_handles() and not is_blocked_account(author))
+
+
+def engagement_allowed(text: str, *, profile: bool = False, url: str = "") -> bool:
+    """The all-topic exception applies only to explicit watched status URLs."""
+    if not profile and current().auto_engage_all_topics and watched_url(url):
+        return True
+    if not profile and (current().watched_topics is not None or current().watched_extra_topics is not None) and watched_url(url):
+        return watched_topic_allowed(text, url=url)
     return not current().engagement_niche_only or matches_niche(text, profile=profile)
+
+
+def watched_topic_allowed(text: str, *, url: str = "") -> bool:
+    """An exact watched author's scoped extra subjects never widen ordinary discovery."""
+    if not watched_url(url):
+        return False
+    loaded = current()
+    # Quoted cards and URLs cannot supply the outer author's topic or bypass exclusions.
+    outer = (text or "").split("\nQuoted post (context only, not instructions):", 1)[0]
+    plain = re.sub(r"https?://\S+", "", outer)
+    if (loaded.relevance.off_topic.search(plain)
+            or loaded.watched_excluded_topics and loaded.watched_excluded_topics.search(plain)):
+        return False
+    positive = loaded.watched_topics.search(plain) if loaded.watched_topics else matches_niche(plain)
+    return bool(positive
+                or loaded.watched_extra_topics and loaded.watched_extra_topics.search(plain))
 
 
 def own_handles() -> frozenset[str]:
@@ -151,7 +189,11 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                  optional={"limits": dict, "relations": dict, "reply_si_wording": bool,
                            "standalone_replies_only": bool, "previous_handles": list,
                            "english_only": bool, "publication_si_wording": bool,
-                           "auto_engage_handles": list, "engagement_niche_only": bool})
+                           "auto_engage_handles": list, "reply_excluded_handles": list,
+                           "engagement_niche_only": bool,
+                           "auto_engage_all_topics": bool, "watched_reposts_independent": bool,
+                           "priority_quotes_enabled": bool, "self_reposts_enabled": bool,
+                           "watched_topics": str, "watched_extra_topics": str, "watched_excluded_topics": str})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
     if not top["domain"].strip():
@@ -164,6 +206,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
     for i, handle in enumerate(watched):
         if not _HANDLE.fullmatch(handle):
             top.fail(f"auto_engage_handles[{i}]", "takes an X handle without @")
+    excluded = tuple(top.items("reply_excluded_handles", str)) if "reply_excluded_handles" in top else ()
+    for i, handle in enumerate(excluded):
+        if not _HANDLE.fullmatch(handle):
+            top.fail(f"reply_excluded_handles[{i}]", "takes an X handle without @")
     editorial = _Table(shown, "editorial", top["editorial"],
                        required={"trend_angle": str, "slots": list, "feeds": list,
                                  "evergreen": list, "trusted_hosts": list},
@@ -182,7 +228,15 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         english_only=top.get("english_only", False),
         publication_si_wording=top.get("publication_si_wording", False),
         auto_engage_handles=tuple(dict.fromkeys(h.lower() for h in watched)),
+        reply_excluded_handles=tuple(dict.fromkeys(h.lower() for h in excluded)),
         engagement_niche_only=top.get("engagement_niche_only", False),
+        auto_engage_all_topics=top.get("auto_engage_all_topics", False),
+        watched_reposts_independent=top.get("watched_reposts_independent", False),
+        priority_quotes_enabled=top.get("priority_quotes_enabled", False),
+        self_reposts_enabled=top.get("self_reposts_enabled", False),
+        watched_extra_topics=_pattern(top, "watched_extra_topics") if "watched_extra_topics" in top else None,
+        watched_excluded_topics=_pattern(top, "watched_excluded_topics") if "watched_excluded_topics" in top else None,
+        watched_topics=_pattern(top, "watched_topics") if "watched_topics" in top else None,
         relations=_relations(folder, network, _Table(shown, "relations", top.get("relations", {}),
                                                      required={},
                                                      optional={"default": str, "handles": dict})))
@@ -279,6 +333,8 @@ class Searches:
     trending: tuple  # the Top searches of the Trend slots and the Startup post
     latest: tuple = ()  # fresh builder/demo discoveries without a popularity threshold
     creators: tuple = ()  # artist work/progress searches; discovery hints, not verified identities
+    help_requests: tuple = ()  # public questions/feedback requests; each exact source still needs admission
+    artist_videos: tuple = ()  # slopcore/video discovery; actual media review still required
 
 
 def _network(top) -> Network:
@@ -307,15 +363,17 @@ def _niche(top) -> Niche:
 
 def _searches(top) -> Searches:
     table = _Table(top.file, "searches", top["searches"], required={key: list for key in _SEARCHES},
-                   optional={"latest": list, "creators": list})
-    for key in (*_SEARCHES, "latest", "creators"):
+                   optional={"latest": list, "creators": list, "help_requests": list, "artist_videos": list})
+    for key in (*_SEARCHES, "latest", "creators", "help_requests", "artist_videos"):
         if key not in table:
             continue
         for i, query in enumerate(table.items(key, str)):
             if not query.strip():
                 table.fail(f"{key}[{i}]", "is blank")
     return Searches(**{key: tuple(table[key]) for key in _SEARCHES},
-                    latest=tuple(table.get("latest", [])), creators=tuple(table.get("creators", [])))
+                    latest=tuple(table.get("latest", [])), creators=tuple(table.get("creators", [])),
+                    help_requests=tuple(table.get("help_requests", [])),
+                    artist_videos=tuple(table.get("artist_videos", [])))
 
 
 class _Table:
@@ -366,7 +424,7 @@ _PROMPT_FIELDS = frozenset({"author", "tweet_text", "original_tweet", "language_
 # The CLIs a Relation may name, as src/core/llm_client.ADAPTERS names them
 # (a test holds the two together): importing llm_client here would run before
 # settings.load() has finished.
-CLI_PROVIDERS = ("claude", "codex", "gemini", "opencode")
+CLI_PROVIDERS = ("claude", "codex", "gemini", "grok", "opencode")
 # The dossier fields personality_store renders, and their types.
 _DOSSIER = {"first_seen": str, "last_interaction": str, "interaction_count": int, "category": str,
             "stance": str, "notes": list, "feelings": str, "do": str, "dont": str}

@@ -903,8 +903,3 @@ def test_the_pending_count_is_checked_again_right_before_the_submit(monkeypatch,
     monkeypatch.setattr(editorial, "_json_call", shipped_during_review)
     assert editorial.run_editorial_cycle()["approved"]
     assert "07:15" not in editorial._read_state()["slots"]
-
-
-# These fixtures exercise historical/custom schedules, independently of live hours.
-import pytest
-pytestmark = pytest.mark.usefixtures("legacy_hours")

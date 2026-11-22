@@ -1,16 +1,19 @@
 """The one door to the models.
 
-Ollama over HTTP and the Codex, Gemini, Claude and OpenCode CLIs are adapters
+Ollama over HTTP and the Codex, Gemini, Claude, Grok and OpenCode CLIs are adapters
 in `ADAPTERS`; `run_llm` puts them behind one fallback ladder and reads the
 answer once, in the output mode the caller's `CallProfile` declares. Callers
 get the model's text or its JSON, never a provider's output.
 """
 import json
+import math
 import os
 import re
 import signal
 import shutil
 import subprocess
+import tempfile
+import time
 from dataclasses import dataclass, replace
 from datetime import datetime, timedelta
 from enum import Enum
@@ -195,6 +198,12 @@ class CallProfile:
     temperature: float = 1.0
     min_timeout: int = 0  # floor on the requested timeout, still capped by bedtime
     output: Output = Output.TEXT
+    deadline: Optional[float] = None  # absolute monotonic deadline, shared by primary and fallback
+
+    def __post_init__(self):
+        if self.deadline is not None and (type(self.deadline) not in (int, float)
+                                          or not math.isfinite(self.deadline) or self.deadline < 0):
+            raise ValueError("CallProfile deadline must be a finite nonnegative monotonic timestamp")
 
 
 TEXT_PROFILE = CallProfile()
@@ -572,6 +581,7 @@ def _run_cmd(
     label: str,
     timeout: int,
     cwd: Optional[str],
+    env: Optional[dict[str, str]] = None,
 ) -> LLMResult:
     """Run a provider CLI. `timeout` is final: `_timeout` computed it."""
     from ..guards.active_hours import require_active
@@ -585,6 +595,7 @@ def _run_cmd(
             text=True,
             cwd=cwd,
             start_new_session=True,  # isolate process group so children can be reaped
+            **({"env": env} if env is not None else {}),
         )
         try:
             stdout, stderr = proc.communicate(timeout=timeout)
@@ -668,7 +679,7 @@ def _envelope_error(stdout: str) -> str:
         if not isinstance(event, dict):
             continue
         if event.get("is_error"):
-            errors.append(str(event.get("result") or event.get("subtype") or ""))
+            errors.append(str(event.get("errors") or event.get("result") or event.get("subtype") or ""))
         elif event.get("type") in ("error", "turn.failed"):
             errors.append(json.dumps(event.get("error") or event.get("message") or ""))
     return "\n".join(errors)
@@ -738,14 +749,149 @@ def _cli_adapter(provider: str) -> Callable[[_Request], LLMResult]:
                          request.allowed_tools, provider)
         from .video_pressure import model_call
         with model_call(provider, request.timeout):
-            return _run_cmd(cmd, label=request.label, timeout=request.timeout, cwd=request.cwd)
+            # Recheck after any shared model admission/telemetry work. Waiting
+            # must never restart a short caller's time budget.
+            timeout = _deadline_timeout(request.timeout, request.profile)
+            if timeout is not None and timeout <= 0:
+                return _deadline_failure(request.label)
+            return _run_cmd(cmd, label=request.label, timeout=timeout, cwd=request.cwd)
     return run
+
+
+_GROK_EFFORTS = frozenset({"none", "minimal", "low", "medium", "high", "xhigh", "max"})
+_GROK_DENIED_TOOLS = (
+    "read_file", "Agent", "CallMcpTool", "GetMcpTools", "FetchMcpResource", "ListMcpResources",
+    "search_tool", "use_tool",
+)
+
+
+def _grok_adapter(request: _Request) -> LLMResult:
+    """One tool-free draft in a fresh directory, using the operator's CLI login."""
+    if not re.fullmatch(r"grok-[a-z0-9][a-z0-9._-]*", request.model):
+        return LLMResult(1, "", f"{request.label}: Grok requires an explicit grok-* model; nothing was run.")
+    effort = settings.get("GROK_REASONING_EFFORT").strip().lower()
+    if effort not in _GROK_EFFORTS:
+        return LLMResult(1, "", f"{request.label}: invalid GROK_REASONING_EFFORT; nothing was run.")
+    if request.allowed_tools:
+        return LLMResult(1, "", f"{request.label}: the Grok drafting adapter cannot run requested tools; nothing was run.")
+    if not shutil.which("grok"):
+        return LLMResult(127, "", f"{request.label}: grok is not installed; nothing was run.")
+    from .video_pressure import model_call
+    with model_call("grok", request.timeout), tempfile.TemporaryDirectory(prefix="bot-grok-", dir="/tmp") as cwd:
+        timeout = _deadline_timeout(request.timeout, request.profile)
+        if timeout is not None and timeout <= 0:
+            return _deadline_failure(request.label)
+        # A valid allowlist entry followed by an explicit denial leaves no
+        # tools. An empty --tools value does not reliably remove defaults.
+        cmd = ["grok", "--cwd", cwd, "--model", request.model,
+               "--reasoning-effort", effort, "--permission-mode", "dontAsk",
+               "--sandbox", "read-only", "--tools", "read_file",
+               "--disallowed-tools", ",".join(_GROK_DENIED_TOOLS),
+               "--disable-web-search", "--no-subagents", "--no-memory", "--no-auto-update",
+               "--storage-mode", "local", "--max-turns", "1",
+               "--system-prompt-override", "Draft only from the supplied prompt. Use no tools. Return only the requested output.",
+               "--output-format", "streaming-messages-json", "--verbatim"]
+        for denied in ("Read", "Bash", "Write", "Edit", "Grep", "WebFetch", "MCPTool"):
+            cmd.extend(["--deny", denied])
+        cmd.extend(["--single", request.prompt])
+        overrides = {
+            "GROK_MEMORY": "0", "GROK_WORKFLOWS": "0", "GROK_SUBAGENTS": "0", "GROK_SUBAGENT_BUNDLE": "0",
+            "GROK_DISABLE_AUTOUPDATER": "1", "GROK_SHARED_DAEMON": "0", "GROK_SESSION_REGISTRY": "0",
+            "GROK_MAX_RETRIES": "0", "GROK_HEADLESS_RETRY_DEADLINE_SECS": str(timeout),
+            "GROK_MANAGED_MCPS_ENABLED": "0", "GROK_MANAGED_MCP_GATEWAY_TOOLS_ENABLED": "0",
+            **{f"GROK_{provider}_{feature}_ENABLED": "0"
+               for provider in ("CLAUDE", "CURSOR", "CODEX")
+               for feature in ("AGENTS", "HOOKS", "MCPS", "RULES", "SKILLS")},
+        }
+        env = settings.process_environment(overrides)
+        # Native skill catalogs bypass the third-party compatibility switches
+        # on the shell route. Keep a private Grok config/session home per call,
+        # referencing the existing login file instead of copying credentials.
+        original_home = env.get("GROK_HOME") or os.path.join(env.get("HOME") or os.path.expanduser("~"), ".grok")
+        auth_path = env.get("GROK_AUTH_PATH") or os.path.join(original_home, "auth.json")
+        env["GROK_AUTH_PATH"] = os.path.abspath(os.path.expanduser(auth_path))
+        grok_home = os.path.join(cwd, "grok-home")
+        os.mkdir(grok_home, mode=0o700)
+        with open(os.path.join(grok_home, "config.toml"), "w", encoding="utf-8") as handle:
+            handle.write('[cli]\nauto_update=false\nuse_leader=false\n'
+                         '[skills]\nignore=["/"]\n[memory]\nenabled=false\n'
+                         '[features]\nsubagent_bundle=false\n')
+        env["GROK_HOME"] = grok_home
+        timeout = _deadline_timeout(timeout, request.profile)
+        if timeout is not None and timeout <= 0:
+            return _deadline_failure(request.label)
+        return _run_cmd(cmd, label=request.label, timeout=timeout, cwd=cwd,
+                        env=env)
+
+
+def _grok_output(raw: LLMResult, model: str) -> LLMResult:
+    """Accept only the final result of one complete, tool-free Grok turn.
+
+    Intermediate text, reasoning, errors and usage metadata are never replies.
+    The emitted model must match the requested ID, so a CLI default cannot
+    silently replace an unsupported explicit model.
+    """
+    if raw.returncode:
+        return raw
+
+    def failed(reason):
+        return LLMResult(1, "", "Grok draft refused: " + reason)
+
+    try:
+        events = [json.loads(line) for line in raw.stdout.splitlines() if line.strip()]
+    except (json.JSONDecodeError, TypeError):
+        return failed("malformed or incomplete CLI output")
+    if not events or any(not isinstance(event, dict) for event in events):
+        return failed("missing structured CLI result")
+    if error := _envelope_error(raw.stdout):
+        return failed(error[:300])
+    if [event.get("type") for event in events] != ["system", "assistant", "result"]:
+        return failed("expected one initialization, one assistant message and one final result")
+    init, assistant, result = events
+    servers = init.get("mcp_servers", [])
+    if init.get("subtype") != "init" or init.get("model") != model:
+        return failed("initialization does not match the requested model")
+    if init.get("tools") != []:
+        return failed("CLI still advertises tools")
+    if init.get("skills", []) != []:
+        return failed("CLI still advertises skills")
+    if (not isinstance(servers, list)
+            or any(not isinstance(server, dict) or server.get("status") != "disabled" for server in servers)):
+        return failed("CLI still exposes MCP context")
+    message = assistant.get("message")
+    if not isinstance(message, dict) or message.get("model") != model or assistant.get("parent_tool_use_id"):
+        return failed("assistant model or parent does not match the requested draft")
+    content = message.get("content")
+    if (not isinstance(content, list) or not content
+            or any(not isinstance(block, dict) or block.get("type") not in {"text", "thinking"}
+                   for block in content)):
+        return failed("unexpected tool or content block")
+    if (result.get("subtype") != "success" or result.get("is_error") is not False
+            or result.get("errors") or result.get("stop_reason") != "end_turn"
+            or type(result.get("num_turns")) is not int or result["num_turns"] != 1
+            or message.get("stop_reason") not in (None, "end_turn")):
+        return failed("turn did not finish successfully")
+    usage = result.get("modelUsage")
+    totals = result.get("usage", {})
+    server_usage = totals.get("server_tool_use", {}) if isinstance(totals, dict) else None
+    if (not isinstance(usage, dict) or set(usage) != {model}
+            or not isinstance(usage[model], dict) or usage[model].get("webSearchRequests", 0) != 0
+            or usage[model].get("modelCalls", 1) != 1 or not isinstance(server_usage, dict)
+            or server_usage.get("web_search_requests", 0) != 0):
+        return failed("unexpected model or web-search usage")
+    text = result.get("result")
+    parts = [block.get("text") for block in content if block.get("type") == "text"]
+    if (not isinstance(text, str) or not text.strip() or any(not isinstance(part, str) for part in parts)
+            or text != "".join(parts)):
+        return failed("final text is missing or does not match the completed assistant message")
+    return LLMResult(0, json.dumps({"type": "result", "result": text}), raw.stderr)
 
 
 # Each adapter returns the provider's raw output; `run_llm` alone judges and
 # reads it. Tests swap entries for fakes.
 ADAPTERS: dict[str, Callable[[_Request], LLMResult]] = {
     "ollama": _ollama_adapter,
+    "grok": _grok_adapter,
     **{name: _cli_adapter(name) for name in ("codex", "gemini", "claude", "opencode")},
 }
 
@@ -812,6 +958,17 @@ _CAPPED_PRIMARY_CLIS = ("claude", "codex", "gemini")
 _CLI_AFTER_OLLAMA_CAP = 150
 
 
+def _deadline_timeout(seconds, profile):
+    if profile.deadline is None:
+        return seconds
+    remaining = max(0, int(profile.deadline - time.monotonic()))
+    return min(seconds, remaining) if seconds is not None else remaining
+
+
+def _deadline_failure(label):
+    return LLMResult(124, "", f"{label}: model call deadline expired; no answer retained.")
+
+
 def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
              after: Optional[str] = None) -> int:
     """Every model call's timeout, computed here only. `after` names the
@@ -834,12 +991,19 @@ def _timeout(provider: str, requested: Optional[int], profile: CallProfile,
         seconds = min(requested or default, _CLI_AFTER_OLLAMA_CAP)
     else:
         seconds = requested or default
-    return min(seconds, max(1, int(seconds_until_pause())))
+    # The optional caller deadline is stricter than provider minimum budgets.
+    # Ordinary calls keep their existing floors and caps.
+    return _deadline_timeout(min(seconds, max(1, int(seconds_until_pause()))), profile)
 
 
 def _call(provider: str, request: _Request, after: Optional[str] = None) -> LLMResult:
     timeout = _timeout(provider, request.timeout, request.profile, after)
-    return _adapter(provider)(replace(request, timeout=timeout))
+    if timeout <= 0:
+        return _deadline_failure(request.label)
+    raw = _adapter(provider)(replace(request, timeout=timeout))
+    if request.profile.deadline is not None and time.monotonic() >= request.profile.deadline:
+        return _deadline_failure(request.label)
+    return raw
 
 
 def _model(provider: str, model: "ModelSetting | _ModelName", profile: CallProfile) -> str:
@@ -857,6 +1021,8 @@ def _answer(provider: str, request: _Request, raw: LLMResult) -> LLMResult:
     text read in the profile's mode, or a failure with a non-zero code and
     no text, EXHAUSTED when the CLI or transport reported a usage limit."""
     model = request.model
+    if provider == "grok":
+        raw = _grok_output(raw, model)
     if _should_fallback(raw):
         reason = (raw.stderr or "").strip() or f"{request.label}: {provider} gave no usable answer"
         status = LLMStatus.EXHAUSTED if _usage_limit(raw, request.prompt) else LLMStatus.FAILED
@@ -928,7 +1094,8 @@ def run_llm(
                           LLMStatus.EXHAUSTED, primary, request.model)
     else:
         first = _answer(primary, request, raw)
-    if first.returncode == 0 or primary not in ADAPTERS:
+    if (first.returncode == 0 or primary not in ADAPTERS
+            or profile.deadline is not None and time.monotonic() >= profile.deadline):
         return first
 
     fallback, _ = _fallback(primary)
@@ -1139,3 +1306,16 @@ def _read_answer(stdout: str, output: Output) -> str:
         return strip_tool_calls(_json_span(_provider_text(raw).strip()))
     text = strip_tool_calls(_provider_text(raw))
     return "" if contains_post_unsafe_leak(text) else text
+
+
+def structured_reply(prompt, label):
+    route = resolve(Surface.REPLY)
+    result = run_llm(prompt, route.model, label=label, force_provider=route.provider,
+                     cwd="/tmp", allowed_tools=(), profile=CallProfile(output=Output.JSON))
+    if result.status is not LLMStatus.ANSWERED:
+        return {}
+    try:
+        data = json.loads(result.stdout)
+        return data if isinstance(data, dict) else {}
+    except (ValueError, TypeError):
+        return {}

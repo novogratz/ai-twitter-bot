@@ -67,30 +67,28 @@ def admit(store, cfg, ident, now):
     if payload["role"] != "main":
         raise ValueError("only the main pick is authorized for automatic publication")
     story = json.loads(store.rows("SELECT document FROM stories WHERE id=?", (row["story"],))[0]["document"])
-    if story.get("post_kind") == "discussion":
-        from . import discussion
-        discussion.admit(store, cfg, story, ident, payload["tweet"], now)
-    else:
-        _news_review(story, payload, now, cfg)
+    if not all(story.get("final_review", {}).get(k) is True for k in editor.REVIEW_FLAGS):
+        raise ValueError("missing independent final approval")
+    if not 0 <= now - story.get("verified_at", 0) <= 86400:
+        raise ValueError("news verification expired")
+    if editor.tweet(story)[0] != payload["tweet"]:
+        raise ValueError("reviewed news bytes changed")
+    if identity(payload["tweet"]) != story.get("reviewed_text_hash"):
+        raise ValueError("final review does not bind this text")
+    if identity([{k: d.get(k) for k in ("url", "text", "dates")} for d in story.get("evidence", [])]) != story.get("evidence_hash"):
+        raise ValueError("reviewed evidence changed")
+    if editor.gate(story, story["evidence"], [], story["window_start"], now, cfg)[0] != "verified":
+        raise ValueError("news evidence no longer passes verification")
     if store.rows("SELECT id FROM outbox WHERE state IN ('submitting','publish_unknown')"):
         raise Deferred("previous news send unresolved")
     local = datetime.fromtimestamp(now, editor.TZ)
     midnight = local.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
     used = store.rows("SELECT COUNT(*) AS n FROM outbox WHERE state='published' AND acknowledged>=?", (midnight,))[0]["n"]
-    used = max(used, action_guard.count_today(action_guard.POST))
-    if used >= min(config.posts_ceiling(), cfg.daily_cap):
-        raise Deferred("text daily ceiling reached")
-    if cfg.publish_windows:
-        due = publication_window(cfg, now)
-        if due is None:
-            raise Deferred("outside scheduled news window")
-        if store.rows("""SELECT id FROM outbox WHERE state IN ('published','submitting','publish_unknown')
-                         AND acknowledged>=? AND acknowledged<? LIMIT 1""",
-                      (due, due + cfg.publish_window_minutes * 60)):
-            raise Deferred("scheduled news window already used")
+    if used >= config.posts_ceiling():
+        raise Deferred("news daily ceiling reached")
     last = store.rows("SELECT MAX(acknowledged) AS at FROM outbox WHERE state='published'")[0]["at"]
     if last and now - last < settings.get("NEWS_MIN_SECONDS_BETWEEN_POSTS"):
-        raise Deferred("text publication spacing")
+        raise Deferred("news publication spacing")
     why = video_refusal(cfg, now)
     if why:
         raise Deferred(why)
@@ -104,32 +102,6 @@ def admit(store, cfg, ident, now):
     return payload
 
 
-def publication_window(cfg, now):
-    """Current Toronto opportunity; missed windows never become a catch-up burst."""
-    local = datetime.fromtimestamp(now, editor.TZ)
-    for clock in cfg.publish_windows:
-        hour, minute = map(int, clock.split(":"))
-        due = local.replace(hour=hour, minute=minute, second=0, microsecond=0).timestamp()
-        if 0 <= now - due < cfg.publish_window_minutes * 60:
-            return due
-    return None
-
-
-def _news_review(story, payload, now, cfg):
-    if not all(story.get("final_review", {}).get(k) is True for k in editor.REVIEW_FLAGS):
-        raise ValueError("missing independent final approval")
-    if not 0 <= now - story.get("verified_at", 0) <= 86400:
-        raise ValueError("news verification expired")
-    if editor.tweet(story)[0] != payload["tweet"]:
-        raise ValueError("reviewed news bytes changed")
-    if identity(payload["tweet"]) != story.get("reviewed_text_hash"):
-        raise ValueError("final review does not bind this text")
-    if identity([{k: d.get(k) for k in ("url", "text", "dates")} for d in story.get("evidence", [])]) != story.get("evidence_hash"):
-        raise ValueError("reviewed evidence changed")
-    if editor.gate(story, story["evidence"], [], story["window_start"], now, cfg)[0] != "verified":
-        raise ValueError("news evidence no longer passes verification")
-
-
 class SafariDelivery:
     def __init__(self, store, cfg):
         self.store, self.cfg = store, cfg
@@ -138,8 +110,6 @@ class SafariDelivery:
     def send(self, ident, payload):
         if payload["role"] != "main":
             return self.drafts.send(ident, payload)
-        # Cheap preflight before taking Safari; final admission repeats it.
-        admit(self.store, self.cfg, ident, time.time())
         from ..x.twitter_client import post_news
         from ..x.confirmed_write import WriteOutcome
         result = post_news(self.store, self.cfg, ident)
@@ -170,8 +140,6 @@ def confirmed(store, ident, url, now, *, reconcile=False):
         if not changed:
             return None
         db.execute("UPDATE stories SET state='published' WHERE id=?", (ident,))
-        story = db.execute("SELECT document FROM stories WHERE id=?", (ident,)).fetchone()
-        if not story or json.loads(story["document"]).get("post_kind") != "discussion":
-            from .startup import confirmed as confirm_startup
-            confirm_startup(db, ident, url, now)
+        from .startup import confirmed as confirm_startup
+        confirm_startup(db, ident, url, now)
     return receipt

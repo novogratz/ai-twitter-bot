@@ -77,7 +77,9 @@ _overrides: dict = {}
 
 
 def _kind(setting: Setting) -> str:
-    if setting.name == "REPLY_VOLUME_BOOST_DATE":
+    if setting.name == "AWAKE_72H_START":
+        return "ISO timestamp with timezone or blank"
+    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE", "REPLY_WORKLOAD_BOOST_START_DATE"}:
         return "YYYY-MM-DD date or blank"
     if setting.type is bool:
         return "0 or 1"
@@ -146,14 +148,34 @@ _declare("PRIORITY_REPLY_MODEL", str, None, "CLI model for priority Replies; uns
 # OpenCode, its own; nor a fallback, its *_FALLBACK_MODEL.
 MODEL_DEFAULTS = {
     "NEWS_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-opus-4-8", "gemini": "gemini-2.0-flash"},
-    "REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
+    "REPLY_MODEL": {"codex": "gpt-5.4-mini", "grok": "grok-4.7-build-fast", "claude": "claude-haiku-4-5-20251001",
                     "gemini": "gemini-1.5-flash"},
-    "PRIORITY_REPLY_MODEL": {"codex": "gpt-5.4-mini", "claude": "claude-haiku-4-5-20251001",
+    "PRIORITY_REPLY_MODEL": {"codex": "gpt-5.4-mini", "grok": "grok-4.7-build-fast", "claude": "claude-haiku-4-5-20251001",
                              "gemini": "gemini-2.0-flash"},
 }
 _declare("PROFILE_LLM_PROVIDER", str, "codex", "Provider for profile surfaces; blank inherits AI_CLI.")
 _declare("REPLY_LLM_PROVIDER", str, "codex", "Provider for Replies; blank inherits AI_CLI.")
+_declare("GROK_REASONING_EFFORT", str, "low", "Reasoning effort for the authenticated Grok CLI draft provider; independent of Codex effort. Replies use tools disabled in an isolated directory.")
 _declare("DRY_RUN", bool, False, "1 logs every write instead of doing it; config.dry_run() reads it at call time.")
+_declare("REPLY_REVIEW_ONLY", bool, False, "Prepare Reply drafts for manual review and refuse all X writes. Local-only unless REPLY_MANUAL_DISCOVERY explicitly enables read-only scheduled discovery.", floor=False)
+_declare("REPLY_MANUAL_DISCOVERY", bool, False, "Read-only source discovery and manual Reply drafting in four Toronto sessions; normally 20 attempts/session and 80/day, temporarily 50/session within an explicitly dated 200/day workload. Does not authorize X writes.", floor=False)
+_declare("REPLY_MANUAL_ORDINARY", bool, False, "Require manual review/posting for ordinary Replies while retaining separately admitted watched-author actions. Uses restricted broad transport; never turns drafts into an automatic outbox.", floor=False)
+_declare("REPLY_CURATED_MODE", bool, False, "Select established AI artists and sharp technical conversations; 100/day ceiling, inspected videos and scoped watched-author actions. Requires REPLY_INVITED_ONLY transport guards.", floor=False)
+_declare("REPLY_BROAD_DISCOVERY", bool, False, "Feed and rotating artist/technical search discovery with source-bound Replies, at most 1500/day and five observed parent likes. Retains curated write restrictions, exact-source receipts and at least eight seconds between sends.", floor=False)
+_declare("REPLY_FOR_YOU_FIRST", bool, False, "Prioritize For You discovery and recent engagement within broad Reply mode; ordinary sources expire after at most 60 minutes, including at final submission. Following and searches are secondary.", floor=False)
+_declare("REPLY_MIN_FOLLOWERS", int, 5000, "Verified author follower floor in curated mode; unknown counts refuse.", floor=1000)
+_declare("REPLY_SHORT_MAX_CHARS", int, 140, "Requested Reply character ceiling. Current short modes additionally cap ordinary Replies at 140 and broad watched Replies at 90; a lower configured value wins. Overlong drafts are refused, never cut mid-thought.", floor=40, ceiling=278)
+_declare("REPLY_REQUIRE_PARENT_LIKE", bool, False, "Require an observed like on the exact admitted parent before every Reply. Only the Reply transaction authorizes ordinary parent likes; unrelated likes remain disabled in restricted modes.", floor=False)
+_declare("CURATED_WATCH_REPLIES_PER_DAY", int, 3, "Watched-author Replies within the Account's configured topics and overall Reply cap; includes uncertain submissions.", floor=0, ceiling=1500)
+_declare("CURATED_WATCH_REPOSTS_PER_DAY", int, 3, "Watched-author native repost ceiling including uncertain submissions. An explicit all-topic independent watched policy enables new originals without selective AI review.", floor=0, ceiling=1500)
+_declare("CURATED_WATCH_REPLY_MIN_SECONDS", int, 21600, "Minimum gap between watched-author Replies, also subject to ordinary Reply spacing and jitter.", floor=8)
+_declare("CURATED_WATCH_REPOST_MIN_SECONDS", int, 21600, "Minimum gap between watched-author reposts including uncertain submissions; independent repost spacing also applies.", floor=60)
+_declare("REPLY_INVITED_ONLY", bool, False, "Restricted exact-source composition and own-receipt checks. Outside curated mode, explicit help/feedback requests only, at most 250/day and one per author/day, with other X writes disabled.", floor=False)
+_declare("REPLY_PUBLIC_REQUESTS", bool, False, "In requested-Reply mode, also discover and answer explicit public requests for technical help or creative feedback; a mention is optional, a topic alone is insufficient.", floor=False)
+_declare("REPLY_REVIEW_DAILY_LIMIT", int, 20, "Normal manual-review draft limit, including dismissed drafts; effective normal ceiling 80. An explicitly dated workload boost may temporarily allow up to 200. Zero disables drafts.", floor=0, ceiling=200)
+_declare("REPLY_WORKLOAD_BOOST_START_DATE", str, "", "Fixed first Toronto calendar day of a temporary Reply workload; blank disables it. Restarts never move the start date.")
+_declare("REPLY_WORKLOAD_BOOST_DAYS", int, 4, "Number of Toronto calendar days in the dated workload boost; expiry is checked on every budget read without restart.", floor=1, ceiling=4)
+_declare("REPLY_WORKLOAD_BOOST_TARGET", int, 200, "Temporary advisory daily Reply target and ceiling within the explicitly dated workload window; no filler obligation. Normal limits resume after expiry.", floor=1, ceiling=200)
 _declare("VIDEO_ENABLED", bool, False, "Opt into isolated licensed-video workers and replace the main editorial schedule; defaults off.")
 _declare("VIDEO_LIVE", bool, False, "Permit video API uploads/posts after explicit activation; DRY_RUN still overrides. Defaults off.")
 _declare("VIDEO_CONFIG_FILE", str, "", "Operator video TOML path; blank uses accounts/<BOT_ACCOUNT>/video.toml.")
@@ -163,19 +185,13 @@ _declare("NEWS_WEBHOOK_URL", str, "", "Optional HTTPS draft destination, used on
 _declare("NEWS_WEBHOOK_TOKEN", str, "", "Optional bearer credential for the configured news draft webhook; never an X/email credential.")
 _declare("NEWS_ENABLED", bool, False, "Run hourly verified news discovery with the normal bot; independent of video mode.")
 _declare("NEWS_AUTO_PUBLISH", bool, False, "Explicit operator opt-in to publish verified main news picks through Safari. Backups remain drafts.")
-_declare("DISCUSSION_POSTS_ENABLED", bool, False, "Prepare occasional reviewed SI discussion questions in the news outbox; shares text limits and requires automatic news publishing to send.")
 _declare("NEWS_MIN_SECONDS_BETWEEN_POSTS", int, 7200, "Minimum gap between news publications, including uncertain attempts.", floor=1200)
 _declare("MAX_ORIGINALS_PER_DAY", int, 8, "Originals per Toronto day.", floor=0, ceiling=8)
 _declare("MIN_SECONDS_BETWEEN_POSTS", int, 1200, "Minimum gap between two Profile publications.", floor=1200)
 _declare("POST_JITTER_SECONDS", int, 0, "Random delay added to the post spacing.", floor=0)
 _declare("MIN_SECONDS_BETWEEN_REPLIES", int, 8, "Minimum gap between two Replies.", floor=8)
-_declare("MAX_REPLIES_PER_DAY", int, 40, "Hard Toronto-day Reply ceiling, including uncertain submissions; zero disables Replies.", floor=0, ceiling=1400)
-_declare("REPLY_MAX_AGE_SECONDS", int, 0, "Final Reply parent age ceiling; zero uses existing source limits.", floor=0)
-_declare("REPLY_WATCHED_MAX_AGE_SECONDS", int, 0, "Tighter final age ceiling for watched authors; zero uses the ordinary ceiling.", floor=0)
-_declare("REPLY_WATCHED_DAILY_CAP", int, 2, "Maximum daily Replies per watched author, including uncertain submissions; zero disables watched Replies.", floor=0, ceiling=2)
-_declare("WATCH_ENGAGEMENT_REQUIRES_REPLY", bool, False, "Watched posts may be liked or reposted only after a confirmed Reply; the verified parent like during Reply composition is allowed.", floor=False)
-_declare("REPLY_DISCUSSIONS_ONLY", bool, False, "Require independent review of exact Reply/source for substantive discussion or a specific grounded reaction to strong AI art/memes; no generic praise or hype.", floor=False)
-_declare("REPLY_PREFER_NEW_AUTHORS", bool, False, "Prefer ordinary candidates whose authors have no confirmed Reply in the retained 90-day ledger.", floor=False)
+_declare("MAX_REPLIES_PER_DAY", int, 1400, "Maximum Replies per Toronto day, including unresolved submissions; the explicit upper ceiling is 1500, with lower mode-specific limits retained.", floor=0, ceiling=1500)
+_declare("REPLY_ALL_DAY", bool, False, "Allow Reply workers and required parent likes at all hours; stop requests and daily limits still apply.", floor=False)
 _declare("REPLY_JITTER_SECONDS", int, 7, "Random delay added to the Reply spacing.", floor=0)
 _declare("FOLLOW_WHITELIST_ONLY", bool, True, "Follow only whitelisted accounts.")
 _declare("FOLLOWBACK_BYPASS_WHITELIST", bool, True, "Let Follow-backs past the whitelist.")
@@ -256,7 +272,8 @@ _declare("FR_FORCED_REPLY_HANDLES", str, "", "Comma-separated handles whose post
 # ── #198 · src/replies, src/editorial ───────────────────────────────────────
 _declare("EDITORIAL_OLLAMA_MODEL", str, "gemma4:31b", "Ollama model that drafts and reviews Originals.")
 _declare("EDITORIAL_LLM_TIMEOUT_SECONDS", int, 300, "Minimum timeout of an editorial model call.")
-_declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer.")
+_declare("DIRECT_REPLY_MAX_AGE_MINUTES", int, 7200, "Oldest post the search and feed-sweep Replies answer; For You first mode also enforces at most 60 minutes through submission.", floor=1)
+_declare("DIRECT_REPLY_INTERVAL_MINUTES", int, 2, "Interval between secondary search Reply cycles in For You first mode; the first search waits this interval so For You runs first.", floor=2)
 _declare_unused("BESTIE_HANDLE", str, "")
 _declare("VIP_SCAN_HANDLES", str, "", "Comma-separated accounts the direct_reply VIP scan answers; the Account's network.vip_scan unless set.")
 _declare("DIRECT_REPLY_MAX_PER_CYCLE", int, 3, "Replies one direct_reply cycle may ship; zero disables its scheduled generation.", floor=0)
@@ -270,7 +287,7 @@ _declare("REPLY_DAILY_TARGET_MIN", int, 0, "Advisory daily Reply target; never c
 _declare("REPLY_DAILY_TARGET_MAX", int, 0, "Upper advisory daily Reply target; neither a cap nor a quota to fill.", floor=0)
 _declare("REPLY_CANDIDATE_BUFFER_LIMIT", int, 400, "Unprocessed source posts retained per search/feed lane in memory; no posting claims.", floor=1, ceiling=1000)
 _declare("REPLY_CANDIDATE_BUFFER_TTL_SECONDS", int, 1800, "Maximum time an unused source stays buffered; source freshness may expire sooner.", floor=60, ceiling=3600)
-_declare("REPLY_RECENT_MEMORY_COUNT", int, 100, "Confirmed Replies checked for repeated wording at admission; generation includes a compact older-pattern summary.", floor=20, ceiling=1400)
+_declare("REPLY_RECENT_MEMORY_COUNT", int, 100, "Confirmed Replies checked for repeated wording; prompt includes a compact older-pattern summary.", floor=20, ceiling=200)
 _declare("REPLY_PREFERRED_MIN_LIKES", int, 2, "Prefer candidates with at least this many observed likes; never an eligibility floor. Zero disables the preference.", floor=0, ceiling=1000)
 _declare_unused("DIRECT_REPLY_MAX_EN_PER_CYCLE", int, 9999)
 _declare_unused("DIRECT_REPLY_FEED_SCAN_LIMIT", int, 150)
@@ -282,9 +299,20 @@ _declare("DEBATE_MAX_PER_CYCLE", int, 3, "Debate Replies one debate cycle may sh
 _declare("DEBATE_MAX_AGE_HOURS", float, 24.0, "Oldest mention the debate job answers.")
 _declare("BABYSIT_WINDOW_MINUTES", float, 60.0, "Age of the latest post under which the babysitter sweeps replybacks.")
 _declare("FEED_SWEEP_SCAN_LIMIT", int, 80, "Posts the feed sweep scrapes per feed.", floor=1)
+_declare("REPLY_MIN_LIKES", int, 0, "Required observed parent likes before generation and again before submission; missing counts refuse when enabled.", floor=0)
+_declare("FEED_SWEEP_INTERVAL_MINUTES", int, 8, "Interval between feed discovery and Reply cycles; For You runs first when configured, otherwise both feeds are scanned. Overlapping cycles coalesce.", floor=1)
+_declare("FEED_FOLLOWING_EVERY_CYCLES", int, 10, "In For You first mode, read Following only after this many For You cycles, after its drafting turn; no Following read on startup.", floor=2)
 _declare("FEED_SCROLL_PASSES", int, 8, "Maximum scrolls per verified Home feed; collect each viewport before scrolling.", floor=1, ceiling=40)
 _declare("HOURLY_BREAK_MINUTES", int, 0, "Scheduled break length every three waking hours; 0 disables breaks.", floor=0, ceiling=10)
-_declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; running browser transactions may delay a poll.", floor=20)
+_declare("SKIP_SLEEP_NIGHT_DATE", str, "", "Explicit Toronto evening date (YYYY-MM-DD) whose following midnight-to-wake sleep is skipped once. Blank disables; stop requests still win.")
+_declare("AWAKE_72H_START", str, "", "Explicit timezone-aware start of one 72-hour awake window. Restarts never extend it; blank disables.")
+_declare("PRIORITY_WATCH_INTERVAL_SECONDS", int, 20, "Poll watched authors independently of generation; five seconds supports the selective first-minute path. Browser transactions can delay discovery; this is not a delivery guarantee.", floor=5)
+_declare("PRIORITY_WATCH_NOTIFICATIONS", bool, False, "Read watched-author status links from X notifications on each watch poll, then verify new exact originals for independent likes/reposts and any permitted Replies.", floor=False)
+_declare("MEME_REPOST_ENABLED", bool, False, "Allow visually reviewed funny AI video reposts discovered by existing scans.", floor=False)
+_declare("MEME_REPOST_DAILY_CAP", int, 2, "Maximum reviewed AI video reposts per Toronto day; uncertain sends hold further reposts.", floor=0, ceiling=20)
+_declare("MEME_REPOST_MIN_LIKES", int, 0, "Optional exact-parent like floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
+_declare("MEME_REPOST_MIN_VIEWS", int, 0, "Optional exact-parent view floor for AI video reposts; zero imposes no popularity requirement.", floor=0)
+_declare("MEME_REPOST_INTERVAL_MINUTES", int, 30, "Minimum spacing between confirmed AI video reposts.", floor=30)
 _declare("PRIORITY_WATCH_DISPATCH_SECONDS", int, 2, "Check discovered watched posts for independent action and Reply work.", floor=2)
 _declare("PRIORITY_WATCH_QUEUE_LIMIT", int, 80, "Maximum discovered watched originals retained in process memory, newest first.", floor=1, ceiling=200)
 _declare("PRIORITY_WATCH_ACTIONS_PER_CYCLE", int, 4, "Maximum independent like/repost attempts per watch action dispatch.", floor=1, ceiling=8)
@@ -293,6 +321,10 @@ _declare("PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS", int, 900, "Maximum repeated w
 _declare("PRIORITY_WATCH_MAX_AGE_HOURS", int, 24, "Maximum age of new watched originals; never before the watch was first enabled.", floor=1, ceiling=24)
 _declare("PRIORITY_WATCH_SCAN_LIMIT", int, 20, "Recent standalone originals collected per watched handle.", floor=1, ceiling=40)
 _declare("PRIORITY_WATCH_MAX_REPLIES", int, 1, "Maximum Reply generations per dispatch; one selects the newest parent again after each generation.", floor=1, ceiling=2)
+_declare("PRIORITY_WATCH_CATCHUP_SCROLLS", int, 3, "Collect each search viewport on the first poll and every fifteen minutes; zero disables bounded catch-up.", floor=0, ceiling=5)
+_declare("PRIORITY_REPOST_MIN_SECONDS", int, 60, "Minimum gap for independently authorized watched reposts, including uncertain attempts.", floor=60)
+_declare("PRIORITY_QUOTE_DAILY_CAP", int, 2, "Maximum selective watched quote posts per Toronto day when the Account opts in; pending sends count.", floor=0, ceiling=3)
+_declare("PRIORITY_QUOTE_INTERVAL_MINUTES", int, 240, "Minimum interval between selective watched quotes, including uncertain sends.", floor=240)
 _declare("FEED_SWEEP_MAX_REPLIES_PER_CYCLE", int, 8, "Reply generations one feed sweep may run per feed; zero disables generation.", floor=0)
 _declare("FEED_SWEEP_HARVEST_MIN_LIKES", int, 100, "Likes that add a feed post's author to dynamic_accounts.json.")
 
@@ -335,6 +367,11 @@ def _is_known(key: str) -> bool:
     return key in known_keys() or bool(_CLI_PASSTHROUGH.match(key))
 
 
+def process_environment(overrides: dict[str, str]) -> dict[str, str]:
+    """Copy inherited CLI credentials/settings with child-only overrides."""
+    return {**os.environ, **overrides}
+
+
 def load(env_file: str | None = None, environ=None) -> None:
     """Read `.env` once, check it, resolve every setting. Later calls do nothing.
 
@@ -368,6 +405,14 @@ def load(env_file: str | None = None, environ=None) -> None:
         values[name], warning = _bound(DECLARED[name], value)
         if warning:
             warnings.append(warning)
+    if values["REPLY_MANUAL_ORDINARY"]:
+        values["REPLY_BROAD_DISCOVERY"] = True
+    if values["REPLY_BROAD_DISCOVERY"]:
+        values["REPLY_CURATED_MODE"] = True
+    if values["REPLY_CURATED_MODE"]:
+        # Curated discovery retains exact-source composition and own-receipt
+        # verification from the restricted Reply transport, even under env overrides.
+        values["REPLY_INVITED_ONLY"] = True
     for key, value in from_file.items():
         environ.setdefault(key, value)
     _values, _warnings = values, warnings
@@ -516,7 +561,12 @@ def _parse(setting: Setting, raw: str):
             raise ValueError(raw)
         return raw == "1"
     value = setting.type(raw)
-    if setting.name == "REPLY_VOLUME_BOOST_DATE" and value:
+    if setting.name == "AWAKE_72H_START" and value:
+        from datetime import datetime
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo is None or parsed.utcoffset() is None:
+            raise ValueError(raw)
+    if setting.name in {"REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE", "REPLY_WORKLOAD_BOOST_START_DATE"} and value:
         if date.fromisoformat(value).isoformat() != value:
             raise ValueError(raw)
     if setting.type is float and not math.isfinite(value):

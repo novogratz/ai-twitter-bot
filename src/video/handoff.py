@@ -12,7 +12,7 @@ def build(store, row, doc, cfg, now):
     if any(matches_history(doc, old) for old in history):
         personal = "already in confirmed account history"
     refusal = personal or ranking.gate(doc, cfg, now, final=True)
-    if (cfg.one_line_caption or cfg.playful_caption) and not refusal:
+    if cfg.one_line_caption and not refusal:
         try:
             ranking.caption(doc, cfg, now)
         except ValueError as exc:
@@ -39,9 +39,7 @@ def build(store, row, doc, cfg, now):
                         "language_dependent": review.get("language_dependent"),
                         "language_evidence_verified": review.get("language_evidence_verified", False)},
         "excerpt": doc.get("edit"), "output_sha256": doc.get("output_sha256"),
-        "editorial_score": bangers.score(doc, now, best_available=cfg.best_available_fallback),
-        "selection_policy": "best available after quality target" if cfg.best_available_fallback else "quality target required",
-        "x_exposure": doc.get("novelty", {}),
+        "editorial_score": bangers.score(doc, now), "x_exposure": doc.get("novelty", {}),
         "personal_history": {"result": personal or "no match in inspected personal history",
                              "initial_coverage_ready": history_ready(store, cfg),
                              "archive_complete": store.meta("history_import_complete", False),

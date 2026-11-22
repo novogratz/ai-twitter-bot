@@ -1,17 +1,163 @@
 # Architecture
 
-Current Account overlay (2026-11-18): news delivery ranks the reviewed pending
-pool by impact at 10:30 and 15:00 Toronto, one text post per window and two per day.
-Questions share those limits and retain their forty-eight-hour interval. Four
-video windows are 09:00, 12:00, 17:00 and 20:00, with at least one of the five
-configured tech/political parody figures. Only the existing Safari publisher writes.
+Current operator status (November 21): **paused at 21:35:55 Toronto; bot stopped**.
+Keep the bot stopped until a new explicit start/restart request. This supersedes
+the earlier resume status below; configuration and publication history are preserved.
 
-All automatic work sleeps 23:00–07:00, including news and independent video workers.
-Replies use a process-locked `reply_submissions.json` journal at final submission:
-forty daily, 24-minute Account spacing, thirty-minute parent age, and two Replies
-per watched author with a five-minute age ceiling. Unknown sends remain charged;
-confirmed ledger rows are counted once. Ordinary candidates prefer unfamiliar
-authors. Watched like/repost dispatch waits for a confirmed Reply to the exact post.
+Current strategy: **earlier broad discovery restored**, with a **1,400/day**
+advisory target and ceiling. Direct searches run every two minutes with the
+sixteen-query author/creator/Top/Latest mix; both Home feeds share an eight-minute
+cycle, up to 160 posts/twenty scrolls and eighty drafting attempts per feed.
+The recent one-reply-per-turn and first-hour-only restrictions are disabled.
+Source age returns to at most twenty-four hours; general Latest keeps one hour.
+Grok and the new short replies, understandable humor and concrete questions remain.
+The worker restarted November 21 at 08:41:57 Toronto after 3,994 passing tests. Confirmed parent likes and the shorter Reply limits are loaded.
+Live verification: parent like at 08:50:37, then a confirmed [Grok Reply](https://x.com/thesimaximalist/status/2124138453269164129) at 08:50:48.
+
+The Reply provider is the authenticated Grok CLI (`grok-4.7-build-fast`, low
+reasoning), through `llm_client`'s existing adapter registry. Each call uses a
+fresh temporary directory and one tool-free turn. Text and JSON are accepted only
+from matching completed assistant/result records; partial/error/tool output refuses.
+A separate child environment disables web, skills, memory, workflows and subagents.
+The prompt uses full-source intent, plain reactions and optional concrete questions.
+No scheduler job or publication path was added. The worker resumed at 08:41:57 Toronto after validation.
+
+Current automatic 1,400/day strategy: manual ordinary/discovery flags are off.
+Broad direct/search and feed workers use the shared exact-source Reply pipeline,
+1,400/day ceiling including uncertainty, eight-second minimum plus 0–4 jitter.
+Manual inbox records remain reserved and never become an automatic outbox.
+
+| Current job | Schedule | Work |
+|---|---|---|
+| `direct_reply_job` | 2 minutes | Sixteen rotating priority/creator/Top/Latest searches and up to eighty Replies |
+| `feed_sweep_job` | 8 minutes | Both Home feeds, up to 160 posts/twenty scrolls and eighty generation attempts each |
+| `opt_out_mentions_job` | 10 minutes | Persist no-contact requests independently of reply capacity |
+| `priority_watch_job` | 5 seconds | Discover eligible watched originals |
+| `curated_repost_job` | 2 seconds | Topic-filtered watched Reply selection and minimal draft |
+| `priority_actions_job` | 2 seconds | Verified new watched likes/reposts across topics |
+| `priority_reply_job` | 2 seconds | Prepared watched Replies with deadline and receipt checks |
+
+The four-session manual drafting job is not scheduled. Historical mode descriptions
+below apply only where compatible with this current configuration.
+
+Temporary workload: **200/day target for November 20–23**, returning automatically
+to the 70/day plan (60–80 range) on November 24. Ordinary replies are review drafts;
+up to 197 drafts reserve three slots for automatic watched Replies. Four sessions
+allow up to 50 attempts each during the boost, then 20. Quality may yield fewer.
+
+Tonight's exception skips November 21, 00:00–04:30 Toronto. Normal midnight sleep
+resumes **November 22 at 00:00**. The date is fixed and stop requests still apply.
+The following base strategy resumes after the temporary workload window.
+
+Current mixed strategy: `REPLY_MANUAL_ORDINARY=1` disables ordinary automatic
+Reply jobs and refuses alternate ordinary submissions at shared admission.
+`REPLY_MANUAL_DISCOVERY=1` runs read-only discovery/drafting in a dedicated executor.
+The watched path shares a single exact-source review and prepared 1–2 word draft,
+with a strict 60 second source deadline and no late resend. It uses Account-owned
+topics (AI/SI/Grok plus SpaceX/Starlink) and exclusions, separately from ordinary
+creative/gaming/film discovery. All previous claims and receipt checks remain.
+
+| Current job | Schedule | Work |
+|---|---|---|
+| `reply_draft_job` |05:00/10:00/15:00/20:00 Toronto | Up to 20 attempts/drafts per session,80/day; manual posting only |
+| `opt_out_mentions_job` |10 minutes | Read and persist no-contact requests |
+| `priority_watch_job` |5 seconds | Exact watched notification/Latest discovery; no old backlog |
+| `curated_repost_job` |2 seconds | One fresh exact source; shared selection and minimal draft in one model call |
+| `priority_actions_job` |2 seconds | Like and selectively repost only the approved source |
+| `priority_reply_job` |2 seconds | Prepared minimal Reply, final source/deadline/receipt checks |
+
+The ordinary live direct/feed jobs are omitted. Review queue sessions, complete
+manual thread snapshots and optional self-reported metrics extend the existing
+version-one manual queue compatibly; they never become an automatic outbox.
+A configured full-manual mode can retain only draft discovery, with every X write
+blocked. The historical descriptions below apply only when those modes are off.
+
+2026-11-20, restored broad discovery with short Replies — The Operator replaces the
+silent curated worker with the earlier rotating major-author, artist, Top/Latest
+and combined Home/Following discovery. `REPLY_BROAD_DISCOVERY=1` retains curated
+write restrictions and the exact-source/own-receipt transport. The advisory target
+is 250–300; the hard ceiling is 300 Replies per Toronto day including uncertain
+submissions. Never generate filler to reach it. At least five observed exact-parent
+likes are required before generation and again at submission; zero, lower and
+unreadable counts refuse. Prefer configured larger accounts without a mandatory
+5,000-follower profile lookup. One Reply per ordinary author/day and permanent
+one-Reply-per-original history remain. Three-minute minimum plus 0–60 seconds jitter;
+normal 04:30–00:00 Toronto hours remain.
+
+Artist discovery includes slopcore and the existing creator pool, with up to 24-hour
+creator originals. Replies are usually a few affectionate words or an occasional
+single heart, at most 12 words/90 characters. Technical Replies make one sharp
+point in one sentence, at most 24 words/140 characters. Simple appreciation does
+not require an eight-point video review, but no unseen visual/audio details or
+fabricated human experience are allowed. A source-bound closed set of brief artist
+reactions may pass the minimum-length/language gate; technical posts cannot borrow
+that exception. Hearts require five intervening Replies without hearts; existing
+confirmed and uncertain-text repetition checks remain. No forced rotation.
+
+The live silence exposed truncated search cards: every restricted pipeline reads
+the full exact original before drafting and rechecks its niche, opt-outs, history,
+likes and freshness. Prepared text cannot silently switch evidence. X also truncates
+the parent in its Reply composer. Only that verified parent's Show more control
+may be expanded, followed by a full exact source/recipient check; a matching prefix
+alone never authorizes sending. Missing or changed sources still refuse.
+
+Scoped watched-author likes, at most three selective AI reposts/day and three AI
+Replies/day inside the total retain their existing six-hour spacing and claims.
+Other writes remain off. A separate ten-minute mentions read honors objections even
+when Reply capacity is exhausted. Keep runtime state and publication memory intact.
+Implementation and validation prepare the next manual restart; do not start the bot.
+
+
+Earlier November 20 inspected-video mode (inactive when broad discovery is enabled)
+retains the restricted Reply publisher and replaces question-only selection. `help_requests.run_help_cycle` delegates to `curated.run_cycle`.
+The bounded disposable source pool prefers strong artist videos and mixes in technical
+posts using recent submitted lanes. Exact profile reads in `x/profile_evidence.py`
+bind follower counters to the author; `guards/reply_selection.py` caches them for six
+hours and binds thirty-minute source/media approvals to the final write.
+
+`video/artist_review.py` reuses the existing native-video temporal sampler and shared
+read/model budgets. Six to sixteen actual frames, source text, profile context and
+three distributed observations support a quality/style verdict. No audio is inferred.
+The shared generation pipeline receives these observations and short-Reply rules.
+Final admission enforces length, word/sentence limits, heart spacing, current audience
+proof, exact source and native video identity, parent likes and permanent histories.
+X's `/compose/post` transition still requires one matching parent copy/editor and an
+unchanged standalone source behind it. An exact recent own-status receipt is required;
+unknown submissions stay claimed and count toward the 100/day ceiling and pacing.
+
+| Current broad-discovery job | Schedule | Work |
+|---|---|---|
+| `direct_reply_job` | 2 minutes | Rotating major-author, creator, Top and Latest searches; incremental drafting after full-source reads |
+| `feed_sweep_job` | 8 minutes | For You and Following discoveries, source buffers and short Replies through shared admission |
+| `opt_out_mentions_job` | 10 minutes | Read mentions for no-contact requests, including after the daily Reply cap |
+| `priority_reply_job` | 30 seconds | Eligible watched AI originals only, at most three/day inside the total |
+| `priority_watch_job` | 20 seconds | Existing exact watched-author notification/Latest discovery, permanent first-enable boundary |
+| `priority_actions_job` | 2 seconds | Independently verify and like eligible watched originals; no blanket reposts |
+| `curated_repost_job` | 30 minutes | Compare at most four exact sources; source-bound AI/value review; at most three reposts/day, six hours apart |
+
+The Account currently watches only Elon. Other likes, follows, original/profile video
+publishing, news, quotes and self-reposts remain disabled by shared write guards. The
+startup/video supervisors stay off even though scoped watch jobs are present. The
+optional `--reply-only` invocation omits watched actions. `REPLY_REVIEW_ONLY` still
+blocks all writes/jobs. Opt-outs/manual inbox decisions remain in `review_store`.
+
+The existing `reply_submissions.json` adds optional `lane`, `heart` and submitted `text` metadata for
+new curated attempts; legacy entries remain valid and unchanged. Repost claims remain
+in `reposted_tweets.json`. No publication-memory migration or reset is required.
+
+Legacy scheduler descriptions below apply only when the curated/restricted mode is off.
+
+Historical Account overlay (2026-11-13): news jobs are disabled by both news flags;
+ordinary editorial/repost publishing remains excluded by video ownership. The
+existing video workers and shared Safari publisher admit only ultra-qualified
+finds, with no automatic startup request or minimum post target. Reply jobs keep
+their current search budgets, executor structure and pacing. Final Reply admission
+checks the configured confirmed-text memory for exact repeats and long near-copies;
+historical dossiers cannot override the Voice. `reply_excluded_handles` refuses
+exact URL authors at parent admission and final send. The live Account excludes
+Elon Replies while keeping his independent likes/reposts. Only when at least one
+watched handle permits Replies does the scheduler add `priority_reply_job`.
+
 
 How the running bot is built, as of the 2026-09-20 policy (PR #97). The rules
 it enforces are in [EDITORIAL_POLICY.md](EDITORIAL_POLICY.md); how to run and
@@ -26,18 +172,12 @@ commit `e7b4d47`.
 
 November 7 news addition: `NEWS_ENABLED` registers `news_job` in a dedicated
 single-thread executor on the existing scheduler, fifteen seconds after boot,
-then hourly. The scheduler stays alive overnight; `awake_job` prevents news
-research and delivery as well as interactions during 23:00–07:00 sleep. Its Safari
+then hourly. The scheduler stays running overnight; interaction jobs retain
+their `awake_job` wrappers, while news public reads can continue. Its Safari
 chokepoint enforces active hours and startup holds. News replaces legacy
 editorial slots, coexists with videos and uses a separate SQLite journal.
 `main.py --news` and `bin/news.py` expose the same worker. Ordinary starts create
 no second scheduler. Standalone `serve` is an alternative without the main bot.
-`DISCUSSION_POSTS_ENABLED` adds an hourly `discussion_post_job` to that same news
-executor. It prepares only; the minute delivery job owns all writes. Its
-source-free question schema allows configured model families, not invented
-version names or factual claims. Discussions share text caps, spacing, video
-holds, own-receipt verification and uncertain-send claims. Their receipts cannot
-fulfill startup news. `bin/news.py prepare-discussion` exposes preparation only.
 
 One Python process drives Safari through AppleScript and injected JavaScript.
 There is no X API client.
@@ -136,13 +276,16 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `news_job` (`NEWS_ENABLED=1`) | 1 hour | Fetch, verify, persist event dedup, rank and independently review one main pick and optional backup. Main picks may publish through Safari with `NEWS_AUTO_PUBLISH`; backups remain drafts. No email. |
 | `news_delivery_job` (`NEWS_ENABLED=1`) | 1 minute; first turn after one second with `--startup-publications` | Retry the same durable approved outbox through the news executor and run lock, before startup research. No model/search call, new draft or second Safari owner. An actual confirmed receipt fulfills the durable startup-news intent. |
 | `editorial_job` | 10 min | Publishes the due original, if any. See [Editorial pipeline](#editorial-pipeline). |
-| `discussion_post_job` (`NEWS_ENABLED=1`, `DISCUSSION_POSTS_ENABLED=1`) | 1 hour, first turn after two minutes | Prepare an independently reviewed question when the shared outbox is free and the discussion interval permits. No direct browser write; uses the news executor and delivery job. |
-| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns five Toronto slots, 06:00, 09:00, 12:00, 17:00 and 21:00, and existing startup requests. A context-local video I/O exception permits 05:55–06:05 only; other jobs remain asleep until 07:00. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue and the same video window. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
+| `video_health_job` (only `VIDEO_ENABLED=1`, replaces `editorial_job`) | 2 s | Dedicated video executor owns thirteen Toronto slots, 05:00–23:00 every 90 minutes, and existing startup requests. Shares Safari with Replies/news. Separate discovery/media processes use the existing SQLite queue. Five-minute reserve maintenance refreshes expiring X checks and brings bounded source polls forward; it creates no second publisher. |
 | `direct_reply_job` | 2 min | Interleaves optional first-hour Latest searches and Top searches within the same scrape budget. Scans the `VIP_SCAN_HANDLES` accounts, then a rotating slice of `DIRECT_REPLY_QUERIES_PER_CYCLE` search queries, and replies up to `DIRECT_REPLY_MAX_PER_CYCLE` times. Generation of reply N+1 overlaps the posting of reply N; reply N+1 then waits out the reply spacing before `reply_to_tweet`. |
-| `feed_sweep_job` | 8 min | Completes verified, bounded For You and Following reads before any generation, then pipelines eligible standalone originals through admission and the generation budget. |
-| `priority_watch_job` | 20 sec, configurable slower | Dedicated `watch` executor; first-viewport Latest discovery, independently of model calls and writes. |
-| `priority_actions_job` | 2 sec, configurable slower | Dedicated `watch_actions` executor; bounded like/repost attempts on discovered watched originals, newest first. |
-| `priority_reply_job` | 2 sec, configurable slower | Dedicated `watch_reply` executor; generate and send one newest eligible watched Reply per dispatch by default. |
+| `feed_sweep_job` | 8 min | Collects both For You and Following, up to 160 posts/20 scrolls each, then drafts from both buffers with three likes preferred and existing generation budgets. |
+| `priority_watch_job` | 20 sec locally and by default | Checks watched notification links and verifies up to two new exact originals, then Latest discovery; first viewport normally, bounded catch-up on startup/every fifteen minutes. |
+| `priority_actions_job` | 2 sec, configurable slower | Dedicated `watch_actions` executor; bounded like/repost attempts on discovered watched originals, newest first. Reply exclusions do not suppress notification discovery. Spacing waits are rechecked on the next tick without failure backoff. |
+| `meme_repost_job` | 5 min, opt-in | Visually reviews one discovered AI video, preferring recent confirmed Reply parents; live maximum twenty/day, thirty minutes apart. |
+| `priority_quote_job` | 30 min, opt-in | Dedicated quote executor compares a bounded shortlist and independently reviews a maximum of two native quotes/day. |
+| `self_repost_discovery_job` | 10 min, opt-in | Bounded own Latest/Top search finds new originals and older high-view posts. |
+| `self_repost_job` | 2 sec, opt-in | Due one-hour reposts and half-hour high-view refreshes, exact own-page verification and durable toggle reconciliation. |
+| `priority_reply_job` | 2 sec, only with a permitted watched Reply author | Dedicated `watch_reply` executor; absent for the live Account because its sole watched author is Reply-excluded. |
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
@@ -1056,3 +1199,45 @@ ordering; only an idle spacing wait yields, and recomputes the remaining ledger
 gap after another sender. Required parent likes, browser verification and final
 admission stay in the write chokepoints. No queue holds the browser during a
 model call. A long browser transaction or provider stall can still delay action.
+
+## November 10 scoped promotion writes
+
+`quote_priority_post` accepts only durable reviewed approvals from `quote_store`;
+`quote_page` verifies a native source card and an exact own receipt.
+`repost_own_post` uses `self_repost_store` and explicit self modes in `repost_page`.
+Every action remains inside `confirmed_write` and the shared Safari lock.
+Unknown quote sends and self-repost toggles retain their claims across restarts.
+`watch_repost` and `self_repost` ledger rows keep their separate allowances.
+The general quote, repost and thread surfaces remain absent.
+
+### November 12 Reply recovery
+
+The feed sweep is one combined eight-minute discovery/drafting job again. Direct
+search drafts existing sources and after each ordinary query, so a slow last
+search cannot expire every earlier candidate. Sixteen rotating reads and eighty
+generations remain bounded. Notification leads join the existing watched queue,
+with exact-source verification and highest Reply priority. Fulfilled watched
+actions wait out source expiry; repeated failures back off up to an hour.
+
+Automatic quote/self-repost jobs are disabled by the live Account switches.
+`meme_repost_job` runs every five minutes on a separate executor at background
+browser priority. `meme_repost_store.offer` receives existing scraped viewports,
+retains at most forty fresh qualifying candidates, and selects one per review.
+The model inspects timestamped video samples for relevant, enjoyable visual humor;
+source text and native video identity are rechecked by `twitter_client.repost_meme`. The shared native repost flow
+records permanent `kind=meme` claims in `reposted_tweets.json` and shipped
+`meme_repost` ledger rows. No second Safari publisher or search worker is added.
+
+### Funny AI video repost clarification
+
+The existing `meme_repost_job` now reviews native videos, not text-only memes.
+`video.repost_review` samples 6–16 real frames under the shared Safari owner/lock
+with a 25-second turn, then releases Safari before a shared-budget, image-aware
+Codex review. Images stay in temporary local files. Source hash, native media ID,
+sample hashes/times and the review are persisted in the existing guarded review
+store; old text approvals remain readable but cannot authorize video reposts.
+Confirmed Reply bookkeeping only prioritizes an existing discovered video; it
+performs no additional browser/model work. The first video-repost turn seeds at
+most ten recent parents from the existing engagement log. A five-minute job checks
+one candidate at a time; deferrals leave other candidates eligible. The live
+allowance is twenty/day, thirty minutes apart, without a popularity floor.

@@ -158,7 +158,8 @@ const video={error:null,readyState:1,duration:4,currentTime:0,dataset:{},muted:f
   scrollIntoView(){},
   play(){this.plays++;this.readyState=2;this.paused=false;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
-const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const article={querySelectorAll:s=>s==='video'?[video]:[stamp],querySelector:()=>video};
+video.closest=s=>s==='article'?article:null;
 const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
 const location={hostname:'x.com',pathname:'/example/status/123'};
 const document={querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],querySelector:()=>null};
@@ -233,7 +234,8 @@ const video={error:null,readyState:1,duration:4,_at:.5,dataset:{},muted:false,pa
     if(this.plays===1){this.paused=true;return Promise.resolve();}
     this.paused=false;this.readyState=4;this.seeking=false;this._at=.75;return Promise.resolve();}};
 const link={getAttribute:()=>'/example/status/123'};
-const article={querySelectorAll:()=>[stamp],querySelector:()=>video};
+const article={querySelectorAll:s=>s==='video'?[video]:[stamp],querySelector:()=>video};
+video.closest=s=>s==='article'?article:null;
 const stamp={closest:s=>s==='article'?article:s==='a'?link:null};
 const location={hostname:'x.com',pathname:'/example/status/123'};
 const document={visibilityState:'visible',querySelectorAll:s=>s.startsWith('article[data-testid')?[article]:[],
@@ -667,29 +669,6 @@ def test_video_reuses_browser_lock_and_confirms_receipt(video_store, browser_cfg
     final = video_store.rows("SELECT * FROM reservations")[0]
     assert final["state"] == "confirmed" and final["post_id"] == "123"
     assert video_store.rows("SELECT state FROM slots WHERE reservation=?", (row["id"],))[0]["state"] == "posted"
-
-
-def test_morning_video_reaches_shared_safari_write_with_normal_activity_asleep(
-        video_store, browser_cfg, ready, at, monkeypatch):
-    from src.guards import active_hours
-    cfg = replace(browser_cfg, windows=("06:00",), paired_windows=(), early_video_window=True)
-    now = at(5, 55)
-    clock(monkeypatch, now)
-    monkeypatch.setattr("src.video.publisher.time.time", lambda: now.timestamp())
-    monkeypatch.setattr(browser, "require_browser_owner", lambda: None)
-    monkeypatch.setattr("src.guards.content_guard.validate", lambda *a, **k: (True, ""))
-    monkeypatch.setattr("src.guards.respect_list.scrub_text_or_skip", lambda t: (t, ""))
-    doc = ready(when=now)
-    row = publisher.reserve(video_store, now, cfg)
-    calls = fake_composer(monkeypatch, video_store, doc)
-    with active_hours.early_video_io(True):
-        assert not active_hours.may_act()
-        result = browser.SafariVideoClient(video_store, cfg).publish_reserved(row["id"], row["token"])
-    assert result is WriteOutcome.SHIPPED
-    assert calls == ["upload", "submit", "close"]
-    final = video_store.rows("SELECT state,deadline FROM reservations")[0]
-    assert final["state"] == "confirmed" and final["deadline"] == at(6, 5).timestamp()
-    assert not active_hours.may_video_act()
 
 
 def test_due_video_cannot_be_starved_by_later_ordinary_replies(video_store, browser_cfg, browser_setup, monkeypatch):

@@ -218,3 +218,24 @@ def _scroll_page():
     end tell
     ''', timeout_s=SCROLL_TIMEOUT_S)
     time.sleep(2)
+
+
+def _scroll_timeline() -> bool:
+    """Advance a feed/search by an overlapping viewport, independent of keyboard focus."""
+    result = _run_js(r"""
+    (() => {
+        if (!['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'].includes(location.hostname)
+            || !['/home', '/search'].includes(location.pathname.replace(/\/$/, ''))
+            || document.querySelector('[role="dialog"]')) return 'UNAVAILABLE';
+        const page = document.scrollingElement || document.documentElement;
+        const height = window.innerHeight || (page && page.clientHeight);
+        if (!page || !Number.isFinite(height) || height <= 0) return 'UNAVAILABLE';
+        const before = page.scrollTop;
+        page.scrollTop = before + Math.max(1, Math.floor(height * 0.85));
+        return page.scrollTop > before ? 'SCROLLED' : 'STALLED';
+    })()
+    """, SCROLL_TIMEOUT_S, log_prefix="[SCRAPE]")
+    if result not in {"SCROLLED", "STALLED"}:
+        return False
+    time.sleep(2)  # allow the next virtualized viewport to render
+    return True

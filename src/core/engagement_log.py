@@ -4,6 +4,7 @@ import re
 import threading
 from collections import deque
 from datetime import datetime
+from difflib import SequenceMatcher
 from . import config, settings
 from .pattern_tags import normalize as _normalize_pattern
 from .pillar_tags import classify as _classify_pillar
@@ -13,16 +14,35 @@ _memory_key = None
 _memory = deque()
 
 
-def repeated_reply(text: str, limit: int = 20) -> bool:
-    """Catch recycled wording despite casing, punctuation or emoji changes.
+def repeated_reply(text: str, limit: int | None = None) -> bool:
+    """Catch exact repeats and lightly edited long replies in confirmed memory.
 
-    Numbers and words stay intact. This is a bounded confirmed-text check,
-    separate from permanent one-Reply-per-parent history.
+    Short, distinct appreciation stays eligible. For near copies, require at
+    least twelve matching words and 80% ordered similarity; changed numerical
+    facts remain distinct. This bounded text check never claims a parent.
     """
     def words(value):
         return re.findall(r"\w+(?:'\w+)*", value.casefold().replace("’", "'"))
+
+    def numbers(tokens):
+        return [token for token in tokens if any(c.isdigit() for c in token)]
+
     wanted = words(text)
-    return bool(wanted) and any(words(previous) == wanted for previous in recent_replies(limit))
+    if not wanted:
+        return False
+    if limit is None:
+        limit = settings.get("REPLY_RECENT_MEMORY_COUNT")
+    wanted_numbers = numbers(wanted)
+    for previous in recent_replies(limit):
+        prior = words(previous)
+        if wanted == prior:
+            return True
+        if min(len(wanted), len(prior)) < 12 or wanted_numbers != numbers(prior):
+            continue
+        match = SequenceMatcher(None, wanted, prior, autojunk=False)
+        if match.ratio() >= 0.8 and sum(block.size for block in match.get_matching_blocks()) >= 12:
+            return True
+    return False
 
 
 def _log_key():

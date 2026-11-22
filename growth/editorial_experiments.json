@@ -1,0 +1,35 @@
+[
+  {
+    "hypothesis": "AI/human psychology standalone posts outperform source-dependent quote reactions.",
+    "variants": [
+      "standalone_ai_human_observation",
+      "quote_reaction"
+    ],
+    "sample_requirement": 10,
+    "start_date": "2026-08-18",
+    "end_rule": "Evaluate after 10 posts per variant or 30 days.",
+    "result": ""
+  },
+  {
+    "hypothesis": "Contradiction hooks with one concrete fact outperform generic launch summaries.",
+    "variants": [
+      "contradiction_hook",
+      "summary_hook"
+    ],
+    "sample_requirement": 10,
+    "start_date": "2026-08-18",
+    "end_rule": "Compare median impressions and hit rate.",
+    "result": ""
+  },
+  {
+    "hypothesis": "Short personal-observation posts transfer winning reply energy to main posts.",
+    "variants": [
+      "short_personal_observation",
+      "medium_explainer"
+    ],
+    "sample_requirement": 10,
+    "start_date": "2026-08-18",
+    "end_rule": "Compare median impressions, replies, and follower response if available.",
+    "result": ""
+  }
+]

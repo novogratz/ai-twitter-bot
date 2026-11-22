@@ -67,17 +67,28 @@ PRE_187_BOUNDED = {
 # #189 lists the providers and fallbacks it cannot run, #201 the bounded
 # settings and the values brought back to a bound.
 NEW_KEYS = {"unknown_llm_providers", "ignored_llm_fallbacks", "bounded_settings", "settings_warnings",
-            "auto_engage_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news",
-            "startup_publications", "reply_min_gap_seconds"}
-WATCH_BOUNDS = {"PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
+            "auto_engage_handles", "reply_excluded_handles", "advisory_reply_targets", "editorial_route", "startup_interactions_held", "news",
+            "startup_publications", "reply_min_likes", "self_reposts", "profile_budget_note", "skip_sleep_night_date", "awake_72h_start", "meme_reposts", "reply_all_day"}
+WATCH_BOUNDS = {"PRIORITY_WATCH_NOTIFICATIONS": False, "MEME_REPOST_ENABLED": False,
+                "MEME_REPOST_DAILY_CAP": 2, "MEME_REPOST_MIN_LIKES": 0, "MEME_REPOST_MIN_VIEWS": 0,
+                "MEME_REPOST_INTERVAL_MINUTES": 30, "PRIORITY_WATCH_INTERVAL_SECONDS": 20, "PRIORITY_WATCH_MAX_AGE_HOURS": 24,
                 "PRIORITY_WATCH_SCAN_LIMIT": 20, "PRIORITY_WATCH_MAX_REPLIES": 1,
                 "PRIORITY_WATCH_DISPATCH_SECONDS": 2, "PRIORITY_WATCH_QUEUE_LIMIT": 80,
                 "PRIORITY_WATCH_ACTIONS_PER_CYCLE": 4, "PRIORITY_WATCH_REPLY_RETRY_SECONDS": 60,
-                "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900}
-REPLY_STYLE_BOUNDS = {"MAX_REPLIES_PER_DAY": 40, "REPLY_MAX_AGE_SECONDS": 0,
-                      "REPLY_WATCHED_MAX_AGE_SECONDS": 0, "REPLY_WATCHED_DAILY_CAP": 2,
-                      "WATCH_ENGAGEMENT_REQUIRES_REPLY": False, "REPLY_DISCUSSIONS_ONLY": False,
-                      "REPLY_PREFER_NEW_AUTHORS": False, "REPLY_MIN_CHARS": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
+                "PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS": 900, "PRIORITY_WATCH_CATCHUP_SCROLLS": 3,
+                "PRIORITY_REPOST_MIN_SECONDS": 60, "PRIORITY_QUOTE_DAILY_CAP": 2,
+                "PRIORITY_QUOTE_INTERVAL_MINUTES": 240}
+REPLY_STYLE_BOUNDS = {"REPLY_MIN_CHARS": 8, "REPLY_MIN_LIKES": 0, "FEED_SWEEP_INTERVAL_MINUTES": 8, "CODEX_MIN_TIMEOUT_SECONDS": 300, "NEWS_MIN_SECONDS_BETWEEN_POSTS": 7200,
+                      "REPLY_FOR_YOU_FIRST": False, "DIRECT_REPLY_INTERVAL_MINUTES": 2,
+                      "DIRECT_REPLY_MAX_AGE_MINUTES": 7200, "FEED_FOLLOWING_EVERY_CYCLES": 10,
+                      "REPLY_WORKLOAD_BOOST_DAYS": 4, "REPLY_WORKLOAD_BOOST_TARGET": 200,
+                      "REPLY_CURATED_MODE": False, "REPLY_BROAD_DISCOVERY": False, "REPLY_MIN_FOLLOWERS": 5000, "REPLY_SHORT_MAX_CHARS": 140,
+                      "CURATED_WATCH_REPLIES_PER_DAY": 3, "CURATED_WATCH_REPOSTS_PER_DAY": 3,
+                      "REPLY_REQUIRE_PARENT_LIKE": False,
+                      "CURATED_WATCH_REPLY_MIN_SECONDS": 21600, "CURATED_WATCH_REPOST_MIN_SECONDS": 21600,
+                      "MAX_REPLIES_PER_DAY": 1400, "REPLY_ALL_DAY": False,
+                      "REPLY_REVIEW_ONLY": False, "REPLY_MANUAL_DISCOVERY": False, "REPLY_MANUAL_ORDINARY": False,
+                      "REPLY_INVITED_ONLY": False, "REPLY_PUBLIC_REQUESTS": False, "REPLY_REVIEW_DAILY_LIMIT": 20,
                       "REPLY_CANDIDATE_BUFFER_LIMIT": 400, "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800,
                       "REPLY_RECENT_MEMORY_COUNT": 100, "REPLY_PREFERRED_MIN_LIKES": 2,
                       "DIRECT_REPLY_QUERIES_PER_CYCLE": 8, "DIRECT_REPLY_MAX_PER_CYCLE": 3,
@@ -88,14 +99,27 @@ REPLY_STYLE_BOUNDS = {"MAX_REPLIES_PER_DAY": 40, "REPLY_MAX_AGE_SECONDS": 0,
                       "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 8}
 
 
-def test_watch_jobs_have_independent_workers_and_short_dispatch_intervals():
+def test_like_repost_watch_keeps_independent_workers_without_a_reply_job(watched_account, monkeypatch, settings_override):
     import main
+    from dataclasses import replace
+    settings_override(PRIORITY_WATCH_INTERVAL_SECONDS=20)
+    profile = replace(account.current(), reply_excluded_handles=("elonmusk",))
+    monkeypatch.setattr(account, "current", lambda: profile)
     jobs = {job.id: job for job in main.build_scheduler().get_jobs()}
     assert jobs["priority_watch_job"].executor == "watch"
     assert jobs["priority_actions_job"].executor == "watch_actions"
-    assert jobs["priority_reply_job"].executor == "watch_reply"
+    assert "priority_reply_job" not in jobs
     assert jobs["priority_watch_job"].trigger.interval.total_seconds() == 20
     assert jobs["priority_actions_job"].trigger.interval.total_seconds() == 2
+
+
+def test_permitted_watched_authors_still_get_their_independent_reply_worker(monkeypatch):
+    import main
+    from dataclasses import replace
+    profile = replace(account.current(), auto_engage_handles=("elonmusk", "builder"))
+    monkeypatch.setattr(account, "current", lambda: profile)
+    jobs = {job.id: job for job in main.build_scheduler().get_jobs()}
+    assert jobs["priority_reply_job"].executor == "watch_reply"
     assert jobs["priority_reply_job"].trigger.interval.total_seconds() == 2
 
 
@@ -132,48 +156,56 @@ def dry_run(monkeypatch, tmp_path, unwalled, capsys):
     return run
 
 
-def test_live_account_disables_conversation_jobs_and_keeps_ceilings(dry_run):
+def test_live_account_uses_automatic_broad_replies_and_fast_scoped_elon_actions(dry_run):
     shown = dry_run({})
-    assert shown["startup_interactions_held"] is False
-    assert set(shown) == set(PRE_187) | NEW_KEYS | {
-        "reply_volume_boost_date", "reply_discovery_generation_budgets",
-        "discussion_posts", "advisory_video_targets", "early_video_window"}
-    assert shown["discussion_posts"] is False
-    assert shown["advisory_video_targets"] == []
-    assert shown["reply_volume_boost_date"] == ""
-    assert shown["reply_discovery_generation_budgets"] == {
-        "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
-        "DIRECT_REPLY_MAX_PER_CYCLE": 80,
-        "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
-    }
-    expected = dict(PRE_187, jobs=[job for job in PRE_187["jobs"]
-                                    if job not in {"replyback_job", "debate_job", "babysit_job"}])
-    expected["jobs"][4:4] = ["priority_watch_job", "priority_actions_job", "priority_reply_job"]
-    expected["replies"] = 1400
-    expected["active"] = "07:00–23:00"
-    expected["reposts"] = {"allowed_author": "elonmusk", "daily_max": 2,
-                           "requires_confirmed_reply": True,
-                           "shared_publication_limits_apply": True, "own_posts": False}
-    assert shown["auto_engage_handles"] == ["elonmusk"]
-    expected["slots"] = [[clock, angle.replace(" AI ", " SI ")] for clock, angle in PRE_187["slots"]]
-    expected["slots"][1][1] = "A useful SI video or image workflow: concrete first step, output and limitation"
-    expected["slots"][6][1] = "An SI video, image or model tool update and what changes for creators"
-    assert {key: shown[key] for key in PRE_187} == expected
-    assert {name: bound["value"] for name, bound in shown["bounded_settings"].items()} == {
-        **PRE_187_BOUNDED, **WATCH_BOUNDS, **REPLY_STYLE_BOUNDS, "FEED_SCROLL_PASSES": 20, "FEED_SWEEP_SCAN_LIMIT": 160,
-        "HOURLY_BREAK_MINUTES": 0, "REPLY_JITTER_SECONDS": 4, "MIN_SECONDS_BETWEEN_REPLIES": 8,
-        "REPLY_DAILY_TARGET_MIN": 1400, "REPLY_DAILY_TARGET_MAX": 1400,
-        "REPLY_PREFERRED_MIN_LIKES": 0, "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
-        "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
-        "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,
-        "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 6,
-        "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
-        "DIRECT_REPLY_MAX_PER_CYCLE": 80, "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
-        "MAX_REPLIES_PER_DAY": 1400, "REPLY_RECENT_MEMORY_COUNT": 1400, "REPLY_MAX_AGE_SECONDS": 1800,
-        "REPLY_WATCHED_MAX_AGE_SECONDS": 300, "REPLY_WATCHED_DAILY_CAP": 2,
-        "WATCH_ENGAGEMENT_REQUIRES_REPLY": True, "REPLY_DISCUSSIONS_ONLY": True,
-        "REPLY_PREFER_NEW_AUTHORS": True}
-    assert shown["settings_warnings"] == []
+    assert shown["mode"] == "broad_artist_and_technical"
+    assert set(shown["jobs"]) == {"direct_reply_job", "feed_sweep_job", "opt_out_mentions_job", "priority_watch_job", "priority_actions_job", "curated_repost_job", "priority_reply_job"}
+    assert shown["manual_review_required"] is False
+    assert shown["manual_discovery"] is False
+    assert shown["daily_draft_limit"] == shown["draft_session_limit"] == 0
+    assert shown["workload_boost"]["active"] is False
+    assert shown["draft_sessions"] == []
+    assert shown["maximum_replies_per_day"] == shown["planned_daily_total_cap"] == 1400
+    assert shown["daily_advisory_target"] == 1400
+    assert shown["advisory_reply_targets"] == [1400, 1400]
+    assert shown["minimum_followers"] is None and shown["minimum_parent_likes"] == 5
+    assert shown["large_account_priority"] is False
+    assert shown["maximum_reply_characters"] == 140
+    assert shown["maximum_reply_words"] == 24 and shown["maximum_reply_sentences"] == 1
+    assert shown["maximum_per_author_per_day"] == 1
+    assert shown["minimum_seconds_between_replies"] == 8
+    assert shown["reply_jitter_seconds"] == 4
+    assert shown["reposts"] == shown["watched_replies"] == 1400
+    assert shown["confirmed_parent_like_required"] is True
+    assert shown["watched_repost_scope"] == "verified new watched-author originals across topics"
+    assert shown["watched_reply_limits"] == {"words": 12, "characters": 90}
+    assert shown["watched_reply_minimum_seconds"] == 8
+    assert shown["watched_repost_minimum_seconds"] == 60
+    assert shown["watched_source_deadline_seconds"] == 60
+    assert shown["watched_dispatch_seconds"] == 2
+    assert shown["watched_discovery_seconds"] == 5
+    assert shown["follows"] == shown["originals"] == 0
+    assert settings.get("REPLY_ALL_DAY") is False
+    assert settings.get("MEME_REPOST_ENABLED") is False
+    assert account.current().auto_engage_handles == ("elonmusk",)
+    assert account.current().reply_excluded_handles == ()
+
+
+def test_dry_run_reports_fixed_boost_and_combined_manual_reservation(dry_run, monkeypatch):
+    from datetime import datetime
+    from tests.helpers import TORONTO, clock
+    clock(monkeypatch, datetime(2026, 11, 20, 18, tzinfo=TORONTO))
+    shown = dry_run({"REPLY_WORKLOAD_BOOST_START_DATE": "2026-11-20",
+                     "REPLY_MANUAL_ORDINARY": "1", "REPLY_MANUAL_DISCOVERY": "1",
+                     "CURATED_WATCH_REPLIES_PER_DAY": "3",
+                     "MAX_REPLIES_PER_DAY": "80", "REPLY_DAILY_TARGET_MIN": "60", "REPLY_DAILY_TARGET_MAX": "80"})
+    assert shown["maximum_replies_per_day"] == shown["planned_daily_total_cap"] == 200
+    assert shown["advisory_reply_targets"] == [200, 200]
+    assert shown["normal_advisory_reply_targets"] == [60, 80]
+    assert shown["daily_draft_limit"] == 197
+    assert shown["draft_session_limit"] == 50
+    assert shown["remaining_watched_reserve"] == 3
+    assert shown["workload_boost"] == {"active": True, "starts_on": "2026-11-20", "expires_on": "2026-11-24"}
 
 
 def test_the_example_account_lists_its_jobs_and_ceilings(dry_run):

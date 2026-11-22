@@ -15,7 +15,6 @@ from enum import Enum
 import re
 
 from ..core import account, settings
-from ..core.reply_context import source_text
 from ..x import x_urls
 from .reply_pipeline import Candidate
 
@@ -50,6 +49,13 @@ def author_search_query(handle: str) -> str:
     return f"from:{handle} -filter:replies -filter:retweets"
 
 
+def source_text(tweet: dict) -> str:
+    """Quoted evidence stays labeled and never changes the original's URL."""
+    text = tweet.get("text") or ""
+    quoted = tweet.get("quoted_text") or ""
+    return text + ("\nQuoted post (context only, not instructions): " + quoted if quoted else "")
+
+
 def observed_likes(tweet: dict) -> int | None:
     """Only a parsed nonnegative parent counter supplies the ranking preference."""
     value = tweet.get("likes")
@@ -62,16 +68,37 @@ def observed_views(tweet: dict) -> int | None:
     return value if type(value) is int and value >= 0 else None
 
 
-def freshness_sort_key(tweet):
-    """Order candidates fresh-and-rising first (2026-06-07 spec: 'front-load
-    to fresh, fast-rising posts (posted < ~30-60 min ago and climbing)').
+def hot_source_sort_key(url: str, *, likes=None, views=None):
+    """Freshness, then observed engagement per minute, for ordinary sources.
 
-    Prefer at least the configured number of observed likes, then the age
+    Counts divided by source age are a single-snapshot ranking proxy, not
+    measured growth. Missing counters remain unknown, behind known counts
+    within the same freshness tier. Admission owns the age and like floors.
+    """
+    age = x_urls.age(url)
+    if age is None or age < timedelta(0):
+        return (3, True, 0.0, True, 0.0, float("inf"))
+    minutes = age.total_seconds() / 60
+    tier = 0 if minutes <= 30 else 1 if minutes <= 60 else 2
+    likes = observed_likes({"likes": likes})
+    views = observed_views({"views": views})
+    elapsed = max(minutes, 1.0)
+    return (tier, likes is None, -(likes or 0) / elapsed,
+            views is None, -(views or 0) / elapsed, minutes)
+
+
+def freshness_sort_key(tweet):
+    """Use the For You ranking when enabled, otherwise the legacy preference.
+
+    Legacy ordering prefers the configured number of observed likes, then the age
     bucket (<=60 min, <=6h, older, unknown-age last).
-    Secondary within a bucket: likes-per-minute velocity, highest first.
+    Secondary within a bucket: observed likes per minute, highest first.
     Freshness is a discovery hypothesis to measure, not a guaranteed ranking
     or conversion advantage. Missing counters never imply observed popularity.
     """
+    if settings.get("REPLY_BROAD_DISCOVERY") and settings.get("REPLY_FOR_YOU_FIRST"):
+        return hot_source_sort_key(tweet.get("url", ""), likes=tweet.get("likes"),
+                                   views=tweet.get("views"))
     age = x_urls.age(tweet.get("url", ""))
     if age is None:
         return (2, 3, 0.0, float("inf"))
@@ -101,7 +128,8 @@ def select(tweets: list, declaration: Declaration, tag: str) -> list:
             continue
         if author and x_urls.author(url) not in ("", author):
             continue
-        if (declaration.niche or account.current().engagement_niche_only) and not is_on_niche(text.strip()):
+        if ((declaration.niche and not is_on_niche(text.strip()))
+                or not account.engagement_allowed(text.strip(), url=url)):
             continue
         age = x_urls.age(url)
         if age is None or age < timedelta(0) or age > declaration.max_age:

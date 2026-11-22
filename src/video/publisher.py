@@ -18,7 +18,7 @@ def replace_deleted(store, post_id, request_id, now, cfg, *, operator_reports_de
     An operator report is recorded as such, never as browser proof of deletion.
     Workers never call this function. The original claim/history are retained.
     """
-    if not operator_reports_deleted or not request_id or not config.live() or not schedule.eligible(now, cfg):
+    if not operator_reports_deleted or not request_id or not config.live() or not schedule.eligible(now):
         raise ValueError("explicit live replacement request and deletion report required")
     stamp = now.timestamp()
     with store.transaction() as db:
@@ -70,50 +70,35 @@ def replace_deleted(store, post_id, request_id, now, cfg, *, operator_reports_de
         return dict(db.execute("SELECT * FROM reservations WHERE id=?", (ident,)).fetchone())
 
 
-def _startup_claimed(db, day, allowance=""):
-    if allowance:
-        return db.execute("SELECT 1 FROM startup_days WHERE allowance=?", (allowance,)).fetchone() is not None
-    return db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone() is not None
-
-
-def request_startup(store, request_id, now, cfg, *, explicit_live=False, retry_expired=False, allowance=""):
+def request_startup(store, request_id, now, cfg, *, explicit_live=False, retry_expired=False):
     if not explicit_live or not config.live():
         return None
-    if allowance and allowance != cfg.startup_once:
-        raise ValueError("startup allowance must match the configured one-time authorization")
     day = schedule.local(now).date().isoformat()
     with store.transaction() as db:
-        old = db.execute("SELECT * FROM startup WHERE state IN ('pending','reserved')").fetchone()
-        if not old:
-            if allowance:
-                old = db.execute("SELECT * FROM startup WHERE id=? OR allowance=?", (request_id, allowance)).fetchone()
-            else:
-                old = db.execute("SELECT * FROM startup WHERE id=? OR requested_day=? ORDER BY requested DESC LIMIT 1",
-                                 (request_id, day)).fetchone()
+        old = db.execute("SELECT * FROM startup WHERE id=? OR requested_day=? OR state IN ('pending','reserved')",
+                         (request_id, day)).fetchone()
         if old:
             # An explicit new script start can renew only an expired request
             # that NEVER attempted a send. Preserve the same identity/day cap,
             # every reservation, and the old expiry as an immutable event.
             eligible = (retry_expired and old["requested_day"] == day and old["state"] == "skipped"
                         and old["reason"] == "eligible-time expiry" and old["reservation"] is None and old["attempts"] == 0)
-            if (not eligible or _startup_claimed(db, day, old["allowance"])
+            if (not eligible or db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone()
                     or db.execute("SELECT 1 FROM reservations WHERE startup=?", (old["id"],)).fetchone()):
                 return dict(old)
             db.execute("INSERT INTO events(at,kind,item,detail) VALUES(?,?,?,?)",
                        (now.timestamp(), "startup_unattempted_expiry_rearmed", old["id"], dumps(dict(old))))
             request_id = old["id"]
-            allowance = old["allowance"]
             db.execute("UPDATE startup SET state='pending',requested=?,reason='' WHERE id=?", (now.timestamp(), request_id))
         else:
-            db.execute("INSERT INTO startup(id,requested_day,requested,allowance) VALUES(?,?,?,?)",
-                       (request_id, day, now.timestamp(), allowance))
+            db.execute("INSERT INTO startup(id,requested_day,requested) VALUES(?,?,?)", (request_id, day, now.timestamp()))
         from .preparation import recover_supply
         recover_supply(db, cfg, now.timestamp())
         for platform in config.PLATFORMS:
             db.execute("INSERT INTO jobs(kind,item,due) VALUES('discovery',?,?) ON CONFLICT(kind,item) "
                        "DO UPDATE SET due=excluded.due,state=CASE WHEN jobs.state='running' THEN jobs.state ELSE 'pending' END,attempts=0",
                        (platform, now.timestamp()))
-        return {"id": request_id, "requested_day": day, "state": "pending", "allowance": allowance}
+        return {"id": request_id, "requested_day": day, "state": "pending"}
 
 
 def tick_calendar(store, now, cfg):
@@ -126,10 +111,9 @@ def tick_calendar(store, now, cfg):
         for row in db.execute("SELECT id FROM slots WHERE state='pending'").fetchall():
             if row["id"].startswith(str(schedule.local(now).date()) + "/") and row["id"] not in expected:
                 db.execute("UPDATE slots SET state='skipped',reason='schedule reconciled' WHERE id=?", (row["id"],))
-        for row in db.execute("SELECT id,due FROM slots WHERE state='pending'").fetchall():
-            if schedule.slot_bounds(row["due"], cfg)[1] < stamp:
-                db.execute("UPDATE slots SET state='skipped',reason=CASE WHEN reason='' THEN 'grace expired; no catch-up' "
-                           "ELSE reason || '; grace expired; no catch-up' END WHERE id=?", (row["id"],))
+        db.execute("UPDATE slots SET state='skipped',reason=CASE WHEN reason='' THEN 'grace expired; no catch-up' "
+                   "ELSE reason || '; grace expired; no catch-up' END WHERE state='pending' AND due+?<?",
+                   (cfg.grace_seconds, stamp))
         for request in db.execute("SELECT * FROM startup WHERE state='pending'").fetchall():
             requested = datetime.fromtimestamp(request["requested"], timezone.utc)
             if schedule.eligible_seconds(requested, now) >= cfg.startup_seconds:
@@ -141,7 +125,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
     tick_calendar(store, now, cfg)
     from . import memory
     memory.import_seed(store, cfg, now.timestamp())
-    if not config.live() or not schedule.eligible(now, cfg):
+    if not config.live() or not schedule.eligible(now):
         return None
     if store.meta("paused", True) or store.meta("shutdown", False):
         return None
@@ -153,14 +137,15 @@ def reserve(store, now, cfg, *, operator_direct=False):
     if store.meta("publish_retry_after", 0) > now.timestamp():
         return None
     from ..news.publisher import video_hold
-    if video_hold(now.timestamp()):
+    from ..guards import quote_store
+    if video_hold(now.timestamp()) or quote_store.video_hold(now.timestamp()):
         return None
     stamp, day = now.timestamp(), schedule.local(now).date().isoformat()
     with store.transaction() as db:
         if db.execute("SELECT 1 FROM reservations WHERE state IN ('reserved','uploading','submitting','publish_unknown')").fetchone():
             return None
-        slot = next((row for row in db.execute("SELECT * FROM slots WHERE state='pending' ORDER BY due")
-                     if schedule.slot_bounds(row["due"], cfg)[0] <= stamp <= schedule.slot_bounds(row["due"], cfg)[1]), None)
+        slot = db.execute("SELECT * FROM slots WHERE state='pending' AND due<=? AND due+?>=? ORDER BY due LIMIT 1",
+                          (stamp, cfg.grace_seconds, stamp)).fetchone()
         # Changing the slot configuration midday cannot create a second daily grid.
         consumed = db.execute("SELECT COUNT(*) FROM slots WHERE id LIKE ? AND state IN ('posted','reserved')", (day + "/%",)).fetchone()[0]
         if slot and consumed >= cfg.scheduled_daily_cap:
@@ -173,7 +158,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         if startup and startup["attempts"] >= cfg.max_attempts:
             db.execute("UPDATE startup SET state='skipped',reason='bounded publishing retries exhausted' WHERE id=?", (startup["id"],))
             startup = None
-        if startup and _startup_claimed(db, day, startup["allowance"]):
+        if startup and db.execute("SELECT 1 FROM startup_days WHERE day=?", (day,)).fetchone():
             db.execute("UPDATE startup SET state='skipped',reason='startup calendar-day cap' WHERE id=?", (startup["id"],))
             startup = None
         if not slot and startup:
@@ -184,7 +169,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
             return None
         last = db.execute("SELECT MAX(confirmed) FROM reservations WHERE state='confirmed'").fetchone()[0]
         ready_at = (last + cfg.min_spacing_seconds) if last is not None else stamp
-        if slot and ready_at > schedule.slot_bounds(slot["due"], cfg)[1]:
+        if slot and ready_at > slot["due"] + cfg.grace_seconds:
             db.execute("UPDATE slots SET state='skipped',reason='actual spacing exceeds grace' WHERE id=?", (slot["id"],))
             slot = None
         if ready_at > stamp or (not slot and not startup):
@@ -206,7 +191,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         else:
             choice = None
             rows = db.execute("SELECT * FROM candidates WHERE state='ready' AND id NOT IN (SELECT candidate FROM content_claims) "
-                              "ORDER BY score DESC,discovered LIMIT ?", (cfg.queue_limit,)).fetchall()
+                              "ORDER BY score DESC,discovered LIMIT 80").fetchall()
         valid = []
         claimed = db.execute("SELECT c.document,c.fingerprint FROM candidates c JOIN content_claims p ON c.id=p.candidate").fetchall()
         history = [json.loads(row["payload"]) for row in db.execute("SELECT payload FROM history")]
@@ -231,9 +216,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
             if slot:
                 db.execute("UPDATE slots SET reason='no eligible ready video' WHERE id=?", (slot["id"],))
             return None  # keep the slot open until grace; report final skip
-        if cfg.best_available_fallback:
-            valid.sort(key=lambda pair: ranking.best_available_order(pair[1], cfg, stamp), reverse=True)
-        elif cfg.bangers_only:
+        if cfg.bangers_only:
             valid.sort(key=lambda pair: ranking.editorial_strength(pair[1]), reverse=True)
         valid = inventory.distinct(valid)
         if cfg.protect_primary_windows and slot and not startup:
@@ -257,10 +240,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
                     break
         recent = [json.loads(r[0]) for r in db.execute("SELECT c.document FROM candidates c JOIN reservations r "
                   "ON r.candidate=c.id WHERE r.state='confirmed' ORDER BY r.confirmed DESC LIMIT 4")]
-        if cfg.best_available_fallback and not choice:
-            best = ranking.best_available_order(valid[0][1], cfg, stamp)
-            comparable = [(r, d) for r, d in valid if ranking.best_available_order(d, cfg, stamp) == best]
-        elif cfg.bangers_only and not choice:
+        if cfg.bangers_only and not choice:
             valid.sort(key=lambda pair: (ranking.editorial_strength(pair[1]), pair[0]["score"] or 0), reverse=True)
             best = ranking.editorial_strength(valid[0][1])
             comparable = [(r, d) for r, d in valid if ranking.editorial_strength(d) >= best - 2]
@@ -283,7 +263,7 @@ def reserve(store, now, cfg, *, operator_direct=False):
         row, doc = min(comparable, key=tie_break)
         ident, token = uuid.uuid4().hex, uuid.uuid4().hex
         remaining = cfg.startup_seconds - schedule.eligible_seconds(datetime.fromtimestamp(startup["requested"], timezone.utc), now) if startup else 0
-        deadline = schedule.slot_bounds(slot["due"], cfg)[1] if slot else stamp + remaining
+        deadline = slot["due"] + cfg.grace_seconds if slot else stamp + remaining
         if startup:
             deadline = min(deadline, stamp + remaining)
         midnight = datetime.combine(schedule.local(now).date() + timedelta(days=1), datetime.min.time(), schedule.ZONE).timestamp()
@@ -302,17 +282,17 @@ def reserve(store, now, cfg, *, operator_direct=False):
             db.execute("UPDATE slots SET state='reserved',reservation=?,attempts=attempts+1,reason='' WHERE id=?", (ident, slot["id"]))
         if startup:
             db.execute("UPDATE startup SET state='reserved',reservation=?,attempts=attempts+1 WHERE id=?", (ident, startup["id"]))
-            db.execute("INSERT INTO startup_days(day,request,reservation,allowance) VALUES(?,?,?,?)",
-                       (day, startup["id"], ident, startup["allowance"]))
+            db.execute("INSERT INTO startup_days(day,request,reservation) VALUES(?,?,?)", (day, startup["id"], ident))
         return dict(db.execute("SELECT * FROM reservations WHERE id=?", (ident,)).fetchone())
 
 
 def guard(store, ident, token, now, cfg, *, submitting=False):
     from ..news.publisher import video_hold
-    news_reason = video_hold(now)
+    from ..guards import quote_store
+    news_reason = video_hold(now) or quote_store.video_hold(now)
     if news_reason:
         raise ValueError(news_reason)
-    if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc), cfg):
+    if not config.live() or not schedule.eligible(datetime.fromtimestamp(now, timezone.utc)):
         raise ValueError("video publishing disabled or overnight")
     if store.meta("paused", True) or store.meta("shutdown", False):
         raise ValueError("video publishing paused")

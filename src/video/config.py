@@ -26,13 +26,7 @@ class VideoConfig:
     min_hook_score: int = 8
     bangers_only: bool = False
     ultra_bangers_only: bool = False
-    best_available_fallback: bool = False
     one_line_caption: bool = False
-    playful_caption: bool = False
-    meme_caption: bool = False
-    early_video_window: bool = False
-    publish_platforms: tuple = ()
-    daily_target_min: int = 0
     audience_examples: tuple = ()
     discovery_prompt_file: str = ""
     discovery_memory_file: str = ""
@@ -44,7 +38,6 @@ class VideoConfig:
     x_max_views: int = 50000
     x_reach_max_age_seconds: int = 21600
     startup_on_boot: bool = False
-    startup_once: str = ""
     pair_minutes: int = 15
     protect_primary_windows: bool = True
     preparation_lead_seconds: int = 1800
@@ -124,26 +117,11 @@ class VideoConfig:
             raise ValueError("x_reads_enabled must be a boolean")
         if type(self.startup_on_boot) is not bool:
             raise ValueError("startup_on_boot must be a boolean")
-        if not isinstance(self.startup_once, str) or (self.startup_once and not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,95}", self.startup_once)):
-            raise ValueError("startup_once must be empty or a stable operator authorization ID")
-        if type(self.scheduled_daily_cap) is not int or not 1 <= self.scheduled_daily_cap <= 13:
-            raise ValueError("scheduled_daily_cap must be 1..13")
-        if type(self.daily_target_min) is not int or not 0 <= self.daily_target_min <= self.scheduled_daily_cap:
-            raise ValueError("daily_target_min must be within the video daily ceiling")
-        if self.one_line_caption and self.playful_caption:
-            raise ValueError("choose either one-line or playful captions")
-        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "best_available_fallback", "one_line_caption", "playful_caption", "meme_caption", "early_video_window", "adaptive_discovery"):
+        if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 13:
+            raise ValueError("scheduled_daily_cap must be 5..13")
+        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
-        if self.meme_caption and not self.playful_caption:
-            raise ValueError("meme captions require inspected playful captions")
-        if self.early_video_window and ("06:00" not in self.windows or "06:00" in self.paired_windows):
-            raise ValueError("early video window requires one unpaired 06:00 slot")
-        if (not isinstance(self.publish_platforms, (list, tuple))
-                or not all(isinstance(p, str) and p in PLATFORMS for p in self.publish_platforms)):
-            raise ValueError("publish_platforms must list known source platforms")
-        if self.best_available_fallback and not (self.bangers_only and self.auto_edit):
-            raise ValueError("best available fallback requires full banger review and editorial cutting")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
             if not isinstance(getattr(self, name), str):
                 raise ValueError(f"{name} must be a local operator file")
@@ -243,7 +221,8 @@ def source_duration_limit(cfg):
 
 
 def live():
-    return enabled() and settings.get("VIDEO_LIVE") and not core_config.dry_run()
+    return (enabled() and settings.get("VIDEO_LIVE") and not core_config.dry_run()
+            and not settings.get("REPLY_REVIEW_ONLY") and not settings.get("REPLY_INVITED_ONLY"))
 
 
 def owns_profile():

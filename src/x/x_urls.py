@@ -49,9 +49,19 @@ def status_id(url: str) -> str:
 
 def age(url: str, now: datetime | None = None) -> timedelta | None:
     """Time since the tweet was posted, read from its snowflake ID; None
-    when the URL carries no status ID."""
+    when the URL carries no status ID.
+
+    Defaults to the shared Toronto clock so every freshness check reads the
+    same time source; a raw datetime.now here diverged from the frozen test
+    clock and made afternoon runs refuse morning-built fixtures (2026-11-21).
+    """
     posted = posted_at(url)
-    return (now or datetime.now(tz=timezone.utc)) - posted if posted is not None else None
+    if posted is None:
+        return None
+    if now is None:
+        from ..guards.active_hours import now_local
+        now = now_local()
+    return now - posted
 
 
 def posted_at(url: str) -> datetime | None:
@@ -65,12 +75,12 @@ def posted_at(url: str) -> datetime | None:
         return None
 
 
-def is_reply_like_tweet(tweet: dict, expected_author: str = "") -> bool:
+def is_reply_like_tweet(tweet: dict, expected_author: str = "", *, allow_leading_mention: bool = False) -> bool:
     """Return True for nested replies/thread comments we should not target,
     and, on a scanned profile, for posts whose URL names another author.
     The scraped display name is never compared to `expected_author`."""
     text = (tweet.get("text") or "").lstrip()
-    if text.startswith("@") or bool(tweet.get("is_reply")) or any(
+    if (text.startswith("@") and not allow_leading_mention) or bool(tweet.get("is_reply")) or any(
             tweet.get(key) for key in ("in_reply_to_status_id", "in_reply_to_tweet_id")):
         return True
     conversation = tweet.get("conversation_id")

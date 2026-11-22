@@ -30,7 +30,7 @@ from ..core import config, settings
 from .active_hours import break_until, is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
-from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW
+from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW, WATCH_REPOST, MEME_REPOST
 
 # --- ledger ----------------------------------------------------------------
 
@@ -81,7 +81,7 @@ def _seconds_since_last(action: str) -> float:
 def _last_write(action: str):
     if action == REPLY:
         from . import reply_budget
-        last = _ledger().last_write(REPLY)
+        last = _ledger().last_write(action)
         return max(([last] if last else []) + reply_budget.submission_times(), default=None)
     if action not in (POST, RETWEET):
         return _ledger().last_write(action)
@@ -143,6 +143,14 @@ def _spacing_gap(action: str) -> float:
     if action not in _SPACING:
         raise ValueError(f"no write spacing for {action!r}")
     base, jitter = (getattr(config, name) for name in _SPACING[action])
+    if action == REPLY:
+        from . import reply_selection
+        if reply_selection.broad():
+            base = max(8, base)
+        elif settings.get("REPLY_CURATED_MODE"):
+            base = max(600, base)
+        elif settings.get("REPLY_INVITED_ONLY"):
+            base = max(240, base)
     last = _last_write(action)
     seed = f"{POST if action == RETWEET else action}:{last.isoformat() if last else ''}"
     return base + random.Random(seed).uniform(0, jitter)
@@ -167,25 +175,32 @@ def too_soon(action: str) -> str:
 
 # --- policy decisions -------------------------------------------------------
 
+def watched_repost_wait_seconds() -> float:
+    """Remaining watched spacing, including uncertain sends; never a sleep."""
+    from . import repost_store
+    latest = max((at for at in (repost_store.independent_last(), _ledger().last_write(WATCH_REPOST)) if at),
+                 default=None)
+    if latest is None:
+        return 0.0
+    elapsed = (now_local() - latest).total_seconds()
+    return max(0.0, settings.get("PRIORITY_REPOST_MIN_SECONDS") - elapsed)
+
+
 def can_post(action: str, *, target: str = "", reply_parent: bool = False, news: bool = False) -> Tuple[bool, str]:
     """Hard day budget and bedtime."""
-    if action == RETWEET:
-        from . import repost_store
-        if not repost_store.allowed_url(target):
-            return False, "automatic reposts are limited to watched Elon originals; never our own"
-        if why := repost_store.budget_refusal():
-            return False, why
-    if action in (LIKE, RETWEET) and not reply_parent and settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"):
-        from ..core import account
-        from ..x import x_urls
-        if x_urls.author(target) in account.current().auto_engage_handles:
-            sid = x_urls.status_id(target)
-            if not any(x_urls.status_id(url) == sid for url in _ledger().targets(REPLY)):
-                return False, "watched engagement requires a confirmed Reply to this exact post"
-    if action in (POST, RETWEET):
+    if settings.get("REPLY_INVITED_ONLY") and action != REPLY:
+        from . import reply_selection, reply_parent_like
+        required = action == LIKE and reply_parent_like.allowed(target)
+        if not required and (not reply_selection.enabled() or not reply_selection.write_allowed(action, target)):
+            return False, "restricted Replies and scoped Elon actions only"
+        if action == LIKE:
+            reply_parent = True  # exact required parent or scoped watched like only
+    from . import repost_store
+    independent = action == RETWEET and repost_store.independent(target)
+    if action in (POST, RETWEET) and not independent:
         from ..video.config import owns_profile, legacy_usage
         news = news and action == POST and settings.get("NEWS_ENABLED") and settings.get("NEWS_AUTO_PUBLISH")
-        if owns_profile() and not news and action != RETWEET:
+        if owns_profile() and not news:
             return False, "main profile publications reserved for the video scheduler"
         video_count, video_last = legacy_usage(now_local())
         # 2026-11-07: verified news has a bounded text budget alongside videos.
@@ -196,15 +211,40 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
             return False, "profile spacing includes the latest confirmed video"
     if stop_requested():
         return False, "stop requested"
-    if not is_active():
+    reply_action = action == REPLY or (action == LIKE and reply_parent)
+    if not is_active() and not (reply_action and settings.get("REPLY_ALL_DAY")):
         return False, f"asleep (active {window_label()})"
     pause_end = break_until()
-    if pause_end is not None:
+    if pause_end is not None and not (reply_action and settings.get("REPLY_ALL_DAY")):
         return False, f"scheduled break until {pause_end.isoformat(timespec='minutes')}"
+    if action == MEME_REPOST:
+        from . import meme_repost_store
+        if not target:
+            return False, "meme repost requires an exact reviewed source URL"
+        why = meme_repost_store.refusal(target)
+        return (False, why) if why else (True, "")
     if action == QUOTE:
-        return False, "automatic quote cap is 0"
+        from . import quote_store
+        if not quote_store.eligible_source(target):
+            return False, "quote requires an enabled exact watched source URL"
+        why = quote_store.refusal(target)
+        return (False, why) if why else (True, "")
+    if independent:
+        if settings.get("REPLY_CURATED_MODE"):
+            from . import watch_curation
+            if why := watch_curation.refusal(target):
+                return False, why
+        from ..x import x_urls
+        age = x_urls.age(target)
+        if age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS")):
+            return False, "watched source missing a fresh timestamp"
+        if watched_repost_wait_seconds():
+            return False, "watched repost spacing"
+        return True, ""
     if action == RETWEET:
         from . import repost_store
+        if not repost_store.allowed_url(target):
+            return False, "reposts require an explicitly watched author and exact status URL"
         from ..editorial.slot_journal import FileJournal
         journal = FileJournal()
         why = profile_submission_refusal(journal, now_local())
@@ -235,8 +275,7 @@ def can_post(action: str, *, target: str = "", reply_parent: bool = False, news:
         return True, ""
     if action == REPLY:
         from . import reply_budget
-        why = reply_budget.refusal(target)
-        if why:
+        if why := reply_budget.refusal(target):
             return False, why
     why = too_soon(action)
     return (False, why) if why else (True, "")
