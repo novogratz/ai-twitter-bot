@@ -1175,9 +1175,12 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             more[0].click();
             return JSON.stringify('expand_parent');
           }
-          return refused('copy_text:len=' + copyText.trim().length
-            + ':head=' + JSON.stringify(copyText.trim().slice(0, 80))
-            + ':tail=' + JSON.stringify(copyText.trim().slice(-60)));
+          const a = dealias(copyText), b = expectedText.trim();
+          let d = 0;
+          while (d < a.length && d < b.length && a[d] === b[d]) d++;
+          return refused('copy_text:at=' + d
+            + ':copy=' + JSON.stringify(a.slice(Math.max(0, d - 20), d + 20))
+            + ':expected=' + JSON.stringify(b.slice(Math.max(0, d - 20), d + 20)));
         }
       }
       if (click) buttons[0].click();
