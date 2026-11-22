@@ -1,5 +1,15 @@
 # History — mandates and incidents, June to November 2026
 
+2026-11-21, Operator pause at 23:43 Toronto — Stop and keep the bot stopped
+until a new explicit start/restart request. This overrides tonight's resume
+authorization. The worker stopped at 23:43:04; no main process or active
+supervisor remained, and `.bot_disabled` is armed. Preserve configuration,
+publication history, uncertain submissions, opt-outs and manual decisions.
+After the restart, the evening ran 28 confirmed Replies in 90 minutes with
+two residual composer refusal classes; the validated trailing link-card
+alias extension to the composer copy check is merged but loads only on the
+next explicitly requested start.
+
 2026-11-21, warmer emotional voice and repaired composing throughput — The
 Operator reports only 50–100 actual Replies against the 1,400 target, asks for
 at least 500 today, more emotion — hearts, blue hearts, a thumbs up — warmer

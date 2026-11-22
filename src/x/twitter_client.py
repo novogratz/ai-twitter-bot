@@ -1164,7 +1164,11 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         // ("x.com/GiorgioPatrini…", 2026-11-21). Strip only those trailing
         // tokens, then require exact equality — the standalone source behind
         // the dialog was exact-matched above in this same read.
-        const alias = String.raw`(?:https?:\/\/)?(?:pic\.(?:x|twitter)\.com\/[A-Za-z0-9]+|(?:x|twitter)\.com\/(?:[A-Za-z0-9_]{1,15}\/status\/\d+\S*|\S*…))`;
+        // Strippable trailing renderings: pic.x.com media aliases, quoted
+        // status permalinks, and a link card's URL text — full with scheme
+        // ("…👇https://github.com/g/gitify", 2026-11-21) or display-truncated
+        // with an ellipsis. Content before them must still match exactly.
+        const alias = String.raw`(?:https?:\/\/\S+|(?:pic\.(?:x|twitter)\.com|(?:x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/\d+)\S*|\S+\.[a-z]{2,}(?:\/\S*)?…)`;
         const dealias = t => t.replace(new RegExp(String.raw`(?:\s*${alias})+\s*$`), '').trim();
         // The two reads render whitespace around inline mentions differently —
         // the scrape inserts breaks the dialog omits ("(\n@grants\n has" vs

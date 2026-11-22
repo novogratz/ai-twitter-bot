@@ -525,3 +525,18 @@ def test_mention_whitespace_rendering_never_blocks_exact_source(invited, monkeyp
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=expected, composing=True) is allowed
     assert clicks == []
+
+
+@pytest.mark.parametrize("appended,allowed", [
+    ("https://github.com/gitify-app/gitify", True),   # glued full link-card URL (2026-11-21)
+    (" github.com/gitify-app/git…", True),            # display-truncated link text
+    (" https://github.com/gitify-app/gitify and more", False),  # prose beyond the link
+])
+def test_trailing_link_card_text_in_copy_never_blocks_exact_source(invited, monkeypatch, appended, allowed):
+    url, question = invited_source()
+    full = question + " The project link is here 👇"
+    copy = {"url": url, "text": full + appended, "dialog": True, "noTime": True, "more": False}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=full, composing=True) is allowed
+    assert clicks == []
