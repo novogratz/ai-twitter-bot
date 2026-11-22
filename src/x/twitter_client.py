@@ -1199,8 +1199,8 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
           let d = 0;
           while (d < a.length && d < b.length && a[d] === b[d]) d++;
           return refused('copy_text:at=' + d
-            + ':copy=' + JSON.stringify(a.slice(Math.max(0, d - 20), d + 20))
-            + ':expected=' + JSON.stringify(b.slice(Math.max(0, d - 20), d + 20)));
+            + ':copy=' + JSON.stringify(a.slice(Math.max(0, d - 20), d + 150))
+            + ':expected=' + JSON.stringify(b.slice(Math.max(0, d - 20), d + 150)));
         }
       }
       if (click) buttons[0].click();
