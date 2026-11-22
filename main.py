@@ -326,7 +326,7 @@ def main():
                               "visual_review_required": not broad, "unseen_media_claims_allowed": False},
             "minimum_seconds_between_replies": max(8 if broad else 600, settings.get("MIN_SECONDS_BETWEEN_REPLIES")),
             "reply_jitter_seconds": settings.get("REPLY_JITTER_SECONDS"),
-            "hearts": "artist reactions only; at least five intervening replies" if broad else "artist reactions only; at least two intervening replies",
+            "hearts": "artist and warm share replies; one 👍 allowed; at least two intervening replies between hearts",
             "discovery": "four read-only draft sessions; fresh outside-circle creative and technical conversations, complete incoming external-thread context; manual posting" if manual_ordinary else _broad_discovery_description() if broad else "two artist searches per technical search; mentions every fifth turn; no API",
             "artist_queries": list(account.current().searches.artist_videos),
             "confirmed_parent_like_required": settings.get("REPLY_REQUIRE_PARENT_LIKE"),
@@ -511,7 +511,7 @@ def main():
         log.info("[REPLY] Drafts stay in the local review inbox. No selected draft becomes an automatic send.")
     elif settings.get("REPLY_BROAD_DISCOVERY"):
         log.info("[REPLY] One per ordinary author/day, permanent parent dedup, exact own-status receipts. "
-                 "%ss minimum plus 0–%ss jitter; five intervening Replies between hearts.",
+                 "%ss minimum plus 0–%ss jitter; two intervening Replies between hearts.",
                  max(8, settings.get("MIN_SECONDS_BETWEEN_REPLIES")), settings.get("REPLY_JITTER_SECONDS"))
     elif settings.get("REPLY_CURATED_MODE"):
         log.info("[REPLY] Three-minute discovery; Top + Latest, at most 40 results/8 scrolls each; "
