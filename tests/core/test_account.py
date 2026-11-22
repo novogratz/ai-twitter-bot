@@ -100,26 +100,56 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.relevance.off_topic.search("AI crypto trading")
     assert loaded.engagement_niche_only
     assert (loaded.handle, loaded.language) == (OLD["BOT_HANDLE"], OLD["CONTENT_LANG_PRIMARY"])
-    assert loaded.limits == {"FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
+    assert loaded.limits == {"MAX_REPLIES_PER_DAY": 1400, "REPLY_ALL_DAY": False,
+                             "REPLY_MANUAL_ORDINARY": False, "REPLY_MANUAL_DISCOVERY": False,
+                             "REPLY_CURATED_MODE": True, "REPLY_BROAD_DISCOVERY": True,
+                             "REPLY_FOR_YOU_FIRST": False, "REPLY_MIN_FOLLOWERS": 5000,
+                             "REPLY_SHORT_MAX_CHARS": 140, "REPLY_REQUIRE_PARENT_LIKE": True,
+                             "CURATED_WATCH_REPLIES_PER_DAY": 1400, "CURATED_WATCH_REPOSTS_PER_DAY": 1400,
+                             "CURATED_WATCH_REPLY_MIN_SECONDS": 8, "CURATED_WATCH_REPOST_MIN_SECONDS": 60,
+                             "REPLY_REVIEW_ONLY": False, "REPLY_REVIEW_DAILY_LIMIT": 80,
+                             "REPLY_INVITED_ONLY": True, "REPLY_PUBLIC_REQUESTS": True,
+                             "FEED_SWEEP_SCAN_LIMIT": 160, "FEED_SCROLL_PASSES": 20,
+                             "FEED_SWEEP_INTERVAL_MINUTES": 8, "FEED_FOLLOWING_EVERY_CYCLES": 20,
+                             "DIRECT_REPLY_MAX_AGE_MINUTES": 1440, "DIRECT_REPLY_INTERVAL_MINUTES": 2,
+                             "REPLY_CANDIDATE_BUFFER_TTL_SECONDS": 1800, "REPLY_MIN_LIKES": 5,
+                             "PRIORITY_WATCH_INTERVAL_SECONDS": 5, "PRIORITY_WATCH_NOTIFICATIONS": True,
+                             "MEME_REPOST_ENABLED": False,
+                             "MEME_REPOST_DAILY_CAP": 20, "MEME_REPOST_INTERVAL_MINUTES": 30,
+                             "MEME_REPOST_MIN_LIKES": 0, "MEME_REPOST_MIN_VIEWS": 0,
                              "HOURLY_BREAK_MINUTES": 0, "MIN_SECONDS_BETWEEN_REPLIES": 8,
                              "REPLY_JITTER_SECONDS": 4, "REPLY_DAILY_TARGET_MIN": 1400,
-                             "REPLY_DAILY_TARGET_MAX": 1400, "REPLY_PREFERRED_MIN_LIKES": 0,
+                             "REPLY_DAILY_TARGET_MAX": 1400, "REPLY_PREFERRED_MIN_LIKES": 3,
                              "DIRECT_REPLY_QUERIES_PER_CYCLE": 16,
-                             "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 0,
+                             "DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE": 4,
                              "DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE": 2,
-                             "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 6,
+                             "DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE": 4,
                              "REPLY_PRIORITIZE_LARGE_ACCOUNTS": False,
                              "DIRECT_REPLY_MAX_PER_CYCLE": 80,
-                             "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80,
-        "MAX_REPLIES_PER_DAY": 1400, "REPLY_RECENT_MEMORY_COUNT": 1400, "REPLY_MAX_AGE_SECONDS": 1800,
-        "REPLY_WATCHED_MAX_AGE_SECONDS": 300, "REPLY_WATCHED_DAILY_CAP": 2,
-        "WATCH_ENGAGEMENT_REQUIRES_REPLY": True, "REPLY_DISCUSSIONS_ONLY": True,
-        "REPLY_PREFER_NEW_AUTHORS": True}
+                             "FEED_SWEEP_MAX_REPLIES_PER_CYCLE": 80}
     assert loaded.domain == "SI / Super Intelligence"
     assert loaded.reply_si_wording is True
     assert loaded.publication_si_wording is True
     assert loaded.previous_handles == ("TheAIShrink",)
     assert loaded.auto_engage_handles == ("elonmusk",)
+    assert loaded.auto_engage_all_topics and loaded.watched_reposts_independent
+    assert loaded.reply_excluded_handles == ()
+
+
+@pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', '[42]', '"Alias"'])
+def test_reply_exclusions_validate_handles(accounts, fresh, value):
+    accounts("theaishrink", THEAISHRINK.replace('reply_excluded_handles = []',
+                                               f"reply_excluded_handles = {value}"))
+    with pytest.raises(settings.SettingsError, match="reply_excluded_handles"):
+        account.load("theaishrink")
+
+
+def test_reply_exclusions_are_optional_case_insensitive_and_unique(accounts, fresh):
+    accounts("other", THEAISHRINK.replace('reply_excluded_handles = []\n', ''))
+    assert account.load("other").reply_excluded_handles == ()
+    accounts("theaishrink", THEAISHRINK.replace('reply_excluded_handles = []',
+                                               'reply_excluded_handles = ["Builder", "BUILDER", "other"]'))
+    assert account.load("theaishrink").reply_excluded_handles == ("builder", "other")
 
 
 @pytest.mark.parametrize("value", ['["@bad"]', '["not a handle"]', '[42]', '"Alias"'])
@@ -552,12 +582,15 @@ def test_theaishrink_loads_its_network_niche_and_searches():
     assert ",".join(net.vip_scan) == NETWORK["VIP_SCAN_HANDLES"]
     assert ",".join(net.pinned_tracked) == NETWORK["PINNED_TRACKED_HANDLES"]
     assert list(net.vip_reply) == NETWORK["VIP_REPLY_ACCOUNTS"]
-    assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"]
+    assert list(net.big_ai_hype) == NETWORK["BIG_AI_HYPE_ACCOUNTS"] + ["tszzl", "signulll", "nearcyan"]
     assert list(net.mid_size_ai) == NETWORK["MID_SIZE_AI_ACCOUNTS"]
     assert list(net.high_traction_reply) == NETWORK["HIGH_TRACTION_REPLY_ACCOUNTS"]
     assert list(net.big_fr) == NETWORK["BIG_FR_ACCOUNTS"]
     expected = ["elonmusk", "xai", "grok"]
     expected += [h for h in NETWORK["ALWAYS_REPLY_ACCOUNTS"] if h.lower() not in {x.lower() for x in expected}]
+    expected.remove("nearcyan")
+    insertion = expected.index("sytelus") + 1
+    expected[insertion:insertion] = ["tszzl", "signulll", "nearcyan"]
     assert list(net.always_reply) == expected
     assert list(net.engage_vip) == NETWORK["ENGAGE_VIP_ACCOUNTS"]
     assert list(net.engage_targets) == NETWORK["ENGAGE_TARGET_ACCOUNTS"]
@@ -736,6 +769,8 @@ def test_the_jobs_read_the_loaded_account(accounts, fresh):
     ("likes = [", "likes = [\n    ' ',", "searches.likes[0]"),
     ("creators = [", "creators = [\n    ' ',", "searches.creators[0]"),
     ("creators = [", "creators = [\n    42,", "searches.creators[0]"),
+    ("help_requests = [", "help_requests = [\n    ' ',", "searches.help_requests[0]"),
+    ("help_requests = [", "help_requests = [\n    42,", "searches.help_requests[0]"),
     ("trending = [", "trending = [\n    ' ',", "searches.trending[0]"),
     ("trending = [", "trending_queries = [", "searches.trending_queries"),
     ("[searches]", "[searches]\nquotes = []", "searches.quotes"),
@@ -925,11 +960,16 @@ def test_a_missing_empty_or_outside_voice_file_stops_the_start(accounts, fresh, 
 
 
 @pytest.mark.parametrize("name, previous", [
+    ("replies", NETWORK["SEARCH_QUERIES"]),
+    ("hot_tab", NETWORK["HOT_TAB_QUERIES"]),
     ("likes", NETWORK["LIKE_QUERIES"]),
     ("trending", OLD_TREND_QUERIES),
 ])
 def test_research_keeps_vocabularies_and_floors_only_for_high_traction_lanes(name, previous):
     queries = getattr(account.current().searches, name)
+    if name == "replies":
+        assert len(queries) == len(previous) + 8
+        queries = queries[8:]
     assert len(queries) == len(previous)
     for before, after in zip(previous, queries):
         if name == "replies":

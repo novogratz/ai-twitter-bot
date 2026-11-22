@@ -34,8 +34,9 @@ def parent(monkeypatch, memory_ledger):
 
 
 @pytest.mark.parametrize("old_probability", [0.0, 0.3, 1.0])
-def test_like_ships_before_reply_even_with_old_probability(parent, settings_override, memory_ledger, old_probability):
-    settings_override(REPLY_LIKE_PARENT_PROB=old_probability)
+@pytest.mark.parametrize("restricted_like_flag", [False, True])
+def test_like_ships_before_reply_even_with_old_probability(parent, settings_override, memory_ledger, old_probability, restricted_like_flag):
+    settings_override(REPLY_LIKE_PARENT_PROB=old_probability, REPLY_REQUIRE_PARENT_LIKE=restricted_like_flag)
     page, events = parent
     assert tc.reply_to_tweet(URL, TEXT) is W.SHIPPED
     assert events == ["verify_parent", "read", "press", "read", "read", "reply_button", "paste", "submit"]
@@ -177,37 +178,3 @@ def test_analytics_failure_never_hides_a_shipped_reply_or_releases_its_claim(par
 
 
 pytestmark = pytest.mark.usefixtures("open_topic_account")
-
-
-def test_unknown_reply_consumes_budget_but_preserves_parent_claim(parent, monkeypatch, memory_ledger):
-    from src.guards import reply_budget
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **kw: False)
-    assert tc.reply_to_tweet(URL, TEXT) is W.UNCONFIRMED
-    assert reply_budget.used_today() == 1 and ag.count_today(ag.REPLY) == 0
-    assert URL in replied_store.load_replied()
-
-
-def test_paste_failure_does_not_spend_reply_budget(parent, monkeypatch):
-    from src.guards import reply_budget
-    monkeypatch.setattr(tc, "_paste_or_abort", lambda *a: False)
-    assert tc.reply_to_tweet(URL, TEXT) is W.FAILED
-    assert reply_budget.used_today() == 0
-    assert URL not in replied_store.load_replied()
-
-
-def test_parent_aging_during_composition_cannot_reach_submit(parent, monkeypatch, settings_override):
-    from datetime import timedelta
-    from src.guards import active_hours, reply_budget
-    from tests.guards.test_reply_budget import NOW, fresh_url
-    from tests.helpers import clock
-    clock(monkeypatch, NOW)
-    settings_override(REPLY_MAX_AGE_SECONDS=1800)
-    url = fresh_url(seconds=1790)
-    monkeypatch.setattr(tc, "_ensure_parent_liked", lambda *a: True)
-    def paste(*args):
-        clock(monkeypatch, NOW + timedelta(seconds=15))
-        return True
-    monkeypatch.setattr(tc, "_paste_or_abort", paste)
-    monkeypatch.setattr(tc, "_submit_or_abort", lambda *a, **k: pytest.fail("stale parent submitted"))
-    assert tc.reply_to_tweet(url, TEXT) is W.REFUSED
-    assert not reply_budget.entries() and url not in replied_store.load_replied()

@@ -5,6 +5,7 @@ from itertools import count
 import threading
 import time
 
+WATCH_REPLY = -1  # already prepared first-minute Reply; active browser owners still finish
 WATCH = 0
 REPLY = 1
 BACKGROUND = 2

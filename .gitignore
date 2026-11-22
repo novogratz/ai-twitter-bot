@@ -11,6 +11,7 @@ build/
 engagement_log.csv
 tweet_history.json
 replied_tweets.json
+reply_submissions.json
 followed_accounts.json
 performance_log.json
 learnings.json

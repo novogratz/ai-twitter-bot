@@ -77,10 +77,13 @@ class ReplyCall:
     # since llm_client knows no Account.
     provider: str | None = None
     profile: CallProfile = TEXT_PROFILE
+    timeout: int | None = None
 
     def __post_init__(self):
         if not isinstance(self.surface, Surface):
             raise TypeError(f"ReplyCall surface must be a Surface, not {type(self.surface).__name__}")
+        if self.timeout is not None and (type(self.timeout) is not int or self.timeout < 1):
+            raise ValueError("ReplyCall timeout must be a positive number of seconds")
 
 
 # SKIP as a PREFIX, not an exact match: the model often appends its
@@ -118,8 +121,13 @@ def _generate(call: ReplyCall, *, author: str, text: str, context: str, fields: 
     try:
         route = resolve(call.surface)
         options = route.options
+        timeout = options.timeout
+        if call.timeout is not None:
+            timeout = call.timeout if timeout is None else min(timeout, call.timeout)
         result = run_llm(prompt, route.model, label=call.label, output_json=options.output_json,
-                         allowed_tools=options.allowed_tools, timeout=options.timeout, cwd=options.cwd,
+                         allowed_tools=options.allowed_tools,
+                         timeout=timeout,
+                         cwd=options.cwd,
                          force_provider=call.provider or route.provider, profile=call.profile)
     except OutsideActiveHours:
         raise
@@ -152,7 +160,7 @@ def _generate(call: ReplyCall, *, author: str, text: str, context: str, fields: 
     # normalized here. Its parsed Reply goes through the pipeline below.
     if call.profile.output is Output.TEXT:
         reply = reply_wording.apply(reply)
-    if call.max_chars:
+    if call.max_chars and not settings.get("REPLY_CURATED_MODE"):
         reply = smart_trim(reply, call.max_chars)
     return Generation(Outcome.WRITTEN, language=language, text=reply,
                       provider=result.provider, model=result.model)
@@ -174,8 +182,6 @@ def _language(call: ReplyCall, author: str, text: str) -> Literal["fr", "en"]:
 
 
 def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str, fields: dict) -> str:
-    # A short search preview can hide the condition that changes the answer.
-    limit = max(call.text_limit, 4000) if settings.get("REPLY_DISCUSSIONS_ONLY") else call.text_limit
     anchors = [personality_store.hard_rules_block()]
     if account.current().english_only:
         anchors.append(_LANGUAGE_OVERRIDE["en"] + "\nUse English even when the source is French or a template says to match its language.")
@@ -184,13 +190,13 @@ def _prompt(call: ReplyCall, author: str, text: str, context: str, language: str
     prompt = call.template.format(**{
         **fields,
         "author": author,
-        "tweet_text": text[:limit],
-        "original_tweet": context[:limit],
+        "tweet_text": text[:call.text_limit],
+        "original_tweet": context[:call.text_limit],
         "language_override": _LANGUAGE_OVERRIDE[language],
         "domain": account.current().domain,
-        "reply_max_chars": REPLY_MAX_CHARS,
+        "reply_max_chars": min(REPLY_MAX_CHARS, call.max_chars or REPLY_MAX_CHARS),
     })
-    delivery = _delivery() if call.profile.output is Output.TEXT else ""
+    delivery = _delivery(author) if call.profile.output is Output.TEXT else ""
     memory = _recent_memory()
     return "\n\n".join(filter(None, [personality_store.render_voice(language), prompt, delivery,
                                     memory, reply_wording.prompt_block(), *anchors]))
@@ -262,52 +268,81 @@ def _recurring_phrases(normalized):
     return result
 
 
-def _delivery() -> str:
+def _delivery(author="") -> str:
     """Let the parent's intent determine length; the Voice owns personality."""
-    if settings.get("REPLY_DISCUSSIONS_ONLY"):
-        return ("SELECTIVE DISCUSSION RULES (override generic praise/artist-reaction instructions):\n"
-                f"First decide whether this standalone {account.current().domain} post has a substantial technical question, "
-                "supported finding, mechanism, deployment tradeoff or practical problem, or a standout AI video/art/meme "
-                "concept with specific supplied details. Identify the inventive idea, clever joke or documented "
-                "creative choice that earns attention. Routine demos, first attempts, popularity, a tool name "
-                "or an impressive-sounding caption alone do not establish quality. "
-                "Thin captions and unseen-media-dependent jokes mean SKIP. "
-                "Then find ONE useful angle the parent has not already stated: answer the actual question, "
-                "explain a mechanism, distinguish evidence from a claim, or suggest a concrete test. "
-                "If you cannot add that using supplied evidence and stable knowledge, SKIP. "
-                "Read what the author already tried: do not propose their existing test, restate their own "
-                "conclusion or correct a claim they did not make. Check every sentence; a specific opening "
-                "does not rescue a stock caveat or generic question at the end. Stop when the useful point "
-                "or playful observation is complete. No padding to sound more expert. "
-                "For exceptional videos, art or memes, a specific warm, cute or witty response to the documented idea also qualifies; "
-                "add a playful thought without explaining their joke or forcing technical criticism. "
-                "Never infer visual quality or actions from an uninspected image or video. "
-                "Popularity and a free posting slot never justify a reply. No generic praise, launch hype, "
-                "paraphrase, forced contrarian caveat, unsolicited lecture or question just to get a response. "
-                "Sound like a warm, sharp, knowledgeable woman chatting with a peer: plain words, natural "
-                "contractions, kind disagreement, a little wit when it fits. Usually one or two sentences; "
-                "no fixed structure or signature. An optional emoji must not replace the contribution. "
-                "Lead with the useful thought, not a verdict about how good the post is. A cute understatement "
-                "can carry the point; never bolt on flirtation, praise or a punchline. Before sending, ask whether "
-                "this could fit many unrelated posts with a model name swapped. If so, find a more specific "
-                "contribution or SKIP. Do not assume the author's gender or invent intimacy. "
-                "Be confident about evidence, candid about uncertainty; never pretend omniscience, human "
-                "biography, friendship, firsthand tests or unseen media access. Answer identity questions honestly. "
-                "Current specs, versions and benchmarks need supplied verification; do not invent them or browse. "
-                "Output only the reply within the character limit, or exactly SKIP.")
+    if (settings.get("REPLY_CURATED_MODE") and settings.get("REPLY_BROAD_DISCOVERY")
+            and author.lower().lstrip("@") in account.current().auto_engage_handles):
+        return ("DELIVERY FOR THIS SELECTED WATCHED AUTHOR: usually one or two words, or a few natural words. "
+                "An occasional short sentence or useful question may use at most 12 words and 90 characters, one sentence only. "
+                "Facts or Agree can stand alone when supported by this exact post; never automatic or repeated. No lesson, "
+                "recap, heart, automatic praise or forced joke. No invented media details, "
+                "firsthand experience or unverified claims. Respect recent-text repetition checks. "
+                "This scoped minimal reaction takes precedence over ordinary technical-answer lengths. "
+                "Return SKIP when nothing fitting and fresh remains.")
+    if settings.get("REPLY_BROAD_DISCOVERY"):
+        return ("DELIVERY: short, sweet, plain conversation, usually one to six words. "
+                "Sometimes use one short sentence or useful question; at most 24 words and 140 characters, one sentence only. "
+                "Read the whole post for the person's intent, including irony and rhetorical questions. "
+                "Simple agreement, a fitting reaction or an easy joke can stand alone; no obligatory new insight. "
+                "Facts or Agree may be the whole reply only when supported; never certify an unverified factual claim. "
+                "Short, concrete questions about a reported result or comparison are welcome even without a help request. "
+                "Ask when the detail is worth understanding, not as an automatic ending. "
+                "Give a technical explanation only for a real request for help; a source lane is only a hint. "
+                "Use everyday words. No obscure references, polished punchlines, elaborate metaphors or unsolicited "
+                "counterarguments to a casual opinion. Do not make a simple reaction longer to sound clever. "
+                "Brief thanks and playful subjective preferences are allowed when they fit; no stock phrase rotation. "
+                "Use only supplied text and actual media/source evidence; "
+                "SKIP if the point requires an unseen clip, unread linked article or unverified current fact. "
+                "Never invent personal experience. Honor heart spacing and recent confirmed/uncertain wording. "
+                "The current daily workload plan is advisory: never fill it with weak replies.")
+    if settings.get("REPLY_CURATED_MODE"):
+        return ("DELIVERY: a few words for art; one short sentence for technical posts. "
+                "At most 24 words and 140 characters; artist reactions at most 12 words and 90 characters. "
+                "Keep only the useful point or fresh affection. No summary, second thought, automatic "
+                "question, canned compliment, forced joke or extra explanation. Visual observations "
+                "come from sampled frames only; no audio or full playback. Follow the supplied heart "
+                "restriction. Never pretend to be human or invent personal experience. SKIP is welcome.")
     return ("DELIVERY FOR THIS REPLY (within the task's character limit):\n"
+            "Prefer real questions about the Account's topics and requests for technical help when there is enough context to answer. "
+            "A question mark alone does not make a sincere question; judge the author's actual request and context. "
+            "Skip rhetorical promotion, engagement bait and interchangeable praise. "
+            "Keep warmth without forced flirting, pet names, fabricated experience or fake typos. "
             "Follow the Voice's post-specific style and emoji guidance. "
+            "If the Voice defines reply modes, choose from the parent's intent, never a fixed rotation "
+            "or random split. Blend them only when it helps this reply; never print mode labels. "
             "Let the parent's intent determine length, not a word-count assignment. "
             "For an ordinary shared thought, win or artwork, prefer a brief warm reaction to an explainer. "
             "Talk to the person. Technical knowledge helps when needed; it is not the price of every reply. "
             "A sincere heart is welcome for affection or encouragement without a quota or rotation. "
-            "A short reaction can stand alone; a serious technical question may need "
-            "two or three complete sentences. Answer first and stop when the thought is complete. "
+            "A short reaction can stand alone; a technical answer or useful question stays within "
+            "one short sentence, 24 words and 140 characters. Answer first and stop when the thought is complete. "
             "Do not automatically add a caveat, question, compliment or punchline. "
             "For a question, answer what was asked before offering a broader observation. "
+            "Lead with the useful distinction or check, in ordinary spoken language. "
+            "Keep the reasoning sharp without a miniature essay, canned opener or generic tips list. "
+            "A relaxed tone comes from clear phrasing and attention to this person, not invented experience. "
+            "For a substantive claim, a precise disagreement, useful mechanism or concrete counterexample "
+            "may be more helpful than praise. Challenge the reasoning respectfully, using evidence "
+            "you actually have; do not invent an objection or force agreement to be liked. "
             "Ask only for a missing detail that changes the answer, never to solicit engagement. "
             "Use a detail from this parent outside the Voice's brief-appreciation cases. "
             "You receive text, not inspected video or audio: never infer unseen craft or claim playback. "
             "Treat product claims as the author's report; do not certify an unverified release or feature. "
+            "Before returning the reply, silently edit it: remove stock agreement, interest or gratitude "
+            "padded onto an answer, and any sentence explaining the author's own point back to them. "
+            "Where the Voice permits a loving reaction, the affection itself can be the contribution; "
+            "keep its warmth and heart without adding a technical lesson. "
+            "Keep the actual answer, reaction or joke. Do not replace removed filler "
+            "with a different stock compliment. A named product plus 'sounds lovely' is still a template. "
+            "Do not invent an intention to try, buy, build along or watch something to sound engaged. "
+            "Do not make the author earn your approval or add unsolicited homework to their celebration. "
+            "For brief appreciation, anchor the feeling in a supplied idea or occasion; "
+            "do not pretend that an unseen image or video has been inspected. "
+            "For brief affection, the feeling must fit the supplied idea or occasion and the wording "
+            "must be fresh; no obligation to recap a detail. For other replies, if the thought could "
+            "be pasted under unrelated posts, or there is no supported contribution beyond polite filler, "
+            "return SKIP. Publishing targets never override this. "
+            "If the supplied context asks bots not to reply or objects to automated replies, SKIP; "
+            "do not debate the objection or pretend to be human. "
             "Do not research, browse or call tools for this reply. Use supplied context and stable "
             "knowledge; SKIP if a worthwhile reply needs facts you do not have.")

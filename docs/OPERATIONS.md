@@ -1,11 +1,183 @@
 # Operations
 
-Current runtime policy (2026-11-18): sleep is **23:00–07:00 Toronto** for
-interactions, news research/delivery and independent video preparation. The
-scheduler stays alive; worker heartbeats can report sleeping. Earlier dated
-runbooks describing 04:30 wake or overnight research are superseded. Apply code
-and local settings through the normal explicitly requested restart; preserve
-all publication, Reply and uncertain-submission histories.
+Current operator status (November 21): **paused at 21:35:55 Toronto; bot stopped**.
+Keep the bot stopped until a new explicit start/restart request. This supersedes
+the earlier resume status below; configuration and publication history are preserved.
+
+Current strategy: **earlier broad discovery restored**, with a **1,400/day**
+advisory target and ceiling. Direct searches run every two minutes with the
+sixteen-query author/creator/Top/Latest mix; both Home feeds share an eight-minute
+cycle, up to 160 posts/twenty scrolls and eighty drafting attempts per feed.
+The recent one-reply-per-turn and first-hour-only restrictions are disabled.
+Source age returns to at most twenty-four hours; general Latest keeps one hour.
+Grok and the new short replies, understandable humor and concrete questions remain.
+The worker restarted November 21 at 08:41:57 Toronto after 3,994 passing tests. Confirmed parent likes and the shorter Reply limits are loaded.
+Live verification: parent like at 08:50:37, then a confirmed [Grok Reply](https://x.com/thesimaximalist/status/2124138453269164129) at 08:50:48.
+
+Reply drafting now uses the signed-in **Grok CLI**, model `grok-4.7-build-fast`
+with low reasoning effort. Both ordinary and watched Reply generation use this
+connection. Draft calls have no tools or web access, and fallback is disabled.
+The earlier “go push harder” instruction lifted the 08:14 pause; the later 21:35 pause now takes precedence.
+
+Earlier operator status (superseded by the 21:35 pause): **running since 08:41:57 Toronto**. The Reply style uses
+plain, brief reactions and understandable humor. Short, relevant questions remain
+welcome; technical explanations are for actual help requests. Stop and pause
+requests still take precedence over scheduled work.
+
+Current setting: **automatic Replies restored**, targeting up to **1,400/day**,
+with a 1,400 hard ceiling including uncertain submissions. Broad search and both Home-feed
+jobs are configured but paused; manual discovery/review mode is off. Pacing is eight
+seconds plus 0–4 seconds jitter. The temporary 200/day boost and later 70/day return
+are cleared. Quality/source checks can produce fewer replies; never fill a quota.
+The optional manual inbox stays separate and is never automatically posted.
+
+Every Reply requires a confirmed like on its exact parent first. Ordinary Replies
+use one short sentence, at most 24 words/140 characters. Elon Replies prefer one or
+two words, with a twelve-word/ninety-character ceiling and the existing topic filter.
+New exact Elon originals get priority likes and native reposts across topics;
+reposts are at least sixty seconds apart. Watched ceilings are 1,400/day, with
+Replies also inside the overall Reply ceiling. The former six-hour gap is removed.
+Only watched Replies expire at sixty seconds. Normal Toronto hours remain.
+Changes take effect after restart; confirm a new own-X Reply receipt and its parent like.
+
+The following earlier strategies are superseded where they differ.
+
+Temporary workload: **200/day target for November 20–23**, returning automatically
+to the 70/day plan (60–80 range) on November 24. Ordinary replies are review drafts;
+up to 197 drafts reserve three slots for automatic watched Replies. Four sessions
+allow up to 50 attempts each during the boost, then 20. Quality may yield fewer.
+
+Tonight's exception skips November 21, 00:00–04:30 Toronto. Normal midnight sleep
+resumes **November 22 at 00:00**. The date is fixed and stop requests still apply.
+The following base strategy resumes after the temporary workload window.
+
+## Current response strategy
+
+`REPLY_MANUAL_ORDINARY=1` and `REPLY_MANUAL_DISCOVERY=1` select the mixed workflow:
+ordinary posts are drafts; only selected watched-author actions run automatically.
+The daily ordinary review sessions are 05:00,10:00,15:00 and 20:00 Toronto, up to 20
+attempts/selections each and 80 selected drafts/day. No catch-up burst fills missed
+sessions. The 70 target/60–80 range is advisory, and manual draft counts are not posted
+Reply counts. `REPLY_REVIEW_ONLY=1` would disable all writes; with manual discovery
+also enabled it can run only the read-only draft scheduler.
+
+All commands use `uv run --with-requirements requirements.txt python main.py`:
+
+| Suffix | Result |
+|---|---|
+| `--dry-run` | Show next-start jobs, watched deadlines and manual workflow; no browser/model |
+| `--reply-review list` | Refresh the local review report and show inbox counts |
+| `--reply-review prepare` | Prepare a bounded batch from imported sources; never send |
+| `--reply-review discover` | Run the enabled read-only discovery/drafting session within its limits |
+| `--reply-review metrics` | Fourteen-day self-reported measurements, separately from confirmed receipts |
+| `--reply-review metrics --meaningful-responses 3 --repeat-interactions 2 --reply-views 900 --attributable-profile-visits 4 --attributable-follows 1 --minutes 120` | Set today's optional self-reported totals; add `--date YYYY-MM-DD` for another day |
+| `--reply-review posted STATUS_ID --url YOUR_POST_URL` | Keep an explicitly unverified manual-post report; no ledger/receipt claim |
+
+Read `state/theaishrink/manual_reply_review.md`, open each source, verify context,
+edit the draft and post manually. The inbox includes relevance/evidence notes and
+missing context. Follow-up snapshots retain the external root, our prior reply and
+the incoming response; inspect the actual conversation before manually sending.
+The existing guarded `manual_reply_review.json` also retains session attempts and
+optional reported metrics. No publication-memory migration is needed.
+
+Elon discovery polls every 5 seconds. Selection, likes/reposts and Reply dispatch
+check every 2 seconds on independent workers; the approved source/draft is shared.
+The first-minute deadline refuses late submissions, including during composition.
+Existing three/day and six-hour watched limits and uncertain claims remain.
+Only an exact own-X receipt counts as a confirmed Reply. Use the normal launcher
+on the Operator's explicit restart; automatic restart stays disabled.
+
+Earlier procedures below apply only where consistent with this current strategy.
+
+## Curated replies and scoped watched actions
+
+Keep the bot paused until the operator explicitly starts/restarts it. The normal
+`./bin/run.sh` launcher applies the curated policy; `main.py --dry-run` previews
+four jobs and the 100/day, audience, brevity and watched-action limits without
+opening Safari or calling a model. Automatic restart remains disabled while paused.
+
+`[CURATED]` logs buffered sources, rejection reasons, generations and confirmed
+Replies separately. No eligible audience, a failed visual review, spacing or a used
+budget can yield zero. `[REPLY] Confirmed <own status URL>` is publication evidence;
+a search, generated draft or submit keystroke alone is not. Missing receipts remain
+pending with permanent deduplication and consume the same daily/pacing budgets.
+
+The existing `reply_submissions.json` retains every prior entry. New curated entries
+also store `lane`, submitted text and whether it had a heart, including uncertain
+attempts. `reposted_tweets.json` remains the durable repost claim/budget record.
+Source/video approvals and profile caches are process-local, bounded and disposable;
+restarting re-reads evidence without resetting publication history. No migration.
+
+Author follower evidence is exact-profile-bound and expires after six hours. Unknown
+counts fail closed. Artist videos require an exact sampled visual review and final
+media identity check. Repost selection never authorizes a Reply; an Elon like never
+authorizes a repost. No-contact requests override these optional actions.
+
+## Earlier automatic invited help
+
+The next-run configuration uses `REPLY_INVITED_ONLY=1`, `REPLY_PUBLIC_REQUESTS=1`
+and `REPLY_REVIEW_ONLY=0`. Three rotating public help/feedback searches alternate
+with one mentions/opt-out check. Public turns read Latest and recent Top, up to
+forty results and eight scrolls per tab; mentions retain twenty results and one scroll.
+A bounded source queue retains unused requests for thirty minutes, with final
+source/history checks at delivery. No prepared draft or send claim is added by discovery.
+The normal launcher starts only `invited_help_job`, every three minutes during the
+04:30–00:00 Toronto window. Apply changes only through the normal launcher after validation; the running
+process retains its loaded settings until restart. A nighttime launch waits
+for 04:30; restarting does not extend awake hours.
+
+`main.py --dry-run` reports what a new process would load, without browser/model calls.
+Look for `Bot started: automatic invited technical help and creative feedback` and `[HOURS]` in
+`bot.log`. `[INVITED-HELP]` counts confirmed outcomes separately from discovered
+requests, generation attempts and admission refusals. The preceding source summary
+shows rejection reasons such as nested replies or no explicit request. Search activity
+alone proves no publication. `[REPLY] Confirmed https://x.com/...` identifies an
+exact recent own-status receipt. A missing receipt leaves the send uncertain,
+charged and permanently claimed, with no automatic resend. Existing confirmed receipts,
+permanent parent claims and pending submission records remain authoritative.
+
+Advisory target 250 Replies/day; hard ceiling 250 submissions/day, one per
+author/day, at least four minutes plus jitter. Unresolved submissions count. Fewer
+than 250 or zero may publish when eligible requests are unavailable. No parent
+likes or other engagement actions; videos/news/profile posts are paused. Explicit
+no-bot/no-contact objections discovered in these searches are
+saved to `manual_reply_opt_outs.json`, also used by `--reply-review opt-out HANDLE`.
+Unseen/deleted complaints cannot be inferred from a search; no report-prevention
+guarantee is made. Do not clear claims, history or opt-outs to regain capacity.
+
+## Manual Reply review
+
+Optional `REPLY_REVIEW_ONLY=1` disables the live publisher. In that mode, running
+`bin/run.sh` prepares a bounded batch from the local inbox and exits; it never starts
+Safari discovery, scheduled jobs, parent likes, reposts or video publication.
+No API credentials or connection are required. There is no publish/approve command.
+
+All commands below use `uv run --with-requirements requirements.txt python main.py`:
+
+| Suffix | Effect |
+|---|---|
+| `--dry-run` | Show the selected mode and limits; zero jobs/writes when review-only is enabled |
+| `--reply-review add --url URL --text TEXT --standalone` | Add an exact source you just read and confirmed is standalone |
+| `--reply-review import FILE.json` | Import up to 2,000 snapshots; each has `url`, `text`, timezone-aware `observed_at`, `is_reply: false` |
+| `--reply-review prepare` | Rank questions first and prepare at most 20 drafts/day, without a minimum |
+| `--reply-review list` | Refresh the local inbox and show queue counts |
+| `--reply-review dismiss STATUS_ID` | Retain the decision without refilling today's allowance |
+| `--reply-review opt-out HANDLE` | Persist a no-contact request and dismiss that author's pending work |
+| `--reply-review posted STATUS_ID --url YOUR_POST_URL` | Record the operator's unverified manual-post report, without a publication claim or ledger row |
+
+Open the source from the inbox, check that a reply is welcome and useful, verify facts,
+edit the draft and post manually in X. Stale sources disappear from the current inbox;
+manual decisions and draft history are retained. Corrupt guarded files stop preparation
+and must be repaired, never deleted to regain capacity or forget an opt-out.
+
+| State file in `state/<BOT_ACCOUNT>/` | Policy |
+|---|---|
+| `manual_reply_review.json` | Guarded, versioned sources, drafts, daily usage and permanent manual decisions |
+| `manual_reply_opt_outs.json` | Guarded no-contact requests |
+| `manual_reply_review.lock` | Cross-process lock for importing, generation and decisions |
+| `manual_reply_review.md` | Regenerable review report; never publication evidence |
+
+The historical publishing operations below do not override invited-help or review-only restrictions.
 
 Running, watching and recovering the bot under the 2026-09-20 policy. The
 design is in [ARCHITECTURE.md](ARCHITECTURE.md), the rules in
@@ -368,11 +540,6 @@ not live, delete the slot entry. Either way, delete its entry (keyed
 source and text, across days too, and today's ceiling counts it. Do this with the bot
 stopped.
 
-**Reply submission recovery.** `reply_submissions.json` complements the permanent
-parent history. Missing receipts never release a submission or its daily budget.
-Do not delete it on deployment or reset it after an unknown send. Corrupt data
-stops Reply admission; repair from evidence while the bot is stopped.
-
 **Priority-watch state and uncertain reposts.** `priority_watch_state.json`
 stores each watched handle's first-enable timestamp; preserve it on deploy and
 restart. The first enable skips older posts, and later passes read at most the
@@ -431,6 +598,9 @@ Safari restart, and nothing writes over the file:
 | `following_count.json` | Every follow: `follow_policy.judge` counts the unreadable following ceiling as reached and `follow_account` returns `CAP_REACHED` before opening the profile. The count update after a shipped follow or unfollow is skipped |
 | `like_bot_state.json` | `like_job` |
 | `priority_watch_state.json` | `priority_watch_job` before search or any action |
+| `meme_repost_reviews.json` | Selective AI meme review and native repost admission |
+| `priority_quotes.json` | Watched quote delivery and video admission that reads quote spacing |
+| `self_reposts.json` | Own-post discovery and timed repost/undo dispatch |
 | `reposted_tweets.json` | Repost writes and Original publication admission, which need its pending reservations |
 | `pin_history.json`, `pin_daily_state.json` | `pin_job` |
 | `follow_engagers_state.json` | `follow_engagers_job` |
@@ -607,6 +777,9 @@ root:
 | `video_discovery.lock`, `video_media.lock`, `video_publisher.lock` | `video.workers` | Process role ownership, including main's Safari publisher role | OS locks; never delete while held |
 | `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
+| `meme_repost_reviews.json` | `meme_repost_store` | Source/media-bound video sample evidence and reviews; legacy text reviews stay readable; permanent sends remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
+| `priority_quotes.json` | `quote_store` | Source-bound editorial reviews, permanent confirmed/uncertain native quote receipts and daily reservations | guarded, process lock; never clear an uncertain send without checking X |
+| `self_reposts.json` | `self_repost_store` | Activation, own status IDs, one-hour due times, observed views, next half-hour turn and ambiguous undo/repost phases | guarded, process lock; preserve on restart |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |
 | `editorial_review.jsonl` | `editorial_bot` | Audit trail of editorial attempts | append-only, outside the store |
 | `reply_feedback.json` | `reply_feedback` | Three-day deterministic one-in-five Reply sample; exact own URL, actual observation ages, nullable counters and source/model/topic | disposable; never an admission history |
@@ -615,8 +788,6 @@ root:
 | `action_ledger.json` | `ledger` (`action_guard.record`) | Counted writes and debate turns per author, one JSON object per line, 90 days | own, fails closed |
 | `following_count.json` | `follow_policy.adjust_following` (`follow_account`, `bin/mass_unfollow.py`) | Following count used by the follow ceiling (`count`) and its last update (`updated`); the Operator's baseline is in the Account folder since issue #206 | guarded |
 | `replied_tweets.json` | `replied_store` (`reply_to_tweet`) | Permanent status-ID history of Replies and uncertain submissions; never evicted | own, fails closed |
-| `reply_submissions.json` | `reply_budget` immediately before submitting | Permanent timestamped Reply attempts; daily forty ceiling, watched-author caps and spacing include uncertain sends; confirmed ledger rows counted once | guarded |
-| `reply_submissions.json.lock` | `reply_budget` | OS process lock serializes final budget reservations | never delete while a writer may hold it |
 | `replied_tweets.json.lock` | `replied_store` | OS process lock for claims and every history update; held together with a thread lock | lock file; never delete while a writer may hold it |
 | `tweet_history.json` | `twitter_client` | Published originals, dedup corpus | guarded |
 | `engagement_log.csv` | `engagement_log` | Append-only action log | append-only, outside the store |
@@ -930,3 +1101,19 @@ The operator skills live in `.claude/skills/` only; `.codex/skills` is a
 relative symlink to it and OpenCode reads `.claude/skills` natively. They
 match the 2026-09-20 policy: none drives a disabled surface. The manual
 write skills follow [Manual writes](#manual-writes).
+
+### Scheduled promotion recovery (November 10)
+
+Quotes in `pending` never automatically resubmit. Inspect the exact own post and
+source card before reconciling. An own-repost `undo_pending` can continue only
+after observing the exact original no longer reposted; `repost_pending` confirms
+only after the exact original is visibly reposted. Otherwise it stays held.
+Do not delete these stores or reset next-due timestamps. Post/repost receipts,
+not elapsed scheduler time, establish success. The ordinary restart workflow
+preserves these files and all existing production histories.
+
+November 12: the Operator will restart manually. Preserve `.bot_disabled` until
+that start. The local `AWAKE_72H_START` window expires without another restart;
+quotes and timed self-reposts stay disabled until explicitly changed. Native AI video
+reposts use permanent repost claims; an unconfirmed click cannot be retried by
+clearing the review record. Read-only diagnostics do not publish.

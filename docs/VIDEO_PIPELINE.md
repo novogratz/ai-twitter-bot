@@ -1,31 +1,15 @@
 # Existing-video pipeline
 
-## Current Account: exceptional Instagram videos alongside news
+## Current Account: ultra bangers only
 
-The November 18 Account schedules four videos daily at 09:00, 12:00,
-17:00 and 20:00 Toronto. Verified news and occasional discussion questions share
-the existing publisher; automatic startup requests remain disabled.
-`best_available_fallback=true` makes editorial scores preferences: target-clearing
-clips rank first, then the best available fully inspected source/output quality.
-The weaker of the two normalized editorial reviews ranks fallback candidates,
-with output quality breaking ties; popularity never compensates for weaker
-footage. Raw ratings and unknown metrics remain unchanged. Other Accounts keep
-strict floors by default. Source, technical, content, permission, X-copy and
-permanent duplicate checks remain mandatory, as do actual opening samples. Immediate action is preferred; observed slow openings
-reduce the score without refusing an otherwise eligible fallback. No eligible supply or a failed send is still a hold.
-Four owner-selected
+The 2026-11-08 Account keeps thirteen 90-minute video opportunities, with no
+minimum publication target. News and automatic startup requests are disabled.
+Only exceptional inspected finds may publish automatically through the existing
+publisher. Source and output each need every editorial component at least 9/10
+and normalized editorial quality at least 95/100, excluding age and engagement.
+The full rubric still requires 88/100; fit/entertainment need 19/20, quality 14/15
+and the first-second hook 9/10. Empty windows stay empty. Four owner-selected
 benchmarks guide taste and remain permanent posted memory, never new finds.
-The November 17 owner-supplied X reference is also permanent posted memory;
-its media and public counters were not independently inspected.
-
-Retained-overlay output review includes original frames trimmed to the same excerpt
-and labeled with output-relative timestamps. Actual source pixels can establish
-that an OCR-missed credit was already present; missing evidence or a model refusal
-still holds the output.
-
-Captions use a short supported scene joke and optional blank-line sign-off such
-as `Absolute BANGER 🔥`. Familiar cast aliases are allowed when supported by
-creator attribution. Jensen, Elon, Sam, Dario and Trump may qualify; facial appearance alone never supplies identity.
 
 Codex chooses one 8–120 second contiguous excerpt from a source up to five minutes.
 Prefer 15–30 seconds when a complete joke/chorus fits; preserve a strong full
@@ -35,14 +19,15 @@ checks actual edited content and the first second at 0/.2/.4/.6/.8 seconds. Audi
 is compared against the exact source interval, not the whole untrimmed audio.
 Retained source overlays are matched with the same timestamp offset. Technical
 quality, source permission, cast attribution, synthetic performance, freshness and
-permanent novelty remain required. Only source/output quality ranks eligible clips; no engagement prediction supplies score points.
+permanent novelty remain required. Only source/output quality above the Account
+floors earns publication; no engagement prediction supplies score points.
 
 The operator-owned [brief](../accounts/theaishrink/video_discovery_prompt.md),
 [query bank](../accounts/theaishrink/video_query_bank.txt) and
 [partial memory seed](../accounts/theaishrink/video_memory.json) feed the existing
 discovery worker. Persistent turns rotate fresh/archive/new-creator searches
 60/30/10, with concept, creator and source-chain lanes. Provider weights favor
-Instagram/Bilibili 70/30; remaining relative weights are TikTok 10, RedNote 4, X 5,
+Instagram/Bilibili 40/30; remaining effort uses TikTok 10, RedNote 4, X 5,
 YouTube 7 and Douyin 4. Cooling/blocked sources yield their turn. Three shared
 research calls per hour and existing daily budgets bound work. One archive pass
 per Toronto day can request up to 120 leads/six queries; ordinary passes use
@@ -50,27 +35,11 @@ per Toronto day can request up to 120 leads/six queries; ordinary passes use
 records bounded search passes, not fabricated exhaustive profile crawling.
 
 Five-minute reserve maintenance refreshes expiring X checks and brings source
-polls forward below five eligible distinct clips. Target inventory is ten. Completed negative reviews and exhausted media retries are not reset by
+polls forward below one eligible distinct clip. Target inventory is three. Completed negative reviews and exhausted media retries are not reset by
 maintenance. New editing policy can re-inspect a saved unclaimed source once.
 Owner `shown`/`delivered`/`rejected` memory is permanent; use
 `bin/video.py remember CANDIDATE delivered` only after actual owner delivery.
 Preparation alone does not create a delivery or publication record.
-
-### Instagram preview and normal-page capture
-
-`bin/video.py prepare-preview INSTAGRAM_URL --output /tmp/si-previews` uses the
-normal request/download/model budgets and source/permission/quality gates. It
-preserves the original, inspects actual temporal samples and audio evidence, and
-renders a branded preview only when source review passes. Its local report and
-caption identify any remaining final publication checks. It never queues,
-reserves or publishes a post. Already posted/claimed sources are refused.
-
-Instagram `/p/`, `/reel/` and `/reels/` aliases must preserve the same
-case-sensitive shortcode. A bounded read of the opened normal page's JSON
-scripts can supply the exact video's date, creator, caption and media versions.
-Only matching `code` plus video type and media versions qualify; recommendations
-from other posts do not. Existing CDN, size, date and download validation remain.
-No private endpoint, cookie extraction or invented media URL is used.
 
 The discovery adapter keeps existing candidate field names and adds `handoff`
 inside the same `candidates.document`: version/candidate/cluster/status, public
@@ -131,9 +100,8 @@ unsupported legacy `av…` lead must never cause an early return that blocks lat
 valid candidates. Unsupported links remain leads, not verified media.
 
 The prior November 5 policy used ten two-hour slots and a two-line POV/slogan
-caption. November 7 changed both to thirteen 90-minute slots and one grounded
-caption; November 17 replaces that cadence and format with the four windows and
-playful captions described above. Optional
+caption. November 7 supersedes both: thirteen 90-minute slots and one grounded,
+output-verified caption naming at least one of the five permitted cast roles. Optional
 source and synthetic-disclosure footers are disabled for this Account; internal
 provenance remains. The operator's video/music permission attestation covers all
 five platforms, including X, until revoked. Source subtitles, logos and credits may remain;
@@ -304,21 +272,22 @@ The current Account selects `publishing_transport = "safari"`, following the
 Operator's later request. Video posts reuse that same composer, write wrapper
 and Safari lock; X API credentials are unnecessary. The optional API adapter is
 retained for compatibility and refuses calls while Safari is selected.
-The latest interaction cooldown is 23:00–07:00 Toronto, with no daytime
+The latest interaction cooldown is midnight–04:30 Toronto, with no daytime
 breaks for this Account. Video publishing and startup eligible-time accounting
-read the same interaction clock. Discovery and media also pause overnight, retaining their durable queue and heartbeat.
+read the same interaction clock. Discovery and media are independent of the
+scheduler's overnight pause.
 
 ## Schedule and delivery semantics
 
 | Window | Scheduled video posts |
 |---|---|
-| Morning | 09:00 |
-| Afternoon | 12:00, 17:00 |
-| Evening | 20:00 |
+| Morning | 05:00, 06:30, 08:00, 09:30, 11:00 |
+| Afternoon | 12:30, 14:00, 15:30, 17:00 |
+| Evening | 18:30, 20:00, 21:30, 23:00 |
 
 All calendars use `zoneinfo.ZoneInfo("America/Toronto")`, also Montreal's time
-rules. One to thirteen distinct slots are configurable; this Account uses four
-and `scheduled_daily_cap=4`. Other Accounts retain the default ceiling of eight.
+rules. Five to thirteen distinct slots are configurable; this Account uses thirteen
+and `scheduled_daily_cap=13`. Other Accounts retain the default ceiling of eight.
 Grace defaults to ten
 minutes and cannot exceed it. The minimum actual-success gap is fifteen minutes
 and may be tightened. There is no outage catch-up. For example, a 07:08 success
@@ -327,10 +296,10 @@ deadline, so the second slot skips. Empty slots stay available through grace.
 One eligible clip can fill one member of a pair.
 
 `protect_primary_windows = true` prioritizes one video at each configured main
-window. This Account has four main windows and no paired slots. If a different
+window. This Account has thirteen main windows and no paired slots. If a different
 configuration gives a window a second slot after its first video, its
 second slot can use only a clip whose removal leaves distinct eligible inventory
-for the next four main windows, including tomorrow morning. Coverage accounts
+for the next five main windows, including tomorrow morning. Coverage accounts
 for source/permission expiry and known freshness-score decay through each slot's
 grace. A high-scoring long-lived clip is retained when it is the only one that
 can cover a later window. The check and content reservation share one database
@@ -338,39 +307,29 @@ transaction. If new clips become ready within grace, the extra slot can proceed;
 otherwise its skip records the inventory shortage. A second slot may still
 provide the window's first post after a missed first slot.
 
-`video.py status` and the daily report include `window_coverage`: the four future
+`video.py status` and the daily report include `window_coverage`: the five future
 slots, provisional candidate allocations and shortfall. Final eligibility,
 novelty, score and file checks still run before publication. The target buffer
-remains ten; current coverage is not a guarantee of future delivery or
+remains sixteen; current coverage is not a guarantee of future delivery or
 future discovery. The explicit startup post keeps its requested best-ready-clip
 priority, including its normal fifteen-minute slot collision rule. Setting
 `protect_primary_windows = false` restores selection without inventory protection
 on the next worker restart; all other gates remain.
 
 Explicit live activation creates a persistent request, unique by request ID and
-local request day for the ordinary allowance. The live Account's `startup_on_boot=true` also records a
+local request day. The live Account's `startup_on_boot=true` also records a
 request on ordinary `main.py` starts, after singleton ownership and before
 resuming jobs. It queues discovery immediately and lets the dedicated publisher
 attempt a ready eligible clip. It creates no Reply hold and never overrides
 video pause/shutdown or ambiguous publication. Reply-only, disabled and dry-run
 starts create none. Repeated starts reuse the day's request; an expired pending
 request from an earlier day is closed before creating today's request. The startup
-request receives sixty minutes of eligible time, excluding 23:00–07:00 and
+request receives sixty minutes of eligible time, excluding midnight–04:30 and
 any explicitly configured interaction breaks (disabled for this Account),
 including both DST transitions correctly. A request within fifteen minutes of
 the next slot waits for that slot; a single confirmed post atomically fulfills
-both records. A unique fulfillment-day record enforces the ordinary once-per-day
-allowance, including requests deferred across midnight.
-
-The November 18 request also configures the stable one-time authorization
-`startup_once="operator-extra-2026-11-18"`, since the earlier confirmed test already
-used today's allowance. This can add one new startup request without changing
-the old receipt. It is unique for its lifetime, never per process or restart;
-without an earlier startup that day it occupies the daily allowance too. The
-version-three schema migration retains all old requests and claims and adds the
-named allowance to those journals. Uncertain sends retain both content and
-startup claims. Removing/readding the config cannot erase consumption. Only an
-explicit new operator request can authorize another ID; code never rotates it.
+both records. A unique fulfillment-day record prevents two startup posts on one
+Montreal calendar day, including requests deferred across midnight.
 
 Slots, startup requests and content are atomically reserved under `BEGIN
 IMMEDIATE`. One publisher reservation can be active at a time. The successful
@@ -508,19 +467,19 @@ artifact transfer. Safari publishing stays on the Reply Mac; do not share
 SQLite over NFS. Automated cross-host telemetry/artifact transport is not
 implemented; same-host telemetry is implemented.
 
-## Connector capabilities (updated 2026-11-17)
+## Connector capability check (2026-11-01)
 
-The November 1 inspection of environment/config **names only** found no Instagram, TikTok,
+Inspection of environment/config **names only** found no Instagram, TikTok,
 Bilibili, RedNote, licensed-provider, X API or video-inspection credentials. No
-live authenticated connector call or test post was made during that initial audit. FFmpeg/ffprobe are
+live authenticated connector call or test post was made. FFmpeg/ffprobe are
 installed; Tesseract and fpcalc are not. Branding uses a Pillow text overlay,
 so this FFmpeg build does not need `drawtext`.
 
 | Adapter | Current status | Exact prerequisite / scope |
 |---|---|---|
-| Instagram Reels | Normal-page capture tested; discovery remains bounded | Codex public-web search and configured creator monitoring. Safari reads the exact shortcode's page-owned video metadata/media, including `/p/` to `/reel/` aliases. The November 17 preview downloaded and inspected a real source; it held on quality. Usage permission and source/final checks remain required. No Meta API access is assumed. |
+| Instagram Reels | Limited discovery | Codex public-web search and configured creator monitoring (`ai_xiaomu`). Authorized original/feed, upload timestamp and video/music permission are still needed for selection. No Meta API access is assumed. |
 | TikTok | Limited discovery | Codex public-web search. Creator feed/original still required; Research Tools are not a commercial-creator workaround. |
-| Bilibili | Normal-page capture implemented | Codex public-web search plus observed ordinary Safari player resources; no private or invented Open Platform endpoints. Usage permission and actual source/output checks remain required. |
+| Bilibili | Limited discovery | Codex public-web search; no private or invented Open Platform endpoints. Authorized original/feed still required. |
 | RedNote/Xiaohongshu | Limited discovery | Codex public-web search. Login/CAPTCHA barriers remain blocked; no claimed public download endpoint. |
 | X publication/history/novelty | Safari | Existing signed-in account and automation access; no API token. Visible native-video frames can supply visual sequence fingerprints when a blob hides its URL. Unreadable/CORS-protected video remains held. |
 | Semantic video/audio/OCR inspection | Implemented | Fresh Codex session, timestamped frames, Apple Vision OCR and local SoundAnalysis. Requires existing Codex login and the one-time helper build below. |
@@ -537,9 +496,9 @@ is falsely labeled operational merely because its class or fixture test exists.
 The account additionally selects `public_search = true` per platform. This is
 permitted public discovery through Codex web search, not authenticated native
 platform access. Search-only results have **unknown upload dates and no download
-or permission assertion**. A permitted feed or supported normal-page capture
-must establish original media and a verified timestamp before selection. Later
-evidence updates that same candidate instead of creating a duplicate. Related creators
+or permission assertion**. They are held without consuming media jobs until an
+authorized feed supplies the original and verified timestamp. The later feed
+updates that same candidate instead of creating a duplicate. Related creators
 remain suggestions, never automatically licensed sources.
 
 Cheap configured feeds retain the 20/10-minute polling cadence. Public searches
@@ -805,8 +764,6 @@ An explicitly requested `./bin/run.sh` starts Reply work and queues one durable
 video request independently. It does not hold Replies while the clip is prepared.
 Preparation cannot guarantee an immediate send without an already eligible ready
 clip. Repeated starts keep the same daily allowance and unknown sends stay held.
-The single November 18 grant above can supplement an already-consumed allowance;
-it does not authorize a post on every restart or extra startup news.
 
 **Optional video first, then interactions:** only when the Operator explicitly
 requests that different order, while the bot is stopped, use the following
@@ -880,8 +837,8 @@ publication.
    uv run --with-requirements requirements-video.txt python bin/video.py preview CANDIDATE_ID
    ```
 
-   Check `window_coverage.shortfall` and its four allocations. Provision at least
-   four distinct eligible clips for the main windows and a surplus for the
+   Check `window_coverage.shortfall` and its five allocations. Provision at least
+   five distinct eligible clips for the main windows and a surplus for the
    explicit startup/paired extras; the normal buffer target is sixteen. A held,
    unlicensed, stale or duplicate clip cannot fill the shortage. Coverage must
    be refreshed at publication and cannot guarantee X delivery.
@@ -947,7 +904,7 @@ restore an older video database. Check unresolved submissions and today's
 profile activity before returning to the older editorial policy. Its shared
 guard includes today's confirmed video count and latest success when applying
 the legacy ceiling/spacing, even though the video journal is separate from the
-historical JSON ledger. The 07:00 interaction wake and disabled daytime breaks
+historical JSON ledger. The 04:30 interaction wake and disabled daytime breaks
 remain when the video feature is disabled.
 
 ## Download allowance and source pixel aspect

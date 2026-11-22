@@ -52,6 +52,22 @@ def test_unrelated_handle_is_admitted(monkeypatch):
     assert verdict and verdict.author == "karpathy"
 
 
+@pytest.mark.parametrize("handle", ["elonmusk", "ElonMusk", "ELONMUSK"])
+def test_reply_exclusion_is_exact_and_does_not_block_other_actions(handle, monkeypatch):
+    from src.core import account
+    from src.guards.reply_admission import is_blocked_account
+    from dataclasses import replace
+    profile = replace(account.current(), reply_excluded_handles=("elonmusk",), auto_engage_handles=())
+    monkeypatch.setattr(account, "current", lambda: profile)
+    parent = url(handle)
+    assert judge_parent(parent).refusal is Refusal.REPLY_EXCLUDED
+    assert judge_reply(parent, TEXT).refusal is Refusal.REPLY_EXCLUDED
+    assert Refusal.REPLY_EXCLUDED.definitive
+    assert not account.watched_url(parent) and not is_blocked_account(handle)
+    assert judge_parent(url("notelonmusk"))
+    assert not replied_store.load_replied()
+
+
 def test_own_post_and_author_less_url_are_definitive():
     own = judge_parent(url(config.BOT_HANDLE.upper()))
     anonymous = judge_parent("https://x.com/i/web/status/2063500000000000201")
@@ -109,10 +125,19 @@ def test_english_only_rejects_french_and_accepts_english_for_a_former_french_vip
     assert not replied_store.load_replied(), "admission alone cannot claim a submission"
 
 
+def test_live_family_tech_reply_passes_final_text_admission_without_a_claim(monkeypatch):
+    monkeypatch.setattr(humanizer, "casualize", lambda text: text)
+    draft = "Family tech support now includes verifying reality."
+    verdict = judge_reply(url("someone"), draft)
+    assert verdict, verdict.reason
+    assert verdict.text == draft
+    assert not replied_store.load_replied(), "text admission is not a publication"
+
+
 def test_spacing_waits_for_the_reply_not_the_parent(monkeypatch):
     """A Reply that just shipped must not refuse every candidate before
     generation: only judge_reply applies the spacing."""
-    monkeypatch.setattr(action_guard, "can_post", lambda action, **kwargs: (False, "too soon"))
+    monkeypatch.setattr(action_guard, "can_post", lambda action: (False, "too soon"))
     assert judge_parent(url("someone"))
     verdict = judge_reply(url("someone"), TEXT)
     assert verdict.refusal is Refusal.SPACING and not verdict.refusal.definitive
@@ -247,22 +272,37 @@ def test_repetition_check_keeps_distinct_numbers_and_contributions(monkeypatch):
     assert judge_reply(url("artist"), "Love the idea of a paper-collage city ❤️")
 
 
-def test_full_target_day_wording_still_refuses_after_a_memory_reload(settings_override, monkeypatch):
-    import csv
-    from src.core import config, engagement_log
+@pytest.mark.parametrize("draft", [
+    "Making a shared office feel personal to each team member is such a thoughtful goal. Congrats on WorkView ❤️",
+    "Making a shared home feel personal to each family member is such a thoughtful goal. Well done on HomeView!",
+])
+def test_lightly_rewritten_long_praise_is_refused_without_claim(monkeypatch, draft):
+    from src.core import engagement_log
+    prior = "Making a shared home feel personal to each family member is such a thoughtful goal. Congrats on HomeView ❤️"
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: [prior])
+    verdict = judge_reply(url("builder"), draft)
+    assert verdict.refusal is Refusal.TEXT and "recycled wording" in verdict.reason
+    assert judge_parent(url("builder")) and not replied_store.load_replied()
 
-    settings_override(REPLY_RECENT_MEMORY_COUNT=1400)
-    repeated = "A held-out set would catch that leakage before the benchmark."
-    with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as handle:
-        writer = csv.writer(handle)
-        writer.writerow(["2026-11-18T07:00:00", "reply", repeated, url("old")])
-        for n in range(1399):
-            writer.writerow(["2026-11-18T08:00:00", "reply", f"Unique observation {n}", url("other")])
-    monkeypatch.setattr(engagement_log, "_memory_key", None)
-    assert repeated not in engagement_log.recent_replies(20)
-    verdict = judge_reply(url("builder"), repeated.upper() + " ❤️")
-    assert verdict.refusal is Refusal.TEXT and "recent confirmed" in verdict.reason
-    assert judge_parent(url("builder")), "rejection must not claim a new parent"
+
+def test_repetition_memory_covers_configured_history_not_just_twenty(monkeypatch, settings_override):
+    from src.core import engagement_log
+    settings_override(REPLY_RECENT_MEMORY_COUNT=100)
+    history = ["Love the paper collage concept ❤️"] + [f"Distinct older reply {i}." for i in range(99)]
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: history[-limit:])
+    assert engagement_log.repeated_reply("LOVE THE PAPER COLLAGE CONCEPT!")
+    assert not engagement_log.repeated_reply("Love the paper collage concept!", limit=20)
+
+
+def test_similar_short_reactions_and_changed_technical_answers_stay_distinct(monkeypatch):
+    from src.core import engagement_log
+    monkeypatch.setattr(engagement_log, "recent_replies", lambda limit: [
+        "Love the paper collage concept ❤️",
+        "With the model loaded, that GPU has 8 GB left for the cache and activations.",
+        "A larger batch can improve throughput, but it also uses more memory and increases latency."])
+    assert not engagement_log.repeated_reply("Love the tiny robot orchestra ❤️")
+    assert not engagement_log.repeated_reply("With the model loaded, that GPU has 16 GB left for the cache and activations.")
+    assert not engagement_log.repeated_reply("A smaller batch reduces latency when each request needs an immediate answer.")
 
 
 def test_unreadable_recent_text_does_not_create_a_send_or_parent_claim(monkeypatch):

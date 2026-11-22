@@ -73,13 +73,13 @@ def test_stale_targets_cannot_be_harvested_promoted_or_scanned(monkeypatch, sett
     assert direct_reply._run_vip_scan(reply_pipeline.Cycle()) == 0
 
 
-def test_a_privileged_source_declaration_still_needs_ai_evidence():
+def test_explicit_watched_author_exception_allows_other_topics(watched_account):
     handle = account.current().auto_engage_handles[0]
     declaration = reply_source.Declaration(max_age=timedelta(hours=1), author=handle)
     rejected = {"url": fresh(handle, n=1), "text": "Starship launch today"}
     accepted = {"url": fresh(handle, n=2), "text": "Grok Imagine made this film"}
     candidates = reply_source.select([rejected, accepted], declaration, "WATCH")
-    assert [c.url for c in candidates] == [accepted["url"]]
+    assert [c.url for c in candidates] == [rejected["url"], accepted["url"]]
 
 
 @pytest.mark.parametrize("pipelined", [False, True])
@@ -180,6 +180,9 @@ def test_manual_reply_to_verified_ai_parent_can_ship(live_write, monkeypatch, me
 @pytest.mark.parametrize("action", ["like_priority_post", "repost_tweet"])
 def test_watch_author_has_no_topic_exception(live_write, monkeypatch, memory_ledger, action):
     from src.x import repost_page
+    from dataclasses import replace
+    profile = replace(account.current(), auto_engage_handles=("watched",), auto_engage_all_topics=False)
+    monkeypatch.setattr(account, "current", lambda: profile)
     url = fresh(account.current().auto_engage_handles[0])
     modes = []
     def read(target, mode="read"):

@@ -31,7 +31,7 @@ from datetime import datetime
 
 from ..core.logger import log
 from ..core.state_store import DISPOSABLE, StateFile
-from ..guards.active_hours import may_act
+from ..guards.active_hours import OutsideActiveHours, require_active
 from . import safari
 
 # Disposable: losing it only allows one earlier Safari restart.
@@ -195,7 +195,9 @@ def restart_safari(reason: str = "") -> bool:
     Login session survives because cookies live on disk. Outside waking
     hours, or once a stop was requested, it does nothing.
     """
-    if not may_act():
+    try:
+        require_active()
+    except OutsideActiveHours:
         log.info(f"[HYGIENE] Skipping restart outside waking hours. reason={reason}")
         return False
     last = _last_run_ts()
@@ -206,8 +208,14 @@ def restart_safari(reason: str = "") -> bool:
         return False
 
     log.warning(f"[HYGIENE] Restarting Safari. reason={reason or 'preventive'}")
-    _quit_safari()
-    ok = _launch_safari()
+    try:
+        require_active()
+        _quit_safari()
+        require_active()
+        ok = _launch_safari()
+    except OutsideActiveHours:
+        log.info("[HYGIENE] Recovery interrupted by stop or active-window expiry.")
+        return False
     if ok:
         _mark_ran()
         log.info("[HYGIENE] Safari restarted cleanly. Login session preserved.")

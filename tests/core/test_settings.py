@@ -20,6 +20,7 @@ def fresh(monkeypatch, tmp_path):
     """A settings module that has not loaded yet, and a `.env` to write."""
     monkeypatch.setattr(settings, "_values", None)
     monkeypatch.setattr(settings, "_warnings", [])
+    monkeypatch.setattr(settings, "_overrides", {})
     env_file = tmp_path / ".env"
 
     def load(text, environ=None):
@@ -59,16 +60,74 @@ def test_a_badly_typed_value_in_the_process_environment_stops_the_start_too(fres
         fresh("", {"MAX_FOLLOWS_PER_DAY": "lots"})
 
 
+@pytest.mark.parametrize("requested,expected", [(0, 5), (5, 5), (20, 20)])
+def test_watched_polling_accepts_five_seconds_without_allowing_a_busy_loop(fresh, requested, expected):
+    fresh(f"PRIORITY_WATCH_INTERVAL_SECONDS={requested}\n")
+    assert settings.get("PRIORITY_WATCH_INTERVAL_SECONDS") == expected
+
+
+def test_manual_ordinary_mode_keeps_restricted_transport_under_stale_overrides(fresh):
+    fresh("REPLY_MANUAL_ORDINARY=1\nREPLY_BROAD_DISCOVERY=0\nREPLY_CURATED_MODE=0\nREPLY_INVITED_ONLY=0\n")
+    assert settings.get("REPLY_BROAD_DISCOVERY") is True
+    assert settings.get("REPLY_CURATED_MODE") is True
+    assert settings.get("REPLY_INVITED_ONLY") is True
+
+
+@pytest.mark.parametrize("requested,expected", [(20, 20), (80, 80), (100, 80)])
+def test_manual_draft_ceiling_allows_the_operator_plan_but_stays_bounded(fresh, requested, expected):
+    from src.guards import reply_budget
+    fresh(f"REPLY_REVIEW_DAILY_LIMIT={requested}\n")
+    assert reply_budget.daily_plan()["draft_limit"] == expected
+
+
+def test_longer_ordinary_replies_are_bounded_to_one_post(fresh):
+    fresh("REPLY_SHORT_MAX_CHARS=1000\n")
+    assert settings.get("REPLY_SHORT_MAX_CHARS") == 278
+
+
+@pytest.mark.parametrize("name,requested,expected", [
+    ("CURATED_WATCH_REPLIES_PER_DAY", 1400, 1400),
+    ("CURATED_WATCH_REPLIES_PER_DAY", 9999, 1500),
+    ("CURATED_WATCH_REPOSTS_PER_DAY", 1400, 1400),
+    ("CURATED_WATCH_REPOSTS_PER_DAY", 9999, 1500),
+    ("CURATED_WATCH_REPLY_MIN_SECONDS", 1, 8),
+    ("CURATED_WATCH_REPOST_MIN_SECONDS", 1, 60),
+])
+def test_explicit_watched_policy_is_bounded_without_the_old_six_hour_hold(fresh, name, requested, expected):
+    fresh(f"{name}={requested}\n")
+    assert settings.get(name) == expected
+
+
+@pytest.mark.parametrize("requested", [1500, 9999])
+def test_explicit_reply_ceiling_is_fifteen_hundred_without_changing_the_generic_default(fresh, requested):
+    fresh(f"MAX_REPLIES_PER_DAY={requested}\n")
+    assert settings.get("MAX_REPLIES_PER_DAY") == 1500
+    assert settings.DECLARED["MAX_REPLIES_PER_DAY"].default == 1400
+
+
 @pytest.mark.parametrize("value", ["today", "2026-11-31", "20261104", "2026-W45-3"])
-def test_reply_boost_requires_an_exact_calendar_date(fresh, value):
-    with pytest.raises(settings.SettingsError, match="REPLY_VOLUME_BOOST_DATE"):
-        fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
+@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE", "REPLY_WORKLOAD_BOOST_START_DATE"])
+def test_date_overrides_require_an_exact_calendar_date(fresh, value, name):
+    with pytest.raises(settings.SettingsError, match=name):
+        fresh(f"{name}={value}\n")
 
 
 @pytest.mark.parametrize("value", ["", "2026-11-04"])
-def test_reply_boost_accepts_blank_or_a_calendar_date(fresh, value):
-    fresh(f"REPLY_VOLUME_BOOST_DATE={value}\n")
-    assert settings.get("REPLY_VOLUME_BOOST_DATE") == value
+@pytest.mark.parametrize("name", ["REPLY_VOLUME_BOOST_DATE", "SKIP_SLEEP_NIGHT_DATE", "REPLY_WORKLOAD_BOOST_START_DATE"])
+def test_date_overrides_accept_blank_or_a_calendar_date(fresh, value, name):
+    fresh(f"{name}={value}\n")
+    assert settings.get(name) == value
+
+
+@pytest.mark.parametrize("value", ["today", "2026-11-13", "2026-11-13T02:00:00", "2026-02-30T02:00:00Z"])
+def test_awake_window_requires_a_timezone_aware_timestamp(fresh, value):
+    with pytest.raises(settings.SettingsError, match="AWAKE_72H_START"):
+        fresh(f"AWAKE_72H_START={value}\n")
+
+
+def test_awake_window_accepts_explicit_offset(fresh):
+    fresh("AWAKE_72H_START=2026-11-12T21:48:10-05:00\n")
+    assert settings.get("AWAKE_72H_START") == "2026-11-12T21:48:10-05:00"
 
 
 def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_override, monkeypatch):
@@ -89,7 +148,8 @@ def test_reply_boost_expires_at_toronto_midnight_without_reload(settings_overrid
         settings.reply_budget("MIN_SECONDS_BETWEEN_REPLIES")
 
 
-def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch):
+def test_restored_broad_discovery_preserves_budgets_and_restricts_writes(fresh, monkeypatch):
+    monkeypatch.setattr(settings, "_overrides", {})
     from datetime import datetime
     from zoneinfo import ZoneInfo
     from src.guards import active_hours
@@ -100,13 +160,23 @@ def test_account_selective_reply_policy_persists_across_days(fresh, monkeypatch)
         local = datetime(2026, 11, day, 12, tzinfo=ZoneInfo("America/Toronto"))
         monkeypatch.setattr(active_hours, "now_local", lambda: local)
         assert [settings.reply_budget(name) for name in settings.REPLY_BUDGET_NAMES] == [16, 80, 80]
-        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 0
-        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 6
-        assert settings.get("DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE") == 2
-        assert settings.get("MAX_REPLIES_PER_DAY") == 1400
-        assert settings.get("MIN_SECONDS_BETWEEN_REPLIES") == 8
+        assert settings.get("REPLY_FOR_YOU_FIRST") is False
+        assert settings.get("DIRECT_REPLY_MAX_AGE_MINUTES") == 1440
+        assert settings.get("DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE") == 4
+        assert settings.get("DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE") == 4
         assert settings.get("REPLY_PRIORITIZE_LARGE_ACCOUNTS") is False
-        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 0
+        assert settings.get("REPLY_MANUAL_ORDINARY") is False
+        assert settings.get("REPLY_MANUAL_DISCOVERY") is False
+        assert settings.get("REPLY_REVIEW_ONLY") is False
+        assert settings.get("REPLY_INVITED_ONLY") is True
+        assert settings.get("MAX_REPLIES_PER_DAY") == 1400
+        assert settings.get("REPLY_PREFERRED_MIN_LIKES") == 3
+        assert settings.get("REPLY_REQUIRE_PARENT_LIKE") is True
+        assert settings.get("REPLY_SHORT_MAX_CHARS") == 140
+        assert settings.get("CURATED_WATCH_REPLIES_PER_DAY") == 1400
+        assert settings.get("CURATED_WATCH_REPOSTS_PER_DAY") == 1400
+        assert settings.get("CURATED_WATCH_REPLY_MIN_SECONDS") == 8
+        assert settings.get("CURATED_WATCH_REPOST_MIN_SECONDS") == 60
 
 
 FLOAT_SETTINGS = sorted(name for name, setting in settings.DECLARED.items() if setting.type is float)
@@ -151,7 +221,7 @@ def test_defaults_hold_without_env_file(fresh):
 
 
 @pytest.mark.parametrize("env_text", ["", (ROOT / ".env.example").read_text()], ids=["defaults", "example"])
-def test_default_and_example_routes_use_only_codex(fresh, env_text):
+def test_example_selects_grok_replies_without_changing_other_default_routes(fresh, env_text):
     from src.core import llm_client as llm
 
     fresh(env_text)
@@ -159,7 +229,9 @@ def test_default_and_example_routes_use_only_codex(fresh, env_text):
     assert settings.get("LLM_DISABLE_FALLBACK") is True
     assert llm._fallback("codex")[0] is None
     for surface in llm.Surface:
-        assert (llm.resolve(surface).provider or llm._provider()) == "codex"
+        reply_surface = surface in {llm.Surface.REPLY, llm.Surface.PRIORITY_REPLY, llm.Surface.REPLY_SEARCH}
+        expected = "grok" if env_text and reply_surface else "codex"
+        assert (llm.resolve(surface).provider or llm._provider()) == expected
 
 
 def test_env_file_values_are_typed(fresh):
@@ -219,8 +291,6 @@ def test_a_stricter_value_is_kept_without_warning(fresh):
 OPERATOR_BOUNDS = [
     ("DEBATE_MAX_TURNS_PER_AUTHOR_PER_DAY", "9", 4, 2),
     ("MIN_SECONDS_BETWEEN_REPLIES", "0", 8, 30),
-    ("MAX_REPLIES_PER_DAY", "1401", 1400, 100),
-    ("REPLY_RECENT_MEMORY_COUNT", "1401", 1400, 200),
     ("REPLY_JITTER_SECONDS", "-5", 0, 3),
     ("LIKE_BOT_PER_CYCLE", "22", 10, 5),
     ("LIKE_BOT_DAILY_CAP", "1800", 500, 200),
@@ -718,8 +788,9 @@ def test_env_example_pins_the_operator_models_and_keeps_policy_defaults():
     No setting without effect, nor a key only an older account used."""
     example = _env_example()
     operator_models = {
-        "AI_CLI": "codex", "REPLY_LLM_PROVIDER": "codex",
-        "REPLY_MODEL": "gpt-6.1-sol", "PRIORITY_REPLY_MODEL": "gpt-6.1-sol",
+        "AI_CLI": "codex", "REPLY_LLM_PROVIDER": "grok",
+        "REPLY_MODEL": "grok-4.7-build-fast", "PRIORITY_REPLY_MODEL": "grok-4.7-build-fast",
+        "GROK_REASONING_EFFORT": "low",
         "CODEX_REASONING_EFFORT": "xhigh", "LLM_DISABLE_FALLBACK": True,
     }
     assert operator_models.keys() <= example.keys()
@@ -741,3 +812,14 @@ def test_model_cli_credentials_in_env_file_do_not_stop_the_start(tmp_path):
     for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_BASE_URL", "OLLAMA_HOST"):
         assert settings._is_known(key), key
     assert not settings._is_known("MAX_BREAKOUTS_PER_DAY")
+
+
+def test_child_environment_overrides_never_change_parent_credentials_or_settings(monkeypatch):
+    monkeypatch.setenv('TEST_CLI_TOKEN', 'test-token')
+    monkeypatch.setenv('GROK_MEMORY', '1')
+    child = settings.process_environment({'GROK_MEMORY': '0'})
+    assert child['TEST_CLI_TOKEN'] == 'test-token'
+    assert child['GROK_MEMORY'] == '0'
+    child['TEST_CLI_TOKEN'] = 'child-only'
+    assert os.environ['TEST_CLI_TOKEN'] == 'test-token'
+    assert os.environ['GROK_MEMORY'] == '1'

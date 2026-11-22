@@ -158,8 +158,3 @@ def test_primary_mapping_tracks_configured_pair_spacing(video_cfg):
     cfg = replace(video_cfg, pair_minutes=20)
     assert schedule.primary_slot("2026-11-02/07:20", cfg) == "2026-11-02/07:00"
     assert schedule.primary_slot("2026-11-02/12:00", cfg) == "2026-11-02/12:00"
-
-
-# These fixtures exercise historical/custom schedules, independently of live hours.
-import pytest
-pytestmark = pytest.mark.usefixtures("legacy_hours")

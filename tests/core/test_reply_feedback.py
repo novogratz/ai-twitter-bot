@@ -61,7 +61,7 @@ def test_unknown_counters_are_not_zero_or_another_posts_metrics():
     assert observation["likes_per_1000_views"] is None
 
 
-@pytest.mark.parametrize("break_minutes,hours,rates", [(0, 16.0, [43.8, 87.5]), (10, 15.17, [46.2, 92.3])])
+@pytest.mark.parametrize("break_minutes,hours,rates", [(0, 19.5, [35.9, 71.8]), (10, 18.5, [37.8, 75.7])])
 def test_report_uses_weighted_rates_and_never_attributes_followers(settings_override, break_minutes, hours, rates):
     settings_override(REPLY_DAILY_TARGET_MIN=700, REPLY_DAILY_TARGET_MAX=1400, HOURLY_BREAK_MINUTES=break_minutes)
     base = dict(sent_at=(NOW - timedelta(hours=2)).isoformat(), parent_age_minutes=20,
@@ -96,20 +96,19 @@ def test_legacy_csv_and_multiline_replies_feed_memory_and_history():
     assert len(engagement_log.recent_replies()) == 2
 
 
-@pytest.mark.parametrize("capacity", [100, 1400])
-def test_longer_confirmed_memory_is_cached_beyond_the_old_forty_reply_limit(monkeypatch, settings_override, capacity):
-    settings_override(REPLY_RECENT_MEMORY_COUNT=capacity)
+def test_longer_confirmed_memory_is_cached_beyond_the_old_forty_reply_limit(monkeypatch, settings_override):
+    settings_override(REPLY_RECENT_MEMORY_COUNT=100)
     with open(config.ENGAGEMENT_LOG_FILE, "w", newline="") as handle:
         writer = csv.writer(handle)
-        for n in range(capacity + 20):
+        for n in range(120):
             writer.writerow([NOW.isoformat(), "reply", f"Confirmed SI observation {n} 🙂", url(extra=n)])
         writer.writerow([NOW.isoformat(), "like", "Not a confirmed reply", url()])
-    recent = engagement_log.recent_replies(capacity)
-    assert len(recent) == capacity and recent[0] == "Confirmed SI observation 20 🙂"
+    recent = engagement_log.recent_replies(100)
+    assert len(recent) == 100 and recent[0] == "Confirmed SI observation 20 🙂"
     def no_reread(*args, **kw):
         raise AssertionError("unchanged reply history must use the cache")
     monkeypatch.setattr(engagement_log, "open", no_reread, raising=False)
-    assert engagement_log.recent_replies(capacity) == recent
+    assert engagement_log.recent_replies(100) == recent
     assert engagement_log.recent_replies(20) == recent[-20:]
 
 

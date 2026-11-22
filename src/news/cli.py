@@ -19,7 +19,7 @@ def main(argv=None):
     parser.add_argument("--config", help="Account news TOML override")
     parser.add_argument("--dry-run", action="store_true", help="Show configuration only; no reads/models/delivery")
     parser.add_argument("--prepare-only", action="store_true", help="Run discovery/review and leave approved picks pending for the bot's delivery worker")
-    parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack", "prepare-discussion"))
+    parser.add_argument("command", choices=("run", "serve", "status", "check-sources", "import-history", "ack"))
     parser.add_argument("delivery_id", nargs="?")
     args = parser.parse_args(argv)
     cfg = load(args.config)
@@ -31,25 +31,19 @@ def main(argv=None):
             "news_email": False, "max_picks": 2, "empty_runs": "silent", "prompt": cfg.prompt_file}, indent=2))
         return
     if args.command == "serve":
-        from ..guards.active_hours import awake_job
         from apscheduler.schedulers.blocking import BlockingScheduler
         from apscheduler.executors.pool import ThreadPoolExecutor
         from apscheduler.triggers.interval import IntervalTrigger
         scheduler = BlockingScheduler(timezone=TZ, executors={"default": ThreadPoolExecutor(1)})
-        scheduler.add_job(awake_job(run), IntervalTrigger(hours=1, timezone=TZ), kwargs={"cfg": cfg},
+        scheduler.add_job(run, IntervalTrigger(hours=1, timezone=TZ), kwargs={"cfg": cfg},
                           id="news_discovery", max_instances=1, coalesce=True, misfire_grace_time=3600,
                           next_run_time=datetime.now(TZ))
-        scheduler.add_job(awake_job(retry_pending), IntervalTrigger(minutes=1, timezone=TZ), kwargs={"cfg": cfg},
+        scheduler.add_job(retry_pending, IntervalTrigger(minutes=1, timezone=TZ), kwargs={"cfg": cfg},
                           id="news_delivery", max_instances=1, coalesce=True, misfire_grace_time=60)
         scheduler.start()
         return
     store = Store()
-    if args.command == "prepare-discussion":
-        from .discussion import prepare
-        payload = prepare(cfg, store=store)
-        if payload:
-            print(payload["display"])
-    elif args.command == "run":
+    if args.command == "run":
         # Empty or held runs produce no stdout and no destination message.
         delivery = None
         if args.prepare_only:

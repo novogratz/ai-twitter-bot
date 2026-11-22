@@ -200,6 +200,226 @@ def test_blank_codex_effort_keeps_the_cli_default(settings_override):
                    for part in _build_cmd("prompt", "model", True, None, "codex"))
 
 
+GROK_MODEL = "grok-4.7-build-fast"
+
+
+def grok_events(text=TEXT):
+    return [
+        {"type": "system", "subtype": "init", "model": GROK_MODEL,
+         "tools": [], "skills": [], "mcp_servers": []},
+        {"type": "assistant", "parent_tool_use_id": None,
+         "message": {"model": GROK_MODEL, "content": [
+             {"type": "thinking", "thinking": "private reasoning never published"},
+             {"type": "text", "text": text}], "stop_reason": "end_turn"}},
+        {"type": "result", "subtype": "success", "is_error": False, "result": text,
+         "stop_reason": "end_turn", "num_turns": 1,
+         "modelUsage": {GROK_MODEL: {"webSearchRequests": 0, "modelCalls": 1}},
+         "usage": {"server_tool_use": {"web_search_requests": 0}}},
+    ]
+
+
+@pytest.fixture
+def grok_process(monkeypatch, settings_override):
+    """No process, signed-in CLI environment, network or provider state is read."""
+    from types import SimpleNamespace
+    from src.core import llm_client as llm, settings
+    settings_override(AI_CLI="grok", REPLY_LLM_PROVIDER="grok", PROFILE_LLM_PROVIDER="",
+                      REPLY_MODEL=GROK_MODEL, PRIORITY_REPLY_MODEL=GROK_MODEL,
+                      GROK_REASONING_EFFORT="low", LLM_DISABLE_FALLBACK=True)
+    state = SimpleNamespace(events=grok_events(), raw=None, calls=[], config=None, home_mode=None)
+    monkeypatch.setattr(llm.shutil, "which", lambda name: "/mock/bin/grok" if name == "grok" else None)
+    monkeypatch.setattr(settings, "process_environment", lambda overrides: {
+        "TEST_ENV": "isolated", "HOME": "/test/operator", **overrides})
+    def run(cmd, **options):
+        import os
+        from pathlib import Path
+        import tomllib
+        home = Path(options["env"]["GROK_HOME"])
+        state.config = tomllib.loads((home / "config.toml").read_text())
+        state.home_mode = os.stat(home).st_mode & 0o777
+        assert not (home / "auth.json").exists(), "credentials must never be copied into a draft workspace"
+        state.calls.append((cmd, options))
+        return state.raw or LLMResult(0, "\n".join(json.dumps(event) for event in state.events), "")
+    monkeypatch.setattr(llm, "_run_cmd", run)
+    return state
+
+
+@pytest.mark.parametrize("surface_name", ["REPLY", "PRIORITY_REPLY"])
+@pytest.mark.parametrize("output", [Output.TEXT, Output.JSON])
+def test_grok_reply_routes_read_only_completed_text_or_json(grok_process, surface_name, output):
+    from pathlib import Path
+    from src.core import llm_client as llm
+    text = TEXT if output is Output.TEXT else json.dumps({"approved": True, "reply": "Nice upgrade"})
+    grok_process.events = grok_events(text)
+    route = llm.resolve(llm.Surface[surface_name])
+    result = llm.run_llm("draft from supplied evidence", route.model, label="TEST",
+                         force_provider=route.provider, output_json=False,
+                         cwd="/must/not/use/project", timeout=20, profile=CallProfile(output=output))
+    assert (result.status, result.stdout, result.provider, result.model) == (
+        LLMStatus.ANSWERED, text, "grok", GROK_MODEL)
+    [(cmd, options)] = grok_process.calls
+    assert cmd[:1] == ["grok"] and cmd[cmd.index("--model") + 1] == GROK_MODEL
+    assert cmd[cmd.index("--reasoning-effort") + 1] == "low"
+    assert cmd[cmd.index("--output-format") + 1] == "streaming-messages-json"
+    assert cmd[cmd.index("--permission-mode") + 1] == "dontAsk"
+    assert cmd[cmd.index("--sandbox") + 1] == "read-only"
+    assert cmd[cmd.index("--max-turns") + 1] == "1"
+    assert {"--disable-web-search", "--no-subagents", "--no-memory", "--no-auto-update", "--verbatim"} <= set(cmd)
+    assert cmd[cmd.index("--tools") + 1] == "read_file"
+    denied = set(cmd[cmd.index("--disallowed-tools") + 1].split(","))
+    assert {"read_file", "Agent", "search_tool", "use_tool", "CallMcpTool", "GetMcpTools"} <= denied
+    assert {cmd[i + 1] for i, part in enumerate(cmd) if part == "--deny"} == {
+        "Read", "Bash", "Write", "Edit", "Grep", "WebFetch", "MCPTool"}
+    assert cmd[-2:] == ["--single", "draft from supplied evidence"]
+    assert options["timeout"] == 20
+    assert options["cwd"] == cmd[cmd.index("--cwd") + 1]
+    assert options["cwd"].startswith("/tmp/bot-grok-") and not Path(options["cwd"]).exists()
+    env = options["env"]
+    assert env["TEST_ENV"] == "isolated" and env["GROK_DISABLE_AUTOUPDATER"] == "1"
+    assert env["HOME"] == "/test/operator" and env["GROK_AUTH_PATH"] == "/test/operator/.grok/auth.json"
+    assert env["GROK_HOME"] == options["cwd"] + "/grok-home" and grok_process.home_mode == 0o700
+    assert grok_process.config == {
+        "cli": {"auto_update": False, "use_leader": False}, "skills": {"ignore": ["/"]},
+        "memory": {"enabled": False}, "features": {"subagent_bundle": False},
+    }
+    assert env["GROK_HEADLESS_RETRY_DEADLINE_SECS"] == "20"
+    assert all(env[key] == "0" for key in ("GROK_MEMORY", "GROK_WORKFLOWS", "GROK_SUBAGENTS", "GROK_SUBAGENT_BUNDLE",
+                                           "GROK_MAX_RETRIES", "GROK_SHARED_DAEMON", "GROK_SESSION_REGISTRY"))
+    assert all(env[f"GROK_{provider}_{feature}_ENABLED"] == "0"
+               for provider in ("CLAUDE", "CURSOR", "CODEX")
+               for feature in ("AGENTS", "HOOKS", "MCPS", "RULES", "SKILLS"))
+    assert llm.unknown_providers() == []
+
+
+@pytest.mark.parametrize("inherited,expected", [
+    ({"GROK_AUTH_PATH": "/existing/login.json", "GROK_HOME": "/existing/grok"}, "/existing/login.json"),
+    ({"GROK_HOME": "/existing/grok"}, "/existing/grok/auth.json"),
+])
+def test_grok_isolation_reuses_the_configured_auth_path_without_changing_parent_environment(
+        grok_process, monkeypatch, inherited, expected):
+    from src.core import llm_client as llm, settings
+    parent = {"HOME": "/test/operator", **inherited}
+    before = dict(parent)
+    monkeypatch.setattr(settings, "process_environment", lambda overrides: {**parent, **overrides})
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok")
+    assert result.status is LLMStatus.ANSWERED
+    assert grok_process.calls[0][1]["env"]["GROK_AUTH_PATH"] == expected
+    assert parent == before
+
+
+@pytest.mark.parametrize("model,effort,tools", [
+    ("gpt-6.1-sol", "low", None), ("", "low", None),
+    ("grok-4.7 --unsafe", "low", None), (GROK_MODEL, "unbounded", None),
+    (GROK_MODEL, "low", ("WebSearch",)),
+])
+def test_grok_rejects_invalid_models_effort_and_tool_requests_before_process(
+        grok_process, settings_override, model, effort, tools):
+    from src.core import llm_client as llm
+    settings_override(GROK_REASONING_EFFORT=effort)
+    result = llm.run_llm("prompt", model, label="TEST", force_provider="grok", allowed_tools=tools)
+    assert result.status is LLMStatus.FAILED and not result.stdout
+    assert "nothing was run" in result.stderr and not grok_process.calls
+
+
+def test_missing_grok_cli_does_not_substitute_codex(grok_process, monkeypatch):
+    from src.core import llm_client as llm
+    monkeypatch.setattr(llm.shutil, "which", lambda name: None)
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok")
+    assert result.returncode == 127 and result.provider == "grok" and not result.stdout
+    assert "not installed" in result.stderr and not grok_process.calls
+
+
+@pytest.mark.parametrize("case", [
+    "plain", "partial", "malformed", "tools", "skills", "mcp", "bad_mcp",
+    "wrong_init_model", "wrong_assistant_model", "tool_block", "tool_result", "subagent",
+    "incomplete", "too_many_turns", "boolean_turns", "wrong_usage_model", "bad_usage",
+    "web_usage", "server_web_usage", "bad_server_usage", "text_mismatch", "error", "late_error",
+])
+def test_grok_stream_failures_never_become_drafts(grok_process, case):
+    from src.core import llm_client as llm
+    init, assistant, result = grok_process.events
+    if case == "plain":
+        grok_process.raw = LLMResult(0, TEXT, "")
+    elif case == "partial":
+        grok_process.events.pop()
+    elif case == "malformed":
+        grok_process.raw = LLMResult(0, json.dumps(init) + '\n{"type":', "")
+    elif case == "tools":
+        init["tools"] = ["search_tool"]
+    elif case == "skills":
+        init["skills"] = ["publish"]
+    elif case in ("mcp", "bad_mcp"):
+        init["mcp_servers"] = [{"status": "connected"}] if case == "mcp" else [None]
+    elif case == "wrong_init_model":
+        init["model"] = "grok-other"
+    elif case == "wrong_assistant_model":
+        assistant["message"]["model"] = "grok-other"
+    elif case == "tool_block":
+        assistant["message"]["content"].append({"type": "tool_use", "name": "read_file"})
+    elif case == "tool_result":
+        grok_process.events.insert(2, {"type": "user", "message": {"content": [{"type": "tool_result"}]}})
+    elif case == "subagent":
+        assistant["parent_tool_use_id"] = "task-1"
+    elif case == "incomplete":
+        result["stop_reason"] = "max_tokens"
+    elif case in ("too_many_turns", "boolean_turns"):
+        result["num_turns"] = 2 if case == "too_many_turns" else True
+    elif case == "wrong_usage_model":
+        result["modelUsage"] = {"grok-other": {}}
+    elif case == "bad_usage":
+        result["modelUsage"] = None
+    elif case == "web_usage":
+        result["modelUsage"][GROK_MODEL]["webSearchRequests"] = 1
+    elif case == "server_web_usage":
+        result["usage"]["server_tool_use"]["web_search_requests"] = 1
+    elif case == "bad_server_usage":
+        result["usage"] = "unexpected"
+    elif case == "text_mismatch":
+        result["result"] = "A different reply"
+    elif case == "error":
+        result.update(subtype="error_during_execution", is_error=True, errors=["authentication failed"])
+    elif case == "late_error":
+        grok_process.events.append({"type": "error", "message": "connection failed"})
+    answer = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok")
+    assert answer.status is LLMStatus.FAILED and answer.stdout == "" and answer.provider == "grok"
+    assert len(grok_process.calls) == 1
+
+
+def test_grok_rate_limit_and_timeout_keep_no_partial_reply(grok_process):
+    from src.core import llm_client as llm
+    grok_process.events[-1].update(subtype="error_during_execution", is_error=True,
+                                  errors=["rate limit exceeded"])
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok")
+    assert result.status is LLMStatus.EXHAUSTED and not result.stdout
+    grok_process.raw = LLMResult(124, TEXT, "TEST timed out after 20s")
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok")
+    assert result.returncode == 124 and not result.stdout
+
+
+def test_grok_deadline_includes_model_admission_and_discards_late_output(grok_process, monkeypatch):
+    from contextlib import contextmanager
+    from src.core import llm_client as llm, video_pressure
+    now = [100]
+    monkeypatch.setattr(llm.time, "monotonic", lambda: now[0])
+    @contextmanager
+    def admission(*args):
+        now[0] = 125
+        yield
+    monkeypatch.setattr(video_pressure, "model_call", admission)
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok",
+                         timeout=20, profile=CallProfile(deadline=120))
+    assert result.returncode == 124 and not result.stdout and not grok_process.calls
+    now[0] = 100
+    monkeypatch.setattr(video_pressure, "model_call", lambda *args: __import__("contextlib").nullcontext())
+    def late(*args, **kwargs):
+        now[0] = 125
+        return LLMResult(0, "\n".join(json.dumps(event) for event in grok_events()), "")
+    monkeypatch.setattr(llm, "_run_cmd", late)
+    result = llm.run_llm("prompt", GROK_MODEL, label="TEST", force_provider="grok",
+                         timeout=20, profile=CallProfile(deadline=120))
+    assert result.returncode == 124 and not result.stdout
+
+
 @pytest.mark.parametrize("complete", [False, True])
 def test_codex_json_reads_only_the_last_answer_of_a_completed_turn(providers, complete):
     events = [
@@ -710,6 +930,77 @@ def test_codex_budget_can_be_disabled_and_never_exceeds_primary_ceiling(settings
     settings_override(LLM_TIMEOUT_SECONDS=120, CODEX_MIN_TIMEOUT_SECONDS=0)
     assert llm._timeout("codex", None, CallProfile()) == 120
     assert llm._timeout("codex", 900, CallProfile()) == 360
+
+
+@pytest.mark.parametrize("provider", ["codex", "ollama", "claude", "gemini", "opencode"])
+def test_explicit_deadline_is_stricter_than_provider_floors(settings_override, monkeypatch, provider):
+    from src.core import llm_client as llm
+    from src.guards import active_hours
+    settings_override(LLM_TIMEOUT_SECONDS=180, CODEX_MIN_TIMEOUT_SECONDS=300)
+    monkeypatch.setattr(active_hours, "seconds_until_pause", lambda: 1000)
+    monkeypatch.setattr(llm.time, "monotonic", lambda: 100)
+    assert llm._timeout(provider, 20, CallProfile(min_timeout=300, deadline=120)) == 20
+    assert llm._timeout("codex", 20, CallProfile()) == 300
+
+
+def test_deadline_is_shared_with_fallback_instead_of_restarting_its_budget(providers, monkeypatch):
+    from src.core import llm_client as llm
+    providers.settings(LLM_FALLBACK_CLI="gemini", CODEX_MIN_TIMEOUT_SECONDS=300)
+    now, calls = [100], []
+    monkeypatch.setattr(llm.time, "monotonic", lambda: now[0])
+    def primary(request):
+        calls.append(("codex", request.timeout))
+        now[0] = 118
+        return LLMResult(1, "", "temporary failure")
+    def fallback(request):
+        calls.append(("gemini", request.timeout))
+        return LLMResult(0, TEXT, "")
+    monkeypatch.setitem(llm.ADAPTERS, "codex", primary)
+    monkeypatch.setitem(llm.ADAPTERS, "gemini", fallback)
+    result = ask(CallProfile(deadline=120), "codex", timeout=20)
+    assert result.stdout == TEXT
+    assert calls == [("codex", 20), ("gemini", 2)]
+
+
+def test_late_success_is_discarded_and_expired_call_runs_no_fallback(providers, monkeypatch):
+    from src.core import llm_client as llm
+    providers.settings(LLM_FALLBACK_CLI="gemini")
+    now = [100]
+    monkeypatch.setattr(llm.time, "monotonic", lambda: now[0])
+    def delayed(request):
+        now[0] = 121
+        return LLMResult(0, TEXT, "")
+    monkeypatch.setitem(llm.ADAPTERS, "codex", delayed)
+    monkeypatch.setitem(llm.ADAPTERS, "gemini", lambda request: pytest.fail("expired fallback started"))
+    result = ask(CallProfile(deadline=120), "codex", timeout=20)
+    assert result.returncode == 124 and result.stdout == ""
+    assert "deadline expired" in result.stderr
+    monkeypatch.setitem(llm.ADAPTERS, "codex", lambda request: pytest.fail("expired primary started"))
+    assert ask(CallProfile(deadline=120), "codex", timeout=20).returncode == 124
+
+
+def test_cli_rechecks_deadline_after_shared_model_context(monkeypatch):
+    from contextlib import contextmanager
+    from src.core import llm_client as llm, video_pressure
+    now = [100]
+    monkeypatch.setattr(llm.time, "monotonic", lambda: now[0])
+    monkeypatch.setattr(llm.shutil, "which", lambda provider: "/bin/" + provider)
+    monkeypatch.setattr(llm, "_build_cmd", lambda *args: ["codex"])
+    monkeypatch.setattr(llm, "_run_cmd", lambda *args, **kwargs: pytest.fail("expired queued call spawned a CLI"))
+    @contextmanager
+    def delayed_context(*args):
+        now[0] = 125
+        yield
+    monkeypatch.setattr(video_pressure, "model_call", delayed_context)
+    request = llm._Request("prompt", "model", "TEST", 20, CallProfile(deadline=120), True, None, "/tmp")
+    result = llm._cli_adapter("codex")(request)
+    assert result.returncode == 124 and not result.stdout
+
+
+@pytest.mark.parametrize("deadline", [True, -1, float("nan"), float("inf"), "120"])
+def test_deadline_rejects_invalid_timestamps(deadline):
+    with pytest.raises(ValueError, match="deadline"):
+        CallProfile(deadline=deadline)
 
 
 def test_timed_out_cli_discards_partial_draft_but_reports_provider_error(monkeypatch):

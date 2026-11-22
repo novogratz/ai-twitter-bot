@@ -1,7 +1,6 @@
 """Explicit activation is distinct from worker starts, resumes and process recovery."""
 import argparse
 import json
-from pathlib import Path
 import time
 
 from ..core import settings, state_store
@@ -22,9 +21,6 @@ def main(argv=None):
     inspection = sub.add_parser("inspect", help="Inspect a local clip in a fresh Codex session; never queues or publishes it")
     inspection.add_argument("path")
     inspection.add_argument("--stage", choices=("source", "output"), default="source")
-    preview = sub.add_parser("prepare-preview", help="Capture and review one Instagram source into local preview files; never queues or publishes")
-    preview.add_argument("source_url")
-    preview.add_argument("--output", help="Parent folder for a new preview directory")
     discovery = sub.add_parser("check-discovery", help="One public/feed discovery check; never starts workers or publishes")
     discovery.add_argument("platform", choices=config.PLATFORMS)
     discovery.add_argument("--fresh", action="store_true",
@@ -113,17 +109,12 @@ def _execute(args):
             result = store.rows("SELECT state,post_id,post_url,reason FROM reservations WHERE id=?", (row["id"],))[0]
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
-    if args.command == "prepare-preview":
-        from .preview import prepare
-        result = prepare(args.source_url, store, cfg, output_root=args.output)
-        result = {key: value for key, value in result.items()
-                  if key not in ("source_review", "output_review")}
-        result["report_path"] = str(Path(result["folder"]) / "report.json")
-    elif args.command == "prepare-inspector":
+    if args.command == "prepare-inspector":
         from .inspection import prepare
         with workers.role_lock("media"):
             result = prepare(cfg)
     elif args.command == "inspect":
+        from pathlib import Path
         from .inspection import inspect_clip
         with workers.role_lock("media"):
             result = inspect_clip(Path(args.path), args.stage, cfg, store, time.time())

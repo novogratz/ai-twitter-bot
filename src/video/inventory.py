@@ -28,8 +28,6 @@ def usable_until(doc, cfg):
     choice = doc.get("operator_selection", {})
     if ranking.selected(doc, choice.get("selected_at", 0)):
         return min(choice["expires_at"], grant_expiry)
-    if cfg.best_available_fallback:
-        return expiry
     if cfg.bangers_only:
         from .bangers import score
         # Stepwise original-age points can change before a future window.
@@ -60,7 +58,7 @@ def coverage(candidates, now, cfg):
     for key, at in schedule.upcoming_primary(now, cfg):
         # Leave the whole upload grace available without losing source freshness
         # or permission. Final score, novelty and file checks still run when due.
-        selected = next((pair for pair in remaining if usable_until(pair[1], cfg) > schedule.slot_bounds(at.timestamp(), cfg)[1]), None)
+        selected = next((pair for pair in remaining if usable_until(pair[1], cfg) > at.timestamp() + cfg.grace_seconds), None)
         windows.append({"id": key, "at": at.isoformat(), "candidate": selected[0]["id"] if selected else None})
         if selected:
             remaining.remove(selected)

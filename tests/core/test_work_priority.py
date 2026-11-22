@@ -84,3 +84,21 @@ def test_priority_context_restores_after_failure():
             assert priority._priority.get() == priority.WATCH
             raise ValueError()
     assert priority._priority.get() == priority.BACKGROUND
+
+
+def test_prepared_watched_reply_precedes_queued_secondary_actions_without_preempting_owner():
+    lock, order = priority.PriorityLock(), []
+    def run(label, rank):
+        with priority.scope(rank), lock:
+            order.append(label)
+    with ThreadPoolExecutor(2) as pool:
+        with priority.scope(priority.WATCH), lock:
+            secondary = pool.submit(run, "like/repost", priority.WATCH)
+            queued(lock, 1)
+            reply = pool.submit(run, "prepared reply", priority.WATCH_REPLY)
+            queued(lock, 2)
+            assert order == []
+            order.append("active browser transaction finished")
+        reply.result(2)
+        secondary.result(2)
+    assert order == ["active browser transaction finished", "prepared reply", "like/repost"]

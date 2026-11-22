@@ -1,0 +1,1165 @@
+[
+  {
+    "topic": "Hugging Face Explores $13 Billion Sale a Month After a Rogue OpenAI Agent Hacked It",
+    "discovered_at": "2026-08-24T18:35:58.858803",
+    "source_url": "https://decrypt.co/376415/hugging-face-13-billion-sale-month-after-openai-hack",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 85,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 100,
+    "overall_opportunity_score": 78.6,
+    "classification": "EARLY + IMPORTANT",
+    "research_packet": {
+      "topic": "Hugging Face Explores $13 Billion Sale a Month After a Rogue OpenAI Agent Hacked It",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Hugging Face Explores $13 Billion Sale a Month After a Rogue OpenAI Agent Hacked It",
+      "primary_sources": [
+        "https://decrypt.co/376415/hugging-face-13-billion-sale-month-after-openai-hack"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Hugging Face Explores $13 Billion Sale a Month After a Rogue OpenAI Agent Hacked It"
+      ],
+      "important_numbers": [
+        "$13 B"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Nvidia says Groq racks will be online this year following $20 billion purchase",
+    "discovered_at": "2026-08-24T18:35:58.859100",
+    "source_url": "https://www.cnbc.com/2026/08/24/nvidia-says-groq-racks-will-be-online-this-year-after-20-billion-deal.html",
+    "source": "CNBC Tech",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 70,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 97.39,
+    "overall_opportunity_score": 74.93,
+    "classification": "EARLY + IMPORTANT",
+    "research_packet": {
+      "topic": "Nvidia says Groq racks will be online this year following $20 billion purchase",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Nvidia says Groq racks will be online this year following $20 billion purchase",
+      "primary_sources": [
+        "https://www.cnbc.com/2026/08/24/nvidia-says-groq-racks-will-be-online-this-year-after-20-billion-deal.html"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Nvidia says Groq racks will be online this year following $20 billion purchase"
+      ],
+      "important_numbers": [
+        "$20 b"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Gemini plans to distribute crypto prediction markets through Apex brokerages",
+    "discovered_at": "2026-08-24T18:35:58.858870",
+    "source_url": "https://cointelegraph.com/news/gemini-plans-to-distribute-crypto-prediction-markets-through-apex-brokerages?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 100,
+    "overall_opportunity_score": 72.0,
+    "classification": "EARLY + IMPORTANT",
+    "research_packet": {
+      "topic": "Gemini plans to distribute crypto prediction markets through Apex brokerages",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Gemini plans to distribute crypto prediction markets through Apex brokerages",
+      "primary_sources": [
+        "https://cointelegraph.com/news/gemini-plans-to-distribute-crypto-prediction-markets-through-apex-brokerages?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Gemini plans to distribute crypto prediction markets through Apex brokerages"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Instinct’s powerful AI assistant is raising privacy and security concerns",
+    "discovered_at": "2026-08-24T18:35:58.859064",
+    "source_url": "https://techcrunch.com/2026/08/24/instincts-powerful-ai-assistant-is-raising-privacy-and-security-concerns/",
+    "source": "TechCrunch",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 70,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 67.39,
+    "overall_opportunity_score": 70.73,
+    "classification": "TRENDING + DISTINCT ANGLE",
+    "research_packet": {
+      "topic": "Instinct’s powerful AI assistant is raising privacy and security concerns",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Instinct’s powerful AI assistant is raising privacy and security concerns",
+      "primary_sources": [
+        "https://techcrunch.com/2026/08/24/instincts-powerful-ai-assistant-is-raising-privacy-and-security-concerns/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Instinct’s powerful AI assistant is raising privacy and security concerns"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Nvidia senior manager linked to Supermicro scheme smuggling AI servers to China",
+    "discovered_at": "2026-08-24T18:35:58.859148",
+    "source_url": "https://arstechnica.com/tech-policy/2026/08/nvidia-senior-manager-linked-to-supermicro-scheme-smuggling-ai-servers-to-china/",
+    "source": "Ars Technica",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 70,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 67.39,
+    "overall_opportunity_score": 70.73,
+    "classification": "TRENDING + DISTINCT ANGLE",
+    "research_packet": {
+      "topic": "Nvidia senior manager linked to Supermicro scheme smuggling AI servers to China",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Nvidia senior manager linked to Supermicro scheme smuggling AI servers to China",
+      "primary_sources": [
+        "https://arstechnica.com/tech-policy/2026/08/nvidia-senior-manager-linked-to-supermicro-scheme-smuggling-ai-servers-to-china/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Nvidia senior manager linked to Supermicro scheme smuggling AI servers to China"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Strive Buys $81.5 Million in Bitcoin After Issuing More Shares",
+    "discovered_at": "2026-08-24T18:35:58.858840",
+    "source_url": "https://decrypt.co/376416/strive-buys-81-million-bitcoin-more-shares",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Strive Buys $81.5 Million in Bitcoin After Issuing More Shares",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Strive Buys $81.5 Million in Bitcoin After Issuing More Shares",
+      "primary_sources": [
+        "https://decrypt.co/376416/strive-buys-81-million-bitcoin-more-shares"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Strive Buys $81.5 Million in Bitcoin After Issuing More Shares"
+      ],
+      "important_numbers": [
+        "$81.5 M"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Coinbase Brings Tokenized Stocks to Ethereum L2 Base",
+    "discovered_at": "2026-08-24T18:35:58.858975",
+    "source_url": "https://decrypt.co/376393/coinbase-tokenized-stocks-base-ethereum",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Coinbase Brings Tokenized Stocks to Ethereum L2 Base",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Coinbase Brings Tokenized Stocks to Ethereum L2 Base",
+      "primary_sources": [
+        "https://decrypt.co/376393/coinbase-tokenized-stocks-base-ethereum"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Coinbase Brings Tokenized Stocks to Ethereum L2 Base"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Bitcoin nears $80,000, but analysts say the next pullback will be key",
+    "discovered_at": "2026-08-24T18:35:58.858986",
+    "source_url": "https://www.coindesk.com/markets/2026/08/24/bitcoin-nears-usd80-000-but-analysts-say-the-next-pullback-will-be-key",
+    "source": "CoinDesk",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Bitcoin nears $80,000, but analysts say the next pullback will be key",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Bitcoin nears $80,000, but analysts say the next pullback will be key",
+      "primary_sources": [
+        "https://www.coindesk.com/markets/2026/08/24/bitcoin-nears-usd80-000-but-analysts-say-the-next-pullback-will-be-key"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Bitcoin nears $80,000, but analysts say the next pullback will be key"
+      ],
+      "important_numbers": [
+        "$80,000"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Crypto exchange volumes double in five days as market activity rebounds",
+    "discovered_at": "2026-08-24T18:35:58.859048",
+    "source_url": "https://www.theblock.co/news/markets/2026-08-24-crypto-exchange-volumes-double-in-five-days-as-market-activity-rebounds-412641",
+    "source": "The Block",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Crypto exchange volumes double in five days as market activity rebounds",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Crypto exchange volumes double in five days as market activity rebounds",
+      "primary_sources": [
+        "https://www.theblock.co/news/markets/2026-08-24-crypto-exchange-volumes-double-in-five-days-as-market-activity-rebounds-412641"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Crypto exchange volumes double in five days as market activity rebounds"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Bitcoin price hits $80K as 24-hour crypto short liquidations pass $220M",
+    "discovered_at": "2026-08-24T18:35:58.859077",
+    "source_url": "https://cointelegraph.com/markets/bitcoin-price-hits-80k-as-24-hour-crypto-short-liquidations-pass-m?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Bitcoin price hits $80K as 24-hour crypto short liquidations pass $220M",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Bitcoin price hits $80K as 24-hour crypto short liquidations pass $220M",
+      "primary_sources": [
+        "https://cointelegraph.com/markets/bitcoin-price-hits-80k-as-24-hour-crypto-short-liquidations-pass-m?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Bitcoin price hits $80K as 24-hour crypto short liquidations pass $220M"
+      ],
+      "important_numbers": [
+        "$80K",
+        "24",
+        "$220M"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money",
+    "discovered_at": "2026-08-24T18:35:58.859124",
+    "source_url": "https://decrypt.co/376349/bitcoin-ethereum-etfs-23-billion-aum-inflows",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money",
+      "primary_sources": [
+        "https://decrypt.co/376349/bitcoin-ethereum-etfs-23-billion-aum-inflows"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money"
+      ],
+      "important_numbers": [
+        "$23 B",
+        "$2.6 B"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Strive buys 1,110 Bitcoin for $81.5M, holdings top 21K BTC; ASST shares surge 11%",
+    "discovered_at": "2026-08-24T18:35:58.859136",
+    "source_url": "https://cointelegraph.com/news/strive-buys-1110-bitcoin-for-815m-holdings-top-21k-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 84.5,
+    "overall_opportunity_score": 69.83,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Strive buys 1,110 Bitcoin for $81.5M, holdings top 21K BTC; ASST shares surge 11%",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Strive buys 1,110 Bitcoin for $81.5M, holdings top 21K BTC; ASST shares surge 11%",
+      "primary_sources": [
+        "https://cointelegraph.com/news/strive-buys-1110-bitcoin-for-815m-holdings-top-21k-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Strive buys 1,110 Bitcoin for $81.5M, holdings top 21K BTC; ASST shares surge 11%"
+      ],
+      "important_numbers": [
+        "1,110 B",
+        "$81.5M",
+        "21K",
+        "11%"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "AI Model Ox Alpha Is Free, Beats Claude Fable, and Nobody Knows Who Built It",
+    "discovered_at": "2026-08-24T18:35:58.858884",
+    "source_url": "https://decrypt.co/376396/mysterious-ai-model-ox-alpha",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "AI Model Ox Alpha Is Free, Beats Claude Fable, and Nobody Knows Who Built It",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "AI Model Ox Alpha Is Free, Beats Claude Fable, and Nobody Knows Who Built It",
+      "primary_sources": [
+        "https://decrypt.co/376396/mysterious-ai-model-ox-alpha"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "AI Model Ox Alpha Is Free, Beats Claude Fable, and Nobody Knows Who Built It"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Jim Cramer says don't sell Meta on litigation risk — the stock is worth the wait",
+    "discovered_at": "2026-08-24T18:35:58.858911",
+    "source_url": "https://www.cnbc.com/2026/08/24/jim-cramer-says-dont-sell-meta-on-litigation-risk-the-stock-is-worth-the-wait.html",
+    "source": "CNBC Top",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Jim Cramer says don't sell Meta on litigation risk — the stock is worth the wait",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Jim Cramer says don't sell Meta on litigation risk — the stock is worth the wait",
+      "primary_sources": [
+        "https://www.cnbc.com/2026/08/24/jim-cramer-says-dont-sell-meta-on-litigation-risk-the-stock-is-worth-the-wait.html"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Jim Cramer says don't sell Meta on litigation risk — the stock is worth the wait"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Alabama launches investigation into OpenAI’s hack of Hugging Face",
+    "discovered_at": "2026-08-24T18:35:58.858952",
+    "source_url": "https://techcrunch.com/2026/08/24/alabama-launches-investigation-into-openais-hack-of-hugging-face/",
+    "source": "TechCrunch",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Alabama launches investigation into OpenAI’s hack of Hugging Face",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Alabama launches investigation into OpenAI’s hack of Hugging Face",
+      "primary_sources": [
+        "https://techcrunch.com/2026/08/24/alabama-launches-investigation-into-openais-hack-of-hugging-face/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Alabama launches investigation into OpenAI’s hack of Hugging Face"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Coinbase tokenized stocks go live on Base with Chainlink price feeds",
+    "discovered_at": "2026-08-24T18:35:58.859025",
+    "source_url": "https://cointelegraph.com/news/coinbase-taps-chainlink-for-tokenized-stock-data-on-base?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Coinbase tokenized stocks go live on Base with Chainlink price feeds",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Coinbase tokenized stocks go live on Base with Chainlink price feeds",
+      "primary_sources": [
+        "https://cointelegraph.com/news/coinbase-taps-chainlink-for-tokenized-stock-data-on-base?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Coinbase tokenized stocks go live on Base with Chainlink price feeds"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Hyperliquid Hits Record High as $1.2 Billion Token Unlock Looms",
+    "discovered_at": "2026-08-24T18:35:58.859036",
+    "source_url": "https://decrypt.co/376375/hypeliquid-price-record-high-token-unlock",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Hyperliquid Hits Record High as $1.2 Billion Token Unlock Looms",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Hyperliquid Hits Record High as $1.2 Billion Token Unlock Looms",
+      "primary_sources": [
+        "https://decrypt.co/376375/hypeliquid-price-record-high-token-unlock"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Hyperliquid Hits Record High as $1.2 Billion Token Unlock Looms"
+      ],
+      "important_numbers": [
+        "$1.2 B"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Coinbase debuts tokenized stocks on Base network, joining race to bring equities on blockchain",
+    "discovered_at": "2026-08-24T18:35:58.859112",
+    "source_url": "https://www.coindesk.com/business/2026/08/24/coinbase-debuts-tokenized-stocks-on-base-network-joining-race-to-bring-equities-on-blockchain",
+    "source": "CoinDesk",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Coinbase debuts tokenized stocks on Base network, joining race to bring equities on blockchain",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Coinbase debuts tokenized stocks on Base network, joining race to bring equities on blockchain",
+      "primary_sources": [
+        "https://www.coindesk.com/business/2026/08/24/coinbase-debuts-tokenized-stocks-on-base-network-joining-race-to-bring-equities-on-blockchain"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Coinbase debuts tokenized stocks on Base network, joining race to bring equities on blockchain"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "llm-anthropic 0.27",
+    "discovered_at": "2026-08-24T18:35:58.859158",
+    "source_url": "https://simonwillison.net/2026/Aug/24/llm-anthropic/",
+    "source": "Simon Willison",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 90,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.8,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "llm-anthropic 0.27",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "llm-anthropic 0.27",
+      "primary_sources": [
+        "https://simonwillison.net/2026/Aug/24/llm-anthropic/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "llm-anthropic 0.27"
+      ],
+      "important_numbers": [
+        "0.27"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Trump bought SpaceX shares two weeks after blockbuster IPO",
+    "discovered_at": "2026-08-24T18:35:58.858856",
+    "source_url": "https://techcrunch.com/2026/08/24/trump-bought-spacex-shares-two-weeks-after-blockbuster-ipo/",
+    "source": "TechCrunch",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 96.77,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.28,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Trump bought SpaceX shares two weeks after blockbuster IPO",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Trump bought SpaceX shares two weeks after blockbuster IPO",
+      "primary_sources": [
+        "https://techcrunch.com/2026/08/24/trump-bought-spacex-shares-two-weeks-after-blockbuster-ipo/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Trump bought SpaceX shares two weeks after blockbuster IPO"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Amazon hikes hardware prices by 60%, blaming memory shortage",
+    "discovered_at": "2026-08-24T18:35:58.858963",
+    "source_url": "https://techcrunch.com/2026/08/24/amazon-hikes-hardware-prices-by-60-percent-blaming-memory-shortage/",
+    "source": "TechCrunch",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 96.77,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.28,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Amazon hikes hardware prices by 60%, blaming memory shortage",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Amazon hikes hardware prices by 60%, blaming memory shortage",
+      "primary_sources": [
+        "https://techcrunch.com/2026/08/24/amazon-hikes-hardware-prices-by-60-percent-blaming-memory-shortage/"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Amazon hikes hardware prices by 60%, blaming memory shortage"
+      ],
+      "important_numbers": [
+        "60%"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Coinbase-affiliated advocacy group endorses candidates for US midterms",
+    "discovered_at": "2026-08-24T18:35:58.859015",
+    "source_url": "https://cointelegraph.com/news/coinbase-stand-crypto-advocacy-group-endorses-midterm-candidates?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 96.77,
+    "reply_signal_strength": 70,
+    "overall_opportunity_score": 67.28,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Coinbase-affiliated advocacy group endorses candidates for US midterms",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Coinbase-affiliated advocacy group endorses candidates for US midterms",
+      "primary_sources": [
+        "https://cointelegraph.com/news/coinbase-stand-crypto-advocacy-group-endorses-midterm-candidates?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Coinbase-affiliated advocacy group endorses candidates for US midterms"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Why the Bitcoin Rally Looks Like a Vote Against the Dollar",
+    "discovered_at": "2026-08-24T18:35:58.858896",
+    "source_url": "https://decrypt.co/376394/bitcoins-price-rally-trade-against-dollar",
+    "source": "Decrypt",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 54.5,
+    "overall_opportunity_score": 65.63,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Why the Bitcoin Rally Looks Like a Vote Against the Dollar",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Why the Bitcoin Rally Looks Like a Vote Against the Dollar",
+      "primary_sources": [
+        "https://decrypt.co/376394/bitcoins-price-rally-trade-against-dollar"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Why the Bitcoin Rally Looks Like a Vote Against the Dollar"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Crypto extends gains after biggest 3-day rally since 2023",
+    "discovered_at": "2026-08-24T18:35:58.858925",
+    "source_url": "https://www.cnbc.com/2026/08/24/crypto-extends-gains-after-biggest-3-day-rally-since-2023.html",
+    "source": "CNBC Top",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 54.5,
+    "overall_opportunity_score": 65.63,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Crypto extends gains after biggest 3-day rally since 2023",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Crypto extends gains after biggest 3-day rally since 2023",
+      "primary_sources": [
+        "https://www.cnbc.com/2026/08/24/crypto-extends-gains-after-biggest-3-day-rally-since-2023.html"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Crypto extends gains after biggest 3-day rally since 2023"
+      ],
+      "important_numbers": [
+        "3",
+        "2023"
+      ],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Here’s what happened in crypto today",
+    "discovered_at": "2026-08-24T18:35:58.858939",
+    "source_url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+    "source": "Cointelegraph",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 54.5,
+    "overall_opportunity_score": 65.63,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Here’s what happened in crypto today",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Here’s what happened in crypto today",
+      "primary_sources": [
+        "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Here’s what happened in crypto today"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "US escalates Iran pressure with sanctions on crypto, aviation, shipping and gold as part of ‘economic D-Day’",
+    "discovered_at": "2026-08-24T18:35:58.859001",
+    "source_url": "https://www.theblock.co/news/regulation/2026-08-24-us-escalates-iran-pressure-sanctions-crypto-aviation-shipping-gold-economic-d-day-412648",
+    "source": "The Block",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 54.5,
+    "overall_opportunity_score": 65.63,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "US escalates Iran pressure with sanctions on crypto, aviation, shipping and gold as part of ‘economic D-Day’",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "US escalates Iran pressure with sanctions on crypto, aviation, shipping and gold as part of ‘economic D-Day’",
+      "primary_sources": [
+        "https://www.theblock.co/news/regulation/2026-08-24-us-escalates-iran-pressure-sanctions-crypto-aviation-shipping-gold-economic-d-day-412648"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "US escalates Iran pressure with sanctions on crypto, aviation, shipping and gold as part of ‘economic D-Day’"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  },
+  {
+    "topic": "Crypto political group details list of U.S. congressional allies its backing this year",
+    "discovered_at": "2026-08-24T18:35:58.859089",
+    "source_url": "https://www.coindesk.com/policy/2026/08/24/crypto-political-group-details-list-of-u-s-congressional-allies-its-backing-this-year",
+    "source": "CoinDesk",
+    "urgency": 90,
+    "importance": 35,
+    "audience_fit": 60,
+    "novelty": 80,
+    "saturation": 10,
+    "insight_potential": 55,
+    "historical_topic_performance": 100.0,
+    "reply_signal_strength": 54.5,
+    "overall_opportunity_score": 65.63,
+    "classification": "WATCH",
+    "research_packet": {
+      "topic": "Crypto political group details list of U.S. congressional allies its backing this year",
+      "why_now": "Fresh signal from external_signal.json.",
+      "primary_event": "Crypto political group details list of U.S. congressional allies its backing this year",
+      "primary_sources": [
+        "https://www.coindesk.com/policy/2026/08/24/crypto-political-group-details-list-of-u-s-congressional-allies-its-backing-this-year"
+      ],
+      "supporting_sources": [],
+      "verified_facts": [
+        "Crypto political group details list of U.S. congressional allies its backing this year"
+      ],
+      "important_numbers": [],
+      "direct_quotes": [],
+      "current_consensus": "",
+      "unknowns": [
+        "Full article/body may need human or web verification before factual claims."
+      ],
+      "contrarian_interpretations": [],
+      "second_order_effects": [],
+      "potential_predictions": [],
+      "human_behavior_implications": [
+        "Ask what this reveals about trust, work, identity, dependency, or social behavior."
+      ],
+      "ai_therapist_relevance": "Prefer the human/AI behavior angle over plain news compression.",
+      "confidence": 0.62
+    }
+  }
+]

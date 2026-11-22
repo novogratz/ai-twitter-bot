@@ -20,8 +20,9 @@ def save_tweet(tweet: str):
             if isinstance(entry, dict) and (entry.get("text") or "").strip() == tweet_norm:
                 return None
         history.append({"text": tweet, "timestamp": datetime.now().isoformat()})
-        # Keep only the last 500 entries to avoid file bloat
-        return history[-500:]
+        # 2026-11-18: own old text is not new content. Preserve the entire
+        # retained corpus; callers bound prompt memory, never publication history.
+        return history
     HISTORY.update(append)
 
 

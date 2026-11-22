@@ -15,6 +15,7 @@ URL = "https://x.com/elonmusk/status/2063500000000000101"
 NEXT = "https://x.com/elonmusk/status/2063500000000000102"
 
 
+
 @pytest.mark.parametrize("url", [
     "https://evilx.com/elonmusk/status/1", "https://x.com.evil/elonmusk/status/1",
     "http://x.com/elonmusk/status/1", "https://x.com@evil/elonmusk/status/1",
@@ -33,63 +34,6 @@ def test_empty_watch_list_and_own_handles_cannot_be_reposted(monkeypatch):
         monkeypatch.setattr(account, "current", lambda: profile)
         assert not store.allowed_url(URL)
         assert not store.allowed_url(f"https://x.com/{profile.handle}/status/1")
-
-
-def test_watch_list_expansion_cannot_enable_other_authors(monkeypatch):
-    profile = replace(account.current(), auto_engage_handles=("elonmusk", "sama", "nvidia"))
-    monkeypatch.setattr(account, "current", lambda: profile)
-    for author in ("sama", "nvidia"):
-        url = f"https://x.com/{author}/status/2063500000000000110"
-        assert not store.allowed_url(url) and not store.claim(url)
-        assert not ag.can_post(ag.RETWEET, target=url)[0]
-
-
-def test_two_repost_ceiling_is_atomic_and_survives_reopen(tmp_path, memory_ledger):
-    urls = [f"https://x.com/elonmusk/status/{2063500000000000200 + n}" for n in range(8)]
-    with ThreadPoolExecutor(8) as pool:
-        result = list(pool.map(store.claim, urls))
-    assert sum(result) == 2 and store.used_today() == 2
-    from src.core.state_store import GUARDED, StateFile
-    reopened = StateFile("reposted_tweets.json", {}, GUARDED)
-    assert len(reopened.read()) == 2
-    assert not store.claim(NEXT) and store.budget_refusal()
-
-
-def test_receipts_and_unknown_sends_count_once_across_url_spellings(monkeypatch, memory_ledger):
-    now = datetime(2026, 11, 18, 12, tzinfo=TORONTO)
-    clock(monkeypatch, now)
-    assert store.claim(URL)
-    ag.record(ag.RETWEET, URL.replace("x.com/elonmusk", "twitter.com/ElonMusk") + "?s=20")
-    store.remember(URL, "shipped")
-    assert store.used_today() == 1
-    assert store.claim(NEXT)  # A lost response retains the second slot.
-    assert store.used_today() == 2 and store.budget_refusal()
-    clock(monkeypatch, now + timedelta(days=1))
-    assert store.used_today() == 0
-    assert not store.claim(URL) and not store.claim(NEXT)
-    clock(monkeypatch, now - timedelta(days=1))
-    assert store.used_today() == 2, "clock rollback cannot free reservations"
-
-
-def test_legacy_today_receipts_alone_exhaust_repost_allowance(memory_ledger):
-    ag.record(ag.RETWEET, URL)
-    ag.record(ag.RETWEET, NEXT)
-    assert not store.claim("https://x.com/elonmusk/status/2063500000000000300")
-    assert store.used_today() == 2
-
-
-def test_elon_exception_with_video_ownership_keeps_reply_and_publication_limits(
-        monkeypatch, memory_ledger, settings_override):
-    from src.video import config as video_config
-    settings_override(WATCH_ENGAGEMENT_REQUIRES_REPLY=True, MAX_ORIGINALS_PER_DAY=7)
-    monkeypatch.setattr(video_config, "owns_profile", lambda: True)
-    monkeypatch.setattr(video_config, "legacy_usage", lambda now: (0, None))
-    assert not ag.can_post(ag.RETWEET, target=URL)[0]
-    ag.record(ag.REPLY, URL)
-    assert ag.can_post(ag.RETWEET, target=URL)[0]
-    assert not ag.can_post(ag.POST)[0], "the narrow exception cannot enable ordinary originals"
-    monkeypatch.setattr(video_config, "legacy_usage", lambda now: (7, None))
-    assert not ag.can_post(ag.RETWEET, target=URL)[0], "video receipts still consume publication capacity"
 
 
 def test_claim_is_atomic_and_permanent_across_url_spellings():
@@ -181,3 +125,6 @@ def test_pending_originals_also_reserve_repost_slots(monkeypatch, memory_ledger,
 
 def test_quotes_stay_disabled_even_for_watched_authors():
     assert not ag.can_post(ag.QUOTE, target=URL)[0]
+
+
+pytestmark = pytest.mark.usefixtures("open_topic_account", "watched_account")

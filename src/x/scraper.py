@@ -8,7 +8,7 @@ from ..core import config, settings
 from ..core.json_safety import sanitize_for_json
 from ..core.logger import log
 from ..guards.active_hours import OutsideActiveHours
-from . import safari
+from . import safari, x_urls
 
 # Reactive black-screen recovery: track consecutive blank pages.
 # When Safari renders an empty app shell (service worker stale state), every
@@ -158,8 +158,6 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
     """Run JS on the current Safari page to extract tweets. Returns list of
     dicts; each `text` is cut to `text_limit` characters."""
     import json as _json
-    if settings.get("REPLY_DISCUSSIONS_ONLY"):
-        text_limit = max(text_limit, 4000)
 
     js_code = """
     (function() {
@@ -174,15 +172,18 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             return Number.isSafeInteger(count) && count >= 0 ? count : null;
         }
         function extractCount(article, testid) {
-            var btn = article.querySelector('[data-testid="' + testid + '"]');
-            if (!btn) return 0;
+            var selector = '[data-testid="' + testid + '"]' + (testid === 'like' ? ',[data-testid="unlike"]' : '');
+            var buttons = Array.from(article.querySelectorAll(selector)).filter(el =>
+                el.closest('article') === article && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+            if (buttons.length !== 1) return null;
+            var btn = buttons[0];
             var label = btn.getAttribute('aria-label') || '';
-            var m = label.match(/(\\d[\\d,\\.KMkm]*)/);
-            if (!m) return 0;
-            var s = m[1].replace(/,/g, '').toLowerCase();
-            if (s.indexOf('k') !== -1) return Math.round(parseFloat(s) * 1000);
-            if (s.indexOf('m') !== -1) return Math.round(parseFloat(s) * 1000000);
-            return parseInt(s, 10) || 0;
+            var m = label.trim().match(/^((?:\\d{1,3}(?:[, \\u00a0\\u202f]\\d{3})+|\\d+)(?:\\.\\d+)?)\\s*([KMB]?)(?:\\s+[A-Za-zÀ-ÿ].*)?$/i);
+            if (!m) return null;
+            var value = Number(m[1].replace(/[, \\u00a0\\u202f]/g, ''));
+            if (!m[2] && !Number.isInteger(value)) return null;
+            var count = Math.round(value * ({k:1000,m:1000000,b:1000000000}[m[2].toLowerCase()] || 1));
+            return Number.isSafeInteger(count) && count >= 0 ? count : null;
         }
         function detectTranslatedLang(article) {
             var html = article.innerHTML;
@@ -248,7 +249,9 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
                 var an = analytics[0];
                 views = extractFromLabel(an.getAttribute('aria-label') || an.textContent || '');
             }
-            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, tl: tl, ir: isReply, ts: ts}));
+            var hasVideo = Array.from(a.querySelectorAll('video, [data-testid="videoPlayer"]')).some(el =>
+                el.closest('article') === a && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+            if (url) tweets.push(JSON.stringify({u: url, t: text.substring(0, TEXT_LIMIT), qt: quoted.substring(0, TEXT_LIMIT), a: author || 'unknown', l: likes, r: replies, v: views, hv: hasVideo, tl: tl, ir: isReply, rc: detectReplyArticle(a, ''), ts: ts}));
         }
         if (tweets.length === 0) return 'ARTICLES_' + articles.length + '_NO_URLS';
         return '[' + tweets.join(',') + ']';
@@ -304,12 +307,14 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
             "replies": int(t.get("r") or 0),
             "translated_from": t.get("tl") or "",
             "is_reply": bool(t.get("ir") or False),
+            "has_reply_context": t.get("rc") if type(t.get("rc")) is bool else None,
             # Bug 2026-06-05 (retweets 140/day → 0): the JS extracted the
             # <time datetime> but this mapping DROPPED it, so every candidate
             # had unknown age and the hard 48h freshness gate skipped 100% of
             # feed/search candidates ("No viable candidates this cycle").
             "timestamp": t.get("ts") or "",
             "views": t["v"] if type(t.get("v")) is int and t["v"] >= 0 else None,
+            "has_video": t.get("hv") is True,
         } for t in data]
         _reset_blank_page_count()
         log.info(f"[SCRAPE] Found {len(tweets)} tweets on {label}")
@@ -317,6 +322,8 @@ def _scrape_tweets_from_page(label: str, max_tweets: int = 10, text_limit: int =
         # discovery pass finishes. The watch alone decides eligible parents.
         from ..core.watch_discovery import offer
         offer(tweets)
+        from ..guards import meme_repost_store
+        meme_repost_store.offer(tweets)
         return tweets
     except OutsideActiveHours:
         raise
@@ -399,6 +406,42 @@ def scrape_mentions(max_tweets: int = 20):
         return tweets
 
 
+def scrape_priority_notifications(handles, max_posts=20):
+    """Bounded notification links are leads only; the watch verifies their exact pages."""
+    allowed = {handle.lower() for handle in handles}
+    if not allowed or max_posts <= 0:
+        return []
+    with safari._safari_lock:
+        if not safari.open_url("https://x.com/notifications"):
+            return []
+        try:
+            time.sleep(4)
+            raw = safari._run_js("""
+            (() => {
+                if (!['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'].includes(location.hostname)
+                    || location.pathname !== '/notifications') return '[]';
+                return JSON.stringify(Array.from(document.querySelectorAll('main a[href*="/status/"]'))
+                    .slice(0, 500).map(a => a.href));
+            })()
+            """, 8, log_prefix="[PRIORITY-NOTIFICATION]")
+            try:
+                links = json.loads(raw)
+            except (TypeError, ValueError):
+                return []
+            if not isinstance(links, list):
+                return []
+            urls = set()
+            for link in links[:500]:
+                if not isinstance(link, str):
+                    continue
+                url = x_urls.canonical_status_url(link)
+                if url and x_urls.author(url) in allowed:
+                    urls.add(url)
+            return sorted(urls, key=lambda u: int(x_urls.status_id(u)), reverse=True)[:max_posts]
+        finally:
+            safari.close_front_tab()
+
+
 def _feed_tab(labels: tuple[str, ...], *, click: bool) -> str:
     """Select or verify the named Home tab; never trust X's remembered tab."""
     script = """
@@ -418,8 +461,9 @@ def _feed_tab(labels: tuple[str, ...], *, click: bool) -> str:
     return safari._run_js(script, 8, log_prefix="[SCRAPE]")
 
 
-def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int, text_limit: int) -> list:
-    """Read each viewport before virtualized posts disappear, deduplicating IDs."""
+def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int, text_limit: int,
+                 *, stop_when=None) -> list:
+    """Read each viewport, optionally ending when a pure source predicate is ready."""
     from .x_urls import status_id
     if max_tweets <= 0:
         return []
@@ -449,19 +493,30 @@ def _scrape_feed(label: str, labels: tuple[str, ...], max_tweets: int, text_limi
                     seen.add(identity)
                     tweets.append(tweet)
                     if len(tweets) >= max_tweets:
-                        return tweets
+                        break
+                if stop_when is not None and stop_when(tweets):
+                    return tweets
+                if len(tweets) >= max_tweets:
+                    return tweets
                 stalled = stalled + 1 if len(tweets) == before else 0
                 if stalled >= 3 or step == passes:
                     break
-                safari._scroll_page()
+                if not safari._scroll_timeline():
+                    break
             return tweets
         finally:
             safari.close_front_tab()
 
 
-def scrape_home_feed(max_tweets: int = 15, *, text_limit: int = 200):
-    """Select For You explicitly and collect posts throughout a bounded deep scroll."""
-    return _scrape_feed("home feed", ("for you", "pour vous"), max_tweets, text_limit)
+def scrape_home_feed(max_tweets: int = 15, *, text_limit: int = 200, stop_when=None):
+    """Select For You; optionally stop after a viewport has a usable fresh source.
+
+    ``stop_when`` receives the accumulated, deduplicated posts before another
+    scroll. It only selects when to finish reading; all write admission remains
+    with the caller. Omit it to retain the complete bounded feed scan.
+    """
+    return _scrape_feed("home feed", ("for you", "pour vous"), max_tweets, text_limit,
+                        stop_when=stop_when)
 
 
 def scrape_following_feed(max_tweets: int = 15, *, text_limit: int = 200):
@@ -482,14 +537,27 @@ def scrape_x_search(query: str, max_tweets: int = 10, tab: str = "top", text_lim
         f_param = "top" if tab == "top" else "live"
         search_url = f"https://x.com/search?q={urllib.parse.quote(query)}&src=typed_query&f={f_param}"
         log.info(f"[SCRAPE] Searching X ({f_param}) for: {query}")
-        safari.open_url(search_url)
-        time.sleep(8)
-        for _ in range(scroll_passes):
-            safari._scroll_page()
-
-        tweets = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
-        safari.close_front_tab()
-        return tweets
+        if not safari.open_url(search_url):
+            return []
+        try:
+            time.sleep(8)
+            tweets, seen = [], set()
+            for index in range(scroll_passes + 1):
+                visible = _scrape_tweets_from_page(f"search '{query}' ({f_param})", max_tweets, text_limit)
+                added = 0
+                for tweet in visible:
+                    sid = x_urls.status_id(tweet.get("url", ""))
+                    if sid and sid not in seen:
+                        seen.add(sid)
+                        tweets.append(tweet)
+                        added += 1
+                if len(tweets) >= max_tweets or index == scroll_passes or (index and not added):
+                    break
+                if not safari._scroll_timeline():
+                    break
+            return tweets[:max_tweets]
+        finally:
+            safari.close_front_tab()
 
 
 def scrape_own_tweet_and_replies():

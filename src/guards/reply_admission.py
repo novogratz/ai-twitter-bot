@@ -31,11 +31,15 @@ from . import (
 )
 from ..core import account, config, engagement_log, humanizer, reply_language, reply_wording, settings
 from ..x import x_urls
+from ..core.logger import log
 
 
 class Refusal(Enum):
     NO_AUTHOR = "no author handle in the URL"
     BLOCKED_ACCOUNT = "Blocked account"
+    REPLY_EXCLUDED = "author excluded from Replies"
+    OPT_OUT = "author opted out of Replies"
+    MANUAL_REVIEW = "parent retained in manual review history"
     OWN_POST = "own post"
     CONVERSATION = "conversation follow-up or nested reply"
     ALREADY_REPLIED = "already Replied"
@@ -43,11 +47,12 @@ class Refusal(Enum):
     STARTUP_VIDEO = "startup video must be confirmed before Replies"
     DEBATE_TURN_CAP = "Debate turn cap reached"
     DAILY_CAP = "daily Reply cap reached"
-    DISCUSSION = "source lacks a substantive technical discussion"
     SPACING = "too soon after the last Reply"
     TEXT = "text refused"
     TOPIC = "source outside engagement niche"
+    ENGAGEMENT = "source below required observed likes"
     STALE_CANDIDATE = "buffered source expired"
+    NOT_INVITED = "no explicit request for this Account's help"
     RESPECTED_ACCOUNT = "text names a Respected account"
 
     @property
@@ -57,7 +62,8 @@ class Refusal(Enum):
         return self in _DEFINITIVE
 
 
-_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.OWN_POST,
+_DEFINITIVE = frozenset({Refusal.NO_AUTHOR, Refusal.BLOCKED_ACCOUNT, Refusal.REPLY_EXCLUDED,
+                         Refusal.OPT_OUT, Refusal.MANUAL_REVIEW, Refusal.OWN_POST,
                          Refusal.ALREADY_REPLIED, Refusal.RESPECTED_ACCOUNT, Refusal.CONVERSATION})
 
 
@@ -74,6 +80,8 @@ class Verdict:
 
 def judge_startup() -> Verdict:
     """Also rechecked immediately before a prepared Reply is submitted."""
+    if settings.get("REPLY_INVITED_ONLY"):
+        return Verdict(None)  # This mode starts no profile/video publisher.
     from ..video.startup import waiting_reason
     reason = waiting_reason()
     return Verdict(Refusal.STARTUP_VIDEO, reason) if reason else Verdict(None)
@@ -87,13 +95,25 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
     if is_blocked_account(author):
         return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
+    if author in account.current().reply_excluded_handles:
+        return Verdict(Refusal.REPLY_EXCLUDED, f"@{author} has a Reply-only exclusion", author)
     if author in account.own_handles():
         return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
+    if settings.get("REPLY_MANUAL_ORDINARY") and not account.watched_url(url):
+        return Verdict(Refusal.MANUAL_REVIEW, "ordinary Replies require operator review and manual posting", author)
+    from . import review_store
+    if review_store.opted_out(author):
+        return Verdict(Refusal.OPT_OUT, "author requested no further contact", author)
+    if review_store.reserved_for_manual_review(url):
+        return Verdict(Refusal.MANUAL_REVIEW, "manual drafts and decisions cannot become automatic Replies", author)
     if account.current().standalone_replies_only and (debate_turn or is_reply):
         return Verdict(Refusal.CONVERSATION, "one Reply to another account's standalone original only", author)
     if url in replied_store.load_replied():
         return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
-    if not active_hours.may_act():
+    from . import reply_selection
+    if why := reply_selection.freshness_refusal(url):
+        return Verdict(Refusal.STALE_CANDIDATE, why, author)
+    if not active_hours.may_reply():
         return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
     startup = judge_startup()
     if not startup:
@@ -103,59 +123,59 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
         if not ok:
             return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
     from . import reply_budget
-    why = reply_budget.refusal(url)
-    if why:
+    if why := reply_budget.refusal(url):
         return Verdict(Refusal.DAILY_CAP, why, author)
-    from .reply_focus import freshness_refusal
-    why = freshness_refusal(url)
-    if why:
-        return Verdict(Refusal.STALE_CANDIDATE, why, author)
     return Verdict(None, author=author)
 
 
-def prepare_text(draft: str, author: str) -> str:
-    """Format once before independent review; selective Replies are deterministic."""
-    text = humanizer.strip_dashes(reply_wording.apply(draft))
-    if len(text) > content_guard.REPLY_MAX_CHARS:
-        text = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
-    # Substance supplies the voice. Do not manufacture random human mannerisms.
-    if not settings.get("REPLY_DISCUSSIONS_ONLY"):
-        text = humanizer.casualize(text)
-    return reply_wording.apply(text)
-
-
-def judge_reply(url: str, draft: str, *, debate_turn: bool = False, value_review=None) -> Verdict:
+def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
-    exact text to send. Selective Replies require approval of deterministic
-    final text; other Accounts retain their legacy formatting."""
+    exact text to send. Casualize and the typo are random: call it once per
+    send and ship `verdict.text`, never the draft."""
     verdict = judge_parent(url, debate_turn=debate_turn)
     if not verdict:
         return verdict
     author = verdict.author
-    ok, why = action_guard.can_post(action_guard.REPLY, target=url)
+    ok, why = action_guard.can_post(action_guard.REPLY)
     if not ok:
         return Verdict(Refusal.SPACING, why, author)
 
-    text = prepare_text(draft, author)
-    if settings.get("REPLY_DISCUSSIONS_ONLY"):
-        from .reply_value import Approval
-        if not isinstance(value_review, Approval) or not value_review.matches_reply(url, text):
-            return Verdict(Refusal.TEXT, "missing or changed independent value review", author)
+    return judge_text(author, draft, manual_review=settings.get("REPLY_INVITED_ONLY"), source_url=url)
+
+
+def judge_text(author: str, draft: str, *, manual_review: bool = False, source_url: str = "") -> Verdict:
+    """Shared text gates for a live Reply and a local draft; never claim a parent."""
+
+    # Every Reply loses its dashes here, including paths that skip humanize().
+    text = humanizer.strip_dashes(reply_wording.apply(draft))
+    if settings.get("REPLY_CURATED_MODE"):
+        from . import reply_selection
+        if why := reply_selection.text_refusal(author, text, url=source_url):
+            return Verdict(Refusal.TEXT, why, author)
+    if len(text) > content_guard.REPLY_MAX_CHARS:
+        # The generation is already paid for: trim on a sentence boundary
+        # rather than discard; validate below still rejects what can't be saved.
+        trimmed = humanizer.smart_trim(text, content_guard.REPLY_MAX_CHARS)
+        log.info(f"[REPLY] over-length ({len(text)} chars) — smart-trimmed to {len(trimmed)}.")
+        text = trimmed
+    if not manual_review:
+        text = humanizer.casualize(text)
+    # The language is judged on the text as written, before the typo.
     if reply_language.is_fr_forced(author) and reply_language.looks_english(text):
         return Verdict(Refusal.TEXT, f"FR-forced parent @{author}, reply looks English", author)
-    if not settings.get("REPLY_DISCUSSIONS_ONLY") and author in _handles("HUMAN_TYPO_HANDLES"):
-        text = reply_wording.apply(humanizer.inject_human_typo(text))
+    if not manual_review and author in _handles("HUMAN_TYPO_HANDLES"):
+        text = humanizer.inject_human_typo(text)
+        log.info(f"[REPLY] human-typo injected for @{author}.")
+    # Keep the Account's wording authoritative after every formatting step.
+    text = reply_wording.apply(text)
     # Validate last, so the text that ships is the text that was checked.
-    ok, why = content_guard.validate(text, kind="reply")
+    context = {"source_url": source_url} if source_url and settings.get("REPLY_BROAD_DISCOVERY") else {}
+    ok, why = content_guard.validate(text, kind="reply", **context)
     if not ok:
         return Verdict(Refusal.TEXT, why, author)
-    from .reply_focus import draft_refusal
-    why = draft_refusal(text)
-    if why:
-        return Verdict(Refusal.TEXT, why, author)
     try:
-        if engagement_log.repeated_reply(text, limit=settings.get("REPLY_RECENT_MEMORY_COUNT")):
-            return Verdict(Refusal.TEXT, "same wording as a recent confirmed Reply", author)
+        if engagement_log.repeated_reply(text):
+            return Verdict(Refusal.TEXT, "recycled wording from a recent confirmed Reply", author)
     except (OSError, ValueError, csv.Error):
         return Verdict(Refusal.TEXT, "recent Reply text unavailable", author)
     _, why = respect_list.scrub_text_or_skip(text, addressee=author)

@@ -3,6 +3,13 @@
 A persona-driven X account that publishes a few sourced AI posts a day and
 converses through replies, within a ceiling set by the operator.
 
+Current November 20 overlay: curated AI slopcore artist Replies and short technical
+comments, up to 100/day; ordinary Originals are disabled. **Curated Reply** means a
+source selected with audience evidence and, for artist videos, temporal visual review.
+It does not require a public question. **Watched action** is a separately scoped like
+or selectively reviewed native repost; neither authorizes a Reply. Older baseline
+terms below do not override the current Account policy.
+
 ## Language
 
 ### Publishing

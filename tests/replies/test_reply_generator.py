@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from src.core.llm_client import LLMResult
+from src.core.llm_client import LLMResult, Surface
 from src.x.confirmed_write import WriteOutcome
 from tests.helpers import fresh
 
@@ -21,7 +21,7 @@ def test_delivery_uses_parent_intent_and_voice_without_rewriting_output(llm):
     direction = _delivery()
     assert "parent's intent determine length" in direction
     assert "Voice's post-specific style and emoji guidance" in direction
-    assert "two or three complete sentences" in direction
+    assert "one short sentence, 24 words and 140 characters" in direction
     assert "never infer unseen craft or claim playback" in direction
     assert "3–8 words" not in direction
     llm.default = "Offline wins. 🙂"
@@ -41,7 +41,7 @@ def test_reply_prompt_keeps_context_beyond_the_old_200_character_cutoff(llm):
 
 
 @pytest.mark.parametrize("structured", [False, True])
-def test_selective_voice_reaches_text_and_search(monkeypatch, llm, structured):
+def test_artist_guidance_precedes_default_delivery_on_text_and_search(monkeypatch, llm, structured):
     from src.replies import direct_reply, reply_agent, reply_generator
 
     recent = ["Love this ❤️"]
@@ -60,17 +60,25 @@ def test_selective_voice_reaches_text_and_search(monkeypatch, llm, structured):
                                           text="Mon nouveau court métrage réalisé avec Grok Imagine.")
         assert result.text == llm.default and result.language == "en"
     prompt = llm.prompts[-1]
-    assert "Replies are selective contributions" in prompt
-    assert "one supported angle" in prompt.lower()
+    assert "A creator's art, progress or win can get a warm little reaction or a heart" in prompt
+    assert "does not prove unseen visual quality" in prompt
+    assert "LOVING:" in prompt and "SI SPECIALIST:" in prompt
+    assert "No fixed ratio, forced alternation, mandatory two-part reply" in " ".join(prompt.split())
+    assert "printed mode labels" in prompt
     assert "Follow the Voice's post-specific style first" in prompt
     assert "Where the Voice permits brief appreciation, that is enough" in prompt
     assert json.dumps(recent, ensure_ascii=False) in prompt
     assert "HARD RULES" in prompt and "TARGET LANGUAGE OVERRIDE: ENGLISH ONLY" in prompt
+    assert "never generic applause" not in prompt
+    assert "the target never demands a post" in prompt
+    assert "Simple agreement" in prompt and "a short, concrete question is welcome" in prompt
+    assert "Could the remaining line" not in prompt and "twenty unrelated posts" not in prompt
 
 
 @pytest.mark.parametrize("text", [
     "Oh, I love this ❤️", "Love it 🩷", "This is beautiful 💖",
     "So lovely 💜", "I love this one 💕", "You made something special 🫶",
+    "You made my day ❤️", "Really cool video ❤️",
 ])
 def test_short_artist_reactions_pass_generation_and_existing_final_admission(monkeypatch, llm, text):
     from src.core import humanizer
@@ -453,6 +461,21 @@ def test_the_generator_hands_the_surface_and_the_call_to_run_llm(llm, settings_o
             search.profile) == (True, ("WebSearch",), None, "/tmp", "gemini", profile)
     assert (relation.model, relation.output_json, relation.timeout, relation.force_provider) == (
         ModelSetting("PRIORITY_REPLY_MODEL"), False, 60, "claude")
+
+
+@pytest.mark.parametrize("surface,bound,expected", [
+    (Surface.REPLY, 20, 20),
+    (Surface.RELATION_REPLY, 20, 20),
+    (Surface.RELATION_REPLY, 90, 60),
+])
+def test_per_reply_timeout_works_with_optional_or_stricter_route_timeout(llm, surface, bound, expected):
+    from src.replies import reply_generator
+    from src.replies.reply_generator import ReplyCall
+    llm.default = "A simple reply."
+    result = reply_generator.generate(
+        ReplyCall("Parent: {tweet_text}", surface, "TEST", dossier=False, timeout=bound), text="a post")
+    assert result.outcome is reply_generator.Outcome.WRITTEN
+    assert llm.calls[-1].timeout == expected
 
 
 def test_default_call_options_are_run_llms_defaults(llm):

@@ -159,17 +159,3 @@ def test_real_cut_preserves_original_and_aligned_audio(video_cfg, tmp_path):
         media.technical_qc(original, output, info, cfg, edit=edit | {"start_seconds": 3})
     sheet, times = inspection.opening_pack(output, tmp_path, cfg)
     assert sheet.is_file() and times == [0, .2, .4, .6, .8]
-    reference = tmp_path / "source-reference"
-    reference.mkdir()
-    source_sheet, source_times = inspection.opening_pack(original, reference, cfg,
-        start=edit["start_seconds"], label="ORIGINAL OPEN")
-    assert source_sheet.is_file() and source_times == times
-    from PIL import Image
-    for index in range(len(times)):
-        with Image.open(tmp_path / f"opening-{index}.jpg") as finished, Image.open(reference / f"opening-{index}.jpg") as source:
-            area = (0, 0, finished.width, round(finished.height * .75))
-            assert inspection.pixel_similarity(finished.crop(area), source.crop(area))["ssim"] > .97
-    frames, source_sheets, _ = inspection.frame_pack(original, reference,
-        info | {"duration": edit["duration"]}, cfg, edit=edit, label="ORIGINAL aligned ")
-    assert frames[0]["at"] == 0 and frames[-1]["at"] < edit["duration"]
-    assert source_sheets

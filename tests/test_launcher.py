@@ -23,6 +23,7 @@ def launcher(tmp_path):
         'if os.environ.get("TEST_BAD_CONFIG"):\n'
         '    raise ValueError("invalid launcher test configuration")\n'
         'def get(name):\n'
+        '    if name in {"REPLY_REVIEW_ONLY", "REPLY_INVITED_ONLY"}: return False\n'
         '    assert name == "VIDEO_ENABLED", name\n'
         '    return os.environ["TEST_VIDEO_ENABLED"] == "1"\n'
     )

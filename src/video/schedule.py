@@ -17,37 +17,25 @@ def local(now):
     return now.astimezone(ZONE)
 
 
-def eligible(now, cfg=None):
-    stamp = local(now)
-    start, end = active_hours.early_video_bounds(stamp)
-    return active_hours.is_active(stamp) or bool(cfg and cfg.early_video_window and start <= stamp < end)
-
-
-def slot_bounds(due, cfg):
-    """Real submission interval; the durable slot keeps its nominal clock/ID."""
-    at = datetime.fromtimestamp(due, ZONE)
-    if cfg.early_video_window and at.time().replace(tzinfo=None) == time(6):
-        start, end = active_hours.early_video_bounds(at)
-        return start.timestamp(), end.timestamp()
-    return due, due + cfg.grace_seconds
+def eligible(now):
+    return active_hours.is_active(local(now))
 
 
 def clocks(cfg):
     minutes = []
-    if not 1 <= len(cfg.windows) <= cfg.scheduled_daily_cap or len(set(cfg.windows)) != len(cfg.windows) or not set(cfg.paired_windows) <= set(cfg.windows):
-        raise ValueError("one to the configured daily cap of unique video windows with paired windows drawn from them are required")
+    if not 5 <= len(cfg.windows) <= cfg.scheduled_daily_cap or len(set(cfg.windows)) != len(cfg.windows) or not set(cfg.paired_windows) <= set(cfg.windows):
+        raise ValueError("five to the configured daily cap of unique video windows with paired windows drawn from them are required")
     for value in cfg.windows:
         parsed = time.fromisoformat(value)
-        early = cfg.early_video_window and parsed == time(6)
-        if parsed.second or parsed.microsecond or parsed.tzinfo or (parsed < active_hours.WAKE and not early):
+        if parsed.second or parsed.microsecond or parsed.tzinfo or parsed < active_hours.WAKE:
             raise ValueError("video slots must be minute precision during " + active_hours.window_label())
         minute = parsed.hour * 60 + parsed.minute
         minutes.append(minute)
         if value in cfg.paired_windows:
             minutes.append(minute + cfg.pair_minutes)
     minutes.sort()
-    if not 1 <= len(minutes) <= cfg.scheduled_daily_cap or len(set(minutes)) != len(minutes) or minutes[-1] >= 1440:
-        raise ValueError("one to the configured daily cap of distinct video slots are required")
+    if not 5 <= len(minutes) <= cfg.scheduled_daily_cap or len(set(minutes)) != len(minutes) or minutes[-1] >= 1440:
+        raise ValueError("five to the configured daily cap of distinct video slots are required")
     if any(b - a < 15 for a, b in zip(minutes, minutes[1:])):
         raise ValueError("video slot clocks must be at least 15 minutes apart")
     return tuple(f"{n // 60:02}:{n % 60:02}" for n in minutes)

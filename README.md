@@ -1,103 +1,182 @@
 # The SI Maximalist · @thesimaximalist
 
-Current policy (November 18): **five Instagram video slots at 06:00, 09:00,
-12:00, 17:00 and 21:00 Toronto; at most two news/text posts at 10:30 and 15:00;
-aim for up to 1,400 thoughtful Replies across 07:00–23:00.** The hard cap is
-1,400 including uncertain submissions. The 06:00 video has a bounded
-05:55–06:05 exception. All other activity sleeps 23:00–07:00. These rules
-supersede older dated notes below.
+Current operator status (November 21): **paused at 21:35:55 Toronto; bot stopped**.
+Keep the bot stopped until a new explicit start/restart request. This supersedes
+the earlier resume status below; configuration and publication history are preserved.
 
-A normal start now also requests **one reviewed Instagram startup video**, while
-Replies continue independently. It publishes when an eligible clip is ready and
-timing checks permit, within sixty eligible minutes. A nearby scheduled slot can
-fulfill the same request. The normal allowance is one per Toronto day. Today's
-earlier confirmed test remains recorded; the new request adds one lifetime grant
-(`startup_once="operator-extra-2026-11-18"`) so the next start can still request an
-extra video. Repeated restarts cannot reset that grant or an uncertain send. It
-does not add a startup news post. These settings take effect on the Operator's
-next restart; implementation does not start the bot.
+Current strategy: **earlier broad discovery restored**, with a **1,400/day**
+advisory target and ceiling. Direct searches run every two minutes with the
+sixteen-query author/creator/Top/Latest mix; both Home feeds share an eight-minute
+cycle, up to 160 posts/twenty scrolls and eighty drafting attempts per feed.
+The recent one-reply-per-turn and first-hour-only restrictions are disabled.
+Source age returns to at most twenty-four hours; general Latest keeps one hour.
+Grok and the new short replies, understandable humor and concrete questions remain.
+The worker restarted November 21 at 08:41:57 Toronto after 3,994 passing tests. Confirmed parent likes and the shorter Reply limits are loaded.
+Live verification: parent like at 08:50:37, then a confirmed [Grok Reply](https://x.com/thesimaximalist/status/2124138453269164129) at 08:50:48.
 
-Content must earn its place. Discovery favors research methods, evaluations,
-agent reliability, inference/deployment tradeoffs and practical workflow problems,
-plus standout AI videos and high-quality art/memes with evidence of an inventive
-concept, clever premise or deliberate creative choice. Routine demos, hype captions,
-tool names and popularity alone do not establish creative quality.
-An independent review must find one useful, supported contribution in every Reply;
-technical vocabulary, generic praise and a paraphrase are insufficient. The final
-text and actual parent must match that approval. Failed or unavailable review
-means no send. Review also rejects boilerplate that could fit unrelated posts with
-only a model name changed, generic closing questions and caveats, and suggestions
-the parent already tested. A specific opening cannot excuse a padded ending.
-The feminine voice stays sharp, kind, playfully cute and
-honest about bot identity. News must explain a supported change or consequence; occasional
-questions must elicit a practical lesson rather than a generic favorite-model poll.
-The 1,400-Reply goal is advisory, never a daily minimum or a reason for filler;
-the two-text limit remains. The Operator will restart after implementation and
-validation. Views, likes and follows depend on actual audience response.
+Reply drafting now uses the signed-in **Grok CLI**, model `grok-4.7-build-fast`
+with low reasoning effort. Both ordinary and watched Reply generation use this
+connection. Draft calls have no tools or web access, and fallback is disabled.
+The earlier “go push harder” instruction lifted the 08:14 pause; the later 21:35 pause now takes precedence.
 
-Every video needs source-attributed Elon Musk, Jensen Huang, Dario Amodei,
-Sam Altman or Donald Trump. Choose the strongest eligible inspected clip;
-permanent content history prevents duplicates. News selects the highest-impact
-verified candidates, with a 90/100 floor and no obligation to fill a quiet slot.
+Earlier operator status (superseded by the 21:35 pause): **running since 08:41:57 Toronto**. The Reply style uses
+plain, brief reactions and understandable humor. Short, relevant questions remain
+welcome; technical explanations are for actual help requests. Stop and pause
+requests still take precedence over scheduled work.
 
-Replies are at least eight seconds plus 0–4 seconds jitter apart, on substantive
-AI/SI discussions or standout AI videos/art/memes, with a sharp, kind and supported
-contribution. An eighty-Reply direct-cycle allowance and eighty draft attempts
-per feed restore capacity;
-review and browser time still limit actual throughput. No invented
-visual details or generic applause; skip when the response requires uninspected
-media. Other posts must be under thirty minutes
-old at send; Elon gets at most two Replies daily, within five minutes (first minute
-when feasible). His likes/reposts are restricted to answered posts, with the
-verified parent like allowed during Reply composition. Unknown sends consume the
-same durable caps. Unfamiliar authors receive preference; no quota forces filler.
-Generation summarizes patterns across the last 1,400 confirmed Replies, and final
-admission refuses repeated wording across that history even when punctuation or
-emoji changes. Independent review compares the latest twenty for recycled ideas.
+Current setting: **automatic Replies restored**, targeting up to **1,400/day**,
+with a 1,400 hard ceiling including uncertain submissions. Broad search and both Home-feed
+jobs are configured but paused; manual discovery/review mode is off. Pacing is eight
+seconds plus 0–4 seconds jitter. The temporary 200/day boost and later 70/day return
+are cleared. Quality/source checks can produce fewer replies; never fill a quota.
+The optional manual inbox stays separate and is never automatically posted.
 
-Automatic reposts are limited to **at most two Elon Musk originals per Toronto
-day**, only after a confirmed Reply to the same AI-relevant post. Never repost
-our own content or any other author, even if added to the watch list. Uncertain
-sends consume the same durable cap; spacing and shared publication limits apply.
+Every Reply requires a confirmed like on its exact parent first. Ordinary Replies
+use one short sentence, at most 24 words/140 characters. Elon Replies prefer one or
+two words, with a twelve-word/ninety-character ceiling and the existing topic filter.
+New exact Elon originals get priority likes and native reposts across topics;
+reposts are at least sixty seconds apart. Watched ceilings are 1,400/day, with
+Replies also inside the overall Reply ceiling. The former six-hour gap is removed.
+Only watched Replies expire at sixty seconds. Normal Toronto hours remain.
+Changes take effect after restart; confirm a new own-X Reply receipt and its parent like.
 
-November 17: restored the last saved code available on November 10 (`4ad829ac`,
-committed November 9). **Never retweet our own posts**, including posts under any
-previous account handle. Shared admission and browser confirmation enforce this
-rule; there is no self-repost scheduler. Posting histories remain intact, and the
-rollback does not start or restart the bot.
+The following earlier strategies are superseded where they differ.
 
-November 18: the best-available live test produced a [confirmed video post](https://x.com/i/status/2122920458366693860).
-The Operator authorized the daily bot to start afterward; the one-time test hours
-exception does not change normal daily hours or create another startup request.
+Temporary workload: **200/day target for November 20–23**, returning automatically
+to the 70/day plan (60–80 range) on November 24. Ordinary replies are review drafts;
+up to 197 drafts reserve three slots for automatic watched Replies. Four sessions
+allow up to 50 attempts each during the boost, then 20. Quality may yield fewer.
 
-**Verified SI news, occasional discussion questions and exceptional Instagram videos.**
-News covers meaningful model releases, CEO/company developments, reported results
-and verified IPO milestones, with a direct source link and no forced BANGER slogan.
-Discussion questions run at most once every 48 hours through the same reviewed
-text outbox. They invite useful opinions and use model families rather than stale
-version numbers. News and questions share the two-text daily ceiling and the 10:30/15:00 windows,
-two-hour text spacing and video protections; news goes first.
+Tonight's exception skips November 21, 00:00–04:30 Toronto. Normal midnight sleep
+resumes **November 22 at 00:00**. The date is fixed and stop requests still apply.
+The following base strategy resumes after the temporary workload window.
 
-The video schedule is **five slots daily at 06:00, 09:00, 12:00, 17:00 and 21:00
-Toronto time**. Prefer exceptional clips; if none reaches the quality target,
-choose the strongest eligible reviewed unseen clip. Only Instagram sources publish,
-with a ten-clip reserve and a warning below five. Permanent source/hash/video
-history prevents reposting the same footage under another link. Actual source,
-audio, output, permission and X-copy checks remain required. Missing valid supply
-or a failed platform send is reported honestly, never counted as publication.
-Captions use short, grounded meme hooks with varied openings and punchlines,
-without repeated BANGER sign-offs. Recent confirmed captions guide variety;
-source and output review approve the style and actual scene details. A changed
-caption policy requires fresh review, not reuse of an older approval.
+Current strategy (November 20): **automatic selected Elon actions; manual ordinary
+replies**. The ordinary plan is 70/day, working range 60–80, with up to 80 review drafts
+and no filler. Discovery/drafting sessions run at 05:00,10:00,15:00 and 20:00 Toronto.
+Review the source and draft, then send manually in X. Gaming, film and internet
+comedy join AI/SI creative and builder discussions; concise replies may use up to
+three sentences/278 characters. Genuine external-thread follow-ups can be drafted
+from complete context, but never automatically sent.
 
+For Elon, selected AI/SI, slopcore, Grok, Starlink and SpaceX originals share a
+like/repost/Reply selection; politics and unclear/inflammatory posts are skipped.
+Replies are **1–2 words**, at most 40 characters. Discovery polls every 5 seconds,
+dispatch every 2 seconds, and work that misses the **first minute from publication**
+is skipped. Three Replies and three native reposts/day, six hours apart per action,
+remain the ceilings. Browser/model delays can mean a post is missed.
+
+`main.py --reply-review list` shows the review inbox. `--reply-review metrics` shows
+the fourteen-day review; reported manual activity is distinct from verified receipts.
+[Operating commands](docs/OPERATIONS.md#current-response-strategy) include draft review
+and optional metric entry. **Prepared for manual restart; do not auto-start.**
+`main.py --dry-run` previews the loaded policy without browser/model calls.
+
+Earlier strategy notes below are historical where they differ from this setup.
+
+Reply tone: match the author's intent. Shares and roadmaps get a brief reaction or
+thanks (at most eight words/60 characters); actual questions get one short answer.
+Art gets warmth and an occasional heart. No unsolicited technical lessons.
+
+Current Reply configuration (November 20): broad artist and technical discovery,
+250–300/day advisory target, hard ceiling 300 including uncertain sends. At least
+five observed parent likes, larger-account priority, three-minute minimum plus
+0–60s jitter. Artist replies can be a few words or an occasional heart; technical
+replies stay within one sentence/140 characters. Search previews are expanded into
+the full source before drafting and rechecked before submission. Restart manually
+with `./bin/run.sh` after validation.
+
+Configured mode (November 20): **short AI slopcore artist reactions and sharp
+technical Replies**, with independent, scoped Elon engagement. The bot is paused
+while these settings are prepared; use `./bin/run.sh` only on the operator's next
+explicit start/restart instruction.
+
+- At most **100 Replies/day**, including uncertain sends; no minimum. Ten minutes
+  plus 0–4 seconds jitter between sends, 04:30–00:00 Toronto.
+- Authors need at least **5,000 observed followers** and sources **20 likes**.
+  Unknown counts refuse; final source verification checks the parent again.
+- Strong AI-generated artist videos get a temporal visual review before a brief
+  reaction: usually 3–10 words, at most 12 words/90 characters. Technical comments
+  use one sharp sentence, at most 24 words/140 characters. No automatic essay.
+- A heart is optional for an artist reaction, with two intervening replies without
+  hearts. Natural variety comes from the source and recent history.
+- Elon: verified new original likes across topics; at most **three selectively
+  reviewed AI reposts/day** and **three AI-related Replies/day**, each action type
+  six hours apart. His Replies count within the overall hundred.
+
+Discovery prefers artist-video searches over technical searches, checks mentions
+and opt-outs every fifth turn, and buffers unused sources for at most thirty
+minutes. Claudia, Astra Blue, Tetsuo and Kaia Venta are discovery/taste references;
+ambiguous names are not mapped to unverified handles. No X API is needed. Visual
+comments use actual sampled-frame evidence; missing audio is never invented.
+
+The exact-source, opt-out, English/SI, content, permanent duplicate and uncertain
+submission guards remain. An own-X receipt is required to count a Reply as sent.
+Follows, ordinary likes/reposts, original videos/news, quotes and self-reposts are
+disabled. The optional manual inbox never feeds automatic sends.
+
+`uv run --with-requirements requirements.txt python main.py --dry-run` shows the
+next-run jobs and policy without browser/model calls. See
+[operations](docs/OPERATIONS.md#curated-replies-and-scoped-watched-actions).
+
+## Earlier automation baseline (inactive in curated mode)
+
+Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
+1,400/day Reply limit and Replies enabled all day and night. Posting histories
+and unresolved sends remain intact; news is off and the earlier video schedule
+and conversational/specialist Voice are restored.
+
+**Only ultra-high-quality parody videos may publish as originals. No news.**
 The four owner-selected references guide discovery and are saved as already posted.
-Each new source and edited output receives actual editorial review, with
+Each new source and edited output must clear exceptional editorial review, with
 an immediate opening, usable audio, the exact watermark and permanent dedup.
-The best eligible finds publish through the existing video pipeline. The launcher
-defaults `STARTUP_PUBLICATIONS=0`; the Account's own `startup_on_boot=true` requests
-the startup video without adding a startup news post. Local `NEWS_ENABLED=1`,
-`NEWS_AUTO_PUBLISH=1` and `DISCUSSION_POSTS_ENABLED=1` enable the reviewed text
-routes on the next explicitly requested restart. Replies remain enabled.
+Qualified finds still publish automatically through the existing video pipeline;
+empty windows stay empty. The launcher defaults `STARTUP_PUBLICATIONS=0` and the
+Account disables automatic startup videos. Local `NEWS_ENABLED=0` and
+`NEWS_AUTO_PUBLISH=0` also block queued news. Replies remain enabled.
+
+November 14: Replies use two modes within the same personality: **loving**, with
+brief affection and hearts for art, ideas, progress and wins; and **SI specialist**,
+with precise answers, useful insights and respectful challenges to weak claims.
+The post determines the mode and any blend, with no fixed ratio or two-part
+formula. Warmth can stand alone without a technical takeaway. Expertise comes
+from grounded reasoning, never invented facts, employment or claims of knowing
+everything. The fictional 45-year-old woman working in tech speaks naturally;
+bot identity remains honest. Repetition checks and the Elon Reply exclusion stay.
+The narrow English check now accepts the requested short video appreciation.
+The complete update takes effect on the Operator's manual restart.
+
+November 12 restores Reply throughput: **1,400+ daily Replies is the target**,
+with no daily Reply cap or filler quota. Three likes are a preference again.
+Search drafts run between reads within the November 9 sixteen-query budget;
+both Home feeds share an eight-minute scan-and-draft cycle, twenty overlapping
+viewport scrolls and 160 posts per feed. The bot retains expanded art/film/video
+queries and adds AI memes, humor, coding mishaps and creator progress.
+
+November 13: **never reply to Elon Musk**. His new eligible originals receive only
+priority likes and native reposts across topics. Notification/Latest polling runs
+every twenty seconds, with independent action dispatch every two seconds and
+exact-original verification. Active browser work finishes first; reposts keep
+at least sixty-second spacing, without a five-minute retry penalty for that wait.
+The Reply-only exclusion applies before drafting and at the final write on every
+surface. Completed and uncertain actions remain remembered across restarts.
+New tszzl/signulll/nearcyan searches join the existing AISafetyMemes sources.
+These are search targets, not new follows or verified follower-size claims.
+
+Automatic quotes and timed own-post reposts are disabled to free browser capacity.
+Watched Elon reposts have their own paced allowance; existing histories remain intact.
+Funny AI video reposts reuse discovered sources, with **no popularity floor**:
+up to **20 distinct reposts per Toronto day**, at least thirty minutes apart.
+The five-minute worker samples the actual video, checks its humor and relevance,
+and prefers videos we just replied to. Each review uses 6–16 timestamped frames
+across clips up to two minutes; missing dialogue/audio needed for the joke holds
+the source. Exact source text, video identity, account and repost state must match.
+Twenty is a ceiling, not a target; ordinary text memes no longer use this allowance.
+
+The locally requested **72-hour awake window** runs November 12 at 21:48:10
+through November 15 at 21:48:10 Toronto. Restarts never extend this deadline;
+afterward the normal schedule applies, with the next sleep at November 16 midnight.
+Start/restart remains under the Operator's control. Reply volume and follower gains are not guaranteed.
 
 The November 9 refinement restores warmth as the default: delight, encouragement,
 affection and shared humor can be a whole Reply. Hearts are welcome without an
@@ -106,8 +185,12 @@ real questions; a technical topic alone does not require a mini explainer.
 Artists sharing work, progress and first attempts get a dedicated discovery turn.
 The parent's intent determines length. Current product claims and unseen media
 stay grounded in supplied evidence. Short English false refusals are fixed, and
-final admission now checks the last 1,400 confirmed logged Replies for recycled
-wording even when the emoji changes. Search budgets, follow policy, pacing and
+final admission now checks the configured confirmed Reply memory (100 locally)
+for exact repeats and lightly rewritten long copies, even when the emoji changes.
+Drafts must earn their place with a supported reaction, answer or joke. Stock
+agreement, empty praise, caption recaps and invented plans to try things are
+removed; drafts with only filler left should SKIP. Short, grounded appreciation
+remains welcome. This changes selection and wording, not a promise of fewer blocks. Search budgets, follow policy, pacing and
 permanent one-Reply-per-original history remain. Engagement reports measure
 observed outcomes; they cannot promise likes or attribute follower gains.
 
@@ -130,24 +213,21 @@ The shared prompts follow the Voice's emoji instructions on every draft.
 
 ## Current publishing policy
 
-Up to **16 searches per cycle** cover eight Top, six general Latest and two
-creator Latest searches, rotating through banks of sixteen, sixteen and eight
-queries respectively. Fresh creator sources get up to four
+Up to **16 searches per cycle** cover four grouped major-author Latest searches,
+two artist Latest searches, six Top searches and four general first-hour Latest
+searches. Major-author reads come first, then fresh artist sources get up to four
 generation attempts before ordinary buffered drafting. Those attempts count
 within the cycle budget even when declined; they are not a posting quota.
-Creator queries rotate through distinctive concepts, filmmaking choices and memes,
-with the same first-hour source limit and no popularity floor. They are discovery
+Artist queries rotate through shared work, first attempts and creative progress,
+with the same first-hour source limit and three-like preference. They are discovery
 hints, never proof that an author is human or created the work.
 Routine Top searches no longer require thirty or fifty likes, so
-smaller accounts can enter discovery. Ordinary buffered Replies first favor
-concrete technical questions, reported experiments and distinctive creative
-premises, then unfamiliar authors, with author variety and actual
+smaller accounts can enter discovery. Ordinary buffered Replies prefer configured
+major authors, then posts with at least three observed likes, with author variety and actual
 parent-post views ordering comparable candidates. Missing views stay unknown;
 no follower or view threshold excludes otherwise eligible posts.
-These text signals guide discovery only; quoted context cannot qualify a thin
-outer caption. At the existing buffer limit, the current artist turn temporarily
-retains its sources; ordinary retention favors contextual leads, then newer
-sources (the optional major-author preference remains off for this Account).
+At the existing buffer limit, the current artist turn temporarily retains its
+sources; ordinary retention still prefers major authors, then newer sources.
 The same 400-source limit, expiry, source checks and permanent history apply.
 
 Short affectionate and technical English Replies also avoid more false language
@@ -199,27 +279,28 @@ more observed likes**, while other eligible posts remain available. These are
 attempt budgets; actual sends still require source checks, parent likes, spacing
 and permanent deduplication. The dry-run and startup log show effective budgets.
 
-Videos have **five daily Toronto slots: 06:00, 09:00, 12:00, 17:00 and 21:00**,
-with best-available fallback below the editorial target and the bounded startup
-request described above. Independent
+Videos now have **thirteen daily Toronto slots, every 90 minutes from 05:00 through
+23:00**, as opportunities rather than targets. The Account disables automatic
+startup requests and reports no minimum original-post target. Independent
 discovery/media workers prioritize recent synthetic dance, song and parody clips
-featuring at least one of Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
-up to two years old. Only Instagram sources may publish. Matching X copies use the
-highest observed view count, with fresh evidence required. Captions use a grounded
-scene-specific meme hook, with supported names or familiar aliases and no recurring sign-off.
+featuring Elon Musk, Sam Altman, Dario Amodei, Trump or Jensen Huang, with fallback
+up to two years old. Sources include X, Instagram, TikTok, RedNote and Bilibili;
+X clips require a known view count of at most 50,000. Matching copies use the
+highest observed view count, with fresh evidence required. Captions use one
+grounded `ANOTHER BANGER 🔥` line with full performer names and a visual joke.
 Actual inspection and audio evidence, permanent
 posting memory and confirmed receipts remain required. An empty or inaccessible
 queue is reported as a missed slot, never a successful post.
 
 The editable [discovery brief](accounts/theaishrink/video_discovery_prompt.md)
 drives fresh uploads, unseen back catalog and source-quality recovery, weighted
-toward Instagram and Bilibili. Preferred quality remains 88/100 overall,
-95/100 normalized editorial quality, every component at least 9/10, and a 9/10
-opening. With `best_available_fallback=true`, these are ranking preferences;
-weaker fully inspected clips remain eligible. Power Rangers-style reveals and complete musical
+toward Instagram and Bilibili. The full rubric retains its 88/100 floor. Ultra mode additionally requires
+95/100 normalized editorial quality, every editorial component at least 9/10,
+and a 9/10 first-second opening in both source selection and output review. Power Rangers-style reveals and complete musical
 performances are supported. Codex selects an 8–120 second excerpt; FFmpeg applies
 the exact cut and watermark, followed by independent opening/audio/output checks.
-The reserve targets ten eligible clips and reports shortages below five. YouTube/Douyin discovery supplies leads; media access remains limited.
+The reserve targets three exceptional eligible clips and reports shortages below
+one. YouTube/Douyin discovery supplies leads; media access remains limited.
 
 On startup, the supervisor also replaces verified discovery/media workers left
 running older code or configuration, waiting for their role locks to release.
@@ -397,14 +478,13 @@ start; Voice files are read for each generation.
   appear. Both reads finish before ordinary feed Reply generation starts, so an exhausted
   model quota cannot skip Following. Generation budgets and publication limits
   still apply; overnight sleep can interrupt feed discovery.
-- **Prioritize new Elon Musk originals.** A dedicated Latest search polls every
-  20 seconds; separate action and Reply workers check discoveries every two seconds.
-  Feed discoveries join the same queue. First enable starts with
-  new posts; later passes inspect up to 20 posts from the past 24 hours.
-  Existing content checks, Reply dedup and overnight sleep apply. Reposts consume
-  the same daily publication budget and spacing as Originals; uncertain
-  repost submissions remain reserved across restarts. Browser contention can
-  delay a poll, and policy limits may defer or skip an action.
+- **Like and repost new Elon Musk originals; never reply to him.** Notifications
+  and Latest are checked every 20 seconds; the action worker dispatches every two
+  seconds. Feed discoveries join the same queue. First enable starts with new
+  posts; later passes inspect up to 20 posts from the past 24 hours. Watched
+  reposts have their separate allowance and at least sixty-second spacing,
+  including uncertain attempts. Browser contention can delay delivery; source
+  checks, active hours, permanent claims and stop requests still apply.
 - **One Reply per original, ever.** Never answer our own posts or replies,
   comments or ongoing debates. Debate, replyback and babysitter jobs are
   disabled. The browser verifies the actual parent and clicks its own Reply
@@ -441,13 +521,14 @@ start; Voice files are read for each generation.
   reply may still address the Respected account it answers by its `@handle`.
   If the replied store (`replied_tweets.json`) is unreadable, no reply ships until
   it is repaired ([recovery](docs/OPERATIONS.md#recovery)).
-- **Discovery and engagement cover AI/SI only**: `[niche]`, `[searches]` and `[network]`
+- **Ordinary discovery and engagement cover AI/SI**; the explicitly watched
+  author has an all-topic exception only for likes/reposts: `[niche]`, `[searches]` and `[network]`
   in `account.toml` ([policy](docs/EDITORIAL_POLICY.md#niche-of-replies-likes-and-follows)).
-- **One Startup post each time the bot starts in waking hours**, restarts included,
-  within the daily ceiling and the twenty-minute spacing. A submission with an
-  ambiguous outcome counts toward both until the operator clears it.
-- **No automatic quote tweets, self-recycling, or burst threads.** Reposts are
-  restricted to `auto_engage_handles`, currently only `elonmusk`.
+- **Automatic startup and news posts are disabled.** Qualified original videos
+  keep their scheduled opportunities and existing quality/receipt checks.
+- **No burst threads.** Automatic quotes and scheduled own-post reposts are off.
+  Other-author native reposts require an exact watched author (currently only
+  `elonmusk`) or the separate reviewed funny-AI-video allowance.
 - Every scheduled original uses a fetched trusted source, prefers fresh AI
   launches/articles when available, carries a specific takeaway, duplicate
   checks, and a separate editorial review before publishing.
@@ -595,7 +676,8 @@ remain removed (issue #111). The October 23 operator request adds only the
 guarded watched-author `repost_tweet` path in `src/x/twitter_client.py`.
 
 Autonomous prompt/code rewriting is excluded from the active scheduler. Old
-`.env` or strategy values cannot lift the eight-post ceiling or restore quotes.
+`.env` or strategy values cannot enable unrestricted posting; the Account owns
+the narrowly scoped watched-quote and self-repost opt-ins.
 The configured reply provider and browser pacing still apply.
 
 ## License
@@ -613,23 +695,22 @@ held; they never silently switch to replying. Ordinary worker starts do not
 create a startup request. See the [startup runbook](docs/VIDEO_PIPELINE.md).
 
 The existing-video feature defaults off behind `VIDEO_ENABLED` and `VIDEO_LIVE`.
-The live Account uses five video windows at 06:00, 09:00, 12:00, 17:00 and 21:00
-Toronto, selecting the best eligible finds alongside verified news
-and occasional discussion posts, plus the bounded startup video request above.
-Activity sleeps 23:00–07:00; only the 05:55–06:05 video opportunity has an exception.
+The live Account opts into thirteen video windows at 90-minute intervals from
+05:00 through 23:00 for exceptional finds, with news and automatic startup
+requests disabled. Replies retain their existing engine; interactions now pause from midnight to 04:30,
+while independent video discovery/media workers can continue overnight.
 
-All five windows have inventory priority. The engine can protect each main
+All thirteen windows have inventory priority. The engine can protect each main
 window before spending a clip on an optional paired slot; this Account has no pairs.
-`video.py status` reports coverage and shortages. The ten-clip buffer is
+`video.py status` reports coverage and shortages. The three-clip buffer is
 the supply target; an empty eligible queue still cannot guarantee a post.
 
 Video posts use the existing **Safari/AppleScript** composer and shared Reply
 browser lock. Discovery and media processing remain separate processes; the
 publishing job runs in `main.py`'s dedicated executor. No X API token is needed.
 
-This Account's captions use a short, grounded English scene joke, optionally
-followed by a blank line and **Absolute BANGER 🔥**. Source-supported familiar
-names and aliases are allowed, without optional source/disclosure footers. The
+This Account's captions use one punchy English **ANOTHER BANGER 🔥** line with
+full verified performer names, without optional source/disclosure footers. The
 operator's standing permission covers these platforms and their music until
 revoked; provenance and synthetic-parody evidence stay in the private records.
 Source subtitles/credits may remain under the configured retention policy.
@@ -640,21 +721,8 @@ It reuses the existing Codex login/model. Build its local helper once with
 `uv run --with-requirements requirements-video.txt python bin/video.py prepare-inspector`.
 Public-web discovery can identify candidates on all four platforms. Bilibili's
 normal signed-in Safari player can supply verified timestamps and actual media
-URLs to the independent downloader. Instagram's normal page also supplies exact
-shortcode-bound video metadata and media, including `/p/`, `/reel/` and `/reels/`
-redirects. Browser reads stay scoped to those exact-source aliases.
-Creator cast credits recognize English names beside Han text and exact full-name
-hashtags. They supply fictional-role context only; actual inspection is required.
-Search results alone never qualify a video. To download, inspect and prepare one
-unpublished Instagram preview without adding a publication claim:
-
-```bash
-uv run --with-requirements requirements-video.txt python bin/video.py prepare-preview INSTAGRAM_URL --output /tmp/si-previews
-```
-
-The report distinguishes a prepared preview from a quality or access hold. It
-never publishes or queues a post; final exposure/history and publication checks
-still apply.
+URLs to the independent downloader. Other platforms still need permitted media
+access through a feed/provider; search results alone never qualify a video.
 See [setup, connector status, tests and exact
 activation/rollback commands](docs/VIDEO_PIPELINE.md). The explicit `probe-upload`
 command tests attachment and discards its draft without publishing.

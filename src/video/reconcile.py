@@ -220,8 +220,8 @@ def preparation_reason(doc, cfg, now):
         return reason
     if cfg.bangers_only:
         from .bangers import score
-        reviewed = score(doc, now, best_available=cfg.best_available_fallback)
-        return "" if reviewed["total"] is not None and (cfg.best_available_fallback or ranking.selected(doc, now) or reviewed["total"] >= cfg.banger_min_score) else "current excerpt is below banger threshold"
+        reviewed = score(doc, now)
+        return "" if reviewed["total"] is not None and (ranking.selected(doc, now) or reviewed["total"] >= cfg.banger_min_score) else "current excerpt is below banger threshold"
     parts = doc.get("ranking", {}).get("components", {})
     if not ranking.selected(doc, now) and parts:
         # This upper bound is only a cost-admission calculation. It never

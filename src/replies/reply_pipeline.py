@@ -19,8 +19,9 @@ import random
 import time
 import traceback
 from contextlib import contextmanager
+from contextvars import copy_context
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable
 
 from ..core import account, engagement_log, reply_wording, work_priority, video_pressure, reply_diagnostics, settings
@@ -29,7 +30,7 @@ from ..core.logger import log
 from ..core.pattern_tags import extract_pattern
 from ..core.state_errors import StateUnreadable
 from ..guards import action_guard
-from ..guards.active_hours import OutsideActiveHours, require_active
+from ..guards.active_hours import OutsideActiveHours, require_active, reply_activity
 from ..guards.reply_admission import Refusal, Verdict, judge_parent
 from ..x import twitter_client, x_urls
 from . import reply_generator
@@ -108,6 +109,7 @@ def _send_turn():
             _SEND_LOCK.release()
 
 
+@reply_activity()
 def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = None,
         max_shipped: int | None = None, ordinary_priority: bool = False) -> int:
     """Order a job's candidates without changing admission or its write priority.
@@ -132,6 +134,9 @@ def run(job: Job, candidates, cycle: Cycle, *, max_generations: int | None = Non
             continue
         generations += 1
         try:
+            candidate = _prepare_source(job, candidate, cycle)
+            if candidate is None:
+                continue
             generation = _generate(job, candidate, author)
         except (OutsideActiveHours, StateUnreadable):
             raise
@@ -154,38 +159,50 @@ def priority_authors():
 
 
 def prioritize(candidates, *, diversify_authors=False, ordinary=False):
-    """Selective ordinary buffers prefer source context before observed reach.
+    """Preserve ordinary freshness ranking through buffered dispatch.
 
-    Context hints are for further review, not quality approval. Within comparable
-    context/author/like groups, authors rotate and actual views break ties.
-    Other Accounts and watched jobs retain their existing ordering.
+    For You discovery shares the source's engagement-per-minute ranking.
+    Author diversity stays within each freshness/known-like tier. Otherwise,
+    ordinary buffers retain their configured-author and observed-view ordering;
+    default/watched jobs keep their stable like preference.
     """
-    from ..guards.reply_focus import discovery_priority
+    if (ordinary and settings.get("REPLY_BROAD_DISCOVERY")
+            and settings.get("REPLY_FOR_YOU_FIRST")):
+        # Import here: reply_source constructs this module's Candidate type.
+        from .reply_source import hot_source_sort_key
+        ranked = sorted(((hot_source_sort_key(candidate.url, likes=candidate.likes,
+                                              views=candidate.views), candidate)
+                         for candidate in candidates), key=lambda row: row[0])
+        if not diversify_authors:
+            return [candidate for _, candidate in ranked]
+        seen = Counter()
+
+        def fresh_key(row):
+            rank, candidate = row
+            author = x_urls.author(candidate.url) or candidate.url
+            tier = rank[:2]
+            occurrence = seen[(*tier, author)]
+            seen[(*tier, author)] += 1
+            return (*tier, occurrence, *rank[2:])
+
+        return [candidate for _, candidate in sorted(ranked, key=fresh_key)]
+
     threshold = settings.get("REPLY_PREFERRED_MIN_LIKES")
     large = priority_authors() if ordinary else set()
-    new_authors = ordinary and settings.get("REPLY_PREFER_NEW_AUTHORS")
-    answered = ({x_urls.author(url) for url in action_guard._ledger().targets(action_guard.REPLY)}
-                if new_authors else set())
     seen = Counter()
-
-    def context(candidate):
-        return (discovery_priority(candidate.text),) if ordinary and settings.get("REPLY_DISCUSSIONS_ONLY") else ()
 
     def reach(candidate):
         views = candidate.views if type(candidate.views) is int and candidate.views >= 0 else None
         return (views is None, -(views if views is not None else 0))
 
     if ordinary:
-        # Assign each author's first round to their best contextual lead.
-        candidates = sorted(candidates, key=lambda candidate: (*context(candidate), *reach(candidate)))
+        # Assign each author's first round to their strongest observed post.
+        candidates = sorted(candidates, key=reach)
 
     def key(candidate):
         preference = bool(threshold and (candidate.likes is None or candidate.likes < threshold))
         author = x_urls.author(candidate.url) or candidate.url
         leading = (author not in large, preference) if large else (preference,)
-        if new_authors:
-            leading = (author in answered, *leading)
-        leading = (*context(candidate), *leading)
         if not diversify_authors:
             return (*leading, *(reach(candidate) if ordinary else ()), 0)
         group = (*leading, author)
@@ -258,17 +275,61 @@ def _admit(job: Job, candidate: Candidate, cycle: Cycle) -> str | None:
 def _parent_verdict(job: Job, candidate: Candidate):
     if candidate.expires_at is not None and time.time() >= candidate.expires_at:
         return Verdict(Refusal.STALE_CANDIDATE, "buffered source freshness expired")
+    invited_only = settings.get("REPLY_INVITED_ONLY")
+    if invited_only:
+        from ..guards import reply_intent
+        reply_intent.remember_opt_out(candidate.url, candidate.text)
+        if why := reply_intent.source_refusal(candidate.url, candidate.text):
+            return Verdict(Refusal.NOT_INVITED, why)
     verdict = judge_parent(candidate.url, debate_turn=job.debate_turn,
                            is_reply=candidate.is_reply or bool(candidate.context)
-                           or candidate.text.lstrip().startswith("@"))
-    if verdict and not account.engagement_allowed(candidate.text):
+                           or (candidate.text.lstrip().startswith("@") and not invited_only))
+    from ..guards import reply_selection
+    topic_ok = (reply_selection.topic_allowed(candidate.url, candidate.text) if reply_selection.enabled()
+                else account.engagement_allowed(candidate.text, url=candidate.url))
+    if verdict and not topic_ok:
         return Verdict(Refusal.TOPIC, "source is outside the Account's engagement niche", verdict.author)
-    if verdict:
-        from ..guards.reply_focus import parent_refusal
-        why = parent_refusal(candidate.text)
-        if why:
-            return Verdict(Refusal.DISCUSSION, why, verdict.author)
+    minimum = reply_selection.minimum_likes()
+    if verdict and minimum and (type(candidate.likes) is not int or candidate.likes < minimum):
+        return Verdict(Refusal.ENGAGEMENT, "at least the configured observed parent likes required", verdict.author)
     return verdict
+
+
+def _prepare_source(job, candidate, cycle):
+    """Bind generation to the full original, never a shortened search/feed card."""
+    if not settings.get("REPLY_INVITED_ONLY"):
+        return candidate
+    from ..guards import reply_intent, reply_selection
+    ready_feed = (settings.get("REPLY_BROAD_DISCOVERY") and settings.get("REPLY_FOR_YOU_FIRST")
+                  and candidate.source == "FEED-SWEEP-FEED")
+    # A fresh parent already found on For You is ready work: do not queue its
+    # exact-source read behind another secondary discovery scan.
+    with work_priority.scope(work_priority.REPLY if ready_feed else work_priority.BACKGROUND):
+        page = twitter_client.read_reply_source(candidate.url)
+    if not page or not page.get("text"):
+        log.info("[%s] Exact full source unavailable: %s", job.label, candidate.url)
+        cycle.refusals["full source unavailable"] += 1
+        return None
+    text = page["text"]
+    reply_intent.remember_opt_out(candidate.url, text)
+    # Already-generated bytes must stay bound to their original evidence.
+    if candidate.reply and candidate.text.strip() != text.strip():
+        cycle.refusals["prepared draft source changed"] += 1
+        cycle.completed.add(candidate.url)
+        return None
+    if reply_selection.broad():
+        lane = reply_selection.source_lane(candidate.url, text, candidate.source)
+        reply_selection.remember(candidate.url, text, lane, page)
+    refreshed = replace(candidate, text=text, likes=page.get("likes"), views=page.get("views"))
+    if reply_selection.broad() and account.watched_url(candidate.url):
+        refreshed = replace(refreshed, expires_at=x_urls.posted_at(candidate.url).timestamp() + 60)
+    verdict = _parent_verdict(job, refreshed)
+    if not verdict:
+        log.info("[%s] Full source refused (%s): %s", job.label, verdict.reason, candidate.url)
+        cycle.refusals[verdict.refusal.value] += 1
+        cycle.completed.add(candidate.url)
+        return None
+    return refreshed
 
 
 def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
@@ -276,8 +337,21 @@ def _generate(job: Job, candidate: Candidate, author: str) -> Generation:
         # The reply search prompt is English (LanguageRule.ENGLISH).
         return Generation(Outcome.WRITTEN, language="en", text=candidate.reply,
                           provider=candidate.provider, model=candidate.model)
+    if settings.get("REPLY_BROAD_DISCOVERY") and account.watched_url(candidate.url):
+        from ..guards import watch_curation
+        selected = watch_curation.selected(candidate.url)
+        if selected.get("text") == candidate.text and selected.get("reply"):
+            return Generation(Outcome.WRITTEN, language="en", text=selected["reply"],
+                              provider=selected.get("provider", ""), model=selected.get("model", ""))
+        return Generation(Outcome.DECLINED, language="en")
     log.info(f"[{job.label}] Generating reply for @{author}...")
     with video_pressure.measure("generation"):
+        if settings.get("REPLY_CURATED_MODE"):
+            from ..guards import reply_selection
+            from .curated import CALL, BROAD_CALL
+            call = BROAD_CALL if reply_selection.broad() else CALL
+            return reply_generator.generate(call, author=author, text=candidate.text,
+                        fields=reply_selection.draft_fields(candidate.url, candidate.text))
         return reply_generator.generate(job.reply_call(author), author=author, text=candidate.text,
                                         context=candidate.context)
 
@@ -319,31 +393,22 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
                          job.label, verdict.refusal.value, url)
                 return 0
             with reply_diagnostics.measure("spacing_wait"):
+                if (candidate.expires_at is not None and account.watched_url(url)
+                        and action_guard.seconds_until_allowed(action_guard.REPLY)
+                        >= candidate.expires_at - time.time()):
+                    log.info("[%s] Watched Reply would miss its source deadline during pacing: %s", job.label, url)
+                    return 0
                 _wait_out_reply_spacing(job.label)
             verdict = _parent_verdict(job, candidate)
             if not verdict:
                 reply_diagnostics.record("send", "parent_no_longer_admitted")
                 return 0
-            review_options = {}
-            if settings.get("REPLY_DISCUSSIONS_ONLY"):
-                from ..guards import reply_admission, reply_value
-                reply = reply_admission.prepare_text(reply, author)
-                with reply_diagnostics.measure("value_review"):
-                    approval, reason = reply_value.review(
-                        url, candidate.text, reply, recent=engagement_log.recent_replies(20))
-                if approval is None:
-                    reply_diagnostics.record("send", "value_refused")
-                    log.info("[%s] Reply value hold: %s", job.label, reason)
-                    return 0
-                # Review can outlast the short freshness window or waking hours.
-                if not _parent_verdict(job, candidate):
-                    return 0
-                review_options["value_review"] = approval
             log.info(f"[{job.label}] Replying to @{author} ({len(reply)} chars): {reply}")
             start = time.monotonic()
             try:
+                source = {"expected_text": candidate.text} if settings.get("REPLY_INVITED_ONLY") else {}
                 shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
-                                                        on_refused=refusals.append, **review_options)
+                                                        on_refused=refusals.append, **source)
             except (OutsideActiveHours, StateUnreadable):
                 reply_diagnostics.record("send", "interrupted", time.monotonic() - start)
                 raise
@@ -397,13 +462,18 @@ def _run_pipelined(job: Job, candidates, cycle: Cycle, max_generations: int | No
             author = _admit(job, candidate, cycle)
             if author is None:
                 continue
+            submitted += 1
+            candidate = _prepare_source(job, candidate, cycle)
+            if candidate is None:
+                if _reached(submitted, max_generations):
+                    return None
+                continue
             try:
-                future = pool.submit(_generate, job, candidate, author)
+                future = pool.submit(copy_context().run, _generate, job, candidate, author)
             except RuntimeError:
                 # The executor is shutting down (SIGTERM mid-cycle): end the
                 # stream instead of crashing the cycle.
                 return None
-            submitted += 1
             return candidate, author, future
         return None
 

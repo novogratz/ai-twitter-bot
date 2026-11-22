@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# The Account's video policy requests one reviewed startup video on a normal start.
-# This separate opt-in additionally requests startup news; disabled features stay off.
+# 2026-11-08: no automatic startup post. News is off; only ultra-qualified videos.
+# The existing video publisher can post exceptional finds after all checks pass.
+# Startup requests are an explicit opt-in and cannot enable disabled features.
 STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-0}"
 # Run the configured Account's bot in the FOREGROUND of this terminal.
 #
@@ -25,7 +26,7 @@ cd "$REPO_DIR"
 # must fail visibly, not be mistaken for disabled video support.
 RUN_CONFIG="$(uv run --with-requirements requirements.txt python -c '
 from src.core import config, settings
-print(config.BOT_HANDLE, int(settings.get("VIDEO_ENABLED")))')"
+print(config.BOT_HANDLE, int(settings.get("VIDEO_ENABLED") and not settings.get("REPLY_REVIEW_ONLY") and not settings.get("REPLY_INVITED_ONLY")))')"
 read -r RUN_HANDLE RUN_VIDEO_ENABLED <<< "$RUN_CONFIG"
 REQUIREMENTS_FILE=requirements.txt
 if [[ "$RUN_VIDEO_ENABLED" == "1" ]]; then

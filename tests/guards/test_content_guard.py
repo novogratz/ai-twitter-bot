@@ -5,12 +5,6 @@ import pytest
 from src.guards import content_guard as cg
 
 
-def test_observed_english_video_caption_with_needs_is_recognized():
-    assert cg.validate("AI-parody Elon’s high kick needs its own backup dancers. 🕺😂", kind="original") == (True, "")
-    assert not cg.validate("Elon needs des danseurs pour cette scène.", kind="original")[0]
-    assert cg.detect_language("needsmore") == ("unknown", 0.0)
-
-
 @pytest.mark.parametrize("text", [
     "Offline wins.", "Less lag. 🙂", "Worth the wait.", "Tiny model, big win.",
     "Cheap tokens, expensive mistakes.", "That's a useful distinction.",
@@ -528,3 +522,90 @@ def test_extended_short_vocabulary_keeps_unknown_and_mixed_language_closed(text)
 ])
 def test_live_artist_reaction_recognizes_autumn_without_opening_the_language_gate(text, allowed):
     assert cg.validate(text, kind="reply")[0] is allowed
+
+
+@pytest.mark.parametrize("text", [
+    "Thanks for sharing! ❤️", "Thank you for sharing", "Interesting take!",
+    "Great insights 💜", "This changes everything!", "This is the future.",
+    "Couldn't agree more.", "Game changer!", "Thanks   for sharing!",
+])
+def test_empty_courtesy_and_hype_are_not_replies(text):
+    ok, why = cg.validate(text, kind="reply")
+    assert not ok and "low-effort" in why
+
+
+@pytest.mark.parametrize("text", ["Facts", "Agree", "I agree"])
+def test_bare_agreement_without_source_context_stays_refused_even_without_length_floor(settings_override, text):
+    settings_override(REPLY_MIN_CHARS=0)
+    ok, why = cg.validate(text, kind="reply")
+    assert not ok and "low-effort" in why
+
+
+@pytest.mark.parametrize("text,allowed", [
+    ("Really cool video ❤️", True),
+    ("Cool video 🩷", True),
+    ("You made my day, really cool video ❤️", True),
+    ("Cool vidéo ❤️", False),
+    ("Really cool video mais vraiment magnifique ❤️", False),
+    ("Really cool video zqxw ❤️", False),
+    ("Really cool video " * 5, False),
+])
+def test_loving_video_wording_keeps_short_english_fallback_closed(text, allowed):
+    assert cg.validate(text, kind="reply")[0] is allowed
+
+
+@pytest.mark.parametrize("text,allowed", [
+    ("Family tech support now includes verifying reality.", True),
+    ("Tech support now includes checking reality.", True),
+    ("Family tech support now includes verifying réalité.", False),
+    ("Family tech support now includes verifying reality, merci.", False),
+    ("Family tech support now includes verifying reality, mais pas toujours.", False),
+    ("Family tech support now includes verifying wirklichkeit.", False),
+    ("Family tech support now includes verifying абракадабра.", False),
+    ("Family tech support now includes verifying quuxaloom.", False),
+    ("Family tech support now includes verifying reality. " * 2, False),
+])
+def test_live_family_tech_reply_keeps_bounded_english_vocabulary(text, allowed):
+    assert cg.validate(text, kind="reply")[0] is allowed
+
+
+@pytest.mark.parametrize("kind", ["original", "source"])
+def test_family_tech_reply_vocabulary_does_not_change_other_surfaces(kind):
+    assert not cg.validate("Family tech support now includes verifying reality.", kind=kind)[0]
+
+
+@pytest.mark.parametrize("text", [
+    "Such a slow day :D", "Just another boring day :D", "Another boring day :D",
+    "Yeah, way too slow.", "Yeah, way too slow :D",
+    "Such a slow day :-D", "Such a slow day :)", "Such a slow day ;-)",
+    "Such a slow day :P",
+])
+def test_short_english_irony_treats_ascii_faces_as_punctuation(text):
+    assert cg.validate(text, kind="reply") == (True, "")
+    assert cg._short_english_reply(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Such a slow journée :D", "Such a slow day, merci :D", "Such a slow day mais pas utile :D",
+    "Yeah, way too slow, merci.", "Yeah, way too langsam.",
+    "Just another boring day, bonjour :D", "Such a slow day quuxaloom :D",
+    "Such a slow day wunderbar :D", "Such a slow day абракадабра :D",
+    "Such a slow day :Dabc", "Such a slow day :D " * 5,
+    "Model tokens :D", ":D :D :D :D", ":) :-) ;-) :P", "😁😁😁😁😁😁😁😁",
+])
+def test_ascii_faces_supply_no_english_evidence_or_foreign_word_exception(text):
+    assert not cg.validate(text, kind="reply")[0]
+    assert not cg._short_english_reply(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Great post :D", "So true :D", "Thanks for sharing :D", "Exactly :D", "Love it :D",
+])
+def test_ascii_faces_do_not_hide_generic_text_or_pad_minimum_length(text):
+    allowed, reason = cg.validate(text, kind="reply")
+    assert not allowed and "low-effort" in reason
+
+
+@pytest.mark.parametrize("kind", ["original", "source"])
+def test_ascii_face_short_english_fallback_stays_reply_only(kind):
+    assert not cg.validate("Such a slow day :D", kind=kind)[0]

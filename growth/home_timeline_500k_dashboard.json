@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-08-24T18:35:58.864967",
+  "target_qualified_home_impressions_90d": 500000,
+  "official_metric": {
+    "available": false,
+    "official_qualified_home_impressions_90d": 0,
+    "source": "not available",
+    "warning": "Ordinary scraped impressions are not the official X qualified Home Timeline metric."
+  },
+  "supporting_metrics": {
+    "rolling_90d_main_post_impressions_estimate": 132970,
+    "main_post_count": 200,
+    "median_impressions_per_post": 31.0,
+    "average_impressions_per_post": 664.85,
+    "hit_count": 11,
+    "breakout_count": 1
+  },
+  "progress": {
+    "official_progress_percent": null,
+    "estimated_supporting_progress_percent": 26.59,
+    "remaining_to_500k": 367030,
+    "required_daily_average_remaining": 4078.11,
+    "required_weekly_average_remaining": 28546.78
+  },
+  "scenarios": [
+    {
+      "average_main_post_impressions": 2000,
+      "posts_needed_for_500k": 250,
+      "label": "scenario, not a guarantee of official qualified Premium Home impressions"
+    },
+    {
+      "average_main_post_impressions": 5000,
+      "posts_needed_for_500k": 100,
+      "label": "scenario, not a guarantee of official qualified Premium Home impressions"
+    },
+    {
+      "average_main_post_impressions": 10000,
+      "posts_needed_for_500k": 50,
+      "label": "scenario, not a guarantee of official qualified Premium Home impressions"
+    },
+    {
+      "average_main_post_impressions": 20000,
+      "posts_needed_for_500k": 25,
+      "label": "scenario, not a guarantee of official qualified Premium Home impressions"
+    },
+    {
+      "average_main_post_impressions": 50000,
+      "posts_needed_for_500k": 10,
+      "label": "scenario, not a guarantee of official qualified Premium Home impressions"
+    }
+  ]
+}

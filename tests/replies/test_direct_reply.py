@@ -19,6 +19,20 @@ def _searches():
     return list(searches.replies), list(searches.hot_tab)
 
 
+def test_for_you_secondary_plan_uses_rotating_latest_only(settings_override):
+    from src.replies import direct_reply
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_FOR_YOU_FIRST=True,
+                      DIRECT_REPLY_QUERIES_PER_CYCLE=2,
+                      DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=4,
+                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2)
+    priority, creators, first = direct_reply._query_plan()
+    _, _, second = direct_reply._query_plan()
+    assert priority == creators == []
+    assert len(first) == len(second) == 2
+    assert all(tab == "latest" and not authors for _, tab, authors in first + second)
+    assert {query for query, _, _ in first}.isdisjoint(query for query, _, _ in second)
+
+
 def test_queries_stay_in_si_and_the_named_musk_ecosystem():
     """The 2026-10-23 ecosystem expansion keeps general markets out."""
     from src.core import account
@@ -26,7 +40,7 @@ def test_queries_stay_in_si_and_the_named_musk_ecosystem():
     queries = replies + hot_tab + list(account.current().searches.likes)
     ai_terms = ("openai", "anthropic", "chatgpt", "claude", "gemini", "grok",
                 "ai ", "\"ai", " ai)", "agi", "nvidia", "gpu", "llama", "deepseek",
-                "cursor", "copilot", "humanoid", "robotics", " ia ", "llm", "transformer", "si ")
+                "cursor", "copilot", "humanoid", "robotics", " ia ")
     for q in queries:
         assert any(t in " " + q.lower() for t in ai_terms), f"no AI term in {q!r}"
     joined = " ".join(queries).lower()
@@ -99,29 +113,6 @@ def test_every_reply_and_like_query_finds_posts_on_the_niche():
         for and_first in (True, False):
             for clause in _query_clauses(query, and_first):
                 assert is_on_niche(" ".join(clause)), f"{clause} of {query!r}"
-
-
-def test_live_query_bank_delivers_eight_top_six_latest_and_two_creators(monkeypatch, settings_override):
-    from src.core import account
-    from src.replies import direct_reply as dr
-
-    loaded = account.load("theaishrink")
-    monkeypatch.setattr(account, "current", lambda: loaded)
-    settings_override(DIRECT_REPLY_QUERIES_PER_CYCLE=16, DIRECT_REPLY_PRIORITY_QUERIES_PER_CYCLE=0,
-                      DIRECT_REPLY_CREATOR_QUERIES_PER_CYCLE=2, DIRECT_REPLY_LATEST_QUERIES_PER_CYCLE=6,
-                      REPLY_VOLUME_BOOST_DATE="")
-    dr._QUERY_ROTATION_OFFSETS.clear()
-    plans = [dr._query_plan() for _ in range(4)]
-    for priority, creators, ordinary in plans:
-        assert priority == [] and len(creators) == 2
-        assert sum(tab == "top" for _, tab, _ in ordinary) == 8
-        assert sum(tab == "latest" for _, tab, _ in ordinary) == 6
-        assert len(set(creators + ordinary)) == 16
-        for query, _, _ in creators + ordinary:
-            assert all(token in query for token in ("lang:en", "-filter:replies", "-filter:retweets"))
-            assert "min_faves:" not in query
-    assert len({q for _, _, ordinary in plans for q, tab, _ in ordinary if tab == "top"}) == 16
-    assert len({q for _, creators, _ in plans for q, _, _ in creators}) == 8
 
 
 def test_the_query_reader_splits_alternatives_both_ways():
@@ -375,7 +366,9 @@ def test_priority_groups_are_discovered_before_a_full_ordinary_buffer_is_drafted
     def scrape(query, **kwargs):
         reads.append(query)
         trace.append("read")
-        authors = groups[query]  # No ordinary search fits after the first confirmed Reply.
+        if query not in groups:
+            return []
+        authors = groups[query]
         url = fresh(authors[0], minutes=23 * 60, n=len(reads))
         expected.append(url)
         return [{"url": url, "text": "New SI model project", "likes": 0, "views": len(reads) * 1000}]
@@ -387,7 +380,7 @@ def test_priority_groups_are_discovered_before_a_full_ordinary_buffer_is_drafted
     monkeypatch.setattr(dr, "scrape_x_search", scrape)
     llm.default = draft
     dr.run_direct_reply_cycle(max_replies=1)
-    assert len(reads) == 4 and trace[:4] == ["read"] * 4
+    assert len(reads) == 4 and trace[:5] == ["read"] * 4 + ["draft"]
     assert chokepoint.sent == [expected[-1]]
     assert any(item.url.startswith("https://x.com/small/") for item in candidate_buffer.SEARCH.pending())
 
@@ -503,7 +496,7 @@ def test_artist_sources_still_require_fresh_standalone_on_topic_posts(monkeypatc
     monkeypatch.setattr(account, "current", lambda: loaded)
     good = {"url": fresh("artist"), "text": "My first SI short film", "likes": 0}
     posts = [good, {**good, "url": fresh("nested", n=1), "is_reply": True},
-             {**good, "url": fresh("old", minutes=61, n=2)},
+             {**good, "url": fresh("old", minutes=1441, n=2)},
              {**good, "url": fresh("future", minutes=-5, n=3)},
              {**good, "url": fresh("offtopic", n=4), "text": "SI crypto NFT trading"}]
     selected = dr._search_candidates(posts, "SI artist", "latest", creator=True)

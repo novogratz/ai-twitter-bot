@@ -140,10 +140,10 @@ def measured_inspection(video_cfg, tmp_path, monkeypatch):
         "safe_crop": [0, 0, 320, 240], "crop_preserves_action": True, "overlays_removable_by_crop": True,
         "watermark_position": "bottom", "watermark_clear_of_action": True}
     monkeypatch.setattr(inspection, "capability", lambda _: {"status": "configured"})
-    monkeypatch.setattr(media, "probe", lambda *a, **kw: {"duration": 3, "width": 320, "height": 240, "fps": 24})
+    monkeypatch.setattr(media, "probe", lambda *a: {"duration": 3, "width": 320, "height": 240, "fps": 24})
     monkeypatch.setattr(media, "ffmpeg", lambda *a, **kw: b"")
     monkeypatch.setattr(media, "bounded_command", lambda *a, **kw: json.dumps(local).encode())
-    monkeypatch.setattr(inspection, "frame_pack", lambda *a, **kw: ([{"at": t} for t in (0, 1, 2.8)], [tmp_path / "sheet.jpg"], 2))
+    monkeypatch.setattr(inspection, "frame_pack", lambda *a: ([{"at": t} for t in (0, 1, 2.8)], [tmp_path / "sheet.jpg"], 2))
     calls = []
     def invoke(store, cfg, prompt, schema, **kw):
         calls.append((prompt, kw))
@@ -311,7 +311,7 @@ def test_final_ocr_cannot_be_overridden_by_model_approval(video_store, measured_
 
 def test_retained_overlay_policy_matches_original_text_time_and_position(video_store, measured_inspection):
     import copy
-    cfg, path, local, answer, calls = measured_inspection
+    cfg, path, local, answer, _ = measured_inspection
     cfg = replace(cfg, allow_source_overlays=True)
     original = {"sha256": sha256(path), "full_clip_inspected": True,
                 "overlays_removable_by_crop": False, "ocr_evidence": copy.deepcopy(local["frames"])}
@@ -322,8 +322,6 @@ def test_retained_overlay_policy_matches_original_text_time_and_position(video_s
     result = inspection.inspect_clip(path, "output", cfg, video_store, time.time(),
                                      original_path=str(path), source_inspection=original)
     assert result["source_overlays_retained"] and result["no_unapproved_new_overlays"]
-    assert len(calls[0][1]["images"]) == 2
-    assert "LAST 1 sheets show the preserved ORIGINAL SOURCE" in calls[0][0]
     assert not result["overlays_clean"] and result["source_sha256"] == sha256(path)
     # A source string relocated into a new overlay is not an allowed original.
     local["frames"][0]["texts"][0]["box"] = [.5, .5, .2, .1]

@@ -362,7 +362,7 @@ def test_a_reply_cycle_refuses_on_an_unreadable_respect_list(
     # produce no eligible candidate. Creator reads, when enabled, finish before
     # drafting. The prompt failure then halts before any ordinary search. Without
     # the creator lane, the first ordinary query encounters that same failure.
-    assert len(scraped) == priority_queries + (creator_queries or 1)
+    assert scraped == []  # unreadable policy now refuses before any discovery
     assert "respect_list.json is unreadable" in caplog.text
     assert "direct_reply halted" in caplog.text
     assert path.read_text() == CORRUPT

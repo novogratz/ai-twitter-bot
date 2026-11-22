@@ -1,0 +1,681 @@
+{
+  "updated_at": "2026-08-24T18:35:58.864080",
+  "recurring_theses": [
+    "AI news matters most when it explains how human behavior changes.",
+    "Infrastructure, compute, and power are the hidden constraints behind AI hype.",
+    "The account performs best when it sounds like a human observer, not a feed summarizer."
+  ],
+  "successful_hooks": [
+    [
+      "surprising_number",
+      27
+    ],
+    [
+      "result_first",
+      22
+    ],
+    [
+      "personal_observation",
+      5
+    ],
+    [
+      "contradiction",
+      5
+    ]
+  ],
+  "failed_hooks": [
+    [
+      "result_first",
+      11
+    ],
+    [
+      "surprising_number",
+      10
+    ],
+    [
+      "personal_observation",
+      6
+    ],
+    [
+      "question",
+      1
+    ],
+    [
+      "prediction",
+      1
+    ],
+    [
+      "contradiction",
+      1
+    ]
+  ],
+  "successful_topics": [
+    [
+      "general_ai",
+      20
+    ],
+    [
+      "markets",
+      18
+    ],
+    [
+      "crypto",
+      14
+    ],
+    [
+      "ai_infra",
+      5
+    ],
+    [
+      "models",
+      5
+    ],
+    [
+      "ai_human",
+      4
+    ],
+    [
+      "robotics",
+      3
+    ],
+    [
+      "agents",
+      2
+    ]
+  ],
+  "failed_topics": [
+    [
+      "general_ai",
+      17
+    ],
+    [
+      "markets",
+      6
+    ],
+    [
+      "ai_human",
+      3
+    ],
+    [
+      "models",
+      3
+    ],
+    [
+      "ai_infra",
+      2
+    ],
+    [
+      "crypto",
+      1
+    ],
+    [
+      "agents",
+      1
+    ],
+    [
+      "robotics",
+      1
+    ]
+  ],
+  "phrases_used_too_often": [
+    [
+      "general result first",
+      35
+    ],
+    [
+      "general surprising number",
+      33
+    ],
+    [
+      "markets surprising number",
+      26
+    ],
+    [
+      "markets result first",
+      16
+    ],
+    [
+      "general personal observation",
+      15
+    ],
+    [
+      "infra result first",
+      8
+    ],
+    [
+      "crypto surprising number",
+      8
+    ],
+    [
+      "models result first",
+      7
+    ],
+    [
+      "infra markets surprising",
+      7
+    ],
+    [
+      "crypto result first",
+      6
+    ]
+  ],
+  "previous_winners": [
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T10:10:52.000Z",
+      "format": "main_post",
+      "topic": "markets,crypto",
+      "hook_type": "surprising_number",
+      "post_length": 129,
+      "impressions": 49,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T15:36:29.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 131,
+      "impressions": 53,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 67
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T15:05:55.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 119,
+      "impressions": 54,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 67
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T17:34:16.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 67,
+      "impressions": 50,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T17:15:48.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 124,
+      "impressions": 85,
+      "likes": 0,
+      "winner_class": "HIT",
+      "quality_score": 71
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T19:40:07.000Z",
+      "format": "main_post",
+      "topic": "crypto",
+      "hook_type": "contradiction",
+      "post_length": 200,
+      "impressions": 53,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T21:38:23.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 83,
+      "impressions": 63,
+      "likes": 1,
+      "winner_class": "GOOD",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T21:21:29.000Z",
+      "format": "main_post",
+      "topic": "ai_human",
+      "hook_type": "result_first",
+      "post_length": 162,
+      "impressions": 77,
+      "likes": 1,
+      "winner_class": "GOOD",
+      "quality_score": 74
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T03:25:38.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 74,
+      "impressions": 83,
+      "likes": 0,
+      "winner_class": "HIT",
+      "quality_score": 62
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T09:33:55.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 93,
+      "impressions": 48,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 75
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T09:09:02.000Z",
+      "format": "main_post",
+      "topic": "markets",
+      "hook_type": "contradiction",
+      "post_length": 200,
+      "impressions": 88,
+      "likes": 1,
+      "winner_class": "HIT",
+      "quality_score": 63
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T15:36:44.000Z",
+      "format": "main_post",
+      "topic": "ai_infra",
+      "hook_type": "result_first",
+      "post_length": 140,
+      "impressions": 48,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 62
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T19:28:23.000Z",
+      "format": "main_post",
+      "topic": "ai_infra,markets",
+      "hook_type": "surprising_number",
+      "post_length": 167,
+      "impressions": 86,
+      "likes": 0,
+      "winner_class": "HIT",
+      "quality_score": 75
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T19:14:33.000Z",
+      "format": "main_post",
+      "topic": "robotics",
+      "hook_type": "result_first",
+      "post_length": 147,
+      "impressions": 70,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 71
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T01:22:52.000Z",
+      "format": "main_post",
+      "topic": "models",
+      "hook_type": "result_first",
+      "post_length": 90,
+      "impressions": 98,
+      "likes": 0,
+      "winner_class": "HIT",
+      "quality_score": 69
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-06-06T15:46:39.000Z",
+      "format": "main_post",
+      "topic": "crypto",
+      "hook_type": "personal_observation",
+      "post_length": 84,
+      "impressions": 125639,
+      "likes": 280,
+      "winner_class": "BREAKOUT",
+      "quality_score": 70
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T03:30:08.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 164,
+      "impressions": 55,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 67
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T05:46:00.000Z",
+      "format": "main_post",
+      "topic": "ai_human,markets",
+      "hook_type": "result_first",
+      "post_length": 128,
+      "impressions": 49,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 73
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T20:20:00.000Z",
+      "format": "main_post",
+      "topic": "ai_infra,markets,robotics",
+      "hook_type": "surprising_number",
+      "post_length": 200,
+      "impressions": 49,
+      "likes": 0,
+      "winner_class": "GOOD",
+      "quality_score": 72
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T19:51:01.000Z",
+      "format": "main_post",
+      "topic": "markets",
+      "hook_type": "result_first",
+      "post_length": 126,
+      "impressions": 67,
+      "likes": 1,
+      "winner_class": "GOOD",
+      "quality_score": 69
+    }
+  ],
+  "previous_losers": [
+    {
+      "post_id": "",
+      "published_time": "2026-08-22T23:57:52.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 85,
+      "impressions": 10,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 62
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T02:09:28.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 84,
+      "impressions": 12,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 62
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T02:09:11.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 69,
+      "impressions": 13,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 67
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T02:03:25.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "personal_observation",
+      "post_length": 110,
+      "impressions": 14,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 72
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T04:04:53.000Z",
+      "format": "main_post",
+      "topic": "ai_human,markets",
+      "hook_type": "result_first",
+      "post_length": 118,
+      "impressions": 11,
+      "likes": 1,
+      "winner_class": "FLOP",
+      "quality_score": 65
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T04:02:14.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 174,
+      "impressions": 12,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 71
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T06:06:50.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 120,
+      "impressions": 10,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T08:04:57.000Z",
+      "format": "main_post",
+      "topic": "models",
+      "hook_type": "surprising_number",
+      "post_length": 128,
+      "impressions": 9,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 75
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T16:08:15.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 81,
+      "impressions": 14,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T16:07:56.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "personal_observation",
+      "post_length": 141,
+      "impressions": 15,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 75
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-23T22:09:16.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 111,
+      "impressions": 9,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 68
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T00:09:30.000Z",
+      "format": "main_post",
+      "topic": "agents",
+      "hook_type": "result_first",
+      "post_length": 157,
+      "impressions": 8,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 65
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T00:09:12.000Z",
+      "format": "main_post",
+      "topic": "ai_infra,markets",
+      "hook_type": "surprising_number",
+      "post_length": 200,
+      "impressions": 9,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 75
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T02:05:35.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "result_first",
+      "post_length": 18,
+      "impressions": 10,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 53
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T06:09:01.000Z",
+      "format": "main_post",
+      "topic": "ai_human",
+      "hook_type": "result_first",
+      "post_length": 66,
+      "impressions": 7,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 69
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T06:02:37.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "prediction",
+      "post_length": 147,
+      "impressions": 13,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 66
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T10:08:26.000Z",
+      "format": "main_post",
+      "topic": "markets",
+      "hook_type": "result_first",
+      "post_length": 120,
+      "impressions": 15,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 62
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T12:06:05.000Z",
+      "format": "main_post",
+      "topic": "markets,robotics",
+      "hook_type": "result_first",
+      "post_length": 187,
+      "impressions": 15,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 71
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T20:34:28.000Z",
+      "format": "main_post",
+      "topic": "ai_infra",
+      "hook_type": "contradiction",
+      "post_length": 135,
+      "impressions": 8,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 63
+    },
+    {
+      "post_id": "",
+      "published_time": "2026-08-24T20:26:36.000Z",
+      "format": "main_post",
+      "topic": "general_ai",
+      "hook_type": "surprising_number",
+      "post_length": 109,
+      "impressions": 15,
+      "likes": 0,
+      "winner_class": "FLOP",
+      "quality_score": 75
+    }
+  ],
+  "reply_sensor": [
+    {
+      "topic": "markets",
+      "count": 19337
+    },
+    {
+      "topic": "general_ai",
+      "count": 15583
+    },
+    {
+      "topic": "models",
+      "count": 10785
+    },
+    {
+      "topic": "ai_infra",
+      "count": 8914
+    },
+    {
+      "topic": "crypto",
+      "count": 4720
+    },
+    {
+      "topic": "agents",
+      "count": 3808
+    },
+    {
+      "topic": "ai_human",
+      "count": 1272
+    },
+    {
+      "topic": "robotics",
+      "count": 671
+    }
+  ],
+  "predictions_file": "/Users/benoitfloch/ai-twitter-bot/src/../growth/prediction_ledger.json"
+}

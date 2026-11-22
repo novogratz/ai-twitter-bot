@@ -1,5 +1,6 @@
 """Frequent, deterministic discovery of new originals by operator-picked handles."""
 from datetime import datetime, timedelta
+from dataclasses import replace
 import time
 import threading
 
@@ -7,18 +8,31 @@ from ..core import account, config, settings, work_priority, watch_discovery
 from ..core.logger import log
 from ..core.state_errors import StateUnreadable
 from ..core.state_store import GUARDED, StateFile
-from ..guards import active_hours
+from ..guards import action_guard, active_hours, reply_admission, reply_selection, repost_store, watch_curation
 from ..guards.active_hours import OutsideActiveHours, require_active
 from ..x import scraper, twitter_client, x_urls
 from . import reply_pipeline, reply_source
 from .direct_reply import reply_call
 
 STATE = StateFile("priority_watch_state.json", {}, GUARDED)
-JOB = reply_pipeline.Job("priority_watch", "PRIORITY", reply_call=reply_call)
+def watched_reply_call(author):
+    call = reply_call(author)
+    return replace(call, template=(
+        "PRIORITY AUTHOR: react plainly in one or a few words. An occasional short sentence "
+        "or genuine question can fit, at most 90 characters and 12 words. Keep it warm, "
+        "natural and easy to understand; no forced joke, obscure reference, lesson, stock "
+        "praise or automatic question. Honor the post's intent, supported facts and the Voice. "
+        "Skip politics, inflammatory or sexual material and unclear context.\n\n" + call.template))
+
+
+JOB = reply_pipeline.Job("priority_watch", "PRIORITY", reply_call=watched_reply_call)
 _retry_after = {}  # process-local backoff only; permanent claims stay at the chokepoints
 _reply_retry_delays = {}  # repeated attempts on one parent must leave room for new Replies
+_action_retry_delays = {}
+_reply_handoffs = {}  # one bounded dispatch grace per selected source, never a publication claim
 _pending = {}
 _queue_lock = threading.RLock()
+_catchup_after = {}
 
 
 def _start_times(handles) -> dict:
@@ -47,7 +61,9 @@ def _read_start_times(handles) -> dict:
 
 def _candidates(handle: str, tweets: list, started: datetime) -> list:
     declaration = reply_source.Declaration(
-        max_age=timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS")),
+        max_age=(timedelta(seconds=watch_curation.FAST_MAX_AGE_SECONDS)
+                 if watch_curation.fast() and not watch_curation.independent_actions()
+                 else timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))),
         root_only=True, author=handle)
     candidates, seen = [], set()
     for candidate in reply_source.select(tweets, declaration, f"PRIORITY/{handle}"):
@@ -55,10 +71,11 @@ def _candidates(handle: str, tweets: list, started: datetime) -> list:
         if not url or x_urls.author(url) != handle or x_urls.status_id(url) in seen:
             continue
         posted = x_urls.posted_at(url)
-        if posted is None or posted < started:
+        if posted is None or posted < started or not watch_curation.actions_fresh(url):
             continue
         seen.add(x_urls.status_id(url))
-        candidates.append(reply_pipeline.Candidate(url, candidate.text, candidate.source))
+        candidates.append(reply_pipeline.Candidate(url, candidate.text, candidate.source,
+                                                   likes=candidate.likes, views=candidate.views))
     return sorted(candidates, key=lambda c: int(x_urls.status_id(c.url)), reverse=True)
 
 
@@ -80,22 +97,31 @@ def _prune():
     """Bound disposable discoveries; the permanent action histories stay untouched."""
     handles = account.current().auto_engage_handles
     maximum = timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))
-    if settings.get("REPLY_WATCHED_MAX_AGE_SECONDS"):
-        maximum = min(maximum, timedelta(seconds=settings.get("REPLY_WATCHED_MAX_AGE_SECONDS")))
     valid = [c for c in _pending.values() if x_urls.author(c.url) in handles
-             and (age := x_urls.age(c.url)) is not None and timedelta(0) <= age <= maximum]
+             and (age := x_urls.age(c.url)) is not None and timedelta(0) <= age <= maximum
+             and watch_curation.actions_fresh(c.url)]
     valid.sort(key=lambda c: int(x_urls.status_id(c.url)), reverse=True)
     _pending.clear()
     _pending.update((c.url, c) for c in valid[:settings.get("PRIORITY_WATCH_QUEUE_LIMIT")])
     for key in list(_retry_after):
-        if key[0] not in _pending or _retry_after[key] <= time.monotonic():
+        if (key[0] not in _pending and key[1] != "notification") or _retry_after[key] <= time.monotonic():
             del _retry_after[key]
+    notifications = sorted((key for key in _retry_after if key[1] == "notification"),
+                           key=lambda key: _retry_after[key], reverse=True)
+    for key in notifications[settings.get("PRIORITY_WATCH_QUEUE_LIMIT"):]:
+        del _retry_after[key]
     for url in list(_reply_retry_delays):
         if url not in _pending:
             del _reply_retry_delays[url]
+    for key in list(_action_retry_delays):
+        if key[0] not in _pending:
+            del _action_retry_delays[key]
+    for url in list(_reply_handoffs):
+        if url not in _pending:
+            del _reply_handoffs[url]
 
 
-def _discovered():
+def discovered():
     require_active()
     if not account.current().auto_engage_handles:
         return []
@@ -114,14 +140,44 @@ def run_priority_watch_cycle():
     if not handles:
         return
     require_active()
-    _start_times(handles)
+    started = _start_times(handles)
+    if settings.get("PRIORITY_WATCH_NOTIFICATIONS"):
+        with work_priority.scope(work_priority.WATCH):
+            urls = scraper.scrape_priority_notifications(handles, settings.get("PRIORITY_WATCH_SCAN_LIMIT"))
+        reads = 0
+        for url in urls:
+            handle = x_urls.author(url)
+            posted, age = x_urls.posted_at(url), x_urls.age(url)
+            with _queue_lock:
+                known = url in _pending
+            if (known or handle not in started or posted is None or posted < started[handle]
+                    or age is None or not timedelta(0) <= age <= timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))
+                    or not watch_curation.actions_fresh(url) or not _ready(url, "notification") or not account.watched_url(url)):
+                continue
+            if reads >= 2:
+                break
+            reads += 1
+            with work_priority.scope(work_priority.WATCH):
+                page = twitter_client.read_priority_post(url)
+            if page:
+                observe([dict(url=url, text=page["text"], likes=page.get("likes"), views=page.get("views"))])
+                log.info("[PRIORITY-NOTIFICATION] Verified original queued first: %s", url)
+                if watch_curation.fast():
+                    return  # hand off immediately instead of holding Safari for another scan
+            else:
+                _backoff(url, "notification", 300)
     for handle in handles:
+        catchup = not watch_curation.fast() and _catchup_after.get(handle, 0) <= time.monotonic()
         with work_priority.scope(work_priority.WATCH):
             tweets = reply_pipeline.scrape(
                 "PRIORITY", f"@{handle}", scraper.scrape_x_search,
                 f"from:{handle} -filter:replies -filter:retweets", tab="live",
-                max_tweets=settings.get("PRIORITY_WATCH_SCAN_LIMIT"), text_limit=1200, scroll_passes=0)
+                max_tweets=settings.get("PRIORITY_WATCH_SCAN_LIMIT"), text_limit=1200,
+                scroll_passes=settings.get("PRIORITY_WATCH_CATCHUP_SCROLLS") if catchup else 0)
         observe(tweets)
+        if catchup:
+            _catchup_after[handle] = time.monotonic() + 900
+        log.info("[PRIORITY] @%s: %d observed, %d eligible originals queued", handle, len(tweets), len(_pending))
 
 
 def _ready(url, action):
@@ -149,31 +205,70 @@ def _backoff_reply(url):
     log.debug("[PRIORITY] Next Reply attempt for %s in %ss if still admitted.", url, delay)
 
 
+def _yield_for_prepared_reply(url, selected):
+    """Give an already-ready Reply one dispatch turn, then keep other actions independent."""
+    reply = selected.get("reply", "")
+    max_chars, max_words = reply_selection.short_reply_limits(x_urls.author(url))
+    if (not isinstance(reply, str) or not 1 <= len(reply.split()) <= max_words or len(reply) > max_chars
+            or not _ready(url, "reply") or not reply_admission.judge_parent(url)
+            or action_guard.seconds_until_allowed(action_guard.REPLY) > 0):
+        return False
+    now = time.monotonic()
+    with _queue_lock:
+        until = _reply_handoffs.setdefault(url, now + min(2, settings.get("PRIORITY_WATCH_DISPATCH_SECONDS")))
+    return now < until
+
+
 def run_priority_actions_cycle():
     """Independent actions stay responsive while a Reply is being generated."""
     attempts = 0
-    for candidate in _discovered():
+    for candidate in discovered():
         require_active()
-        if settings.get("WATCH_ENGAGEMENT_REQUIRES_REPLY"):
-            from ..guards import action_guard
-            if not any(x_urls.status_id(url) == x_urls.status_id(candidate.url)
-                       for url in action_guard._ledger().targets(action_guard.REPLY)):
+        if reply_selection.broad():
+            selected = watch_curation.selected(candidate.url)
+            if ((not selected and not watch_curation.independent_actions(candidate.url))
+                    or selected and _yield_for_prepared_reply(candidate.url, selected)):
                 continue
         # One failed or rate-limited action must not hide the other action types.
         for action_id, action in (("like", twitter_client.like_priority_post),
                                   ("repost", twitter_client.repost_tweet)):
+            if (settings.get("REPLY_CURATED_MODE") and not watch_curation.fast() and action_id == "repost"
+                    and not watch_curation.independent_actions(candidate.url)):
+                continue  # a separate bounded selector admits only a few reviewed reposts
             if (attempts >= settings.get("PRIORITY_WATCH_ACTIONS_PER_CYCLE")
                     or not _ready(candidate.url, action_id)):
                 continue
+            if action_id == "repost":
+                if repost_store.contains(candidate.url):
+                    _backoff(candidate.url, action_id, 86400)
+                    continue
+                if watch_curation.fast() and watch_curation.refusal(candidate.url):
+                    continue
+                if repost_store.independent(candidate.url) and action_guard.watched_repost_wait_seconds():
+                    # A normal spacing wait is not a failed attempt. Check again
+                    # on the next dispatch, without Safari or failure backoff.
+                    continue
             attempts += 1
             try:
                 with work_priority.scope(work_priority.WATCH):
                     outcome = action(candidate.url)
                 log.info("[PRIORITY] %s %s: %s", action.__name__, candidate.url, outcome.value)
-                # Avoid reopening the same refused post every dispatch.
-                # No permanent skip: transient refusals retry in five minutes.
-                delay = (3600 if outcome or outcome.value == "already_liked" else
-                         120 if outcome.value in {"failed", "unconfirmed"} else 300)
+                # Fulfilled actions need no hourly re-open. Repeated failures
+                # back off so old watched posts cannot monopolize Safari.
+                key = (candidate.url, action_id)
+                with _queue_lock:
+                    if outcome or outcome.value == "already_liked":
+                        delay = 86400
+                        _action_retry_delays.pop(key, None)
+                    elif (action_id == "repost" and outcome.value == "refused"
+                          and repost_store.independent(candidate.url)
+                          and action_guard.watched_repost_wait_seconds()):
+                        # Another sender may have used the gap after our preflight.
+                        delay = settings.get("PRIORITY_WATCH_DISPATCH_SECONDS")
+                    else:
+                        base = 120 if outcome.value in {"failed", "unconfirmed"} else 300
+                        delay = min(3600, max(base, _action_retry_delays.get(key, 0) * 2))
+                        _action_retry_delays[key] = delay
                 _backoff(candidate.url, action_id, delay)
             except (OutsideActiveHours, StateUnreadable):
                 raise
@@ -184,12 +279,34 @@ def run_priority_actions_cycle():
 
 def run_priority_reply_cycle():
     """Re-select newest discoveries after each generation, even if polls continue."""
-    candidates = [c for c in _discovered() if _ready(c.url, "reply")]
+    candidates = []
+    for candidate in discovered():
+        if watch_curation.fast():
+            selected = watch_curation.selected(candidate.url)
+            reply = selected.get("reply")
+            if not isinstance(reply, str) or not reply.strip():
+                continue
+            candidate = replace(candidate, text=selected["text"], reply=reply,
+                                provider=selected["provider"], model=selected["model"],
+                                likes=selected["likes"], views=selected["views"],
+                                expires_at=x_urls.posted_at(candidate.url).timestamp() + watch_curation.FAST_MAX_AGE_SECONDS)
+        if not _ready(candidate.url, "reply"):
+            continue
+        verdict = reply_admission.judge_parent(candidate.url)
+        if verdict:
+            candidates.append(candidate)
+        elif verdict.refusal.definitive:
+            _backoff(candidate.url, "reply", 86400)
     if not candidates:
         return
     cycle = reply_pipeline.Cycle()
     try:
-        with work_priority.scope(work_priority.WATCH):
+        if watch_curation.fast():
+            with _queue_lock:
+                for candidate in candidates:
+                    _reply_handoffs[candidate.url] = 0
+        priority = work_priority.WATCH_REPLY if watch_curation.fast() else work_priority.WATCH
+        with work_priority.scope(priority):
             return reply_pipeline.run(JOB, candidates, cycle,
                                       max_generations=settings.get("PRIORITY_WATCH_MAX_REPLIES"))
     finally:

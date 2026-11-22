@@ -1,8 +1,8 @@
 """One Toronto clock for scheduling, day budgets, and browser activity."""
-from datetime import date, datetime, time, timedelta
-from functools import wraps
-from contextlib import contextmanager
+from datetime import date, datetime, time, timedelta, timezone
+from contextlib import contextmanager, nullcontext
 from contextvars import ContextVar
+from functools import wraps
 import hashlib
 import threading
 from zoneinfo import ZoneInfo
@@ -11,43 +11,26 @@ from ..core import config, settings
 from ..core.logger import log
 
 
-WAKE = time(7, 0)
-BEDTIME = time(23, 0)
+WAKE = time(4, 30)
+BEDTIME = time(0, 0)
 _BREAK_INTERVAL_HOURS = 3
-_FIRST_BREAK_HOUR = 7  # Optional breaks start only after three waking hours.
+_FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.
 
 _STOP = threading.Event()
-_VIDEO_IO = ContextVar("early_video_io", default=None)
-
-
-def early_video_bounds(now):
-    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
-    return (local.replace(hour=5, minute=55, second=0, microsecond=0),
-            local.replace(hour=6, minute=5, second=0, microsecond=0))
+_REPLY_ACTIVITY = ContextVar("reply_activity", default=False)
 
 
 @contextmanager
-def early_video_io(enabled=False):
-    """Video workers alone may use shared I/O in the bounded 06:00 window.
-
-    General activity/admission stays 07:00–23:00. The context expires in real
-    time, cannot survive into another day, and never overrides a stop request.
-    """
-    token = _VIDEO_IO.set(early_video_bounds(now_local()) if enabled else None)
+def reply_activity():
+    token = _REPLY_ACTIVITY.set(True)
     try:
         yield
     finally:
-        _VIDEO_IO.reset(token)
+        _REPLY_ACTIVITY.reset(token)
 
 
-def _video_io_active(now):
-    bounds = _VIDEO_IO.get()
-    return bool(bounds and bounds[0] <= now < bounds[1])
-
-
-def may_video_act(now=None):
-    now = now or now_local()
-    return not stop_requested() and (is_active(now) or _video_io_active(now)) and break_until(now) is None
+def may_reply(now: datetime | None = None) -> bool:
+    return not stop_requested() and (settings.get("REPLY_ALL_DAY") or may_act(now))
 
 
 def request_stop():
@@ -86,7 +69,25 @@ def break_until(now: datetime | None = None) -> datetime | None:
 
 
 def window_label() -> str:
-    return f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    label = f"{WAKE:%H:%M}–{BEDTIME:%H:%M} {config.BOT_TIMEZONE}"
+    if window := awake_window():
+        label += f"; awake from {window[0].isoformat()} until {window[1].isoformat()}"
+    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
+    return label + (f"; sleep skipped for the night of {night} only" if night else "")
+
+
+def _skipped_sleep_day():
+    night = settings.get("SKIP_SLEEP_NIGHT_DATE")
+    return date.fromisoformat(night) + timedelta(days=1) if night else None
+
+
+def awake_window():
+    start = settings.get("AWAKE_72H_START")
+    if not start:
+        return None
+    start = datetime.fromisoformat(start).astimezone(timezone.utc)
+    zone = ZoneInfo(config.BOT_TIMEZONE)
+    return start.astimezone(zone), (start + timedelta(hours=72)).astimezone(zone)
 
 
 def now_local() -> datetime:
@@ -112,7 +113,12 @@ def is_past_day(stamped) -> bool:
 
 def is_active(now: datetime | None = None) -> bool:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    window = awake_window()
+    if window and window[0] <= local < window[1]:
+        return True
     clock = local.time().replace(tzinfo=None)
+    if local.date() == _skipped_sleep_day() and clock < WAKE:
+        return True
     if BEDTIME <= WAKE:
         return clock >= WAKE or clock < BEDTIME
     return WAKE <= clock < BEDTIME
@@ -131,57 +137,68 @@ def may_act(now: datetime | None = None) -> bool:
 def next_wake(now: datetime | None = None) -> datetime:
     local = (now or now_local()).astimezone(ZoneInfo(config.BOT_TIMEZONE))
     wake = local.replace(hour=WAKE.hour, minute=WAKE.minute, second=0, microsecond=0)
-    return wake if local < wake else wake + timedelta(days=1)
+    wake = wake if local < wake else wake + timedelta(days=1)
+    window = awake_window()
+    return min(wake, window[0]) if window and local < window[0] else wake
 
 
 def require_active() -> None:
     now = now_local()
-    if stop_requested() or not (is_active(now) or _video_io_active(now)):
+    if _REPLY_ACTIVITY.get() and settings.get("REPLY_ALL_DAY") and not stop_requested():
+        return
+    if stop_requested() or not is_active(now):
         raise OutsideActiveHours(f"Bot asleep: active {window_label()}")
     end = break_until(now)
     if end is not None:
         raise ScheduledBreak(f"Scheduled break until {end.isoformat(timespec='minutes')}")
 
 
-def awake_job(fn):
+def awake_job(fn, *, reply=False):
     """Also gate queued jobs and work that crossed the BEDTIME boundary."""
     @wraps(fn)
     def run(*args, **kwargs):
-        if not may_act():
-            return None
-        try:
-            return fn(*args, **kwargs)
-        except ScheduledBreak:
-            log.info("[%s] Stopped for a scheduled break.", fn.__name__)
-            return None
-        except OutsideActiveHours:
-            log.info("[%s] Stopped for bedtime.", fn.__name__)
-            return None
+        with reply_activity() if reply else nullcontext():
+            if not (may_reply() if reply else may_act()):
+                return None
+            try:
+                return fn(*args, **kwargs)
+            except ScheduledBreak:
+                log.info("[%s] Stopped for a scheduled break.", fn.__name__)
+                return None
+            except OutsideActiveHours:
+                log.info("[%s] Stopped for bedtime.", fn.__name__)
+                return None
     return run
 
 
 def bedtime(now: datetime) -> datetime:
-    """The BEDTIME that ends `now`'s day, in `now`'s timezone."""
-    end = now.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
-    if BEDTIME <= WAKE and now.time().replace(tzinfo=None) >= WAKE:
+    """Next policy bedtime, including one explicitly skipped Toronto night."""
+    local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
+    end = local.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
+    if BEDTIME <= WAKE and local.time().replace(tzinfo=None) >= WAKE:
         end += timedelta(days=1)
-    return end
+    if end.date() == _skipped_sleep_day():
+        end += timedelta(days=1)
+    window = awake_window()
+    if window and (window[0] <= end < window[1] or window[0] <= local < window[1]):
+        end = window[1]
+        if is_active(end):
+            end = end.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0) + timedelta(days=1)
+    return end.astimezone(now.tzinfo)
 
 
 def seconds_until_bedtime() -> float:
     now = now_local()
-    if _video_io_active(now):
-        return max(0.0, (_VIDEO_IO.get()[1] - now).total_seconds())
-    if not is_active(now):
-        return 0.0
     return max(0.0, (bedtime(now) - now).total_seconds())
 
 
 def seconds_until_pause() -> float:
     """Model requests stop at the next break or bedtime, whichever comes first."""
+    if stop_requested():
+        return 0.0
+    if _REPLY_ACTIVITY.get() and settings.get("REPLY_ALL_DAY"):
+        return 24 * 60 * 60
     now = now_local()
-    if _video_io_active(now):
-        return max(0.0, (_VIDEO_IO.get()[1] - now).total_seconds())
     if not is_active(now) or break_until(now) is not None:
         return 0.0
     end = bedtime(now)

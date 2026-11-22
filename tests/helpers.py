@@ -58,8 +58,12 @@ def numbered_url(n, author="someone"):
 
 
 def fresh(handle, minutes=5, n=0):
-    """A status URL posted `minutes` ago; `n` keeps URLs distinct."""
-    ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000) - minutes * 60_000
+    """A status URL posted `minutes` before the test clock; `n` keeps URLs distinct.
+
+    Built from active_hours.now_local so a frozen test clock and the IDs agree;
+    datetime.now here made afternoon runs see these fixtures as future posts.
+    """
+    ms = int(hours.now_local().timestamp() * 1000) - minutes * 60_000
     return f"https://x.com/{handle}/status/{((ms - x_urls._TWITTER_EPOCH_MS) << 22) + n}"
 
 

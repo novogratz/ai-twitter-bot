@@ -10,12 +10,13 @@ from . import reply_pipeline
 
 
 class Buffer:
-    def __init__(self):
+    def __init__(self, *, allow_leading_mention=False, max_age=None):
         self.lock = threading.RLock()
         self.entries = {}
+        self.allow_leading_mention = allow_leading_mention
+        self.max_age = max_age
 
     def _prune(self, now, *, preferred_ids=()):
-        from ..guards.reply_focus import discovery_priority
         expired = [sid for sid, candidate in self.entries.items() if candidate.expires_at <= now]
         for sid in expired:
             self.entries.pop(sid)
@@ -28,10 +29,17 @@ class Buffer:
         # An explicitly bounded discovery turn can retain its fresh sources
         # until drafting, even when major authors fill the ordinary buffer.
         # This preference belongs to this offer only, never a durable claim.
-        oldest = sorted(self.entries, key=lambda sid: (
-            sid in preferred_ids, -discovery_priority(self.entries[sid].text),
-            x_urls.author(self.entries[sid].url) in large,
-            int(sid)))[:max(0, len(self.entries) - limit)]
+        if settings.get("REPLY_BROAD_DISCOVERY") and settings.get("REPLY_FOR_YOU_FIRST"):
+            from .reply_source import hot_source_sort_key
+            # Retain fresh sources showing current attention, not old total
+            # reach or designated authors, before the send ranking even runs.
+            ranked = sorted(self.entries, key=lambda sid: hot_source_sort_key(
+                self.entries[sid].url, likes=self.entries[sid].likes, views=self.entries[sid].views))
+            oldest = ranked[limit:]
+        else:
+            oldest = sorted(self.entries, key=lambda sid: (
+                sid in preferred_ids, x_urls.author(self.entries[sid].url) in large,
+                int(sid)))[:max(0, len(self.entries) - limit)]
         for sid in oldest:
             self.entries.pop(sid)
         if oldest:
@@ -48,7 +56,7 @@ class Buffer:
                 posted = x_urls.posted_at(url)
                 if (not url or not posted or posted.timestamp() > now or not candidate.text.strip()
                         or candidate.is_reply or candidate.context or candidate.reply
-                        or candidate.text.lstrip().startswith("@")):
+                        or (candidate.text.lstrip().startswith("@") and not self.allow_leading_mention)):
                     continue
                 expires = min(now + ttl, posted.timestamp() + max_age.total_seconds())
                 if candidate.expires_at is not None:
@@ -56,6 +64,11 @@ class Buffer:
                 if expires <= now:
                     continue
                 sid = x_urls.status_id(url)
+                from ..guards import reply_selection
+                minimum = reply_selection.minimum_likes()
+                if minimum and (type(candidate.likes) is not int or candidate.likes < minimum):
+                    self.entries.pop(sid, None)
+                    continue
                 if sid in self.entries:
                     # Keep the earliest source horizon even when rediscovery
                     # supplies no counters. A wider lane can never extend TTL.
@@ -73,7 +86,7 @@ class Buffer:
         with self.lock:
             self._prune(time.time())
             # Re-read a tightened freshness setting as well as the stored horizon.
-            max_age = timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
+            max_age = self.max_age or timedelta(minutes=settings.get("DIRECT_REPLY_MAX_AGE_MINUTES"))
             for sid, candidate in list(self.entries.items()):
                 age = x_urls.age(candidate.url)
                 if age is None or age < timedelta(0) or age > max_age:

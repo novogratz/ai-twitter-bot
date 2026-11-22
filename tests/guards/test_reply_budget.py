@@ -7,11 +7,38 @@ import pytest
 
 from src.core.state_errors import StateUnreadable
 from src.core.state_store import GUARDED, StateFile
-from src.guards import action_guard as guard, reply_budget, reply_focus
+from src.guards import action_guard as guard, reply_budget
 from tests.helpers import TORONTO, clock, numbered_url
 from src.x import x_urls
 
 NOW = datetime(2026, 11, 18, 12, tzinfo=TORONTO)
+
+
+@pytest.mark.parametrize("configured,effective", [(20, 20), (100, 100), (250, 250), (1400, 250)])
+def test_invited_mode_honors_lower_limits_and_never_exceeds_two_hundred_fifty(monkeypatch, memory_ledger, settings_override,
+                                                                     configured, effective):
+    clock(monkeypatch, NOW)
+    settings_override(REPLY_INVITED_ONLY=True, MAX_REPLIES_PER_DAY=configured,
+                      REPLY_DAILY_TARGET_MIN=250, REPLY_DAILY_TARGET_MAX=250)
+    for n in range(effective):
+        memory_ledger.append(guard.REPLY, numbered_url(n, f"author{n}"), False, NOW - timedelta(hours=2))
+    assert f"{effective}/{effective}" in reply_budget.refusal()
+    assert reply_budget.begin(numbered_url(999, "newauthor"))
+
+
+def test_invited_author_budget_and_four_minute_gap_include_uncertain_sends(monkeypatch, memory_ledger, settings_override):
+    clock(monkeypatch, NOW)
+    settings_override(REPLY_INVITED_ONLY=True, MAX_REPLIES_PER_DAY=250,
+                      MIN_SECONDS_BETWEEN_REPLIES=8, REPLY_JITTER_SECONDS=0)
+    assert reply_budget.begin(numbered_url(501, "builder")) == ""
+    assert guard.seconds_until_allowed(guard.REPLY) == 240
+    clock(monkeypatch, NOW + timedelta(minutes=5))
+    assert "author" in reply_budget.begin(numbered_url(502, "builder"))
+    assert reply_budget.begin(numbered_url(503, "someoneelse")) == ""
+    assert reply_budget.used_today() == 2
+    clock(monkeypatch, NOW + timedelta(days=1))
+    assert reply_budget.begin(numbered_url(504, "builder")) == ""
+    assert reply_budget.begin(numbered_url(501, "builder")) == "Reply already submitted"
 
 
 def fresh_url(author="someone", seconds=0, now=NOW):
@@ -55,7 +82,7 @@ def test_uncertain_send_survives_restart_and_keeps_spacing(monkeypatch, memory_l
 def test_1400_goal_cannot_override_spacing_or_waking_hours(monkeypatch, memory_ledger, settings_override):
     settings_override(MAX_REPLIES_PER_DAY=1400, REPLY_DAILY_TARGET_MIN=1400, REPLY_DAILY_TARGET_MAX=1400,
                       MIN_SECONDS_BETWEEN_REPLIES=8, REPLY_JITTER_SECONDS=4)
-    start = NOW.replace(hour=7)
+    start = NOW.replace(hour=4, minute=30)
     clock(monkeypatch, start - timedelta(seconds=1))
     assert not guard.can_post(guard.REPLY)[0]
     clock(monkeypatch, start)
@@ -66,10 +93,10 @@ def test_1400_goal_cannot_override_spacing_or_waking_hours(monkeypatch, memory_l
     assert not guard.can_post(guard.REPLY)[0]
     clock(monkeypatch, start + timedelta(seconds=gap + 0.01))
     assert guard.can_post(guard.REPLY)[0]
-    clock(monkeypatch, start.replace(hour=22, minute=59, second=58))
+    clock(monkeypatch, start.replace(hour=23, minute=59, second=58))
     assert reply_budget.begin(numbered_url(10001)) == ""
     assert reply_budget.used_today() == 2
-    clock(monkeypatch, start.replace(hour=23))
+    clock(monkeypatch, (start + timedelta(days=1)).replace(hour=0, minute=0))
     assert not guard.can_post(guard.REPLY)[0]
 
 
@@ -79,6 +106,24 @@ def test_toronto_day_changes_budget_but_never_releases_parent(monkeypatch, memor
     clock(monkeypatch, NOW + timedelta(days=1))
     assert reply_budget.used_today() == 0
     assert reply_budget.begin(numbered_url(30)) == "Reply already submitted"
+
+
+def test_overnight_midnight_preserves_spacing_claims_and_morning_budget(monkeypatch, memory_ledger, settings_override):
+    settings_override(REPLY_ALL_DAY=True, MAX_REPLIES_PER_DAY=1,
+                      MIN_SECONDS_BETWEEN_REPLIES=8, REPLY_JITTER_SECONDS=0)
+    late = NOW.replace(hour=23, minute=59, second=58)
+    clock(monkeypatch, late)
+    assert reply_budget.begin(numbered_url(300)) == ""
+    clock(monkeypatch, late + timedelta(seconds=3))
+    assert reply_budget.used_today() == 0
+    assert not guard.can_post(guard.REPLY)[0]
+    assert reply_budget.begin(numbered_url(300)) == "Reply already submitted"
+    clock(monkeypatch, late + timedelta(seconds=9))
+    assert guard.can_post(guard.REPLY)[0]
+    assert reply_budget.begin(numbered_url(301)) == ""
+    clock(monkeypatch, datetime(2026, 11, 19, 7, tzinfo=TORONTO))
+    assert reply_budget.used_today() == 1
+    assert not guard.can_post(guard.REPLY)[0]
 
 
 def test_future_stamp_and_corrupt_state_fail_closed(monkeypatch, memory_ledger):
@@ -93,66 +138,127 @@ def test_future_stamp_and_corrupt_state_fail_closed(monkeypatch, memory_ledger):
     assert Path(reply_budget.STATE.path).read_text() == '{"bad": {}}'
 
 
-def test_watched_author_cap_includes_legacy_receipts_and_unknown_sends(monkeypatch, memory_ledger, settings_override):
-    clock(monkeypatch, NOW)
-    settings_override(REPLY_WATCHED_DAILY_CAP=2)
-    memory_ledger.append(guard.REPLY, numbered_url(40, "elonmusk"), False, NOW-timedelta(hours=2))
-    assert reply_budget.begin(numbered_url(41, "elonmusk")) == ""
-    assert "@elonmusk" in reply_budget.refusal(numbered_url(42, "elonmusk"))
-    assert reply_budget.refusal(numbered_url(43, "another")) == ""
+def _temporary_workload(settings_override):
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_CURATED_MODE=True, REPLY_INVITED_ONLY=True,
+                      MAX_REPLIES_PER_DAY=80, REPLY_REVIEW_DAILY_LIMIT=80,
+                      REPLY_DAILY_TARGET_MIN=60, REPLY_DAILY_TARGET_MAX=80,
+                      REPLY_WORKLOAD_BOOST_START_DATE="2026-11-20", REPLY_WORKLOAD_BOOST_DAYS=4,
+                      REPLY_WORKLOAD_BOOST_TARGET=200, REPLY_JITTER_SECONDS=0)
 
 
-@pytest.mark.parametrize("author,seconds,allowed", [
-    ("someone", 30, True), ("someone", 1800, True), ("someone", 1801, False),
-    ("elonmusk", 20, True), ("elonmusk", 60, True), ("elonmusk", 300, True),
-    ("elonmusk", 301, False), ("someone", -1, False),
+@pytest.mark.parametrize("stamp,boosted", [
+    ("2026-11-19T23:59:59-05:00", False),
+    ("2026-11-20T00:00:00-05:00", True),
+    ("2026-11-23T23:59:59-05:00", True),
+    ("2026-11-24T00:00:00-05:00", False),
 ])
-def test_freshness_boundaries_rechecked_at_submission(monkeypatch, memory_ledger, settings_override, author, seconds, allowed):
+def test_four_day_workload_uses_fixed_toronto_dates_and_expires_without_reload(
+        monkeypatch, settings_override, stamp, boosted):
+    _temporary_workload(settings_override)
+    clock(monkeypatch, datetime.fromisoformat(stamp).astimezone(TORONTO))
+    plan = reply_budget.daily_plan()
+    assert plan["boost_active"] is boosted
+    assert plan["boost_until"] == "2026-11-24"
+    assert plan["target"] == (200 if boosted else 70)
+    assert (plan["minimum"], plan["maximum"]) == ((200, 200) if boosted else (60, 80))
+    assert plan["cap"] == plan["draft_limit"] == reply_budget.ceiling() == (200 if boosted else 80)
+    assert plan["session_limit"] == (50 if boosted else 20)
+
+
+def test_restart_cannot_extend_the_workload_window_or_clear_pending_capacity(
+        monkeypatch, memory_ledger, settings_override):
+    _temporary_workload(settings_override)
+    now = datetime(2026, 11, 23, 12, tzinfo=TORONTO)
+    clock(monkeypatch, now)
+    for n in range(199):
+        memory_ledger.append(guard.REPLY, numbered_url(n, f"author{n}"), False, now - timedelta(hours=2))
+    winner = numbered_url(6000, "newauthor")
+    assert reply_budget.begin(winner, "Check the evaluation split.") == ""
+    monkeypatch.setattr(reply_budget, "STATE", StateFile("reply_submissions.json", {}, GUARDED))
+    assert reply_budget.used_today() == 200
+    assert "200/200" in reply_budget.refusal()
+    assert reply_budget.daily_plan()["boost_until"] == "2026-11-24"
+    clock(monkeypatch, datetime(2026, 11, 24, 0, tzinfo=TORONTO))
+    assert reply_budget.ceiling() == 80
+    assert reply_budget.daily_plan()["target"] == 70
+    assert x_urls.status_id(winner) in reply_budget.entries()
+
+
+def test_boost_never_overrides_zero_disable_or_outlives_four_days(monkeypatch, settings_override):
+    _temporary_workload(settings_override)
+    settings_override(MAX_REPLIES_PER_DAY=0, REPLY_REVIEW_DAILY_LIMIT=0,
+                      REPLY_WORKLOAD_BOOST_DAYS=100, REPLY_WORKLOAD_BOOST_TARGET=1000)
+    clock(monkeypatch, datetime(2026, 11, 20, 12, tzinfo=TORONTO))
+    plan = reply_budget.daily_plan()
+    assert plan["cap"] == 200 and plan["automatic_cap"] == plan["draft_limit"] == 0
+    assert plan["boost_until"] == "2026-11-24"
+
+
+def _automatic_broad(settings_override):
+    settings_override(REPLY_BROAD_DISCOVERY=True, REPLY_CURATED_MODE=True, REPLY_INVITED_ONLY=True,
+                      REPLY_MANUAL_ORDINARY=False, REPLY_REVIEW_ONLY=False,
+                      MAX_REPLIES_PER_DAY=1500, REPLY_DAILY_TARGET_MIN=1500, REPLY_DAILY_TARGET_MAX=1500,
+                      REPLY_WORKLOAD_BOOST_START_DATE="", MIN_SECONDS_BETWEEN_REPLIES=8,
+                      REPLY_JITTER_SECONDS=4)
+
+
+def test_fifteen_hundredth_slot_is_atomic_includes_unknown_sends_and_survives_restart(
+        monkeypatch, memory_ledger, settings_override):
+    _automatic_broad(settings_override)
     clock(monkeypatch, NOW)
-    settings_override(REPLY_MAX_AGE_SECONDS=1800, REPLY_WATCHED_MAX_AGE_SECONDS=300)
-    url = fresh_url(author, seconds)
-    assert (reply_budget.begin(url) == "") is allowed
-    assert bool(reply_budget.entries()) is allowed
+    for n in range(1498):
+        memory_ledger.append(guard.REPLY, numbered_url(n, f"author{n}"), False, NOW - timedelta(hours=2))
+    earlier = numbered_url(9000, "uncertainauthor")
+    reply_budget.STATE.write({x_urls.status_id(earlier): {
+        "target": earlier, "status": "pending", "submitted_at": (NOW - timedelta(hours=1)).isoformat()}})
+    assert reply_budget.used_today() == 1499
+    urls = [numbered_url(9001, "newone"), numbered_url(9002, "newtwo")]
+    with ThreadPoolExecutor(2) as workers:
+        results = list(workers.map(lambda target: reply_budget.begin(target, "Check the evaluation split."), urls))
+    assert results.count("") == 1
+    assert reply_budget.used_today() == 1500
+    winner = urls[results.index("")]
+    monkeypatch.setattr(reply_budget, "STATE", StateFile("reply_submissions.json", {}, GUARDED))
+    assert "1500/1500" in reply_budget.refusal()
+    guard.record(guard.REPLY, winner)
+    reply_budget.confirmed(winner)
+    assert reply_budget.used_today() == 1500
+    assert reply_budget.entries()[x_urls.status_id(earlier)]["status"] == "pending"
 
 
-def test_watched_likes_and_reposts_require_the_exact_confirmed_reply(monkeypatch, memory_ledger, settings_override):
+def test_broad_eight_second_gap_and_jitter_include_pending_sends(monkeypatch, memory_ledger, settings_override):
+    _automatic_broad(settings_override)
     clock(monkeypatch, NOW)
-    settings_override(WATCH_ENGAGEMENT_REQUIRES_REPLY=True)
-    url = numbered_url(60, "elonmusk")
-    assert not guard.can_post(guard.LIKE, target=url)[0]
-    assert "confirmed Reply" in guard.can_post(guard.RETWEET, target=url)[1]
-    assert guard.can_post(guard.LIKE, target=url, reply_parent=True)[0]
-    assert reply_budget.begin(url) == ""
-    assert not guard.can_post(guard.LIKE, target=url)[0], "an uncertain send is not a confirmed Reply"
-    guard.record(guard.REPLY, url)
-    assert guard.can_post(guard.LIKE, target=url)[0]
-    assert not guard.can_post(guard.LIKE, target=numbered_url(61, "elonmusk"))[0]
+    target = numbered_url(9100, "builder")
+    assert reply_budget.begin(target, "Check the evaluation split.") == ""
+    gap = guard.seconds_until_allowed(guard.REPLY)
+    assert 8 <= gap <= 12
+    assert guard.seconds_until_allowed(guard.REPLY) == gap
+    monkeypatch.setattr(reply_budget, "STATE", StateFile("reply_submissions.json", {}, GUARDED))
+    assert guard.seconds_until_allowed(guard.REPLY) == gap
+    clock(monkeypatch, NOW + timedelta(seconds=gap - .01))
+    assert not guard.can_post(guard.REPLY)[0]
+    clock(monkeypatch, NOW + timedelta(seconds=gap + .01))
+    assert guard.can_post(guard.REPLY)[0]
+    assert reply_budget.begin(target, "Check the evaluation split.") == "Reply already submitted"
 
 
-@pytest.mark.parametrize("text,allowed", [
-    ("Claude is here! Absolutely incredible, what a launch!", False),
-    ("Made this in Grok Imagine, hope you like it!", False),
-    ("Like and repost for my inference benchmark results", False),
-    ("Why does batching improve inference throughput but hurt latency?", True),
-    ("Our LLM retrieval fails when the relevant document uses different terminology.", True),
+@pytest.mark.parametrize("broad,curated,invited,expected", [
+    (True, True, True, 1500), (False, True, True, 100),
+    (False, False, True, 250), (False, False, False, 1500),
 ])
-def test_selective_sources(settings_override, text, allowed):
-    settings_override(REPLY_DISCUSSIONS_ONLY=True)
-    assert (reply_focus.parent_refusal(text) == "") is allowed
+def test_new_ceiling_does_not_lift_other_restricted_modes(settings_override, broad, curated, invited, expected):
+    settings_override(MAX_REPLIES_PER_DAY=1500, REPLY_BROAD_DISCOVERY=broad,
+                      REPLY_CURATED_MODE=curated, REPLY_INVITED_ONLY=invited)
+    assert reply_budget.ceiling() == expected
 
 
-def test_generic_praise_is_refused_but_specific_help_remains_eligible(settings_override):
-    settings_override(REPLY_DISCUSSIONS_ONLY=True)
-    assert reply_focus.draft_refusal("Oh, I love this ❤️")
-    assert reply_focus.draft_refusal("Great point!")
-    assert not reply_focus.draft_refusal("A held-out split would catch that leakage before the benchmark.")
-
-
-def test_unfamiliar_author_precedes_familiar_high_view_account(monkeypatch, memory_ledger, settings_override):
-    from src.replies.reply_pipeline import Candidate, prioritize
-    clock(monkeypatch, NOW)
-    settings_override(REPLY_PREFER_NEW_AUTHORS=True, REPLY_PRIORITIZE_LARGE_ACCOUNTS=False)
-    guard.record(guard.REPLY, numbered_url(80, "familiar"))
-    familiar = Candidate(numbered_url(81, "familiar"), "LLM inference comparison", "SEARCH", likes=1000, views=100000)
-    new = Candidate(numbered_url(82, "newbuilder"), "LLM inference comparison", "SEARCH", likes=0)
-    assert prioritize([familiar, new], ordinary=True, diversify_authors=True) == [new, familiar]
+def test_stale_lower_workload_boost_cannot_replace_persistent_fifteen_hundred(
+        monkeypatch, settings_override):
+    _automatic_broad(settings_override)
+    settings_override(REPLY_WORKLOAD_BOOST_START_DATE="2026-11-20",
+                      REPLY_WORKLOAD_BOOST_DAYS=4, REPLY_WORKLOAD_BOOST_TARGET=200)
+    clock(monkeypatch, datetime(2026, 11, 20, 12, tzinfo=TORONTO))
+    plan = reply_budget.daily_plan()
+    assert not plan["boost_active"]
+    assert plan["target"] == plan["minimum"] == plan["maximum"] == reply_budget.ceiling() == 1500
