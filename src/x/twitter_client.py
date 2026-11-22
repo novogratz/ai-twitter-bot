@@ -1175,7 +1175,9 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             more[0].click();
             return JSON.stringify('expand_parent');
           }
-          return refused('copy_text:' + JSON.stringify(copyText.trim().slice(0, 120)));
+          return refused('copy_text:len=' + copyText.trim().length
+            + ':head=' + JSON.stringify(copyText.trim().slice(0, 80))
+            + ':tail=' + JSON.stringify(copyText.trim().slice(-60)));
         }
       }
       if (click) buttons[0].click();
@@ -1202,6 +1204,9 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
     if isinstance(opened, str) and opened.startswith("refused"):
         log.info("[REPLY] Source DOM refused (%s)%s: %s", opened.partition(":")[2] or "unlabeled",
                  " while composing" if composing else "", url)
+        if opened.partition(":")[2].startswith("copy_text") and expected_text:
+            trimmed = expected_text.strip()
+            log.info("[REPLY] Expected source len=%d tail=%r", len(trimmed), trimmed[-60:])
         return False
     if not (isinstance(opened, dict) and isinstance(opened.get("url"), str)
             and x_urls.status_id(opened["url"]) == sid
