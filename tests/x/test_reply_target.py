@@ -554,3 +554,17 @@ def test_trailing_link_in_scrape_missing_from_copy_never_blocks_exact_source(inv
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True) is allowed
     assert clicks == []
+
+
+@pytest.mark.parametrize("copy_extra,allowed", [
+    ("https://pic.x.com/uAKimFHBsY", True),   # copy adds a media alias after the shared link (2026-11-22)
+    (" extra prose after", False),            # prose beyond the shared link is never excused
+])
+def test_shared_trailing_link_plus_copy_alias_never_blocks_exact_source(invited, monkeypatch, copy_extra, allowed):
+    url, question = invited_source()
+    full = question + " Full set here vk.com/wall-10164239992709527…"
+    copy = {"url": url, "text": full + copy_extra, "dialog": True, "noTime": True, "more": False}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=full, composing=True) is allowed
+    assert clicks == []

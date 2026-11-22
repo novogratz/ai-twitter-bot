@@ -1177,16 +1177,21 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         // dialog shows the same parent, so compare with whitespace removed.
         // Every letter, digit and symbol must still match in order.
         // Either side may carry trailing link text the other omits — the copy
-        // appends a link card's URL; the scrape can keep a trailing link the
-        // dialog drops ("…homepage!https://llmstxt.org", 2026-11-22). Strip a
-        // trailing link only from the side that alone carries one: when both
-        // sides render links they must match — no link equivalence.
+        // appends a link card's URL or media alias; the scrape can keep a
+        // trailing link the dialog drops ("…homepage!https://llmstxt.org"),
+        // and both can end with the author's own truncated link before the
+        // copy's extra alias ("vk…https://pic.x.com/uA", 2026-11-22). Strip
+        // trailing aliases from both sides: the remaining prose must match
+        // exactly and one side's removed tail must extend the other's —
+        // two different rendered links still refuse; no link equivalence.
         const fold = t => t.replace(/\s+/g, '');
         const expTrim = expectedText.trim();
-        const oneSided = (dealias(copyText) === copyText.trim()) !== (dealias(expTrim) === expTrim);
-        const left = oneSided ? dealias(copyText) : copyText.trim();
-        const right = oneSided ? dealias(expTrim) : expTrim;
-        if (copyText.trim() !== expTrim && fold(left) !== fold(right)) {
+        const tailRe = new RegExp(String.raw`(?:\s*${alias})+\s*$`);
+        const tailOf = t => fold((t.match(tailRe) || [''])[0]);
+        const ct = tailOf(copyText), et = tailOf(expTrim);
+        const tailsAgree = ct.startsWith(et) || et.startsWith(ct);
+        if (copyText.trim() !== expTrim
+            && !(fold(dealias(copyText)) === fold(dealias(expTrim)) && tailsAgree)) {
           // A truncated compact copy exposes a Show more control; expand only
           // this verified copy, then require full equality on the next read.
           // A bare prefix without that exact match never admits a send.
@@ -1195,7 +1200,7 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             more[0].click();
             return JSON.stringify('expand_parent');
           }
-          const a = fold(left), b = fold(right);
+          const a = fold(dealias(copyText)) + '|tail:' + ct, b = fold(dealias(expTrim)) + '|tail:' + et;
           let d = 0;
           while (d < a.length && d < b.length && a[d] === b[d]) d++;
           return refused('copy_text:at=' + d
