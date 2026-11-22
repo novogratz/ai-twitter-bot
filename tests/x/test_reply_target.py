@@ -540,3 +540,17 @@ def test_trailing_link_card_text_in_copy_never_blocks_exact_source(invited, monk
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True) is allowed
     assert clicks == []
+
+
+@pytest.mark.parametrize("missing,allowed", [
+    (" https://llmstxt.org", True),      # scrape kept a trailing link the dialog drops (2026-11-22)
+    (" from your homepage!", False),     # missing prose is never excused
+])
+def test_trailing_link_in_scrape_missing_from_copy_never_blocks_exact_source(invited, monkeypatch, missing, allowed):
+    url, question = invited_source()
+    full = question + " Serve it from your homepage!" + missing
+    copy = {"url": url, "text": full[:-len(missing)], "dialog": True, "noTime": True, "more": False}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=full, composing=True) is allowed
+    assert clicks == []
