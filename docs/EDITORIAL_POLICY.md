@@ -1,5 +1,15 @@
 # Editorial policy — November 20, 2026
 
+2026-11-21, resume at 23:45 after the link-card alias fix — The Operator says
+"ok restart go", lifting the 23:43 pause. The normal launcher started the
+worker at 23:45:04 Toronto on the merged code, including the trailing
+link-card URL extension to the composer copy check. X confirmed a Reply with
+an own receipt at 23:50:20:
+https://x.com/thesimaximalist/status/2124364826616979478 — no composer
+refusals since the resume. All publication, uncertain-send, opt-out and
+manual records were preserved. Normal midnight sleep applies; the worker
+wakes at 04:30. Later stop/pause requests override this authorization.
+
 2026-11-21, Operator pause at 23:43 Toronto — Stop and keep the bot stopped
 until a new explicit start/restart request. This overrides tonight's resume
 authorization. The worker stopped at 23:43:04; no main process or active
