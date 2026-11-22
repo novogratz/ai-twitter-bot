@@ -509,3 +509,19 @@ def test_truncated_compact_copy_with_quote_alias_expands_then_passes(invited, mo
     assert tc._reply_target(url, expected_text=full, composing=True)
     assert expansions == [url]
     assert clicks == []
+
+
+@pytest.mark.parametrize("suffix,allowed", [
+    # The dialog copy renders a mid-text mention inline; the scraped source
+    # wrapped it in newlines. Removing whitespace admits identical characters only.
+    (" (@impetusgrants has details) on model runs.", True),
+    (" (@impetusgrants has details) on model costs.", False),
+])
+def test_mention_whitespace_rendering_never_blocks_exact_source(invited, monkeypatch, suffix, allowed):
+    url, question = invited_source()
+    expected = question + " (\n@impetusgrants\n has details) on model runs."
+    copy = {"url": url, "text": question + suffix, "dialog": True, "noTime": True, "more": False}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": expected}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=expected, composing=True) is allowed
+    assert clicks == []

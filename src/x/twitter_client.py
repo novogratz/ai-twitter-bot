@@ -1166,7 +1166,15 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         // the dialog was exact-matched above in this same read.
         const alias = String.raw`(?:https?:\/\/)?(?:pic\.(?:x|twitter)\.com\/[A-Za-z0-9]+|(?:x|twitter)\.com\/(?:[A-Za-z0-9_]{1,15}\/status\/\d+\S*|\S*…))`;
         const dealias = t => t.replace(new RegExp(String.raw`(?:\s*${alias})+\s*$`), '').trim();
-        if (copyText.trim() !== expectedText.trim() && dealias(copyText) !== expectedText.trim()) {
+        // The two reads render whitespace around inline mentions differently —
+        // the scrape inserts breaks the dialog omits ("(\n@grants\n has" vs
+        // "(@grants has", 2026-11-21). The standalone source behind the dialog
+        // is already strictly matched above; this copy check only confirms the
+        // dialog shows the same parent, so compare with whitespace removed.
+        // Every letter, digit and symbol must still match in order.
+        const fold = t => t.replace(/\s+/g, '');
+        if (copyText.trim() !== expectedText.trim() && dealias(copyText) !== expectedText.trim()
+            && fold(dealias(copyText)) !== fold(expectedText)) {
           // A truncated compact copy exposes a Show more control; expand only
           // this verified copy, then require full equality on the next read.
           // A bare prefix without that exact match never admits a send.
@@ -1175,7 +1183,7 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             more[0].click();
             return JSON.stringify('expand_parent');
           }
-          const a = dealias(copyText), b = expectedText.trim();
+          const a = fold(dealias(copyText)), b = fold(expectedText);
           let d = 0;
           while (d < a.length && d < b.length && a[d] === b[d]) d++;
           return refused('copy_text:at=' + d

@@ -14,11 +14,13 @@ parent copy appends alias display text the standalone source never renders in
 its own text: the quoted-status permalink, usually ellipsis-truncated
 ("x.com/GiorgioPatrini…"), and a glued pic.x.com token for native media; short
 copies expose no Show more control. Exact equality could therefore never pass
-on a quote or short media parent. The composing comparison now strips only
-those trailing alias tokens before requiring exact equality; the standalone
-source behind the dialog is still exact-matched in the same read, Show more
-expansion remains, a bare prefix still refuses, and every composer DOM refusal
-now logs a labeled branch reason. Grok `grok-4.7-build-fast` at low effort
+on a quote or short media parent, and the two reads also render whitespace
+around inline mentions differently. The composing comparison now strips only
+those trailing alias tokens and compares the copy with whitespace removed —
+every letter, digit and symbol in order; the standalone source behind the
+dialog is still strictly exact-matched in the same read, Show more expansion
+remains, a bare prefix still refuses, and every composer DOM refusal now logs
+a labeled branch reason with the first divergence. Grok `grok-4.7-build-fast` at low effort
 remains the Reply route.
 
 Both Voice files put feeling first: hearts ❤️/💙/🩷 lead for affection (blue
