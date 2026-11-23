@@ -385,13 +385,15 @@ def test_compact_media_link_expands_before_exact_source_admission(invited, monke
                        "https://x.com/compose/post", expansions=expansions)
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True)
-    assert expansions == [url]
+    # A complete prose copy whose pic alias renders the same native media is
+    # X's rendering variance (2026-11-23); only a truncated copy must expand.
+    assert expansions == ([url] if short else [])
     assert clicks == []
 
 
 @pytest.mark.parametrize("change", ["prose", "link", "unchanged"])
 def test_compact_media_expansion_never_replaces_full_equality(invited, monkeypatch, change):
-    url, full, copy = compact_media_source()
+    url, full, copy = compact_media_source(short=True)
     if change == "prose":
         copy["expandedText"] = full.replace("memory use", "latency")
     elif change == "link":
@@ -410,7 +412,7 @@ def test_compact_media_expansion_never_replaces_full_equality(invited, monkeypat
 
 @pytest.mark.parametrize("case", ["missing", "changed", "nested", "wrong_author", "wrong_id", "duplicate"])
 def test_background_original_is_verified_before_any_composer_expansion(invited, monkeypatch, case):
-    url, full, copy = compact_media_source()
+    url, full, copy = compact_media_source(short=True)
     root = {"url": url, "text": full}
     articles = [copy, root]
     if case == "missing":
@@ -434,7 +436,7 @@ def test_background_original_is_verified_before_any_composer_expansion(invited, 
 
 @pytest.mark.parametrize("case", ["no_more", "wrong_author", "body_only_author", "multiple_copies", "multiple_editors"])
 def test_compact_copy_must_identify_one_parent_before_expansion(invited, monkeypatch, case):
-    url, full, copy = compact_media_source()
+    url, full, copy = compact_media_source(short=True)
     articles = [copy, {"url": url, "text": full}]
     if case == "no_more":
         copy["more"] = False
@@ -453,7 +455,7 @@ def test_compact_copy_must_identify_one_parent_before_expansion(invited, monkeyp
 
 
 def test_background_source_is_rechecked_after_compact_copy_expansion(invited, monkeypatch):
-    url, full, copy = compact_media_source()
+    url, full, copy = compact_media_source(short=True)
     root = {"url": url, "text": full}
     expansions = []
     clicks = mock_page(monkeypatch, [copy, root], "https://x.com/compose/post", expansions=expansions)
@@ -567,4 +569,17 @@ def test_shared_trailing_link_plus_copy_alias_never_blocks_exact_source(invited,
     clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True) is allowed
+    assert clicks == []
+
+
+def test_opaque_pic_alias_matches_native_video_permalink_tail(invited, monkeypatch):
+    # @google quoting a creator's video: the scrape ends with the native video
+    # permalink, the dialog copy with its opaque pic.x.com alias (2026-11-23).
+    url, question = invited_source()
+    full = question + " Great showcase here " + _NATIVE_MEDIA_LINK
+    copy = {"url": url, "text": question + " Great showcase here https://pic.x.com/JfZiLtiBGR",
+            "dialog": True, "noTime": True, "more": False}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=full, composing=True)
     assert clicks == []

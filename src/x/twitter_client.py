@@ -1187,7 +1187,13 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         const fold = t => t.replace(/\s+/g, '');
         const expTrim = expectedText.trim();
         const tailRe = new RegExp(String.raw`(?:\s*${alias})+\s*$`);
-        const tailOf = t => fold((t.match(tailRe) || [''])[0]);
+        // A pic.x.com alias is X's opaque rendering of the same native media
+        // the other read shows as a status permalink ("pic.x.com/JfZ…" vs
+        // "x.com/u/status/N/video/1…", 2026-11-23); the two schemes cannot be
+        // compared. Drop opaque aliases from the tails, then the remaining
+        // comparable link text must agree — /video/1 vs /video/2 still refuses.
+        const tailOf = t => fold(((t.match(tailRe) || [''])[0])
+          .replace(/(?:https?:\/\/)?pic\.(?:x|twitter)\.com\/[A-Za-z0-9]+/g, ''));
         const ct = tailOf(copyText), et = tailOf(expTrim);
         const tailsAgree = ct.startsWith(et) || et.startsWith(ct);
         if (copyText.trim() !== expTrim
