@@ -66,7 +66,7 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
     if settings.get("REPLY_INVITED_ONLY"):
         from src.replies.help_requests import run_help_cycle
         from src.video import config as video_config
-        if video_config.scheduled() and not post_only:
+        if video_config.scheduled():  # a video is a post: --post-only keeps it, without Replies
             # 2026-11-23: videos again beside restricted Replies (VIDEO_WITH_REPLIES).
             # Same single publisher job; no editorial, news or startup hold here.
             from src.video.workers import health_job

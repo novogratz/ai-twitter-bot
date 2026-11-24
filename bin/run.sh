@@ -3,6 +3,8 @@
 # The existing video publisher can post exceptional finds after all checks pass.
 # Startup requests are an explicit opt-in and cannot enable disabled features.
 STARTUP_PUBLICATIONS="${STARTUP_PUBLICATIONS:-0}"
+# 2026-11-23: POST_ONLY=1 starts without any Reply job (videos only while the Operator is away).
+POST_ONLY="${POST_ONLY:-0}"
 # Run the configured Account's bot in the FOREGROUND of this terminal.
 #
 # Press Ctrl-C to stop it cleanly (graceful shutdown via SIGTERM).
@@ -52,6 +54,10 @@ set --
 if [[ "$STARTUP_PUBLICATIONS" == "1" ]]; then
   set -- --startup-publications
   echo "[run] Startup: news + video requested first; actual receipts confirm publication."
+fi
+if [[ "$POST_ONLY" == "1" ]]; then
+  set -- "$@" --post-only
+  echo "[run] Post-only: no Reply jobs; inspected video posts only."
 fi
 echo "[run] Logs are also written to bot.log (tail -F bot.log)."
 echo "────────────────────────────────────────"

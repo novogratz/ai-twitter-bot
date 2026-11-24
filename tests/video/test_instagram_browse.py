@@ -279,3 +279,18 @@ def test_handle_is_never_stamped_over_measured_source_subtitles():
     corner = [{"at": 1, "texts": [{"box": [0.02, 0.9, 0.1, 0.05], "confidence": 1, "text": "logo"}]}]
     assert place({"watermark_position": "bottom", "ocr_evidence": corner}) == "bottom"              # clear of the centre stamp
     assert place({"watermark_position": None}) is None
+
+
+def test_both_retained_overlay_match_paths_survive_a_cut_offset():
+    """2026-11-23: the exact same-sample match has no `source_at`; a cut clip with subtitles raised KeyError."""
+    from src.video.inspection import source_time
+    assert source_time({"method": "same_sample_pixels", "source_sample_at": 3}, 2)["source_sample_at"] == 5
+    assert source_time({"method": "native_frame_pixels", "source_at": 3.5}, 2)["source_at"] == 5.5
+
+
+def test_post_only_start_keeps_the_video_job_and_drops_replies(settings_override, promotion_account):
+    """Operator, 2026-11-23: videos only while away."""
+    import main
+    settings_override(REPLY_INVITED_ONLY=True, REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True, REPLY_REVIEW_ONLY=False,
+                      VIDEO_ENABLED=True, VIDEO_LIVE=True, VIDEO_WITH_REPLIES=True)
+    assert [job.id for job in main.build_scheduler(post_only=True).get_jobs()] == ["video_health_job"]

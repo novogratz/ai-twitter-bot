@@ -502,6 +502,12 @@ def retained_pixel_matches(source_frames, output, box, watermark_position, *, al
     return {"method": "native_frame_pixels", "source_at": best[1], "frame": best[0], "text_region": measured}
 
 
+def source_time(proof, offset):
+    """Express a cut-relative match time on the original's clock, whichever path matched."""
+    key = "source_at" if "source_at" in proof else "source_sample_at"
+    return proof | {key: proof[key] + offset}
+
+
 def corroborate_retained_pixels(result, source_review, cfg, unexpected, source_path, output_path):
     """Resolve OCR misses from unchanged bytes, without changing the model verdict."""
     if (not source_path or not output_path or source_review.get("sha256") != sha256(source_path)
@@ -553,7 +559,10 @@ def corroborate_retained_pixels(result, source_review, cfg, unexpected, source_p
                     for item in (item for item in unexpected if item["at"] == at):
                         proof = retained_pixel_matches(frames, output, item["box"], source_review.get("watermark_position", "bottom"), aligned_source=aligned)
                         if proof:
-                            proof["source_at"] += offset
+                            # The same-sample match reports `source_sample_at`, the native-frame
+                            # match `source_at`. 2026-11-23: reading only the latter raised KeyError
+                            # and held every subtitled clip that matched on its first, exact path.
+                            proof = source_time(proof, offset)
                             accepted.append(item | proof | {"source_sha256": source_review["sha256"],
                                 "output_sha256": result["sha256"], "native_frame_radius_seconds": radius})
                 finally:

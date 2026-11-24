@@ -44,8 +44,15 @@ top or bottom, and output QC confirmed the handle and retained subtitles apart.
 Validated live without publishing: 12 leads in two reads, four reels captured
 and downloaded, inspection, render and output QC completing in about two
 minutes a clip. The first rendered reel was held on a weak opening shot: the
-output gate still refuses a clip, an audience alone never publishes one. The 21:50 pause
-remains binding: `.bot_disabled` stays armed until an explicit start request.
+output gate still refuses a clip, an audience alone never publishes one. A cut clip with retained subtitles also crashed output review (`KeyError:
+'source_at'`: the exact same-sample match reports `source_sample_at`); fixed.
+
+Asked whether to start, the Operator chooses "Videos only, no replies". This
+lifts the 21:50 pause for a post-only start: `POST_ONLY=1` makes `bin/run.sh`
+pass `--post-only`, which keeps `video_health_job` and its workers and schedules
+no Reply, watched like or repost job. Started through `bin/watchdog.sh` with a
+120-minute stall window so a crash does not cost the two weeks. A plain
+`./bin/run.sh` later brings the Replies back. Later stop requests override this.
 
 2026-11-23, Operator pause at 21:50 Toronto — Stop and keep the bot stopped
 until a new explicit start/restart request. This overrides the latest resume
