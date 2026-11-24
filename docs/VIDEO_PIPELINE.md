@@ -390,6 +390,12 @@ existing browser queue turn. Routine archive reads retain a five-second wait.
 This avoids repeatedly losing the queue position while preserving the single
 Safari owner and active-hours recheck after acquisition.
 
+2026-11-24: the account proof (Home's own profile link) waits up to 25 seconds and
+a read turn reuses it for fifteen minutes; a publication needs one under sixty
+seconds. Reopening Home each minute beside Replies failed 61 times in a night and
+stopped preparation. `request_budget` is one daily total across platforms; X video
+segments exhausted 460 before 07:00, so the Account sets 3,000.
+
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
 at the shared action guard. Watched likes and Replies continue. This prevents an

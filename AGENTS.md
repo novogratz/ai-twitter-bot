@@ -1,5 +1,16 @@
 # AGENTS.md
 
+2026-11-24, empty 07:00 slot: two starvation causes — The Operator reports no
+video this morning. The 07:00 slot closed with no eligible clip. (1) Every
+publisher read turn first reopened Home to prove the Safari account, waiting
+eight seconds; beside Replies that failed 61 times overnight and each failure
+stopped preparation. The proof now waits up to 25 seconds and a read turn reuses
+it for fifteen minutes; a publication still needs one under sixty seconds and
+another account still refuses. (2) `request_budget` is one daily total across
+platforms: X video segments spent all 460 by 07:00 and every Instagram capture
+deferred ("source request budget exhausted", 212 times). The Account sets 3,000;
+the 4 GB download ceiling is unchanged. No publication gate changes.
+
 2026-11-24, five daily videos, short captions, Replies continue — After the first
 confirmed Instagram repost (https://x.com/i/status/2125098583040881083, 00:26
 Toronto, posted on the Operator's explicit "can you post one?"), the Operator

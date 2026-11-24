@@ -1,5 +1,10 @@
 # Editorial policy — November 20, 2026
 
+2026-11-24, video preparation starvation — No publication rule changes. The
+Safari account proof for video read turns waits up to 25 seconds and is reused
+for fifteen minutes (sixty seconds before a publication); the shared daily
+source request budget is 3,000. Both had left the 07:00 slot without a clip.
+
 2026-11-23, Operator pause at 21:50 Toronto — Stop and keep the bot stopped
 until a new explicit start/restart request. This overrides the latest resume
 authorization. The worker stopped at 21:50:35; no main process or active

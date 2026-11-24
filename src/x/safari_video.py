@@ -60,6 +60,10 @@ def browser_session():
             lock.release()
 
 
+PROOF_SECONDS = 900  # read turns; a publication asks for sixty seconds
+PROOF_POLLS = 50     # 25 s: Home loads slowly while Replies use Safari
+
+
 def _json(js, timeout=8):
     raw = safari._run_js(js, timeout, log_prefix="[VIDEO-SAFARI]")
     try:
@@ -576,15 +580,18 @@ class SafariVideoClient:
 
     def preflight(self, *, publishing=False, force=False):
         proof = self.store.meta("safari_account_proof", {})
+        # 2026-11-24: a read turn reuses the proof for fifteen minutes. Reopening
+        # Home every minute beside Replies failed 61 times in one night and
+        # stopped all video preparation; a publication still needs a fresh one.
         if (not force and proof.get("account", "").casefold() == account.current().handle.casefold()
-                and 0 <= time.time() - proof.get("checked_at", 0) < 60):
+                and 0 <= time.time() - proof.get("checked_at", 0) < (60 if publishing else PROOF_SECONDS)):
             return {"account_verified": True, "transport": "safari", "api_required": False}
         with browser_session():
             if not safari.open_url("https://x.com/home"):
                 raise AccessError("Safari could not open X")
             try:
                 state = {}
-                for _ in range(16):
+                for _ in range(PROOF_POLLS):
                     state = _json(_PAGE)
                     if state.get("account"):
                         break
