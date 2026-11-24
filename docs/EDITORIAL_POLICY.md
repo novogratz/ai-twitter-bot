@@ -680,6 +680,9 @@ closing heart, at most 45 characters ("Jensen VS Dario ❤️"). Replies continu
 beside the videos. This supersedes the thirteen 90-minute windows and the
 "ANOTHER BANGER" caption line.
 
+Sleep runs from 23:30 to 04:30 Toronto, replacing the midnight bedtime. A
+`SKIP_SLEEP_NIGHT_DATE` night starts at 23:30 of that evening.
+
 ## November 23 operator amendment — Instagram bangers, audience-proven
 
 The Operator asks for video posts again and for Instagram bangers, with a wider

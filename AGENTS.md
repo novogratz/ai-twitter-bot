@@ -13,8 +13,9 @@ watchdog (`bot_watchdog.sh`) starts the bot through `bin/run.sh`: a bare
 `main.py` had started the full bot without the video requirements. Instagram
 search uses plain "<name> ai" queries, creators of reels with five times the
 like floor join the grid rotation, and inspection gets 240 Codex calls a day.
-Requested and not yet done: sleep from 23:30 instead of midnight (25 tests pin
-the midnight boundary and the skipped-night rule), and more Replies.
+The Operator also sets sleep from 23:30 to 04:30 Toronto: `BEDTIME = time(23, 30)`.
+A skipped night now starts at 23:30 of its evening date. Requested and still
+open: more Replies.
 
 2026-11-23, Instagram bangers again: four breaks repaired while paused — The
 Operator, leaving for two weeks, asks to fix video posting and find Instagram
@@ -1976,7 +1977,7 @@ environment edit or production-state migration accompanies this update.
 [`docs/EDITORIAL_POLICY.md`](docs/EDITORIAL_POLICY.md) is the source of truth
 (including the October 23–November 4 amendments) and supersedes older mandates. It encodes:
 
-- Interactions active 04:30–00:00 America/Toronto, with no daytime breaks for this Account; isolated video discovery/media may continue overnight.
+- Interactions active 04:30–23:30 America/Toronto (bedtime moved from midnight on 2026-11-24), with no daytime breaks for this Account; isolated video discovery/media may continue overnight.
 - At least three sourced AI originals targeted a day, six planned, and eight
   combined profile publications at most, twenty minutes apart at least.
 - Three trend slots (10:00, 13:00, 15:00) and a Startup post on every start

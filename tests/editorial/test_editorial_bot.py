@@ -753,10 +753,10 @@ def test_a_startup_pass_without_a_draft_falls_through_to_the_grid(monkeypatch, t
 
 def test_the_startup_window_closes_at_bedtime():
     at = lambda h, m: datetime(2026, 9, 20, h, m, tzinfo=TORONTO)
-    editorial.open_startup_window(at(23, 40))
+    editorial.open_startup_window(at(23, 10))
     key = editorial.startup_key()
-    assert editorial.startup_slot(at(23, 59), {})[0] == key
-    midnight = datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO)
+    assert editorial.startup_slot(at(23, 29), {})[0] == key
+    midnight = at(23, 30)  # bedtime since 2026-11-24
     assert not editorial._in_window(key, midnight)
     assert editorial.startup_slot(midnight, {}) is None
 

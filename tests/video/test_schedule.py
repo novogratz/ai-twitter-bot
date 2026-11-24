@@ -36,13 +36,13 @@ def test_dst_offsets(day, offset, video_cfg):
     ("2026-11-01T01:30:00-04:00", False), ("2026-11-01T01:30:00-05:00", False),
     ("2026-11-01T03:59:59-05:00", False), ("2026-11-01T04:00:00-05:00", False),
     ("2026-11-01T04:29:59-05:00", False), ("2026-11-01T04:30:00-05:00", True),
-    ("2026-11-01T23:59:59-05:00", True)])
+    ("2026-11-01T23:29:59-05:00", True), ("2026-11-01T23:30:00-05:00", False)])
 def test_cooldown_including_fold(when, allowed):
     assert schedule.eligible(datetime.fromisoformat(when)) is allowed
 
 
-@pytest.mark.parametrize("before,after", [("2026-10-31T23:30:00-04:00", "2026-11-01T05:00:00-05:00"),
-                                       ("2026-03-07T23:30:00-05:00", "2026-03-08T05:00:00-04:00")])
+@pytest.mark.parametrize("before,after", [("2026-10-31T23:00:00-04:00", "2026-11-01T05:00:00-05:00"),
+                                       ("2026-03-07T23:00:00-05:00", "2026-03-08T05:00:00-04:00")])
 def test_startup_eligible_hour_excludes_dst_night(before, after):
     assert schedule.eligible_seconds(datetime.fromisoformat(before), datetime.fromisoformat(after)) == 3600
 
