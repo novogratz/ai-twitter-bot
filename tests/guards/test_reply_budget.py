@@ -93,7 +93,7 @@ def test_1400_goal_cannot_override_spacing_or_waking_hours(monkeypatch, memory_l
     assert not guard.can_post(guard.REPLY)[0]
     clock(monkeypatch, start + timedelta(seconds=gap + 0.01))
     assert guard.can_post(guard.REPLY)[0]
-    clock(monkeypatch, start.replace(hour=23, minute=59, second=58))
+    clock(monkeypatch, start.replace(hour=23, minute=29, second=58))
     assert reply_budget.begin(numbered_url(10001)) == ""
     assert reply_budget.used_today() == 2
     clock(monkeypatch, (start + timedelta(days=1)).replace(hour=0, minute=0))

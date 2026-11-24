@@ -128,6 +128,7 @@ and conversational/specialist Voice are restored.
 
 **2026-11-24:** five video windows a day (07:00, 09:00, 12:00, 17:00, 21:00 Toronto) and short captions
 (a cast name, a few words, one heart). `POST_ONLY=1` starts without Replies.
+The bot sleeps from **23:30 to 04:30 Toronto**; older mentions of a midnight bedtime below are history.
 
 **2026-11-23: Instagram bangers, audience-proven.** Video posts run again beside
 curated Replies (`VIDEO_WITH_REPLIES=1`, `VIDEO_LIVE=1`). Leads come from

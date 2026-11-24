@@ -12,7 +12,8 @@ from ..core.logger import log
 
 
 WAKE = time(4, 30)
-BEDTIME = time(0, 0)
+# Operator, 2026-11-24: sleep from 11:30 PM to 4:30 AM Toronto.
+BEDTIME = time(23, 30)
 _BREAK_INTERVAL_HOURS = 3
 _FIRST_BREAK_HOUR = 7  # October 31: extra waking hour does not move the six daytime breaks.
 
@@ -119,6 +120,9 @@ def is_active(now: datetime | None = None) -> bool:
     clock = local.time().replace(tzinfo=None)
     if local.date() == _skipped_sleep_day() and clock < WAKE:
         return True
+    # An evening bedtime starts the skipped night before midnight.
+    if BEDTIME > WAKE and clock >= BEDTIME and local.date() + timedelta(days=1) == _skipped_sleep_day():
+        return True
     if BEDTIME <= WAKE:
         return clock >= WAKE or clock < BEDTIME
     return WAKE <= clock < BEDTIME
@@ -175,9 +179,13 @@ def bedtime(now: datetime) -> datetime:
     """Next policy bedtime, including one explicitly skipped Toronto night."""
     local = now.astimezone(ZoneInfo(config.BOT_TIMEZONE))
     end = local.replace(hour=BEDTIME.hour, minute=BEDTIME.minute, second=0, microsecond=0)
-    if BEDTIME <= WAKE and local.time().replace(tzinfo=None) >= WAKE:
+    clock = local.time().replace(tzinfo=None)
+    if BEDTIME <= WAKE and clock >= WAKE:
         end += timedelta(days=1)
-    if end.date() == _skipped_sleep_day():
+    elif BEDTIME > WAKE and clock < WAKE:
+        end -= timedelta(days=1)  # asleep before wake: this night's bedtime was yesterday evening
+    night = end.date() if BEDTIME <= WAKE else end.date() + timedelta(days=1)
+    if night == _skipped_sleep_day():
         end += timedelta(days=1)
     window = awake_window()
     if window and (window[0] <= end < window[1] or window[0] <= local < window[1]):

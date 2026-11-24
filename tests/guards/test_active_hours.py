@@ -14,26 +14,31 @@ from tests.helpers import TORONTO, stop_requested, clock
     ("2026-09-20T04:30:00-04:00", True),
     ("2026-09-20T22:00:00-04:00", True),
     ("2026-09-20T23:29:59-04:00", True),
-    ("2026-09-20T23:30:00-04:00", True),
-    ("2026-09-20T23:59:59-04:00", True),
+    ("2026-09-20T23:30:00-04:00", False),  # Operator, 2026-11-24: bedtime 23:30
+    ("2026-09-20T23:59:59-04:00", False),
     ("2026-09-21T00:00:00-04:00", False),
-    # Midnight EDT, then wake after the autumn clock change in EST.
-    ("2026-11-01T03:59:59+00:00", True),
+    # 23:30 EDT, then wake after the autumn clock change in EST.
+    ("2026-11-01T03:29:59+00:00", True),
+    ("2026-11-01T03:30:00+00:00", False),
+    ("2026-11-01T03:59:59+00:00", False),
     ("2026-11-01T04:00:00+00:00", False),
     ("2026-11-01T08:59:59+00:00", False),
     ("2026-11-01T09:00:00+00:00", False),
     ("2026-11-01T09:29:59+00:00", False),
     ("2026-11-01T09:30:00+00:00", True),
-    ("2026-11-02T04:59:59+00:00", True),
+    ("2026-11-02T04:29:59+00:00", True),
+    ("2026-11-02T04:59:59+00:00", False),
     ("2026-11-02T05:00:00+00:00", False),
-    # Midnight EST, then wake after the spring clock change in EDT.
-    ("2026-03-08T04:59:59+00:00", True),
+    # 23:30 EST, then wake after the spring clock change in EDT.
+    ("2026-03-08T04:29:59+00:00", True),
+    ("2026-03-08T04:59:59+00:00", False),
     ("2026-03-08T05:00:00+00:00", False),
     ("2026-03-08T07:59:59+00:00", False),
     ("2026-03-08T08:00:00+00:00", False),
     ("2026-03-08T08:29:59+00:00", False),
     ("2026-03-08T08:30:00+00:00", True),
-    ("2026-03-09T03:59:59+00:00", True),
+    ("2026-03-09T03:29:59+00:00", True),
+    ("2026-03-09T03:59:59+00:00", False),
     ("2026-03-09T04:00:00+00:00", False),
 ])
 def test_exact_waking_boundaries_and_dst(when, awake):
@@ -41,7 +46,7 @@ def test_exact_waking_boundaries_and_dst(when, awake):
 
 
 def test_the_window_label_follows_the_constants():
-    assert hours.window_label() == "04:30–00:00 America/Toronto"
+    assert hours.window_label() == "04:30–23:30 America/Toronto"
 
 
 @pytest.mark.parametrize("when,awake", [
@@ -62,8 +67,8 @@ def test_skipped_night_keeps_model_time_and_stop_still_wins(settings_override, m
     settings_override(SKIP_SLEEP_NIGHT_DATE="2026-11-12", HOURLY_BREAK_MINUTES=0)
     now = datetime(2026, 11, 13, 1, tzinfo=TORONTO)
     clock(monkeypatch, now)
-    assert hours.bedtime(now) == datetime(2026, 11, 14, tzinfo=TORONTO)
-    assert hours.seconds_until_pause() == 23 * 3600
+    assert hours.bedtime(now) == datetime(2026, 11, 13, 23, 30, tzinfo=TORONTO)
+    assert hours.seconds_until_pause() == 22.5 * 3600
     assert _active_seconds(now) == (24 * 3600, 3600)
     assert _active_seconds(now - timedelta(days=1))[0] == 19.5 * 3600
     stop_requested(monkeypatch)
@@ -96,10 +101,12 @@ def test_72_hours_are_elapsed_hours_across_dst(settings_override):
 
 
 def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
-    clock(monkeypatch, datetime(2026, 9, 20, 23, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 22, 30, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 3600
-    clock(monkeypatch, datetime(2026, 9, 20, 23, 59, 59, tzinfo=TORONTO))
+    clock(monkeypatch, datetime(2026, 9, 20, 23, 29, 59, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 1
+    clock(monkeypatch, datetime(2026, 9, 20, 23, 30, tzinfo=TORONTO))
+    assert hours.seconds_until_bedtime() == 0
     clock(monkeypatch, datetime(2026, 9, 21, 0, 0, tzinfo=TORONTO))
     assert hours.seconds_until_bedtime() == 0
     clock(monkeypatch, datetime(2026, 9, 21, 3, 59, tzinfo=TORONTO))
@@ -107,10 +114,10 @@ def test_seconds_until_bedtime_counts_the_minutes(monkeypatch):
 
 
 @pytest.mark.parametrize("day", [(2026, 3, 8), (2026, 11, 1), (2026, 12, 31)])
-def test_bedtime_is_the_next_midnight_after_wake(day):
-    from datetime import timedelta
-    now = datetime(*day, 23, 59, tzinfo=TORONTO)
-    assert hours.bedtime(now) == now.replace(hour=0, minute=0) + timedelta(days=1)
+def test_bedtime_is_this_evening_at_half_past_eleven(day):
+    now = datetime(*day, 23, 0, tzinfo=TORONTO)
+    assert hours.bedtime(now) == now.replace(minute=30)
+    assert hours.bedtime(now.replace(hour=5)) == now.replace(minute=30)
 
 
 @pytest.mark.parametrize("now,wake", [
@@ -241,7 +248,7 @@ def test_intervening_hours_stay_active_and_model_budget_reaches_the_next_break(m
         following = hours.break_window(day.replace(hour=next_hour))
         assert hours.seconds_until_pause() == (following[0] - now).total_seconds()
     clock(monkeypatch, day.replace(hour=23, minute=15))
-    assert hours.may_act() and hours.seconds_until_pause() == hours.seconds_until_bedtime() == 45 * 60
+    assert hours.may_act() and hours.seconds_until_pause() == hours.seconds_until_bedtime() == 15 * 60
 
 
 def test_break_gates_jobs_browser_and_publication_then_resumes(monkeypatch, pause, unwalled):
@@ -286,10 +293,10 @@ def test_zero_break_minutes_keeps_bedtime_budget(monkeypatch, settings_override)
     clock(monkeypatch, datetime(2026, 10, 23, 12, tzinfo=TORONTO))
     assert hours.break_window() is None
     assert hours.break_until() is None
-    assert hours.seconds_until_pause() == hours.seconds_until_bedtime() == 12 * 3600
+    assert hours.seconds_until_pause() == hours.seconds_until_bedtime() == 11.5 * 3600
 
 
-def test_no_daytime_breaks_keeps_jobs_and_model_budget_active_until_midnight(monkeypatch, settings_override):
+def test_no_daytime_breaks_keeps_jobs_and_model_budget_active_until_bedtime(monkeypatch, settings_override):
     settings_override(HOURLY_BREAK_MINUTES=0)
     day = datetime(2026, 11, 2, tzinfo=TORONTO)
     called = []
@@ -299,12 +306,12 @@ def test_no_daytime_breaks_keeps_jobs_and_model_budget_active_until_midnight(mon
             now = day.replace(hour=hour, minute=minute)
             clock(monkeypatch, now)
             assert hours.break_window() is None and hours.break_until() is None
-            awake = (hour, minute) >= (4, 30)
+            awake = (4, 30) <= (hour, minute) < (23, 30)
             assert hours.may_act() is awake
             before = len(called)
             job()
             assert len(called) == before + int(awake)
-            expected = (day + timedelta(days=1) - now).total_seconds() if awake else 0
+            expected = (day.replace(hour=23, minute=30) - now).total_seconds() if awake else 0
             assert hours.seconds_until_pause() == expected
 
 
