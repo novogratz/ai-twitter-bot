@@ -598,3 +598,25 @@ def test_affiliation_badge_never_misattributes_the_copy_author(invited, monkeypa
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True) is allowed
     assert clicks == []
+
+
+def test_missing_composer_parent_is_skipped_for_a_day(invited, monkeypatch, memory_ledger):
+    from src.x import x_urls
+    monkeypatch.setattr(tc, "_no_composer", {})
+    url, question = invited_source()
+    full = question + " Full breakdown of the model memory budget."
+    copy = {"url": url, "text": full, "dialog": True, "noTime": True, "more": False}
+    mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post", editor_count=0)
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert not tc._reply_target(url, expected_text=full, composing=True)
+    sid = x_urls.status_id(url)
+    assert sid in tc._no_composer
+    # The next attempt refuses at admission, before any page opens or claim.
+    monkeypatch.setattr(tc, "_open_or_abort", lambda *a, **k: pytest.fail("opened a skipped parent"))
+    assert tc.reply_to_tweet(url, TEXT, expected_text=full) is WriteOutcome.REFUSED
+    assert not replied_store.load_replied()
+    # An expired hold re-admits the parent (the open attempt then runs).
+    tc._no_composer[sid] -= tc._NO_COMPOSER_TTL_SECONDS + 1
+    monkeypatch.setattr(safari, "_run_applescript", lambda *a, **k: True)
+    monkeypatch.setattr(tc, "_open_or_abort", lambda *a, **k: False)
+    assert tc.reply_to_tweet(url, TEXT, expected_text=full) is WriteOutcome.FAILED

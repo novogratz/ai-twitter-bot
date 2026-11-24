@@ -1093,6 +1093,12 @@ def read_reply_source(url: str) -> dict:
             safari.close_front_tab()
 
 
+# Status IDs whose Reply dialog would not open (reply-restricted parents),
+# skipped for a day. In-process and disposable; never a publication claim.
+_no_composer: dict = {}
+_NO_COMPOSER_TTL_SECONDS = 24 * 3600
+
+
 def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_text: str = "", composing: bool = False) -> bool:
     """Verify the actual parent and optionally click its own Reply button.
 
@@ -1244,6 +1250,13 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         if opened.partition(":")[2].startswith("copy_text") and expected_text:
             trimmed = expected_text.strip()
             log.info("[REPLY] Expected source len=%d tail=%r", len(trimmed), trimmed[-60:])
+        if composing and opened.partition(":")[2].startswith("composer_editors"):
+            # A reply-restricted parent never opens a dialog; remember the
+            # exact status for a day so rediscovery stops burning cycles.
+            # Disposable process memory, never a claim or a permanent record.
+            while len(_no_composer) > 200:
+                del _no_composer[min(_no_composer, key=_no_composer.get)]
+            _no_composer[sid] = time.monotonic()
         return False
     if not (isinstance(opened, dict) and isinstance(opened.get("url"), str)
             and x_urls.status_id(opened["url"]) == sid
@@ -1309,6 +1322,12 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     own_url = ""
 
     def admit():
+        from . import x_urls
+        held = _no_composer.get(x_urls.status_id(tweet_url))
+        if held is not None and time.monotonic() - held <= _NO_COMPOSER_TTL_SECONDS:
+            log.info("[REPLY] Reply dialog would not open for this parent earlier; "
+                     "skipping it for a day: %s", tweet_url)
+            return WriteOutcome.REFUSED
         if settings.get("REPLY_INVITED_ONLY"):
             from ..guards import reply_intent
             if not expected_text or reply_intent.source_refusal(tweet_url, expected_text):
