@@ -486,6 +486,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `REPLY_WORKLOAD_BOOST_TARGET` | int | `200` | floor `1`, ceiling `200` | Temporary advisory daily Reply target and ceiling within the explicitly dated workload window; no filler obligation. Normal limits resume after expiry. |
 | `VIDEO_ENABLED` | 0 or 1 | `0` |  | Opt into isolated licensed-video workers and replace the main editorial schedule; defaults off. |
 | `VIDEO_LIVE` | 0 or 1 | `0` |  | Permit video API uploads/posts after explicit activation; DRY_RUN still overrides. Defaults off. |
+| `VIDEO_WITH_REPLIES` | 0 or 1 | `0` |  | Operator, 2026-11-23: run the video scheduler and its reserved, inspected video posts alongside the restricted Reply modes (invited, curated, broad), which otherwise disable every non-Reply publication. Manual review mode still refuses all writes; VIDEO_LIVE and every video gate still apply. |
 | `VIDEO_CONFIG_FILE` | str | blank |  | Operator video TOML path; blank uses accounts/<BOT_ACCOUNT>/video.toml. |
 | `VIDEO_CREDENTIALS_FILE` | str | blank |  | Private (mode 600) JSON credentials path for official X API user access; never a token value. |
 | `NEWS_CONFIG_FILE` | str | blank |  | News worker TOML; blank uses the Account news.toml. NEWS_ENABLED adds it to normal bot startup. |

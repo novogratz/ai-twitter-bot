@@ -4,15 +4,18 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_has_90_minute_video_cadence_and_five_qualifiers():
+def test_live_account_has_90_minute_video_cadence_and_six_qualifiers():
     cfg = config.load()
     assert len(schedule.clocks(cfg)) == 13
     minutes = [int(t[:2]) * 60 + int(t[3:]) for t in schedule.clocks(cfg)]
     assert {b - a for a, b in zip(minutes, minutes[1:])} == {90}
-    assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario"}
+    # Operator, 2026-11-23: Zuckerberg qualifies too; Trump and Elon must look good.
+    assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario", "zuck"}
+    assert "Trump or Elon appear they must look good" in cfg.editorial_taste
     assert cfg.watermark == "@thesimaximalist" and cfg.auto_edit and cfg.bangers_only
     assert cfg.edit_max_seconds == 120 and cfg.discovery_prompt_file
-    assert cfg.ultra_bangers_only and cfg.min_hook_score == 9
+    # The ultra floors never passed one clip in three weeks; an audience floor replaces them.
+    assert not cfg.ultra_bangers_only and cfg.audience_min_views >= 50000 and cfg.audience_min_likes >= 2000
     assert not cfg.startup_on_boot and cfg.buffer_target == 3 and cfg.ready_reserve_min == 1
 
 

@@ -204,10 +204,21 @@ def capture_next(store, cfg, now):
             continue
         if platform not in native_source.CDNS:
             continue
+        if platform == "instagram":
+            # 2026-11-23: read Instagram's own grids for leads; web search is blind there.
+            from . import instagram_browse
+            result = instagram_browse.browse_next(store, cfg, now)
+            if result:
+                store.set_meta("next_source_capture", now + 60)
+                store.set_meta("source_capture_offset", platforms.index(platform) + 1)
+                return result
         chosen = None
+        # Among leads never opened, the most-played visible reels go first.
         for item in store.rows("SELECT id FROM candidates WHERE platform=? AND state IN ('discovered','held','ready') "
                                "ORDER BY CASE WHEN state='ready' THEN 0 ELSE 1 END,"
-                               "COALESCE(json_extract(document,'$.source_capture_attempt'),0),published DESC,discovered DESC LIMIT 80", (platform,)):
+                               "COALESCE(json_extract(document,'$.source_capture_attempt'),0),"
+                               "COALESCE(json_extract(document,'$.discovery_evidence.views'),0) DESC,"
+                               "published DESC,discovered DESC LIMIT 80", (platform,)):
             row = store.candidate(item["id"])
             doc = row["document"]
             if doc.get("source_capture_retry_at", 0) > now:
@@ -243,6 +254,10 @@ def capture_next(store, cfg, now):
                 observed = doc.get("source_metrics", {})
                 if type(observed.get("views")) is int:
                     db.execute("INSERT OR IGNORE INTO observations VALUES(?,?,?)", (row["id"], now, json.dumps({"views": observed["views"]})))
+                stats = doc.get("source_stats", {})
+                if platform == "instagram" and (type(stats.get("views")) is int or type(stats.get("likes")) is int):
+                    db.execute("INSERT OR IGNORE INTO observations VALUES(?,?,?)", (row["id"], now, json.dumps(
+                        {"views": stats.get("views"), "likes": stats.get("likes"), "shares": None, "comments": None})))
                 if not downloaded:
                     db.execute("INSERT INTO jobs(kind,item,due) VALUES('media',?,?) ON CONFLICT(kind,item) DO UPDATE SET "
                                "state='pending',due=excluded.due,attempts=0", (row["id"], now))
@@ -254,6 +269,13 @@ def capture_next(store, cfg, now):
             from .config import safe_label
             if isinstance(exc, (OutsideActiveHours, Deferred)):
                 raise
+            from .instagram_browse import LeadRefused
+            if isinstance(exc, LeadRefused):
+                # A completed decision on the exact page, not an outage: never reopened.
+                doc["source_capture_retry_at"] = now + 365 * 86400
+                store.save_candidate(row["id"], doc, time.time(), state="held", reason="lead refused: " + safe_label(str(exc)),
+                                     score=row["score"], fingerprint=json.loads(row["fingerprint"]) if row["fingerprint"] else None)
+                return "source lead refused"
             reason = safe_label(str(exc)) if isinstance(exc, AccessError) else type(exc).__name__
             _source_failed(doc, now)
             store.save_candidate(row["id"], doc, time.time(), state="held", reason="source player unavailable: " + reason,

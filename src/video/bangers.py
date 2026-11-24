@@ -12,8 +12,8 @@ def editorial_total(review):
                  * 10 / sum(WEIGHTS[key] for key in JUDGMENTS), 4)
 
 
-def ultra_refusal(review):
-    if reason := review_refusal(review):
+def ultra_refusal(review, cfg=None):
+    if reason := review_refusal(review, cfg):
         return reason
     if any(review["banger_scores"][key] < 9 for key in JUDGMENTS):
         return "ultra bangers require every editorial component at least 9/10"
@@ -22,14 +22,16 @@ def ultra_refusal(review):
     return ""
 
 
-def review_refusal(review):
+def review_refusal(review, cfg=None):
     scores = review.get("banger_scores", {})
+    minimum = cfg.banger_component_min if cfg else 8
+    fit = cfg.banger_fit_min if cfg else 8
     for key in JUDGMENTS:
         value = scores.get(key)
         if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 10:
             return "banger rubric evidence incomplete"
-        if key != "novelty" and value < 8:
-            return "banger hook/performance/fit/quality must each reach 8/10"
+        if key != "novelty" and value < (fit if key == "fit" else minimum):
+            return f"banger hook/performance/quality must each reach {minimum:g}/10 and fit {fit:g}/10"
     if review.get("brand_fit") is not True:
         return "brand fit or non-hostile parody unverified"
     if review.get("language_dependent") is not False and review.get("language_evidence_verified") is not True:
@@ -46,9 +48,9 @@ def freshness(published, now):
     return next((score for age, score in ((2, 10), (7, 8), (30, 6), (90, 4), (365, 2)) if days <= age), 1)
 
 
-def score(doc, now, *, source=False):
+def score(doc, now, *, source=False, cfg=None):
     review = doc.get("inspection" if source else "qc", {})
-    refusal = review_refusal(review)
+    refusal = review_refusal(review, cfg)
     if refusal:
         return {"status": "hold", "total": None, "reason": refusal}
     values = dict(review["banger_scores"])
@@ -68,7 +70,7 @@ def score(doc, now, *, source=False):
 
 
 def possible(doc, now, cfg):
-    result = score(doc, now, source=True)
+    result = score(doc, now, source=True, cfg=cfg)
     if result["total"] is None:
         return False
     # Feasibility only: allow maximum unobserved engagement, never save it as a score.

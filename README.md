@@ -126,6 +126,14 @@ Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
 and unresolved sends remain intact; news is off and the earlier video schedule
 and conversational/specialist Voice are restored.
 
+**2026-11-23: Instagram bangers, audience-proven.** Video posts run again beside
+curated Replies (`VIDEO_WITH_REPLIES=1`, `VIDEO_LIVE=1`). Leads come from
+Instagram's own creator grids and keyword search, read in the signed-in Safari
+session; a reel needs 50,000 displayed plays or 2,000 likes. Cast: Trump, Elon,
+Jensen, Dario, Sam or Zuckerberg; Trump and Elon must look good; funny, short
+and songs first. The inspector's floors are Account settings in `video.toml`.
+This supersedes the ultra-only paragraph below.
+
 **Only ultra-high-quality parody videos may publish as originals. No news.**
 The four owner-selected references guide discovery and are saved as already posted.
 Each new source and edited output must clear exceptional editorial review, with

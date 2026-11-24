@@ -8,7 +8,8 @@ def policy_revision(cfg):
     return hashlib.sha256(json.dumps({"version": 2, "targets": cfg.targets, "watermark": cfg.watermark,
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
-        "caption": cfg.one_line_caption, "ultra_bangers": cfg.ultra_bangers_only}, sort_keys=True).encode()).hexdigest()
+        "caption": cfg.one_line_caption, "ultra_bangers": cfg.ultra_bangers_only,
+        "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors], "taste": cfg.editorial_taste}, sort_keys=True).encode()).hexdigest()
 
 
 def plan(evidence, info, cfg, digest):
@@ -43,13 +44,13 @@ def banger_refusal(review, cfg, *, output=False):
     if not cfg.bangers_only:
         return ""
     from .bangers import review_refusal
-    if reason := review_refusal(review):
+    if reason := review_refusal(review, cfg):
         return reason
     if cfg.ultra_bangers_only:
         from .bangers import ultra_refusal
-        if reason := ultra_refusal(review):
+        if reason := ultra_refusal(review, cfg):
             return reason
-    floors = (19, 19, 14) if cfg.ultra_bangers_only else (18, 17, 12)
+    floors = (19, 19, 14) if cfg.ultra_bangers_only else cfg.banger_floors
     for field, minimum, maximum in zip(("fit_score", "entertainment_score", "quality_score"), floors, (20, 20, 15)):
         value = review.get(field)
         if type(value) not in (int, float) or not math.isfinite(value) or not minimum <= value <= maximum:

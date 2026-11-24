@@ -32,6 +32,35 @@ def cast_context(document, cfg):
             "title": title, "source_url": document["canonical_url"], "creator": document["creator"]} if names else {}
 
 
+def clear_watermark_position(review):
+    """Measured source text decides where the handle goes, not the model's guess.
+
+    2026-11-23: the inspector answered "bottom" for a reel with bottom subtitles
+    and the handle was stamped across every lyric line. Count the sampled frames
+    of the proposed cut whose OCR text crosses each stamp band and move to the
+    quieter band. A model's "top" for action reasons is kept unless text sits there."""
+    position = review.get("watermark_position")
+    if position not in ("top", "bottom"):
+        return position
+    edit = review.get("edit") or {}
+    start, end = edit.get("start_seconds", 0), edit.get("end_seconds", math.inf)
+    def busy(where):
+        low, high = (.80, 1.0) if where == "bottom" else (0.0, .20)
+        count = 0
+        for frame in review.get("ocr_evidence", []):
+            if not isinstance(frame, dict) or not start <= frame.get("at", -1) <= end:
+                continue
+            for text in frame.get("texts", []):
+                box = text.get("box", [])
+                if (len(box) == 4 and text.get("confidence", 0) >= .3 and box[1] < high and box[1] + box[3] > low
+                        and box[0] < .72 and box[0] + box[2] > .28):
+                    count += 1
+                    break
+        return count
+    other = "top" if position == "bottom" else "bottom"
+    return other if busy(other) < busy(position) else position
+
+
 def watermark_ocr(text, watermark, position):
     """Corroborate the known renderer text, tolerating small OCR errors in its area."""
     normalize = lambda value: re.sub(r"[^\w@]", "", value).casefold()
@@ -250,9 +279,13 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "auto_edit": cfg.auto_edit, "edit_bounds": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "bangers_only": cfg.bangers_only, "ultra_bangers_only": cfg.ultra_bangers_only,
         "one_line_caption": cfg.one_line_caption,
+        "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors, cfg.min_hook_score],
+        "taste": cfg.editorial_taste,
         "caption": source_review.get("caption")}, sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
+        if stage == "source":
+            cached["watermark_position"] = clear_watermark_position(cached)
         if stage == "output" and cached.get("model_verdict"):
             cached = output_ocr(dict(cached), source_review, cfg, retained, source_path=source_path, output_path=path)
             store.set_meta("inspection:" + cache_key, cached)
@@ -284,7 +317,9 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
                     "quality_policy": ("ULTRA ONLY: compare with owner references; every editorial component >=9/10, "
                         "weighted editorial quality >=95/100, fit/entertainment >=19/20, quality >=14/15, "
                         "opening >=9/10. No posting quota. Reject ordinary relevant clips; never inflate scores."
-                        if cfg.ultra_bangers_only else "Existing strict banger policy"),
+                        if cfg.ultra_bangers_only else
+                        "Score what is actually there on the full 0-10 scale. Clips an audience would replay "
+                        "and share earn 7-9; reserve 10 for the exceptional and never inflate a weak clip."),
                     "creator_cast_attribution": context,
                     "watermark_allowlist": [cfg.watermark], "audio": audio,
                     "ocr": local["frames"], "frame_sampling_fps": rate,
@@ -387,7 +422,7 @@ joke; without actual verified transcript/translation that is a HOLD. SoundAnalys
 does not identify a song or transcribe lyrics. Label credited songs as attribution,
 not independently heard/verified music. Never call an upscale native high resolution.
 
-""" + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + supplied["quality_policy"] + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
+""" + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
     result["model_verdict"] = {k: result.get(k) for k in ("confidence", "watermark_present", "overlays_clean",
         "no_destructive_edit", "source_overlays_retained", "no_unapproved_new_overlays")}
@@ -417,6 +452,8 @@ not independently heard/verified music. Never call an upscale native high resolu
         result["language_evidence_verified"] = False  # this backend has no transcript/translation verifier
     if stage == "output":
         result = output_ocr(result, source_review, cfg, retained, source_path=source_path, output_path=path)
+    else:
+        result["watermark_position"] = clear_watermark_position(result)
     store.set_meta("inspection:" + cache_key, result)
     return result
 

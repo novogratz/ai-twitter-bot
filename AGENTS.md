@@ -1,5 +1,46 @@
 # AGENTS.md
 
+2026-11-23, Instagram bangers again: four breaks repaired while paused — The
+Operator, leaving for two weeks, asks to fix video posting and find Instagram
+bangers, then widens the cast and leaves the bar to the agent: Trump, Elon,
+Jensen, Dario, Sam or Zuckerberg; Trump and Elon must look good; prefer funny,
+short and songs. The audit found no video since November 18 and four causes.
+
+1. The curated/broad Reply modes return from `build_scheduler` before the video
+   job and `video.config.live()` refused them; `VIDEO_LIVE` was also 0. New
+   `VIDEO_WITH_REPLIES=1` runs the one video publisher beside restricted Replies.
+   The reserved `VIDEO` write is the only added publication; manual review mode
+   still writes nothing. News, editorial, quotes and startup requests stay off.
+2. Codex web search cannot see Instagram: two leads in three weeks. With
+   `safari_browse`, the publisher's source turn reads Instagram's own pages in
+   the signed-in Safari session: a creator's Reels grid with its displayed play
+   counter, and keyword search. One page per fifteen minutes, six leads per
+   read, most-played first. Creators whose inspected reel showed a target in a
+   synthetic parody join the grid rotation. Leads only; every gate still decides.
+3. Instagram redirects `/reel/ID` to its `/reels/ID` player: no JSON-LD, no
+   `og:video`, blob-backed players, and the tab-bound read found no tab. Capture
+   now follows the redirect and reads this exact reel's page-embedded data,
+   bound by shortcode: media URL, upload time, creator, caption, likes.
+4. A blank `codex_model` reused `REPLY_MODEL`, a Grok model since November 21;
+   Codex refused every inspection and search. The Account pins `gpt-6.1-sol`,
+   and a blank value now fails with its cause when Replies use another provider.
+
+The ultra floors had never passed one clip: 45 inspected, best 8/10, and a
+1.7M-play reel scored 5.5. `ultra_bangers_only=false`. An Instagram audience now
+proves the banger (50,000 displayed plays or 2,000 likes, checked on the exact
+page before any download), and the inspector's floors are Account settings:
+hook/performance/quality 5.5/10, fit 7/10, 14/12/9 source floors, opening 6/10,
+62/100 total, inspector confidence 0.85 (it reported 0.89 on a clean 1.7M-play
+reel). `editorial_taste` carries the cast and portrayal rule into the
+inspector as trusted policy: a clip that mocks or weakens Trump or Elon is
+`brand_fit=false`. `zuck` joins the qualifying cast. Cast attribution, synthetic
+performance, audio, safety, output QC, watermark, novelty,
+permanent dedup, spacing and receipts are unchanged. No posting quota.
+
+Validated live without publishing: 12 leads in two reads, four reels captured
+and downloaded, inspection completing in about 100 seconds. The 21:50 pause
+remains binding: `.bot_disabled` stays armed until an explicit start request.
+
 2026-11-23, Operator pause at 21:50 Toronto — Stop and keep the bot stopped
 until a new explicit start/restart request. This overrides the latest resume
 authorization. The worker stopped at 21:50:35; no main process or active
@@ -1963,6 +2004,7 @@ Account.
 | Reply admission: Blocked account, own post, one Reply per post, Debate turn cap, spacing, final text, Respected account named | `src/guards/reply_admission.py` |
 | Author, status ID and age read from a status URL; nested-reply filter for scraped tweets | `src/x/x_urls.py` |
 | Replied store: permanent status-ID history with process-locked claims | `src/guards/replied_store.py` |
+| Instagram leads for the video pipeline: creator Reels grids and keyword search read in the signed-in Safari session, audience floor and caption rule on the exact reel page | `src/video/instagram_browse.py`; capture in `src/video/native_source.py` |
 | Priority watch: first-enable boundaries, Latest discovery and independent like/repost/Reply attempts | `src/replies/priority_watch.py` |
 | Work priority: bounded viewport handoff and reentrant browser/send queues, watched work before ready Replies before routine work | `src/core/watch_discovery.py`, `src/core/work_priority.py` |
 | Reply outcomes: exact own receipts, sampled public counters and advisory daily targets | `src/core/reply_feedback.py`, `src/x/reply_metrics.py` |

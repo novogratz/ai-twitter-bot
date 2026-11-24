@@ -65,6 +65,14 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         return scheduler
     if settings.get("REPLY_INVITED_ONLY"):
         from src.replies.help_requests import run_help_cycle
+        from src.video import config as video_config
+        if video_config.scheduled() and not post_only:
+            # 2026-11-23: videos again beside restricted Replies (VIDEO_WITH_REPLIES).
+            # Same single publisher job; no editorial, news or startup hold here.
+            from src.video.workers import health_job
+            scheduler.add_job(awake_job(health.wrap_job(health_job, "video_health", safari_health=False)),
+                              trigger=IntervalTrigger(seconds=2), id="video_health_job", executor="video",
+                              next_run_time=datetime.now(timezone.utc) + timedelta(seconds=2))
         if not post_only:
             if settings.get("REPLY_BROAD_DISCOVERY"):
                 from src.replies.direct_reply import run_direct_reply_cycle
@@ -324,6 +332,8 @@ def main():
             "artist_limits": {"characters": min(140 if broad else 90, settings.get("REPLY_SHORT_MAX_CHARS")),
                               "words": 24 if broad else 12, "sentences": 1,
                               "visual_review_required": not broad, "unseen_media_claims_allowed": False},
+            "video_scheduler": {"scheduled": __import__("src.video.config", fromlist=["x"]).scheduled(),
+                                "live": __import__("src.video.config", fromlist=["x"]).live()},
             "minimum_seconds_between_replies": max(8 if broad else 600, settings.get("MIN_SECONDS_BETWEEN_REPLIES")),
             "reply_jitter_seconds": settings.get("REPLY_JITTER_SECONDS"),
             "hearts": "artist and warm share replies; one 👍 allowed; at least two intervening replies between hearts",
@@ -439,13 +449,17 @@ def main():
         open_startup_window()
     stop = threading.Event()
     video_supervisor = None
-    if settings.get("VIDEO_ENABLED") and not args.reply_only:
+    from src.video import config as video_settings
+    if video_settings.scheduled() and not scheduler_reply_only:
         from src.video.workers import Supervisor
         video_supervisor = Supervisor()
     if args.startup_publications and not args.reply_only:
         _request_startup_news()
     if video_supervisor:
         _request_startup_video(retry_expired=args.startup_publications)
+        if settings.get("REPLY_INVITED_ONLY"):
+            log.info("[VIDEO] Video scheduler runs beside restricted Replies (VIDEO_WITH_REPLIES); live=%s.",
+                     video_settings.live())
 
     def shutdown(signum, frame):
         from src.guards.active_hours import request_stop
@@ -536,7 +550,7 @@ def main():
                 elif was_startup_held:
                     log.info("[VIDEO-FIRST] Startup hold released; normal interaction jobs may resume.")
                 was_startup_held = startup_held
-            if settings.get("VIDEO_ENABLED") and not (settings.get("REPLY_INVITED_ONLY") or settings.get("REPLY_REVIEW_ONLY")):
+            if video_supervisor:
                 from src.video.workers import record_main_mode
                 try:
                     record_main_mode()

@@ -34,7 +34,7 @@ def usable_until(doc, cfg):
         for days in (2, 7, 30, 90, 365):
             boundary = doc["published_at"] + days * 86400 + .01
             if boundary > doc.get("ranking", {}).get("scored_at", 0):
-                graded = score(doc, boundary)
+                graded = score(doc, boundary, cfg=cfg)
                 if graded["total"] is None or graded["total"] < cfg.banger_min_score:
                     expiry = min(expiry, boundary)
                     break

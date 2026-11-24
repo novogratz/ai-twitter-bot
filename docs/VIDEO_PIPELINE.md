@@ -1,5 +1,38 @@
 # Existing-video pipeline
 
+## 2026-11-23: Instagram supply and audience-proven bangers
+
+This section supersedes the ultra-only floors described below.
+
+**Leads.** `[platforms.instagram] safari_browse = true` lets the publisher's
+source turn read Instagram's own pages in the signed-in Safari session, since
+web search finds almost nothing there. Two rotations alternate: creator Reels
+grids (`creators` plus creators learned from inspected target parodies) and
+`browse_queries` keyword searches. `browse_seconds` (900) bounds one page per
+turn, `browse_scrolls` (2) the depth, `browse_leads_per_read` (6) the intake,
+`browse_min_views` (20,000) the grid floor. A signed-out wall waits six hours
+and is never treated as an empty catalog. `video.py status` events show
+`instagram_leads` and `instagram_browse_limited`.
+
+**Capture.** Instagram redirects `/reel/ID` and `/p/ID` to `/reels/ID`. The read
+stays confined to a tab showing that shortcode and takes this reel's embedded
+page data: `video_versions`, `taken_at`, creator, caption, likes. Another
+shortcode, a non-Instagram CDN or a missing date still fails closed. No fetch,
+cookie access or private endpoint is used.
+
+**Audience and floors.** `audience_min_views` / `audience_min_likes` refuse a
+reel on its own page before any download when a known counter is below both
+floors. `banger_component_min`, `banger_fit_min`, `banger_floors`,
+`min_hook_score` and `banger_min_score` are Account settings; their defaults are
+the former strict values. `editorial_taste` reaches the inspector as trusted
+policy and rebinds the inspection cache and editing revision.
+
+**Codex model.** Set `codex_model`. Blank reuses `REPLY_MODEL` and now refuses
+to start a session when Replies run on another provider.
+
+**Beside Replies.** `VIDEO_WITH_REPLIES=1` keeps `video_health_job` and the
+worker supervisor in the restricted Reply modes.
+
 ## Current Account: ultra bangers only
 
 The 2026-11-08 Account keeps thirteen 90-minute video opportunities, with no

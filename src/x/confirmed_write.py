@@ -101,7 +101,12 @@ def _admit(tag: str, outcomes: type[O], would: Callable[[], str], rows: Rows,
     if settings.get("REPLY_REVIEW_ONLY"):
         log.info("[%s] Manual Reply review: X writes disabled.", tag)
         return outcomes["REFUSED"]
-    if settings.get("REPLY_INVITED_ONLY") and tag != "REPLY":
+    from ..video import config as video_config
+    # 2026-11-23: the reserved video post is the one profile publication the
+    # Operator re-enabled beside restricted Replies. post_video still checks
+    # its reservation, the live switch and the publisher role before the lock.
+    video = tag == "VIDEO" and video_config.live()
+    if settings.get("REPLY_INVITED_ONLY") and tag != "REPLY" and not video:
         from ..guards import reply_selection, reply_parent_like
         permitted_mode = reply_selection.enabled() or (tag == "LIKE" and reply_parent_like.active())
         actions = rows() if permitted_mode and tag in {"LIKE", "REPOST"} else []

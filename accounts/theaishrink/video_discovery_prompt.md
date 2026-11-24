@@ -25,10 +25,13 @@ polished karaoke, and Power Rangers-style transformations or fast team reveals
 with strong music, a clear escalation and a payoff. A solo performance can beat
 an ensemble. Do not reward cast size or force variety over a clearly better clip.
 
-At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman or Dario Amodei
-must visibly participate as a source-attributed fictional role. Preserve the
-operator's five-person qualifying rule. Zuckerberg, Optimus, JD Vance, Melania,
-Lisa Su and other guests can accompany them; they do not qualify a clip alone.
+At least ONE of Donald Trump, Elon Musk, Jensen Huang, Sam Altman, Dario Amodei
+or Mark Zuckerberg (added by the owner on 2026-11-23) must visibly participate as a
+source-attributed fictional role. Optimus, JD Vance, Melania, Lisa Su and other
+guests can accompany them; they do not qualify a clip alone.
+When Trump or Elon appear they must look good: cool, charismatic, funny with the
+joke on their side. Skip clips that mock, humiliate or weaken either of them.
+Prefer funny clips, songs and short cuts.
 There is no creator exemption. Do not identify people from faces or invent a
 background performer's identity. Dario is the attributed Anthropic figure, not
 an arbitrary bearded character. A robot is not automatically Optimus.

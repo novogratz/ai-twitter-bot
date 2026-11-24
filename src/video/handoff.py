@@ -39,7 +39,7 @@ def build(store, row, doc, cfg, now):
                         "language_dependent": review.get("language_dependent"),
                         "language_evidence_verified": review.get("language_evidence_verified", False)},
         "excerpt": doc.get("edit"), "output_sha256": doc.get("output_sha256"),
-        "editorial_score": bangers.score(doc, now), "x_exposure": doc.get("novelty", {}),
+        "editorial_score": bangers.score(doc, now, cfg=cfg), "x_exposure": doc.get("novelty", {}),
         "personal_history": {"result": personal or "no match in inspected personal history",
                              "initial_coverage_ready": history_ready(store, cfg),
                              "archive_complete": store.meta("history_import_complete", False),

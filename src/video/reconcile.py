@@ -220,7 +220,7 @@ def preparation_reason(doc, cfg, now):
         return reason
     if cfg.bangers_only:
         from .bangers import score
-        reviewed = score(doc, now)
+        reviewed = score(doc, now, cfg=cfg)
         return "" if reviewed["total"] is not None and (ranking.selected(doc, now) or reviewed["total"] >= cfg.banger_min_score) else "current excerpt is below banger threshold"
     parts = doc.get("ranking", {}).get("components", {})
     if not ranking.selected(doc, now) and parts:

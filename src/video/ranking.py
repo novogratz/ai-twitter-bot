@@ -190,7 +190,7 @@ def gate(doc, cfg, now, *, final=False):
         ranking = doc.get("ranking", {})
         if cfg.bangers_only:
             from .bangers import score as banger_score
-            reviewed = banger_score(doc, now)
+            reviewed = banger_score(doc, now, cfg=cfg)
             if reviewed["total"] is None or (not selected(doc, now) and reviewed["total"] < cfg.banger_min_score):
                 return "below banger editorial threshold"
             exposure = doc.get("novelty", {})
@@ -346,6 +346,6 @@ def refresh(store, row, now, cfg):
     doc["ranking"]["observed_points_percent"] = round(doc["ranking"]["total"] / 75 * 100, 2) if fallback else None
     if cfg.bangers_only:
         from .bangers import score as banger_score
-        doc["ranking"]["banger"] = banger_score(doc, now)
+        doc["ranking"]["banger"] = banger_score(doc, now, cfg=cfg)
         doc["ranking"]["selection_rule"] = "inspected_banger_rubric"
     return doc

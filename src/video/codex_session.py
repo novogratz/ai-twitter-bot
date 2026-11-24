@@ -13,7 +13,17 @@ from .security import AccessError, Deferred
 
 
 def model(cfg):
-    return cfg.codex_model or llm_client._model("codex", llm_client.ModelSetting("REPLY_MODEL"), llm_client.TEXT_PROFILE)
+    """The Codex model for background video work.
+
+    A blank `codex_model` reuses the Reply model, which is only a Codex model
+    while Replies run on Codex. 2026-11-23: Replies had moved to Grok and
+    Codex was handed `grok-…`; every inspection failed and opened the circuit.
+    Fail with the cause instead of a provider error nobody reads."""
+    if cfg.codex_model:
+        return cfg.codex_model
+    if (settings.get("REPLY_LLM_PROVIDER") or settings.get("AI_CLI")) != "codex":
+        raise AccessError("video.toml codex_model is required while Replies use another provider")
+    return llm_client._model("codex", llm_client.ModelSetting("REPLY_MODEL"), llm_client.TEXT_PROFILE)
 
 
 @contextmanager

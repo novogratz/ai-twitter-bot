@@ -672,6 +672,31 @@ local settings and state before restoration; remove newer-only runtime modules
 and local settings. Validate, start through the normal launcher, and check an
 actual Reply receipt rather than treating search activity as publication proof.
 
+## November 23 operator amendment — Instagram bangers, audience-proven
+
+The Operator asks for video posts again and for Instagram bangers, with a wider
+cast and the bar left to the agent. This supersedes the November 8 ultra floors
+and the November 20 rule that curated Replies disable video publishing.
+
+- **Cast:** Trump, Elon, Jensen, Dario, Sam or Zuckerberg; one is enough.
+- **Portrayal:** when Trump or Elon appear they must look good. A clip that
+  mocks, humiliates or weakens either is refused (`brand_fit=false`).
+- **Taste:** funny clips, songs and short cuts first.
+- **Banger:** an Instagram audience proves it — at least 50,000 displayed plays
+  or 2,000 likes on the exact reel. Both unknown is not a refusal.
+- **Floors** (Account settings in `video.toml`, never below their bounds):
+  hook/performance/quality 5.5/10, fit 7/10, source 14/12/9, opening 6/10,
+  total 62/100, inspector confidence 0.85. The ultra floors passed no clip in
+  three weeks.
+- **Videos beside Replies:** `VIDEO_WITH_REPLIES=1` and `VIDEO_LIVE=1` run the
+  one video publisher in the curated/broad Reply modes. Manual review mode
+  still writes nothing. Thirteen windows remain opportunities, not targets.
+
+Unchanged: synthetic performance and cast attribution, audio evidence, safety,
+output QC and watermark, X novelty, permanent dedup, fifteen
+minute spacing, exact own receipts, uncertain-send holds, active hours. News,
+ordinary Originals, quotes and startup requests stay off.
+
 ## November 14 operator amendment
 
 2026-11-14, loving and SI specialist Reply modes — The Operator asks for

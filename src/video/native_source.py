@@ -132,7 +132,7 @@ def script(platform, source_id):
       const meta=k=>document.querySelector('meta[property="'+k+'"],meta[name="'+k+'"]')?.content||'';
       const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
       const videos=[...document.querySelectorAll('video')].filter(visible);
-      let scope=document, video=videos.length===1?videos[0]:null, title=meta('og:title'), published='', creator='', views=null;
+      let scope=document, video=videos.length===1?videos[0]:null, title=meta('og:title'), published='', creator='', views=null, stats=null;
       let boundPlayer=false;
       const urls=[];
       if(platform==='x'){
@@ -179,6 +179,30 @@ def script(platform, source_id):
             creator=item.author?.uniqueId||creator;views=item.stats?.playCount??null;boundPlayer=true;
             const address=item.video?.playAddr;if(typeof address==='string')urls.push(address);}
         }catch(e){}}
+        // 2026-11-23: instagram.com/reel/ID now opens the scrolling Reels
+        // player: several blob-backed videos, no JSON-LD and no og:video. The
+        // page's own embedded data still carries this exact reel, bound by
+        // its shortcode. Page-owned data only: no fetch, cookie or click.
+        if(platform==='instagram'){
+          const found=[];
+          const walk=(o,depth)=>{if(!o||typeof o!=='object'||depth>40||found.length)return;
+            if(o.code===id&&Array.isArray(o.video_versions)&&o.video_versions.length){found.push(o);return;}
+            if(Array.isArray(o)){for(const v of o.slice(0,400))walk(v,depth+1);}
+            else{for(const k in o)walk(o[k],depth+1);}};
+          for(const s of document.querySelectorAll('script[type="application/json"]')){
+            const text=s.textContent||'';
+            if(found.length||text.length>4000000||!text.includes(id))continue;
+            try{walk(JSON.parse(text),0);}catch(e){}}
+          const item=found[0];
+          if(item){
+            const count=v=>Number.isInteger(v)&&v>=0?v:null;
+            published=Number(item.taken_at)||published;title=item.caption?.text||title;
+            creator=item.user?.username||creator;boundPlayer=true;
+            item.video_versions.forEach(v=>{if(typeof v?.url==='string')urls.push(v.url);});
+            stats={views:count(item.play_count??item.ig_play_count??item.view_count),likes:count(item.like_count),
+              duration:Number.isFinite(item.video_duration)?item.video_duration:null,bound_code:item.code};
+          }
+        }
       }
       if(video&&boundPlayer){video.muted=true;video.preload='metadata';
         if(video.currentSrc)urls.push(video.currentSrc);
@@ -186,33 +210,44 @@ def script(platform, source_id):
         if(platform==='x'){
           urls.push(...(playerMedia(video)?.media||[]));
         }}
-      return {canonical_url:canonical,id,published,creator,title,views,
+      return {canonical_url:canonical,id,published,creator,title,views,stats,
         native_media:platform==='x'&&video&&boundPlayer?{...playerMedia(video),post_id:id,post_url:canonical}:null,
         media:urls.filter(u=>/^https:\/\//.test(u)).slice(0,12),user_agent:navigator.userAgent};})())'''.replace(
             "PLATFORM", json.dumps(platform)).replace("IDENT", json.dumps(source_id)).replace("PLAYER_MEDIA_HELPER", X_PLAYER_MEDIA)
 
 
 def capture(row, cfg, now):
-    from .connectors import canonical, timestamp
+    from .connectors import canonical, timestamp, video_id
     from ..x import safari
     from ..x.safari_video import browser_session
     doc = row["document"]
     platform, url = doc["platform"], doc["canonical_url"]
+    # Instagram redirects /reel/ID and /p/ID to its /reels/ID player. The read
+    # stays confined to a tab showing this exact shortcode, whichever path
+    # Instagram settled on; a tab on any other page still fails closed.
+    tabs = ([f"https://www.instagram.com/{kind}/{doc['source_id']}" for kind in ("reels", "reel", "p")]
+            if platform == "instagram" else [url])
     with browser_session():
         if not safari.open_url(url):
             raise AccessError("source page did not open")
         try:
             payload = {}
-            for _ in range(8):
-                raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5, target_url=url)
-                if raw and len(raw) <= 100000:
-                    payload = json.loads(raw)
+            for _ in range(16 if platform == "instagram" else 8):
+                for tab in list(tabs):
+                    raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5, target_url=tab)
+                    if raw and len(raw) <= 100000:
+                        payload = json.loads(raw)
+                        tabs = [tab]
+                        break
                 if payload.get("published") and payload.get("media"):
                     break
                 time.sleep(.5)
         finally:
             safari.close_front_tab()
-    if canonical(platform, payload.get("canonical_url", "")) != url:
+    observed = canonical(platform, payload.get("canonical_url", ""))
+    # Instagram serves one reel under /p/ID, /reel/ID and /reels/ID: the
+    # shortcode is its identity, the path kind is not.
+    if (video_id(platform, observed) != doc["source_id"] if platform == "instagram" else observed != url):
         raise AccessError("source page canonical identity differs from candidate")
     published = timestamp(payload.get("published") or None)
     if published is None or not 0 < published <= now:
@@ -220,6 +255,15 @@ def capture(row, cfg, now):
     doc.update(published_at=published, creator=str(payload.get("creator") or doc["creator"])[:128],
                title=str(payload.get("title", ""))[:2000],
                publication_evidence="Publication timestamp from the exact normal source page")
+    if platform == "instagram":
+        stats = payload.get("stats") if isinstance(payload.get("stats"), dict) else {}
+        if stats and stats.get("bound_code") != doc["source_id"]:
+            raise AccessError("source page data belongs to another reel")
+        doc["source_stats"] = {key: stats.get(key) if type(stats.get(key)) is int and stats[key] >= 0 else None
+                               for key in ("views", "likes")} | {"observed_at": now}
+        from . import instagram_browse
+        if reason := instagram_browse.lead_refusal(doc, cfg):
+            raise instagram_browse.LeadRefused(reason)
     if platform == "x":
         doc["source_metrics"] = {"views": view_upper_bound(payload.get("views")), "observed_at": now,
                                  "source_url": url, "displayed": str(payload.get("views", ""))[:200]}

@@ -26,7 +26,7 @@ cd "$REPO_DIR"
 # must fail visibly, not be mistaken for disabled video support.
 RUN_CONFIG="$(uv run --with-requirements requirements.txt python -c '
 from src.core import config, settings
-print(config.BOT_HANDLE, int(settings.get("VIDEO_ENABLED") and not settings.get("REPLY_REVIEW_ONLY") and not settings.get("REPLY_INVITED_ONLY")))')"
+print(config.BOT_HANDLE, int(settings.get("VIDEO_ENABLED") and not settings.get("REPLY_REVIEW_ONLY") and (not settings.get("REPLY_INVITED_ONLY") or settings.get("VIDEO_WITH_REPLIES"))))')"
 read -r RUN_HANDLE RUN_VIDEO_ENABLED <<< "$RUN_CONFIG"
 REQUIREMENTS_FILE=requirements.txt
 if [[ "$RUN_VIDEO_ENABLED" == "1" ]]; then

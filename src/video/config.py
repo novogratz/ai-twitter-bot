@@ -35,6 +35,12 @@ class VideoConfig:
     discovery_calls_per_hour: int = 3
     ready_reserve_min: int = 3
     banger_min_score: float = 88.0
+    banger_component_min: float = 8.0
+    banger_fit_min: float = 8.0
+    banger_floors: tuple = (18, 17, 12)
+    editorial_taste: str = ""
+    audience_min_views: int = 0
+    audience_min_likes: int = 0
     x_max_views: int = 50000
     x_reach_max_age_seconds: int = 21600
     startup_on_boot: bool = False
@@ -130,8 +136,20 @@ class VideoConfig:
             value = getattr(self, name)
             if type(value) is not int or not lo <= value <= hi:
                 raise ValueError(f"{name} must be {lo}..{hi}")
-        if type(self.banger_min_score) not in (int, float) or not 88 <= self.banger_min_score <= 100:
-            raise ValueError("banger_min_score must be 88..100")
+        if type(self.banger_min_score) not in (int, float) or not 60 <= self.banger_min_score <= 100:
+            raise ValueError("banger_min_score must be 60..100")
+        for name in ("banger_component_min", "banger_fit_min"):
+            if type(getattr(self, name)) not in (int, float) or not 5 <= getattr(self, name) <= 10:
+                raise ValueError(f"{name} must be 5..10")
+        object.__setattr__(self, "banger_floors", tuple(self.banger_floors))
+        if (len(self.banger_floors) != 3 or any(type(v) not in (int, float) for v in self.banger_floors)
+                or not all(lo <= v <= hi for v, lo, hi in zip(self.banger_floors, (12, 10, 8), (20, 20, 15)))):
+            raise ValueError("banger_floors must be fit 12..20, entertainment 10..20, quality 8..15")
+        if not isinstance(self.editorial_taste, str) or len(self.editorial_taste) > 1500:
+            raise ValueError("editorial_taste must be at most 1500 characters")
+        for name in ("audience_min_views", "audience_min_likes"):
+            if type(getattr(self, name)) is not int or getattr(self, name) < 0:
+                raise ValueError(f"{name} must be a nonnegative integer")
         for name in ("source_max_duration_seconds", "edit_min_seconds", "edit_max_seconds", "min_hook_score"):
             if type(getattr(self, name)) is not int:
                 raise ValueError(f"{name} must be an integer")
@@ -139,8 +157,8 @@ class VideoConfig:
             raise ValueError("edit duration must be 8 seconds through the output duration limit")
         if not self.max_duration_seconds <= self.source_max_duration_seconds <= 300:
             raise ValueError("source duration must be within the output limit and 300 seconds")
-        if not 8 <= self.min_hook_score <= 10:
-            raise ValueError("opening hook threshold must be 8..10")
+        if not 5 <= self.min_hook_score <= 10:
+            raise ValueError("opening hook threshold must be 5..10")
         if self.ultra_bangers_only and (not self.bangers_only or not self.auto_edit or self.min_hook_score < 9):
             raise ValueError("ultra bangers require inspected automatic cuts, bangers_only and a 9/10 opening")
         if not set(self.target_handles) <= set(self.targets) or any(
@@ -194,8 +212,8 @@ class VideoConfig:
             raise ValueError("video spacing cannot be below 15 minutes; startup cannot exceed one eligible hour")
         if self.grace_seconds > 600 or not 0 <= self.score_threshold <= 100:
             raise ValueError("video grace must be <=600 seconds; score must be 0..100")
-        if not 0.9 <= self.confidence_min <= 1 or self.render_threads != 1:
-            raise ValueError("video confidence must be >=0.9; reserve resources with one render thread")
+        if not 0.8 <= self.confidence_min <= 1 or self.render_threads != 1:
+            raise ValueError("video confidence must be >=0.8; reserve resources with one render thread")
         if self.max_age_hours > 730 * 24 or self.max_duration_seconds > 140:
             raise ValueError("video fallback is at most two years; conservative duration cap is 140 seconds")
         if self.lease_seconds <= max(self.task_timeout_seconds, self.render_timeout_seconds):
@@ -220,9 +238,19 @@ def source_duration_limit(cfg):
     return cfg.source_max_duration_seconds if cfg.auto_edit else cfg.max_duration_seconds
 
 
+def scheduled():
+    """The video scheduler runs beside the active Reply mode.
+
+    The restricted Reply modes disable every other publication. 2026-11-23:
+    the Operator asks for video posts again while those Replies run, so
+    VIDEO_WITH_REPLIES opts the reserved video path back in. Manual review
+    mode still writes nothing."""
+    return bool(enabled() and not settings.get("REPLY_REVIEW_ONLY")
+                and (not settings.get("REPLY_INVITED_ONLY") or settings.get("VIDEO_WITH_REPLIES")))
+
+
 def live():
-    return (enabled() and settings.get("VIDEO_LIVE") and not core_config.dry_run()
-            and not settings.get("REPLY_REVIEW_ONLY") and not settings.get("REPLY_INVITED_ONLY"))
+    return bool(scheduled() and settings.get("VIDEO_LIVE") and not core_config.dry_run())
 
 
 def owns_profile():

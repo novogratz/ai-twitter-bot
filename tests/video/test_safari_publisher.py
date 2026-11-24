@@ -671,6 +671,22 @@ def test_video_reuses_browser_lock_and_confirms_receipt(video_store, browser_cfg
     assert video_store.rows("SELECT state FROM slots WHERE reservation=?", (row["id"],))[0]["state"] == "posted"
 
 
+def test_restricted_replies_refuse_the_video_post_until_the_operator_opts_in(
+        video_store, browser_cfg, browser_setup, monkeypatch, settings_override):
+    """2026-11-23: the curated Reply modes disabled every other publication; videos came back by request."""
+    row, doc = browser_setup
+    calls = fake_composer(monkeypatch, video_store, doc)
+    client = browser.SafariVideoClient(video_store, browser_cfg)
+    settings_override(REPLY_INVITED_ONLY=True, REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True)
+    assert client.publish_reserved(row["id"], row["token"]) is WriteOutcome.REFUSED
+    settings_override(VIDEO_WITH_REPLIES=True, REPLY_REVIEW_ONLY=True)
+    assert client.publish_reserved(row["id"], row["token"]) is WriteOutcome.REFUSED  # manual review writes nothing
+    assert not calls and video_store.rows("SELECT state FROM reservations")[0]["state"] == "reserved"
+    settings_override(REPLY_REVIEW_ONLY=False)
+    assert client.publish_reserved(row["id"], row["token"]) is WriteOutcome.SHIPPED
+    assert calls == ["upload", "submit", "close"]
+
+
 def test_due_video_cannot_be_starved_by_later_ordinary_replies(video_store, browser_cfg, browser_setup, monkeypatch):
     import threading
     import time

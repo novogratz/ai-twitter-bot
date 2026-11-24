@@ -196,6 +196,52 @@ def test_invited_start_cannot_start_profile_publishers(monkeypatch, settings_ove
         main.main()
 
 
+def test_video_scheduler_runs_beside_restricted_replies_only_when_opted_in(settings_override, promotion_account):
+    """2026-11-23: curated Replies silently removed the video job; the Operator asked for videos again."""
+    import main
+    from src.video import config
+    settings_override(REPLY_INVITED_ONLY=True, REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True, REPLY_REVIEW_ONLY=False,
+                      VIDEO_ENABLED=True, VIDEO_LIVE=True, DRY_RUN=False, NEWS_ENABLED=True, NEWS_AUTO_PUBLISH=True)
+    before = [job.id for job in main.build_scheduler().get_jobs()]
+    assert "video_health_job" not in before and not config.scheduled() and not config.live()
+    settings_override(VIDEO_WITH_REPLIES=True)
+    jobs = {job.id: job for job in main.build_scheduler().get_jobs()}
+    assert set(jobs) == set(before) | {"video_health_job"}  # no editorial, news or startup job comes with it
+    assert jobs["video_health_job"].executor == "video" and config.scheduled() and config.live()
+    settings_override(VIDEO_LIVE=False)
+    assert config.scheduled() and not config.live()
+    settings_override(VIDEO_LIVE=True, REPLY_REVIEW_ONLY=True)
+    assert not config.scheduled() and not config.live()
+    assert "video_health_job" not in [job.id for job in main.build_scheduler().get_jobs()]
+
+
+def test_restricted_start_supervises_video_workers_only_when_opted_in(monkeypatch, settings_override):
+    import sys
+    import main
+    from src.video import workers
+    settings_override(REPLY_INVITED_ONLY=True, REPLY_REVIEW_ONLY=False, VIDEO_ENABLED=True, VIDEO_LIVE=True,
+                      VIDEO_WITH_REPLIES=True, NEWS_ENABLED=True)
+    class Started(Exception):
+        pass
+    class Scheduler:
+        def start(self, paused):
+            raise Started
+    started = []
+    def forbidden(*a, **k):
+        pytest.fail("restricted startup reached another profile publisher")
+    monkeypatch.setattr(sys, "argv", ["main.py", "--startup-publications"])
+    monkeypatch.setattr(main, "_acquire_singleton_lock", lambda: None)
+    monkeypatch.setattr(main, "build_scheduler", lambda **k: Scheduler())
+    monkeypatch.setattr(main, "open_startup_window", forbidden)
+    monkeypatch.setattr(main, "_request_startup_news", forbidden)
+    monkeypatch.setattr(main, "_request_startup_video", lambda **k: started.append("request"))
+    monkeypatch.setattr(workers, "Supervisor", lambda: started.append("supervisor") or object())
+    monkeypatch.setattr(main.signal, "signal", lambda *a: None)
+    with pytest.raises(Started):
+        main.main()
+    assert started == ["supervisor", "request"]
+
+
 def test_broad_watched_work_uses_fast_independent_workers(settings_override, watched_account):
     """Polling does not wait for ordinary discovery, selection or Reply generation."""
     import main
