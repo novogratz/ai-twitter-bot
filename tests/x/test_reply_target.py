@@ -94,12 +94,13 @@ function article(spec) {
   const quoteBody = node({innerText: spec.quoteText || ''}, true);
   const profile = new URL(spec.profile || '/' + new URL(spec.url).pathname.split('/')[1], 'https://x.com');
   const profileLink = node({href: profile.href, pathname: profile.pathname, querySelector: () => null});
+  const badgeLink = spec.badge ? node({href: 'https://x.com/' + spec.badge, pathname: '/' + spec.badge, querySelector: () => null}) : null;
   if (spec.profileInBody) {
     profileLink.closest = selector => selector === 'article' ? a : selector === '[data-testid="tweetText"]' ? body : null;
   }
   const button = node({click: () => clicks.push(spec.url)});
   a.querySelectorAll = selector => {
-    if (selector === 'a[href]') return [...links, profileLink];
+    if (selector === 'a[href]') return badgeLink ? [...links, profileLink, badgeLink] : [...links, profileLink];
     if (selector === '[data-testid="tweetText"]') return spec.quoteText ? [body, quoteBody] : [body];
     if (selector === '[data-testid="reply"]') return spec.noButton ? [] : [button];
     if (selector === '[data-testid="tweet-text-show-more-link"]') return spec.more ? [node({click: () => expansions.push(spec.url)})] : [];
@@ -582,4 +583,18 @@ def test_opaque_pic_alias_matches_native_video_permalink_tail(invited, monkeypat
     clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
     monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
     assert tc._reply_target(url, expected_text=full, composing=True)
+    assert clicks == []
+
+
+@pytest.mark.parametrize("spec,allowed", [
+    ({"badge": "partner_org"}, True),          # affiliation badge beside the author (2026-11-23)
+    ({"profile": "/another_author"}, False),   # the author's own link stays required
+])
+def test_affiliation_badge_never_misattributes_the_copy_author(invited, monkeypatch, spec, allowed):
+    url, question = invited_source()
+    full = question + " Full breakdown of the model memory budget."
+    copy = {"url": url, "text": full, "dialog": True, "noTime": True, "more": False, **spec}
+    clicks = mock_page(monkeypatch, [copy, {"url": url, "text": full}], "https://x.com/compose/post")
+    monkeypatch.setattr(tc.time, "sleep", lambda seconds: None)
+    assert tc._reply_target(url, expected_text=full, composing=True) is allowed
     assert clicks == []

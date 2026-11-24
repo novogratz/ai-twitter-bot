@@ -1156,7 +1156,10 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
         // avatar retains the author profile URL. Body mentions are not identity.
         const authors = own(copy, 'a[href]').filter(l => !l.closest('[data-testid="tweetText"]'))
           .map(l => l.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/?$/)?.[1].toLowerCase()).filter(Boolean);
-        if (!authors.length || authors.some(a => a !== author)) return refused('copy_author');
+        // An affiliation badge adds a second profile link to the author block
+        // (@AlyraModel, @claudecodelog, 2026-11-23); the author's own link must
+        // be present, and a wrong parent still fails that requirement.
+        if (!authors.includes(author)) return refused('copy_author');
         const copyText = own(copy, '[data-testid="tweetText"]')[0]?.innerText || '';
         // X's compact copy appends alias display text the standalone source
         // never renders in tweetText: a glued pic.x.com token for native
