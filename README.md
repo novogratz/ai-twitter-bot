@@ -134,6 +134,7 @@ request budget is 3,000 (an empty 07:00 slot on 2026-11-24 traced to both).
 Short video captions pass the English-only check through the video publisher's own `short_title` path.
 Videos render at 1080p 60 fps (`upscale`) and lose the source's corner logo (`remove_source_logos`).
 Source capture reopens a reel tab that vanished beside Replies.
+Opening-shot floor 5/10 for audience-proven clips.
 
 **2026-11-23: Instagram bangers, audience-proven.** Video posts run again beside
 curated Replies (`VIDEO_WITH_REPLIES=1`, `VIDEO_LIVE=1`). Leads come from
