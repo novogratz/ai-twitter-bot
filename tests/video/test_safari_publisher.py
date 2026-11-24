@@ -926,3 +926,13 @@ def test_account_proof_still_refuses_another_account(video_store, browser_cfg, m
     monkeypatch.setattr(browser, "_json", lambda *_: {"host": True, "account": "/someone_else"})
     with pytest.raises(AccessError, match="could not be verified"):
         browser.SafariVideoClient(video_store, browser_cfg).preflight()
+
+
+def test_short_caption_passes_the_final_check_at_submit(video_store, browser_cfg, browser_setup, at):
+    # 2026-11-24: the upload was ready and "Jensen duet era ❤️" died at authorize_submit.
+    row, doc = browser_setup
+    cfg = replace(browser_cfg, short_caption=True)
+    evidence = {"ready": True, "sha256": sha256(doc["output_path"]), "checked_at": at().timestamp(), "nonce": "n"}
+    with video_store.transaction() as db:
+        db.execute("UPDATE reservations SET browser_evidence=?,caption=?", (json.dumps(evidence), "Jensen duet era ❤️"))
+    assert publisher.authorize_submit(video_store, row["id"], row["token"], at().timestamp(), cfg)["caption"] == "Jensen duet era ❤️"
