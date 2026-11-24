@@ -9,7 +9,7 @@ def policy_revision(cfg):
         "duration": cfg.source_max_duration_seconds, "cut": [cfg.edit_min_seconds, cfg.edit_max_seconds],
         "hook": cfg.min_hook_score, "bangers": cfg.bangers_only, "rubric_min": cfg.banger_min_score,
         "caption": cfg.one_line_caption, "ultra_bangers": cfg.ultra_bangers_only,
-        "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors], "taste": cfg.editorial_taste}, sort_keys=True).encode()).hexdigest()
+        "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors], "taste": cfg.editorial_taste, "short_caption": cfg.short_caption}, sort_keys=True).encode()).hexdigest()
 
 
 def plan(evidence, info, cfg, digest):

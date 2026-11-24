@@ -126,6 +126,9 @@ Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
 and unresolved sends remain intact; news is off and the earlier video schedule
 and conversational/specialist Voice are restored.
 
+**2026-11-24:** five video windows a day (07:00, 09:00, 12:00, 17:00, 21:00 Toronto) and short captions
+(a cast name, a few words, one heart). `POST_ONLY=1` starts without Replies.
+
 **2026-11-23: Instagram bangers, audience-proven.** Video posts run again beside
 curated Replies (`VIDEO_WITH_REPLIES=1`, `VIDEO_LIVE=1`). Leads come from
 Instagram's own creator grids and keyword search, read in the signed-in Safari

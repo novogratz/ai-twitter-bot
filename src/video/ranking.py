@@ -253,6 +253,19 @@ def caption(doc, cfg, now):
         if not isinstance(text, str):
             raise ValueError("one-line caption must be text")
         cast = (doc.get("edit") or {}).get("cast", doc["inspection"].get("cast", []))
+        if cfg.short_caption:
+            # Operator, 2026-11-24: "Jensen VS Dario" plus one heart; short and sweet.
+            hearts = re.findall("[❤♥💕💖💗💓💞💘💝🧡💛💚💙💜🤎🖤🤍🩷🩵🩶]", text)
+            words = text.replace("\ufe0f", "").strip()
+            names = [alias for key in cast if key in cfg.targets for alias in cfg.targets[key]]
+            if (not 6 <= len(text) <= 45 or len(hearts) != 1 or words[-1:] != hearts[0]
+                    or any(c in text for c in "\r\n#—\"") or re.search(r"https?://|[<>\[\]@]", text)
+                    or not any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I) for alias in names)
+                    or doc.get("qc", {}).get("caption_accurate") is not True):
+                raise ValueError("short caption needs a cast name, one closing heart and at most 45 characters")
+            if not permission(doc, cfg, now):
+                raise ValueError("caption permission expired")
+            return text
         aliases = [cfg.targets[key][0] for key in cast if key in cfg.targets]
         named = any(re.search(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I) for alias in aliases)
         if (not isinstance(text, str) or not 25 <= len(text) <= 240 or any(c in text for c in "\r\n#—")

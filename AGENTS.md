@@ -1,5 +1,21 @@
 # AGENTS.md
 
+2026-11-24, five daily videos, short captions, Replies continue — After the first
+confirmed Instagram repost (https://x.com/i/status/2125098583040881083, 00:26
+Toronto, posted on the Operator's explicit "can you post one?"), the Operator
+sets one video at 07:00, 09:00, 12:00, 17:00 and 21:00 Toronto every day
+(`windows`, `scheduled_daily_cap = 5`), asks for short captions "like Jensen VS
+Dario + one heart emoji" (`short_caption`: a cast name, a few words, exactly one
+closing heart, at most 45 characters, still verified against the output), and
+says Replies continue as before and that he restarts the bot himself. `POST_ONLY`
+is now a setting any launcher honors and is off again. The legacy launchd
+watchdog (`bot_watchdog.sh`) starts the bot through `bin/run.sh`: a bare
+`main.py` had started the full bot without the video requirements. Instagram
+search uses plain "<name> ai" queries, creators of reels with five times the
+like floor join the grid rotation, and inspection gets 240 Codex calls a day.
+Requested and not yet done: sleep from 23:30 instead of midnight (25 tests pin
+the midnight boundary and the skipped-night rule), and more Replies.
+
 2026-11-23, Instagram bangers again: four breaks repaired while paused — The
 Operator, leaving for two weeks, asks to fix video posting and find Instagram
 bangers, then widens the cast and leaves the bar to the agent: Trump, Elon,
