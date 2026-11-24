@@ -334,3 +334,28 @@ def test_capture_reopens_a_source_tab_that_vanished_and_names_a_page_that_never_
     assert source_browser.capture_next(video_store, cfg, now + 120) == "source player unavailable"
     assert len(opens) == 3   # the first open and two more, never an endless loop
     assert "did not stay open" in video_store.rows("SELECT reason FROM candidates WHERE source_id='BBBBB2'")[0]["reason"]
+
+
+def test_capture_follows_a_redirect_that_happens_after_the_first_answer(video_store, video_cfg, at, monkeypatch):
+    """2026-11-24, the real cause: /reel/ID answered once without media, Instagram moved the tab to
+    /reels/ID, and the read kept asking the old address until it gave up."""
+    from src.x import safari, safari_video
+    now = at().timestamp()
+    cfg = replace(video_cfg, platforms={"instagram": {"safari_player": True}})
+    connectors.ingest(video_store, "instagram", [{"canonical_url": "https://www.instagram.com/reel/AAAAA1",
+        "source_id": "AAAAA1", "creator": "creator", "permission_id": "grant"}], now, cfg)
+    monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda url: True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(native_source.time, "sleep", lambda seconds: None)
+    polls = []
+    def page(js, **kw):
+        tab = kw.get("target_url", "")
+        polls.append(tab)
+        if len(polls) == 2 and tab.endswith("/reel/AAAAA1"):      # before the redirect: shell only
+            return json.dumps(reel_payload(now, "AAAAA1", media=[], published=None))
+        if len(polls) > 2 and tab.endswith("/reels/AAAAA1"):      # after it
+            return json.dumps(reel_payload(now, "AAAAA1"))
+        return ""
+    monkeypatch.setattr(safari, "_run_js", page)
+    assert source_browser.capture_next(video_store, cfg, now) == "source media captured"

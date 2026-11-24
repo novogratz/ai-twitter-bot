@@ -241,7 +241,10 @@ def capture(row, cfg, now):
                             payload = json.loads(raw)
                         except ValueError:
                             continue  # a page still loading answers "missing value"
-                        tabs, answered = [tab], True
+                        # Never narrow to the answering address: the first poll can
+                        # land on /reel/ID before Instagram redirects to /reels/ID,
+                        # and the read then waited on a tab that no longer existed.
+                        answered = True
                         break
                 if payload.get("published") and payload.get("media"):
                     break
@@ -256,7 +259,7 @@ def capture(row, cfg, now):
                 time.sleep(.5)
         finally:
             safari.close_front_tab()
-    if not payload:
+    if not payload or not payload.get("canonical_url"):
         raise AccessError("source page did not stay open")
     observed = canonical(platform, payload.get("canonical_url", ""))
     # Instagram serves one reel under /p/ID, /reel/ID and /reels/ID: the

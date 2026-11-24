@@ -405,6 +405,10 @@ The retained-overlay pixel proof resizes the source sample to the output's raste
 
 2026-11-24: source capture reopens its page when the bound tab is missing for four polls
 (at most twice) and reports "source page did not stay open" instead of a bare `ValueError`.
+Capture polls `/reels/ID`, `/reel/ID` and `/p/ID` on every pass: narrowing to the first
+answering address lost the tab when Instagram redirected afterwards. The Account schedules
+twenty windows (`scheduled_daily_cap` may be 5..24), and corner-logo removal also covers a
+persistent creator handle or name anywhere in the frame.
 
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
