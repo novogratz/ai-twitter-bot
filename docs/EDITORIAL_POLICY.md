@@ -5,6 +5,7 @@ opportunities, every fifty minutes from 07:00 to 22:50 Toronto, replacing the
 five of the night before. No posting quota: a window without an eligible clip
 skips. Fifteen-minute spacing, audience floors, inspection, novelty and dedup are
 unchanged. A persistent creator handle or name in the source frame is removed.
+The opening-shot floor for an audience-proven clip is 5/10 (was 6).
 
 2026-11-24, video render — Every video renders at 1080p and 60 fps (`upscale`).
 Small persistent corner logos and credits of the source are removed

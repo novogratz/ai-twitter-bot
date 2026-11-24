@@ -12,6 +12,9 @@ or matching the creator), never a title or subtitle. The capture failure was a
 redirect race: the first poll answered on `/reel/ID`, the read then asked only
 that address, and Instagram had moved the tab to `/reels/ID`. Every poll now
 tries all three addresses. This supersedes the five-window schedule above.
+With captures flowing the inspector became the limiter: a 258K-like reel was
+refused for a 5.5/10 opening against the floor of 6. `min_hook_score = 5`; the
+audience floor and every other gate are unchanged.
 
 2026-11-24, Instagram captures died beside Replies — After two posts the reserve
 was empty: every Instagram capture since 01:03 (twelve reels, one at 994K plays)
