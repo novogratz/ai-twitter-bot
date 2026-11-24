@@ -609,3 +609,20 @@ def test_ascii_faces_do_not_hide_generic_text_or_pad_minimum_length(text):
 @pytest.mark.parametrize("kind", ["original", "source"])
 def test_ascii_face_short_english_fallback_stays_reply_only(kind):
     assert not cg.validate("Such a slow day :D", kind=kind)[0]
+
+
+@pytest.mark.parametrize("text", ["Jensen duet era ❤️", "Jensen VS Dario ❤️", "Sam & Dario pop duo ❤️"])
+def test_verified_short_video_caption_passes_only_for_its_caller(text):
+    # 2026-11-24: every short caption was refused at the Post click ("detected unknown").
+    assert not cg.validate(text, kind="original")[0]
+    assert cg.validate(text, kind="original", short_title=True) == (True, "")
+    assert not cg.validate(text, kind="reply", short_title=True)[0]
+
+
+@pytest.mark.parametrize("text", [
+    "Jensen et Dario en duo ❤️",
+    "Bonjour, magnifique démonstration !",
+    "Tensor parallelism; quantization benchmarks; sparse attention kernels.",
+])
+def test_short_title_keeps_french_and_long_unidentified_prose_closed(text):
+    assert not cg.validate(text, kind="original", short_title=True)[0]

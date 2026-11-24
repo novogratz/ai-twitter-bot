@@ -1,5 +1,15 @@
 # AGENTS.md
 
+2026-11-24, short captions died at the Post click — Reopening the missed 07:00
+slot on the Operator's "lets do the 7 AM slot right now" showed the third and
+decisive cause: the upload was ready, then `authorize_submit` refused the caption
+("English-only account: detected unknown"). A name and three words have no
+detectable language, so no short caption could ever ship; the midnight post used
+the long form. The video publisher now passes `short_title` for a short-caption
+Account: an unknown result of at most 45 characters passes for that caller only;
+detected French, French cues, Replies and ordinary Originals are unchanged. The
+refusal reason is logged instead of a bare `ValueError`.
+
 2026-11-24, empty 07:00 slot: two starvation causes — The Operator reports no
 video this morning. The 07:00 slot closed with no eligible clip. (1) Every
 publisher read turn first reopened Home to prove the Safari account, waiting

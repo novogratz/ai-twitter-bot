@@ -1,5 +1,10 @@
 # Editorial policy — November 20, 2026
 
+2026-11-24, short video captions and English-only — A verified short video
+caption (at most 45 characters, a cast name, one heart) whose language cannot be
+detected passes the final check for the video publisher only. Detected French
+and French cues still refuse; Replies and other Originals are unchanged.
+
 2026-11-24, video preparation starvation — No publication rule changes. The
 Safari account proof for video read turns waits up to 25 seconds and is reused
 for fifteen minutes (sixty seconds before a publication); the shared daily

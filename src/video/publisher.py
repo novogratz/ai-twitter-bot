@@ -5,6 +5,7 @@ import time
 import uuid
 
 from . import config, inventory, ranking, schedule
+from ..core.logger import log
 from .media import matches_history
 from .security import sha256
 from .store import dumps
@@ -334,8 +335,9 @@ def guard(store, ident, token, now, cfg, *, submitting=False):
 def authorize_submit(store, ident, token, now, cfg):
     row = guard(store, ident, token, now, cfg, submitting=True)
     from ..guards import content_guard, respect_list
-    ok, reason = content_guard.validate(row["caption"], kind="original")
+    ok, reason = content_guard.validate(row["caption"], kind="original", short_title=cfg.short_caption)
     if not ok or respect_list.scrub_text_or_skip(row["caption"])[1]:
+        log.warning("[VIDEO] Final caption check refused: %s", reason or "respected account named")
         raise ValueError("final caption content check refused")
     with store.transaction() as db:
         # Re-read switches and the success clock inside the final transaction.

@@ -560,7 +560,8 @@ def is_model_refusal(text: str) -> bool:
     return bool(_MODEL_REFUSAL.match(normalized.lstrip(" \"'“”‘`*")))
 
 
-def validate(text: str, kind: str = "original", *, source_language: str = "", source_url: str = "") -> Tuple[bool, str]:
+def validate(text: str, kind: str = "original", *, source_language: str = "", source_url: str = "",
+             short_title: bool = False) -> Tuple[bool, str]:
     """Validate a draft or a watched source. kind ∈ {"original", "reply", "source"}.
 
     English-only Accounts require English on all surfaces. Otherwise
@@ -646,7 +647,12 @@ def validate(text: str, kind: str = "original", *, source_language: str = "", so
         # result. Neither relaxes the language/quality gate on our Reply.
         source_english = (kind == "source" and lang == "unknown"
                           and (source_language.lower() == "en" or _short_english_source(prose)))
-        if ((lang != "en" and not short_english and not source_english)
+        # 2026-11-24: a verified video caption of a name and a few words
+        # ("Jensen VS Dario ❤️") has no detectable language; every short
+        # caption was refused at the Post click. Unknown passes for that
+        # caller only; detected French and the French cues below still refuse.
+        title = short_title and kind == "original" and lang == "unknown" and len(text) <= 45
+        if ((lang != "en" and not short_english and not source_english and not title)
                 or reply_language.looks_french(prose) or _UNAMBIGUOUS_FRENCH_CUES.search(prose)
                 or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):
             return (False, f"English-only account: detected {lang} @ {conf:.0%}")
