@@ -311,6 +311,54 @@ def inspect(path, stage, cfg, store, now, **extra):
     return result
 
 
+def source_logo_boxes(evidence, info):
+    """Corner text the source carries on most sampled frames of the cut: a platform
+    logo or creator credit. Pixel boxes for ffmpeg's delogo, measured by OCR.
+
+    Operator, 2026-11-24: "you left the watermark top right". Only small text that
+    stays in one corner qualifies; subtitles and centred titles are never touched."""
+    edit = evidence.get("edit") or {}
+    start, end = edit.get("start_seconds", 0), edit.get("end_seconds", math.inf)
+    frames = [f for f in evidence.get("ocr_evidence", []) if isinstance(f, dict) and start <= f.get("at", -1) <= end]
+    if len(frames) < 4:
+        return []
+    groups = []
+    for frame in frames:
+        seen = set()
+        for text in frame.get("texts", []):
+            box = text.get("box", [])
+            if len(box) != 4 or text.get("confidence", 0) < .3 or not all(type(n) in (int, float) for n in box):
+                continue
+            x, y, w, h = box
+            corner = (y + h <= .14 or y >= .86) and (x + w <= .45 or x >= .55)
+            if not corner or not 0 < w <= .4 or not 0 < h <= .1:
+                continue
+            for index, group in enumerate(groups):
+                gx, gy, gw, gh = group["box"]
+                if abs(x + w / 2 - gx - gw / 2) <= .08 and abs(y + h / 2 - gy - gh / 2) <= .04:
+                    left, top = min(x, gx), min(y, gy)
+                    group["box"] = [left, top, max(x + w, gx + gw) - left, max(y + h, gy + gh) - top]
+                    if index not in seen:
+                        group["frames"] += 1
+                        seen.add(index)
+                    break
+            else:
+                groups.append({"box": [x, y, w, h], "frames": 1})
+                seen.add(len(groups) - 1)
+    boxes = []
+    for group in groups:
+        x, y, w, h = group["box"]
+        if group["frames"] < len(frames) * .6 or w > .45 or h > .14:
+            continue
+        pad_x, pad_y = .012 * info["width"], .010 * info["height"]
+        left, top = max(1, int(x * info["width"] - pad_x)), max(1, int(y * info["height"] - pad_y))
+        right = min(info["width"] - 1, int((x + w) * info["width"] + pad_x))
+        bottom = min(info["height"] - 1, int((y + h) * info["height"] + pad_y))
+        if right - left >= 4 and bottom - top >= 4:
+            boxes.append([left, top, right - left, bottom - top])
+    return boxes[:4]
+
+
 def render(original, output, info, evidence, cfg):
     from .editing import plan
     edit = plan(evidence, info, cfg, sha256(original)) if cfg.auto_edit else None
@@ -333,7 +381,9 @@ def render(original, output, info, evidence, cfg):
     # Preserve display proportions when converting non-square source pixels.
     # Crop/OCR coordinates remain in the original raster; normalize afterwards.
     display_w = w * info.get("sample_aspect_ratio", 1.0)
-    scale = min(1, 1080 / min(display_w, h), 1920 / max(display_w, h))
+    scale = min(1080 / min(display_w, h), 1920 / max(display_w, h))
+    if not cfg.upscale:
+        scale = min(1, scale)
     ow, oh = int(display_w * scale) // 2 * 2, int(h * scale) // 2 * 2
     font_size = max(14, int(ow * .025))
     font = ImageFont.truetype(cfg.font_file, font_size)
@@ -348,7 +398,13 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("watermark safe placement unverified")
     ypos = "H-h-0.06*H" if position == "bottom" else "0.06*H"
     cut = f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS," if edit else ""
-    filters = f"[0:v]{cut}crop={w}:{h}:{x}:{y},scale={ow}:{oh},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+    logos = source_logo_boxes(evidence, info) if cfg.remove_source_logos else []
+    evidence["removed_logo_boxes"] = logos
+    clean = "".join(f"delogo=x={lx}:y={ly}:w={lw}:h={lh}," for lx, ly, lw, lh in logos)
+    # Operator, 2026-11-24: always 1080p at 60 fps. Lanczos with a light sharpen;
+    # 60 fps repeats source frames, it invents no motion.
+    sizing = (f"scale={ow}:{oh}:flags=lanczos,unsharp=5:5:0.5:5:5:0.0,fps=60" if cfg.upscale else f"scale={ow}:{oh}")
+    filters = f"[0:v]{clean}{cut}crop={w}:{h}:{x}:{y},{sizing},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
     if edit:
         filters += f";[0:a:0]atrim=start={edit['start_seconds']}:end={edit['end_seconds']},asetpts=PTS-STARTPTS[aout]"
     # Reserve container/audio headroom before encoding. Unbounded CRF can make a
@@ -359,9 +415,10 @@ def render(original, output, info, evidence, cfg):
     try:
         ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(original), "-i", str(watermark_path),
                 "-filter_complex", filters, "-map", "[out]", "-map", "[aout]" if edit else "0:a:0", "-sn", "-dn", "-map_metadata", "-1",
-                "-c:v", "libx264", "-threads", "1", "-preset", "veryfast", "-crf", "16", "-profile:v", "high",
+                "-c:v", "libx264", "-threads", "4" if cfg.upscale else "1", "-preset", "veryfast",
+                "-crf", "18" if cfg.upscale else "16", "-profile:v", "high",
                 "-maxrate", str(maxrate), "-bufsize", str(maxrate * 2),
-                "-pix_fmt", "yuv420p", "-x264-params", "open-gop=0", "-fps_mode", "passthrough",
+                "-pix_fmt", "yuv420p", "-x264-params", "open-gop=0", "-fps_mode", "cfr" if cfg.upscale else "passthrough",
                 "-c:a", "aac", "-profile:a", "aac_low", "-ac", "2", "-b:a", "192k", "-movflags", "+faststart", str(output)], cfg)
         if output.stat().st_size > cfg.max_download_bytes:
             raise ValueError("rendered output exceeds configured byte budget")
@@ -376,7 +433,7 @@ def technical_qc(original, output, original_info, cfg, *, edit=None):
     expected = edit["duration"] if edit else original_info["duration"]
     if edit and edit.get("source_sha256") != sha256(original):
         raise ValueError("cut source changed")
-    if abs(result["duration"] - expected) > .15 or abs(result["fps"] - original_info["fps"]) > .1:
+    if abs(result["duration"] - expected) > .15 or abs(result["fps"] - (60 if cfg.upscale else original_info["fps"])) > .1:
         raise ValueError("duration or genuine frame rate changed")
     if result["video_codec"] != "h264" or result["audio_codec"] != "aac":
         raise ValueError("output codec mismatch")

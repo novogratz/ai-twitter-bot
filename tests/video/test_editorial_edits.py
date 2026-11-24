@@ -179,3 +179,36 @@ def test_short_caption_is_a_cast_name_a_few_words_and_one_closing_heart(ready, v
     doc["inspection"]["caption"], doc["qc"]["caption_accurate"] = "Example VS the robots ❤️", False
     with pytest.raises(ValueError):
         ranking.caption(doc, cfg, at().timestamp())
+
+
+def _logo_frames(extra=()):
+    frames = []
+    for i in range(10):
+        texts = [{"text": "bilibili", "box": [.83, .02, .15, .06], "confidence": .9}] if i != 3 else []
+        texts += [{"text": "lyric line here", "box": [.3, .88, .4, .06], "confidence": .9}]
+        texts += list(extra)
+        frames.append({"at": i * .5, "texts": texts})
+    return frames
+
+
+def test_persistent_corner_logo_is_measured_and_subtitles_are_left_alone():
+    # Operator, 2026-11-24: "you left the watermark top right".
+    from src.video import media
+    info = {"width": 1920, "height": 1080}
+    boxes = media.source_logo_boxes({"ocr_evidence": _logo_frames()}, info)
+    assert len(boxes) == 1
+    x, y, w, h = boxes[0]
+    assert x > 1500 and y >= 1 and x + w <= 1919 and y + h < 160
+    # a corner word seen on two frames only is scene text, not a logo
+    passing = [{"at": i * .5, "texts": [{"text": "EXIT", "box": [.05, .03, .1, .05], "confidence": .9}] if i < 2 else []}
+               for i in range(10)]
+    assert media.source_logo_boxes({"ocr_evidence": passing}, info) == []
+    assert media.source_logo_boxes({"ocr_evidence": _logo_frames()[:3]}, info) == []
+
+
+def test_upscale_and_logo_settings_are_booleans(video_cfg):
+    from dataclasses import replace
+    import pytest
+    assert replace(video_cfg, upscale=True, remove_source_logos=True).upscale
+    with pytest.raises(ValueError):
+        replace(video_cfg, upscale=1)

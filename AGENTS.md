@@ -1,5 +1,20 @@
 # AGENTS.md
 
+2026-11-24, 1080p 60 fps and no source corner logo — After the reopened 07:00
+post the Operator says "you left the watermark top right", "i wanted 1080p 60 fps
+upscale" and "always do the upscale". `upscale = true` renders a 1080-pixel short
+side (Lanczos, light sharpen) at a constant 60 fps; repeated frames, no invented
+motion, and technical QC expects 60. `remove_source_logos = true` removes small
+OCR-measured text that stays in one corner on at least 60% of the cut's sampled
+frames (platform logo, creator credit) with ffmpeg `delogo`; subtitles and centred
+text are never touched, and a logo with no readable text is not detected. The
+output inspector is told both edits are approved. This narrows the 2026-11-01
+"overlays may remain" allowance for corner logos only. The Operator also says
+"you are the one running the bot do it": while he is away the agent restarts
+through `bin/run.sh` when a merged fix needs loading. Asked for "the most trendy
+video" and "thousands of views": ranking already prefers the most-played leads;
+views are not something the bot can promise.
+
 2026-11-24, short captions died at the Post click — Reopening the missed 07:00
 slot on the Operator's "lets do the 7 AM slot right now" showed the third and
 decisive cause: the upload was ready, then `authorize_submit` refused the caption

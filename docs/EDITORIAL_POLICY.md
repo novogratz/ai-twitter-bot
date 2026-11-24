@@ -1,5 +1,11 @@
 # Editorial policy — November 20, 2026
 
+2026-11-24, video render — Every video renders at 1080p and 60 fps (`upscale`).
+Small persistent corner logos and credits of the source are removed
+(`remove_source_logos`); subtitles stay. Our handle watermark and every other
+gate are unchanged. During the Operator's absence the agent may restart the bot
+through `bin/run.sh` to load a merged fix ("you are the one running the bot").
+
 2026-11-24, short video captions and English-only — A verified short video
 caption (at most 45 characters, a cast name, one heart) whose language cannot be
 detected passes the final check for the video publisher only. Detected French
