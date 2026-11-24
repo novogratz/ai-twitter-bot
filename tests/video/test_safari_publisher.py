@@ -890,3 +890,39 @@ def test_upload_probe_can_never_submit(video_store, browser_cfg, browser_setup, 
         return
     result = browser.probe_upload(video_store, browser_cfg, doc["output_path"])
     assert result["ready"] and result["draft_discarded"] and result["published"] is False
+
+
+def test_account_proof_waits_for_a_slow_home_page_and_read_turns_reuse_it(video_store, browser_cfg, monkeypatch):
+    # 2026-11-24: beside Replies, Home needed more than eight seconds; 61 failed
+    # proofs in one night stopped all preparation and the 07:00 slot was empty.
+    from contextlib import nullcontext
+    from src.core import account
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(browser.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: True)
+    opened = []
+    monkeypatch.setattr(safari, "open_url", lambda url: opened.append(url) or True)
+    reads = []
+    def page(*_):
+        reads.append(1)
+        return {"host": True, "account": "/" + account.current().handle if len(reads) >= 30 else ""}
+    monkeypatch.setattr(browser, "_json", page)
+    client = browser.SafariVideoClient(video_store, browser_cfg)
+    assert client.preflight()["account_verified"] and len(reads) == 30
+    moment = browser.time.time()
+    monkeypatch.setattr(browser.time, "time", lambda: moment + 600)
+    client.preflight()
+    assert len(opened) == 1                      # a read turn reuses the proof
+    client.preflight(publishing=True)
+    assert len(opened) == 2                      # a publication asks again
+
+
+def test_account_proof_still_refuses_another_account(video_store, browser_cfg, monkeypatch):
+    from contextlib import nullcontext
+    monkeypatch.setattr(browser, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(browser.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: True)
+    monkeypatch.setattr(safari, "open_url", lambda url: True)
+    monkeypatch.setattr(browser, "_json", lambda *_: {"host": True, "account": "/someone_else"})
+    with pytest.raises(AccessError, match="could not be verified"):
+        browser.SafariVideoClient(video_store, browser_cfg).preflight()
