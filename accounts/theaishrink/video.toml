@@ -6,9 +6,10 @@
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
 # Operator, 2026-11-24: one video at 7 AM, 9 AM, noon, 5 PM and 9 PM Toronto, every day.
-windows = ["07:00", "09:00", "12:00", "17:00", "21:00"]
+# operator 2026-11-24: "lets do 20 posts a day" - twenty opportunities, every fifty minutes; an empty reserve still skips
+windows = ["07:00", "07:50", "08:40", "09:30", "10:20", "11:10", "12:00", "12:50", "13:40", "14:30", "15:20", "16:10", "17:00", "17:50", "18:40", "19:30", "20:20", "21:10", "22:00", "22:50"]
 paired_windows = []
-scheduled_daily_cap = 5
+scheduled_daily_cap = 20
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -85,9 +86,9 @@ inspection_provider = "codex"
 # Codex refused it and every inspection and public search failed from then on.
 codex_model = "gpt-6.1-sol"
 codex_timeout_seconds = 180
-codex_daily_calls = 240 # 2026-11-23: inspection was the bottleneck (37 calls spent the old token budget)
-codex_daily_input_tokens = 8000000
-codex_inspection_reserve = 200
+codex_daily_calls = 600 # 2026-11-23: inspection was the bottleneck (37 calls spent the old token budget)
+codex_daily_input_tokens = 30000000
+codex_inspection_reserve = 540
 codex_max_reply_calls = 2
 inspection_fps = 1 # temporal inspection across the full clip; reserve capacity for the ready buffer
 font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"

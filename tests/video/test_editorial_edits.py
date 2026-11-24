@@ -227,3 +227,30 @@ def test_retained_overlay_proof_compares_an_upscaled_output_on_one_raster():
     assert inspection.retained_pixel_matches([(1.0, same)], big, [.2, .2, .2, .1], "bottom")
     wide = Image.new("RGB", (640, 360))
     assert inspection.same_raster(wide, big) is wide   # other proportions are never stretched
+
+
+def test_creator_handle_and_name_are_removed_anywhere_but_a_title_stays():
+    # Operator, 2026-11-24: "please remove watermark why do we see evolving ai".
+    from src.video import media
+    frames = [{"at": float(i), "texts": [
+        {"text": "EVOLVING AI", "box": [.06, .26, .09, .01], "confidence": .9},
+        {"text": "Evolving Al &", "box": [.18, .24, .22, .02], "confidence": .9},
+        {"text": "@evolving.ai", "box": [.18, .26, .21, .02], "confidence": .9},
+        {"text": "This is why RAM costs so much", "box": [.05, .30, .61, .02], "confidence": .9}]} for i in range(8)]
+    info = {"width": 720, "height": 1280}
+    boxes = media.source_logo_boxes({"ocr_evidence": frames}, info, "evolving.ai")
+    assert boxes and all(y + h < .29 * 1280 for x, y, w, h in boxes)       # the title line below is untouched
+    assert media.source_logo_boxes({"ocr_evidence": frames}, info, "") != []  # the @handle alone still qualifies
+    plain = [{"at": float(i), "texts": [{"text": "This is why RAM costs so much", "box": [.05, .30, .61, .02], "confidence": .9}]} for i in range(8)]
+    assert media.source_logo_boxes({"ocr_evidence": plain}, info, "evolving.ai") == []
+
+
+def test_twenty_daily_windows_are_a_valid_schedule(video_cfg):
+    from dataclasses import replace
+    import pytest
+    from src.video import schedule
+    windows = tuple(f"{(420 + 50 * i) // 60:02}:{(420 + 50 * i) % 60:02}" for i in range(20))
+    cfg = replace(video_cfg, windows=windows, paired_windows=(), scheduled_daily_cap=20)
+    assert len(schedule.slots(__import__("datetime").date(2026, 11, 25), cfg)) == 20
+    with pytest.raises(ValueError):
+        replace(video_cfg, scheduled_daily_cap=25)

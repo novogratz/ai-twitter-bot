@@ -1,5 +1,18 @@
 # AGENTS.md
 
+2026-11-24, twenty windows, creator credits removed, the real capture cause —
+The Operator asks "lets do 20 posts a day", "GO push hard today", and "please
+remove watermark why do we see evolving ai ... fix it for future". Twenty video
+windows now run every fifty minutes from 07:00 to 22:50 Toronto
+(`scheduled_daily_cap = 20`, bound raised to 24); each stays an opportunity, an
+empty reserve still skips and no gate is lowered. Inspection gets 600 Codex
+calls and 30M input tokens a day. `remove_source_logos` also removes a
+persistent creator handle or name anywhere in the frame (text starting with "@",
+or matching the creator), never a title or subtitle. The capture failure was a
+redirect race: the first poll answered on `/reel/ID`, the read then asked only
+that address, and Instagram had moved the tab to `/reels/ID`. Every poll now
+tries all three addresses. This supersedes the five-window schedule above.
+
 2026-11-24, Instagram captures died beside Replies — After two posts the reserve
 was empty: every Instagram capture since 01:03 (twelve reels, one at 994K plays)
 ended "source player unavailable: ValueError". The reel tab was gone on every

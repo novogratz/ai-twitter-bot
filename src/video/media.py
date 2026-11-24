@@ -4,6 +4,7 @@ from functools import lru_cache
 import json
 import math
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -311,7 +312,17 @@ def inspect(path, stage, cfg, store, now, **extra):
     return result
 
 
-def source_logo_boxes(evidence, info):
+def _credit_text(text, creator):
+    """A creator's own handle or name burned into the frame, wherever it sits."""
+    from difflib import SequenceMatcher
+    plain = lambda value: re.sub(r"[^a-z0-9]", "", str(value).casefold())
+    value, name = plain(text), plain(creator)
+    if str(text).strip().startswith("@") and len(value) >= 3:
+        return True
+    return len(name) >= 4 and len(value) >= 4 and SequenceMatcher(None, value[:len(name) + 2], name).ratio() >= .8
+
+
+def source_logo_boxes(evidence, info, creator=""):
     """Corner text the source carries on most sampled frames of the cut: a platform
     logo or creator credit. Pixel boxes for ffmpeg's delogo, measured by OCR.
 
@@ -331,7 +342,10 @@ def source_logo_boxes(evidence, info):
                 continue
             x, y, w, h = box
             corner = (y + h <= .14 or y >= .86) and (x + w <= .45 or x >= .55)
-            if not corner or not 0 < w <= .4 or not 0 < h <= .1:
+            # Operator, 2026-11-24: "why do we see evolving ai". A persistent creator
+            # handle or name is a credit anywhere in the frame, not only in a corner.
+            credit = _credit_text(text.get("text", ""), creator)
+            if not (corner or credit) or not 0 < w <= .5 or not 0 < h <= .1:
                 continue
             for index, group in enumerate(groups):
                 gx, gy, gw, gh = group["box"]
@@ -348,7 +362,7 @@ def source_logo_boxes(evidence, info):
     boxes = []
     for group in groups:
         x, y, w, h = group["box"]
-        if group["frames"] < len(frames) * .6 or w > .45 or h > .14:
+        if group["frames"] < len(frames) * .6 or w > .55 or h > .14:
             continue
         pad_x, pad_y = .012 * info["width"], .010 * info["height"]
         left, top = max(1, int(x * info["width"] - pad_x)), max(1, int(y * info["height"] - pad_y))
@@ -398,7 +412,7 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("watermark safe placement unverified")
     ypos = "H-h-0.06*H" if position == "bottom" else "0.06*H"
     cut = f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS," if edit else ""
-    logos = source_logo_boxes(evidence, info) if cfg.remove_source_logos else []
+    logos = source_logo_boxes(evidence, info, evidence.get("source_creator", "")) if cfg.remove_source_logos else []
     evidence["removed_logo_boxes"] = logos
     clean = "".join(f"delogo=x={lx}:y={ly}:w={lw}:h={lh}," for lx, ly, lw, lh in logos)
     # Operator, 2026-11-24: always 1080p at 60 fps. Lanczos with a light sharpen;
@@ -651,7 +665,11 @@ def _process(store, job, now, cfg):
                                  fingerprint=original_fp, job=job)
             return
         doc.pop("preparation_hold", None)
-        render(original, output, info, doc["inspection"], cfg)
+        doc["inspection"]["source_creator"] = str(doc.get("creator", ""))[:128]
+        try:
+            render(original, output, info, doc["inspection"], cfg)
+        finally:
+            doc["inspection"].pop("source_creator", None)  # a render input, not part of the review
         doc.update(output_path=str(output), output_sha256=sha256(output), brand=cfg.watermark)
         technical = technical_qc(original, output, info, cfg, **({"edit": doc["edit"]} if doc.get("edit") else {}))
         final = inspect(output, "output", cfg, store, now, original_path=str(original),
