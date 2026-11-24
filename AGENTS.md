@@ -1,5 +1,14 @@
 # AGENTS.md
 
+2026-11-24, Instagram captures died beside Replies — After two posts the reserve
+was empty: every Instagram capture since 01:03 (twelve reels, one at 994K plays)
+ended "source player unavailable: ValueError". The reel tab was gone on every
+poll ("Requested source tab is not open"), the empty answer reached `canonical('')`
+and raised. Capture now opens the page again when the tab is missing for four
+polls (twice at most), ignores a not-yet-JSON answer, and names the failure
+"source page did not stay open". What closes the tab beside Replies is not yet
+identified. The failed reels were queued again.
+
 2026-11-24, 1080p 60 fps and no source corner logo — After the reopened 07:00
 post the Operator says "you left the watermark top right", "i wanted 1080p 60 fps
 upscale" and "always do the upscale". `upscale = true` renders a 1080-pixel short

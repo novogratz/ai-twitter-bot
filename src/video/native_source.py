@@ -231,19 +231,33 @@ def capture(row, cfg, now):
         if not safari.open_url(url):
             raise AccessError("source page did not open")
         try:
-            payload = {}
-            for _ in range(16 if platform == "instagram" else 8):
+            payload, missing, reopened = {}, 0, 0
+            for _ in range(24 if platform == "instagram" else 12):
+                answered = False
                 for tab in list(tabs):
                     raw = safari._run_js(script(platform, doc["source_id"]), timeout_s=5, target_url=tab)
                     if raw and len(raw) <= 100000:
-                        payload = json.loads(raw)
-                        tabs = [tab]
+                        try:
+                            payload = json.loads(raw)
+                        except ValueError:
+                            continue  # a page still loading answers "missing value"
+                        tabs, answered = [tab], True
                         break
                 if payload.get("published") and payload.get("media"):
                     break
+                # 2026-11-24: beside Replies the source tab was gone on every poll
+                # ("Requested source tab is not open") and each capture ended in a
+                # bare ValueError, 12 Instagram reels in one morning. Open it again.
+                missing = 0 if answered else missing + 1
+                if missing >= 4 and reopened < 2:
+                    missing, reopened = 0, reopened + 1
+                    if not safari.open_url(url):
+                        raise AccessError("source page did not open")
                 time.sleep(.5)
         finally:
             safari.close_front_tab()
+    if not payload:
+        raise AccessError("source page did not stay open")
     observed = canonical(platform, payload.get("canonical_url", ""))
     # Instagram serves one reel under /p/ID, /reel/ID and /reels/ID: the
     # shortcode is its identity, the path kind is not.
