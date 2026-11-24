@@ -4,11 +4,10 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_has_90_minute_video_cadence_and_six_qualifiers():
+def test_live_account_posts_at_five_daily_times_with_six_qualifiers():
     cfg = config.load()
-    assert len(schedule.clocks(cfg)) == 13
-    minutes = [int(t[:2]) * 60 + int(t[3:]) for t in schedule.clocks(cfg)]
-    assert {b - a for a, b in zip(minutes, minutes[1:])} == {90}
+    # Operator, 2026-11-24: 7 AM, 9 AM, noon, 5 PM and 9 PM Toronto, every day; short captions.
+    assert list(schedule.clocks(cfg)) == ["07:00", "09:00", "12:00", "17:00", "21:00"] and cfg.short_caption
     # Operator, 2026-11-23: Zuckerberg qualifies too; Trump and Elon must look good.
     assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario", "zuck"}
     assert "Trump or Elon appear they must look good" in cfg.editorial_taste

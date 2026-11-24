@@ -32,6 +32,20 @@ def cast_context(document, cfg):
             "title": title, "source_url": document["canonical_url"], "creator": document["creator"]} if names else {}
 
 
+LONG_CAPTION = """For a one-line caption: begin ANOTHER BANGER 🔥, then a short English visual joke
+using full names of principal attributed targets. A source-supported song reference
+may finish the line; never invent lyrics or song identity from sound categories.
+25–240 characters,
+"""
+# Operator, 2026-11-24: "short and sweet", like "Jensen VS Dario" plus one heart.
+SHORT_CAPTION = """For a one-line caption: SHORT AND SWEET, at most 40 characters. Short names of
+the principal attributed targets and two or three words of premise at most, then
+exactly ONE heart emoji at the end and no other emoji. Examples of the form only:
+"Jensen VS Dario ❤️", "Elon boy band era 💙". No "ANOTHER BANGER", no sentence, no
+quotation marks,
+"""
+
+
 def clear_watermark_position(review):
     """Measured source text decides where the handle goes, not the model's guess.
 
@@ -280,7 +294,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "bangers_only": cfg.bangers_only, "ultra_bangers_only": cfg.ultra_bangers_only,
         "one_line_caption": cfg.one_line_caption,
         "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors, cfg.min_hook_score],
-        "taste": cfg.editorial_taste,
+        "taste": cfg.editorial_taste, "short_caption": cfg.short_caption,
         "caption": source_review.get("caption")}, sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
@@ -398,10 +412,7 @@ finished excerpt; the source's proposed scores do not approve the output. A vali
 contiguous trim is intentional, not destructive, if performance/audio and the payoff
 remain coherent. Compare original OCR at output time PLUS the trusted cut start.
 
-For a one-line caption: begin ANOTHER BANGER 🔥, then a short English visual joke
-using full names of principal attributed targets. A source-supported song reference
-may finish the line; never invent lyrics or song identity from sound categories.
-25–240 characters,
+CAPTION_STYLE
 no newline, URL, hashtag, generic second slogan or invented song/lyric/location.
 Do not invent a real event, relationship or endorsement. The footage is a synthetic
 parody. No em dash or mass tags. Output caption_accurate checks that supplied caption against
@@ -422,7 +433,7 @@ joke; without actual verified transcript/translation that is a HOLD. SoundAnalys
 does not identify a song or transcribe lyrics. Label credited songs as attribution,
 not independently heard/verified music. Never call an upscale native high resolution.
 
-""" + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
+""".replace("CAPTION_STYLE\n", SHORT_CAPTION if cfg.short_caption else LONG_CAPTION) + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
     result["model_verdict"] = {k: result.get(k) for k in ("confidence", "watermark_present", "overlays_clean",
         "no_destructive_edit", "source_overlays_retained", "no_unapproved_new_overlays")}

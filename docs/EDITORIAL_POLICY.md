@@ -672,6 +672,14 @@ local settings and state before restoration; remove newer-only runtime modules
 and local settings. Validate, start through the normal launcher, and check an
 actual Reply receipt rather than treating search activity as publication proof.
 
+## November 24 operator amendment — five daily videos, short captions
+
+One video at 07:00, 09:00, 12:00, 17:00 and 21:00 Toronto, every day; an empty
+window still stays empty. Captions are short: a cast name, a few words and one
+closing heart, at most 45 characters ("Jensen VS Dario ❤️"). Replies continue
+beside the videos. This supersedes the thirteen 90-minute windows and the
+"ANOTHER BANGER" caption line.
+
 ## November 23 operator amendment — Instagram bangers, audience-proven
 
 The Operator asks for video posts again and for Instagram bangers, with a wider

@@ -159,3 +159,23 @@ def test_real_cut_preserves_original_and_aligned_audio(video_cfg, tmp_path):
         media.technical_qc(original, output, info, cfg, edit=edit | {"start_seconds": 3})
     sheet, times = inspection.opening_pack(output, tmp_path, cfg)
     assert sheet.is_file() and times == [0, .2, .4, .6, .8]
+
+
+def test_short_caption_is_a_cast_name_a_few_words_and_one_closing_heart(ready, video_cfg, at):
+    """Operator, 2026-11-24: 'Jensen VS Dario' plus one heart; short and sweet."""
+    cfg = replace(video_cfg, one_line_caption=True, short_caption=True, caption_disclosure=False,
+                  targets={"performer": ["Example Star", "Example"]})
+    doc = ready()
+    doc["qc"]["caption_accurate"] = True
+    for good in ("Example VS the robots ❤️", "Example Star boy band era 💙"):
+        doc["inspection"]["caption"] = good
+        assert ranking.caption(doc, cfg, at().timestamp()) == good
+    for bad in ("ANOTHER BANGER 🔥 Example Star turned the meeting into a dance break. 😂", "Example VS the robots",
+                "Example VS the robots ❤️❤️", "❤️ Example VS the robots", "Somebody VS the robots ❤️",
+                "Example VS the robots #ai ❤️", "Example ❤️ https://x.test", "Example\nVS robots ❤️"):
+        doc["inspection"]["caption"] = bad
+        with pytest.raises(ValueError):
+            ranking.caption(doc, cfg, at().timestamp())
+    doc["inspection"]["caption"], doc["qc"]["caption_accurate"] = "Example VS the robots ❤️", False
+    with pytest.raises(ValueError):
+        ranking.caption(doc, cfg, at().timestamp())

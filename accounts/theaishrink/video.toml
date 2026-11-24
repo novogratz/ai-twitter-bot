@@ -5,9 +5,10 @@
 # banger, the inspector still checks cast, portrayal, safety, quality and the cut. See docs/EDITORIAL_POLICY.md.
 publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
-windows = ["05:00", "06:30", "08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:30", "20:00", "21:30", "23:00"]
+# Operator, 2026-11-24: one video at 7 AM, 9 AM, noon, 5 PM and 9 PM Toronto, every day.
+windows = ["07:00", "09:00", "12:00", "17:00", "21:00"]
 paired_windows = []
-scheduled_daily_cap = 13
+scheduled_daily_cap = 5
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -26,6 +27,7 @@ A clip that mocks, humiliates, weakens or makes either of them look bad is brand
 teased playfully. Prefer funny clips, songs and musical numbers, and short cuts: when a 10-30 second excerpt holds \
 the joke or the chorus, choose it over a longer one."""
 one_line_caption = true
+short_caption = true # Operator, 2026-11-24: "Jensen VS Dario" plus one heart; short and sweet
 discovery_prompt_file = "video_discovery_prompt.md"
 discovery_memory_file = "video_memory.json"
 query_bank_file = "video_query_bank.txt"
