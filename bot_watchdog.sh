@@ -45,5 +45,8 @@ fi
 # replaces this watchdog process with the bot so the supervised process stays
 # alive and receives signals directly.
 TS=$(date -Iseconds)
-echo "[$TS] Bot dead — execing uv run python main.py" >> "$LOG_FILE"
-exec uv run python main.py >> "$PROJECT_DIR/bot.log" 2>> "$PROJECT_DIR/bot.err"
+# 2026-11-24: start through the one launcher. A bare `uv run python main.py`
+# skipped requirements-video.txt (every video cycle failed on a missing module)
+# and ignored the launcher's switches.
+echo "[$TS] Bot dead — execing bin/run.sh" >> "$LOG_FILE"
+exec "$PROJECT_DIR/bin/run.sh" >> /tmp/aitwitter_run.out 2>> "$PROJECT_DIR/bot.err"

@@ -259,6 +259,9 @@ def main():
     parser.add_argument("--reply-review", nargs=argparse.REMAINDER,
                         help="Local Reply inbox: import, prepare, list, dismiss, posted or opt-out; never posts")
     args = parser.parse_args()
+    if settings.get("POST_ONLY") and not args.reply_only:
+        # A launchd watchdog started the full bot over the Operator's videos-only choice (2026-11-24).
+        args.post_only = True
     if args.reply_review is not None:
         if args.dry_run:
             parser.error("Use --dry-run on its own for policy; --reply-review commands manage the local inbox")

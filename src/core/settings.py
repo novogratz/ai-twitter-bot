@@ -178,6 +178,7 @@ _declare("REPLY_WORKLOAD_BOOST_DAYS", int, 4, "Number of Toronto calendar days i
 _declare("REPLY_WORKLOAD_BOOST_TARGET", int, 200, "Temporary advisory daily Reply target and ceiling within the explicitly dated workload window; no filler obligation. Normal limits resume after expiry.", floor=1, ceiling=200)
 _declare("VIDEO_ENABLED", bool, False, "Opt into isolated licensed-video workers and replace the main editorial schedule; defaults off.")
 _declare("VIDEO_LIVE", bool, False, "Permit video API uploads/posts after explicit activation; DRY_RUN still overrides. Defaults off.")
+_declare("POST_ONLY", bool, False, "Operator, 2026-11-24: start without any Reply, watched like or repost job, whichever launcher starts the bot; same as `main.py --post-only`. Videos only while the Operator is away.")
 _declare("VIDEO_WITH_REPLIES", bool, False, "Operator, 2026-11-23: run the video scheduler and its reserved, inspected video posts alongside the restricted Reply modes (invited, curated, broad), which otherwise disable every non-Reply publication. Manual review mode still refuses all writes; VIDEO_LIVE and every video gate still apply.")
 _declare("VIDEO_CONFIG_FILE", str, "", "Operator video TOML path; blank uses accounts/<BOT_ACCOUNT>/video.toml.")
 _declare("VIDEO_CREDENTIALS_FILE", str, "", "Private (mode 600) JSON credentials path for official X API user access; never a token value.")
