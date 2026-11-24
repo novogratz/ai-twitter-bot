@@ -403,6 +403,9 @@ in the inspection record and reported to the output inspector).
 The retained-overlay pixel proof resizes the source sample to the output's raster
 (`same_raster`) so an upscaled render can still be matched; no sharpening is applied.
 
+2026-11-24: source capture reopens its page when the bound tab is missing for four polls
+(at most twice) and reports "source page did not stay open" instead of a bare `ValueError`.
+
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
 at the shared action guard. Watched likes and Replies continue. This prevents an

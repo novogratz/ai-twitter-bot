@@ -309,3 +309,28 @@ def test_creator_of_a_big_reel_joins_the_rotation_before_any_inspection(video_st
                                    state="held", reason=reason)
     assert instagram_browse.learned_creators(video_store, cfg) == ["big.creator"]
     assert instagram_browse.learned_creators(video_store, replace(cfg, audience_min_likes=0)) == []
+
+
+def test_capture_reopens_a_source_tab_that_vanished_and_names_a_page_that_never_stays(video_store, video_cfg, at, monkeypatch):
+    """2026-11-24: beside Replies the reel tab was gone on every poll; twelve reels ended in a bare ValueError."""
+    from src.x import safari, safari_video
+    now = at().timestamp()
+    cfg = replace(video_cfg, platforms={"instagram": {"safari_player": True}})
+    connectors.ingest(video_store, "instagram", [{"canonical_url": "https://www.instagram.com/reel/AAAAA1",
+        "source_id": "AAAAA1", "creator": "creator", "permission_id": "grant"}], now, cfg)
+    opens = []
+    monkeypatch.setattr(safari_video, "browser_session", lambda: nullcontext())
+    monkeypatch.setattr(safari, "open_url", lambda url: opens.append(url) or True)
+    monkeypatch.setattr(safari, "close_front_tab", lambda: None)
+    monkeypatch.setattr(native_source.time, "sleep", lambda seconds: None)
+    monkeypatch.setattr(safari, "_run_js", lambda js, **kw: json.dumps(reel_payload(now, "AAAAA1"))
+                        if len(opens) == 2 and kw.get("target_url", "").endswith("/reels/AAAAA1") else "")
+    assert source_browser.capture_next(video_store, cfg, now) == "source media captured"
+    assert len(opens) == 2
+    connectors.ingest(video_store, "instagram", [{"canonical_url": "https://www.instagram.com/reel/BBBBB2",
+        "source_id": "BBBBB2", "creator": "creator", "permission_id": "grant"}], now, cfg)
+    opens.clear()
+    monkeypatch.setattr(safari, "_run_js", lambda js, **kw: "missing value")
+    assert source_browser.capture_next(video_store, cfg, now + 120) == "source player unavailable"
+    assert len(opens) == 3   # the first open and two more, never an endless loop
+    assert "did not stay open" in video_store.rows("SELECT reason FROM candidates WHERE source_id='BBBBB2'")[0]["reason"]
