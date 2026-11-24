@@ -54,6 +54,14 @@ no Reply, watched like or repost job. Started through `bin/watchdog.sh` with a
 120-minute stall window so a crash does not cost the two weeks. A plain
 `./bin/run.sh` later brings the Replies back. Later stop requests override this.
 
+The Operator then reports "so many bangers" on Instagram and no post. The first
+hour showed the inspector as the bottleneck (37 Codex calls spent the 2M-token
+day) and half the search leads below the audience floor. The Account now reads
+one Instagram page per five minutes, takes twelve leads per read, allows 240
+Codex calls and 8M input tokens a day with 200 reserved for inspection, and cuts
+public web search to one call an hour. A clip the agent had set aside as a
+suspected repeat was compared with the earlier post, found different and restored.
+
 2026-11-23, Operator pause at 21:50 Toronto — Stop and keep the bot stopped
 until a new explicit start/restart request. This overrides the latest resume
 authorization. The worker stopped at 21:50:35; no main process or active

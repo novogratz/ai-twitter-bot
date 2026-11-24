@@ -30,7 +30,7 @@ discovery_prompt_file = "video_discovery_prompt.md"
 discovery_memory_file = "video_memory.json"
 query_bank_file = "video_query_bank.txt"
 adaptive_discovery = true
-discovery_calls_per_hour = 3
+discovery_calls_per_hour = 1 # web search finds almost nothing on Instagram; keep Codex for inspection
 ready_reserve_min = 1
 banger_min_score = 62.0
 x_max_views = 50000
@@ -81,9 +81,9 @@ inspection_provider = "codex"
 # Codex refused it and every inspection and public search failed from then on.
 codex_model = "gpt-6.1-sol"
 codex_timeout_seconds = 180
-codex_daily_calls = 96
-codex_daily_input_tokens = 2000000
-codex_inspection_reserve = 48
+codex_daily_calls = 240 # 2026-11-23: inspection was the bottleneck (37 calls spent the old token budget)
+codex_daily_input_tokens = 8000000
+codex_inspection_reserve = 200
 codex_max_reply_calls = 2
 inspection_fps = 1 # temporal inspection across the full clip; reserve capacity for the ready buffer
 font_file = "/System/Library/Fonts/Supplemental/Arial.ttf"
@@ -119,10 +119,10 @@ permission_reference = ""
 # and Instagram keyword search. Creators whose inspected reel showed a target in a
 # synthetic parody join the grid rotation on their own. Leads only; every gate still decides.
 safari_browse = true
-browse_seconds = 900        # one grid or search page per fifteen minutes at most
+browse_seconds = 300        # one grid or search page per five minutes at most (operator: push harder, 2026-11-23)
 browse_scrolls = 2
 browse_min_views = 20000    # creator grids: only reels the audience already picked
-browse_leads_per_read = 6
+browse_leads_per_read = 12
 browse_queries = [
   "ai trump elon dance",
   "ai elon musk singing parody",
