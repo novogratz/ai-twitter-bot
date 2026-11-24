@@ -37,8 +37,14 @@ inspector as trusted policy: a clip that mocks or weakens Trump or Elon is
 performance, audio, safety, output QC, watermark, novelty,
 permanent dedup, spacing and receipts are unchanged. No posting quota.
 
+"Cleanly": the render stamped the handle across the source's bottom subtitles
+on every frame. Measured source OCR inside the cut now picks the quieter band,
+top or bottom, and output QC confirmed the handle and retained subtitles apart.
+
 Validated live without publishing: 12 leads in two reads, four reels captured
-and downloaded, inspection completing in about 100 seconds. The 21:50 pause
+and downloaded, inspection, render and output QC completing in about two
+minutes a clip. The first rendered reel was held on a weak opening shot: the
+output gate still refuses a clip, an audience alone never publishes one. The 21:50 pause
 remains binding: `.bot_disabled` stays armed until an explicit start request.
 
 2026-11-23, Operator pause at 21:50 Toronto — Stop and keep the bot stopped
