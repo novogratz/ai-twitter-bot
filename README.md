@@ -132,6 +132,7 @@ The bot sleeps from **23:30 to 04:30 Toronto**; older mentions of a midnight bed
 Video read turns reuse the Safari account proof for fifteen minutes and the shared daily source
 request budget is 3,000 (an empty 07:00 slot on 2026-11-24 traced to both).
 Short video captions pass the English-only check through the video publisher's own `short_title` path.
+Videos render at 1080p 60 fps (`upscale`) and lose the source's corner logo (`remove_source_logos`).
 
 **2026-11-23: Instagram bangers, audience-proven.** Video posts run again beside
 curated Replies (`VIDEO_WITH_REPLIES=1`, `VIDEO_LIVE=1`). Leads come from

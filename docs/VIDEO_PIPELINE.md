@@ -396,6 +396,11 @@ seconds. Reopening Home each minute beside Replies failed 61 times in a night an
 stopped preparation. `request_budget` is one daily total across platforms; X video
 segments exhausted 460 before 07:00, so the Account sets 3,000.
 
+2026-11-24 render options: `upscale` (1080-pixel short side, Lanczos, constant 60 fps by
+frame repetition; `render_timeout_seconds = 300`) and `remove_source_logos` (OCR-measured
+persistent corner text removed with `delogo` before the crop; `removed_logo_boxes` is kept
+in the inspection record and reported to the output inspector).
+
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
 at the shared action guard. Watched likes and Replies continue. This prevents an

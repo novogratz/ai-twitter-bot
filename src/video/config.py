@@ -51,6 +51,8 @@ class VideoConfig:
     initial_history_pages: int = 0
     allow_unknown_momentum: bool = False
     allow_source_overlays: bool = False
+    upscale: bool = False              # render 1080p at 60 fps
+    remove_source_logos: bool = False  # blur persistent corner logos/credits measured by OCR
     caption_disclosure: bool = True
     grace_seconds: int = 600
     min_spacing_seconds: int = 900
@@ -126,7 +128,7 @@ class VideoConfig:
             raise ValueError("startup_on_boot must be a boolean")
         if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 13:
             raise ValueError("scheduled_daily_cap must be 5..13")
-        for name in ("auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
+        for name in ("upscale", "remove_source_logos", "auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
