@@ -403,7 +403,7 @@ def render(original, output, info, evidence, cfg):
     clean = "".join(f"delogo=x={lx}:y={ly}:w={lw}:h={lh}," for lx, ly, lw, lh in logos)
     # Operator, 2026-11-24: always 1080p at 60 fps. Lanczos with a light sharpen;
     # 60 fps repeats source frames, it invents no motion.
-    sizing = (f"scale={ow}:{oh}:flags=lanczos,unsharp=5:5:0.5:5:5:0.0,fps=60" if cfg.upscale else f"scale={ow}:{oh}")
+    sizing = (f"scale={ow}:{oh}:flags=lanczos,fps=60" if cfg.upscale else f"scale={ow}:{oh}")
     filters = f"[0:v]{clean}{cut}crop={w}:{h}:{x}:{y},{sizing},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
     if edit:
         filters += f";[0:a:0]atrim=start={edit['start_seconds']}:end={edit['end_seconds']},asetpts=PTS-STARTPTS[aout]"

@@ -400,6 +400,8 @@ segments exhausted 460 before 07:00, so the Account sets 3,000.
 frame repetition; `render_timeout_seconds = 300`) and `remove_source_logos` (OCR-measured
 persistent corner text removed with `delogo` before the crop; `removed_logo_boxes` is kept
 in the inspection record and reported to the output inspector).
+The retained-overlay pixel proof resizes the source sample to the output's raster
+(`same_raster`) so an upscaled render can still be matched; no sharpening is applied.
 
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
