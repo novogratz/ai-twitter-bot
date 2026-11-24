@@ -294,3 +294,18 @@ def test_post_only_start_keeps_the_video_job_and_drops_replies(settings_override
     settings_override(REPLY_INVITED_ONLY=True, REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True, REPLY_REVIEW_ONLY=False,
                       VIDEO_ENABLED=True, VIDEO_LIVE=True, VIDEO_WITH_REPLIES=True)
     assert [job.id for job in main.build_scheduler(post_only=True).get_jobs()] == ["video_health_job"]
+
+
+def test_creator_of_a_big_reel_joins_the_rotation_before_any_inspection(video_store, video_cfg, at):
+    """2026-11-24: 258K-like search finds were captured once and their creators never read again."""
+    now = at().timestamp()
+    cfg = replace(cfg_for(video_cfg, creators=[]), audience_min_likes=2000)
+    for code, creator, likes, reason in (("AAAAA1", "big.creator", 258000, ""), ("BBBBB2", "small", 3000, ""),
+                                         ("CCCCC3", "off.topic", 90000, "lead refused: caption")):
+        connectors.ingest(video_store, "instagram", [{"source_id": code, "creator": creator,
+            "canonical_url": "https://www.instagram.com/reel/" + code}], now, cfg)
+        row = video_store.rows("SELECT id,document FROM candidates WHERE source_id=?", (code,))[0]
+        video_store.save_candidate(row["id"], json.loads(row["document"]) | {"source_stats": {"likes": likes}}, now,
+                                   state="held", reason=reason)
+    assert instagram_browse.learned_creators(video_store, cfg) == ["big.creator"]
+    assert instagram_browse.learned_creators(video_store, replace(cfg, audience_min_likes=0)) == []

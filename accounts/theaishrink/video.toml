@@ -124,19 +124,12 @@ browse_scrolls = 2
 browse_min_views = 20000    # creator grids: only reels the audience already picked
 browse_leads_per_read = 12
 browse_queries = [
-  "ai trump elon dance",
-  "ai elon musk singing parody",
-  "ai trump singing parody",
-  "ai jensen huang dance",
-  "ai sam altman parody song",
-  "ai tech billionaires boy band",
-  "ai trump musk music video",
-  "ai zuckerberg dance parody",
-  "ai zuckerberg elon song",
-  "AI 马斯克 特朗普 跳舞",
-  "AI 黄仁勋 唱歌",
-  "ai科技天团",
-  "ai trump elon what is love",
+  # 2026-11-24: plain "<name> ai" finds the big reels (258K-like Jensen clips were missed by narrow dance/singing queries).
+  "jensen huang ai", "elon musk ai", "trump ai", "sam altman ai", "zuckerberg ai", "dario amodei ai",
+  "jensen huang ai parody", "elon musk ai parody", "trump ai parody", "trump elon ai",
+  "ai jensen huang singing", "ai elon musk singing", "ai trump singing", "ai trump elon dance",
+  "nvidia jensen ai meme", "tech ceo ai parody", "ai tech billionaires boy band",
+  "黄仁勋 ai", "马斯克 ai", "特朗普 ai", "ai科技天团", "AI 马斯克 特朗普 跳舞",
 ]
 # feed = "/absolute/path/to/authorized-instagram-feed.json"
 # Alternatively: provider_command = ["/absolute/path/to/licensed-provider-adapter"]

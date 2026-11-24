@@ -50,13 +50,22 @@ def count(text):
 
 
 def learned_creators(store, cfg, limit=40):
-    """Creators whose inspected reel showed a target in a synthetic parody."""
+    """Creators worth revisiting: an inspected target parody, or a reel the audience made big.
+
+    2026-11-24: search surfaced 258K- and 78K-like reels whose creators were never
+    read again. Five times the like floor on an exact reel page earns its creator a
+    place in the grid rotation; the grid then ranks that creator's reels by plays."""
     result = []
+    big = max(1, cfg.audience_min_likes) * 5
     for row in store.rows("SELECT creator,document FROM candidates WHERE platform='instagram' "
-                          "AND json_extract(document,'$.inspection.synthetic_parody') ORDER BY updated DESC LIMIT 200"):
-        review = json.loads(row["document"]).get("inspection", {})
-        if (USERNAME.fullmatch(row["creator"] or "") and set(review.get("cast", [])) & set(cfg.targets)
-                and row["creator"] not in result):
+                          "AND state NOT IN ('rejected','duplicate') AND reason NOT LIKE 'lead refused%' "
+                          "AND (json_extract(document,'$.inspection.synthetic_parody') "
+                          "OR json_extract(document,'$.source_stats.likes')>=?) ORDER BY updated DESC LIMIT 300", (big,)):
+        doc = json.loads(row["document"])
+        review = doc.get("inspection", {})
+        proven = review.get("synthetic_parody") and set(review.get("cast", [])) & set(cfg.targets)
+        popular = cfg.audience_min_likes > 0 and (doc.get("source_stats", {}).get("likes") or 0) >= big
+        if USERNAME.fullmatch(row["creator"] or "") and (proven or popular) and row["creator"] not in result:
             result.append(row["creator"])
     return result[:limit]
 
