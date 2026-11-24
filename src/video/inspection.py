@@ -513,6 +513,17 @@ def retained_pixel_matches(source_frames, output, box, watermark_position, *, al
     return {"method": "native_frame_pixels", "source_at": best[1], "frame": best[0], "text_region": measured}
 
 
+def same_raster(source, output):
+    """An upscaled render (2026-11-24) samples larger than its smaller source, and
+    every comparison silently found no frame of equal size. Bring the source
+    sample to the output's raster when the proportions agree; never otherwise."""
+    if source.size == output.size or abs(source.width / source.height - output.width / output.height) > .01:
+        return source
+    resized = source.resize(output.size, Image.LANCZOS)
+    source.close()
+    return resized
+
+
 def source_time(proof, offset):
     """Express a cut-relative match time on the original's clock, whichever path matched."""
     key = "source_at" if "source_at" in proof else "source_sample_at"
@@ -563,10 +574,10 @@ def corroborate_retained_pixels(result, source_review, cfg, unexpected, source_p
                 frames = []
                 aligned = None
                 try:
-                    frames = [(int(path.stem) / 1_000_000, Image.open(path)) for path in nearby]
+                    frames = [(int(path.stem) / 1_000_000, same_raster(Image.open(path), output)) for path in nearby]
                     aligned_file = aligned_dir / output_file.name
                     if aligned_file.is_file():
-                        aligned = at, Image.open(aligned_file)
+                        aligned = at, same_raster(Image.open(aligned_file), output)
                     for item in (item for item in unexpected if item["at"] == at):
                         proof = retained_pixel_matches(frames, output, item["box"], source_review.get("watermark_position", "bottom"), aligned_source=aligned)
                         if proof:

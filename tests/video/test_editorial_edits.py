@@ -212,3 +212,18 @@ def test_upscale_and_logo_settings_are_booleans(video_cfg):
     assert replace(video_cfg, upscale=True, remove_source_logos=True).upscale
     with pytest.raises(ValueError):
         replace(video_cfg, upscale=1)
+
+
+def test_retained_overlay_proof_compares_an_upscaled_output_on_one_raster():
+    # 2026-11-24: a 720-wide source against its 1080 render never had a frame of
+    # equal size, so every upscaled clip with retained text was held.
+    from PIL import Image
+    from src.video import inspection
+    small = Image.effect_noise((360, 640), 40).convert("RGB")
+    big = small.resize((480, 853), Image.LANCZOS)
+    assert inspection.retained_pixel_matches([(1.0, small.copy())], big, [.2, .2, .2, .1], "bottom") is None
+    same = inspection.same_raster(small.copy(), big)
+    assert same.size == big.size
+    assert inspection.retained_pixel_matches([(1.0, same)], big, [.2, .2, .2, .1], "bottom")
+    wide = Image.new("RGB", (640, 360))
+    assert inspection.same_raster(wide, big) is wide   # other proportions are never stretched
