@@ -593,6 +593,10 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PRIORITY_WATCH_REPLY_RETRY_MAX_SECONDS` | int | `900` | floor `20`, ceiling `900` | Maximum repeated watched Reply cooldown; never shortens the initial retry delay. |
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
+| `PRIORITY_WATCH_REPLY_WINDOW_SECONDS` | int | `60` | floor `30`, ceiling `300` | Selective watched actions and Replies are attempted only this long after the original's own timestamp (the Operator's local setting is 120 since 2026-11-25: within two minutes); late work is discarded. A goal, not a delivery guarantee. |
+| `THANKS_PER_CYCLE` | int | `3` | floor `1`, ceiling `10` | Maximum thank-you Replies to commenters per three-minute cycle; ordinary Reply spacing and the daily ceiling still apply. |
+| `THANKS_HOT_MINUTES` | int | `30` | floor `0`, ceiling `120` | After one of our video posts, comments are read every minute for this long and every one may be answered (X rewards early back and forth); afterwards every three minutes. |
+| `THANKS_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `72` | A comment on one of our posts older than this is no longer answered. |
 | `PRIORITY_WATCH_MAX_REPLIES` | int | `1` | floor `1`, ceiling `2` | Maximum Reply generations per dispatch; one selects the newest parent again after each generation. |
 | `PRIORITY_WATCH_CATCHUP_SCROLLS` | int | `3` | floor `0`, ceiling `5` | Collect each search viewport on the first poll and every fifteen minutes; zero disables bounded catch-up. |
 | `PRIORITY_REPOST_MIN_SECONDS` | int | `60` | floor `60` | Minimum gap for independently authorized watched reposts, including uncertain attempts. |

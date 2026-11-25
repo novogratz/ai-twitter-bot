@@ -132,7 +132,10 @@ def test_the_account_keeps_its_schedule_and_sources_after_the_rename():
     assert loaded.publication_si_wording is True
     assert loaded.previous_handles == ("TheAIShrink",)
     assert loaded.auto_engage_handles == ("elonmusk",)
+    # Operator, 2026-11-25: watched actions follow one selection (about three posts in ten).
     assert loaded.auto_engage_all_topics and loaded.watched_reposts_independent
+    assert loaded.watched_action_share == 0.5
+    assert loaded.thank_commenters and "fan" in loaded.watched_reply_style and "Thanks" in loaded.thanks_style
     assert loaded.reply_excluded_handles == ()
 
 

@@ -73,6 +73,17 @@ def _no_video_api(monkeypatch):
 _UNWALLED = {}
 
 
+@_pytest.fixture(autouse=True)
+def _engine_defaults_for_optional_account_features(monkeypatch):
+    """The live Account's 2026-11-25 options (half of a watched author's other
+    posts, thanking commenters) are tested where they are named; every other
+    test sees the engine defaults."""
+    from dataclasses import replace
+    from src.core import account
+    loaded = account.current
+    monkeypatch.setattr(account, "current", lambda: replace(loaded(), watched_action_share=1.0, thank_commenters=False))
+
+
 @_pytest.fixture
 def watched_account(monkeypatch):
     """Optional watched-author behavior is explicit test setup, never live policy."""

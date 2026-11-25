@@ -126,6 +126,11 @@ Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
 and unresolved sends remain intact; news is off and the earlier video schedule
 and conversational/specialist Voice are restored.
 
+**2026-11-25:** the bot thanks each person who comments on our posts, once (`thank_commenters`,
+`commenter_thanks_job`; every comment in a post's first thirty minutes). For the watched author it answers about three
+posts in ten within two minutes, with a GIF when one fits, always likes and reposts those, and likes and reposts half
+of the others (`watched_action_share`).
+
 **2026-11-25:** one video window an hour, 07:00 to 23:00 Toronto (seventeen; twenty the day before). Sources come from
 outside X and a clip with any matching copy found on X is held (`x_exclusive`); the output may show no logo, handle or
 credit but `@thesimaximalist` (`clean_watermarks_only`); a reel below the audience floor can pass on a 75/100 rating

@@ -1,5 +1,39 @@
 # AGENTS.md
 
+2026-11-25, thank every commenter; answer about three watched posts in ten — The
+Operator, with notes from a coach: "always reply 1 time when people reply on our
+posts ... Thanks and ... the emoticon ... do it naturally like dont spam", "first
+30 minutes of a post, reply to every comment"; for Elon "Dont auto retweet like
+and comment all his posts. Do it maybe for 30% ... the one that are relevant to
+us ... within 2 minutes ... Ideally add a GIF", "Always like and retweet the ones
+you respond to. the other 70%, retweet and like 50% of them", "be nice and sharp
+... you are a fan". The bot stays paused; this loads on the next requested start.
+
+- `thank_commenters = true` (Account): `commenter_thanks_job` reads the mentions
+  tab and sends one short Reply under each comment that sits directly under one
+  of our posts. This is the one conversation turn `standalone_replies_only` now
+  allows; debate, replyback and babysitter stay off. The browser refuses a
+  comment whose parent is not ours, a thread where we already appear twice (a
+  reply to our answer) and a thread we already answered. `judge_comment` and
+  `judge_thanks` own the rules: opt-in, Blocked account, own post, opt-out, one
+  per comment for ever (Replied store), one per author per day, daily ceiling,
+  spacing, at most 12 words and 80 characters, no link, mention or hashtag,
+  never the same line as one of the last three. `thank_commenter` ships only
+  with an own-status receipt. A full pass runs every three minutes, every minute
+  for thirty minutes after one of our video posts (`THANKS_HOT_MINUTES`), then
+  up to ten per pass. `thanks_style` carries the Operator's own recent answers.
+- Watched author: `watched_action_share = 0.5`. A post the selector approved or
+  that we answered is always liked and reposted; of the other posts a stable
+  draw on the status ID takes half, once the Reply window has closed. The
+  selector prompt asks for about three posts in ten, the relevant ones, with no
+  quota; `watched_reply_style` holds the tone (his own short register, a fan,
+  nice and sharp). The Reply window is `PRIORITY_WATCH_REPLY_WINDOW_SECONDS`
+  (default 60, 120 locally): a goal, late work is still discarded.
+- GIF: the selector may return a two or three word `gif` search;
+  `reply_to_tweet(gif_query=...)` picks the first result of X's own GIF search
+  in the composer. Best effort: the Reply ships without one when the picker
+  fails. Verified live on an empty draft; no GIF has been sent yet.
+
 2026-11-25, hourly videos from outside X, no mark but ours — After a pause at
 09:16 Toronto (the bot stays stopped until an explicit start), the Operator sets
 the video rules: "1 post every 1 hour", the best candidate, never a duplicate,

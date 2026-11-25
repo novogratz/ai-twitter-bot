@@ -561,7 +561,7 @@ def is_model_refusal(text: str) -> bool:
 
 
 def validate(text: str, kind: str = "original", *, source_language: str = "", source_url: str = "",
-             short_title: bool = False) -> Tuple[bool, str]:
+             short_title: bool = False, short_reaction: bool = False) -> Tuple[bool, str]:
     """Validate a draft or a watched source. kind ∈ {"original", "reply", "source"}.
 
     English-only Accounts require English on all surfaces. Otherwise
@@ -608,7 +608,9 @@ def validate(text: str, kind: str = "original", *, source_language: str = "", so
 
     from . import reply_selection
     simple_reaction = kind == "reply" and reply_selection.simple_reaction(source_url, text)
-    if kind == "reply" and not simple_reaction and _is_lazy_reply(text):
+    # 2026-11-25: a thank-you to a commenter ("Thanks 🙏") is short on purpose; its
+    # caller passes short_reaction and bounds the text itself.
+    if kind == "reply" and not simple_reaction and not short_reaction and _is_lazy_reply(text):
         return (False, "low-effort reply (too short / generic — must be substantive)")
 
     if kind == "original":
@@ -651,7 +653,8 @@ def validate(text: str, kind: str = "original", *, source_language: str = "", so
         # ("Jensen VS Dario ❤️") has no detectable language; every short
         # caption was refused at the Post click. Unknown passes for that
         # caller only; detected French and the French cues below still refuse.
-        title = short_title and kind == "original" and lang == "unknown" and len(text) <= 45
+        title = ((short_title and kind == "original" or short_reaction and kind == "reply")
+                 and lang == "unknown" and len(text) <= 45)
         if ((lang != "en" and not short_english and not source_english and not title)
                 or reply_language.looks_french(prose) or _UNAMBIGUOUS_FRENCH_CUES.search(prose)
                 or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):

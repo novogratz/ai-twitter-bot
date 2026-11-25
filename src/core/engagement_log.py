@@ -78,6 +78,19 @@ def recent_replies(limit: int = 20) -> list[str]:
         return list(_memory)[-max(1, limit):]
 
 
+def recent_by_source(prefix: str, limit: int = 6) -> list[str]:
+    """The latest confirmed Reply texts of one source tag, newest first."""
+    path = os.fspath(config.ENGAGEMENT_LOG_FILE)
+    if not os.path.exists(path):
+        return []
+    found = []
+    with open(path, newline="") as handle:
+        for row in csv.reader(handle):
+            if len(row) >= 5 and row[1] == "reply" and row[4].startswith(prefix):
+                found.append(row[2])
+    return found[::-1][:max(1, limit)]
+
+
 def _extract_author(target_url: str) -> str:
     """Pull @handle from a tweet URL like https://x.com/<author>/status/<id>."""
     if not target_url:

@@ -61,7 +61,7 @@ def _read_start_times(handles) -> dict:
 
 def _candidates(handle: str, tweets: list, started: datetime) -> list:
     declaration = reply_source.Declaration(
-        max_age=(timedelta(seconds=watch_curation.FAST_MAX_AGE_SECONDS)
+        max_age=(timedelta(seconds=watch_curation.window())
                  if watch_curation.fast() and not watch_curation.independent_actions()
                  else timedelta(hours=settings.get("PRIORITY_WATCH_MAX_AGE_HOURS"))),
         root_only=True, author=handle)
@@ -289,7 +289,8 @@ def run_priority_reply_cycle():
             candidate = replace(candidate, text=selected["text"], reply=reply,
                                 provider=selected["provider"], model=selected["model"],
                                 likes=selected["likes"], views=selected["views"],
-                                expires_at=x_urls.posted_at(candidate.url).timestamp() + watch_curation.FAST_MAX_AGE_SECONDS)
+                                expires_at=x_urls.posted_at(candidate.url).timestamp() + watch_curation.window(),
+                                gif=selected.get("gif", ""))
         if not _ready(candidate.url, "reply"):
             continue
         verdict = reply_admission.judge_parent(candidate.url)

@@ -70,6 +70,7 @@ class Candidate:
     provider: str = ""  # the provider and model that wrote `reply`
     model: str = ""
     is_reply: bool = False
+    gif: str = ""  # a reaction GIF search for the composer; best effort, never required
     queued_at: float = field(default_factory=time.monotonic, compare=False, repr=False)
     expires_at: float | None = None  # buffered source freshness, never a posting claim
     likes: int | None = None  # observed parent counter; missing is unknown
@@ -407,6 +408,8 @@ def _send(job: Job, candidate: Candidate, author: str, generation: Generation) -
             start = time.monotonic()
             try:
                 source = {"expected_text": candidate.text} if settings.get("REPLY_INVITED_ONLY") else {}
+                if candidate.gif:
+                    source["gif_query"] = candidate.gif
                 shipped = twitter_client.reply_to_tweet(url, reply, debate_turn=job.debate_turn,
                                                         on_refused=refusals.append, **source)
             except (OutsideActiveHours, StateUnreadable):

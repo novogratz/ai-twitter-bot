@@ -213,7 +213,7 @@ def test_expired_work_is_refused_without_a_model_or_browser(monkeypatch):
     monkeypatch.setattr(twitter_client, "like_tweet", lambda *a: pytest.fail("liked stale source"))
     curated_reposts.run_cycle()
     assert twitter_client.like_priority_post(source["url"]) is twitter_client.LikeOutcome.REFUSED
-    assert "first-minute" in watch_curation.refusal(source["url"])
+    assert "submission window" in watch_curation.refusal(source["url"])
 
 
 def test_direct_like_caller_rechecks_selected_source_under_browser_lock(monkeypatch):
