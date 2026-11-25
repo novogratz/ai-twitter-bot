@@ -74,3 +74,36 @@ def test_candidate_carries_the_gif_to_the_send(monkeypatch):
     from src.replies import reply_pipeline
     assert reply_pipeline.Candidate("u", "t", "s", gif="rocket launch").gif == "rocket launch"
     assert reply_pipeline.Candidate("u", "t", "s").gif == ""
+
+
+def test_short_watched_reply_with_no_detectable_language_is_admitted(promotion_account, settings_override):
+    # 2026-11-25, live test: the selector's line for a watched post was refused as "detected unknown".
+    from src.guards import reply_admission
+    settings_override(REPLY_BROAD_DISCOVERY=True)
+    text = "Passenger seat finally pulls its weight."
+    assert reply_admission.judge_text("elonmusk", text, source_url="https://x.com/elonmusk/status/2125516475712844116")
+    # the same day: one shared word (" on ") made an English line read as French at 100%
+    assert reply_admission.judge_text("elonmusk", "Best passenger on a long drive.", source_url="https://x.com/elonmusk/status/2125516475712844116")
+    assert not reply_admission.judge_text("elonmusk", "On est bien sur la route.", source_url="https://x.com/elonmusk/status/2125516475712844116")
+    assert not reply_admission.judge_text("someone", text, source_url="https://x.com/someone/status/2125516475712844116")
+    assert not reply_admission.judge_text("elonmusk", "Le siège passager sert enfin.", source_url="https://x.com/elonmusk/status/2125516475712844116")
+
+
+def test_prepared_watched_reply_expires_with_the_configured_window_not_a_fixed_minute():
+    import inspect
+    from src.replies import reply_pipeline
+    source = inspect.getsource(reply_pipeline)
+    assert "timestamp() + 60)" not in source and "timestamp() + watch_curation.window())" in source
+
+
+def test_watched_quote_post_is_matched_on_its_outer_text(monkeypatch, promotion_account, settings_override):
+    # 2026-11-25, live test: the opened page joins the quoted post's text; the review holds the outer text.
+    from src.guards import reply_selection
+    settings_override(REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True)
+    seen = []
+    monkeypatch.setattr(reply_selection, "source_refusal", lambda url, text: "")
+    monkeypatch.setattr(reply_selection, "evidence", lambda url, text: {"evidence": {}})
+    monkeypatch.setattr(watch_curation, "reviewed", lambda page: seen.append(page["text"]) or page["text"] == "outer")
+    url = "https://x.com/elonmusk/status/2125464682580623467"
+    assert reply_selection.page_refusal(url, "outer", {"url": url, "text": "outer\nquoted text"}) == ""
+    assert seen == ["outer"]

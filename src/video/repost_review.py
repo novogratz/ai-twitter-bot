@@ -108,8 +108,10 @@ def _capture(page, folder, *, max_seconds=MAX_SECONDS):
 SHARE_PROMPT = """This clip would be posted on our own profile with a short caption of ours above it.
 take: that caption. Two to four plain English words reacting to what the clip shows, as a fan would, then at most
 one emoji. No name you only know from a face, no hashtag, no link, no mention, no quotation of the creator's text.
-brand_fit: true only when the clip suits an account of AI memes and cinematic tech parodies and respects this
-Operator taste (a portrayal it forbids is brand_fit=false): """
+brand_fit: true when the clip suits an account of AI memes and cinematic tech parodies. Any funny AI-made clip
+qualifies: the people named in the Operator taste below are a preference here, never a requirement (2026-11-25:
+a superhero carpool gag was refused for having none of them). Only its portrayal rule is binding: a clip showing
+someone the taste protects in a bad light is brand_fit=false. Operator taste: """
 
 
 def take_ok(text):

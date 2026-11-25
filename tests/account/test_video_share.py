@@ -67,7 +67,7 @@ def test_an_uncertain_share_holds_the_next_one_and_a_proven_failure_releases_the
 
 def test_our_own_video_post_counts_for_the_spacing(sharing, monkeypatch):
     from src.video import config as video_config
-    monkeypatch.setattr(video_config, "legacy_usage", lambda now: (1, now - 120))
+    monkeypatch.setattr(video_config, "legacy_usage", lambda now: (1, now.timestamp() - 120))
     assert "spacing" in store.refusal()
 
 
@@ -98,7 +98,7 @@ def test_cycle_reviews_one_lead_and_posts_only_an_approved_take(sharing, monkeyp
 def test_write_path_checks_the_exact_video_in_the_composer_before_and_after_the_paste():
     import inspect
     source = inspect.getsource(twitter_client.post_video_share)
-    for rule in ("Post Video", "postVideoRemove", "composed(\"\")", "reply_metrics.capture", "video_share_store.claim"):
+    for rule in ("Post Video", "postVideoRemove", "composed(\"\")", "_share_receipt(take, since)", "video_share_store.claim"):
         assert rule in source
 
 
@@ -112,3 +112,25 @@ def test_live_account_has_searches_and_the_scheduler_runs_the_job_only_when_enab
     assert "video_share_job" in {job.id for job in main.build_scheduler().get_jobs()}
     settings_override(VIDEO_SHARE_ENABLED=False)
     assert "video_share_job" not in {job.id for job in main.build_scheduler().get_jobs()}
+
+
+def test_a_fresh_claim_does_not_hold_its_own_submission_back(sharing):
+    # 2026-11-25, first live share: the claim made a second earlier read as "uncertain share held".
+    assert store.claim(URL, "Jensen cooked 🔥", "111")
+    assert "uncertain" in store.refusal() and not store.refusal(own=URL)
+
+
+def test_share_receipt_is_read_on_our_own_profile_by_words_and_time(monkeypatch):
+    # 2026-11-25, first live share: it posted, and the receipt was looked for on the source page.
+    import json
+    from datetime import datetime, timezone
+    since = datetime(2026, 11, 25, 16, 45, 40, tzinfo=timezone.utc)
+    own = "https://x.com/" + next(iter(__import__("src.core.account", fromlist=["x"]).own_handles()))
+    rows = [{"href": own + "/status/2107607335971463430", "at": "2026-10-06T23:02:01.000Z", "text": "Superhero carpool chaos"},
+            {"href": own + "/status/2125632102364315980", "at": "2026-11-25T16:46:00.000Z", "text": "Superhero carpool chaos"},
+            {"href": "https://x.com/other/status/2125632102364315981", "at": "2026-11-25T16:46:00.000Z", "text": "Superhero carpool chaos"}]
+    monkeypatch.setattr(twitter_client.safari, "open_url", lambda url: True)
+    monkeypatch.setattr(twitter_client.time, "sleep", lambda s: None)
+    monkeypatch.setattr(twitter_client.safari, "_run_js", lambda *a, **k: json.dumps(rows))
+    assert twitter_client._share_receipt("Superhero carpool chaos 😂", since).endswith("/status/2125632102364315980")
+    assert twitter_client._share_receipt("Another take 😂", since) == ""

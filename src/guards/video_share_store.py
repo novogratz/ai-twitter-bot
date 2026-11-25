@@ -67,12 +67,13 @@ def eligible(url):
                 and timedelta(0) <= age <= timedelta(hours=settings.get("VIDEO_SHARE_MAX_AGE_HOURS")))
 
 
-def refusal(url="", media_id="", *, preparing=False):
-    """Why nothing may be shared now. `preparing` asks only whether a review is worth starting."""
+def refusal(url="", media_id="", *, preparing=False, own=""):
+    """Why nothing may be shared now. `preparing` asks only whether a review is worth starting.
+    `own`: the status being submitted, whose fresh claim must not hold itself back."""
     if not settings.get("VIDEO_SHARE_ENABLED"):
         return "video shares disabled"
     now = active_hours.now_local()
-    data = entries()
+    data = {sid: row for sid, row in entries().items() if sid != x_urls.status_id(own)}
     if url and (not eligible(url) or contains(url, media_id)):
         return "video already shared, too old or not shareable"
     times = _times(data, now)
@@ -93,7 +94,7 @@ def refusal(url="", media_id="", *, preparing=False):
     latest = [t.timestamp() for t in times]
     try:
         from ..video.config import legacy_usage
-        if own := legacy_usage(now.timestamp())[1]:
+        if own := legacy_usage(now)[1]:  # an aware datetime; a float raised and stopped every share (first live test)
             latest.append(own)
     except Exception:
         return "own video history unreadable"

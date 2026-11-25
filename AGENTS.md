@@ -1,5 +1,25 @@
 # AGENTS.md
 
+2026-11-25, first live sends and what they caught — On the Operator's "lets go",
+one thank-you (https://x.com/thesimaximalist/status/2125622302717177919), one
+watched Reply with a GIF (https://x.com/thesimaximalist/status/2125626095772786968)
+and one video share (https://x.com/thesimaximalist/status/2125632102364315980)
+shipped, the two-minute window lifted for that one test on an older post. Nine
+defects surfaced and are fixed with tests: the submission reservation applied
+ordinary Reply text rules to a thank-you; a short watched Reply with no
+detectable language, or with one word both languages share (" on "), was refused
+as not English; the prepared watched Reply still expired after a fixed sixty
+seconds; a watched quote post was compared with its quoted text included and
+always refused; that refusal was silent and now logs its reason; the selector's
+twenty-second model limit cut two of seven calls (thirty now); the video
+history was asked with a float where it wants an aware time, which stopped every
+share and the thirty-minute thank-you pace; a fresh share claim held its own
+submit back; the share receipt was looked for on the source page instead of our
+profile, and the composer text check counted an emoji X draws as an image.
+Share searches use plain words plus the job's own `since:` date (emoji
+alternatives returned nothing), and the cast in the video taste is a preference
+for shares, never a requirement.
+
 2026-11-25, viral AI videos from X with a short take — The Operator's coach:
 "quote big viral AI videos with a 2-4 word take ... right click on the actual
 video ... and click post. do it at least for 4 to 6 videos a day ... between 8

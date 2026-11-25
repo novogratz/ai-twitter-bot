@@ -280,8 +280,8 @@ def test_slow_model_cannot_revive_expired_source(monkeypatch):
     monkeypatch.setattr(priority_watch, "discovered", lambda: [reply_pipeline.Candidate(source["url"], TEXT, "WATCH")])
     monkeypatch.setattr(twitter_client, "read_priority_post", lambda target: source)
     def generate(call, **kwargs):
-        assert call.timeout == 20
-        assert 19 <= call.profile.deadline - curated_reposts.time.monotonic() <= 20
+        assert call.timeout == 22  # forty seconds left, eighteen kept for the page and the composer
+        assert 21 <= call.profile.deadline - curated_reposts.time.monotonic() <= 22
         clock(monkeypatch, NOW + timedelta(seconds=41))
         return reply_generator.Generation(reply_generator.Outcome.WRITTEN, "en", json.dumps(verdict()))
     monkeypatch.setattr(reply_generator, "generate", generate)

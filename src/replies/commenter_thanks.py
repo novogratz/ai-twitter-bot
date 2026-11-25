@@ -65,11 +65,14 @@ def hot(now=None):
     if not minutes:
         return False
     try:
+        from ..guards import active_hours
         from ..video import config as video_config
-        last = video_config.legacy_usage(now or time.time())[1]
+        stamp = now or active_hours.now_local()   # an aware datetime: a float raised and the fast pace never started
+        last = video_config.legacy_usage(stamp)[1]
     except Exception:
+        log.exception("[THANKS] Latest video post time unreadable; keeping the three-minute pace")
         return False
-    return bool(last) and 0 <= (now or time.time()) - last <= minutes * 60
+    return bool(last) and 0 <= stamp.timestamp() - last <= minutes * 60
 
 
 _last_cycle = 0.0
