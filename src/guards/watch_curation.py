@@ -7,7 +7,11 @@ from ..x import x_urls
 from . import active_hours, repost_store
 
 _reviews = {}
-FAST_MAX_AGE_SECONDS = 60
+
+
+def window():
+    """Seconds after the original's timestamp in which selective work may still ship."""
+    return settings.get("PRIORITY_WATCH_REPLY_WINDOW_SECONDS")
 
 
 def fast():
@@ -19,7 +23,7 @@ def fresh(url):
     if not fast():
         return True
     age = x_urls.age(url, active_hours.now_local())
-    return age is not None and timedelta(0) <= age < timedelta(seconds=FAST_MAX_AGE_SECONDS)
+    return age is not None and timedelta(0) <= age < timedelta(seconds=window())
 
 
 def eligible(url):
@@ -29,8 +33,24 @@ def eligible(url):
 def independent_actions(url=""):
     """The Account's explicit all-topic permission applies only to watched actions."""
     profile = account.current()
-    return bool(profile.auto_engage_all_topics and profile.watched_reposts_independent
-                and (eligible(url) if url else profile.auto_engage_handles))
+    allowed = bool(profile.auto_engage_all_topics and profile.watched_reposts_independent
+                   and (eligible(url) if url else profile.auto_engage_handles))
+    if not allowed or not url or profile.watched_action_share >= 1:
+        return allowed
+    # Operator, 2026-11-25: a post we selected or answered is always liked and
+    # reposted; of the others a fixed share is, once the Reply window has passed
+    # (so the selection had its chance). The share is a stable draw on the status
+    # ID: the same post gets the same answer on every dispatch and after a restart.
+    from . import replied_store
+    canonical = x_urls.canonical_status_url(url)
+    if selected(url) or canonical in replied_store.load_replied():
+        return True
+    age = x_urls.age(url, active_hours.now_local())
+    if age is None or age < timedelta(seconds=window()):
+        return False
+    import hashlib
+    draw = int(hashlib.sha256(x_urls.status_id(canonical).encode()).hexdigest()[:8], 16) / 0xFFFFFFFF
+    return draw < profile.watched_action_share
 
 
 def actions_fresh(url):
@@ -48,7 +68,7 @@ def refusal(url=""):
         return "only exact configured watched authors are enabled"
     if url and not actions_fresh(url):
         return ("watched source is outside its action freshness window" if independent_actions(url)
-                else "watched source missed the first-minute submission window")
+                else "watched source missed its submission window")
     now = active_hours.now_local()
     ledger = action_guard._ledger()
     used = {x_urls.status_id(target) for action in (action_guard.WATCH_REPOST, action_guard.RETWEET)
@@ -101,10 +121,18 @@ def reviewed(page):
                 page["url"], page["text"], source_language=row.get("language", ""))))
 
 
+def gif_query(value):
+    """A model-proposed GIF search: a few plain words, or nothing."""
+    import re
+    words = re.findall(r"[A-Za-z0-9']+", value if isinstance(value, str) else "")
+    return " ".join(words[:4])[:40] if 1 <= len(words) <= 6 else ""
+
+
 def selected(url):
     """Disposable approved source for the fast dispatchers; each write re-reads it."""
     row = _reviews.get(url, {})
     page = dict(url=url, text=row.get("text", ""), media_id=row.get("media_id", ""),
                 likes=row.get("likes"), views=row.get("views"), reply=row.get("verdict", {}).get("reply", ""),
+                gif=gif_query(row.get("verdict", {}).get("gif", "")),
                 language=row.get("language", ""), provider=row.get("provider", ""), model=row.get("model", ""))
     return page if reviewed(page) else {}

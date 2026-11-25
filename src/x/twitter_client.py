@@ -1283,9 +1283,48 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             and _reply_engagement_ok(url))
 
 
+def _attach_gif(query: str) -> bool:
+    """Pick the first result of X's own GIF search in the open composer.
+
+    Verified live on an empty draft (2026-11-25): the toolbar's gifSearchButton
+    opens the picker, gifSearchSearchInput takes the query, a click on a
+    gifSearchGifImage result attaches it and returns focus to the editor.
+    Any failure closes the picker and leaves the text draft as it was."""
+    dialog = '[role="dialog"]'
+    try:
+        opened = safari._run_js(r"""(()=>{const e=document.querySelectorAll('[role="dialog"] [data-testid="tweetTextarea_0"]');
+          const b=document.querySelector('[role="dialog"] [data-testid="gifSearchButton"]');
+          if(e.length!==1||!b||b.getAttribute('aria-disabled')==='true')return 'no';b.click();return 'ok'})()""", 8, log_prefix="[REPLY]")
+        if opened != "ok":
+            return False
+        time.sleep(2)
+        typed = safari._run_js(r"""(()=>{const i=document.querySelector('[data-testid="gifSearchSearchInput"]');if(!i)return 'no';
+          const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;i.focus();set.call(i,__QUERY__);
+          i.dispatchEvent(new Event('input',{bubbles:true}));return 'ok'})()""".replace("__QUERY__", json.dumps(query)), 8, log_prefix="[REPLY]")
+        picked = "no"
+        if typed == "ok":
+            time.sleep(4)
+            picked = safari._run_js(r"""(()=>{const i=document.querySelector('[data-testid="gifSearchSearchInput"]');
+              const g=[...document.querySelectorAll('[data-testid="gifSearchGifImage"]')];
+              if(!i||i.value!==__QUERY__||!g.length)return 'no';(g[0].closest('[role="button"]')||g[0]).click();return 'ok'})()"""
+                                    .replace("__QUERY__", json.dumps(query)), 8, log_prefix="[REPLY]")
+        if picked == "ok":
+            time.sleep(3)
+        state = json.loads(safari._run_js(r"""JSON.stringify((()=>{const d='__DIALOG__';
+          const picker=!!document.querySelector('[data-testid="gifSearchSearchInput"]');
+          if(picker)document.querySelector(d+' [data-testid="app-bar-back"], '+d+' [data-testid="app-bar-close"]')?.click();
+          const editors=document.querySelectorAll(d+' [data-testid="tweetTextarea_0"]');
+          if(editors.length===1)editors[0].focus();
+          return {picker, editors:editors.length, attached:!!document.querySelector(d+' [data-testid="attachments"] img, '+d+' [data-testid="attachments"] video')};})())"""
+                                          .replace("__DIALOG__", dialog), 8, log_prefix="[REPLY]") or "{}")
+        return bool(picked == "ok" and not state.get("picker") and state.get("editors") == 1 and state.get("attached"))
+    except (TypeError, ValueError):
+        return False
+
+
 @reply_activity()
 def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False,
-                   on_refused=None, expected_text: str = "") -> WriteOutcome:
+                   on_refused=None, expected_text: str = "", gif_query: str = "") -> WriteOutcome:
     """Verify the parent and any required like before composing and submitting.
 
     Returns SHIPPED only when the reply actually shipped, DRY_RUN on a dry
@@ -1422,6 +1461,9 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
             if not _paste_or_abort(admitted_text, "REPLY"):
                 return WriteOutcome.FAILED
             time.sleep(2)  # Wait for paste to complete
+            if gif_query:
+                # Operator, 2026-11-25: "ideally add a GIF". Best effort: the Reply ships without one.
+                log.info("[REPLY] GIF %s: %r", "attached" if _attach_gif(gif_query) else "not attached", gif_query)
 
             log.info("Submitting reply...")
             require_active()  # last point where a stop still means nothing sent
@@ -1513,6 +1555,189 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
     return confirmed_write.run(
         "REPLY", WriteOutcome, would=lambda: f"reply to {tweet_url}: {admitted_text[:160]!r}",
         rows=rows, before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
+        steps=steps, after_record=after_record)
+
+
+def _comment_target(url: str, *, click: bool = False, expected_text: str = "", composing: bool = False) -> dict:
+    """Prove that `url` is a comment sitting directly under one of our posts,
+    in a thread we have not answered, and optionally click its Reply button.
+
+    Returns the comment and parent text, `{"already_replied": True}` when one
+    of our Replies is already visible below it, or {} on anything else."""
+    from ..core import account
+    sid, expected = x_urls.status_id(url), x_urls.author(url)
+    self_handles = account.own_handles()
+    if not sid or not expected or expected in self_handles:
+        return {}
+    js = r"""(() => {
+      const id = __TARGET__, author = __AUTHOR__, click = __CLICK__, self = __SELF__;
+      const expectedText = __EXPECTED_TEXT__, composing = __COMPOSING__;
+      const refused = why => JSON.stringify({refused: why});
+      const articles = [...document.querySelectorAll('article')].filter(a => !a.closest('[role="dialog"]'));
+      const own = (article, selector) => [...article.querySelectorAll(selector)]
+        .filter(el => el.closest('article') === article
+          && !el.closest('[data-testid="quoteTweet"], div[role="link"]'));
+      const status = link => link?.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d+)\/?$/);
+      const permalink = article => own(article, 'a[href]').find(l => status(l) && l.querySelector('time'));
+      const who = article => (status(permalink(article))?.[1] || '').toLowerCase();
+      const body = article => own(article, '[data-testid="tweetText"]')[0]?.innerText || '';
+      const page = location.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/status\/(\d+)\/?$/);
+      const composeRoute = composing && /^\/compose\/(?:post|tweet)\/?$/.test(location.pathname);
+      if (!composeRoute && (!page || page[2] !== id || page[1].toLowerCase() !== author)) return refused('route');
+      const matches = articles.filter(a => status(permalink(a))?.[2] === id);
+      const index = articles.indexOf(matches[0]);
+      if (matches.length !== 1 || index < 1) return refused('comment_position');
+      const article = articles[index], parent = articles[index - 1];
+      if (who(article) !== author || self.includes(author)) return refused('comment_author');
+      // The comment answers us directly, and we appear once above it: a reply
+      // to our own answer is a conversation, which the Account does not continue.
+      if (!self.includes(who(parent))) return refused('parent_not_ours');
+      if (articles.slice(0, index).filter(a => self.includes(who(a))).length !== 1) return refused('conversation');
+      if (articles.slice(index + 1).some(a => self.includes(who(a))))
+        return JSON.stringify({already_replied: true});
+      const text = body(article);
+      if (expectedText !== null && text.trim() !== expectedText.trim()) return refused('comment_text');
+      const buttons = own(article, '[data-testid="reply"]');
+      if (buttons.length !== 1) return refused('reply_button:' + buttons.length);
+      if (composing) {
+        const editors = [...document.querySelectorAll('[role="dialog"] [data-testid="tweetTextarea_0"]')];
+        if (editors.length !== 1) return refused('composer_editors:' + editors.length);
+        const dialog = editors[0].closest('[role="dialog"]');
+        const copies = [...dialog.querySelectorAll('article')].filter(a => a.closest('[role="dialog"]') === dialog);
+        if (copies.length !== 1) return refused('dialog_copies:' + copies.length);
+        const authors = own(copies[0], 'a[href]').filter(l => !l.closest('[data-testid="tweetText"]'))
+          .map(l => l.pathname.match(/^\/([A-Za-z0-9_]{1,15})\/?$/)?.[1].toLowerCase()).filter(Boolean);
+        if (!authors.includes(author)) return refused('copy_author');
+      }
+      if (click) buttons[0].click();
+      return JSON.stringify({url: permalink(article).href, text, parent_text: body(parent),
+                             parent_url: permalink(parent).href, clicked: click});
+    })()""".replace("__TARGET__", json.dumps(sid)).replace("__AUTHOR__", json.dumps(expected))
+    js = js.replace("__CLICK__", json.dumps(click)).replace("__SELF__", json.dumps(sorted(self_handles)))
+    js = js.replace("__EXPECTED_TEXT__", json.dumps(expected_text if click or composing else None))
+    js = js.replace("__COMPOSING__", json.dumps(composing))
+    try:
+        page = json.loads(safari._run_js(js, 10, log_prefix="[THANKS]") or "null")
+    except (TypeError, ValueError):
+        return {}
+    if not isinstance(page, dict):
+        return {}
+    if page.get("refused"):
+        log.info("[THANKS] Comment page refused (%s)%s: %s", page["refused"], " while composing" if composing else "", url)
+        return {}
+    if page.get("already_replied") is True:
+        return {"already_replied": True}
+    if (x_urls.status_id(page.get("url", "")) != sid or x_urls.author(page.get("url", "")) != expected
+            or x_urls.author(page.get("parent_url", "")) not in self_handles or page.get("clicked") is not click):
+        return {}
+    return page
+
+
+def read_comment(url: str) -> dict:
+    """Open a comment's page and return it with our post above it; {} when it is not one."""
+    from ..core import config as core_config
+    if core_config.dry_run():
+        return {}
+    with safari._safari_lock:
+        try:
+            if not safari.open_url(url):
+                return {}
+            time.sleep(6)
+            return _comment_target(url)
+        finally:
+            safari.close_front_tab()
+
+
+@reply_activity()
+def thank_commenter(comment_url: str, reply_text: str, *, expected_text: str, recent: tuple = ()) -> WriteOutcome:
+    """One short Reply under a comment on one of our posts (Operator, 2026-11-25).
+
+    `reply_admission.judge_thanks` owns the rules; the Replied store claims the
+    comment for ever, the ledger gets a Reply row and a Debate turn for the
+    commenter. SHIPPED only with an exact own-status receipt."""
+    from ..guards import action_guard, active_hours, replied_store, reply_admission, reply_budget
+    admitted_text = author = ""
+    submitted_at = None
+
+    def admit():
+        if not active_hours.may_reply():
+            return WriteOutcome.REFUSED
+        return None
+
+    def judge():
+        nonlocal admitted_text, author
+        verdict = reply_admission.judge_thanks(comment_url, reply_text, recent)
+        if not verdict:
+            log.info("[THANKS] not admitted (%s: %s): %s %r", verdict.refusal.value, verdict.reason,
+                     comment_url, (reply_text or "")[:80])
+            return WriteOutcome.REFUSED
+        admitted_text, author = verdict.text, verdict.author
+        return None
+
+    def claim():
+        if not replied_store.claim(comment_url):
+            return WriteOutcome.REFUSED
+        return None
+
+    def steps():
+        nonlocal submitted_at
+        sent = answered_before = False
+        try:
+            if not _activate_or_abort(comment_url) or not _open_or_abort(comment_url, "THANKS"):
+                return WriteOutcome.FAILED
+            time.sleep(6)
+            if not _activate_or_abort(comment_url):
+                return WriteOutcome.FAILED
+            page = _comment_target(comment_url, click=True, expected_text=expected_text)
+            if page.get("already_replied"):
+                answered_before = True
+                return WriteOutcome.REFUSED
+            if not page:
+                return WriteOutcome.REFUSED
+            time.sleep(3)
+            if not _paste_or_abort(admitted_text, "THANKS"):
+                return WriteOutcome.FAILED
+            time.sleep(2)
+            require_active()  # last point where a stop still means nothing sent
+            if not _comment_target(comment_url, expected_text=expected_text, composing=True).get("url"):
+                log.info("[THANKS] Comment or composer changed; leaving the draft unsent: %s", comment_url)
+                return WriteOutcome.REFUSED
+            if why := reply_budget.begin(comment_url, admitted_text):
+                log.info("[THANKS] Submission refused: %s", why)
+                return WriteOutcome.REFUSED
+            sent = True
+            submitted_at = active_hours.now_local()
+            if not _submit_or_abort("THANKS", target=comment_url):
+                return WriteOutcome.UNCONFIRMED
+            time.sleep(2)
+            from . import reply_metrics
+            for attempt in range(3):
+                try:
+                    receipt = reply_metrics.capture(admitted_text, since=submitted_at, parent=comment_url)
+                except Exception:
+                    log.exception("[THANKS] Could not read the submitted Reply receipt")
+                    return WriteOutcome.UNCONFIRMED
+                if receipt:
+                    log.info("[THANKS] Confirmed %s", receipt)
+                    return WriteOutcome.SHIPPED
+                if attempt < 2:
+                    time.sleep(2)
+            log.warning("[THANKS] Submission outcome uncertain: no own-status receipt for %s; no automatic resend.", comment_url)
+            return WriteOutcome.UNCONFIRMED
+        finally:
+            if not sent and not answered_before:
+                replied_store.release(comment_url)
+
+    def after_record():
+        try:
+            reply_budget.confirmed(comment_url)
+        except Exception:
+            log.exception("[THANKS] Receipt saved; submission remains conservatively pending")
+
+    return confirmed_write.run(
+        "REPLY", WriteOutcome, would=lambda: f"thank the commenter at {comment_url}: {admitted_text!r}",
+        rows=lambda: [(action_guard.REPLY, comment_url), (action_guard.DEBATE_TURN, author)],
+        before_lock=(admit,), under_lock=(judge, confirmed_write.DRY_RUN_EXIT, claim),
         steps=steps, after_record=after_record)
 
 

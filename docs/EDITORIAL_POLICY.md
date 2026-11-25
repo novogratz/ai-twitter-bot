@@ -1,5 +1,17 @@
 # Editorial policy — November 20, 2026
 
+2026-11-25, thanks to commenters and a selective watched author — One short
+Reply answers each person who comments directly on one of our posts: once per
+comment, once per author a day, never a second turn in the same thread, inside
+the daily Reply ceiling and spacing. In the first thirty minutes after a video
+post every comment may be answered. This is the only exception to "no
+conversation follow-ups"; Debate, replyback and babysitter remain disabled.
+For the watched author the bot answers about three posts in ten (relevant
+subjects, no politics, no quota), within two minutes of the post when it can,
+optionally with a GIF from X's own picker. Answered posts are always liked and
+reposted; half of his other posts are liked and reposted. This replaces
+"like and repost every new original" (2026-11-21).
+
 2026-11-25, hourly videos, outside X only, no mark but ours — The Operator sets
 one video opportunity an hour, 07:00 to 23:00 Toronto (seventeen), replacing the
 twenty of the day before; an empty reserve still skips. A video must come from

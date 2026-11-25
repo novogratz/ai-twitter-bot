@@ -16,9 +16,25 @@ standalone_replies_only = true
 engagement_niche_only = true
 # Keep the old identity and state folder so historical own posts stay protected.
 previous_handles = ["TheAIShrink"]
-# Operator, 2026-11-21: like/repost new Elon originals; Replies retain topic exclusions.
+# Operator, 2026-11-25: "Dont auto retweet like and comment all his posts. Do it maybe for 30% ...
+# the one that are relevant to us", answered "within 2 minutes"; then the coach's rule: "respond to
+# 30% of his posts. Always like and retweet the ones you respond to. the other 70%, retweet and like
+# 50% of them." A selected or answered post is always liked and reposted; half of the others are.
 auto_engage_handles = ["elonmusk"]
 auto_engage_all_topics = true
+watched_action_share = 0.5
+watched_reply_style = """Write the way he answers people himself: a few plain words, direct, dry or playful, \
+confident, no hedging and no corporate tone ("True", "Exactly", "Wow", "Interesting" are his register; never copy \
+one as the whole reply). You are a real fan of his work and it shows: nice, sharp, on his side, never fawning. \
+This account makes AI memes and cinematic tech parodies, follows tech and AI, and uses Grok every day: \
+answer from that seat. Being one of the first funny replies under his post is the goal: \
+quick, light, on his side. No bullshit, no filler."""
+# Operator, 2026-11-25: "always reply 1 time when people reply on our posts ... do it naturally like dont spam".
+thank_commenters = true
+thanks_style = """Nice, sharp, sweet: people should want to like you, follow you and come back. \
+The Operator's own recent answers show the tone: "So you do cool stuff also!" got "Trying to keep it fun 😎"; \
+"Elon got Rick Rolled" got "He never saw it coming 😂"; "wait, is this real?" got "All AI, all fun 🤖"; \
+"So good 😂🕺" got "🕺"; "OMG cool!" gets a warm "Thanks 🙏". Never copy these lines, write a fresh one each time."""
 watched_topics = '\b(AI|SI|AGI|ASI|artificial\s+intelligence|super\s*intelligence|slopcore|grok|xai|llms?|chatbots?|gpt\w*|chatgpt|openai|anthropic|claude|gemini|deepseek|qwen|llama|sora|veo|kling|seedance|midjourney|generative\s+(?:video|art|music)|machine\s+learning|neural|reasoning\s+models?|context\s+windows?|open[ -]weights?|agentic|(?:coding|autonomous)\s+agents?|gpus?|tpus?|data\s*centers?|robotics|humanoids?|codex)\b'
 watched_extra_topics = '\b(starlink|spacex|space\s+x|starship|falcon\s*(?:9|heavy)|grok\s*bot)\b'
 watched_excluded_topics = '\b(politic\w*|elections?|vote|voting|ballots?|republicans?|democrats?|congress|senate|parliament|president|prime\s+minister|trump|biden|harris|immigration|migrants?|deport\w*|woke|culture\s+war|nazis?|fascis\w*|racis\w*|stocks?|trading|crypto|porn\w*|sexual|nudes?)\b'

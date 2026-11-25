@@ -128,6 +128,71 @@ def judge_parent(url: str, *, debate_turn: bool = False, is_reply: bool = False)
     return Verdict(None, author=author)
 
 
+def judge_comment(url: str) -> Verdict:
+    """May the account thank the author of this comment on one of its posts?
+
+    Operator, 2026-11-25: "always reply 1 time when people reply on our posts".
+    This is the one answer the standalone policy allows inside a conversation;
+    the browser proves the comment sits directly under one of our posts and that
+    we have not answered in that thread. One per comment, for ever."""
+    author = x_urls.author(url)
+    if not author:
+        return Verdict(Refusal.NO_AUTHOR, f"no author handle in {url!r}")
+    if not account.current().thank_commenters:
+        return Verdict(Refusal.CONVERSATION, "thanking commenters is not enabled for this Account", author)
+    if is_blocked_account(author):
+        return Verdict(Refusal.BLOCKED_ACCOUNT, f"@{author} matches the blocklist", author)
+    if author in account.own_handles():
+        return Verdict(Refusal.OWN_POST, "the account never answers itself", author)
+    from . import review_store
+    if review_store.opted_out(author):
+        return Verdict(Refusal.OPT_OUT, "author requested no further contact", author)
+    if url in replied_store.load_replied():
+        return Verdict(Refusal.ALREADY_REPLIED, "one Reply per post", author)
+    if not active_hours.may_reply():
+        return Verdict(Refusal.OVERNIGHT, "outside Waking hours or stop requested", author)
+    startup = judge_startup()
+    if not startup:
+        return Verdict(startup.refusal, startup.reason, author)
+    ok, why = action_guard.can_debate_turn(author)
+    if not ok:
+        return Verdict(Refusal.DEBATE_TURN_CAP, why, author)
+    from . import reply_budget
+    if why := reply_budget.refusal(url):
+        return Verdict(Refusal.DAILY_CAP, why, author)
+    return Verdict(None, author=author)
+
+
+THANKS_MAX_CHARS, THANKS_MAX_WORDS = 80, 12
+
+
+def judge_thanks(url: str, draft: str, recent: tuple = ()) -> Verdict:
+    """The comment and the final text of a thank-you; `recent` holds the last ones sent."""
+    verdict = judge_comment(url)
+    if not verdict:
+        return verdict
+    author = verdict.author
+    ok, why = action_guard.can_post(action_guard.REPLY)
+    if not ok:
+        return Verdict(Refusal.SPACING, why, author)
+    text = " ".join(humanizer.strip_dashes(reply_wording.apply(draft or "")).split())
+    if (not text or len(text) > THANKS_MAX_CHARS or len(text.split()) > THANKS_MAX_WORDS
+            or re.search(r"https?://|[@#]", text)):
+        return Verdict(Refusal.TEXT, f"a thank-you stays within {THANKS_MAX_WORDS} words and "
+                                     f"{THANKS_MAX_CHARS} characters, without links, mentions or hashtags", author)
+    fold = lambda value: re.sub(r"[^\w]", "", value.casefold())
+    # "Dont spam": the same line never goes out twice in a row.
+    if fold(text) and any(fold(text) == fold(previous) for previous in recent[:3]):
+        return Verdict(Refusal.TEXT, "same wording as one of the last three thank-yous", author)
+    ok, why = content_guard.validate(text, kind="reply", short_reaction=True)
+    if not ok:
+        return Verdict(Refusal.TEXT, why, author)
+    _, why = respect_list.scrub_text_or_skip(text, addressee=author)
+    if why:
+        return Verdict(Refusal.RESPECTED_ACCOUNT, why, author)
+    return Verdict(None, author=author, text=text)
+
+
 def judge_reply(url: str, draft: str, *, debate_turn: bool = False) -> Verdict:
     """Judge the post and the final text; an admitted Verdict carries the
     exact text to send. Casualize and the typo are random: call it once per

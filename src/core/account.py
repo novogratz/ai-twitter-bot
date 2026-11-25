@@ -95,6 +95,10 @@ class Account:
     watched_reposts_independent: bool = False
     priority_quotes_enabled: bool = False
     self_reposts_enabled: bool = False
+    watched_action_share: float = 1.0  # share of a watched author's other posts that get a like and repost
+    thank_commenters: bool = False  # one short Reply to each person who comments on our posts
+    thanks_style: str = ""          # the Operator's own words on how those Replies sound
+    watched_reply_style: str = ""   # how a Reply to a watched author sounds
     watched_extra_topics: re.Pattern | None = None
     watched_excluded_topics: re.Pattern | None = None
     watched_topics: re.Pattern | None = None
@@ -193,6 +197,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                            "engagement_niche_only": bool,
                            "auto_engage_all_topics": bool, "watched_reposts_independent": bool,
                            "priority_quotes_enabled": bool, "self_reposts_enabled": bool,
+                           "thank_commenters": bool, "thanks_style": str, "watched_reply_style": str,
+                           "watched_action_share": float,
                            "watched_topics": str, "watched_extra_topics": str, "watched_excluded_topics": str})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
@@ -234,6 +240,10 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         watched_reposts_independent=top.get("watched_reposts_independent", False),
         priority_quotes_enabled=top.get("priority_quotes_enabled", False),
         self_reposts_enabled=top.get("self_reposts_enabled", False),
+        thank_commenters=top.get("thank_commenters", False),
+        watched_action_share=min(1.0, max(0.0, top.get("watched_action_share", 1.0))),
+        thanks_style=top.get("thanks_style", "").strip()[:1500],
+        watched_reply_style=top.get("watched_reply_style", "").strip()[:1500],
         watched_extra_topics=_pattern(top, "watched_extra_topics") if "watched_extra_topics" in top else None,
         watched_excluded_topics=_pattern(top, "watched_excluded_topics") if "watched_excluded_topics" in top else None,
         watched_topics=_pattern(top, "watched_topics") if "watched_topics" in top else None,

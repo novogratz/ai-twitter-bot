@@ -94,6 +94,12 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
                 scheduler.add_job(awake_job(health.wrap_job(run_help_cycle, "invited_help"), reply=True),
                                   trigger=IntervalTrigger(minutes=3), id="curated_reply_job" if settings.get("REPLY_CURATED_MODE") else "invited_help_job",
                                   next_run_time=datetime.now(timezone.utc) + timedelta(seconds=2))
+            if account.current().thank_commenters and not settings.get("REPLY_MANUAL_ORDINARY"):
+                # Operator, 2026-11-25: one short Reply to each person who comments on our posts.
+                from src.replies.commenter_thanks import run_thanks_cycle
+                scheduler.add_job(awake_job(health.wrap_job(run_thanks_cycle, "commenter_thanks"), reply=True),
+                                  trigger=IntervalTrigger(minutes=1), id="commenter_thanks_job",
+                                  next_run_time=datetime.now(timezone.utc) + timedelta(seconds=45))
             if settings.get("REPLY_CURATED_MODE") and not reply_only and account.current().auto_engage_handles:
                 from src.replies.priority_watch import run_priority_watch_cycle, run_priority_actions_cycle
                 from src.replies.curated_reposts import run_cycle as run_curated_reposts
@@ -116,7 +122,7 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
 
     reply_jobs = {"direct_reply_job", "feed_sweep_job", "priority_watch_job", "priority_reply_job",
                   "early_bird_job", "replyback_job", "debate_job", "mega_watch_job",
-                  "babysit_job", "notify_job", "reply_job"}
+                  "babysit_job", "notify_job", "reply_job", "commenter_thanks_job"}
 
     def add(fn, minutes, job_id, *, executor="default", first_seconds=None):
         if job_id != "video_health_job":
@@ -188,6 +194,9 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
             add(health.wrap_job(run_replyback_cycle, "replyback"), 3, "replyback_job")
             add(health.wrap_job(run_debate_cycle, "debate"), 12, "debate_job")
         add(health.wrap_job(run_mega_watch_cycle, "mega_watch"), 2, "mega_watch_job")
+        if account.current().thank_commenters:
+            from src.replies.commenter_thanks import run_thanks_cycle
+            add(health.wrap_job(run_thanks_cycle, "commenter_thanks"), 1, "commenter_thanks_job", first_seconds=45)
         if not account.current().standalone_replies_only:
             add(health.wrap_job(run_babysit_cycle, "babysitter"), 5, "babysit_job")
         add(health.wrap_job(run_notify_cycle, "notify"), 20, "notify_job")
