@@ -96,6 +96,7 @@ class Account:
     priority_quotes_enabled: bool = False
     self_reposts_enabled: bool = False
     watched_action_share: float = 1.0  # share of a watched author's other posts that get a like and repost
+    video_share_queries: tuple[str, ...] = ()  # X searches for viral AI videos to share
     thank_commenters: bool = False  # one short Reply to each person who comments on our posts
     thanks_style: str = ""          # the Operator's own words on how those Replies sound
     watched_reply_style: str = ""   # how a Reply to a watched author sounds
@@ -198,7 +199,7 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
                            "auto_engage_all_topics": bool, "watched_reposts_independent": bool,
                            "priority_quotes_enabled": bool, "self_reposts_enabled": bool,
                            "thank_commenters": bool, "thanks_style": str, "watched_reply_style": str,
-                           "watched_action_share": float,
+                           "watched_action_share": float, "video_share_queries": list,
                            "watched_topics": str, "watched_extra_topics": str, "watched_excluded_topics": str})
     if top["language"] not in LANGUAGES:
         top.fail("language", f"takes one of {', '.join(LANGUAGES)}, not {top['language']!r}")
@@ -241,6 +242,8 @@ def _parse(name: str, folder: str, shown: str, data: dict) -> Account:
         priority_quotes_enabled=top.get("priority_quotes_enabled", False),
         self_reposts_enabled=top.get("self_reposts_enabled", False),
         thank_commenters=top.get("thank_commenters", False),
+        video_share_queries=tuple(q.strip() for q in (top.items("video_share_queries", str) if "video_share_queries" in top else ())
+                                  if q.strip() and len(q) <= 200),
         watched_action_share=min(1.0, max(0.0, top.get("watched_action_share", 1.0))),
         thanks_style=top.get("thanks_style", "").strip()[:1500],
         watched_reply_style=top.get("watched_reply_style", "").strip()[:1500],

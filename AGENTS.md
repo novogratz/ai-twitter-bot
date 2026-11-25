@@ -1,5 +1,25 @@
 # AGENTS.md
 
+2026-11-25, viral AI videos from X with a short take — The Operator's coach:
+"quote big viral AI videos with a 2-4 word take ... right click on the actual
+video ... and click post. do it at least for 4 to 6 videos a day ... between 8
+and 9, 12 to 1 pm, 5 to 6 and around 10 PM", with an example of the Operator's
+own that reached 24K views. `VIDEO_SHARE_ENABLED` (on locally) adds
+`video_share_job`: one X Top search per turn from the Account's
+`video_share_queries`, a like floor read on the exact page (500), the existing
+sampled-frame review with two added answers (`take`, `brand_fit` under the
+video taste, so Trump and Elon are never mocked), then `post_video_share`
+opens the player's own "Post Video" menu, checks that the composer holds
+exactly that media beside `postVideoRemove`, pastes the take and requires an
+own-status receipt. `video_shares.json` keeps one permanent claim per status
+and per media. Windows (`VIDEO_SHARE_WINDOWS`): 08:00-09:00 five, 12:00-13:00
+three, 17:00-18:00 six, 21:45-22:30 two; ten minutes between shares and from
+our own video posts; sixteen a day at most. A window is an opportunity, never a
+quota: "at least 4 to 6" is the aim, not a promise. This is the second profile
+publication allowed beside restricted Replies, and it is separate from our own
+uploads, which still come from outside X. Verified live up to the paste step,
+without submitting; no share has been posted yet.
+
 2026-11-25, thank every commenter; answer about three watched posts in ten — The
 Operator, with notes from a coach: "always reply 1 time when people reply on our
 posts ... Thanks and ... the emoticon ... do it naturally like dont spam", "first

@@ -594,6 +594,12 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `PRIORITY_WATCH_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `24` | Maximum age of new watched originals; never before the watch was first enabled. |
 | `PRIORITY_WATCH_SCAN_LIMIT` | int | `20` | floor `1`, ceiling `40` | Recent standalone originals collected per watched handle. |
 | `PRIORITY_WATCH_REPLY_WINDOW_SECONDS` | int | `60` | floor `30`, ceiling `300` | Selective watched actions and Replies are attempted only this long after the original's own timestamp (the Operator's local setting is 120 since 2026-11-25: within two minutes); late work is discarded. A goal, not a delivery guarantee. |
+| `VIDEO_SHARE_ENABLED` | 0 or 1 | `0` |  | Post reviewed viral AI videos found on X through the video's own Post Video menu, with a two to four word take, inside VIDEO_SHARE_WINDOWS (Operator's coach, 2026-11-25). |
+| `VIDEO_SHARE_WINDOWS` | str | `08:00-09:00=5,12:00-13:00=3,17:00-18:00=6,21:45-22:30=2` |  | Toronto windows and the most video shares in each, as HH:MM-HH:MM=count separated by commas. Opportunities, never a quota. |
+| `VIDEO_SHARE_DAILY_CAP` | int | `16` | floor `0`, ceiling `24` | Most video shares per Toronto day, uncertain submissions included. |
+| `VIDEO_SHARE_MIN_LIKES` | int | `500` | floor `0` | Observed likes a video post needs on its own page before it is reviewed. |
+| `VIDEO_SHARE_SPACING_MINUTES` | int | `10` | floor `5`, ceiling `120` | Minutes between two video shares, and between a share and our own latest video post. |
+| `VIDEO_SHARE_MAX_AGE_HOURS` | int | `36` | floor `1`, ceiling `72` | A video post older than this is not shared. |
 | `THANKS_PER_CYCLE` | int | `3` | floor `1`, ceiling `10` | Maximum thank-you Replies to commenters per three-minute cycle; ordinary Reply spacing and the daily ceiling still apply. |
 | `THANKS_HOT_MINUTES` | int | `30` | floor `0`, ceiling `120` | After one of our video posts, comments are read every minute for this long and every one may be answered (X rewards early back and forth); afterwards every three minutes. |
 | `THANKS_MAX_AGE_HOURS` | int | `24` | floor `1`, ceiling `72` | A comment on one of our posts older than this is no longer answered. |
