@@ -410,6 +410,16 @@ answering address lost the tab when Instagram redirected afterwards. The Account
 twenty windows (`scheduled_daily_cap` may be 5..24), and corner-logo removal also covers a
 persistent creator handle or name anywhere in the frame.
 
+2026-11-25: the Account schedules seventeen hourly windows. `x_exclusive` refuses X sources and
+accepts only `checked_no_match` at the final gate. `clean_watermarks_only` adds `foreign_marks`
+(source) and `foreign_watermark_visible` (output) to the inspection schema: located marks join
+the `delogo` regions (each at most 50% wide and 14% high, six in all) and the output gate holds
+unless the inspector saw no foreign mark. `underdog_min_views`/`underdog_min_likes` let a smaller
+Instagram audience reach inspection; `underdog_min_editorial` is then required of both reviews.
+`trend_cast` interleaves trend queries into the Instagram search rotation and orders comparable
+ready clips. The exposure check skips an X result that shows no playable video after three reads
+and lists it in `novelty.unreadable_posts`.
+
 `VIDEO_ENABLED=1` replaces `editorial_job` with the video publishing job, suppresses
 legacy startup creation, and blocks both browser Originals and watched reposts
 at the shared action guard. Watched likes and Replies continue. This prevents an

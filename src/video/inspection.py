@@ -128,6 +128,10 @@ def schema(cfg, stage):
             "watermark_position": {"type": "string", "enum": ["top", "bottom"]},
             "watermark_clear_of_action": boolean,
         })
+        if cfg.clean_watermarks_only:
+            unit = {"type": "number", "minimum": 0, "maximum": 1}
+            properties["foreign_marks"] = {"type": "array", "maxItems": 4,
+                                           "items": object_schema({"x": unit, "y": unit, "w": unit, "h": unit})}
         if cfg.auto_edit:
             properties["edit"] = object_schema({
                 "start_seconds": {"type": "number", "minimum": 0},
@@ -143,6 +147,8 @@ def schema(cfg, stage):
         properties.update({"overlays_clean": boolean, "watermark_present": boolean,
                            "no_destructive_edit": boolean, "source_overlays_retained": boolean,
                            "no_unapproved_new_overlays": boolean})
+        if cfg.clean_watermarks_only:
+            properties["foreign_watermark_visible"] = boolean
         if cfg.bangers_only:
             properties["opening"] = object_schema({
                 "hook_score": {"type": "number", "minimum": 0, "maximum": 10},
@@ -268,6 +274,17 @@ def opening_pack(path, folder, cfg):
     return target, times
 
 
+CLEAN_MARKS = """The Operator allows one mark in the finished video: our own watermark (2026-11-25).
+For source: foreign_marks lists every persistent platform logo, app icon, creator handle, channel name or
+credit burned into the picture, each as a box in fractions of the frame (x, y from the top-left corner, w, h),
+drawn tightly; at most four, an empty list when there is none. Subtitles, lyrics, titles and text that belongs
+to the scene are not marks.
+For output: foreign_watermark_visible is true when any such logo, icon, handle or credit other than our
+watermark can still be read or recognised in any sample, false only when you looked and found none.
+A softened patch with nothing legible is not a visible mark.
+"""
+
+
 def inspect_clip(path, stage, cfg, store, now, **extra):
     if stage not in ("source", "output") or not cfg.targets:
         raise ValueError("inspection needs a stage and configured target cast")
@@ -295,7 +312,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "one_line_caption": cfg.one_line_caption,
         "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors, cfg.min_hook_score],
         "taste": cfg.editorial_taste, "short_caption": cfg.short_caption,
-        "caption": source_review.get("caption")}, sort_keys=True).encode()).hexdigest()
+        "caption": source_review.get("caption")} | ({"clean_marks": True} if stage == "output" and cfg.clean_watermarks_only else {}), sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
         if stage == "source":
@@ -433,7 +450,7 @@ joke; without actual verified transcript/translation that is a HOLD. SoundAnalys
 does not identify a song or transcribe lyrics. Label credited songs as attribution,
 not independently heard/verified music. Never call an upscale native high resolution.
 
-""".replace("CAPTION_STYLE\n", SHORT_CAPTION if cfg.short_caption else LONG_CAPTION) + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + (f"The renderer deliberately softened {len(source_review.get('removed_logo_boxes') or [])} small source corner logo/credit region(s) on the Operator's instruction (2026-11-24) and scaled the clip to 1080p at 60 fps. For output this is approved: it is not a destructive edit, and source_overlays_retained concerns only the remaining source text.\n" if stage == "output" and (source_review.get("removed_logo_boxes") or cfg.upscale) else "") + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
+""".replace("CAPTION_STYLE\n", SHORT_CAPTION if cfg.short_caption else LONG_CAPTION) + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + (f"The renderer deliberately softened {len(source_review.get('removed_logo_boxes') or [])} small source corner logo/credit region(s) on the Operator's instruction (2026-11-24) and scaled the clip to 1080p at 60 fps. For output this is approved: it is not a destructive edit, and source_overlays_retained concerns only the remaining source text.\n" if stage == "output" and (source_review.get("removed_logo_boxes") or cfg.upscale) else "") + (CLEAN_MARKS if cfg.clean_watermarks_only else "") + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
     result["model_verdict"] = {k: result.get(k) for k in ("confidence", "watermark_present", "overlays_clean",
         "no_destructive_edit", "source_overlays_retained", "no_unapproved_new_overlays")}
@@ -643,6 +660,12 @@ def output_ocr(result, source_review, cfg, retained, *, source_path=None, output
             proofs = []  # missing/uncertain local evidence remains a refusal
         unexpected = [item for item in unexpected if not any(
             all(proof.get(key) == item[key] for key in ("at", "text", "box")) for proof in proofs)]
+    if cfg.clean_watermarks_only:
+        # Local backstop: another account's handle that OCR still reads is a visible mark.
+        other = lambda t: str(t.get("text", "")).strip().startswith("@") and not watermark_ocr(
+            t, cfg.watermark, source_review.get("watermark_position", "bottom"))
+        if any(other(t) for frame in frames for t in frame.get("texts", []) if t.get("confidence", 0) >= .6):
+            result["foreign_watermark_visible"] = True
     result["retained_overlay_pixel_evidence"] = proofs
     result["ocr_watermark_fraction"] = marked / len(frames)
     result["unexpected_output_text"] = [{"at": item["at"], "text": item["text"]} for item in unexpected[:80]]

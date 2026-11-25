@@ -6,8 +6,10 @@ from ..core import account
 from ..x import x_urls
 from . import ranking
 from .media import duplicate
-from .security import Deferred
+from .security import AccessError, Deferred
 from .store import dumps
+
+UNREADABLE_TRIES = 3
 
 
 def queries(doc, cfg):
@@ -75,8 +77,24 @@ def check(store, row, client, cfg, now):
             if inspected:
                 raise Deferred("X exposure continues from saved matching-copy evidence", retry_after=10)
             media = videos[progress["media"]]
-            result = media_fingerprint(media, store, cfg, now, client=client)
-            matched = duplicate(source, result) or bool(doc.get("output_fingerprint") and duplicate(doc["output_fingerprint"], result))
+            try:
+                result = media_fingerprint(media, store, cfg, now, client=client)
+            except AccessError as exc:
+                # 2026-11-25: a search result whose page shows no playable video (removed,
+                # hidden behind a warning) failed the whole check on every turn; three
+                # approved clips waited all morning. After three reads it is recorded
+                # as unreadable and the check moves on.
+                if str(exc) != "native video duration unavailable":
+                    raise
+                post = str(media.get("post_url", ""))[-40:]
+                tries = progress.setdefault("unreadable", {})
+                tries[post] = tries.get(post, 0) + 1
+                store.set_meta(key, progress)
+                if tries[post] < UNREADABLE_TRIES:
+                    raise
+                result = None
+            matched = result is not None and (duplicate(source, result) or bool(
+                doc.get("output_fingerprint") and duplicate(doc["output_fingerprint"], result)))
             if matched:
                 posts = [p for p in page.get("data", []) if media["media_key"] in p.get("attachments", {}).get("media_keys", [])]
                 for post in posts:
@@ -104,6 +122,7 @@ def check(store, row, client, cfg, now):
     doc["novelty"] = {"state": state, "public_result": "checked_no_match_public" if state == "checked_no_match" else state,
         "checked_at": now, "matching_copies": copies, "highest_observed_views": highest,
         "personal_duplicate": own, "evidence": progress["checked"], "truncated": progress["truncated"],
+        "unreadable_posts": sorted(post for post, n in progress.get("unreadable", {}).items() if n >= UNREADABLE_TRIES),
         "scope": getattr(client, "scope", "bounded public X search; no global-exclusivity claim")}
     doc = ranking.refresh(store, row | {"document": doc}, now, cfg)
     why = ranking.gate(doc, cfg, now, final=True)

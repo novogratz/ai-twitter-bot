@@ -7,9 +7,10 @@ publishing_transport = "safari"
 browser_upload_seconds = 180 # includes X processing after transfer; still inside slot grace
 # Operator, 2026-11-24: one video at 7 AM, 9 AM, noon, 5 PM and 9 PM Toronto, every day.
 # operator 2026-11-24: "lets do 20 posts a day" - twenty opportunities, every fifty minutes; an empty reserve still skips
-windows = ["07:00", "07:50", "08:40", "09:30", "10:20", "11:10", "12:00", "12:50", "13:40", "14:30", "15:20", "16:10", "17:00", "17:50", "18:40", "19:30", "20:20", "21:10", "22:00", "22:50"]
+# operator 2026-11-25: "1 post every 1 hour" - seventeen opportunities, 07:00 to 23:00; an empty reserve still skips
+windows = ["07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
 paired_windows = []
-scheduled_daily_cap = 20
+scheduled_daily_cap = 17
 auto_edit = true
 source_max_duration_seconds = 300
 edit_min_seconds = 8
@@ -22,6 +23,14 @@ banger_fit_min = 7           # cast and account fit, /10
 banger_floors = [14, 12, 9]  # fit /20, entertainment /20, quality /15
 audience_min_views = 50000   # Instagram plays shown on the creator grid
 audience_min_likes = 2000    # or likes on the exact reel page; one of the two is enough
+# operator 2026-11-25: "the most viral ... OR an underdog if our rating is high": a smaller
+# audience may reach inspection, then needs 75/100 on the inspector's own judgments.
+underdog_min_views = 5000
+underdog_min_likes = 200
+underdog_min_editorial = 75
+x_exclusive = true            # operator 2026-11-25: "from outside X and not be on X yet"
+clean_watermarks_only = true  # operator 2026-11-25: "remove all watermarks and only keep @thesimaximalist"
+trend_cast = ["jensen"]       # operator 2026-11-25: "right now jensen is a solid trend"
 editorial_taste = """Qualifying cast: Donald Trump, Elon Musk, Jensen Huang, Dario Amodei, Sam Altman or Mark Zuckerberg. \
 When Trump or Elon appear they must look good: cool, charismatic, funny with the joke on their side, winning. \
 A clip that mocks, humiliates, weakens or makes either of them look bad is brand_fit=false. The other four can be \
@@ -169,7 +178,7 @@ permission_reference = ""
 
 [platforms.x]
 weight = 5
-enabled = true
+enabled = false # operator 2026-11-25: sources come from outside X
 safari_player = true
 public_search = true
 public_search_seconds = 7200

@@ -4,11 +4,15 @@ from src.video import config, publisher, schedule
 from tests.helpers import clock
 
 
-def test_live_account_has_twenty_daily_windows_with_six_qualifiers():
+def test_live_account_has_hourly_windows_with_six_qualifiers():
     cfg = config.load()
-    # Operator, 2026-11-24 morning: "lets do 20 posts a day" (five the night before); short captions.
+    # Operator, 2026-11-25: "1 post every 1 hour" (twenty windows the day before); short captions.
     clocks = list(schedule.clocks(cfg))
-    assert len(clocks) == 20 and clocks[0] == "07:00" and clocks[-1] == "22:50" and cfg.short_caption
+    assert clocks == [f"{hour:02d}:00" for hour in range(7, 24)] and cfg.short_caption
+    # Same day: outside X only, no mark but ours, an underdog path, Jensen as the trend.
+    assert cfg.x_exclusive and cfg.clean_watermarks_only and cfg.trend_cast == ("jensen",)
+    assert not cfg.platforms["x"]["enabled"]
+    assert 0 < cfg.underdog_min_likes < cfg.audience_min_likes and cfg.underdog_min_editorial >= 75
     assert cfg.upscale and cfg.remove_source_logos
     # Operator, 2026-11-23: Zuckerberg qualifies too; Trump and Elon must look good.
     assert set(cfg.targets) == {"elon", "trump", "jensen", "sam", "dario", "zuck"}

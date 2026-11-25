@@ -260,7 +260,9 @@ def reserve(store, now, cfg, *, operator_direct=False):
         def tie_break(pair):
             maximum = pair[1].get("novelty", {}).get("highest_observed_views")
             saturated = type(maximum) is int and maximum >= 10000
-            return repetition(pair), saturated if cfg.bangers_only else False
+            # Operator, 2026-11-25: among comparable clips the current trend goes first.
+            cast = (pair[1].get("edit") or {}).get("cast") or pair[1].get("inspection", {}).get("cast", [])
+            return not set(cast) & set(cfg.trend_cast), repetition(pair), saturated if cfg.bangers_only else False
         row, doc = min(comparable, key=tie_break)
         ident, token = uuid.uuid4().hex, uuid.uuid4().hex
         remaining = cfg.startup_seconds - schedule.eligible_seconds(datetime.fromtimestamp(startup["requested"], timezone.utc), now) if startup else 0

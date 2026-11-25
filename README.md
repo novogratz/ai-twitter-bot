@@ -126,7 +126,12 @@ Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
 and unresolved sends remain intact; news is off and the earlier video schedule
 and conversational/specialist Voice are restored.
 
-**2026-11-24:** twenty video windows a day (every fifty minutes, 07:00 to 22:50 Toronto; five until that morning) and short captions
+**2026-11-25:** one video window an hour, 07:00 to 23:00 Toronto (seventeen; twenty the day before). Sources come from
+outside X and a clip with any matching copy found on X is held (`x_exclusive`); the output may show no logo, handle or
+credit but `@thesimaximalist` (`clean_watermarks_only`); a reel below the audience floor can pass on a 75/100 rating
+(`underdog_*`); `trend_cast` names the cast searched and chosen first.
+
+**2026-11-24:** short captions
 (a cast name, a few words, one heart). `POST_ONLY=1` starts without Replies.
 The bot sleeps from **23:30 to 04:30 Toronto**; older mentions of a midnight bedtime below are history.
 Video read turns reuse the Safari account proof for fifteen minutes and the shared daily source
