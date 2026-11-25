@@ -1,5 +1,35 @@
 # AGENTS.md
 
+2026-11-25, no watermark at all, first-level thanks only, share reviews get
+Safari — After the four live tests the Operator pauses (12:32), then asks:
+"lets not add anymore our watermark to the videos ... any video we post with
+bot"; "never respond to a response to our response ... reply to replies only if
+the reply is the first reply to the thread"; "if we already replied manually ...
+dont reply again"; and why no video share and no Elon reply came in the half
+hour the bot ran. Then "restart bot when ready".
+
+- `stamp_watermark = false` (Account): the render draws nothing and needs no
+  placement; the output gate requires `watermark_present = false`, so an older
+  stamped render is held until rendered again. Foreign marks are still removed
+  and still hold a clip (`clean_watermarks_only`). This ends the
+  @thesimaximalist stamp of 2026-11-01 for this Account.
+- Thank-you: the comment must be the second post on its page, directly under a
+  post of ours that starts the thread (`not_first_level`, `parent_is_a_reply`).
+  Nothing is answered under one of our Replies in someone else's thread; the
+  first live thank-you had gone to exactly such a comment.
+- A reply written by hand already stopped the bot: every Reply and thank-you
+  reads the page and refuses when one of our own posts sits below the target.
+  It only sees what X renders on that page.
+- No share in the 12:00 window: the frame read asked for Safari at background
+  priority, waited five seconds, lost to the Reply jobs every time and dropped
+  the lead. It now asks at Reply priority and a deferred read keeps its lead.
+- No Elon reply: his search showed the same seven posts for the whole run; none
+  was new inside the two-minute window. Nothing to fix.
+- "Elon robot jam" (12:00) against the pinned "Elon and Optimus" post of
+  October 6: the two fingerprints share no frame, so the bot holds them to be
+  different videos. 53 of the 169 own video posts on record have no
+  fingerprint, so a repeat of one of those would not be caught.
+
 2026-11-25, first live sends and what they caught — On the Operator's "lets go",
 one thank-you (https://x.com/thesimaximalist/status/2125622302717177919), one
 watched Reply with a GIF (https://x.com/thesimaximalist/status/2125626095772786968)

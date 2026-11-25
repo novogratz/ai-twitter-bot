@@ -158,8 +158,12 @@ def output_gate(doc, cfg):
             return "output does not match reviewed editorial cut"
     if cfg.one_line_caption and qc.get("caption_accurate") is not True:
         return "one-line caption not verified against output"
-    if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze", "watermark_present")):
+    if not all(qc.get(k) is True for k in ("decoded", "audio_sync", "no_new_black_freeze")):
         return "output quality uncertain"
+    if cfg.stamp_watermark and qc.get("watermark_present") is not True:
+        return "output quality uncertain"
+    if not cfg.stamp_watermark and qc.get("watermark_present") is not False:
+        return "output still carries the account watermark; it must be rendered again without it"
     if qc.get("overlays_clean") is not True and not (
             cfg.allow_source_overlays and qc.get("source_overlays_retained") is True
             and qc.get("no_unapproved_new_overlays") is True

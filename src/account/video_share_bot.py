@@ -2,11 +2,11 @@
 import time
 from datetime import timedelta
 
-from ..core import account, config, settings
+from ..core import account, config, settings, work_priority
 from ..core.logger import log
 from ..guards import active_hours, video_share_store as store
 from ..video import repost_review
-from ..video.security import AccessError
+from ..video.security import AccessError, Deferred
 from ..x import scraper, twitter_client, x_urls
 
 _candidates = {}  # url -> scraped row; disposable
@@ -54,7 +54,16 @@ def _review(candidate):
             or store.contains(url, page["media_id"])):
         return
     try:
-        evidence = repost_review.inspect(page, share=True)
+        # 2026-11-25: at background priority the frame read waited five seconds for Safari and lost
+        # to the Reply jobs every time; in half an hour of a share window nothing was reviewed.
+        # It now waits its turn like a ready Reply, and a deferred read puts the lead back.
+        with work_priority.scope(work_priority.REPLY):
+            evidence = repost_review.inspect(page, share=True)
+    except Deferred as exc:
+        _declined.pop(url, None)
+        _candidates[url] = candidate
+        log.info("[VIDEO-SHARE] review of %s waits for Safari: %s", url, exc)
+        return
     except (AccessError, ValueError, TimeoutError) as exc:
         log.info("[VIDEO-SHARE] inspection failed for %s: %s", url, exc)
         return

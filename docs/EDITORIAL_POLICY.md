@@ -1,5 +1,11 @@
 # Editorial policy — November 20, 2026
 
+2026-11-25, later the same day — Videos the bot uploads carry no watermark:
+neither the source's nor the Account's. A thank-you answers only a first-level
+comment under a post of ours that starts its thread; a comment under one of our
+Replies, or a reply to our answer, gets nothing. Where the Operator already
+answered by hand, the bot does not answer again.
+
 2026-11-25, video shares — Besides its own uploads, the Account may post another
 account's viral AI video through X's "Post Video" (the clip stays credited to
 its author) with a two to four word take and at most one emoji. Windows:

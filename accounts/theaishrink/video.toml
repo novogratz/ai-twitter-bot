@@ -30,6 +30,7 @@ underdog_min_likes = 200
 underdog_min_editorial = 75
 x_exclusive = true            # operator 2026-11-25: "from outside X and not be on X yet"
 clean_watermarks_only = true  # operator 2026-11-25: "remove all watermarks and only keep @thesimaximalist"
+stamp_watermark = false       # operator 2026-11-25, later: "lets not add anymore our watermark ... any video we post with bot"
 trend_cast = ["jensen"]       # operator 2026-11-25: "right now jensen is a solid trend"
 editorial_taste = """Qualifying cast: Donald Trump, Elon Musk, Jensen Huang, Dario Amodei, Sam Altman or Mark Zuckerberg. \
 When Trump or Elon appear they must look good: cool, charismatic, funny with the joke on their side, winning. \
