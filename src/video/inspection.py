@@ -312,7 +312,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "one_line_caption": cfg.one_line_caption,
         "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors, cfg.min_hook_score],
         "taste": cfg.editorial_taste, "short_caption": cfg.short_caption,
-        "caption": source_review.get("caption")} | ({"clean_marks": True} if stage == "output" and cfg.clean_watermarks_only else {}), sort_keys=True).encode()).hexdigest()
+        "caption": source_review.get("caption")} | ({"clean_marks": True} if cfg.clean_watermarks_only else {}), sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
         if stage == "source":
