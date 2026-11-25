@@ -328,6 +328,7 @@ _declare("VIDEO_SHARE_WINDOWS", str, "08:00-09:00=5,12:00-13:00=3,17:00-18:00=6,
 _declare("VIDEO_SHARE_DAILY_CAP", int, 16, "Most video shares per Toronto day, uncertain submissions included.", floor=0, ceiling=24)
 _declare("VIDEO_SHARE_MIN_LIKES", int, 500, "Observed likes a video post needs on its own page before it is reviewed.", floor=0)
 _declare("VIDEO_SHARE_SPACING_MINUTES", int, 10, "Minutes between two video shares, and between a share and our own latest video post.", floor=5, ceiling=120)
+_declare("VIDEO_SHARE_REQUIRE_CAST", bool, False, "Share only a clip whose creator text or legible captions name one of the people in the Account's video taste (Operator, 2026-11-25: a burger gag with none of them \"was not the case\").")
 _declare("VIDEO_SHARE_MAX_AGE_HOURS", int, 36, "A video post older than this is not shared.", floor=1, ceiling=72)
 _declare("THANKS_PER_CYCLE", int, 3, "Maximum thank-you Replies to commenters per three-minute cycle; ordinary Reply spacing and the daily ceiling still apply.", floor=1, ceiling=10)
 _declare("THANKS_HOT_MINUTES", int, 30, "After one of our video posts, comments are read every minute for this long and every one may be answered (X rewards early back and forth); afterwards every three minutes.", floor=0, ceiling=120)

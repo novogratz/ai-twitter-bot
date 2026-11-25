@@ -1,5 +1,17 @@
 # AGENTS.md
 
+2026-11-25, one share every ninety minutes, cast required — After the two test
+shares the Operator says "lets do 1 repost every 1h30 all day make sure it fits
+our stuff with Elon trump jensen or the other tech ceo which was not the case
+here" (the burger clip he had named himself), then "restart bot". Locally
+`VIDEO_SHARE_WINDOWS=07:00-23:20=11` and `VIDEO_SHARE_SPACING_MINUTES=90`
+replace the coach's four windows. `VIDEO_SHARE_REQUIRE_CAST=1`: the frame
+review answers `cast_shown`, true only when the creator's text or a legible
+caption names someone of the video taste (never a face alone), and the job
+queues nothing without it. Every `video_share_queries` search now names the
+cast. A slot stays an opportunity: no fitting clip, no share. Own uploads stay
+off. The bot is restarted on this request.
+
 2026-11-25, no own uploads; shares and Replies only — After a pause at 16:34 the
 Operator says "dont do any posts anymore just the responses and the rest - dont
 post new things except the post from a X video where you double click". Local

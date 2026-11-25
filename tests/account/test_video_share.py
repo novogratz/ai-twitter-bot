@@ -93,6 +93,17 @@ def test_cycle_reviews_one_lead_and_posts_only_an_approved_take(sharing, monkeyp
     verdict["brand_fit"] = False
     video_share_bot.run_video_share_cycle()
     assert not video_share_bot._approved and len(posted) == 1
+    # 2026-11-25: with the cast required, a fitting clip that names none of them is not queued
+    verdict["brand_fit"] = True
+    video_share_bot._declined.clear()
+    monkeypatch.setattr(video_share_bot.settings, "get", lambda key, _get=video_share_bot.settings.get:
+                        True if key == "VIDEO_SHARE_REQUIRE_CAST" else _get(key))
+    video_share_bot.run_video_share_cycle()
+    assert not video_share_bot._approved
+    verdict["cast_shown"] = True
+    video_share_bot._declined.clear()
+    video_share_bot.run_video_share_cycle()
+    assert len(video_share_bot._approved) == 1
 
 
 def test_write_path_checks_the_exact_video_in_the_composer_before_and_after_the_paste():

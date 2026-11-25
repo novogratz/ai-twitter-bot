@@ -111,7 +111,10 @@ one emoji. No name you only know from a face, no hashtag, no link, no mention, n
 brand_fit: true when the clip suits an account of AI memes and cinematic tech parodies. Any funny AI-made clip
 qualifies: the people named in the Operator taste below are a preference here, never a requirement (2026-11-25:
 a superhero carpool gag was refused for having none of them). Only its portrayal rule is binding: a clip showing
-someone the taste protects in a bad light is brand_fit=false. Operator taste: """
+someone the taste protects in a bad light is brand_fit=false.
+cast_shown: true only when the clip is about at least one of the people named in the taste, and the creator's text or
+a legible caption or name in the frames says so. A face alone never establishes it; when unsure, false.
+Operator taste: """
 
 
 def take_ok(text):
@@ -161,7 +164,8 @@ def inspect(page, *, share=False):
             "reason": {"type": "string", "maxLength": 800},
             "observations": {"type": "array", "minItems": 3, "maxItems": 6, "items": inspection.object_schema({"at": {"type": "number"}, "observation": {"type": "string", "maxLength": 300}})}})
         if share:
-            schema["properties"].update(take={"type": "string", "maxLength": 40}, brand_fit={"type": "boolean"})
+            schema["properties"].update(take={"type": "string", "maxLength": 40}, brand_fit={"type": "boolean"},
+                                        cast_shown={"type": "boolean"})
             schema["required"] = list(schema["properties"])
         prompt = """Select funny AI videos for native reposting on an SI artist account.
 Popularity is irrelevant. Inspect ALL attached timestamped temporal samples.

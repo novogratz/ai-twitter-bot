@@ -599,6 +599,7 @@ past a bound is brought back to it and logged as a `[SETTINGS]` warning.
 | `VIDEO_SHARE_DAILY_CAP` | int | `16` | floor `0`, ceiling `24` | Most video shares per Toronto day, uncertain submissions included. |
 | `VIDEO_SHARE_MIN_LIKES` | int | `500` | floor `0` | Observed likes a video post needs on its own page before it is reviewed. |
 | `VIDEO_SHARE_SPACING_MINUTES` | int | `10` | floor `5`, ceiling `120` | Minutes between two video shares, and between a share and our own latest video post. |
+| `VIDEO_SHARE_REQUIRE_CAST` | 0 or 1 | `0` |  | Share only a clip whose creator text or legible captions name one of the people in the Account's video taste (Operator, 2026-11-25: a burger gag with none of them "was not the case"). |
 | `VIDEO_SHARE_MAX_AGE_HOURS` | int | `36` | floor `1`, ceiling `72` | A video post older than this is not shared. |
 | `THANKS_PER_CYCLE` | int | `3` | floor `1`, ceiling `10` | Maximum thank-you Replies to commenters per three-minute cycle; ordinary Reply spacing and the daily ceiling still apply. |
 | `THANKS_HOT_MINUTES` | int | `30` | floor `0`, ceiling `120` | After one of our video posts, comments are read every minute for this long and every one may be answered (X rewards early back and forth); afterwards every three minutes. |

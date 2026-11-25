@@ -6,6 +6,13 @@ comment under a post of ours that starts its thread; a comment under one of our
 Replies, or a reply to our answer, gets nothing. Where the Operator already
 answered by hand, the bot does not answer again.
 
+2026-11-25, shares every ninety minutes with the cast — The Operator: "1 repost
+every 1h30 all day ... with Elon trump jensen or the other tech ceo". Locally one
+share per ninety minutes between 07:00 and 23:20, eleven at most, and only a clip
+whose creator text or captions name someone of the video taste
+(`VIDEO_SHARE_REQUIRE_CAST`). This replaces the coach's four windows for this
+Account. No fitting clip, no share.
+
 2026-11-25, no own uploads — The Operator: "dont post new things except the post
 from a X video". Own video uploads stop for this Account (`VIDEO_WITH_REPLIES=0`
 locally). Replies, thank-yous, watched-author actions and video shares continue.

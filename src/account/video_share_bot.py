@@ -72,7 +72,9 @@ def _review(candidate):
     verdict = evidence["verdict"]
     take = " ".join(str(verdict.get("take", "")).split())
     approved = (repost_review.valid(evidence, url, page["text"], page["media_id"]) and verdict.get("brand_fit") is True
-                and repost_review.take_ok(take))
+                and repost_review.take_ok(take)
+                # 2026-11-25: "make sure it fits our stuff with Elon trump jensen or the other tech ceo".
+                and (verdict.get("cast_shown") is True or not settings.get("VIDEO_SHARE_REQUIRE_CAST")))
     log.info("[VIDEO-SHARE] %s: %s %r (%s)", "approved" if approved else "declined", url, take, str(verdict.get("reason", ""))[:160])
     if approved:
         _approved.append((url, take, page["media_id"], page["text"], time.monotonic()))
