@@ -1,5 +1,17 @@
 # AGENTS.md
 
+2026-11-25, no own uploads; shares and Replies only — After a pause at 16:34 the
+Operator says "dont do any posts anymore just the responses and the rest - dont
+post new things except the post from a X video where you double click". Local
+`VIDEO_WITH_REPLIES=0`: the video scheduler and its workers do not run beside
+Replies, so nothing from outside X is uploaded. Replies, thank-yous, the watched
+author's likes, reposts and Replies, and video shares (`VIDEO_SHARE_ENABLED`)
+stay. `bin/run.sh` loads the video requirements when shares are on, since their
+frame review uses the video modules. On "can you try one" two shares shipped by
+hand outside the windows: one the job chose ("The crowd gets it 😂") and one the
+Operator named ("Burger hype overload 🍔"). The bot stays paused until an
+explicit start.
+
 2026-11-25, no watermark at all, first-level thanks only, share reviews get
 Safari — After the four live tests the Operator pauses (12:32), then asks:
 "lets not add anymore our watermark to the videos ... any video we post with

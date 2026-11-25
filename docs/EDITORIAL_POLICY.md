@@ -6,6 +6,10 @@ comment under a post of ours that starts its thread; a comment under one of our
 Replies, or a reply to our answer, gets nothing. Where the Operator already
 answered by hand, the bot does not answer again.
 
+2026-11-25, no own uploads — The Operator: "dont post new things except the post
+from a X video". Own video uploads stop for this Account (`VIDEO_WITH_REPLIES=0`
+locally). Replies, thank-yous, watched-author actions and video shares continue.
+
 2026-11-25, video shares — Besides its own uploads, the Account may post another
 account's viral AI video through X's "Post Video" (the clip stays credited to
 its author) with a two to four word take and at most one emoji. Windows:
