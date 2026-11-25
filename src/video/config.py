@@ -42,6 +42,13 @@ class VideoConfig:
     editorial_taste: str = ""
     audience_min_views: int = 0
     audience_min_likes: int = 0
+    # Operator, 2026-11-25: an underdog below the audience floor may pass on a high rating.
+    underdog_min_views: int = 0
+    underdog_min_likes: int = 0
+    underdog_min_editorial: float = 80.0
+    x_exclusive: bool = False          # sources outside X only; any matching copy on X holds
+    clean_watermarks_only: bool = False  # the output may show no logo, handle or credit but ours
+    trend_cast: tuple = ()             # cast keys the Operator names as the current trend
     x_max_views: int = 50000
     x_reach_max_age_seconds: int = 21600
     startup_on_boot: bool = False
@@ -128,7 +135,7 @@ class VideoConfig:
             raise ValueError("startup_on_boot must be a boolean")
         if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 24:
             raise ValueError("scheduled_daily_cap must be 5..24")
-        for name in ("upscale", "remove_source_logos", "auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
+        for name in ("upscale", "remove_source_logos", "x_exclusive", "clean_watermarks_only", "auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
@@ -150,9 +157,15 @@ class VideoConfig:
             raise ValueError("banger_floors must be fit 12..20, entertainment 10..20, quality 8..15")
         if not isinstance(self.editorial_taste, str) or len(self.editorial_taste) > 1500:
             raise ValueError("editorial_taste must be at most 1500 characters")
-        for name in ("audience_min_views", "audience_min_likes"):
+        for name in ("audience_min_views", "audience_min_likes", "underdog_min_views", "underdog_min_likes"):
             if type(getattr(self, name)) is not int or getattr(self, name) < 0:
                 raise ValueError(f"{name} must be a nonnegative integer")
+        if (self.underdog_min_views > self.audience_min_views or self.underdog_min_likes > self.audience_min_likes
+                or type(self.underdog_min_editorial) not in (int, float) or not 70 <= self.underdog_min_editorial <= 100):
+            raise ValueError("underdog floors sit below the audience floors and need a 70..100 rating")
+        object.__setattr__(self, "trend_cast", tuple(self.trend_cast))
+        if not set(self.trend_cast) <= set(self.targets):
+            raise ValueError("trend_cast must name configured cast keys")
         for name in ("source_max_duration_seconds", "edit_min_seconds", "edit_max_seconds", "min_hook_score"):
             if type(getattr(self, name)) is not int:
                 raise ValueError(f"{name} must be an integer")

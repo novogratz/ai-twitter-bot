@@ -331,9 +331,9 @@ def source_logo_boxes(evidence, info, creator=""):
     edit = evidence.get("edit") or {}
     start, end = edit.get("start_seconds", 0), edit.get("end_seconds", math.inf)
     frames = [f for f in evidence.get("ocr_evidence", []) if isinstance(f, dict) and start <= f.get("at", -1) <= end]
-    if len(frames) < 4:
-        return []
     groups = []
+    if len(frames) < 4:
+        frames = []
     for frame in frames:
         seen = set()
         for text in frame.get("texts", []):
@@ -364,13 +364,32 @@ def source_logo_boxes(evidence, info, creator=""):
         x, y, w, h = group["box"]
         if group["frames"] < len(frames) * .6 or w > .55 or h > .14:
             continue
-        pad_x, pad_y = .012 * info["width"], .010 * info["height"]
-        left, top = max(1, int(x * info["width"] - pad_x)), max(1, int(y * info["height"] - pad_y))
-        right = min(info["width"] - 1, int((x + w) * info["width"] + pad_x))
-        bottom = min(info["height"] - 1, int((y + h) * info["height"] + pad_y))
-        if right - left >= 4 and bottom - top >= 4:
-            boxes.append([left, top, right - left, bottom - top])
-    return boxes[:4]
+        if box := _pixel_box(x, y, w, h, info):
+            boxes.append(box)
+    # Operator, 2026-11-25: "cleanly remove all watermarks". A drawn logo has no text
+    # for OCR to read; the source inspector locates it. Small regions only.
+    for mark in evidence.get("foreign_marks") or []:
+        values = [mark.get(key) for key in ("x", "y", "w", "h")] if isinstance(mark, dict) else []
+        if (len(values) == 4 and all(type(n) in (int, float) and math.isfinite(n) for n in values)
+                and values[0] >= 0 and values[1] >= 0 and 0 < values[2] <= .5 and 0 < values[3] <= .14
+                and values[0] + values[2] <= 1 and values[1] + values[3] <= 1):
+            box = _pixel_box(*values, info)
+            if box and not any(_inside(box, other) for other in boxes):
+                boxes.append(box)
+    return boxes[:6]
+
+
+def _pixel_box(x, y, w, h, info):
+    pad_x, pad_y = .012 * info["width"], .010 * info["height"]
+    left, top = max(1, int(x * info["width"] - pad_x)), max(1, int(y * info["height"] - pad_y))
+    right = min(info["width"] - 1, int((x + w) * info["width"] + pad_x))
+    bottom = min(info["height"] - 1, int((y + h) * info["height"] + pad_y))
+    return [left, top, right - left, bottom - top] if right - left >= 4 and bottom - top >= 4 else None
+
+
+def _inside(box, other):
+    return (box[0] >= other[0] and box[1] >= other[1] and box[0] + box[2] <= other[0] + other[2]
+            and box[1] + box[3] <= other[1] + other[3])
 
 
 def render(original, output, info, evidence, cfg):

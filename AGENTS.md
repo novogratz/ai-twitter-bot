@@ -1,5 +1,41 @@
 # AGENTS.md
 
+2026-11-25, hourly videos from outside X, no mark but ours — After a pause at
+09:16 Toronto (the bot stays stopped until an explicit start), the Operator sets
+the video rules: "1 post every 1 hour", the best candidate, never a duplicate,
+"cleanly remove all watermarks and only keep @thesimaximalist", "from outside X
+and not be on X yet", 1080p 60 fps, an AI meme or AI song with Trump, Elon,
+Jensen, Sam, Dario or Zuckerberg, Trump and Elon "in good posture", "the most
+viral on another platform ... OR an underdog if our rating is high", ideally on
+the current trend ("right now jensen is a solid trend").
+
+- Seventeen windows, hourly from 07:00 to 23:00 Toronto (`scheduled_daily_cap = 17`).
+  A window is still an opportunity: an empty reserve skips.
+- `x_exclusive = true`: an X source is refused and the final gate accepts only
+  `checked_no_match`. This ends the 2026-11-04 allowance for X sources and for
+  copies under 50,000 views. `[platforms.x]` is disabled. The check is a bounded
+  X search, not proof of global absence.
+- `clean_watermarks_only = true`: the source inspector locates logos, icons and
+  credits (`foreign_marks`, small boxes only) and the render removes them with
+  the OCR-measured ones; the output inspector must report
+  `foreign_watermark_visible = false`, and another account's handle that OCR
+  still reads in the output overrides it. Subtitles and scene text stay. This
+  narrows the 2026-11-01 "overlays may remain" allowance for marks.
+- Underdog: an Instagram reel below the audience floors but with 5,000 plays or
+  200 likes reaches inspection, then needs 75/100 on the inspector's own
+  judgments (`underdog_min_editorial`), in source and output. Posted clips
+  scored 64 to 79.
+- `trend_cast = ["jensen"]`: every other Instagram search turn reads a trend
+  query, and among comparable ready clips the trend cast is chosen first. The
+  list is the Operator's; nothing measures the trend.
+- 1080p60, cast, portrayal and permanent dedup were already in force.
+
+The morning's three skipped slots had a cause: the X duplicate check failed on
+every turn at one search result with no playable video ("native video duration
+unavailable"), so approved clips never became ready. After three reads such a
+post is recorded in `novelty.unreadable_posts` and the check moves on; any other
+read failure still fails it.
+
 2026-11-24, twenty windows, creator credits removed, the real capture cause —
 The Operator asks "lets do 20 posts a day", "GO push hard today", and "please
 remove watermark why do we see evolving ai ... fix it for future". Twenty video

@@ -117,6 +117,29 @@ def publication_gate(doc, cfg, now):
     return ""
 
 
+def underdog(doc, cfg):
+    """An Instagram clip whose known audience is below every configured floor."""
+    if doc.get("platform") != "instagram":
+        return False
+    plays = doc.get("discovery_evidence", {}).get("views")
+    likes = (doc.get("source_stats") or {}).get("likes")
+    known = [(value, floor) for value, floor in ((plays, cfg.audience_min_views), (likes, cfg.audience_min_likes))
+             if type(value) is int and floor > 0]
+    return bool(known) and all(value < floor for value, floor in known)
+
+
+def underdog_refusal(doc, review, cfg):
+    """Operator, 2026-11-25: without a proven audience the rating itself must be high."""
+    if not underdog(doc, cfg):
+        return ""
+    from .bangers import editorial_total
+    try:
+        total = editorial_total(review)
+    except (KeyError, TypeError):
+        return "underdog rating unavailable"
+    return "" if total >= cfg.underdog_min_editorial else f"underdog rating below {cfg.underdog_min_editorial:g}/100"
+
+
 def output_gate(doc, cfg):
     """Shared completed-output checks for preparation and final publication."""
     if doc.get("brand") != cfg.watermark:
@@ -142,6 +165,10 @@ def output_gate(doc, cfg):
             and qc.get("no_unapproved_new_overlays") is True
             and qc.get("source_sha256") == doc.get("original_sha256")):
         return "output overlay quality uncertain"
+    if cfg.clean_watermarks_only and qc.get("foreign_watermark_visible") is not False:
+        return "a source logo, handle or credit is still visible in the output"
+    if reason := underdog_refusal(doc, qc, cfg):
+        return reason
     if qc.get("sha256") != doc.get("output_sha256") or not doc.get("output_sha256"):
         return "QC not bound to output bytes"
     return ""
@@ -180,10 +207,12 @@ def gate(doc, cfg, now, *, final=False):
         from .editing import banger_refusal
         if reason := banger_refusal(inspect, cfg):
             return reason
+        if reason := underdog_refusal(doc, inspect, cfg):
+            return reason
     if final:
         if reason := output_gate(doc, cfg):
             return reason
-        if doc.get("novelty", {}).get("state") not in (("checked_no_match", "verified_low_reach_match") if cfg.bangers_only else ("checked_no_match",)):
+        if doc.get("novelty", {}).get("state") not in (("checked_no_match", "verified_low_reach_match") if cfg.bangers_only and not cfg.x_exclusive else ("checked_no_match",)):
             return "X novelty unchecked or existing copy found"
         if now - doc.get("novelty", {}).get("checked_at", 0) > (cfg.x_reach_max_age_seconds if cfg.bangers_only else 86400):
             return "X novelty check stale"
@@ -210,6 +239,8 @@ def source_gate(doc, now, cfg=None):
     """2026-11-04: the X source ceiling also applies to explicit selections."""
     if doc.get("platform") != "x":
         return ""
+    if cfg and cfg.x_exclusive:
+        return "X sources are excluded: the clip must come from outside X"
     observed = doc.get("source_metrics", {})
     views, at = observed.get("views"), observed.get("observed_at")
     if (type(views) is not int or views < 0 or type(at) not in (int, float)

@@ -76,6 +76,13 @@ def pages(store, cfg):
     creators = list(dict.fromkeys(name for name in [*options.get("creators", []), *learned_creators(store, cfg)]
                                   if isinstance(name, str) and USERNAME.fullmatch(name)))
     queries = [q.strip() for q in options.get("browse_queries", []) if isinstance(q, str) and 0 < len(q.strip()) <= 80]
+    # Operator, 2026-11-25: "ideally something around whats the current trend". Every
+    # other search turn reads a query naming a trend cast member.
+    names = [alias.casefold() for key in cfg.trend_cast for alias in cfg.targets.get(key, [])]
+    hot = [q for q in queries if any(name in q.casefold() for name in names)]
+    rest = [q for q in queries if q not in hot]
+    if hot and rest:
+        queries = [q for index, other in enumerate(rest) for q in (hot[index % len(hot)], other)]
     return ([("creator", name, f"https://www.instagram.com/{name}/reels/") for name in creators],
             [("search", q, "https://www.instagram.com/explore/search/keyword/?q=" + quote(q, safe="")) for q in queries])
 
@@ -129,7 +136,11 @@ def lead_refusal(doc, cfg):
     known = [(value, floor) for value, floor in ((plays, cfg.audience_min_views), (likes, cfg.audience_min_likes))
              if type(value) is int and floor > 0]
     if known and all(value < floor for value, floor in known):
-        return "audience below the configured plays and likes floors"
+        # Operator, 2026-11-25: "we can also take an underdog if our rating ... is high".
+        # A smaller audience may reach inspection; ranking.gate then asks the higher rating.
+        small = [(plays, cfg.underdog_min_views), (likes, cfg.underdog_min_likes)]
+        if not any(type(value) is int and 0 < floor <= value for value, floor in small):
+            return "audience below the configured plays and likes floors"
     if doc.get("discovery_evidence", {}).get("method") != KEYWORD_SEARCH:
         return ""
     caption = str(doc.get("title", ""))

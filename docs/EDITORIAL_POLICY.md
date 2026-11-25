@@ -1,5 +1,18 @@
 # Editorial policy — November 20, 2026
 
+2026-11-25, hourly videos, outside X only, no mark but ours — The Operator sets
+one video opportunity an hour, 07:00 to 23:00 Toronto (seventeen), replacing the
+twenty of the day before; an empty reserve still skips. A video must come from
+outside X and have no matching copy found on X: X sources are refused and the
+earlier allowance for copies under 50,000 views ends (`x_exclusive`). The
+finished video may carry no logo, handle or credit but the Account's watermark
+(`clean_watermarks_only`); a clip where one remains is held. Subtitles and scene
+text may stay. Besides audience-proven reels, an underdog (at least 5,000 plays
+or 200 likes) may publish when the inspector's own judgments reach 75/100.
+`trend_cast` (Jensen today) is searched more often and chosen first among
+comparable clips. Cast, the Trump/Elon portrayal rule, 1080p60, inspection,
+permanent dedup and fifteen-minute spacing are unchanged.
+
 2026-11-24, twenty video windows — The Operator sets twenty daily video
 opportunities, every fifty minutes from 07:00 to 22:50 Toronto, replacing the
 five of the night before. No posting quota: a window without an eligible clip
