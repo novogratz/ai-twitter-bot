@@ -24,6 +24,7 @@ def launcher(tmp_path):
         '    raise ValueError("invalid launcher test configuration")\n'
         'def get(name):\n'
         '    if name in {"REPLY_REVIEW_ONLY", "REPLY_INVITED_ONLY"}: return False\n'
+        '    if name == "VIDEO_SHARE_ENABLED": return os.environ.get("TEST_VIDEO_SHARE") == "1"\n'
         '    assert name == "VIDEO_ENABLED", name\n'
         '    return os.environ["TEST_VIDEO_ENABLED"] == "1"\n'
     )
@@ -61,10 +62,10 @@ def launcher(tmp_path):
     for name in ("curl", "ollama", "codex", "pkill", "tee"):
         command(name, record + 'raise SystemExit("unexpected external command")\n')
 
-    def run(video="0", *, bad_config=False, exit_code=0, startup=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
+    def run(video="0", *, share="0", bad_config=False, exit_code=0, startup=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
         env = dict(os.environ, PATH=f"{commands}{os.pathsep}{os.environ['PATH']}",
                    TEST_COMMAND_TRACE=str(trace), TEST_VIDEO_ENABLED=video,
-                   TEST_MAIN_EXIT=str(exit_code), TEST_BAD_CONFIG="1" if bad_config else "")
+                   TEST_MAIN_EXIT=str(exit_code), TEST_BAD_CONFIG="1" if bad_config else "", TEST_VIDEO_SHARE=share)
         env.pop("STARTUP_PUBLICATIONS", None)
         if startup is not None:
             env["STARTUP_PUBLICATIONS"] = startup
@@ -85,6 +86,13 @@ def test_launcher_reaches_main_without_any_model_warmup(launcher, video, require
     assert [Path(call[0]).name for call in calls] == ["uv", "pgrep", "find", "uv"]
     assert calls[-1][1:] == ["run", "--with-requirements", requirements, "python", "-u", "main.py"]
     assert "news + video requested first" not in result.stdout
+
+
+def test_video_shares_load_the_video_requirements_with_uploads_off(launcher):
+    # 2026-11-25: own uploads off, shares on; the share's frame review imports the video modules.
+    result, calls = launcher("0", share="1")
+    assert result.returncode == 0, result.stderr
+    assert calls[-1][1:] == ["run", "--with-requirements", "requirements-video.txt", "python", "-u", "main.py"]
 
 
 def test_launcher_explicit_startup_opt_in(launcher):

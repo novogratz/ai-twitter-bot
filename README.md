@@ -129,6 +129,9 @@ and conversational/specialist Voice are restored.
 **2026-11-25:** our own uploads carry no watermark at all (`stamp_watermark = false`); thank-yous go only to the
 first reply under a thread we started.
 
+**2026-11-25 (later):** the Operator stops own uploads (`VIDEO_WITH_REPLIES=0` locally); Replies and video shares
+continue, and `bin/run.sh` loads the video requirements whenever shares are on.
+
 **2026-11-25:** `VIDEO_SHARE_ENABLED` posts reviewed viral AI videos found on X through the video's own "Post Video"
 menu with a two to four word take, in four daily windows (`video_share_job`, `VIDEO_SHARE_WINDOWS`).
 
