@@ -129,6 +129,9 @@ and conversational/specialist Voice are restored.
 **2026-11-25:** our own uploads carry no watermark at all (`stamp_watermark = false`); thank-yous go only to the
 first reply under a thread we started.
 
+**2026-11-25 (evening):** locally one video share every ninety minutes from 07:00 to 23:20, and only clips whose
+text or captions name the video cast (`VIDEO_SHARE_REQUIRE_CAST`).
+
 **2026-11-25 (later):** the Operator stops own uploads (`VIDEO_WITH_REPLIES=0` locally); Replies and video shares
 continue, and `bin/run.sh` loads the video requirements whenever shares are on.
 
