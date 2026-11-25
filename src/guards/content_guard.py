@@ -653,8 +653,15 @@ def validate(text: str, kind: str = "original", *, source_language: str = "", so
         # ("Jensen VS Dario ❤️") has no detectable language; every short
         # caption was refused at the Post click. Unknown passes for that
         # caller only; detected French and the French cues below still refuse.
+        # 2026-11-25: "Best passenger on a long drive." counted one French marker (" on ") and no
+        # English one, so it read as French at 100%. For these short callers a result that rests
+        # only on words both languages share is treated as unknown; any other French marker or an
+        # accent still refuses.
+        folded = " " + re.sub(r"[^a-zà-ÿ' ]", " ", prose.lower()) + " "
+        shared_only = (lang == "fr" and not _FR_ACCENTS_RE.search(folded)
+                       and not any(m in folded for m in _FR_MARKERS if m not in (" on ", " son ")))
         title = ((short_title and kind == "original" or short_reaction and kind == "reply")
-                 and lang == "unknown" and len(text) <= 45)
+                 and (lang == "unknown" or shared_only) and len(text) <= 45)
         if ((lang != "en" and not short_english and not source_english and not title)
                 or reply_language.looks_french(prose) or _UNAMBIGUOUS_FRENCH_CUES.search(prose)
                 or (kind == "source" and _FRENCH_REPLY_CUES.search(prose))):

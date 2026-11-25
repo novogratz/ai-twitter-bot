@@ -235,6 +235,11 @@ def judge_text(author: str, draft: str, *, manual_review: bool = False, source_u
     text = reply_wording.apply(text)
     # Validate last, so the text that ships is the text that was checked.
     context = {"source_url": source_url} if source_url and settings.get("REPLY_BROAD_DISCOVERY") else {}
+    if source_url and account.watched_url(source_url):
+        # 2026-11-25: "Passenger seat finally pulls its weight." has no detectable language and
+        # was refused on a watched post. A watched Reply is at most twelve words by its own rule;
+        # an unidentified one of 45 characters or fewer passes, detected French still refuses.
+        context["short_reaction"] = True
     ok, why = content_guard.validate(text, kind="reply", **context)
     if not ok:
         return Verdict(Refusal.TEXT, why, author)

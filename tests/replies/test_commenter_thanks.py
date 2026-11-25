@@ -114,3 +114,24 @@ def test_live_account_thanks_commenters_and_scheduler_runs_the_job(monkeypatch):
     from pathlib import Path
     raw = tomllib.loads(Path("accounts/theaishrink/account.toml").read_text())
     assert raw["thank_commenters"] is True and "Thanks" in raw["thanks_style"]
+
+
+def test_reservation_does_not_apply_ordinary_reply_text_rules_to_a_thank_you(thanking, settings_override):
+    # 2026-11-25, first live send: "hearts belong to artist reactions" refused "Glad you liked it 💙".
+    from src.guards import reply_budget
+    settings_override(REPLY_CURATED_MODE=True, REPLY_BROAD_DISCOVERY=True)
+    other = COMMENT[:-1] + "9"
+    assert "heart" in reply_budget.begin(other, "Glad you liked it 💙")
+    assert reply_budget.begin(COMMENT, "Glad you liked it 💙", thanks=True) == ""
+
+
+def test_fast_pace_reads_the_real_video_history_with_an_aware_time(thanking, monkeypatch):
+    # 2026-11-25: a float was passed where the history wants an aware datetime; the fast pace never started.
+    from datetime import datetime
+    from src.video import config as video_config
+    now = datetime.fromisoformat("2026-11-25T12:10:00-05:00")
+    seen = []
+    monkeypatch.setattr(video_config, "legacy_usage", lambda at: seen.append(at) or (1, at.timestamp() - 600))
+    assert commenter_thanks.hot(now) and seen[0].tzinfo is not None
+    monkeypatch.setattr(video_config, "legacy_usage", lambda at: (1, at.timestamp() - 3600))
+    assert not commenter_thanks.hot(now)

@@ -1277,10 +1277,15 @@ def _reply_target(url: str, *, click: bool = False, on_answered=None, expected_t
             log.info("[REPLY] Source refused (%s): %s", why, url)
             return False
     from ..guards import reply_selection
-    topic_ok = (not reply_selection.page_refusal(url, opened.get("outer_text") or "", opened)
-                if reply_selection.enabled() else account.engagement_allowed(opened.get("text") or "", url=url))
-    return (opened.get("clicked") is click and topic_ok
-            and _reply_engagement_ok(url))
+    why = (reply_selection.page_refusal(url, opened.get("outer_text") or "", opened)
+           if reply_selection.enabled() else
+           "" if account.engagement_allowed(opened.get("text") or "", url=url) else "outside the engagement niche")
+    if not why and not _reply_engagement_ok(url):
+        why = "below the required observed likes"
+    if why:
+        # 2026-11-25: this refusal was silent; a live test could not tell which rule had fired.
+        log.info("[REPLY] Opened source refused (%s): %s", why, url)
+    return opened.get("clicked") is click and not why
 
 
 def _attach_gif(query: str) -> bool:
@@ -1575,6 +1580,33 @@ def read_share_post(tweet_url: str) -> dict:
             safari.close_front_tab()
 
 
+def _share_receipt(take: str, since) -> str:
+    """Our own profile's newest posts: the one carrying exactly these words, posted since `since`."""
+    from datetime import datetime, timedelta
+    from ..core import account
+    try:
+        if not safari.open_url(config.BOT_PROFILE_URL):
+            return ""
+        time.sleep(6)
+        rows = json.loads(safari._run_js(r"""JSON.stringify([...document.querySelectorAll('article')].slice(0,8).map(a=>{
+          const l=[...a.querySelectorAll('a[href*="/status/"]')].find(x=>x.querySelector('time'));
+          return {href:l?l.href:'',at:l?l.querySelector('time').getAttribute('datetime'):'',
+                  text:a.querySelector('[data-testid="tweetText"]')?.innerText||''};}))""", 10, log_prefix="[VIDEO-SHARE]") or "[]")
+    except (TypeError, ValueError):
+        return ""
+    words = re.findall(r"\w+", take)
+    for row in rows if isinstance(rows, list) else []:
+        url = x_urls.canonical_status_url(row.get("href", "")) if isinstance(row, dict) else ""
+        try:
+            posted = datetime.fromisoformat(str(row.get("at", "")).replace("Z", "+00:00"))
+        except (ValueError, AttributeError):
+            continue
+        if (url and x_urls.author(url) in account.own_handles() and posted >= since - timedelta(seconds=60)
+                and re.findall(r"\w+", row.get("text", "")) == words):
+            return url
+    return ""
+
+
 def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str) -> WriteOutcome:
     """Post another account's video through its own Post Video menu, with our take.
 
@@ -1583,7 +1615,7 @@ def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str)
     postVideoRemove and the editor focused. SHIPPED needs an exact own-status receipt."""
     from ..guards import action_guard, active_hours, content_guard, video_share_store
     from ..video import repost_review
-    from . import repost_page, reply_metrics
+    from . import repost_page
     url = x_urls.canonical_status_url(tweet_url)
     claimed = sent = False
 
@@ -1654,7 +1686,9 @@ def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str)
                     return False
                 return (state.get("route") in ("/compose/post", "/compose/tweet") and state.get("editors") == 1
                         and state.get("videos") == 1 and f"/{media_id}/" in state.get("poster", "")
-                        and state.get("text") == text)
+                        # X draws an emoji as an image, so the editor's text holds the words only
+                        # (first live test: "Superhero carpool chaos 😂" never matched itself).
+                        and re.findall(r"\w+", state.get("text", "")) == re.findall(r"\w+", text))
             if not composed(""):
                 log.info("[VIDEO-SHARE] Composer does not hold exactly this video; nothing posted: %s", url)
                 return WriteOutcome.FAILED
@@ -1662,25 +1696,22 @@ def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str)
                 return WriteOutcome.FAILED
             time.sleep(2)
             require_active()  # last point where a stop still means nothing sent
-            if not composed(" ".join(take.split())) or video_share_store.refusal():
+            if not composed(" ".join(take.split())) or video_share_store.refusal(own=url):
                 log.info("[VIDEO-SHARE] Draft or window changed before submit; nothing posted: %s", url)
                 return WriteOutcome.REFUSED
             sent = True
             since = active_hours.now_local()
             if not _submit_or_abort("VIDEO-SHARE", target=url):
                 return WriteOutcome.UNCONFIRMED
-            time.sleep(3)
+            time.sleep(4)
+            # The composer returns to the source page, where the new post never shows (first live
+            # share, 2026-11-25: posted, yet "uncertain"). The receipt is on our own profile.
             for attempt in range(3):
-                try:
-                    receipt = reply_metrics.capture(take, since=since, parent=url)
-                except Exception:
-                    log.exception("[VIDEO-SHARE] Could not read the submitted post receipt")
-                    return WriteOutcome.UNCONFIRMED
+                receipt = _share_receipt(take, since)
                 if receipt:
                     log.info("[VIDEO-SHARE] Confirmed %s", receipt)
                     return WriteOutcome.SHIPPED
-                if attempt < 2:
-                    time.sleep(3)
+                time.sleep(4)
             log.warning("[VIDEO-SHARE] Submission outcome uncertain for %s; no automatic resend.", url)
             return WriteOutcome.UNCONFIRMED
         finally:
@@ -1838,7 +1869,7 @@ def thank_commenter(comment_url: str, reply_text: str, *, expected_text: str, re
             if not _comment_target(comment_url, expected_text=expected_text, composing=True).get("url"):
                 log.info("[THANKS] Comment or composer changed; leaving the draft unsent: %s", comment_url)
                 return WriteOutcome.REFUSED
-            if why := reply_budget.begin(comment_url, admitted_text):
+            if why := reply_budget.begin(comment_url, admitted_text, thanks=True):
                 log.info("[THANKS] Submission refused: %s", why)
                 return WriteOutcome.REFUSED
             sent = True

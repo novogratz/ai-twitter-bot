@@ -176,7 +176,9 @@ def page_refusal(url, text, page):
     if broad():
         if account.watched_url(url):
             from . import watch_curation
-            if not watch_curation.reviewed(page):
+            # 2026-11-25: the opened page's `text` also carries a quoted post's text, the review
+            # holds the outer text only; every watched quote post was refused here. Compare outer with outer.
+            if not watch_curation.reviewed({**page, "text": text}):
                 return "selected watched source or media changed or its review expired"
         if not row:
             return "full source was not read before drafting"

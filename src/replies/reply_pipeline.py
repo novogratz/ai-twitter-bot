@@ -323,7 +323,9 @@ def _prepare_source(job, candidate, cycle):
         reply_selection.remember(candidate.url, text, lane, page)
     refreshed = replace(candidate, text=text, likes=page.get("likes"), views=page.get("views"))
     if reply_selection.broad() and account.watched_url(candidate.url):
-        refreshed = replace(refreshed, expires_at=x_urls.posted_at(candidate.url).timestamp() + 60)
+        from ..guards import watch_curation
+        # 2026-11-25: this still carried the old sixty seconds after the window became a setting.
+        refreshed = replace(refreshed, expires_at=x_urls.posted_at(candidate.url).timestamp() + watch_curation.window())
     verdict = _parent_verdict(job, refreshed)
     if not verdict:
         log.info("[%s] Full source refused (%s): %s", job.label, verdict.reason, candidate.url)

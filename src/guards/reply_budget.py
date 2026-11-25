@@ -133,7 +133,7 @@ def _locked():
             raise StateUnreadable("Reply submission budget could not be locked or saved") from exc
 
 
-def begin(url: str, text: str = "") -> str:
+def begin(url: str, text: str = "", *, thanks: bool = False) -> str:
     """Reserve immediately before submit; return a refusal, or empty on success.
 
     There is deliberately no release: after this point a crash or transport
@@ -149,7 +149,9 @@ def begin(url: str, text: str = "") -> str:
             return "Reply already submitted"
         if why := refusal(url):
             return why
-        if settings.get("REPLY_CURATED_MODE"):
+        # 2026-11-25: a thank-you to a commenter was judged by judge_thanks; the
+        # ordinary Reply text rules (hearts only on artist posts) stopped the first one.
+        if settings.get("REPLY_CURATED_MODE") and not thanks:
             from . import reply_selection
             if why := reply_selection.text_refusal(x_urls.author(url), text, url=url):
                 return why
@@ -158,6 +160,7 @@ def begin(url: str, text: str = "") -> str:
             return why
         data[sid] = dict(target=url, status="pending", submitted_at=active_hours.now_local().isoformat())
         if settings.get("REPLY_CURATED_MODE"):
+            from . import reply_selection
             row = reply_selection._sources.get(url, {})
             data[sid].update(lane=row.get("lane", "technical"), heart=bool(reply_selection.HEART.search(text)), text=text)
         STATE.write(data)

@@ -1,5 +1,6 @@
 """Find viral AI videos on X, review them, and post them with a short take in the Operator's windows."""
 import time
+from datetime import timedelta
 
 from ..core import account, config, settings
 from ..core.logger import log
@@ -25,7 +26,9 @@ def _discover():
     query = queries[_cursor % len(queries)]
     _cursor += 1
     floor = settings.get("VIDEO_SHARE_MIN_LIKES")
-    for tweet in scraper.scrape_x_search(query, max_tweets=20, tab="top", text_limit=600):
+    # Top results reach back for days; the date keeps them inside the share age.
+    since = (active_hours.now_local() - timedelta(hours=settings.get("VIDEO_SHARE_MAX_AGE_HOURS"))).date().isoformat()
+    for tweet in scraper.scrape_x_search(f"{query} since:{since}", max_tweets=20, tab="top", text_limit=600):
         url = x_urls.canonical_status_url(tweet.get("url", ""))
         if (url and tweet.get("has_video") and not tweet.get("is_reply") and (tweet.get("likes") or 0) >= floor
                 and store.eligible(url) and not store.contains(url) and url not in _declined):

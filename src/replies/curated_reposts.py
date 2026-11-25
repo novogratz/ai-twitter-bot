@@ -27,6 +27,7 @@ FAST_CALL = ReplyCall(
     "Approve only when a reply the author could remember exists: a sharp observation, a useful question "
     "or a joke on his side, tied to this exact post. {watched_style}"
     "Keep it to a few natural words or one short sentence, at most 12 words and 90 characters. "
+    "One sentence only: never two fragments separated by a full stop. "
     "Use the exact post's intent and recent writing memory; no automatic agreement, stock rotation, "
     "heart, explanation, flattery, invented personal experience or claim about things you cannot see. "
     "Agreement such as Facts or Agree fits only an actually supported point, not an unverified assertion. "
@@ -47,7 +48,7 @@ def _fast_review(page):
     extra = account.current().watched_extra_topics
     remaining = (x_urls.posted_at(page["url"]) - active_hours.now_local()).total_seconds() + watch_curation.window()
     # Keep room for exact-source reads and composition; an exhausted window is no model task.
-    timeout = min(20, int(remaining - 18))
+    timeout = min(30, int(remaining - 18))  # 2026-11-25: twenty seconds cut the model off on two of seven live calls
     if timeout <= 0:
         return {}, "", ""
     call = replace(FAST_CALL, timeout=timeout,
