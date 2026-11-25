@@ -106,6 +106,9 @@ def _admit(tag: str, outcomes: type[O], would: Callable[[], str], rows: Rows,
     # Operator re-enabled beside restricted Replies. post_video still checks
     # its reservation, the live switch and the publisher role before the lock.
     video = tag == "VIDEO" and video_config.live()
+    # 2026-11-25: a reviewed video share is the second profile publication the
+    # Operator enabled; post_video_share checks its store, window and review.
+    video = video or (tag == "VIDEO_SHARE" and settings.get("VIDEO_SHARE_ENABLED"))
     if settings.get("REPLY_INVITED_ONLY") and tag != "REPLY" and not video:
         from ..guards import reply_selection, reply_parent_like
         permitted_mode = reply_selection.enabled() or (tag == "LIKE" and reply_parent_like.active())

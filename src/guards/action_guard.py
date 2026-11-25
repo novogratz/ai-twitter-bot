@@ -30,7 +30,7 @@ from ..core import config, settings
 from .active_hours import break_until, is_active, now_local, stop_requested, window_label
 from .ledger import Ledger, file_ledger
 # Action types, named by callers as action_guard.POST, action_guard.PIN...
-from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW, WATCH_REPOST, MEME_REPOST
+from .ledger import DEBATE_TURN, FOLLOW, LIKE, PIN, POST, QUOTE, REPLY, RETWEET, UNFOLLOW, WATCH_REPOST, MEME_REPOST, VIDEO_SHARE
 
 # --- ledger ----------------------------------------------------------------
 

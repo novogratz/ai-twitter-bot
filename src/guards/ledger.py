@@ -51,6 +51,7 @@ RETWEET = "retweet"
 WATCH_REPOST = "watch_repost"
 SELF_REPOST = "self_repost"
 MEME_REPOST = "meme_repost"
+VIDEO_SHARE = "video_share"  # another account's video posted with our short take
 PIN = "pin"
 # Bookkeeping row beside REPLY: the answered author, for the per-author cap.
 DEBATE_TURN = "debate_turn"

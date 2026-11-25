@@ -599,6 +599,7 @@ Safari restart, and nothing writes over the file:
 | `like_bot_state.json` | `like_job` |
 | `priority_watch_state.json` | `priority_watch_job` before search or any action |
 | `meme_repost_reviews.json` | Selective AI meme review and native repost admission |
+| `video_shares.json` | Video shares (Post Video with a short take): permanent claims |
 | `priority_quotes.json` | Watched quote delivery and video admission that reads quote spacing |
 | `self_reposts.json` | Own-post discovery and timed repost/undo dispatch |
 | `reposted_tweets.json` | Repost writes and Original publication admission, which need its pending reservations |
@@ -778,6 +779,7 @@ root:
 | `video_daily_report.json` | `video.operations` | Local daily status and advisory performance report | disposable |
 | `priority_watch_state.json` | `priority_watch` | Watched handles' first-enable timestamps; prevents old backlog on restart | guarded |
 | `meme_repost_reviews.json` | `meme_repost_store` | Source/media-bound video sample evidence and reviews; legacy text reviews stay readable; permanent sends remain in reposted_tweets.json | guarded; never invent an approval or clear an uncertain send |
+| `video_shares.json` | `video_share_store` | Other accounts' videos posted with our take: one permanent claim per status and per media; pending when a submit was uncertain | guarded |
 | `priority_quotes.json` | `quote_store` | Source-bound editorial reviews, permanent confirmed/uncertain native quote receipts and daily reservations | guarded, process lock; never clear an uncertain send without checking X |
 | `self_reposts.json` | `self_repost_store` | Activation, own status IDs, one-hour due times, observed views, next half-hour turn and ambiguous undo/repost phases | guarded, process lock; preserve on restart |
 | `reposted_tweets.json` | `repost_store` / `repost_tweet` | Permanent status-ID claims; uncertain reposts reserve publication budget and spacing; process lock beside the file | guarded |

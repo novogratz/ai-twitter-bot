@@ -289,6 +289,7 @@ The reply jobs live in `src/replies/`; `engage_job`,
 | `early_bird_job` | 5 min | Replies to fresh posts from the Account's always-reply accounts (`vip_reply`, then the lists after it in `[network]`) and the tracked-account list. |
 | `mega_watch_job` | 2 min | Replies to posts under four minutes old from the top tracked handles. |
 | `commenter_thanks_job` | 1 min (a full pass every 3; every minute for 30 minutes after a video post) | With `thank_commenters`: one short Reply under each comment that sits directly under one of our posts. |
+| `video_share_job` | 2 min | With `VIDEO_SHARE_ENABLED`: finds, reviews and posts viral AI videos from X with a short take, inside `VIDEO_SHARE_WINDOWS`. |
 | `replyback_job` | Disabled for the live Account | Replies under our latest post to people who answered it (debate turns, cap shared with `debate_job`), then visits and likes up to 5 of their profiles. It never follows: `follow_engagers_job` owns engager follows. |
 | `babysit_job` | Disabled for the live Account | Runs an extra replyback cycle while our latest post is under an hour old. |
 | `debate_job` | Disabled for the live Account | Answers fresh mentions, at most 4 debate turns per author per Toronto day, counted by `reply_to_tweet` and shared with `replyback_job` and `babysit_job`. |

@@ -1,5 +1,14 @@
 # Editorial policy — November 20, 2026
 
+2026-11-25, video shares — Besides its own uploads, the Account may post another
+account's viral AI video through X's "Post Video" (the clip stays credited to
+its author) with a two to four word take and at most one emoji. Windows:
+08:00-09:00 (five), 12:00-13:00 (three), 17:00-18:00 (six), around 22:00 (two);
+sixteen a day at most, ten minutes apart and from our own videos. Each clip
+needs 500 likes on its page, a sampled-frame review, and the video taste rule
+(Trump and Elon shown well). One share per post and per media, for ever. No
+quota: an empty window posts nothing.
+
 2026-11-25, thanks to commenters and a selective watched author — One short
 Reply answers each person who comments directly on one of our posts: once per
 comment, once per author a day, never a second turn in the same thread, inside

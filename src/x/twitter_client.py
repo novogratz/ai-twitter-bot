@@ -1558,6 +1558,142 @@ def reply_to_tweet(tweet_url: str, reply_text: str, *, debate_turn: bool = False
         steps=steps, after_record=after_record)
 
 
+def read_share_post(tweet_url: str) -> dict:
+    """Read an exact video post before its review; {} when unreadable."""
+    from ..guards import video_share_store
+    from . import repost_page
+    url = x_urls.canonical_status_url(tweet_url)
+    if config.dry_run() or not settings.get("VIDEO_SHARE_ENABLED") or not video_share_store.eligible(url):
+        return {}
+    with safari._safari_lock:
+        try:
+            if not _open_or_abort(url, "VIDEO-SHARE"):
+                return {}
+            time.sleep(4)
+            return repost_page.read(url, "meme_read")
+        finally:
+            safari.close_front_tab()
+
+
+def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str) -> WriteOutcome:
+    """Post another account's video through its own Post Video menu, with our take.
+
+    Verified live without submitting (2026-11-25): a right-click on the player
+    offers "Post Video"; it opens /compose/post with the clip attached beside
+    postVideoRemove and the editor focused. SHIPPED needs an exact own-status receipt."""
+    from ..guards import action_guard, active_hours, content_guard, video_share_store
+    from ..video import repost_review
+    from . import repost_page, reply_metrics
+    url = x_urls.canonical_status_url(tweet_url)
+    claimed = sent = False
+
+    def admit():
+        if not url or not repost_review.take_ok(take) or not media_id.isdigit():
+            return WriteOutcome.REFUSED
+        ok, why = content_guard.validate(take, kind="original", short_title=True)
+        why = why if not ok else video_share_store.refusal(url, media_id)
+        if not why and not active_hours.is_active():
+            why = "outside Waking hours"
+        if why:
+            log.info("[VIDEO-SHARE] not admitted (%s): %s", why, url)
+            return WriteOutcome.REFUSED
+        return None
+
+    def claim():
+        nonlocal claimed
+        claimed = video_share_store.claim(url, take, media_id)
+        return None if claimed else WriteOutcome.REFUSED
+
+    def steps():
+        nonlocal sent
+        try:
+            if not _activate_or_abort(url) or not _open_or_abort(url, "VIDEO-SHARE"):
+                return WriteOutcome.FAILED
+            time.sleep(6)
+            page = repost_page.read(url, "meme_read")
+            if (not page or x_urls.canonical_status_url(page.get("url", "")) != url or page.get("media_id") != media_id
+                    or page.get("has_video") is not True or page.get("text") != source_text):
+                log.info("[VIDEO-SHARE] Source changed since its review; nothing posted: %s", url)
+                return WriteOutcome.REFUSED
+            opened = safari._run_js(r"""(()=>{const id=__ID__;
+              const article=[...document.querySelectorAll('article')].find(a=>[...a.querySelectorAll('a[href]')].some(l=>l.querySelector('time')&&l.pathname.endsWith('/status/'+id)));
+              const videos=article?[...article.querySelectorAll('video')].filter(v=>!v.closest('[data-testid="quoteTweet"], div[role="link"]')):[];
+              if(videos.length!==1)return 'videos:'+videos.length;
+              const r=videos[0].getBoundingClientRect();videos[0].scrollIntoView({block:'center'});
+              const b=videos[0].getBoundingClientRect();
+              const o={bubbles:true,cancelable:true,composed:true,view:window,clientX:b.left+b.width/2,clientY:b.top+b.height/2,button:2,buttons:2};
+              const t=document.elementFromPoint(o.clientX,o.clientY)||videos[0];
+              if(!article.contains(t))return 'covered';
+              for(const n of ['pointerdown','mousedown','contextmenu','pointerup','mouseup'])
+                t.dispatchEvent(new (n.startsWith('pointer')?PointerEvent:MouseEvent)(n,o));
+              return 'ok'})()""".replace("__ID__", json.dumps(x_urls.status_id(url))), 10, log_prefix="[VIDEO-SHARE]")
+            if opened != "ok":
+                log.info("[VIDEO-SHARE] Video menu did not open (%s): %s", opened, url)
+                return WriteOutcome.FAILED
+            time.sleep(1.5)
+            clicked = safari._run_js(r"""(()=>{const m=[...document.querySelectorAll('[role="menuitem"]')]
+              .filter(e=>/^Post Video$/i.test((e.innerText||'').trim()));if(m.length!==1)return 'items:'+m.length;m[0].click();return 'ok'})()""",
+                                     10, log_prefix="[VIDEO-SHARE]")
+            if clicked != "ok":
+                log.info("[VIDEO-SHARE] No single Post Video item (%s): %s", clicked, url)
+                return WriteOutcome.FAILED
+            time.sleep(4)
+            composer = r"""JSON.stringify((()=>{const e=[...document.querySelectorAll('[role="dialog"] [data-testid="tweetTextarea_0"]')];
+              const d=e.length===1?e[0].closest('[role="dialog"]'):null;
+              // The clip shows as a video in quoteVideoSlot or as a thumbnail under attachments,
+              // always beside postVideoRemove; its media ID is in the thumbnail address either way.
+              const ids=d&&d.querySelector('[data-testid="postVideoRemove"]')?[...d.querySelectorAll('video,img')]
+                .map(m=>((m.poster||m.src||'').match(/\/(?:ext_tw_video_thumb|amplify_video_thumb)\/(\d+)\//)||[])[1]).filter(Boolean):[];
+              const v=[...new Set(ids)];
+              return {route:location.pathname,editors:e.length,videos:v.length,poster:v.length===1?'/'+v[0]+'/':'',
+                      text:(e[0]?.innerText||'').replace(/\s+/g,' ').trim()};})())"""
+            def composed(text):
+                try:
+                    state = json.loads(safari._run_js(composer, 10, log_prefix="[VIDEO-SHARE]") or "{}")
+                except (TypeError, ValueError):
+                    return False
+                return (state.get("route") in ("/compose/post", "/compose/tweet") and state.get("editors") == 1
+                        and state.get("videos") == 1 and f"/{media_id}/" in state.get("poster", "")
+                        and state.get("text") == text)
+            if not composed(""):
+                log.info("[VIDEO-SHARE] Composer does not hold exactly this video; nothing posted: %s", url)
+                return WriteOutcome.FAILED
+            if not _paste_or_abort(take, "VIDEO-SHARE"):
+                return WriteOutcome.FAILED
+            time.sleep(2)
+            require_active()  # last point where a stop still means nothing sent
+            if not composed(" ".join(take.split())) or video_share_store.refusal():
+                log.info("[VIDEO-SHARE] Draft or window changed before submit; nothing posted: %s", url)
+                return WriteOutcome.REFUSED
+            sent = True
+            since = active_hours.now_local()
+            if not _submit_or_abort("VIDEO-SHARE", target=url):
+                return WriteOutcome.UNCONFIRMED
+            time.sleep(3)
+            for attempt in range(3):
+                try:
+                    receipt = reply_metrics.capture(take, since=since, parent=url)
+                except Exception:
+                    log.exception("[VIDEO-SHARE] Could not read the submitted post receipt")
+                    return WriteOutcome.UNCONFIRMED
+                if receipt:
+                    log.info("[VIDEO-SHARE] Confirmed %s", receipt)
+                    return WriteOutcome.SHIPPED
+                if attempt < 2:
+                    time.sleep(3)
+            log.warning("[VIDEO-SHARE] Submission outcome uncertain for %s; no automatic resend.", url)
+            return WriteOutcome.UNCONFIRMED
+        finally:
+            if claimed and not sent:
+                video_share_store.settle(url, shipped=False)
+
+    return confirmed_write.run(
+        "VIDEO_SHARE", WriteOutcome, would=lambda: f"post the video of {url} with {take!r}",
+        rows=lambda: [(action_guard.VIDEO_SHARE, url)],
+        before_lock=(admit, confirmed_write.DRY_RUN_EXIT), under_lock=(claim,),
+        steps=steps, after_record=lambda: video_share_store.settle(url, shipped=True))
+
+
 def _comment_target(url: str, *, click: bool = False, expected_text: str = "", composing: bool = False) -> dict:
     """Prove that `url` is a comment sitting directly under one of our posts,
     in a thread we have not answered, and optionally click its Reply button.

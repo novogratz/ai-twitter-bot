@@ -73,6 +73,12 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
             scheduler.add_job(awake_job(health.wrap_job(health_job, "video_health", safari_health=False)),
                               trigger=IntervalTrigger(seconds=2), id="video_health_job", executor="video",
                               next_run_time=datetime.now(timezone.utc) + timedelta(seconds=2))
+        if settings.get("VIDEO_SHARE_ENABLED") and not reply_only:
+            # 2026-11-25: reviewed viral AI videos posted with a short take; a post, so --post-only keeps it.
+            from src.account.video_share_bot import run_video_share_cycle
+            scheduler.add_job(awake_job(health.wrap_job(run_video_share_cycle, "video_share", safari_health=False)),
+                              trigger=IntervalTrigger(minutes=2), id="video_share_job", executor="memes",
+                              next_run_time=datetime.now(timezone.utc) + timedelta(seconds=60))
         if not post_only:
             if settings.get("REPLY_BROAD_DISCOVERY"):
                 from src.replies.direct_reply import run_direct_reply_cycle
@@ -208,6 +214,11 @@ def build_scheduler(*, post_only=False, reply_only=False, startup_publications=F
         from src.account.meme_repost_bot import run_meme_repost_cycle
         add(health.wrap_job(run_meme_repost_cycle, "meme_repost", safari_health=False), 5,
             "meme_repost_job", executor="memes", first_seconds=30)
+
+    if not reply_only and settings.get("VIDEO_SHARE_ENABLED"):
+        from src.account.video_share_bot import run_video_share_cycle
+        add(health.wrap_job(run_video_share_cycle, "video_share", safari_health=False), 2,
+            "video_share_job", executor="memes", first_seconds=60)
 
     if not reply_only and account.current().self_reposts_enabled:
         from src.account.self_repost_bot import run_self_repost_cycle, run_self_repost_discovery
