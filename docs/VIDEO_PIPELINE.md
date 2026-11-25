@@ -410,6 +410,9 @@ answering address lost the tab when Instagram redirected afterwards. The Account
 twenty windows (`scheduled_daily_cap` may be 5..24), and corner-logo removal also covers a
 persistent creator handle or name anywhere in the frame.
 
+2026-11-25: `stamp_watermark = false` renders without the account overlay and the output gate then requires
+`watermark_present = false`.
+
 2026-11-25: the Account schedules seventeen hourly windows. `x_exclusive` refuses X sources and
 accepts only `checked_no_match` at the final gate. `clean_watermarks_only` adds `foreign_marks`
 (source) and `foreign_watermark_visible` (output) to the inspection schema: located marks join

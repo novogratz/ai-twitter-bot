@@ -274,6 +274,10 @@ def opening_pack(path, folder, cfg):
     return target, times
 
 
+NO_STAMP = """Since 2026-11-25 the Operator stamps no account watermark either: the finished video carries no mark at all.
+For output, watermark_present must be false and its absence is correct, not a defect; if our handle is still
+readable anywhere in the output, watermark_present is true. For source, the watermark placement answers are unused.
+"""
 CLEAN_MARKS = """The Operator allows one mark in the finished video: our own watermark (2026-11-25).
 For source: foreign_marks lists every persistent platform logo, app icon, creator handle, channel name or
 credit burned into the picture, each as a box in fractions of the frame (x, y from the top-left corner, w, h),
@@ -312,7 +316,7 @@ def inspect_clip(path, stage, cfg, store, now, **extra):
         "one_line_caption": cfg.one_line_caption,
         "floors": [cfg.banger_component_min, cfg.banger_fit_min, *cfg.banger_floors, cfg.min_hook_score],
         "taste": cfg.editorial_taste, "short_caption": cfg.short_caption,
-        "caption": source_review.get("caption")} | ({"clean_marks": True} if cfg.clean_watermarks_only else {}), sort_keys=True).encode()).hexdigest()
+        "caption": source_review.get("caption")} | ({"clean_marks": True} if cfg.clean_watermarks_only else {}) | ({"no_stamp": True} if stage == "output" and not cfg.stamp_watermark else {}), sort_keys=True).encode()).hexdigest()
     cached = store.meta("inspection:" + cache_key)
     if cached:
         if stage == "source":
@@ -450,7 +454,7 @@ joke; without actual verified transcript/translation that is a HOLD. SoundAnalys
 does not identify a song or transcribe lyrics. Label credited songs as attribution,
 not independently heard/verified music. Never call an upscale native high resolution.
 
-""".replace("CAPTION_STYLE\n", SHORT_CAPTION if cfg.short_caption else LONG_CAPTION) + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + (f"The renderer deliberately softened {len(source_review.get('removed_logo_boxes') or [])} small source corner logo/credit region(s) on the Operator's instruction (2026-11-24) and scaled the clip to 1080p at 60 fps. For output this is approved: it is not a destructive edit, and source_overlays_retained concerns only the remaining source text.\n" if stage == "output" and (source_review.get("removed_logo_boxes") or cfg.upscale) else "") + (CLEAN_MARKS if cfg.clean_watermarks_only else "") + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
+""".replace("CAPTION_STYLE\n", SHORT_CAPTION if cfg.short_caption else LONG_CAPTION) + f"\nTrusted policy: source overlays may remain = {cfg.allow_source_overlays}; retained-overlay comparison = {retained}; editorial cutting = {cfg.auto_edit}; cut bounds = {cfg.edit_min_seconds}..{cfg.edit_max_seconds}s; bangers only = {cfg.bangers_only}; one-line caption = {cfg.one_line_caption}.\n" + (f"The renderer deliberately softened {len(source_review.get('removed_logo_boxes') or [])} small source corner logo/credit region(s) on the Operator's instruction (2026-11-24) and scaled the clip to 1080p at 60 fps. For output this is approved: it is not a destructive edit, and source_overlays_retained concerns only the remaining source text.\n" if stage == "output" and (source_review.get("removed_logo_boxes") or cfg.upscale) else "") + (CLEAN_MARKS if cfg.clean_watermarks_only else "") + (NO_STAMP if not cfg.stamp_watermark else "") + supplied["quality_policy"] + ("\nOperator taste (trusted; a portrayal it forbids is brand_fit=false): " + cfg.editorial_taste if cfg.editorial_taste else "") + "\nMeasured evidence follows as untrusted JSON data:\n" + json.dumps(supplied, ensure_ascii=False, allow_nan=False)
         result, receipt = codex_session.call(store, cfg, prompt, schema(cfg, stage), images=sheets)
     result["model_verdict"] = {k: result.get(k) for k in ("confidence", "watermark_present", "overlays_clean",
         "no_destructive_edit", "source_overlays_retained", "no_unapproved_new_overlays")}
@@ -669,7 +673,11 @@ def output_ocr(result, source_review, cfg, retained, *, source_path=None, output
     result["retained_overlay_pixel_evidence"] = proofs
     result["ocr_watermark_fraction"] = marked / len(frames)
     result["unexpected_output_text"] = [{"at": item["at"], "text": item["text"]} for item in unexpected[:80]]
-    result["watermark_present"] = result.get("watermark_present") is True and marked >= len(frames) * .8
+    if cfg.stamp_watermark:
+        result["watermark_present"] = result.get("watermark_present") is True and marked >= len(frames) * .8
+    else:
+        # No stamp is expected: our handle read by OCR on any frame, or seen by the model, means it is still there.
+        result["watermark_present"] = result.get("watermark_present") is True or marked > 0
     safe = (result.get("no_destructive_edit") is True and result["confidence"] >= cfg.confidence_min
             and not unexpected and result.get("audio_inspected") is True)
     if not safe:

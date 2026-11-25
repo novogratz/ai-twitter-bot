@@ -134,3 +134,20 @@ def test_share_receipt_is_read_on_our_own_profile_by_words_and_time(monkeypatch)
     monkeypatch.setattr(twitter_client.safari, "_run_js", lambda *a, **k: json.dumps(rows))
     assert twitter_client._share_receipt("Superhero carpool chaos 😂", since).endswith("/status/2125632102364315980")
     assert twitter_client._share_receipt("Another take 😂", since) == ""
+
+
+def test_a_review_that_cannot_get_safari_keeps_its_lead_and_asks_at_reply_priority(sharing, monkeypatch):
+    # 2026-11-25: every review in the 12:00 window was deferred at background priority and the lead dropped.
+    from src.core import work_priority
+    from src.video.security import Deferred
+    video_share_bot._candidates.clear(); video_share_bot._declined.clear(); video_share_bot._approved.clear()
+    page = {"url": URL, "text": "AI clip", "has_video": True, "media_id": "111", "likes": 9000}
+    monkeypatch.setattr(video_share_bot.twitter_client, "read_share_post", lambda url: page)
+    seen = []
+    def busy(page, share=False):
+        seen.append(work_priority.current_priority())
+        raise Deferred("Safari busy")
+    monkeypatch.setattr(video_share_bot.repost_review, "inspect", busy)
+    video_share_bot._candidates[URL] = {"url": URL, "likes": 9000}
+    video_share_bot._review(video_share_bot._candidates[URL])
+    assert seen == [work_priority.REPLY] and URL in video_share_bot._candidates and URL not in video_share_bot._declined

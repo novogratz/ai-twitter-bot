@@ -1726,8 +1726,8 @@ def post_video_share(tweet_url: str, take: str, media_id: str, source_text: str)
 
 
 def _comment_target(url: str, *, click: bool = False, expected_text: str = "", composing: bool = False) -> dict:
-    """Prove that `url` is a comment sitting directly under one of our posts,
-    in a thread we have not answered, and optionally click its Reply button.
+    """Prove that `url` is a first-level comment directly under a post of ours that
+    starts its thread, not yet answered, and optionally click its Reply button.
 
     Returns the comment and parent text, `{"already_replied": True}` when one
     of our Replies is already visible below it, or {} on anything else."""
@@ -1756,10 +1756,14 @@ def _comment_target(url: str, *, click: bool = False, expected_text: str = "", c
       if (matches.length !== 1 || index < 1) return refused('comment_position');
       const article = articles[index], parent = articles[index - 1];
       if (who(article) !== author || self.includes(author)) return refused('comment_author');
-      // The comment answers us directly, and we appear once above it: a reply
-      // to our own answer is a conversation, which the Account does not continue.
       if (!self.includes(who(parent))) return refused('parent_not_ours');
-      if (articles.slice(0, index).filter(a => self.includes(who(a))).length !== 1) return refused('conversation');
+      // Operator, 2026-11-25: "never respond to a response to our response ... reply to replies
+      // only if the reply is the first reply to the thread". The comment must be the second
+      // post on its page, directly under a post of ours that starts the thread: nothing under
+      // one of our Replies in someone else's thread, nothing deeper in our own.
+      if (index !== 1) return refused('not_first_level');
+      if (/Replying to|En réponse à/i.test(parent.innerText) || body(parent).trim().startsWith('@'))
+        return refused('parent_is_a_reply');
       if (articles.slice(index + 1).some(a => self.includes(who(a))))
         return JSON.stringify({already_replied: true});
       const text = body(article);

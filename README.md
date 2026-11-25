@@ -126,6 +126,9 @@ Earlier deployment: November 14 `b7bc4199` restored on November 19, with a
 and unresolved sends remain intact; news is off and the earlier video schedule
 and conversational/specialist Voice are restored.
 
+**2026-11-25:** our own uploads carry no watermark at all (`stamp_watermark = false`); thank-yous go only to the
+first reply under a thread we started.
+
 **2026-11-25:** `VIDEO_SHARE_ENABLED` posts reviewed viral AI videos found on X through the video's own "Post Video"
 menu with a two to four word take, in four daily windows (`video_share_job`, `VIDEO_SHARE_WINDOWS`).
 

@@ -409,7 +409,10 @@ def render(original, output, info, evidence, cfg):
         raise ValueError("destructive or unverified crop")
     if evidence.get("overlays_removable_by_crop") is not True and not retaining:
         raise ValueError("overlay requires unavailable cleanup; no inpainting is pretended")
-    if not cfg.watermark or not cfg.watermark.startswith("@"):
+    # Operator, 2026-11-25: "lets not add anymore our watermark to the videos ... any video we
+    # post with bot". With stamp_watermark off nothing is drawn and no placement is needed.
+    stamping = cfg.stamp_watermark
+    if stamping and (not cfg.watermark or not cfg.watermark.startswith("@")):
         raise ValueError("operator watermark missing")
     # Preserve display proportions when converting non-square source pixels.
     # Crop/OCR coordinates remain in the original raster; normalize afterwards.
@@ -425,10 +428,11 @@ def render(original, output, info, evidence, cfg):
     ImageDraw.Draw(stamp).text((8 - box[0], 6 - box[1]), cfg.watermark, font=font,
                                fill=(255, 255, 255, 240), stroke_width=max(2, font_size // 14), stroke_fill=(0, 0, 0, 235))
     watermark_path = output.with_suffix(".watermark.png")
-    stamp.save(watermark_path)
     position = evidence.get("watermark_position", "bottom")
-    if position not in ("top", "bottom") or evidence.get("watermark_clear_of_action") is not True:
-        raise ValueError("watermark safe placement unverified")
+    if stamping:
+        stamp.save(watermark_path)
+        if position not in ("top", "bottom") or evidence.get("watermark_clear_of_action") is not True:
+            raise ValueError("watermark safe placement unverified")
     ypos = "H-h-0.06*H" if position == "bottom" else "0.06*H"
     cut = f"trim=start={edit['start_seconds']}:end={edit['end_seconds']},setpts=PTS-STARTPTS," if edit else ""
     logos = source_logo_boxes(evidence, info, evidence.get("source_creator", "")) if cfg.remove_source_logos else []
@@ -437,7 +441,8 @@ def render(original, output, info, evidence, cfg):
     # Operator, 2026-11-24: always 1080p at 60 fps. Lanczos with a light sharpen;
     # 60 fps repeats source frames, it invents no motion.
     sizing = (f"scale={ow}:{oh}:flags=lanczos,fps=60" if cfg.upscale else f"scale={ow}:{oh}")
-    filters = f"[0:v]{clean}{cut}crop={w}:{h}:{x}:{y},{sizing},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+    filters = (f"[0:v]{clean}{cut}crop={w}:{h}:{x}:{y},{sizing},setsar=1[v];[v][1:v]overlay=(W-w)/2:{ypos}:format=auto[out]"
+               if stamping else f"[0:v]{clean}{cut}crop={w}:{h}:{x}:{y},{sizing},setsar=1[out]")
     if edit:
         filters += f";[0:a:0]atrim=start={edit['start_seconds']}:end={edit['end_seconds']},asetpts=PTS-STARTPTS[aout]"
     # Reserve container/audio headroom before encoding. Unbounded CRF can make a
@@ -446,7 +451,7 @@ def render(original, output, info, evidence, cfg):
     if maxrate < 100_000:
         raise ValueError("configured output byte budget is too small")
     try:
-        ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(original), "-i", str(watermark_path),
+        ffmpeg(["-protocol_whitelist", "file,pipe", "-i", str(original), *(["-i", str(watermark_path)] if stamping else []),
                 "-filter_complex", filters, "-map", "[out]", "-map", "[aout]" if edit else "0:a:0", "-sn", "-dn", "-map_metadata", "-1",
                 "-c:v", "libx264", "-threads", "4" if cfg.upscale else "1", "-preset", "veryfast",
                 "-crf", "18" if cfg.upscale else "16", "-profile:v", "high",

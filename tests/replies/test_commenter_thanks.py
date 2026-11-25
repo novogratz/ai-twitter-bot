@@ -105,7 +105,8 @@ def test_first_half_hour_after_a_post_reads_every_minute_and_answers_everyone(th
 def test_comment_script_requires_our_post_directly_above_and_one_own_turn():
     import inspect
     source = inspect.getsource(twitter_client._comment_target)
-    for rule in ("parent_not_ours", "conversation", "already_replied", "comment_text", "copy_author"):
+    # Operator, 2026-11-25: only the first reply under a thread we started; never a reply to our reply.
+    for rule in ("parent_not_ours", "not_first_level", "parent_is_a_reply", "already_replied", "comment_text", "copy_author"):
         assert rule in source
 
 

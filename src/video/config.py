@@ -48,6 +48,7 @@ class VideoConfig:
     underdog_min_editorial: float = 80.0
     x_exclusive: bool = False          # sources outside X only; any matching copy on X holds
     clean_watermarks_only: bool = False  # the output may show no logo, handle or credit but ours
+    stamp_watermark: bool = True       # false: no account watermark either (Operator, 2026-11-25)
     trend_cast: tuple = ()             # cast keys the Operator names as the current trend
     x_max_views: int = 50000
     x_reach_max_age_seconds: int = 21600
@@ -135,7 +136,7 @@ class VideoConfig:
             raise ValueError("startup_on_boot must be a boolean")
         if type(self.scheduled_daily_cap) is not int or not 5 <= self.scheduled_daily_cap <= 24:
             raise ValueError("scheduled_daily_cap must be 5..24")
-        for name in ("upscale", "remove_source_logos", "x_exclusive", "clean_watermarks_only", "auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
+        for name in ("upscale", "remove_source_logos", "x_exclusive", "clean_watermarks_only", "stamp_watermark", "auto_edit", "bangers_only", "ultra_bangers_only", "one_line_caption", "short_caption", "adaptive_discovery"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean")
         for name in ("discovery_prompt_file", "discovery_memory_file", "query_bank_file"):
